@@ -5,9 +5,16 @@ import type { PageManifestEntry } from "../../lib/page-manifest";
 import { AdminShell } from "../../components/shells/Shells";
 import { entityExamples, entityFields, entityForPath, type EntityName } from "../../content/entities";
 import type { AtlasCatalog } from "../../server/atlas";
+import type { PublicHealthReport, ServiceHealthStatus } from "../../server/health";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
+}
+
+async function fetchHealth(): Promise<PublicHealthReport> {
+  const response = await fetch("/api/health");
+  if (!response.ok) throw new Error("Service health could not be loaded.");
+  return response.json() as Promise<PublicHealthReport>;
 }
 
 function DataIndex({ screen }: { screen: PageManifestEntry }) {
@@ -96,6 +103,21 @@ function CityPage({ screen }: { screen: PageManifestEntry }) {
   return <><AdminHead screen={screen} description={descriptions[screen.screenId] ?? "City Builder task."} />{screen.screenId === "CITY05" ? <div className="atlas-layout"><section className="map"><img src="/assets/world_map.png" alt="City district overlay preview" /></section><aside className="card"><h2>District overlays</h2>{["Streets", "Parcels", "Buildings", "Interiors"].map((name) => <label key={name}><input type="checkbox" defaultChecked /> {name}</label>)}</aside></div> : <div className="split"><section className="card"><h2>{screen.title}</h2><div className="city-canvas">{screen.screenId === "CITY04" ? "Interior graph" : screen.screenId === "CITY03" ? "Building exteriors" : screen.screenId === "CITY02" ? "Parcel and street graph" : "City records"}</div></section><aside className="card"><h2>Selection</h2><label className="field">Name<input className="input" /></label><label className="field">Type<select className="select"><option>Select</option></select></label><button className="button button--gold">Save</button></aside></div>}</>;
 }
 
+const operationsStatusLabels: Record<ServiceHealthStatus, string> = {
+  operational: "Operational",
+  configured: "Configured",
+  unavailable: "Unavailable",
+  unmonitored: "Not monitored",
+};
+
+function OperationsPage({ screen }: { screen: PageManifestEntry }) {
+  const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth, refetchInterval: 30_000 });
+  if (screen.screenId === "OPS002") {
+    return <><AdminHead screen={screen} description="Prepare and inspect an approved release without conflating release notes with deployment state." /><div className="grid-2"><article className="card"><h2>Release candidate 0.2.0</h2><dl className="summary"><dt>Status</dt><dd>Awaiting owner authorization</dd><dt>Tests</dt><dd>Run through pnpm verify</dd><dt>Deployment</dt><dd>Blocked</dd><dt>Release notes</dt><dd><a href="/status/releases/0.2.0">View notes</a></dd></dl><button className="button" disabled>Deploy blocked</button></article><article className="card"><h2>Recent releases</h2><p>No deployment-history owner is configured.</p></article></div><p className="notice notice--warn">Deployment requires a separate explicit owner instruction.</p></>;
+  }
+  return <><AdminHead screen={screen} description="Read-only service health. No restart action is exposed without an operations owner." />{health.isPending && <p className="notice">Checking service health…</p>}{health.isError && <p className="notice notice--bad">{health.error.message}</p>}<div className="grid-3">{health.data?.services.map((service) => <article className="card" key={service.name}><h2>{service.name}</h2><span className="tag">{operationsStatusLabels[service.status]}</span><p>{service.description}</p><button className="button" disabled>Restart unavailable</button></article>)}</div>{health.data && <p className="notice">Last checked {new Date(health.data.checkedAt).toLocaleString()}.</p>}</>;
+}
+
 function GeneralAdmin({ screen }: { screen: PageManifestEntry }) {
   if (screen.screenId === "ADM001") return <><AdminHead screen={screen} description="Administrative overview and current work queues." /><div className="grid-3">{[["Access approvals", "0"], ["Store orders", "0"], ["Data validations", "0"], ["Release tasks", "0"], ["Prompt work", "0"], ["Operations alerts", "0"]].map(([name, count]) => <article className="card" key={name}><h2>{name}</h2><p className="stat">{count}</p></article>)}</div></>;
   if (screen.path?.startsWith("/admin/access")) {
@@ -110,7 +132,8 @@ function GeneralAdmin({ screen }: { screen: PageManifestEntry }) {
   if (screen.path?.includes("bulk-operations")) return <><AdminHead screen={screen} description="Validate, map and preview before atomic bulk apply." /><div className="grid-3"><article className="card"><h2>Validate</h2><p>Required fields, controlled values and record links.</p><button className="button">Choose operation</button></article><article className="card"><h2>External API</h2><p>Scoped key status and permitted entities.</p><span className="tag">{screen.screenId === "ADM021" ? "ENABLED" : "DISABLED"}</span></article><article className="card"><h2>Recent activity</h2><p>Audit records identify preview and apply separately.</p><a className="button" href="/admin/data/bulk-operations?state=ADM022">Open audit</a></article></div></>;
   if (screen.path?.startsWith("/admin/assets")) return <><AdminHead screen={screen} description={`Upload and manage ${screen.path.endsWith("audio") ? "audio" : "video"} assets through the configured S3 owner.`} /><div className="split"><form className="card form-stack"><h2>Upload asset</h2><input className="input" type="file" accept={screen.path.endsWith("audio") ? "audio/*" : "video/*"} /><label className="field">Accessible label<input className="input" /></label><button className="button button--gold">Upload</button></form><aside className="card"><h2>Managed assets</h2><p>Canonical asset records appear after successful storage.</p></aside></div></>;
   if (screen.path === "/admin/prompts") return <><AdminHead screen={screen} description={screen.screenId === "ADM034" ? "Only prompt work still outstanding." : "Review current prompt records and status."} /><section className="card"><div className="toolbar"><input className="input" placeholder="Search prompts" /><button className="button">{screen.screenId === "ADM034" ? "Outstanding only" : "All statuses"}</button></div><table className="data-table"><thead><tr><th>Prompt</th><th>Owner</th><th>Status</th><th>Updated</th></tr></thead><tbody><tr><td>Current prompt record</td><td>Application</td><td>Outstanding</td><td>Current review</td></tr></tbody></table></section></>;
-  return <><AdminHead screen={screen} description={screen.screenId === "OPS002" ? "Prepare and verify releases without deployment." : "Service, worker and release health."} /><div className="grid-3">{["Web", "Authentication", "Game service", "Store", "Workers", "Database"].map((service) => <article className="card" key={service}><h2>{service}</h2><span className="tag tag--good">Operational</span>{screen.screenId === "OPS001" && <button className="button">Restart surface</button>}</article>)}</div>{screen.screenId === "OPS002" && <p className="notice notice--warn">Deployment requires a separate explicit owner instruction.</p>}</>;
+  if (["OPS001", "OPS002"].includes(screen.screenId)) return <OperationsPage screen={screen} />;
+  return <><AdminHead screen={screen} description="Reviewed administration task." /></>;
 }
 
 export function AdminPage({ screen }: { screen: PageManifestEntry }) {

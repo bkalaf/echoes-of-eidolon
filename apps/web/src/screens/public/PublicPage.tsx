@@ -1,20 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import type { PageManifestEntry } from "../../lib/page-manifest";
+
 import { PublicShell } from "../../components/shells/Shells";
 import { publicFeatures, inviteConsent } from "../../content/public";
+import type { PageManifestEntry } from "../../lib/page-manifest";
+import type { PublicHealthReport, ServiceHealthStatus } from "../../server/health";
 
 const gameplaySteps = [
   ["Go somewhere worth investigating", "Use maps, routes and what you have learned to decide where to spend your time."],
   ["Talk naturally", "Speak or type your own questions. Characters answer from their own knowledge and perspective."],
   ["Build understanding", "Your Knowledge Base grows as you discover records, testimony and contradictions."],
   ["Choose what matters", "Decisions affect relationships, access, knowledge and later opportunities."],
-] as const;
-
-const services = [
-  ["Website", "Public site and account access"],
-  ["Authentication", "Sign in, invitations and account access"],
-  ["Game Service", "Player runtime and progression"],
-  ["Store", "Merchandise browsing and checkout"],
 ] as const;
 
 function PageHead({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
@@ -36,8 +32,27 @@ function GameplayPage() {
   return <><PageHead eyebrow="Gameplay" title="Explore. Ask. Learn. Decide." description="The core loop is investigation inside a persistent world, not a chain of dialogue menus." /><div className="gameplay-layout"><section className="video-panel"><img src="/assets/feature_video_clean.jpg" alt="" /><span className="play">▶</span><div><strong>How Echoes plays</strong><small>Travel, conversation, knowledge and challenges in one continuous experience.</small></div></section><section className="step-list">{gameplaySteps.map(([title, body], index) => <article className="step" key={title}><span>{index + 1}</span><div><h2>{title}</h2><p>{body}</p></div></article>)}</section></div></>;
 }
 
+async function fetchHealth(): Promise<PublicHealthReport> {
+  const response = await fetch("/api/health");
+  if (!response.ok) throw new Error("Service health could not be loaded.");
+  return response.json() as Promise<PublicHealthReport>;
+}
+
+const statusLabels: Record<ServiceHealthStatus, string> = {
+  operational: "Operational",
+  configured: "Configured",
+  unavailable: "Unavailable",
+  unmonitored: "Not monitored",
+};
+
 function StatusPage() {
-  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className="notice notice--good">All monitored public services are operational.</p><div className="service-grid">{services.map(([name, description]) => <article className="card service" key={name}><h2>{name}<span>Operational</span></h2><p>{description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance window is currently scheduled.</p><span className="tag">No active maintenance</span></article><article className="card"><h2>Current release</h2><p className="stat">0.2.0</p><a className="button" href="/status/releases">View Release Notes</a></article></div></>;
+  const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth, refetchInterval: 30_000 });
+  const notice = health.isPending
+    ? "Checking monitored public services…"
+    : health.isError
+      ? health.error.message
+      : "Status checks loaded. Each service reports only what is currently verified.";
+  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2><p className="stat">0.2.0</p><a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
 }
 
 function ReleasesPage({ detail }: { detail: boolean }) {
