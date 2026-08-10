@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { InterludeType, TimelineEventType } from "../generated/prisma/enums";
+import { ArkStatus, InterludeType, TimelineEventType } from "../generated/prisma/enums";
 
 const soulImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
@@ -39,12 +39,19 @@ const interludeImportRowSchema = z.object({
   summary: z.string().refine((value) => value.trim().length > 0, "summary cannot be blank"),
 }).strict();
 
+const arkImportRowSchema = z.object({
+  arkId: z.string().refine((value) => value.trim().length > 0, "arkId cannot be blank"),
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+  status: z.enum(ArkStatus),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
 export type LegendaryRewardImportRow = z.infer<typeof legendaryRewardImportRowSchema>;
 export type TimelineEventImportRow = z.infer<typeof timelineEventImportRowSchema>;
 export type InterludeImportRow = z.infer<typeof interludeImportRowSchema>;
+export type ArkImportRow = z.infer<typeof arkImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -130,6 +137,20 @@ export interface InterludeImportDatabase {
   transaction<Result>(work: (transaction: InterludeImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface ArkImportTransaction {
+  ark: {
+    createMany(input: { data: ArkImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { arkId: true; name: true; status: true };
+      where: { arkId: { in: string[] } };
+    }): Promise<ArkImportRow[]>;
+  };
+}
+
+export interface ArkImportDatabase {
+  transaction<Result>(work: (transaction: ArkImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -193,6 +214,16 @@ export function parseInterludeImportRows(value: unknown): InterludeImportRow[] {
   for (const row of rows) {
     if (identifiers.has(row.interludeId)) throw new Error(`Import duplicates interludeId ${row.interludeId}.`);
     identifiers.add(row.interludeId);
+  }
+  return rows;
+}
+
+export function parseArkImportRows(value: unknown): ArkImportRow[] {
+  const rows = z.array(arkImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.arkId)) throw new Error(`Import duplicates arkId ${row.arkId}.`);
+    identifiers.add(row.arkId);
   }
   return rows;
 }
@@ -346,10 +377,33 @@ export async function applyInterludeImport(
   });
 }
 
+export async function applyArkImport(
+  value: unknown,
+  database: ArkImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseArkImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.ark.findMany({
+      select: { arkId: true, name: true, status: true },
+      where: { arkId: { in: rows.map((row) => row.arkId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.arkId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.arkId);
+      if (persisted && (persisted.name !== row.name || persisted.status !== row.status)) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for Ark ${row.arkId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.arkId));
+    if (missing.length > 0) await transaction.ark.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase | ArkImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
@@ -357,5 +411,6 @@ export async function applyRegisteredEntityImport(
   if (entityKey === "legendaryreward") return applyLegendaryRewardImport(value, database as LegendaryRewardImportDatabase);
   if (entityKey === "timelineevent") return applyTimelineEventImport(value, database as TimelineEventImportDatabase);
   if (entityKey === "interlude") return applyInterludeImport(value, database as InterludeImportDatabase);
+  if (entityKey === "ark") return applyArkImport(value, database as ArkImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }

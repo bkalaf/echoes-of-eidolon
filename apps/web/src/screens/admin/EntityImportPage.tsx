@@ -20,6 +20,7 @@ const importFormats = {
 type ImportFormat = keyof typeof importFormats;
 
 const typedImportKeys = {
+  Ark: "ark",
   Definition: "definition",
   Interlude: "interlude",
   Lesson: "lesson",

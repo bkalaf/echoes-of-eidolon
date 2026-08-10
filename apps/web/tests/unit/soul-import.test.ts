@@ -6,6 +6,7 @@ import {
   applyLegendaryRewardImport,
   applyTimelineEventImport,
   applyInterludeImport,
+  applyArkImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
@@ -13,6 +14,7 @@ import {
   parseLegendaryRewardImportRows,
   parseTimelineEventImportRows,
   parseInterludeImportRows,
+  parseArkImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -379,5 +381,45 @@ describe("typed Interlude import", () => {
     await expect(applyRegisteredEntityImport("interlude", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
     await expect(applyInterludeImport([{ ...row, interludeType: "MYTH" }], database))
       .rejects.toThrow("Canonical drift refused for Interlude INTERLUDE-1");
+  });
+});
+
+describe("typed Ark import", () => {
+  const row = { arkId: "ARK-1", name: "Supplied ark", status: "OPERATIONAL" as const };
+  const stored = new Map<string, typeof row>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      ark: {
+        createMany(input: { data: typeof row[] }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { arkId: true; name: true; status: true };
+          where: { arkId: { in: string[] } };
+        }): Promise<typeof row[]>;
+      };
+    }) => Promise<Result>) => work({
+      ark: {
+        async createMany({ data }) {
+          for (const item of data) stored.set(item.arkId, { ...item });
+          return { count: data.length };
+        },
+        async findMany({ where }) {
+          return where.arkId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []);
+        },
+      },
+    })),
+  };
+
+  it("accepts only exact ArkStatus values and exact fields", () => {
+    expect(parseArkImportRows([row])).toEqual([row]);
+    expect(() => parseArkImportRows([{ ...row, status: "UNKNOWN" }])).toThrow();
+    expect(() => parseArkImportRows([{ ...row, campaignBook: 1 }])).toThrow();
+  });
+
+  it("applies idempotently and refuses status drift", async () => {
+    stored.clear();
+    await expect(applyArkImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("ark", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyArkImport([{ ...row, status: "DAMAGED" }], database))
+      .rejects.toThrow("Canonical drift refused for Ark ARK-1");
   });
 });

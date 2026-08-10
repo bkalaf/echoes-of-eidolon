@@ -9,6 +9,7 @@ import {
   applyLegendaryRewardImport,
   applyTimelineEventImport,
   applyInterludeImport,
+  applyArkImport,
   applySoulImport,
   CanonicalImportDriftError,
   UnsupportedImportEntityError,
@@ -47,6 +48,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "interlude") {
             result = await applyInterludeImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "ark") {
+            result = await applyArkImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {
