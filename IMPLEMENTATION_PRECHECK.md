@@ -26,7 +26,8 @@ closed-world packet and current workspace inputs remain unchanged and controllin
 - UI: Tailwind CSS 4 and React Hook Form
 - Data: PostgreSQL, Prisma 7 with `@prisma/adapter-pg`, Zod, AJV, YAML
 - Authentication: Better Auth `1.6.25`, Prisma adapter, Passkey
-- External service owners: AWS S3, Resend, Stripe
+- External service owners: DigitalOcean Spaces through its S3 API, Resend,
+  Stripe, and Printful for fulfillment only
 - Testing: Vitest, Testing Library, jsdom, Playwright
 - Development/build: TypeScript 6, TSX, ESLint
 
@@ -41,7 +42,7 @@ product semantics:
 | Authentication/session | None | Auth/session adapter and Auth shell |
 | Data access | None | Typed repository interfaces; no invented domain records |
 | Routes | None | One manifest-backed route/state registry |
-| Assets/media | None | Static visual assets only until storage/upload is settled |
+| Assets/media | None | One final-byte managed-asset pipeline backed by DigitalOcean Spaces through its S3 API |
 | Atlas | None | Manifest-validated Atlas data loader and Atlas views |
 | Campaign | None | Campaign assignment service and planner state |
 | Puzzle | None | PuzzleBlueprint library/editor and deterministic generator boundary |
@@ -52,8 +53,9 @@ product semantics:
 
 ## Persistence and schemas
 
-- Persistence technology at intake: none.
-- Application schema at intake: none.
+- Persistence technology at intake: none; the implementation now uses PostgreSQL
+  through Prisma 7 and `@prisma/adapter-pg`.
+- Application schema: `apps/web/prisma/schema.prisma`.
 - Current field/relationship contract:
   `Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD/types/eidolon-domain-types.ts`.
 - Current Atlas schemas/contracts:
@@ -95,6 +97,7 @@ inventory. Duplicate paths represent approved state variants, not duplicate rout
 | Packet `assets/*` | `VISUAL_REFERENCE` | Copied into implementation only where required by an approved screen. |
 | Packet reviewed PDF, manifest, types, diagrams, and implementation contracts/plan | `IMPLEMENTATION_INPUT` | Used according to the packet authority order. |
 | Packet validation JSON and SHA manifests | `REFERENCE_ONLY` | Integrity/review checks only, never product logic. |
+| Owner-supplied feature PNGs, soundtrack MP3s, captioned MP4s, logos, and Atlas image/texture files under `/home/bobby/Dropbox` | `DATA_INPUT` for managed assets | Source bytes only. They are sanitized, hashed from final bytes, renamed to the SHA-256 identity, and served from DigitalOcean Spaces; workstation paths and source filenames never become public identity. |
 
 Atlas R08 supplies one unresolved canonical location: Highcourt/Ascendancy
 `SITE-0401` has no approved latitude/longitude. It remains visibly pending and is
@@ -105,57 +108,65 @@ not placed by inference.
 Independent UI, route/state, domain-validation, and settled calculation work can
 continue. Only these dependent slices remain blocked:
 
-### ODR-HEIRLOOM-VALUES
-
-- Subsystem: Story/Companion
-- Blocked slice: validating or persisting a Companion Heirloom selection
-- Missing decision: exact allowed Heirloom values
-- Checked: owner ledger, current types, Mermaid 03, reviewed Companion screens
-- Current safe work: render the Companion relation without inventing enum members
-
-### ODR-SETTLEMENT-PERSISTENCE
-
-- Subsystem: Settlement
-- Blocked slice: permanent Found City/Migrate population-history writes
-- Missing decision: canonical persistence/history shape and exact Human founding allocation
-- Checked: owner ledger, current types, Mermaid 07-10, implementation contracts,
-  Atlas R08 data input
-- Current safe work: implement validated same-world Breed calculations, atomic
-  service boundary, preview, and UI without fabricating a history subsystem
-
 ### ODR-CAPABILITY-RUNTIME
 
 - Subsystem: Capability/Knowledge
-- Blocked slice: mutating capability state, thresholds, awards, and disclosure state
-- Missing decision: capability keys, events, thresholds, reset rules, and Knowledge disclosure mutation semantics
+- Blocked slice: authoring concrete capability keys, authored score ceilings,
+  achievement thresholds/chains, and disclosure requirements
+- Missing decision: the actual authored definitions and thresholds; the supplied
+  append-only event/reducer and disclosure operation contracts do not supply those records
 - Checked: current compact types, Mermaid 14/31, reviewed admin/player screens
-- Current safe work: read-only definition/editor surfaces and player-safe view models
+- Current safe work: validate supplied definitions/events, reduce derived state,
+  and project disclosures without fabricating authored keys or thresholds
 
-### ODR-PUZZLE-RUNTIME
+### ODR-GUARDIAN-CONSENT
 
-- Subsystem: Puzzle
-- Blocked slice: authoritative countdown, retry, and challenge lifecycle behavior
-- Missing decision: timer start/expiry, retry, attempt, and server-authority semantics
-- Checked: PuzzleBlueprint contract, Mermaid 15/16, reviewed Puzzle screens
-- Current safe work: 70-blueprint library UI, exactly two hints, deterministic test generation, answer validation, and alternate presentation checks
+- Subsystem: Authentication
+- Blocked slice: enabling registration for ages 14–17
+- Missing decision: guardian-consent verification method and evidence capture
+- Checked: direct owner age/privacy rules and current signup screen
+- Current safe work: keep the minor option unavailable and collect no exact age or date of birth
 
-### ODR-ASSET-STORAGE
+### ODR-MERCHANDISE-MAPPING
 
-- Subsystem: Assets/Media
-- Blocked slice: persistent upload/publication
-- Supplied technical owner: AWS S3
-- Missing decision: object-key/path policy and managed metadata/rights model
-- Checked: owner ledger, implementation contracts, Mermaid 32, reviewed asset screens
-- Current safe work: lazy S3 service boundary, local visual references, and
-  non-mutating manager UI
+- Subsystem: Commerce
+- Blocked slice: activating the three merchandise products
+- Missing decision: exact Conjunction artwork-to-product mapping and real configured Printful variants
+- Checked: direct owner merchandise rules and store wireframes
+- Current safe work: render an unavailable catalog state without prices, dimensions, materials, or mappings
 
-### ODR-OPERATIONS-HOOKS
+### ODR-CALENDAR-SOURCE
 
-- Subsystem: Operations
-- Blocked slice: service restart and release execution
-- Missing decision: real service/status/deployment API or scripts and authorization model
-- Checked: operations contract and reviewed Operations/Release screens
-- Current safe work: read-only status/release UI; no deployment or production mutation
+- Subsystem: Calendar/Game
+- Blocked slice: authoritative ordinal-day lookup and calendar projection
+- Missing input: `source_data/eidolon_ordinal_days_v3.json` is specified but is not present in this workspace
+- Checked: direct owner calendar rules and repository file inventory
+- Current safe work: render an honest unavailable state; do not reconstruct rows arithmetically
+
+### ODR-PRINTFUL-CONFIGURATION
+
+- Subsystem: Commerce
+- Blocked slice: submitting paid merchandise for fulfillment
+- Missing input: no Printful credential/configuration key is present in `.local.example/secrets`
+- Checked: direct owner provider boundary and local secret-key inventory only; secret values were not read
+- Current safe work: enforce that fulfillment cannot begin before confirmed Stripe payment and leave fulfillment unavailable
+
+## Subsequent owner inputs reconciled
+
+The initial unresolved list above has been narrowed by later direct owner input:
+
+- the exact Heirloom enum is supplied;
+- SettlementWorld and append-only SettlementPopulationEvent ownership, ordering,
+  replay, founding allocation, founding loss, ordinary migration, and reset rules are supplied;
+- the Puzzle timer starts only on acceptance and lasts exactly 2,160,000 seconds,
+  with exactly two authored answer-free hint levels;
+- managed assets use sanitized final bytes, SHA-256 object identity, deduplication,
+  purpose links, and DigitalOcean Spaces through the S3 API;
+- the production deployment sequence, dry-run behavior, backup-before-migration,
+  health check, and application rollback boundary are supplied.
+
+These are no longer owner-decision gaps. Production deployment, production asset
+upload, and production data mutation remain unauthorized until separately requested.
 
 ## Intake verification
 

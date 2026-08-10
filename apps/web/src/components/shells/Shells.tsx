@@ -41,6 +41,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <PublicAuthControls />
+        <LoginSoundtrackPlayer />
       </header>
       <main className="site-main">{children}</main>
       <footer className="public-footer">
