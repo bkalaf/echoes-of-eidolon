@@ -211,6 +211,23 @@ describe("account session boundary", () => {
     expect(screen.queryByText("Active", { exact: true })).not.toBeInTheDocument();
   });
 
+  it("shows the fixed monthly membership offer without enabling an unconnected checkout", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
+      isPending: false,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ active: false, activePerks: [], effectiveEndAt: null, grants: [], voiceWindowSeconds: 15 }),
+      ok: true,
+    }));
+
+    render(<AccountPage screen={accountScreen("ACC005")} />);
+
+    expect(await screen.findByText("$9.99 monthly")).toBeInTheDocument();
+    expect(screen.getByText("A subscription will never be required.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Start membership unavailable" })).toBeDisabled();
+  });
+
   it("lists current and other sessions and never offers to revoke the current session", async () => {
     authMocks.useSession.mockReturnValue({
       data: {
