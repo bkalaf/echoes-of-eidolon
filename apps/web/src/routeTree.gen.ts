@@ -28,6 +28,7 @@ import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/ac
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminAssetsIndexRouteImport } from './routes/api/admin/assets/index'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminCommerceIndexRouteImport } from './routes/api/admin/commerce/index'
 import { Route as ApiAdminPromptsIndexRouteImport } from './routes/api/admin/prompts/index'
 import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
@@ -137,6 +138,11 @@ const ApiAdminBetaInvitationsIndexRoute =
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminCommerceIndexRoute = ApiAdminCommerceIndexRouteImport.update({
+  id: '/api/admin/commerce/',
+  path: '/api/admin/commerce/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminPromptsIndexRoute = ApiAdminPromptsIndexRouteImport.update({
   id: '/api/admin/prompts/',
   path: '/api/admin/prompts/',
@@ -209,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/commerce/': typeof ApiAdminCommerceIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -238,6 +245,7 @@ export interface FileRoutesByTo {
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/commerce': typeof ApiAdminCommerceIndexRoute
   '/api/admin/prompts': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/commerce/': typeof ApiAdminCommerceIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/commerce/'
     | '/api/admin/prompts/'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts'
     | '/api/admin/assets'
     | '/api/admin/beta-invitations'
+    | '/api/admin/commerce'
     | '/api/admin/prompts'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -357,6 +368,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/commerce/'
     | '/api/admin/prompts/'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -387,6 +399,7 @@ export interface RootRouteChildren {
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
+  ApiAdminCommerceIndexRoute: typeof ApiAdminCommerceIndexRoute
   ApiAdminPromptsIndexRoute: typeof ApiAdminPromptsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -527,6 +540,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/commerce/': {
+      id: '/api/admin/commerce/'
+      path: '/api/admin/commerce'
+      fullPath: '/api/admin/commerce/'
+      preLoaderRoute: typeof ApiAdminCommerceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/prompts/': {
       id: '/api/admin/prompts/'
       path: '/api/admin/prompts'
@@ -625,6 +645,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,
+  ApiAdminCommerceIndexRoute: ApiAdminCommerceIndexRoute,
   ApiAdminPromptsIndexRoute: ApiAdminPromptsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
