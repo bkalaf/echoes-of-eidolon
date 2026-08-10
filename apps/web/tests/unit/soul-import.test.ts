@@ -5,12 +5,14 @@ import {
   applyLessonImport,
   applyLegendaryRewardImport,
   applyTimelineEventImport,
+  applyInterludeImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
   parseLessonImportRows,
   parseLegendaryRewardImportRows,
   parseTimelineEventImportRows,
+  parseInterludeImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -332,5 +334,50 @@ describe("typed TimelineEvent import", () => {
     await expect(applyRegisteredEntityImport("timelineevent", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
     await expect(applyTimelineEventImport([{ ...row, timelineEventType: "ATROCITY" }], database))
       .rejects.toThrow("Canonical drift refused for TimelineEvent EVENT-1");
+  });
+});
+
+describe("typed Interlude import", () => {
+  const row = {
+    interludeId: "INTERLUDE-1",
+    interludeType: "SCIENCE" as const,
+    name: "Supplied interlude",
+    summary: "Supplied summary",
+  };
+  const stored = new Map<string, typeof row>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      interlude: {
+        createMany(input: { data: typeof row[] }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { interludeId: true; interludeType: true; name: true; summary: true };
+          where: { interludeId: { in: string[] } };
+        }): Promise<typeof row[]>;
+      };
+    }) => Promise<Result>) => work({
+      interlude: {
+        async createMany({ data }) {
+          for (const item of data) stored.set(item.interludeId, { ...item });
+          return { count: data.length };
+        },
+        async findMany({ where }) {
+          return where.interludeId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []);
+        },
+      },
+    })),
+  };
+
+  it("requires an exact authored InterludeType and exact fields", () => {
+    expect(parseInterludeImportRows([row])).toEqual([row]);
+    expect(() => parseInterludeImportRows([{ ...row, interludeType: "DREAM" }])).toThrow();
+    expect(() => parseInterludeImportRows([{ ...row, substitutionId: "SUB-1" }])).toThrow();
+  });
+
+  it("applies once, reruns unchanged, and refuses drift", async () => {
+    stored.clear();
+    await expect(applyInterludeImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("interlude", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyInterludeImport([{ ...row, interludeType: "MYTH" }], database))
+      .rejects.toThrow("Canonical drift refused for Interlude INTERLUDE-1");
   });
 });

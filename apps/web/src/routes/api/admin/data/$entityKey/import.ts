@@ -8,6 +8,7 @@ import {
   applyLessonImport,
   applyLegendaryRewardImport,
   applyTimelineEventImport,
+  applyInterludeImport,
   applySoulImport,
   CanonicalImportDriftError,
   UnsupportedImportEntityError,
@@ -42,6 +43,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "timelineevent") {
             result = await applyTimelineEventImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "interlude") {
+            result = await applyInterludeImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {

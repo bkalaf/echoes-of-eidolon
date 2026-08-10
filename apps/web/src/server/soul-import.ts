@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { TimelineEventType } from "../generated/prisma/enums";
+import { InterludeType, TimelineEventType } from "../generated/prisma/enums";
 
 const soulImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
@@ -32,11 +32,19 @@ const timelineEventImportRowSchema = z.object({
   timelineEventType: z.enum(TimelineEventType),
 }).strict();
 
+const interludeImportRowSchema = z.object({
+  interludeId: z.string().refine((value) => value.trim().length > 0, "interludeId cannot be blank"),
+  interludeType: z.enum(InterludeType),
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+  summary: z.string().refine((value) => value.trim().length > 0, "summary cannot be blank"),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
 export type LegendaryRewardImportRow = z.infer<typeof legendaryRewardImportRowSchema>;
 export type TimelineEventImportRow = z.infer<typeof timelineEventImportRowSchema>;
+export type InterludeImportRow = z.infer<typeof interludeImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -108,6 +116,20 @@ export interface TimelineEventImportDatabase {
   transaction<Result>(work: (transaction: TimelineEventImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface InterludeImportTransaction {
+  interlude: {
+    createMany(input: { data: InterludeImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { interludeId: true; interludeType: true; name: true; summary: true };
+      where: { interludeId: { in: string[] } };
+    }): Promise<InterludeImportRow[]>;
+  };
+}
+
+export interface InterludeImportDatabase {
+  transaction<Result>(work: (transaction: InterludeImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -161,6 +183,16 @@ export function parseTimelineEventImportRows(value: unknown): TimelineEventImpor
       throw new Error(`Import duplicates timelineEventId ${row.timelineEventId}.`);
     }
     identifiers.add(row.timelineEventId);
+  }
+  return rows;
+}
+
+export function parseInterludeImportRows(value: unknown): InterludeImportRow[] {
+  const rows = z.array(interludeImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.interludeId)) throw new Error(`Import duplicates interludeId ${row.interludeId}.`);
+    identifiers.add(row.interludeId);
   }
   return rows;
 }
@@ -287,15 +319,43 @@ export async function applyTimelineEventImport(
   });
 }
 
+export async function applyInterludeImport(
+  value: unknown,
+  database: InterludeImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseInterludeImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.interlude.findMany({
+      select: { interludeId: true, interludeType: true, name: true, summary: true },
+      where: { interludeId: { in: rows.map((row) => row.interludeId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.interludeId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.interludeId);
+      if (persisted && (
+        persisted.name !== row.name ||
+        persisted.summary !== row.summary ||
+        persisted.interludeType !== row.interludeType
+      )) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for Interlude ${row.interludeId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.interludeId));
+    if (missing.length > 0) await transaction.interlude.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
   if (entityKey === "lesson") return applyLessonImport(value, database as LessonImportDatabase);
   if (entityKey === "legendaryreward") return applyLegendaryRewardImport(value, database as LegendaryRewardImportDatabase);
   if (entityKey === "timelineevent") return applyTimelineEventImport(value, database as TimelineEventImportDatabase);
+  if (entityKey === "interlude") return applyInterludeImport(value, database as InterludeImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }
