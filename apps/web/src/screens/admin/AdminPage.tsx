@@ -1,9 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-import type { PageManifestEntry } from "../../lib/page-manifest";
 import { AdminShell } from "../../components/shells/Shells";
 import { entityExamples, entityFields, entityForPath, type EntityName } from "../../content/entities";
+import {
+  createDefaultFieldMapping,
+  parseEntityImport,
+  prepareEntityImport,
+  type FieldMapping,
+  type ImportRecord,
+} from "../../domain/entity-import";
+import type { PageManifestEntry } from "../../lib/page-manifest";
 import type { AtlasCatalog } from "../../server/atlas";
 import type { PublicHealthReport, ServiceHealthStatus } from "../../server/health";
 
@@ -35,8 +42,47 @@ function EntityEditor({ screen, entity }: { screen: PageManifestEntry; entity: E
 
 function EntityImport({ screen, entity }: { screen: PageManifestEntry; entity: EntityName }) {
   const fields = entityFields[entity];
-  const example = entityExamples[entity];
-  return <><AdminHead screen={screen} description={`Validate, preview, and apply ${entity} rows without writing during preview.`} /><div className="grid-3"><section className="card"><h2>1 · Source</h2><p>Upload JSON, YAML or CSV data.</p><input className="input" type="file" accept=".json,.yaml,.yml,.csv" /><button className="button">Paste data</button></section><section className="card"><h2>2 · Field mapping</h2><div className="schema-list">{fields.map((field) => <span key={field}>{field} → {field}</span>)}</div><p>Unknown fields stay blocked until explicitly mapped.</p></section><section className="card"><h2>3 · Validation</h2><p><span className="tag tag--good">2 valid rows</span></p><p>Required IDs present</p><p>Controlled values recognized</p><p>Referenced IDs resolve or are reported before apply</p><button className="button button--good">Preview import</button></section></div><section className="card import-preview"><div className="action-row"><h2>Preview</h2><span className="tag">No writes yet</span></div><div className="table-scroll"><table className="data-table"><thead><tr>{fields.slice(0, 6).map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody><tr>{fields.slice(0, 6).map((field) => <td key={field}>{example[field] ?? ""}</td>)}</tr></tbody></table></div><div className="action-row"><button className="button button--gold">Apply 2 rows</button><button className="button">Download validation report</button></div></section></>;
+  const [rows, setRows] = useState<ImportRecord[]>([]);
+  const [mapping, setMapping] = useState<FieldMapping>({});
+  const [sourceError, setSourceError] = useState<string>();
+  const [pastedSource, setPastedSource] = useState("");
+  const [pastedFormat, setPastedFormat] = useState("records.json");
+  const preview = useMemo(
+    () => prepareEntityImport(entity, rows, mapping),
+    [entity, mapping, rows],
+  );
+
+  const acceptSource = (source: string, fileName: string) => {
+    try {
+      const parsedRows = parseEntityImport(source, fileName);
+      setRows(parsedRows);
+      setMapping(createDefaultFieldMapping(entity, parsedRows));
+      setSourceError(undefined);
+    } catch (caught) {
+      setRows([]);
+      setMapping({});
+      setSourceError(caught instanceof Error ? caught.message : "Import source could not be parsed.");
+    }
+  };
+
+  const downloadReport = () => {
+    const report = JSON.stringify(
+      { entity, rowCount: rows.length, errors: preview.errors, rows: preview.rows },
+      null,
+      2,
+    );
+    const url = URL.createObjectURL(new Blob([report], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${entity.toLowerCase()}-validation.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const displayValue = (value: unknown) =>
+    typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value);
+
+  return <><AdminHead screen={screen} description={`Validate, map, and preview ${entity} rows without writing during preview.`} /><div className="grid-3"><section className="card"><h2>1 · Source</h2><p>Upload JSON, YAML or CSV data.</p><input aria-label="Import file" className="input" type="file" accept=".json,.yaml,.yml,.csv" onChange={async (event) => { const file = event.target.files?.[0]; if (file) acceptSource(await file.text(), file.name); }} /><label className="field">Paste format<select className="select" value={pastedFormat} onChange={(event) => setPastedFormat(event.target.value)}><option value="records.json">JSON</option><option value="records.yaml">YAML</option><option value="records.csv">CSV</option></select></label><label className="field">Paste structured data<textarea aria-label="Paste structured data" className="textarea" value={pastedSource} onChange={(event) => setPastedSource(event.target.value)} /></label><button className="button" disabled={!pastedSource.trim()} onClick={() => acceptSource(pastedSource, pastedFormat)}>Parse pasted data</button>{sourceError && <p className="notice notice--bad" role="alert">{sourceError}</p>}</section><section className="card"><h2>2 · Field mapping</h2>{preview.sourceFields.length === 0 ? <p>Load a source to inspect its fields.</p> : <div className="form-stack">{preview.sourceFields.map((sourceField) => <label className="field" key={sourceField}>{sourceField}<select aria-label={`Map ${sourceField}`} className="select" value={mapping[sourceField] === null ? "__ignore__" : mapping[sourceField] ?? ""} onChange={(event) => setMapping((current) => ({ ...current, [sourceField]: event.target.value === "__ignore__" ? null : event.target.value || undefined }))}><option value="">Unmapped</option><option value="__ignore__">Ignore</option>{fields.map((field) => <option value={field} key={field}>{field}</option>)}</select></label>)}</div>}<p>Every source field must be explicitly mapped or ignored.</p></section><section className="card"><h2>3 · Validation</h2>{rows.length === 0 ? <p>No rows loaded.</p> : preview.errors.length === 0 ? <p><span className="tag tag--good">{rows.length} valid {rows.length === 1 ? "row" : "rows"}</span></p> : <><span className="tag">Blocked</span><ul>{preview.errors.map((error) => <li key={error}>{error}</li>)}</ul></>}<p>Required record IDs and duplicate IDs are checked before preview.</p><p>Controlled values and referenced IDs require the authorized server apply contract.</p></section></div><section className="card import-preview"><div className="action-row"><h2>Preview</h2><span className="tag">No writes</span></div>{preview.rows.length === 0 ? <p>No preview rows.</p> : <div className="table-scroll"><table className="data-table"><thead><tr>{fields.slice(0, 6).map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody>{preview.rows.slice(0, 50).map((row, index) => <tr key={`${String(row[fields[0]])}-${index}`}>{fields.slice(0, 6).map((field) => <td key={field}>{displayValue(row[field])}</td>)}</tr>)}</tbody></table></div>}<div className="action-row"><button className="button button--gold" disabled>Apply unavailable</button><button className="button" disabled={rows.length === 0} onClick={downloadReport}>Download validation report</button></div><p className="notice notice--warn">Atomic apply remains disabled until the packet supplies an administrative authorization owner and complete server-side field/reference validators.</p></section></>;
 }
 
 function CreateAntagonist({ screen }: { screen: PageManifestEntry }) {
