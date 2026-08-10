@@ -5,6 +5,7 @@ import { requireAdminCapability } from "../../../../../server/access";
 import { getDatabase } from "../../../../../server/database";
 import {
   applyDefinitionImport,
+  applyLessonImport,
   applySoulImport,
   CanonicalImportDriftError,
   UnsupportedImportEntityError,
@@ -27,6 +28,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "definition") {
             result = await applyDefinitionImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "lesson") {
+            result = await applyLessonImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {

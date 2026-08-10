@@ -11,8 +11,15 @@ const definitionImportRowSchema = z.object({
   term: z.string().refine((value) => value.trim().length > 0, "term cannot be blank"),
 }).strict();
 
+const lessonImportRowSchema = z.object({
+  description: z.string().refine((value) => value.trim().length > 0, "description cannot be blank"),
+  lessonId: z.string().refine((value) => value.trim().length > 0, "lessonId cannot be blank"),
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
+export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -42,6 +49,20 @@ export interface DefinitionImportDatabase {
   transaction<Result>(work: (transaction: DefinitionImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface LessonImportTransaction {
+  lesson: {
+    createMany(input: { data: LessonImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { description: true; lessonId: true; name: true };
+      where: { lessonId: { in: string[] } };
+    }): Promise<LessonImportRow[]>;
+  };
+}
+
+export interface LessonImportDatabase {
+  transaction<Result>(work: (transaction: LessonImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -61,6 +82,16 @@ export function parseDefinitionImportRows(value: unknown): DefinitionImportRow[]
   for (const row of rows) {
     if (identifiers.has(row.definitionId)) throw new Error(`Import duplicates definitionId ${row.definitionId}.`);
     identifiers.add(row.definitionId);
+  }
+  return rows;
+}
+
+export function parseLessonImportRows(value: unknown): LessonImportRow[] {
+  const rows = z.array(lessonImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.lessonId)) throw new Error(`Import duplicates lessonId ${row.lessonId}.`);
+    identifiers.add(row.lessonId);
   }
   return rows;
 }
@@ -114,12 +145,36 @@ export async function applyDefinitionImport(
   });
 }
 
+export async function applyLessonImport(
+  value: unknown,
+  database: LessonImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseLessonImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.lesson.findMany({
+      select: { description: true, lessonId: true, name: true },
+      where: { lessonId: { in: rows.map((row) => row.lessonId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.lessonId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.lessonId);
+      if (persisted && (persisted.name !== row.name || persisted.description !== row.description)) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for Lesson ${row.lessonId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.lessonId));
+    if (missing.length > 0) await transaction.lesson.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
+  if (entityKey === "lesson") return applyLessonImport(value, database as LessonImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }

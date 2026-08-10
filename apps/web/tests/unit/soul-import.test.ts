@@ -2,9 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
   applyDefinitionImport,
+  applyLessonImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
+  parseLessonImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -78,6 +80,39 @@ function definitionDatabase(initial: StoredDefinition[] = []) {
       async findMany({ where }) {
         return where.definitionId.in.flatMap((definitionId) => {
           const row = stored.get(definitionId);
+          return row ? [{ ...row }] : [];
+        });
+      },
+    },
+  }));
+  return { stored, transaction };
+}
+
+interface StoredLesson {
+  description: string;
+  lessonId: string;
+  name: string;
+}
+
+function lessonDatabase(initial: StoredLesson[] = []) {
+  const stored = new Map(initial.map((row) => [row.lessonId, { ...row }]));
+  const transaction = vi.fn(async <Result>(work: (client: {
+    lesson: {
+      createMany(input: { data: StoredLesson[] }): Promise<{ count: number }>;
+      findMany(input: {
+        select: { description: true; lessonId: true; name: true };
+        where: { lessonId: { in: string[] } };
+      }): Promise<StoredLesson[]>;
+    };
+  }) => Promise<Result>) => work({
+    lesson: {
+      async createMany({ data }) {
+        for (const row of data) stored.set(row.lessonId, { ...row });
+        return { count: data.length };
+      },
+      async findMany({ where }) {
+        return where.lessonId.in.flatMap((lessonId) => {
+          const row = stored.get(lessonId);
           return row ? [{ ...row }] : [];
         });
       },
@@ -180,5 +215,25 @@ describe("typed Definition import", () => {
     expect([...db.stored.values()]).toEqual([
       { definition: "Canonical", definitionId: "DEF-1", term: "Term" },
     ]);
+  });
+});
+
+describe("typed Lesson import", () => {
+  const row = { description: "Supplied description", lessonId: "LESSON-1", name: "Supplied lesson" };
+
+  it("rejects unknown fields, blank authored text, and duplicate identifiers", () => {
+    expect(parseLessonImportRows([row])).toEqual([row]);
+    expect(() => parseLessonImportRows([{ ...row, book: 1 }])).toThrow();
+    expect(() => parseLessonImportRows([{ ...row, name: "" }])).toThrow();
+    expect(() => parseLessonImportRows([row, row])).toThrow("duplicates lessonId LESSON-1");
+  });
+
+  it("creates, reruns idempotently, and refuses authored drift", async () => {
+    const db = lessonDatabase();
+    await expect(applyLessonImport([row], db)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("lesson", [row], db)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyLessonImport([{ ...row, description: "Changed" }], db))
+      .rejects.toThrow("Canonical drift refused for Lesson LESSON-1");
+    expect([...db.stored.values()]).toEqual([row]);
   });
 });
