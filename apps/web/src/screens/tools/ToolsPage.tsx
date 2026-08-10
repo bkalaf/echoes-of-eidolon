@@ -36,7 +36,15 @@ function Unavailable({ screen }: { screen: PageManifestEntry }) {
 }
 
 function NavigationStates({ screen }: { screen: PageManifestEntry }) {
-  return <><ToolsHead screen={screen} description="Public navigation across guest, user, member and administrator states." /><div className="stack">{["Guest", "User", "Member", "Administrator"].map((state) => <section className="card nav-state" key={state}><strong>{state}</strong><nav><span>Features</span><span>Gameplay</span><span>Merchandise</span><span>Status</span><span>Request Invite</span></nav><span className="tag">{state.toUpperCase()}</span></section>)}</div></>;
+  const capabilities = [
+    ["Browse public pages", "yes", "yes", "yes", "yes", "yes"],
+    ["Account", "no", "yes", "yes", "yes", "yes"],
+    ["Play", "no", "when invited/eligible", "when invited/eligible", "participation-dependent", "yes"],
+    ["Member benefits", "no", "no", "yes", "not implicit", "owner policy"],
+    ["Administer users/data", "no", "no", "no", "yes", "yes"],
+    ["Change authorization roles", "no", "no", "no", "no", "yes"],
+  ] as const;
+  return <><ToolsHead screen={screen} description="The five displayed access levels and their supplied capability boundaries." /><section className="card"><p>Authorization role, beta/player eligibility, and membership entitlement remain separate.</p><div className="table-scroll"><table aria-label="Access level capabilities" className="simple-table"><thead><tr><th>Capability</th>{["GUEST", "USER", "MEMBER", "ADMIN", "OWNER"].map((level) => <th key={level}>{level}</th>)}</tr></thead><tbody>{capabilities.map(([capability, ...levels]) => <tr key={capability}><th scope="row">{capability}</th>{levels.map((value, index) => <td key={`${capability}-${index}`}>{value}</td>)}</tr>)}</tbody></table></div></section></>;
 }
 
 export function ToolsPage({ screen }: { screen: PageManifestEntry }) {

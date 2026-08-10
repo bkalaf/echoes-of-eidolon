@@ -67,4 +67,15 @@ describe("packet screens", () => {
     expect(screen.getByRole("heading", { name: "Review tool unavailable" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Untitled task" })).not.toBeInTheDocument();
   });
+
+  it("uses the exact five owner-supplied access levels on the navigation-state review", () => {
+    renderPacket("TOOL006");
+
+    const accessTable = screen.getByRole("table", { name: "Access level capabilities" });
+    for (const level of ["GUEST", "USER", "MEMBER", "ADMIN", "OWNER"]) {
+      expect(accessTable).toHaveTextContent(level);
+    }
+    expect(accessTable).not.toHaveTextContent("Administrator");
+    expect(screen.getByText(/Authorization role, beta\/player eligibility, and membership entitlement remain separate/)).toBeInTheDocument();
+  });
 });
