@@ -87,7 +87,6 @@ function createAuth() {
         otpOptions: {
           allowedAttempts: 3,
           digits: 6,
-          period: 10,
           sendOTP: async ({ otp, user }) => {
             await sendAuthenticationCode({ recipient: user.email, code: otp, purpose: "two-factor" });
           },

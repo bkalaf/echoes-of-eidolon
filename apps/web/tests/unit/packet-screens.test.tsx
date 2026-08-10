@@ -22,7 +22,7 @@ describe("packet screens", () => {
     ["PUB016", "Game & Server Status"],
     ["AUTH01", "Sign In"],
     ["ACC008", "Subscription - Active"],
-    ["STORE10", "Order Confirmed"],
+    ["STORE10", "Order Confirmation"],
     ["DATA_WITNESS_EDIT", "Edit Witness"],
     ["DATA_BREED_IMPORT", "Bulk Import Breed"],
     ["ATLAS_POI_3D", "Points of Interest — 3D View"],

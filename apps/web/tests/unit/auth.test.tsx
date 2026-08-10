@@ -37,6 +37,9 @@ describe("reviewed authentication states", () => {
   it("uses the privacy-minimal signup eligibility contract", () => {
     render(<AuthPage screen={authScreen("AUTH03")} />);
 
+    expect(screen.getByLabelText("Username")).not.toHaveAttribute("minlength");
+    expect(screen.getByLabelText("Username")).not.toHaveAttribute("maxlength");
+    expect(screen.getByLabelText("Password")).not.toHaveAttribute("minlength");
     expect(screen.getByRole("radio", { name: "18 or older" })).toBeInTheDocument();
     expect(screen.getByRole("radio", { name: "14–17 with verified guardian consent" })).toBeDisabled();
     expect(screen.getByText(/No date of birth or exact age is collected/)).toBeInTheDocument();

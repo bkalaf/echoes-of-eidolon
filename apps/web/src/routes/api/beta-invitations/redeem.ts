@@ -2,9 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { requireServerSession } from "../../../server/access";
-import { redeemBetaInvitation } from "../../../server/beta-invitations";
-
-const redeemSchema = z.object({ code: z.string().trim().min(1).max(512) });
+import { betaInvitationRedemptionInputSchema, redeemBetaInvitation } from "../../../server/beta-invitations";
 
 export const Route = createFileRoute("/api/beta-invitations/redeem")({
   server: {
@@ -12,7 +10,7 @@ export const Route = createFileRoute("/api/beta-invitations/redeem")({
       POST: async ({ request }) => {
         try {
           const access = await requireServerSession(request);
-          const { code } = redeemSchema.parse(await request.json());
+          const { code } = betaInvitationRedemptionInputSchema.parse(await request.json());
           await redeemBetaInvitation({ code, email: access.email, userId: access.userId });
           return Response.json({ redeemed: true });
         } catch (error) {

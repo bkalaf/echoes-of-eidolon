@@ -10,6 +10,18 @@ function publicScreen(screenId: string) {
 }
 
 describe("public mutation boundaries", () => {
+  it("preserves the approved gameplay loop and feature explanation copy", () => {
+    const gameplay = render(<PublicPage screen={publicScreen("PUB003")} />);
+    expect(screen.getByText("Your Knowledge Base grows as you discover people, places, books, history and connections.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Accept a challenge when you are ready" })).toBeInTheDocument();
+    expect(screen.queryByText("Choose what matters")).not.toBeInTheDocument();
+    gameplay.unmount();
+
+    render(<PublicPage screen={publicScreen("FEATURE_01")} />);
+    expect(screen.getByText("Feature video and screenshots explain the idea without revealing late-story structure.")).toBeInTheDocument();
+    expect(screen.queryByText(/content-addressed managed storage/)).not.toBeInTheDocument();
+  });
+
   it("keeps all eight approved contact topics and blocks unowned delivery", () => {
     render(<PublicPage screen={publicScreen("PUB015")} />);
     expect(screen.getAllByRole("button").filter((button) => button.classList.contains("topic"))).toHaveLength(8);

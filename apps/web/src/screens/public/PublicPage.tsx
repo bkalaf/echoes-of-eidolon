@@ -13,8 +13,8 @@ import type { PublicHealthReport, ServiceHealthStatus } from "../../server/healt
 const gameplaySteps = [
   ["Go somewhere worth investigating", "Use maps, routes and what you have learned to decide where to spend your time."],
   ["Talk naturally", "Speak or type your own questions. Characters answer from their own knowledge and perspective."],
-  ["Build understanding", "Your Knowledge Base grows as you discover records, testimony and contradictions."],
-  ["Choose what matters", "Decisions affect relationships, access, knowledge and later opportunities."],
+  ["Build understanding", "Your Knowledge Base grows as you discover people, places, books, history and connections."],
+  ["Accept a challenge when you are ready", "Optional timed challenges begin deliberately, not because the game happened to load a screen."],
 ] as const;
 
 function PageHead({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
@@ -31,7 +31,7 @@ function FeaturePage({ screen }: { screen: PageManifestEntry }) {
   const featureMedia = feature.slug === "the-power-of-three"
     ? <video className="feature-scene__media" controls preload="metadata" src={managedAssetUrl("video.power-of-three")}>Your browser does not support the captioned Power of Three video.</video>
     : <img className="feature-scene__media" src={feature.image} alt="" />;
-  return <><a className="back-link" href="/features">← All Features</a><PageHead eyebrow={feature.title} title={feature.title} description={feature.tagline} /><div className="feature-detail"><section className="feature-scene">{featureMedia}<img className="feature-scene__icon" src={feature.icon} alt="" /><div><h2>{feature.title}</h2><p>{feature.detail}</p></div></section><aside className="stack"><article className="card"><h2>What changes for the player</h2><p>{feature.playerChange}</p></article><article className="card"><h2>What it is not</h2><p>No generic MMO framing, no visible internal admin terminology, and no menu-driven substitute for the feature itself.</p></article><article className="card"><h2>See it in play</h2><p>The supplied captioned media is served from content-addressed managed storage.</p></article></aside></div><div className="grid-2"><article className="card"><h2>In practice</h2><ul>{feature.practice.map((item) => <li key={item}>{item}</li>)}</ul></article><article className="card"><h2>Next</h2><p>Return to all nine features or continue to Gameplay for a broader view of how they work together.</p><div className="action-row"><a className="button" href="/features">All Features</a><a className="button button--gold" href="/gameplay">Gameplay</a></div></article></div></>;
+  return <><a className="back-link" href="/features">← All Features</a><PageHead eyebrow={feature.title} title={feature.title} description={feature.tagline} /><div className="feature-detail"><section className="feature-scene">{featureMedia}<img className="feature-scene__icon" src={feature.icon} alt="" /><div><h2>{feature.title}</h2><p>{feature.detail}</p></div></section><aside className="stack"><article className="card"><h2>What changes for the player</h2><p>{feature.playerChange}</p></article><article className="card"><h2>What it is not</h2><p>No generic MMO framing, no visible internal admin terminology, and no menu-driven substitute for the feature itself.</p></article><article className="card"><h2>See it in play</h2><p>Feature video and screenshots explain the idea without revealing late-story structure.</p></article></aside></div><div className="grid-2"><article className="card"><h2>In practice</h2><ul>{feature.practice.map((item) => <li key={item}>{item}</li>)}</ul></article><article className="card"><h2>Next</h2><p>Return to all nine features or continue to Gameplay for a broader view of how they work together.</p><div className="action-row"><a className="button" href="/features">All Features</a><a className="button button--gold" href="/gameplay">Gameplay</a></div></article></div></>;
 }
 
 function GameplayPage() {
@@ -52,7 +52,7 @@ const statusLabels: Record<ServiceHealthStatus, string> = {
 };
 
 function StatusPage() {
-  const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth, refetchInterval: 30_000 });
+  const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth });
   const notice = health.isPending
     ? "Checking monitored public services…"
     : health.isError

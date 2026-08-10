@@ -1,10 +1,21 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { z } from "zod";
 
 import type { PrismaClient } from "../generated/prisma/client";
 import { getDatabase } from "./database";
 import { sendBetaInvitation } from "./email";
 
 type Database = PrismaClient;
+
+export const betaInviteRequestInputSchema = z.object({
+  email: z.email(),
+  friendName: z.string().trim().min(1),
+  reason: z.string().trim().min(1),
+});
+
+export const betaInvitationRedemptionInputSchema = z.object({
+  code: z.string().trim().min(1),
+});
 
 export function hashBetaInvitationCode(code: string): string {
   return createHash("sha256").update(code).digest("hex");
