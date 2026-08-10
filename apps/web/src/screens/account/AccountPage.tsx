@@ -36,6 +36,14 @@ interface MembershipProjection {
   voiceWindowSeconds: number;
 }
 
+interface PlayerAccessProjection {
+  betaEligible: boolean;
+  canPlay: boolean;
+  membershipEntitled: boolean;
+  role: string;
+  voiceWindowSeconds: number;
+}
+
 interface AccountOrderProjection {
   createdAt: string;
   lines: Array<{
@@ -278,7 +286,23 @@ function Invitations({ screen }: { screen: PageManifestEntry }) {
 }
 
 function BetaLanding({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Authenticated account landing." /><div className="grid-2"><section className="card"><h2>Account access</h2><p>The Better Auth session is active.</p><a className="button" href="/account/profile">View profile</a></section><Deferred>Beta participation and MEMBER/USER access require an account-access owner and role model.</Deferred></div></>;
+  const [access, setAccess] = useState<PlayerAccessProjection>();
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/player/access").then(async (response) => {
+      const result = await response.json() as PlayerAccessProjection & { error?: string };
+      if (!active) return;
+      if (!response.ok) setError(result.error ?? "Player access could not be verified.");
+      else setAccess(result);
+    }).catch(() => {
+      if (active) setError("Player access could not be verified.");
+    });
+    return () => { active = false; };
+  }, []);
+
+  return <><AccountHead screen={screen} description="Authenticated account landing." />{error ? <p className="notice notice--bad" role="alert">{error}</p> : !access ? <p className="notice">Checking player access…</p> : <div className="grid-2"><section className="card"><h2>Account access</h2><dl className="detail-list"><dt>Authorization role</dt><dd>{access.role.toUpperCase()}</dd><dt>Beta/player eligible</dt><dd>{access.betaEligible ? "Yes" : "No"}</dd><dt>Membership entitlement</dt><dd>{access.membershipEntitled ? "Active" : "Inactive"}</dd><dt>Voice window</dt><dd>{access.voiceWindowSeconds} seconds</dd></dl><a className="button" href="/account/profile">View profile</a></section><section className="card"><h2>{access.canPlay ? "Beta access verified" : "Player eligibility required"}</h2><p>{access.canPlay ? "This account may enter the authenticated player shell." : "Authorization role and membership entitlement do not grant beta/player eligibility."}</p>{access.canPlay && <a className="button button--gold" href="/game">Enter Game</a>}</section></div>}</>;
 }
 
 function SignedInAccountPage({ currentSessionToken, pathname, screen, user }: { currentSessionToken?: string; pathname?: string; screen: PageManifestEntry; user: AccountUser }) {

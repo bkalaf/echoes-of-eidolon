@@ -134,6 +134,30 @@ describe("account session boundary", () => {
     await waitFor(() => expect(authMocks.updateUser).toHaveBeenCalledWith({ name: "Updated Name" }));
   });
 
+  it("projects the authenticated beta landing from server-owned access dimensions", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "player@example.test", name: "Player", username: "player" } },
+      isPending: false,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        betaEligible: true,
+        canPlay: true,
+        membershipEntitled: false,
+        role: "user",
+        voiceWindowSeconds: 15,
+      }),
+      ok: true,
+    }));
+
+    render(<AccountPage screen={accountScreen("ACC030")} />);
+
+    expect(await screen.findByRole("heading", { name: "Beta access verified" })).toBeInTheDocument();
+    expect(screen.getByText("USER")).toBeInTheDocument();
+    expect(screen.getByText("Inactive")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Enter Game" })).toHaveAttribute("href", "/game");
+  });
+
   it("uses the dedicated six-digit OTP control for email re-verification", () => {
     authMocks.useSession.mockReturnValue({
       data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
