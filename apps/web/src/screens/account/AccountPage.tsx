@@ -53,9 +53,14 @@ function Invitations({ screen }: { screen: PageManifestEntry }) {
   return <><AccountHead screen={screen} description="Request an invitation for another participant." /><section className="form-card">{pending ? <><p className="notice notice--warn">Invitation request pending.</p><p>The request will remain here until it is approved or declined.</p></> : <form><label className="field">Email<input className="input" type="email" /></label><label className="field">Message<textarea className="textarea" /></label><button className="button button--gold">Request invite</button></form>}</section></>;
 }
 
+function BetaLanding({ screen }: { screen: PageManifestEntry }) {
+  return <><AccountHead screen={screen} description="Approval state: AUTHENTICATED" /><div className="checkout-layout"><section className="card"><p className="kicker">BETA</p><h2>Beta is Invite Only</h2><p>Your account is participating in the current beta. USER and MEMBER have the same beta-access status.</p><p className="notice">Optional membership changes configured perks; it does not purchase participation.</p><div className="action-row"><a className="button button--gold" href="/game">Continue Game</a><a className="button" href="/status/releases">Release Notes</a></div></section><form className="card form-stack"><h2>Invite a friend</h2><p>You may request an invitation for someone you know. Requests enter the admin review queue.</p><label className="field">Name<input className="input" defaultValue="Friend name" /></label><label className="field">Email<input className="input" type="email" defaultValue="friend@example.com" /></label><label className="field">Reason<input className="input" defaultValue="Why should they join?" /></label><button className="button">Request invite</button></form></div><article className="card import-preview"><h2>What's new in 0.2.0</h2><p>Read release notes without exposing unrevealed story details.</p></article></>;
+}
+
 export function AccountPage({ screen }: { screen: PageManifestEntry }) {
   let page;
-  if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) page = <Profile screen={screen} />;
+  if (screen.screenId === "ACC030") page = <BetaLanding screen={screen} />;
+  else if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) page = <Profile screen={screen} />;
   else if (screen.screenId >= "ACC005" && screen.screenId <= "ACC010") page = <Subscription screen={screen} />;
   else if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) page = <Orders screen={screen} />;
   else if (["ACC014", "ACC015"].includes(screen.screenId)) page = <Settings screen={screen} />;

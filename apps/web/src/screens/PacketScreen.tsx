@@ -5,6 +5,8 @@ import { AdminPage } from "./admin/AdminPage";
 import { AuthPage } from "./auth/AuthPage";
 import { PublicPage } from "./public/PublicPage";
 import { StorePage } from "./store/StorePage";
+import { GamePage } from "./game/GamePage";
+import { ToolsPage } from "./tools/ToolsPage";
 
 export function PacketScreen({ screen }: { screen?: PageManifestEntry }) {
   if (!screen) {
@@ -17,12 +19,24 @@ export function PacketScreen({ screen }: { screen?: PageManifestEntry }) {
     );
   }
 
+  if (screen.screenId === "ACC030") {
+    return <AccountPage screen={screen} />;
+  }
+  if (screen.screenId.startsWith("GAME") || screen.screenId.startsWith("GAM")) {
+    return <GamePage screen={screen} />;
+  }
+  if (screen.screenId.startsWith("TOOL") || screen.screenId.startsWith("TOO")) {
+    return <ToolsPage screen={screen} />;
+  }
+
   switch (shellFor(screen)) {
     case "auth": return <AuthPage screen={screen} />;
     case "account": return <AccountPage screen={screen} />;
     case "store": return <StorePage screen={screen} />;
     case "public": return <PublicPage screen={screen} />;
     case "admin": return <AdminPage screen={screen} />;
+    case "game": return <GamePage screen={screen} />;
+    case "tools-review": return <ToolsPage screen={screen} />;
     default:
       return (
         <main className="not-found">

@@ -30,3 +30,16 @@ test("administration routes expose canonical editor, import, atlas, and campaign
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
   }
 });
+
+test("game and review routes expose routed and state-only tasks", async ({ page }) => {
+  for (const [path, text] of [
+    ["/game?state=GAME_VIEW_SINGLE_EXIT", "Speak or type freely"],
+    ["/game/knowledge?state=GAME016", "Knowledge Base - Timeline Viewer"],
+    ["/game/bookshelf", "Bookshelf"],
+    ["/review/controls/lookups?state=TOOL003", "Control Gallery - Enum Selects"],
+    ["/tools/wireframe-builder", "Wireframe Builder"],
+  ] as const) {
+    await page.goto(path);
+    await expect(page.getByText(text, { exact: true }).first()).toBeVisible();
+  }
+});

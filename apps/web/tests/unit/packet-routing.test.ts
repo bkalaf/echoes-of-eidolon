@@ -29,4 +29,11 @@ describe("packet route resolution", () => {
       }
     }
   });
+
+  it("resolves every state-only screen when its manifest state is requested", () => {
+    const states = manifestByShell()["state-only"];
+    for (const entry of states) {
+      expect(screenForPath("/", entry.screenId)?.screenId).toBe(entry.screenId);
+    }
+  });
 });

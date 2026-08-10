@@ -78,5 +78,6 @@ export function screensForPath(pathname: string) {
 
 export function screenForPath(pathname: string, requestedState?: string) {
   const matches = screensForPath(pathname);
-  return matches.find((entry) => entry.screenId === requestedState) ?? matches[0];
+  const requested = requestedState ? pageManifest.find((entry) => entry.screenId === requestedState) : undefined;
+  return matches.find((entry) => entry.screenId === requestedState) ?? (requested?.path === null ? requested : undefined) ?? matches[0];
 }

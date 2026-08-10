@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { pageManifest } from "../../src/lib/page-manifest";
 import { PacketScreen } from "../../src/screens/PacketScreen";
@@ -20,5 +20,14 @@ describe("packet screens", () => {
   ])("renders the %s reviewed task", (screenId, heading) => {
     render(<PacketScreen screen={entry(screenId)} />);
     expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
+  });
+
+  it("implements every state-only manifest entry", () => {
+    for (const item of pageManifest.filter((candidate) => candidate.path === null)) {
+      const view = render(<PacketScreen screen={item} />);
+      expect(screen.queryByText("This packet screen belongs to a later implementation tranche.")).not.toBeInTheDocument();
+      view.unmount();
+      cleanup();
+    }
   });
 });
