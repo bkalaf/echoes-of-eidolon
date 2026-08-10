@@ -113,6 +113,7 @@ button, input, select, textarea { font: inherit; }
 
 .workspace-shell { min-height: 100vh; display: grid; grid-template: 60px 1fr / 210px 1fr; }
 .workspace-header { grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; padding: 0 20px; border-bottom: 1px solid var(--line); background: #010812; }
+.login-soundtrack { width: min(360px, 42vw); margin-left: auto; }
 .workspace-sidebar { display: flex; flex-direction: column; gap: 3px; padding: 22px 14px; border-right: 1px solid var(--line); background: #02101b; }
 .workspace-sidebar strong { color: var(--cyan); margin: 0 8px 12px; }
 .workspace-sidebar a { padding: 9px 10px; color: #9ec5dd; font-size: 13px; border-radius: 6px; }
@@ -156,8 +157,8 @@ button, input, select, textarea { font: inherit; }
 
 .features-overview { display: grid; grid-template-columns: 1.05fr 1.25fr; gap: 16px; }
 .video-panel { min-height: 510px; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: #071725; }
-.video-panel > img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; opacity: .82; }
-.video-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgb(1 8 14 / 70%)); }
+.video-panel > img, .video-panel > video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; opacity: .82; }
+.video-panel::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent, rgb(1 8 14 / 70%)); }
 .video-panel .play { width: 74px; height: 74px; display: grid; place-items: center; position: absolute; z-index: 1; left: 50%; top: 48%; transform: translate(-50%, -50%); border: 2px solid var(--gold); border-radius: 50%; background: rgb(1 11 19 / 82%); color: var(--gold); font-size: 28px; }
 .video-panel > div { position: absolute; z-index: 1; left: 22px; bottom: 20px; }
 .video-panel strong, .video-panel small { display: block; }

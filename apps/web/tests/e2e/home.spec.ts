@@ -31,11 +31,19 @@ test("administration routes expose canonical editor, import, atlas, and campaign
   }
 });
 
-test("game and review routes expose routed and state-only tasks", async ({ page }) => {
+test("game routes require an authenticated eligible player", async ({ page }) => {
+  for (const path of [
+    "/game?state=GAME_VIEW_SINGLE_EXIT",
+    "/game/knowledge?state=GAME016",
+    "/game/bookshelf",
+  ]) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
+  }
+});
+
+test("review routes expose routed and state-only tasks", async ({ page }) => {
   for (const [path, text] of [
-    ["/game?state=GAME_VIEW_SINGLE_EXIT", "Speak or type freely"],
-    ["/game/knowledge?state=GAME016", "Knowledge Base - Timeline Viewer"],
-    ["/game/bookshelf", "Bookshelf"],
     ["/review/controls/lookups?state=TOOL003", "Control Gallery - Enum Selects"],
     ["/tools/wireframe-builder", "Wireframe Builder"],
   ] as const) {
@@ -44,10 +52,8 @@ test("game and review routes expose routed and state-only tasks", async ({ page 
   }
 });
 
-test("Atlas map loads and synchronizes the canonical Point of Interest selection", async ({ page }) => {
+test("Atlas data is not disclosed without administrative authorization", async ({ page }) => {
   await page.goto("/admin/atlas/pois?state=ATLAS_POI_2D");
-  await expect(page.getByText("92 canonical Points of Interest")).toBeVisible();
-  await page.getByRole("button", { name: "Select World Tree" }).click();
-  await expect(page.getByText("POI-0007 · World Tree")).toBeVisible();
-  await expect(page.getByText("Kind: WORLD_TREE")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
+  await expect(page.getByText("92 canonical Points of Interest")).not.toBeVisible();
 });

@@ -43,7 +43,7 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" style={{ colorScheme: "dark" }}>
       <head>
         <HeadContent />
       </head>

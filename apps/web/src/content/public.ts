@@ -1,8 +1,11 @@
+import { managedAssetUrl } from "./managed-assets";
+
 export interface FeatureSummary {
   slug: string;
   title: string;
   summary: string;
   icon: string;
+  image?: string;
   tagline: string;
   detail: string;
   playerChange: string;
@@ -15,7 +18,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "A Living World",
     summary:
       "Cities, institutions, populations and histories keep moving even when the player is elsewhere.",
-    icon: "/assets/feature_icon_01.jpg",
+    icon: managedAssetUrl("feature.icon.01"),
+    image: managedAssetUrl("feature.a-living-world"),
     tagline: "The world keeps moving.",
     detail: "Cities, institutions and characters continue to change as time passes. You are entering a place with its own history, pressures and relationships - not a sequence of rooms waiting for the player to trigger them.",
     playerChange: "The point is not background simulation for its own sake. The point is that context matters when you arrive.",
@@ -26,7 +30,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Forge Your Path",
     summary:
       "Speak and act without dialogue menus; people respond to what you say and what they know.",
-    icon: "/assets/feature_icon_02.jpg",
+    icon: managedAssetUrl("feature.icon.02"),
+    image: managedAssetUrl("feature.forge-your-path"),
     tagline: "Choose what matters. Discover what follows.",
     detail: "You are not repeatedly choosing from a list of prewritten branches. You decide where to travel, what to investigate, whom to speak with, what to ask, and what deserves another look.",
     playerChange: "Where you go matters. What you learn matters. What you do with it matters.",
@@ -37,7 +42,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Real Challenges",
     summary:
       "Puzzles test reasoning through language, numbers, sound, space, history and construction.",
-    icon: "/assets/feature_icon_03.jpg",
+    icon: managedAssetUrl("feature.icon.03"),
+    image: managedAssetUrl("feature.real-challenges"),
     tagline: "Challenges that ask you to pay attention.",
     detail: "Puzzles are built around observation, logic, language, history, sound, space and construction. They are meant to feel like part of the world rather than a detached minigame checklist.",
     playerChange: "A challenge should be satisfying because you solved it - not because the interface told you which answer was safe.",
@@ -48,7 +54,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Leave Your Mark",
     summary:
       "Consequences persist through people, places, institutions, relationships and later scenes.",
-    icon: "/assets/feature_icon_04.jpg",
+    icon: managedAssetUrl("feature.icon.04"),
+    image: managedAssetUrl("feature.leave-your-mark"),
     tagline: "The world remembers meaningful actions.",
     detail: "Choices can affect relationships, discovered places, what information becomes available, and how later events are understood. The game does not need a giant morality meter to remember what happened.",
     playerChange: "Your history with the world should be visible in what becomes possible later.",
@@ -59,7 +66,7 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "The Power of Three",
     summary:
       "Three moons and the Beacon cycle shape the sky without exposing hidden story structure.",
-    icon: "/assets/feature_icon_05.jpg",
+    icon: managedAssetUrl("feature.icon.05"),
     tagline: "Power is rarely a two-sided argument.",
     detail: "Echoes is interested in pressure, compromise, competing values and the way different forces can interpret the same event. A situation can have more than one serious answer without pretending every answer is equally true.",
     playerChange: "The feature is about tension and leverage - not exposing the hidden structure behind the story.",
@@ -70,7 +77,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Truth Still Matters",
     summary:
       "Rumor, belief, source-backed facts and later corrections remain distinguishable.",
-    icon: "/assets/feature_icon_06.jpg",
+    icon: managedAssetUrl("feature.icon.06"),
+    image: managedAssetUrl("feature.truth-still-matters"),
     tagline: "Belief can change. Facts do not become whatever is convenient.",
     detail: "Characters can be wrong, governments can distort events, records can be incomplete, and the player can misunderstand what happened. Echoes keeps objective events separate from belief so discovery can genuinely change understanding.",
     playerChange: "The story can be uncertain without treating truth as meaningless.",
@@ -81,7 +89,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Real Life Comes First",
     summary:
       "Ordinary interruptions do not punish the player; explicit challenge timers are shown clearly.",
-    icon: "/assets/feature_icon_07.jpg",
+    icon: managedAssetUrl("feature.icon.07"),
+    image: managedAssetUrl("feature.real-life-comes-first"),
     tagline: "The game should fit around your life.",
     detail: "You should be able to step away and come back. Timed challenges are explicit commitments that begin when you choose to accept them; ordinary play should not manufacture anxiety just to increase engagement.",
     playerChange: "Your time outside the game matters more than keeping a streak alive.",
@@ -92,7 +101,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "Speak or Type Freely",
     summary:
       "NPC interaction accepts natural speech or text instead of numbered dialogue choices.",
-    icon: "/assets/feature_icon_08.jpg",
+    icon: managedAssetUrl("feature.icon.08"),
+    image: managedAssetUrl("feature.speak-or-type-freely"),
     tagline: "Talk to characters like people, not menu options.",
     detail: "Speak or type naturally. Characters answer from what they know, believe, remember and are willing to say. The direction of a conversation comes from your questions instead of a conventional dialogue tree.",
     playerChange: "The important choice is often what you decide to ask next.",
@@ -103,7 +113,8 @@ export const publicFeatures: readonly FeatureSummary[] = [
     title: "A Unique and Powerful Story",
     summary:
       "A continuing character moves through books, companions, cities, puzzles and discoveries.",
-    icon: "/assets/feature_icon_09.jpg",
+    icon: managedAssetUrl("feature.icon.09"),
+    image: managedAssetUrl("feature.unique-and-powerful-story"),
     tagline: "A story designed to be lived through, not merely clicked through.",
     detail: "Echoes is a long-form narrative built around discovery, consequence, books, places, people and mysteries that connect over time. Different players can encounter information in different orders and build different understandings of the same larger story.",
     playerChange: "The story should reward attention months later, not just the next button press.",

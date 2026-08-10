@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
+import { managedAssetUrl } from "../../content/managed-assets";
 import { publicFeatures } from "../../content/public";
 
 export function HomePage() {
@@ -20,7 +21,7 @@ export function HomePage() {
   return (
     <PublicShell>
       <section className="hero" aria-labelledby="home-heading">
-        <img src="/assets/landing_hero_background.jpg" alt="" />
+        <img src={managedAssetUrl("marketing.landing-hero")} alt="" />
         <div className="hero-shade" />
         <div className="hero-copy">
           <p className="kicker">Echoes of Eidolon</p>
@@ -65,7 +66,7 @@ export function HomePage() {
 
       <section className="free-band">
         <div>
-          <h2>Free to play. Open to everyone.</h2>
+          <h2>Free to Play. Open to Everyone.</h2>
           <p>A subscription will never be required.</p>
         </div>
         <a className="button button--gold" href="/auth/sign-up">

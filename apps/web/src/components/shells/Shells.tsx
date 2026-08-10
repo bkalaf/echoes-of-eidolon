@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
 
+import { managedAssetUrl } from "../../content/managed-assets";
+import { LoginSoundtrackPlayer } from "../LoginSoundtrackPlayer";
+
 const publicNav = [
   ["Features", "/features"],
   ["Gameplay", "/gameplay"],
@@ -9,7 +12,7 @@ const publicNav = [
 ] as const;
 
 export function BrandLogo() {
-  return <img className="brand-logo" src="/assets/logo.png" alt="Echoes of Eidolon" />;
+  return <img className="brand-logo" src={managedAssetUrl("brand.logo-alpha")} alt="Echoes of Eidolon" />;
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
@@ -62,6 +65,7 @@ function SideShell({ children, label, navigation }: SideShellProps) {
       <header className="workspace-header">
         <BrandLogo />
         <span>{label}</span>
+        <LoginSoundtrackPlayer />
       </header>
       <aside className="workspace-sidebar">
         <strong>{label}</strong>
@@ -101,6 +105,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 export function GameShell({ children }: { children: ReactNode }) {
   return (
     <div className="game-shell">
+      <LoginSoundtrackPlayer />
       <main>{children}</main>
       <footer className="game-bottom-bar">
         <span>Location unavailable</span>

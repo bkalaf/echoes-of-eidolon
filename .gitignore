@@ -19,3 +19,4 @@ apps/web/src/generated/
 .env.*
 !.env.example
 /.local/
+/assets/managed/

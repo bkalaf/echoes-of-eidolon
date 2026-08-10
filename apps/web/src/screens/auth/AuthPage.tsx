@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { AuthShell } from "../../components/shells/Shells";
 import { safeSignedInReturnPath } from "../../domain/auth-navigation";
+import { clearQueuedLoginSoundtrack, queueRandomLoginSoundtrack } from "../../domain/login-soundtrack";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
@@ -85,13 +86,17 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setMessage(undefined);
     try {
       if (screen.screenId === "AUTH01") {
+        queueRandomLoginSoundtrack();
         const result = await authClient.signIn.email({
           callbackURL: signedInReturnPath,
           email: values.email,
           password: values.password,
         });
         const nextError = resultError(result);
-        if (nextError) setError(nextError);
+        if (nextError) {
+          clearQueuedLoginSoundtrack();
+          setError(nextError);
+        }
         else setMessage("Signed in.");
       } else if (screen.screenId === "AUTH03") {
         const result = await authClient.signUp.email({
@@ -154,11 +159,16 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setBusy(true);
     setError(undefined);
     try {
+      queueRandomLoginSoundtrack();
       const result = await authClient.signIn.passkey();
       const nextError = resultError(result);
-      if (nextError) setError(nextError);
+      if (nextError) {
+        clearQueuedLoginSoundtrack();
+        setError(nextError);
+      }
       else setMessage("Passkey accepted.");
     } catch (caught) {
+      clearQueuedLoginSoundtrack();
       setError(caught instanceof Error ? caught.message : "Passkey authentication failed.");
     } finally {
       setBusy(false);

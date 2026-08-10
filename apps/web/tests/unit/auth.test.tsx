@@ -11,6 +11,7 @@ vi.mock("../../src/lib/auth-client", () => ({
 }));
 
 import { pageManifest } from "../../src/lib/page-manifest";
+import { loginSoundtrackKeys } from "../../src/content/managed-assets";
 import { AuthPage } from "../../src/screens/auth/AuthPage";
 
 function authScreen(screenId: string) {
@@ -27,6 +28,7 @@ describe("reviewed authentication states", () => {
       json: async () => ({ redeemed: true }),
       ok: true,
     }));
+    window.sessionStorage.clear();
     window.history.replaceState({}, "", "/");
   });
 
@@ -53,6 +55,20 @@ describe("reviewed authentication states", () => {
       email: "player@example.com",
       password: "long-password",
     }));
+    expect(loginSoundtrackKeys).toContain(window.sessionStorage.getItem("echoes.login-soundtrack"));
+  });
+
+  it("does not leave a soundtrack queued after a failed sign-in", async () => {
+    authMocks.signInEmail.mockResolvedValue({ data: null, error: { message: "Invalid credentials" } });
+    render(<AuthPage screen={authScreen("AUTH01")} />);
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "player@example.com" } });
+    fireEvent.change(screen.getByLabelText("Password"), { target: { value: "long-password" } });
+    const submit = screen.getByRole("button", { name: "Sign In" });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.click(submit);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Invalid credentials");
+    expect(window.sessionStorage.getItem("echoes.login-soundtrack")).toBeNull();
   });
 
   it("redeems a bearer beta invitation without changing an organization role", async () => {

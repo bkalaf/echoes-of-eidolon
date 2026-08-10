@@ -1,6 +1,7 @@
 import { useState, useSyncExternalStore } from "react";
 
 import { StoreShell } from "../../components/shells/Shells";
+import { managedAssetUrl } from "../../content/managed-assets";
 import {
   addCartLine,
   cartSubtotalCents,
@@ -74,7 +75,7 @@ function ProductDetail() {
     }
   };
 
-  return <><StoreHead title="Conjunction 1 — Mug" path="/store/products/:slug" description="Merchandise product detail with reviewed artwork, variant, price, and fulfillment owner." /><div className="product-detail"><img src="/assets/hero_r007.png" alt="Conjunction 1 mug artwork" /><section><p className="kicker">Mug</p><h2>Conjunction 1 — Mug</h2><p>Approved Conjunction artwork. Printful fulfillment.</p><p className="price">{formatUsd(product.priceCents)}</p><label className="field">Variant<select className="select" value={product.variant} disabled><option>{product.variant}</option></select></label><label className="field">Quantity<input aria-label="Quantity" className="input" type="number" min="1" max="99" value={quantity} onChange={(event) => setQuantity(event.target.valueAsNumber)} /></label><button className="button button--gold wide" onClick={addToCart}>Add to cart</button>{message && <p className="notice notice--good" role="status">{message} <a href="/store/cart">View cart</a></p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}<p className="notice">No scarcity or provider estimate is shown without live Printful data.</p></section></div></>;
+  return <><StoreHead title="Conjunction 1 — Mug" path="/store/products/:slug" description="Merchandise product detail with reviewed artwork, variant, price, and fulfillment owner." /><div className="product-detail"><img src={managedAssetUrl("store.conjunction-art")} alt="Conjunction 1 mug artwork" /><section><p className="kicker">Mug</p><h2>Conjunction 1 — Mug</h2><p>Approved Conjunction artwork. Printful fulfillment.</p><p className="price">{formatUsd(product.priceCents)}</p><label className="field">Variant<select className="select" value={product.variant} disabled><option>{product.variant}</option></select></label><label className="field">Quantity<input aria-label="Quantity" className="input" type="number" min="1" max="99" value={quantity} onChange={(event) => setQuantity(event.target.valueAsNumber)} /></label><button className="button button--gold wide" onClick={addToCart}>Add to cart</button>{message && <p className="notice notice--good" role="status">{message} <a href="/store/cart">View cart</a></p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}<p className="notice">No scarcity or provider estimate is shown without live Printful data.</p></section></div></>;
 }
 
 function useStoredCart() {
