@@ -168,6 +168,6 @@ export async function loadAtlasRelease(root: string): Promise<AtlasCatalog> {
 let catalog: Promise<AtlasCatalog> | undefined;
 
 export function getAtlasCatalog(): Promise<AtlasCatalog> {
-  catalog ??= loadAtlasRelease(getAtlasEnv().ATLAS_RELEASE_ROOT);
+  catalog ??= loadAtlasRelease(getAtlasEnv().EIDOLON_ATLAS_RELEASE_ROOT);
   return catalog;
 }

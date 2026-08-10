@@ -40,7 +40,7 @@ const paymentsEnvSchema = runtimeEnvObject.pick({
   STRIPE_SECRET_KEY: true,
   STRIPE_WEBHOOK_SECRET: true,
 });
-const atlasEnvSchema = z.object({ ATLAS_RELEASE_ROOT: z.string().min(1) });
+const atlasEnvSchema = z.object({ EIDOLON_ATLAS_RELEASE_ROOT: z.string().min(1) });
 
 export function parseRuntimeEnv(source: NodeJS.ProcessEnv): RuntimeEnv {
   return runtimeEnvSchema.parse(source);

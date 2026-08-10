@@ -47,7 +47,7 @@ function loadLocalEnvironment() {
     "EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE",
   );
   if (existsSync(resolve(atlasRoot, "atlas-data-release.json"))) {
-    environment.ATLAS_RELEASE_ROOT = atlasRoot;
+    environment.EIDOLON_ATLAS_RELEASE_ROOT = atlasRoot;
   }
   const databaseUrl = new URL(environment.DATABASE_URL);
   environment.POSTGRES_USER = decodeURIComponent(databaseUrl.username);
