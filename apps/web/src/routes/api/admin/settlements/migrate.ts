@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
+import { WorldKey } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
 import { migratePopulation } from "../../../../server/settlements";
 
@@ -11,7 +12,7 @@ export const migrationInputSchema = z.object({
     amount: z.number().int().positive(),
     breedId: z.string().min(1),
   }).strict()).min(1),
-  worldKey: z.enum(["CONCORD", "RUIN", "SCHISM"]),
+  worldKey: z.enum(WorldKey),
   year: z.number().int().min(0).max(4040),
 }).strict();
 

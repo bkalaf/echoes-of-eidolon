@@ -6,6 +6,7 @@ import { resolve, sep } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import type { AnySchema } from "ajv";
 
+import type { NameStatus } from "../generated/prisma/enums";
 import { getAtlasEnv } from "./env";
 
 interface ArtifactReference {
@@ -33,7 +34,7 @@ export interface CanonicalPointOfInterest {
   poiId: string;
   workingLabel: string;
   displayName: string | null;
-  nameStatus: "WORKING" | "CANONICAL";
+  nameStatus: NameStatus;
   category: string;
   latitude: number;
   longitude: number;

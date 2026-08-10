@@ -1,3 +1,5 @@
+import { DepartmentWitnessPathStatus } from "../generated/prisma/enums";
+
 export const campaignObjectTypes = [
   "PILLAR",
   "LESSON",
@@ -85,11 +87,11 @@ export function linkedCampaignGroup(objectType: CampaignObjectType): CampaignLin
   ) ?? null;
 }
 
-export function departmentCampaignDisposition(departmentId: string): "NORMAL" | "EXEMPT" | "EXCLUDED" {
+export function departmentCampaignDisposition(departmentId: string): DepartmentWitnessPathStatus {
   const match = /^DEPT-(\d{3})$/.exec(departmentId);
   const ordinal = match ? Number(match[1]) : 0;
   if (ordinal < 1 || ordinal > 54) throw new Error("Department must be one of the controlled DEPT-001 through DEPT-054 rows.");
-  if (ordinal === 53) return "EXEMPT";
-  if (ordinal === 54) return "EXCLUDED";
-  return "NORMAL";
+  if (ordinal === 53) return DepartmentWitnessPathStatus.EXEMPT;
+  if (ordinal === 54) return DepartmentWitnessPathStatus.EXCLUDED;
+  return DepartmentWitnessPathStatus.NORMAL;
 }

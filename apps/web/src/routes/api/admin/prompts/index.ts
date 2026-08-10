@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
+import { PromptStatus } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
 import { getDatabase } from "../../../../server/database";
 
-const promptStatusSchema = z.enum(["OUTSTANDING", "READY", "COMPLETED"]);
+const promptStatusSchema = z.enum(PromptStatus);
 
 export const Route = createFileRoute("/api/admin/prompts/")({
   server: {

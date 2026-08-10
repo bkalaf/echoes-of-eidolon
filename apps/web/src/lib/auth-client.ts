@@ -8,6 +8,7 @@ import { usernameClient } from "better-auth/client/plugins";
 import { twoFactorClient } from "better-auth/client/plugins";
 import { accountAuthorizationAccessControl, accountAuthorizationRoles } from "../domain/authorization-access";
 import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
+import { AgeEligibility } from "../generated/prisma/enums";
 
 export const authClient = createAuthClient({
   plugins: [
@@ -20,7 +21,7 @@ export const authClient = createAuthClient({
     inferAdditionalFields({
       user: {
         eligibilityStatus: {
-          type: ["ADULT_18_PLUS", "MINOR_14_17_GUARDIAN_CONSENTED"],
+          type: Object.values(AgeEligibility),
           required: true,
         },
       },

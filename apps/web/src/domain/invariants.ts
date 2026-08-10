@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CompanionKey, Heirloom, PuzzleDifficultyTier, PuzzleFamily, WorldKey as PrismaWorldKey } from "../generated/prisma/enums";
 import type { Companion, Protagonist, PuzzleBlueprint, Witness, WorldKey } from "./types";
 
 export const witnessSchema = z
@@ -15,16 +16,12 @@ export const witnessSchema = z
   ) satisfies z.ZodType<Witness>;
 
 export const companionSchema = z.object({
-  companionKey: z.enum(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]),
+  companionKey: z.enum(CompanionKey),
   concordProtagonistId: z.string().min(1),
   ruinProtagonistId: z.string().min(1),
   schismProtagonistId: z.string().min(1),
   soulId: z.string().min(1),
-  heirloom: z.enum([
-    "NECKLACE", "BRACELET", "EARRINGS", "CLOAK_CLASP", "LIGHTER", "POCKETWATCH",
-    "COIN_HEAD_BLACKENED", "COIN_TAIL_BLACKENED", "RING", "TATTOO", "BIRTHMARK",
-    "BROOCH", "HAIR_BARRETTE", "BELT_BUCKLE", "BACKPACK_CLASP",
-  ]),
+  heirloom: z.enum(Heirloom),
 }).refine((companion) => new Set([
   companion.concordProtagonistId,
   companion.ruinProtagonistId,
@@ -54,8 +51,8 @@ export function validateCompanionWorldSlots(
 
 export const puzzleBlueprintSchema = z.object({
   puzzleBlueprintId: z.string().min(1),
-  family: z.enum(["TEXT_LANGUAGE_LITERARY", "CRYPTO_NUMERIC_DATA", "VISUAL_COLOR_OPTICAL", "SPATIAL_FOLDING_GEOMETRY", "AUDIO_MUSIC_SPECTRAL", "LOGIC_CONSTRAINT", "HISTORICAL_RESEARCH", "CONSTRUCTION_SIMULATION", "CROSS_MODAL"]),
-  difficultyTier: z.enum(["TIER_1_INITIATE", "TIER_2_ADEPT", "TIER_3_EXPERT", "TIER_4_MASTER", "TIER_5_ORDEAL"]),
+  family: z.enum(PuzzleFamily),
+  difficultyTier: z.enum(PuzzleDifficultyTier),
 }) satisfies z.ZodType<PuzzleBlueprint>;
 
 const migrationRowSchema = z.object({
@@ -65,7 +62,7 @@ const migrationRowSchema = z.object({
 
 export const migrationRequestSchema = z
   .object({
-    worldKey: z.enum(["CONCORD", "RUIN", "SCHISM"]),
+    worldKey: z.enum(PrismaWorldKey),
     year: z.number().int(),
     originSettlementId: z.string().min(1),
     destinationSettlementId: z.string().min(1),

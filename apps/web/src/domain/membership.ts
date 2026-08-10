@@ -1,3 +1,5 @@
+import type { PerkStatus } from "../generated/prisma/enums";
+
 export const subscriptionPriceCents = 999;
 export const ordinaryVoiceWindowSeconds = 15;
 export const memberVoiceWindowSeconds = 30;
@@ -130,6 +132,6 @@ export function voiceWindowSeconds(hasActiveMembership: boolean): number {
   return hasActiveMembership ? memberVoiceWindowSeconds : ordinaryVoiceWindowSeconds;
 }
 
-export function activePerks<Perk extends { status: "ACTIVE" | "INACTIVE" }>(perks: readonly Perk[]): Perk[] {
+export function activePerks<Perk extends { status: PerkStatus }>(perks: readonly Perk[]): Perk[] {
   return perks.filter((perk) => perk.status === "ACTIVE");
 }

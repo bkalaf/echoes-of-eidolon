@@ -1,9 +1,6 @@
 import type { CapabilityStateEntry, CapabilityValue } from "./capabilities";
+import type { CapabilityRequirementOperator, KnowledgeBaseBlockKind, KnowledgeBaseDisclosureMode } from "../generated/prisma/enums";
 import { resolveVisibleKnowledge, type CitationEvidence, type SourceEvidence, type VisibleFootnote } from "./knowledge-evidence";
-
-export type CapabilityRequirementOperator = "EXISTS" | "EQ" | "NEQ" | "GT" | "GTE" | "LT" | "LTE";
-export type KnowledgeBaseBlockKind = "HEADING" | "PARAGRAPH" | "QUOTE" | "LIST";
-export type KnowledgeBaseDisclosureMode = "APPEND_BLOCKS" | "INSERT_AFTER_BLOCK" | "REPLACE_BLOCK" | "REPLACE_ENTRY";
 
 export interface KnowledgeBlock {
   knowledgeBaseBlockId: string;

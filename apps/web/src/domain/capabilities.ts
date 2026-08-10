@@ -1,5 +1,6 @@
-export type CapabilityValueKind = "BOOLEAN" | "SCORE" | "COUNTER" | "ENUM" | "REFERENCE";
-export type CapabilityOperation = "SET" | "ADD";
+import type { CapabilityOperation, CapabilityValueKind, RewardEvidenceKind } from "../generated/prisma/enums";
+
+export type { CapabilityOperation, CapabilityValueKind, RewardEvidenceKind } from "../generated/prisma/enums";
 export type CapabilityValue = boolean | number | string;
 
 export interface CapabilityDefinitionContract {
@@ -99,8 +100,6 @@ export function reduceCapabilityEvents(
   }
   return state;
 }
-
-export type RewardEvidenceKind = "RUMOR" | "EVIDENCE" | "PROOF" | "DOUBT" | "CONTRADICTION" | "REFUTATION";
 
 export const rewardEvidenceWeights = {
   RUMOR: 50,

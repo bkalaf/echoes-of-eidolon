@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import type { Prisma } from "../../../../generated/prisma/client";
+import { PromptStatus, WorldKey } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
 import { foundCity } from "../../../../server/settlements";
 
@@ -15,10 +16,10 @@ export const foundCityInputSchema = z.object({
     promptText: z.string().min(1),
     purpose: z.string().min(1),
     responseContract: z.json(),
-    status: z.enum(["OUTSTANDING", "READY", "COMPLETED"]),
+    status: z.enum(PromptStatus),
   }).strict(),
   siteId: z.string().min(1),
-  worldKey: z.enum(["CONCORD", "RUIN", "SCHISM"]),
+  worldKey: z.enum(WorldKey),
   year: z.number().int().min(0).max(4040),
 }).strict();
 

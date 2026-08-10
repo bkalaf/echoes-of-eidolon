@@ -11,6 +11,7 @@ import { z } from "zod";
 
 import { accountAuthorizationAccessControl, accountAuthorizationRoles } from "../domain/authorization-access";
 import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
+import { AgeEligibility } from "../generated/prisma/enums";
 import { getDatabase } from "./database";
 import { sendAuthenticationCode } from "./email";
 import { getAuthEnv } from "./env";
@@ -49,10 +50,10 @@ function createAuth() {
     user: {
       additionalFields: {
         eligibilityStatus: {
-          type: ["ADULT_18_PLUS", "MINOR_14_17_GUARDIAN_CONSENTED"],
+          type: Object.values(AgeEligibility),
           required: true,
           validator: {
-            input: z.enum(["ADULT_18_PLUS", "MINOR_14_17_GUARDIAN_CONSENTED"]),
+            input: z.enum(AgeEligibility),
           },
         },
       },

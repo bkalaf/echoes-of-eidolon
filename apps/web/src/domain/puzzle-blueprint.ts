@@ -1,25 +1,25 @@
-export const puzzleChallengeDurationSeconds = 2_160_000;
-export const puzzleHintKinds = ["DIRECTIONAL", "GUIDED"] as const;
-export const puzzleFamilies = [
-  "TEXT_LANGUAGE_LITERARY", "CRYPTO_NUMERIC_DATA", "VISUAL_COLOR_OPTICAL",
-  "SPATIAL_FOLDING_GEOMETRY", "AUDIO_MUSIC_SPECTRAL", "LOGIC_CONSTRAINT",
-  "HISTORICAL_RESEARCH", "CONSTRUCTION_SIMULATION", "CROSS_MODAL",
-] as const;
-export const puzzleDifficultyTiers = [
-  "TIER_1_INITIATE", "TIER_2_ADEPT", "TIER_3_EXPERT", "TIER_4_MASTER", "TIER_5_ORDEAL",
-] as const;
+import {
+  PuzzleDifficultyTier,
+  PuzzleFamily,
+  PuzzleHintKind,
+  type PuzzleDifficultyTier as PuzzleDifficultyTierValue,
+  type PuzzleFamily as PuzzleFamilyValue,
+  type PuzzleHintKind as PuzzleHintKindValue,
+} from "../generated/prisma/enums";
 
-export type PuzzleFamily = typeof puzzleFamilies[number];
-export type PuzzleDifficultyTier = typeof puzzleDifficultyTiers[number];
+export const puzzleChallengeDurationSeconds = 2_160_000;
+export const puzzleHintKinds = Object.values(PuzzleHintKind);
+export const puzzleFamilies = Object.values(PuzzleFamily);
+export const puzzleDifficultyTiers = Object.values(PuzzleDifficultyTier);
 
 export interface PuzzleBlueprintSeed {
   puzzleBlueprintId: string;
-  family: PuzzleFamily;
-  difficultyTier: PuzzleDifficultyTier;
+  family: PuzzleFamilyValue;
+  difficultyTier: PuzzleDifficultyTierValue;
   generatorVersion: number;
   hints: readonly [
-    { level: 1; kind: "DIRECTIONAL"; template: string; containsAnswer: false },
-    { level: 2; kind: "GUIDED"; template: string; containsAnswer: false },
+    { level: 1; kind: PuzzleHintKindValue; template: string; containsAnswer: false },
+    { level: 2; kind: PuzzleHintKindValue; template: string; containsAnswer: false },
   ];
 }
 
@@ -36,10 +36,10 @@ export function validateInitialPuzzleBank(blueprints: readonly PuzzleBlueprintSe
   for (const blueprint of blueprints) {
     if (!puzzleFamilies.includes(blueprint.family)) throw new Error("Puzzle family is not registered.");
     if (!Number.isSafeInteger(blueprint.generatorVersion)) throw new Error("Puzzle generator versions must be integers.");
-    if (blueprint.hints[0].level !== 1 || blueprint.hints[0].kind !== "DIRECTIONAL" || !blueprint.hints[0].template.trim()) {
+    if (blueprint.hints[0].level !== 1 || blueprint.hints[0].kind !== PuzzleHintKind.DIRECTIONAL || !blueprint.hints[0].template.trim()) {
       throw new Error("Hint level 1 must be a nonempty DIRECTIONAL template.");
     }
-    if (blueprint.hints[1].level !== 2 || blueprint.hints[1].kind !== "GUIDED" || !blueprint.hints[1].template.trim()) {
+    if (blueprint.hints[1].level !== 2 || blueprint.hints[1].kind !== PuzzleHintKind.GUIDED || !blueprint.hints[1].template.trim()) {
       throw new Error("Hint level 2 must be a nonempty GUIDED template.");
     }
     if (blueprint.hints.some((hint) => hint.containsAnswer)) throw new Error("Puzzle hint templates must not contain answers.");

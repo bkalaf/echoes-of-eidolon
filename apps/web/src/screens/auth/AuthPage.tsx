@@ -5,6 +5,7 @@ import { AuthShell } from "../../components/shells/Shells";
 import { OtpInput } from "../../components/ui/controls";
 import { safeSignedInReturnPath } from "../../domain/auth-navigation";
 import { clearQueuedLoginSoundtrack, queueRandomLoginSoundtrack } from "../../domain/login-soundtrack";
+import type { AgeEligibility } from "../../generated/prisma/enums";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
@@ -13,7 +14,7 @@ type AuthFields = {
   password: string;
   username: string;
   code: string;
-  eligibilityStatus: "ADULT_18_PLUS" | "MINOR_14_17_GUARDIAN_CONSENTED";
+  eligibilityStatus: AgeEligibility;
 };
 
 const authCopy: Record<string, { title: string; description: string; submit: string }> = {

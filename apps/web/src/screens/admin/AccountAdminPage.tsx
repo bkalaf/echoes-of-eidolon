@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { AuthorizationRole } from "../../domain/authorization";
+import type { AgeEligibility } from "../../generated/prisma/enums";
 
 const storedRoles = ["admin", "member", "owner", "user"] as const;
 
@@ -20,7 +21,7 @@ interface AccountListRow {
 interface AccountDetail extends AccountListRow {
   banExpires: string | null;
   banReason: string | null;
-  eligibilityStatus: "ADULT_18_PLUS" | "MINOR_14_17_GUARDIAN_CONSENTED";
+  eligibilityStatus: AgeEligibility;
   emailVerified: boolean;
   membership: {
     active: boolean;

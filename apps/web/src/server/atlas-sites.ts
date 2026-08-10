@@ -1,9 +1,8 @@
 import type { CanonicalSettlementSite } from "./atlas";
-import type { RegionId, SettlementClassification } from "../generated/prisma/enums";
+import { RegionId, SettlementClassification } from "../generated/prisma/enums";
 
-const classificationTokens = ["HAMLET", "VILLAGE", "TOWN", "CITY", "METROPOLIS"] as const;
-const classifications = new Set<string>(classificationTokens);
-const regions = new Set<string>(Array.from({ length: 25 }, (_, index) => `R${String(index + 1).padStart(2, "0")}`));
+const classifications = new Set<string>(Object.values(SettlementClassification));
+const regions = new Set<string>(Object.values(RegionId));
 
 export interface SiteMirror {
   siteId: string;

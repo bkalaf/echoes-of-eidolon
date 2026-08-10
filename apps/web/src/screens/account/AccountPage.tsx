@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { AccountShell } from "../../components/shells/Shells";
 import { OtpInput } from "../../components/ui/controls";
+import type { MembershipGrantSource } from "../../generated/prisma/enums";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
@@ -30,7 +31,7 @@ interface MembershipProjection {
     effectiveStartAt: string;
     membershipGrantId: string;
     monthsGranted: number;
-    source: "DONATION" | "SUBSCRIPTION";
+    source: MembershipGrantSource;
   }>;
   voiceWindowSeconds: number;
 }

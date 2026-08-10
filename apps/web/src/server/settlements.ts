@@ -3,7 +3,8 @@ import { randomUUID } from "node:crypto";
 import Ajv from "ajv";
 import { z } from "zod";
 
-import { Prisma, type PrismaClient, type PromptStatus, type WorldKey } from "../generated/prisma/client";
+import { Prisma, type PrismaClient } from "../generated/prisma/client";
+import type { PromptStatus, SettlementPopulationEventType, WorldKey } from "../generated/prisma/enums";
 import {
   apportionFoundingArrival,
   replaySettlementPopulation,
@@ -22,7 +23,7 @@ interface PopulationWorld {
   worldKey: WorldKey;
   populationEvents: Array<{
     breedId: string;
-    eventType: "FOUNDING" | "GROWTH" | "MIGRATION_IN" | "MIGRATION_OUT";
+    eventType: SettlementPopulationEventType;
     populationDelta: number;
     sequence: number;
     year: number;
@@ -98,7 +99,7 @@ async function appendEvents(
   transaction: Transaction,
   world: PopulationWorld,
   year: number,
-  eventType: "FOUNDING" | "MIGRATION_IN" | "MIGRATION_OUT",
+  eventType: Exclude<SettlementPopulationEventType, "GROWTH">,
   rows: readonly BreedPopulationAmount[],
 ) {
   let sequence = nextSequence(world, year);

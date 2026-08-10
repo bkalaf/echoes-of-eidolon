@@ -1,11 +1,6 @@
-export const settlementPopulationEventKinds = [
-  "FOUNDING",
-  "GROWTH",
-  "MIGRATION_IN",
-  "MIGRATION_OUT",
-] as const;
+import { SettlementPopulationEventType, type SettlementClassification } from "../generated/prisma/enums";
 
-export type SettlementPopulationEventKind = (typeof settlementPopulationEventKinds)[number];
+export const settlementPopulationEventKinds = Object.values(SettlementPopulationEventType);
 
 export interface BreedIdentity {
   breedId: string;
@@ -23,7 +18,7 @@ export interface SettlementPopulationEvent {
   settlementWorldId: string;
   year: number;
   sequence: number;
-  eventType: SettlementPopulationEventKind;
+  eventType: SettlementPopulationEventType;
   breedId: string;
   populationDelta: number;
 }
@@ -134,7 +129,7 @@ export function replaySettlementPopulation(
   };
 }
 
-const sitePriority = ["METROPOLIS", "CITY", "TOWN", "VILLAGE", "HAMLET"] as const;
+const sitePriority = ["METROPOLIS", "CITY", "TOWN", "VILLAGE", "HAMLET"] as const satisfies readonly SettlementClassification[];
 
 export function selectResetSeedSites<T extends { siteId: string; regionId: string; candidateType: string }>(sites: readonly T[]): T[] {
   const grouped = new Map<string, T[]>();

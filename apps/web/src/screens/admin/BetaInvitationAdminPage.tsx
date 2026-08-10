@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { adminCapabilities, hasAdminCapability } from "../../domain/authorization";
+import type { FriendInvitationRequestStatus } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface BetaInviteRow {
@@ -16,7 +17,7 @@ interface BetaInviteRow {
     revokedAt: string | null;
   };
   reason: string;
-  status: "PENDING" | "INVITED" | "REJECTED";
+  status: FriendInvitationRequestStatus;
 }
 
 async function loadRequests(): Promise<BetaInviteRow[]> {

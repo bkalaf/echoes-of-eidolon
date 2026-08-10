@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
+import type { ManagedAssetMediaKind } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface AssetRow {
   byteSize: string;
   managedAssetId: string;
-  mediaKind: "IMAGE" | "AUDIO" | "VIDEO";
+  mediaKind: ManagedAssetMediaKind;
   mimeType: string;
   objectKey: string;
   purposeLinks: Array<{ purpose: string }>;
@@ -53,7 +54,7 @@ async function readJson<T>(response: Response): Promise<T> {
   return result;
 }
 
-function AssetManager({ mediaKind }: { mediaKind: "AUDIO" | "VIDEO" }) {
+function AssetManager({ mediaKind }: { mediaKind: Extract<ManagedAssetMediaKind, "AUDIO" | "VIDEO"> }) {
   const assets = useQuery({
     queryKey: ["admin", "assets", mediaKind],
     queryFn: async () => readJson<{ assets: AssetRow[]; total: number }>(await fetch(`/api/admin/assets/?mediaKind=${mediaKind}`)),

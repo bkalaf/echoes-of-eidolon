@@ -1,43 +1,23 @@
 /** Echoes of Eidolon current rebuild type map.
  * Only owner-approved/current relationships are represented here.
  */
-export type WorldKey = 'CONCORD' | 'RUIN' | 'SCHISM';
-export type SpeciesKind = 'HUMAN' | 'BEAST' | 'MYTHOS' | 'PET';
-export type ProtagonistImportance = 'MINOR' | 'MAJOR';
-export type TimelineEventType = 'HISTORICAL' | 'ATROCITY' | 'EXODUS' | 'IN_TRANSIT';
-export type InterludeType = 'WWII' | 'HISTORICAL' | 'MYTH' | 'SCIENCE' | 'DEJA_VU' | 'OTHER';
-export type StructureOrientation = 'ORDERED' | 'NEUTRAL' | 'CHAOS';
-export type OperatingStyle = 'TEAMWORK' | 'SITUATIONAL' | 'SOLO';
-export type Motivation = 'ALTRUISTIC' | 'RECIPROCAL' | 'SELFISH';
-export type AdministrationMode = 'CENTRALIZED' | 'DELEGATED' | 'DISTRIBUTED';
-export type AuthoritySource = 'APPOINTMENT' | 'DIVINE_MANDATE' | 'ELECTION';
-export type LegitimacyBasis = 'ANCESTRAL' | 'CHARTERED' | 'MARTIAL';
-export type AllocationMode = 'CUSTOMARY' | 'MARKET' | 'PLANNED';
-export type OwnershipMode = 'COMMON_USE' | 'SHARED_TITLE' | 'SINGLE_ENTITY';
-export type PoliticalForm =
-  | 'ACCLAIMED_IMPERATOR' | 'APPOINTED_COMMISSION' | 'APPOINTED_DIRECTORATE'
-  | 'CAPTAINS_COUNCIL' | 'CHIEFTAIN_COUNCIL' | 'CONSECRATED_REPUBLIC'
-  | 'COVENANT_ASSEMBLY' | 'COVENANT_CROWN' | 'DELEGATE_LEAGUE' | 'DIVINE_THRONE'
-  | 'ELDER_MOOT' | 'ELECTED_EXECUTIVE' | 'ELECTIVE_CROWN' | 'ESTATES_DIET'
-  | 'FEUDAL_ORDER' | 'FREE_COMPANY' | 'GARRISON_COMMAND' | 'HALLOWED_CUSTOM'
-  | 'JUNTA' | 'MILITANT_ORDER' | 'MILITANT_THEOCRACY' | 'POPULAR_FEDERATION'
-  | 'RAIDER_CONFEDERACY' | 'REGENT_THRONE' | 'REPUBLIC' | 'TEMPLE_HIERARCHY'
-  | 'ZEALOT_BANDS';
-export type EconomicForm =
-  | 'COMMAND_DEMESNE' | 'COMMUNE_PLAN' | 'FOLK_COMMONS' | 'GUILD_COMPACT'
-  | 'MONOPOLY_ESTATE' | 'OPEN_BAZAAR' | 'SHAREHOLDER_BOURSE'
-  | 'SYNDICATE_CARTEL' | 'TRIBUTARY_DEMESNE';
-export type CulturePoolId = `CP${'01'|'02'|'03'|'04'|'05'|'06'|'07'|'08'|'09'|'10'|'11'|'12'|'13'|'14'|'15'|'16'|'17'|'18'|'19'|'20'|'21'|'22'|'23'|'24'|'25'}`;
-export type CompanionKey = 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K';
-export type Heirloom =
-  | 'NECKLACE' | 'BRACELET' | 'EARRINGS' | 'CLOAK_CLASP' | 'LIGHTER' | 'POCKETWATCH'
-  | 'COIN_HEAD_BLACKENED' | 'COIN_TAIL_BLACKENED' | 'RING' | 'TATTOO' | 'BIRTHMARK'
-  | 'BROOCH' | 'HAIR_BARRETTE' | 'BELT_BUCKLE' | 'BACKPACK_CLASP';
-export type CitationQuality = 'VERY_LOW'|'LOW'|'MODERATE'|'HIGH'|'VERY_HIGH';
-export type ResearchCategory =
-  | 'EXODUS_PROGRAM' | 'REWARD' | 'SPECIES' | 'HISTORICAL_EVENT' | 'CULTURAL_WOUND'
-  | 'PERSON' | 'PLACE' | 'INSTITUTION' | 'ORGANIZATION' | 'SYMBOL' | 'TOME'
-  | 'TECHNOLOGY_OR_SYSTEM' | 'OTHER';
+import type {
+  AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityValueKind,
+  CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId, EconomicForm,
+  EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity,
+  Motivation, OperatingStyle, OutlookOrientation, OwnershipMode, PoliticalForm,
+  ProtagonistImportance, PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
+  SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind,
+  StructureOrientation, TimelineEventType, WorldKey,
+} from "../generated/prisma/enums";
+
+export type {
+  AdministrationMode, AllocationMode, AuthoritySource, CitationQuality, CompanionKey,
+  CulturePoolId, EconomicForm, Heirloom, InterludeType, LegitimacyBasis, Motivation,
+  OperatingStyle, OwnershipMode, PoliticalForm, ProtagonistImportance, RegionId,
+  ResearchCategory, SettlementClassification, SpeciesKind, StructureOrientation,
+  TimelineEventType, WorldKey,
+} from "../generated/prisma/enums";
 
 export interface Species {
   speciesId: string;
@@ -122,10 +102,8 @@ export interface Lesson { lessonId: string; name: string; description: string; }
 export interface Tome { tomeId: string; title: string; author?: string; }
 export interface Transition { transitionId: string; name: string; bookA: number; bookB: number; summary: string; }
 export interface Constellation { constellationId: string; name: string; rightAscension?: string; declination?: string; }
-export interface Ark { arkId: string; name: string; status: 'OPERATIONAL'|'CANNIBALIZED'|'DAMAGED'|'DESTROYED'; }
+export interface Ark { arkId: string; name: string; status: ArkStatus; }
 export interface PointOfInterest { pointOfInterestId: string; name: string; kind: string; regionId: string; longitude: number; latitude: number; }
-export type RegionId = `R${'01'|'02'|'03'|'04'|'05'|'06'|'07'|'08'|'09'|'10'|'11'|'12'|'13'|'14'|'15'|'16'|'17'|'18'|'19'|'20'|'21'|'22'|'23'|'24'|'25'}`;
-export type SettlementClassification = 'HAMLET'|'VILLAGE'|'TOWN'|'CITY'|'METROPOLIS';
 export interface Site { siteId: string; regionId: RegionId; candidateType: SettlementClassification; longitude: number; latitude: number; }
 export interface Settlement { settlementId: string; siteId: Site['siteId']; name: string | null; classification: SettlementClassification; }
 export interface SettlementWorld {
@@ -142,18 +120,18 @@ export interface SettlementPopulationEvent {
   year: number;
   sequence: number;
   breedId: Breed['breedId'];
-  eventType: 'FOUNDING'|'GROWTH'|'MIGRATION_IN'|'MIGRATION_OUT';
+  eventType: SettlementPopulationEventType;
   populationDelta: number;
 }
-export interface Source { sourceId: string; title: string; authors: string[]; publisher?: string; publicationDate?: string; sourceType: string; urlOrIdentifier?: string; }
+export interface Source { sourceId: string; title: string; authors: string[]; publisher?: string; publicationDate?: string; sourceType: SourceType; urlOrIdentifier?: string; }
 export interface Citation { citationId: string; sourceId: Source['sourceId']; locator?: string; rendering: string; quality?: CitationQuality; }
 export interface Research { researchId: string; notes: string; citationId: Citation['citationId']; category?: ResearchCategory | null; }
-export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: string; entityId: string; title: string; baseContent: string; }
+export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: EntityType; entityId: string; title: string; baseContent: string; }
 export interface Definition { definitionId: string; term: string; definition: string; }
 export interface Matrix { matrixId: string; regionId: string; latticeId: string; culturePoolIds: string[]; }
 export interface Layette { layetteId: string; name: string; description: string; }
-export interface PersonalityExpression { personalityExpressionId: string; name: string; loquacity: string; emotionalTemperature: string; outlookOrientation: string; collaborativePosture: string; }
-export interface CapabilityDefinition { capabilityDefinitionId: string; key: string; valueType: 'BOOLEAN'|'SCORE'; minValue?: number; maxValue?: number; description: string; }
+export interface PersonalityExpression { personalityExpressionId: string; name: string; loquacity: Loquacity; emotionalTemperature: EmotionalTemperature; outlookOrientation: OutlookOrientation; collaborativePosture: CollaborativePosture; }
+export interface CapabilityDefinition { capabilityDefinitionId: string; key: string; valueKind: CapabilityValueKind; minValue?: number; maxValue?: number; description: string; }
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
 export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }
-export interface PuzzleBlueprint { puzzleBlueprintId: string; family: 'TEXT_LANGUAGE_LITERARY'|'CRYPTO_NUMERIC_DATA'|'VISUAL_COLOR_OPTICAL'|'SPATIAL_FOLDING_GEOMETRY'|'AUDIO_MUSIC_SPECTRAL'|'LOGIC_CONSTRAINT'|'HISTORICAL_RESEARCH'|'CONSTRUCTION_SIMULATION'|'CROSS_MODAL'; difficultyTier: 'TIER_1_INITIATE'|'TIER_2_ADEPT'|'TIER_3_EXPERT'|'TIER_4_MASTER'|'TIER_5_ORDEAL'; }
+export interface PuzzleBlueprint { puzzleBlueprintId: string; family: PuzzleFamily; difficultyTier: PuzzleDifficultyTier; }

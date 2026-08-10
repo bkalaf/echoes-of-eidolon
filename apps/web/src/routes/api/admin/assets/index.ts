@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
+import { ManagedAssetMediaKind } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
 import { getDatabase } from "../../../../server/database";
 
-const mediaKindSchema = z.enum(["IMAGE", "AUDIO", "VIDEO"]);
+const mediaKindSchema = z.enum(ManagedAssetMediaKind);
 
 export const Route = createFileRoute("/api/admin/assets/")({
   server: {

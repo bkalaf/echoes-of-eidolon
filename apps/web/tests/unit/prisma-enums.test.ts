@@ -3,6 +3,11 @@ import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { puzzleDifficultyTiers, puzzleFamilies, puzzleHintKinds } from "../../src/domain/puzzle-blueprint";
+import { settlementPopulationEventKinds } from "../../src/domain/settlement-population";
+import { speciesPersonalityDimensions } from "../../src/domain/species-personality";
+import { PuzzleDifficultyTier, PuzzleFamily, PuzzleHintKind, SettlementPopulationEventType, SpeciesResearchDimension } from "../../src/generated/prisma/enums";
+
 const schema = readFileSync(resolve(import.meta.dirname, "../../prisma/schema.prisma"), "utf8");
 const migration = readFileSync(resolve(
   import.meta.dirname,
@@ -53,5 +58,13 @@ describe("Prisma finite enum authority", () => {
     expect(migration).toContain('USING ("status"::text::"FriendInvitationRequestStatus")');
     expect(migration).toContain('USING ("valueType"::text::"CapabilityValueKind")');
     expect(migration).toContain('USING ("eligibilityStatus"::text::"AgeEligibility")');
+  });
+
+  it("uses generated Prisma values in exported persistence-domain collections", () => {
+    expect(puzzleFamilies).toEqual(Object.values(PuzzleFamily));
+    expect(puzzleDifficultyTiers).toEqual(Object.values(PuzzleDifficultyTier));
+    expect(puzzleHintKinds).toEqual(Object.values(PuzzleHintKind));
+    expect(settlementPopulationEventKinds).toEqual(Object.values(SettlementPopulationEventType));
+    expect(speciesPersonalityDimensions).toEqual(Object.values(SpeciesResearchDimension));
   });
 });
