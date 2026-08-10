@@ -57,7 +57,7 @@ function AtlasCatalogPage({ view }: { view: AtlasView }) {
   if (atlas.isError) return <p className="notice notice--bad" role="alert">{atlas.error.message}</p>;
   if (view === "poi-2d" || view === "poi-3d") return <PoiAtlas atlas={atlas.data} globe={view === "poi-3d"} />;
   if (view === "sites") return <Sites atlas={atlas.data} />;
-  if (view === "found-city") return <AtlasStatus>The 90% ceiling and largest-remainder founding rules are specified. City founding remains unavailable until the atomic settlement persistence service is connected.</AtlasStatus>;
+  if (view === "found-city") return <AtlasStatus>The atomic founding service, 90% ceiling, and largest-remainder rules are connected. Found City remains unavailable until the exact server-owned settlement naming prompt and response contract are supplied; the browser cannot author them.</AtlasStatus>;
   if (view === "settlements") return <AtlasStatus>Settlement persistence and exact Breed-conserving migration require the typed settlement repository.</AtlasStatus>;
   return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Settlements</h2><p>Canonical Site mirrors are read-only until the typed import repository is connected.</p></article></div>;
 }

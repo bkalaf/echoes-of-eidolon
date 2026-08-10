@@ -5,23 +5,22 @@ import { migrationInputSchema } from "../../src/routes/api/admin/settlements/mig
 
 const foundCityInput = {
   departures: [{ amount: 10, breedId: "BREED-1", originSettlementWorldId: "SW-1" }],
-  prompt: {
-    promptText: "OWNER SUPPLIED PROMPT",
-    purpose: "OWNER_SUPPLIED_PURPOSE",
-    responseContract: { type: "object" },
-    status: "READY",
-  },
   siteId: "SITE-1",
   worldKey: "CONCORD",
   year: 12,
 };
 
 describe("settlement admin input boundary", () => {
-  it("requires every naming-prompt field and never supplies a default", () => {
+  it("accepts only the browser-owned founding fields", () => {
     expect(foundCityInputSchema.parse(foundCityInput)).toEqual(foundCityInput);
     expect(() => foundCityInputSchema.parse({
       ...foundCityInput,
-      prompt: { promptText: "OWNER SUPPLIED PROMPT", responseContract: { type: "object" } },
+      prompt: {
+        promptText: "BROWSER AUTHORED PROMPT",
+        purpose: "BROWSER_AUTHORED_PURPOSE",
+        responseContract: { type: "object" },
+        status: "READY",
+      },
     })).toThrow();
   });
 
