@@ -48,6 +48,17 @@ describe("account session boundary", () => {
     expect(screen.queryByText(/EID-1042/)).not.toBeInTheDocument();
   });
 
+  it("fails closed for an unknown authenticated account screen", () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
+      isPending: false,
+    });
+    render(<AccountPage screen={{ ...accountScreen("ACC022"), screenId: "ACC_UNKNOWN" }} />);
+
+    expect(screen.getByRole("heading", { name: "Account screen unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Request a friend invitation" })).not.toBeInTheDocument();
+  });
+
   it("renders the authenticated Better Auth identity and saves only the display name", async () => {
     authMocks.useSession.mockReturnValue({
       data: {

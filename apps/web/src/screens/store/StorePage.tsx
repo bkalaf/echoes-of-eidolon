@@ -61,6 +61,7 @@ export function StorePage({ screen }: { screen: PageManifestEntry }) {
   else if (screen.screenId === "STORE09" || screen.screenId === "STORE10") page = <CheckoutResult approved={screen.screenId === "STORE10"} />;
   else if (screen.screenId === "STORE11") page = <GuestStatus />;
   else if (screen.screenId === "STORE12") page = <Lookup />;
-  else page = <StoreSupport />;
+  else if (screen.screenId === "STORE08") page = <StoreSupport />;
+  else page = <><StoreHead title="Store screen unavailable" path={screen.path ?? ""} description="This store screen is not registered." /><p className="notice notice--warn">No store workflow is inferred for an unknown screen.</p></>;
   return <StoreShell><main className="public-page">{page}</main></StoreShell>;
 }

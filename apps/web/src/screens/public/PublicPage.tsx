@@ -25,9 +25,22 @@ function FeaturesPage() {
   return <><div className="action-row"><a className="button" href="/">Back</a><a className="button" href="/">Home</a></div><PageHead eyebrow="Features" title="Nine ways Echoes plays differently." description="Explore the systems behind the world, conversation, challenges and story." /><section className="features-overview"><div className="video-panel"><video controls preload="metadata" src={managedAssetUrl("video.good-versus-evil")}>Your browser does not support the captioned feature video.</video><div><strong>What makes Echoes of Eidolon different?</strong><small>Captioned feature video</small></div></div><div className="feature-grid">{publicFeatures.map((feature) => <a className="feature-tile" href={`/features/${feature.slug}`} key={feature.slug}><img src={feature.image ?? feature.icon} alt="" /><h2>{feature.title}</h2><p>{feature.summary}</p><span>View feature →</span></a>)}</div></section></>;
 }
 
+const featureSlugByScreenId: Record<string, string> = {
+  FEATURE_01: "a-living-world",
+  FEATURE_02: "forge-your-path",
+  FEATURE_03: "real-challenges",
+  FEATURE_04: "leave-your-mark",
+  FEATURE_05: "the-power-of-three",
+  FEATURE_06: "truth-still-matters",
+  FEATURE_07: "real-life-comes-first",
+  FEATURE_08: "speak-or-type-freely",
+  FEATURE_09: "a-unique-and-powerful-story",
+};
+
 function FeaturePage({ screen }: { screen: PageManifestEntry }) {
-  const index = Math.max(0, publicFeatures.findIndex((feature) => feature.title === screen.title));
-  const feature = publicFeatures[index] ?? publicFeatures[0]!;
+  const slug = featureSlugByScreenId[screen.screenId];
+  const feature = publicFeatures.find((entry) => entry.slug === slug);
+  if (!feature) return <><PageHead eyebrow="Features" title="Feature unavailable" description="This feature screen is not registered." /><p className="notice notice--warn">No feature content is inferred for an unknown screen.</p></>;
   const featureMedia = feature.slug === "the-power-of-three"
     ? <video className="feature-scene__media" controls preload="metadata" src={managedAssetUrl("video.power-of-three")}>Your browser does not support the captioned Power of Three video.</video>
     : <img className="feature-scene__media" src={feature.image} alt="" />;

@@ -22,6 +22,19 @@ describe("public mutation boundaries", () => {
     expect(screen.queryByText(/content-addressed managed storage/)).not.toBeInTheDocument();
   });
 
+  it("selects feature content by explicit screen identity rather than mutable title", () => {
+    render(<PublicPage screen={{ ...publicScreen("FEATURE_01"), title: "Changed review title" }} />);
+
+    expect(screen.getByRole("heading", { name: "A Living World", level: 1 })).toBeInTheDocument();
+  });
+
+  it("does not turn an unknown feature screen into the first feature", () => {
+    render(<PublicPage screen={{ ...publicScreen("FEATURE_01"), screenId: "FEATURE_UNKNOWN" }} />);
+
+    expect(screen.getByRole("heading", { name: "Feature unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "A Living World", level: 1 })).not.toBeInTheDocument();
+  });
+
   it("keeps all eight approved contact topics and blocks unowned delivery", () => {
     render(<PublicPage screen={publicScreen("PUB015")} />);
     expect(screen.getAllByRole("button").filter((button) => button.classList.contains("topic"))).toHaveLength(8);

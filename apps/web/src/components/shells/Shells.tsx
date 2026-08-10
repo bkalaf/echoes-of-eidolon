@@ -20,7 +20,7 @@ function PublicAuthControls() {
   const session = authClient.useSession();
   if (session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
   if (session.data) {
-    const initial = session.data.user.name?.trim().charAt(0).toUpperCase() || "A";
+    const initial = session.data.user.name?.trim().charAt(0).toUpperCase() ?? "";
     return <div className="auth-actions"><a aria-label="Account" className="avatar-link" href="/account/profile"><span aria-hidden="true">{initial}</span></a><a className="button button--gold" href="/auth/sign-out">Sign Out</a></div>;
   }
   return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;

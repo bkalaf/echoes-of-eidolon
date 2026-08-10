@@ -106,6 +106,21 @@ describe("reviewed authentication states", () => {
     invite.unmount();
   });
 
+  it("never copies an invitation bearer code from the URL into the form", () => {
+    window.history.replaceState({}, "", "/auth/redeem-invitation?id=secret-in-history");
+    render(<AuthPage screen={authScreen("AUTH07")} />);
+
+    expect(screen.getByLabelText("Invitation code")).toHaveValue("");
+    expect(screen.getByRole("button", { name: "Redeem Invitation" })).toBeDisabled();
+  });
+
+  it("fails closed for an unknown authentication screen", () => {
+    render(<AuthPage screen={{ ...authScreen("AUTH03"), screenId: "AUTH_UNKNOWN" }} />);
+
+    expect(screen.getByRole("heading", { name: "Authentication unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Create Account" })).not.toBeInTheDocument();
+  });
+
   it("sends and verifies a six-digit email two-factor OTP", async () => {
     render(<AuthPage screen={authScreen("AUTH08")} />);
     expect(screen.getByLabelText("6-digit code")).toHaveAttribute("type", "text");

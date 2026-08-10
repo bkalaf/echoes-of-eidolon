@@ -65,7 +65,8 @@ function SignedInGamePage({ screen }: { screen: PageManifestEntry }) {
   if (screen.screenId === "GAME011") return <WitnessTrial screen={screen} />;
   if (screen.screenId === "GAME012") return <Companions screen={screen} />;
   if (screen.screenId === "GAME014") return <Calendar screen={screen} />;
-  return <SettingsOverlay screen={screen} />;
+  if (screen.screenId === "GAME015") return <SettingsOverlay screen={screen} />;
+  return <><GameHead title="Game screen unavailable" description="This player screen is not registered." /><section className="game-deferred"><h2>No runtime projection</h2><p>No game workflow is inferred for an unknown screen.</p></section></>;
 }
 
 export function GamePage({ screen }: { screen: PageManifestEntry }) {

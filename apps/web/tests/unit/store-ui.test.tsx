@@ -48,4 +48,11 @@ describe("store interaction boundaries", () => {
     expect(screen.getByRole("button", { name: "Continue to Stripe unavailable" })).toBeDisabled();
     expect(screen.getByText(/Printful product and variant identifiers/)).toBeInTheDocument();
   });
+
+  it("fails closed for an unknown store screen", () => {
+    render(<StorePage screen={{ ...storeScreen("STORE08"), screenId: "STORE_UNKNOWN" }} />);
+
+    expect(screen.getByRole("heading", { name: "Store screen unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Store support owner-deferred" })).not.toBeInTheDocument();
+  });
 });

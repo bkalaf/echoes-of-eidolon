@@ -26,6 +26,15 @@ function renderGame(screenId: string) {
   );
 }
 
+function renderGameScreen(screenEntry: ReturnType<typeof gameScreen>) {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <GamePage screen={screenEntry} />
+    </QueryClientProvider>,
+  );
+}
+
 function playerAccess(input: { betaEligible: boolean; canPlay: boolean; role: string }) {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
     json: async () => input,
@@ -164,5 +173,13 @@ describe("game runtime boundary", () => {
 
     expect(await screen.findByRole("heading", { name: "Game access unavailable" })).toBeInTheDocument();
     expect(screen.queryByRole("textbox", { name: "Speak or type freely" })).not.toBeInTheDocument();
+  });
+
+  it("fails closed for an unknown authenticated game screen", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    renderGameScreen({ ...gameScreen("GAME015"), screenId: "GAME_UNKNOWN" });
+
+    expect(await screen.findByRole("heading", { name: "Game screen unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Game Settings" })).not.toBeInTheDocument();
   });
 });

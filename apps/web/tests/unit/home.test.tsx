@@ -55,6 +55,14 @@ describe("public home", () => {
     expect(screen.queryByRole("link", { name: "Sign In" })).not.toBeInTheDocument();
   });
 
+  it("does not fabricate an account initial when the signed-in name is blank", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "player-1", name: "" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: true, canPlay: true, role: "member" }) }));
+    renderHome();
+
+    expect(await screen.findByRole("link", { name: "Account" })).not.toHaveTextContent("A");
+  });
+
   it("does not infer beta admission from a signed-in account", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: false, canPlay: false, role: "admin" }) }));

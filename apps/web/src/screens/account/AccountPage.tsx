@@ -230,7 +230,8 @@ function SignedInAccountPage({ currentSessionToken, screen, user }: { currentSes
   if (["ACC016", "ACC017"].includes(screen.screenId)) return <Progress screen={screen} />;
   if (screen.screenId === "ACC018") return <Achievements screen={screen} />;
   if (["ACC019", "ACC020", "ACC021"].includes(screen.screenId)) return <Support screen={screen} />;
-  return <Invitations screen={screen} />;
+  if (["ACC022", "ACC023"].includes(screen.screenId)) return <Invitations screen={screen} />;
+  return <><AccountHead screen={screen} description="This account screen is not registered." /><section className="card"><h2>Account screen unavailable</h2><p>No account workflow is inferred for an unknown screen.</p></section></>;
 }
 
 export function AccountPage({ screen }: { screen: PageManifestEntry }) {
