@@ -22,12 +22,44 @@ function Controls({ screen }: { screen: PageManifestEntry }) {
   return <Unavailable screen={screen} />;
 }
 
-const componentNames = ["Header", "Footer", "Sidebar", "Page head", "Card", "Form field", "Data table", "Modal", "Map", "Game HUD"];
+const composerComponents = ["Public TopBar", "Hero", "Feature Carousel", "Data Table", "Modal", "Game BottomBar"] as const;
+const libraryComponents = [
+  ["Top Bar", "Public/admin navigation shell."],
+  ["Data Table", "Search, filter, sort, inline-safe editing and selection."],
+  ["Lookup Control", "Controlled entity search with exact IDs."],
+  ["Modal", "Focused confirmation or short workflow state."],
+  ["Map View", "2D Atlas view with synchronized selection."],
+  ["Globe View", "3D Atlas view with layered rendering."],
+] as const;
+const wireframeTemplates = [
+  ["Public detail page", "Hero/media, substantive copy, CTA, footer."],
+  ["Admin table workspace", "Task-specific table plus selected-record detail."],
+  ["Admin editor", "Entity-specific fields, relationships and save actions."],
+  ["Split map workspace", "List/detail synchronized with a 2D or 3D map view."],
+  ["Campaign planner", "Book rows, assignment columns and compact linked cards."],
+  ["Game overlay", "Persistent sky viewport with task-specific player UI."],
+] as const;
+
+function ComponentComposer({ screen }: { screen: PageManifestEntry }) {
+  return <><ToolsHead screen={screen} description="The builder uses the same 0.2.0 component/state catalog as the approval screens." /><div className="builder-layout"><aside className="card"><h2>Component Palette</h2>{composerComponents.map((name) => <button key={name}>{name}</button>)}</aside><section className="builder-canvas"><article className="card"><h2>TopBar</h2></article><article className="card"><h2>Selected component: Feature Carousel</h2><p>Drag/reorder or select to edit. Desktop/mobile preview uses the same content.</p></article><div className="action-row"><button className="button">Undo</button><button className="button">Save Local</button><button className="button button--gold">Export HTML</button></div></section><aside className="card"><h2>Properties</h2><dl className="detail-list"><dt>Role</dt><dd>GUEST</dd><dt>State</dt><dd>DEFAULT</dd><dt>Width</dt><dd>Desktop</dd></dl><p>JSON import/export · local saves · standalone HTML</p></aside></div></>;
+}
+
+function ReviewQueue({ screen }: { screen: PageManifestEntry }) {
+  const rows = [
+    ["001", "PUB001", "Home", "Approved visual target"],
+    ["107", "DATA_ANTAGONIST_TABLE", "Antagonist Records", "Review"],
+    ["251", "AT004_FOUND_CITY", "Found City", "Review"],
+    ["253", "AT005_SETTLEMENT_DETAIL", "Migrate", "Review"],
+    ["255", "ADM036", "Campaign Planner", "Review"],
+  ] as const;
+  return <><ToolsHead screen={screen} description="Shared wireframe tooling without replacing task-specific page topology." /><div className="grid-2"><section className="card"><h2>Wireframe Review Queue</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Page</th><th>Screen</th><th>Title</th><th>State</th></tr></thead><tbody>{rows.map(([page, id, title, state]) => <tr key={id}><td>{page}</td><td>{id}</td><td>{title}</td><td>{state}</td></tr>)}</tbody></table></div></section><aside className="card"><h2>Review controls</h2><p>Open page, compare against owner-approved source, annotate, accept, or return for revision.</p><button className="button button--gold">Open selected</button></aside></div></>;
+}
 
 function Builder({ screen }: { screen: PageManifestEntry }) {
-  if (["TOO002"].includes(screen.screenId)) return <><ToolsHead screen={screen} description="Reusable wireframe component library." /><div className="entity-grid">{componentNames.map((name) => <article className="card" key={name}><h2>{name}</h2><span className="tag">Component</span></article>)}</div></>;
-  if (screen.screenId === "TOO003") return <><ToolsHead screen={screen} description="Task-specific wireframe templates." /><div className="grid-3">{["Public detail", "Account form", "Admin table", "Admin editor", "Game viewport", "Review control"].map((name) => <article className="card" key={name}><h2>{name}</h2><button className="button">Use template</button></article>)}</div></>;
-  if (["TOOL005", "TOO001"].includes(screen.screenId)) return <><ToolsHead screen={screen} description="Compose review wireframes from the current component set." /><div className="builder-layout"><aside className="card"><h2>Components</h2>{componentNames.map((name) => <button key={name}>{name}</button>)}</aside><section className="builder-canvas"><article className="card"><p className="kicker">PAGE HEAD</p><h2>Untitled task</h2><p>Drop components into this review canvas.</p></article></section><aside className="card"><h2>Properties</h2><label className="field">Label<input className="input" /></label><label className="field">Variant<select className="select"><option>Default</option></select></label><button className="button button--gold">Export review</button></aside></div></>;
+  if (screen.screenId === "TOOL005") return <ComponentComposer screen={screen} />;
+  if (screen.screenId === "TOO001") return <ReviewQueue screen={screen} />;
+  if (screen.screenId === "TOO002") return <><ToolsHead screen={screen} description="Shared wireframe tooling without replacing task-specific page topology." /><div className="grid-3">{libraryComponents.map(([name, description]) => <article className="card" key={name}><h2>{name}</h2><p>{description}</p><span className="tag">Shared primitive</span></article>)}</div></>;
+  if (screen.screenId === "TOO003") return <><ToolsHead screen={screen} description="Shared wireframe tooling without replacing task-specific page topology." /><div className="grid-3">{wireframeTemplates.map(([name, description]) => <article className="card" key={name}><h2>{name}</h2><p>{description}</p></article>)}</div></>;
   return <Unavailable screen={screen} />;
 }
 
