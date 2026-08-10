@@ -28,4 +28,16 @@ describe("public mutation boundaries", () => {
     expect(screen.getByText("+6 months")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Donate unavailable" })).toBeDisabled();
   });
+
+  it("does not turn the reviewed eligible donation state into a live eligibility result", () => {
+    render(<PublicPage screen={publicScreen("PUB021")} />);
+    expect(screen.getByRole("heading", { name: "Eligibility unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Eligible participant" })).not.toBeInTheDocument();
+  });
+
+  it("does not fabricate version history without a release source", () => {
+    render(<PublicPage screen={publicScreen("PUB017")} />);
+    expect(screen.getByRole("heading", { name: "Release notes unavailable" })).toBeInTheDocument();
+    expect(screen.queryByText(/v0\.2\.0|v0\.1\.9|v0\.1\.8/)).not.toBeInTheDocument();
+  });
 });

@@ -42,7 +42,7 @@ export function PacketScreen({ screen }: { screen?: PageManifestEntry }) {
         <main className="not-found">
           <p className="kicker">{screen.screenId}</p>
           <h1>{screen.title}</h1>
-          <p>This packet screen belongs to a later implementation tranche.</p>
+          <p>No shell owner is registered for this manifest entry.</p>
         </main>
       );
   }
