@@ -20,7 +20,7 @@ export function PacketScreen({ pathname, screen }: { pathname?: string; screen?:
   }
 
   if (screen.screenId === "ACC030") {
-    return <AccountPage screen={screen} />;
+    return <AccountPage pathname={pathname} screen={screen} />;
   }
   if (screen.screenId.startsWith("GAME") || screen.screenId.startsWith("GAM")) {
     return <GamePage screen={screen} />;
@@ -31,7 +31,7 @@ export function PacketScreen({ pathname, screen }: { pathname?: string; screen?:
 
   switch (shellFor(screen)) {
     case "auth": return <AuthPage screen={screen} />;
-    case "account": return <AccountPage screen={screen} />;
+    case "account": return <AccountPage pathname={pathname} screen={screen} />;
     case "store": return <StorePage screen={screen} />;
     case "public": return <PublicPage screen={screen} />;
     case "admin": return <AdminPage pathname={pathname} screen={screen} />;

@@ -22,6 +22,8 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
 import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
 import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
+import { Route as ApiAccountOrdersIndexRouteImport } from './routes/api/account/orders/index'
+import { Route as ApiAccountOrdersOrderIdRouteImport } from './routes/api/account/orders/$orderId'
 import { Route as ApiAccountSessionsRevokeAllOtherRouteImport } from './routes/api/account/sessions/revoke-all-other'
 import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/account/sessions/revoke-other'
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
@@ -103,6 +105,16 @@ const ApiBetaInvitationsRequestRoute =
 const ApiPlayerAccessRoute = ApiPlayerAccessRouteImport.update({
   id: '/api/player/access',
   path: '/api/player/access',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountOrdersIndexRoute = ApiAccountOrdersIndexRouteImport.update({
+  id: '/api/account/orders/',
+  path: '/api/account/orders/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountOrdersOrderIdRoute = ApiAccountOrdersOrderIdRouteImport.update({
+  id: '/api/account/orders/$orderId',
+  path: '/api/account/orders/$orderId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAccountSessionsRevokeAllOtherRoute =
@@ -205,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
@@ -212,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
+  '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -235,6 +249,7 @@ export interface FileRoutesByTo {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
@@ -242,6 +257,7 @@ export interface FileRoutesByTo {
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
+  '/api/account/orders': typeof ApiAccountOrdersIndexRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
@@ -266,6 +282,7 @@ export interface FileRoutesById {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
@@ -273,6 +290,7 @@ export interface FileRoutesById {
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
+  '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -298,6 +316,7 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
@@ -305,6 +324,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
+    | '/api/account/orders/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -328,6 +348,7 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
@@ -335,6 +356,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
+    | '/api/account/orders'
     | '/api/admin/accounts'
     | '/api/admin/assets'
     | '/api/admin/beta-invitations'
@@ -358,6 +380,7 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
@@ -365,6 +388,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
+    | '/api/account/orders/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -389,6 +413,7 @@ export interface RootRouteChildren {
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
   ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
   ApiPlayerAccessRoute: typeof ApiPlayerAccessRoute
+  ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRoute
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
@@ -396,6 +421,7 @@ export interface RootRouteChildren {
   ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
+  ApiAccountOrdersIndexRoute: typeof ApiAccountOrdersIndexRoute
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
@@ -496,6 +522,20 @@ declare module '@tanstack/react-router' {
       path: '/api/player/access'
       fullPath: '/api/player/access'
       preLoaderRoute: typeof ApiPlayerAccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/orders/': {
+      id: '/api/account/orders/'
+      path: '/api/account/orders'
+      fullPath: '/api/account/orders/'
+      preLoaderRoute: typeof ApiAccountOrdersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/orders/$orderId': {
+      id: '/api/account/orders/$orderId'
+      path: '/api/account/orders/$orderId'
+      fullPath: '/api/account/orders/$orderId'
+      preLoaderRoute: typeof ApiAccountOrdersOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/account/sessions/revoke-all-other': {
@@ -634,6 +674,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
   ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,
   ApiPlayerAccessRoute: ApiPlayerAccessRoute,
+  ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRoute,
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
@@ -642,6 +683,7 @@ const rootRouteChildren: RootRouteChildren = {
     ApiAdminSettlementsCompleteNamingRoute,
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
   ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
+  ApiAccountOrdersIndexRoute: ApiAccountOrdersIndexRoute,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,

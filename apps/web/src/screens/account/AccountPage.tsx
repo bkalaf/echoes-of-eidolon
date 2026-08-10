@@ -36,6 +36,27 @@ interface MembershipProjection {
   voiceWindowSeconds: number;
 }
 
+interface AccountOrderProjection {
+  createdAt: string;
+  lines: Array<{
+    color: string | null;
+    name: string;
+    orderLineId: string;
+    quantity: number;
+    size: string | null;
+    storeVariantId: string;
+    unitPriceCents: number;
+  }>;
+  orderId: string;
+  payment: null | {
+    amountCents: number;
+    confirmedAt: string;
+    fulfillmentSubmittedAt: string | null;
+  };
+  refunds: Array<{ amountCents: number; refundedAt: string }>;
+  returnEligibleAt: string | null;
+}
+
 function AccountHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ACCOUNT · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
 }
@@ -172,8 +193,46 @@ function Subscription({ screen }: { screen: PageManifestEntry }) {
   return <><AccountHead screen={screen} description="Subscription status, billing state and history." />{loading ? <p className="notice">Loading membership entitlement…</p> : error || !membership ? <p className="notice notice--bad" role="alert">{error ?? "Membership entitlement could not be loaded."}</p> : <div className="stack"><section className="card"><h2>Membership entitlement</h2><dl className="detail-list"><dt>Status</dt><dd>{membership.active ? "Active" : "Inactive"}</dd><dt>Effective end</dt><dd>{membership.effectiveEndAt ? new Date(membership.effectiveEndAt).toLocaleString() : "No active entitlement"}</dd><dt>Voice window</dt><dd>{membership.voiceWindowSeconds} seconds</dd></dl><p className="muted">Membership benefits do not grant an authorization role or beta/player eligibility.</p></section>{screen.screenId === "ACC010" && <section className="card"><h2>Membership history</h2>{membership.grants.length === 0 ? <p>No membership grants.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Source</th><th>Months</th><th>Effective start</th><th>Effective end</th></tr></thead><tbody>{membership.grants.map((grant) => <tr key={grant.membershipGrantId}><td>{grant.source}</td><td>{grant.monthsGranted}</td><td>{new Date(grant.effectiveStartAt).toLocaleString()}</td><td>{new Date(grant.effectiveEndAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section>}{membership.activePerks.length > 0 && <section className="card"><h2>Active perks</h2><ul>{membership.activePerks.map((perk) => <li key={perk.perkId}><strong>{perk.name}</strong>: {perk.description}</li>)}</ul></section>}{providerStateScreen && <Deferred>Stripe payment acceptance, decline, and cancellation actions require a persisted provider operation for this account. The membership ledger above is authoritative and no provider result is inferred from it.</Deferred>}</div>}</>;
 }
 
-function Orders({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." /><div className="grid-2"><Deferred>No Order persistence or authenticated order-query contract is supplied.</Deferred><section className="card"><h2>Provider boundary</h2><p>Stripe payment and Printful fulfillment remain separate. No order or fulfillment state is inferred from provider configuration.</p></section></div></>;
+function money(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`;
+}
+
+function Orders({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
+  const [orders, setOrders] = useState<AccountOrderProjection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>();
+  const orderId = pathname?.match(/^\/account\/orders\/([^/]+)(?:\/return)?$/)?.[1];
+  const detail = screen.screenId === "ACC012" || screen.screenId === "ACC013";
+
+  useEffect(() => {
+    let active = true;
+    if (detail && !orderId) return () => { active = false; };
+    const endpoint = detail ? `/api/account/orders/${encodeURIComponent(orderId!)}` : "/api/account/orders/";
+    void fetch(endpoint).then(async (response) => {
+      const result = await response.json() as { error?: string; order?: AccountOrderProjection; orders?: AccountOrderProjection[] };
+      if (!active) return;
+      setLoading(false);
+      if (!response.ok) setError(result.error ?? "Orders could not be loaded.");
+      else setOrders(result.order ? [result.order] : result.orders ?? []);
+    }).catch(() => {
+      if (!active) return;
+      setLoading(false);
+      setError("Orders could not be loaded.");
+    });
+    return () => { active = false; };
+  }, [detail, orderId]);
+
+  const order = orders[0];
+  let content;
+  if (detail && !orderId) content = <p className="notice notice--bad" role="alert">Order identity is required.</p>;
+  else if (loading) content = <p className="notice">Loading orders…</p>;
+  else if (error) content = <p className="notice notice--bad" role="alert">{error}</p>;
+  else if (!detail) content = orders.length === 0 ? <p>No merchandise orders.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Order</th><th>Created</th><th>Items</th><th>Payment</th><th>Fulfillment</th></tr></thead><tbody>{orders.map((item) => <tr key={item.orderId}><td><a href={`/account/orders/${encodeURIComponent(item.orderId)}`}>{item.orderId}</a></td><td>{new Date(item.createdAt).toLocaleString()}</td><td>{item.lines.reduce((sum, line) => sum + line.quantity, 0)}</td><td>{item.payment ? `${money(item.payment.amountCents)} confirmed` : "No confirmed payment"}</td><td>{item.payment?.fulfillmentSubmittedAt ? "Submitted to Printful" : "Not submitted"}</td></tr>)}</tbody></table></div>;
+  else if (!order) content = <p className="notice notice--bad" role="alert">Order not found.</p>;
+  else if (screen.screenId === "ACC013") content = order.returnEligibleAt ? <section className="card"><h2>Return request</h2><p>Return eligibility was recorded at {new Date(order.returnEligibleAt).toLocaleString()}.</p><button className="button button--gold" disabled>Submit return unavailable</button><p className="notice notice--warn">No return-submission or refund workflow is inferred from eligibility alone.</p></section> : <section className="card"><h2>Return unavailable</h2><p>This order has no persisted return eligibility.</p><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>Back to order</a></section>;
+  else content = <div className="stack"><section className="card"><h2>Order {order.orderId}</h2><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Payment</dt><dd>{order.payment ? `${money(order.payment.amountCents)} confirmed ${new Date(order.payment.confirmedAt).toLocaleString()}` : "No confirmed payment"}</dd><dt>Fulfillment</dt><dd>{order.payment?.fulfillmentSubmittedAt ? `Submitted ${new Date(order.payment.fulfillmentSubmittedAt).toLocaleString()}` : "Not submitted"}</dd><dt>Refunded</dt><dd>{money(order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0))}</dd></dl>{order.returnEligibleAt && <a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}/return`}>Request a return</a>}</section><section className="card"><h2>Items</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Product</th><th>Size</th><th>Color</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>{order.lines.map((line) => <tr key={line.orderLineId}><td>{line.name}</td><td>{line.size ?? "—"}</td><td>{line.color ?? "—"}</td><td>{line.quantity}</td><td>{money(line.unitPriceCents)}</td></tr>)}</tbody></table></div></section></div>;
+
+  return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." />{content}<section className="card"><h2>Provider boundary</h2><p>Stripe payment and Printful fulfillment remain separate. Provider identifiers are not exposed.</p></section></>;
 }
 
 function Settings({ screen }: { screen: PageManifestEntry }) {
@@ -222,11 +281,11 @@ function BetaLanding({ screen }: { screen: PageManifestEntry }) {
   return <><AccountHead screen={screen} description="Authenticated account landing." /><div className="grid-2"><section className="card"><h2>Account access</h2><p>The Better Auth session is active.</p><a className="button" href="/account/profile">View profile</a></section><Deferred>Beta participation and MEMBER/USER access require an account-access owner and role model.</Deferred></div></>;
 }
 
-function SignedInAccountPage({ currentSessionToken, screen, user }: { currentSessionToken?: string; screen: PageManifestEntry; user: AccountUser }) {
+function SignedInAccountPage({ currentSessionToken, pathname, screen, user }: { currentSessionToken?: string; pathname?: string; screen: PageManifestEntry; user: AccountUser }) {
   if (screen.screenId === "ACC030") return <BetaLanding screen={screen} />;
   if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) return <Profile currentSessionToken={currentSessionToken} screen={screen} user={user} />;
   if (screen.screenId >= "ACC005" && screen.screenId <= "ACC010") return <Subscription screen={screen} />;
-  if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) return <Orders screen={screen} />;
+  if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) return <Orders pathname={pathname} screen={screen} />;
   if (["ACC014", "ACC015"].includes(screen.screenId)) return <Settings screen={screen} />;
   if (["ACC016", "ACC017"].includes(screen.screenId)) return <Progress screen={screen} />;
   if (screen.screenId === "ACC018") return <Achievements screen={screen} />;
@@ -235,7 +294,7 @@ function SignedInAccountPage({ currentSessionToken, screen, user }: { currentSes
   return <><AccountHead screen={screen} description="This account screen is not registered." /><section className="card"><h2>Account screen unavailable</h2><p>No account workflow is inferred for an unknown screen.</p></section></>;
 }
 
-export function AccountPage({ screen }: { screen: PageManifestEntry }) {
+export function AccountPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
   const session = authClient.useSession();
   let page;
   if (session.isPending) {
@@ -243,7 +302,7 @@ export function AccountPage({ screen }: { screen: PageManifestEntry }) {
   } else if (!session.data) {
     page = <><AccountHead screen={screen} description="A signed-in account is required." /><section className="card"><h2>Sign in required</h2><p>No account, order, progress, or support data is shown without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
   } else {
-    page = <SignedInAccountPage currentSessionToken={session.data.session?.token} screen={screen} user={session.data.user} />;
+    page = <SignedInAccountPage currentSessionToken={session.data.session?.token} pathname={pathname} screen={screen} user={session.data.user} />;
   }
   return <AccountShell>{page}</AccountShell>;
 }

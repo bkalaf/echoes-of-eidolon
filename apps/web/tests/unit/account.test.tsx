@@ -48,6 +48,58 @@ describe("account session boundary", () => {
     expect(screen.queryByText(/EID-1042/)).not.toBeInTheDocument();
   });
 
+  it("lists only authenticated server-projected orders without provider identifiers", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "player@example.test", name: "Player", username: "player" } },
+      isPending: false,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        orders: [{
+          createdAt: "2026-08-10T00:00:00.000Z",
+          lines: [{ color: null, name: "Poster", orderLineId: "LINE-1", quantity: 1, size: null, storeVariantId: "VARIANT-1", unitPriceCents: 2500 }],
+          orderId: "ORDER-1",
+          payment: { amountCents: 2500, confirmedAt: "2026-08-10T00:01:00.000Z", fulfillmentSubmittedAt: null },
+          refunds: [],
+          returnEligibleAt: null,
+        }],
+      }),
+      ok: true,
+    }));
+
+    render(<AccountPage pathname="/account/orders" screen={accountScreen("ACC011")} />);
+
+    expect(await screen.findByRole("link", { name: "ORDER-1" })).toHaveAttribute("href", "/account/orders/ORDER-1");
+    expect(screen.getByText("$25.00 confirmed")).toBeInTheDocument();
+    expect(screen.getByText("Not submitted")).toBeInTheDocument();
+    expect(screen.queryByText(/stripe_|printful_/i)).not.toBeInTheDocument();
+  });
+
+  it("shows a return action only when persisted order eligibility exists", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "player@example.test", name: "Player", username: "player" } },
+      isPending: false,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        order: {
+          createdAt: "2026-08-10T00:00:00.000Z",
+          lines: [],
+          orderId: "ORDER-1",
+          payment: null,
+          refunds: [],
+          returnEligibleAt: null,
+        },
+      }),
+      ok: true,
+    }));
+
+    render(<AccountPage pathname="/account/orders/ORDER-1/return" screen={accountScreen("ACC013")} />);
+
+    expect(await screen.findByRole("heading", { name: "Return unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Submit return unavailable" })).not.toBeInTheDocument();
+  });
+
   it("fails closed for an unknown authenticated account screen", () => {
     authMocks.useSession.mockReturnValue({
       data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
