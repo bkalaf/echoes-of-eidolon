@@ -1,0 +1,21 @@
+[Unit]
+Description=Echoes of Eidolon web server
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=eidolon
+Group=eidolon
+WorkingDirectory=/srv/eidolon/current
+EnvironmentFile=/etc/eidolon/deployment.env
+ExecStart=/usr/bin/pnpm --filter @echoes/web start
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/srv/eidolon/current/.output
+
+[Install]
+WantedBy=multi-user.target
