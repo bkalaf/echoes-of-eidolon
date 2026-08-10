@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { managedAssetUrl } from "../../content/managed-assets";
+import { authClient } from "../../lib/auth-client";
 import { LoginSoundtrackPlayer } from "../LoginSoundtrackPlayer";
 
 const publicNav = [
@@ -13,6 +14,15 @@ const publicNav = [
 
 export function BrandLogo() {
   return <img className="brand-logo" src={managedAssetUrl("brand.logo-alpha")} alt="Echoes of Eidolon" />;
+}
+
+function PublicAuthControls() {
+  const session = authClient.useSession();
+  if (session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
+  if (session.data) {
+    return <div className="auth-actions"><a className="button button--default" href="/account/profile">Account</a><a className="button button--gold" href="/auth/sign-out">Sign Out</a></div>;
+  }
+  return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
@@ -29,14 +39,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </a>
           ))}
         </nav>
-        <div className="auth-actions">
-          <a className="button button--default" href="/auth/sign-in">
-            Sign In
-          </a>
-          <a className="button button--gold" href="/auth/sign-up">
-            Sign Up
-          </a>
-        </div>
+        <PublicAuthControls />
       </header>
       <main className="site-main">{children}</main>
       <footer className="public-footer">

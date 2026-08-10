@@ -1,12 +1,13 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const authMocks = vi.hoisted(() => ({ sendOtp: vi.fn(), signInEmail: vi.fn(), verifyOtp: vi.fn() }));
+const authMocks = vi.hoisted(() => ({ sendOtp: vi.fn(), signInEmail: vi.fn(), useSession: vi.fn(), verifyOtp: vi.fn() }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
     signIn: { email: authMocks.signInEmail },
     twoFactor: { sendOtp: authMocks.sendOtp, verifyOtp: authMocks.verifyOtp },
+    useSession: authMocks.useSession,
   },
 }));
 
@@ -24,6 +25,7 @@ describe("reviewed authentication states", () => {
     authMocks.sendOtp.mockResolvedValue({ data: { status: true }, error: null });
     authMocks.signInEmail.mockResolvedValue({ data: {}, error: null });
     authMocks.verifyOtp.mockResolvedValue({ data: {}, error: null });
+    authMocks.useSession.mockReturnValue({ data: null, isPending: false });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       json: async () => ({ redeemed: true }),
       ok: true,

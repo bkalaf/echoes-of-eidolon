@@ -1,11 +1,25 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
+
+vi.mock("../../src/lib/auth-client", () => ({ authClient: { useSession: authMocks.useSession } }));
 
 import { HomePage } from "../../src/screens/public/HomePage";
 
+function renderHome() {
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><HomePage /></QueryClientProvider>);
+}
+
 describe("public home", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    authMocks.useSession.mockReturnValue({ data: null, isPending: false });
+  });
+
   it("renders the approved hero and all nine carousel features", () => {
-    render(<HomePage />);
+    renderHome();
     expect(screen.getByRole("heading", { name: /when the moons align/i })).toBeVisible();
     expect(screen.getAllByRole("listitem")).toHaveLength(9);
     expect(screen.getByText("A subscription will never be required.")).toBeVisible();
@@ -13,11 +27,37 @@ describe("public home", () => {
 
   it("moves through all nine features with controlled carousel navigation", () => {
     Element.prototype.scrollIntoView = () => undefined;
-    render(<HomePage />);
+    renderHome();
     expect(screen.getByText("Feature 1 of 9")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Next feature" }));
     expect(screen.getByText("Feature 2 of 9")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Previous feature" }));
     expect(screen.getByText("Feature 1 of 9")).toBeVisible();
+  });
+
+  it("shows only signed-out authentication controls on the public landing page", () => {
+    renderHome();
+    expect(screen.getByRole("link", { name: "Sign In" })).toHaveAttribute("href", "/auth/sign-in");
+    expect(screen.getByRole("link", { name: "Sign Up" })).toHaveAttribute("href", "/auth/sign-up");
+    expect(screen.queryByRole("link", { name: "Sign Out" })).not.toBeInTheDocument();
+  });
+
+  it("renders the invite-only beta landing only after player access is verified", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "player-1" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: true, canPlay: true, role: "member" }) }));
+    renderHome();
+    expect(await screen.findByRole("heading", { name: "Echoes of Eidolon Beta" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Enter Game" })).toHaveAttribute("href", "/game");
+    expect(screen.getByRole("link", { name: "Account" })).toHaveAttribute("href", "/account/profile");
+    expect(screen.getByRole("link", { name: "Sign Out" })).toHaveAttribute("href", "/auth/sign-out");
+    expect(screen.queryByRole("link", { name: "Sign In" })).not.toBeInTheDocument();
+  });
+
+  it("does not infer beta admission from a signed-in account", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: false, canPlay: false, role: "admin" }) }));
+    renderHome();
+    expect(await screen.findByRole("heading", { name: "Player eligibility required" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Enter Game" })).not.toBeInTheDocument();
   });
 });

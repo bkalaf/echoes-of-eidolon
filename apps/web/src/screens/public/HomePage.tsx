@@ -1,10 +1,37 @@
+import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
 import { managedAssetUrl } from "../../content/managed-assets";
 import { publicFeatures } from "../../content/public";
+import type { AuthorizationRole } from "../../domain/authorization";
+import { authClient } from "../../lib/auth-client";
+
+interface PlayerAccess {
+  betaEligible: boolean;
+  canPlay: boolean;
+  role: AuthorizationRole;
+}
+
+function AuthenticatedHome({ access }: { access: PlayerAccess }) {
+  if (!access.canPlay) {
+    return <PublicShell><main className="public-page"><header className="page-head"><p className="eyebrow">Account</p><h1>Player eligibility required</h1><p>This signed-in account does not currently have access to the invite-only beta.</p></header><section className="card"><p>Authorization role and membership entitlement do not grant beta/player eligibility.</p><a className="button" href="/account/profile">Open Account</a></section></main></PublicShell>;
+  }
+  return <PublicShell><main className="public-page"><header className="page-head"><p className="eyebrow">Invite-only beta</p><h1>Echoes of Eidolon Beta</h1><p>Your authenticated player access has been verified.</p></header><section className="card"><h2>Continue playing</h2><p>Enter the authenticated player shell.</p><a className="button button--gold" href="/game">Enter Game</a></section></main></PublicShell>;
+}
 
 export function HomePage() {
+  const session = authClient.useSession();
+  const playerAccess = useQuery({
+    queryKey: ["authorization", "home-player-access", session.data?.user.id],
+    enabled: Boolean(session.data),
+    queryFn: async () => {
+      const response = await fetch("/api/player/access");
+      if (!response.ok) throw new Error("Player access could not be verified.");
+      return response.json() as Promise<PlayerAccess>;
+    },
+    retry: false,
+  });
   const [activeFeature, setActiveFeature] = useState(0);
   const cards = useRef<Array<HTMLAnchorElement | null>>([]);
 
@@ -17,6 +44,10 @@ export function HomePage() {
       inline: "center",
     });
   };
+
+  if (session.data && playerAccess.isPending) return <PublicShell><main className="public-page"><p className="notice">Checking player eligibility…</p></main></PublicShell>;
+  if (session.data && playerAccess.isError) return <PublicShell><main className="public-page"><section className="card"><h1>Player access unavailable</h1><p>Access fails closed when beta/player eligibility cannot be verified.</p></section></main></PublicShell>;
+  if (session.data && playerAccess.data) return <AuthenticatedHome access={playerAccess.data} />;
 
   return (
     <PublicShell>
