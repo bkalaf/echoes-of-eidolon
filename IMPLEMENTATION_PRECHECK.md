@@ -143,9 +143,11 @@ continue. Only these dependent slices remain blocked:
 
 - Subsystem: Assets/Media
 - Blocked slice: persistent upload/publication
-- Missing decision: storage provider/path and managed metadata/rights model
+- Supplied technical owner: AWS S3
+- Missing decision: object-key/path policy and managed metadata/rights model
 - Checked: owner ledger, implementation contracts, Mermaid 32, reviewed asset screens
-- Current safe work: local visual references and non-mutating manager UI
+- Current safe work: lazy S3 service boundary, local visual references, and
+  non-mutating manager UI
 
 ### ODR-OPERATIONS-HOOKS
 

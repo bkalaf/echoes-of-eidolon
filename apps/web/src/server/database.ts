@@ -2,7 +2,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
 import { PrismaClient } from "../generated/prisma/client";
-import { getRuntimeEnv } from "./env";
+import { getDatabaseEnv } from "./env";
 
 interface DatabaseSingleton {
   client?: PrismaClient;
@@ -18,7 +18,7 @@ const database = (singleton.__echoesDatabase ??= {});
 export function getDatabase(): PrismaClient {
   if (database.client) return database.client;
 
-  const { DATABASE_URL } = getRuntimeEnv();
+  const { DATABASE_URL } = getDatabaseEnv();
   const pool = new Pool({ connectionString: DATABASE_URL });
   const adapter = new PrismaPg(pool);
 

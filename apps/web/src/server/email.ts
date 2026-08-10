@@ -1,11 +1,11 @@
 import { Resend } from "resend";
 
-import { getRuntimeEnv } from "./env";
+import { getEmailEnv } from "./env";
 
 let client: Resend | undefined;
 
 function getEmailClient(): Resend {
-  client ??= new Resend(getRuntimeEnv().RESEND_API_KEY);
+  client ??= new Resend(getEmailEnv().RESEND_API_KEY);
   return client;
 }
 
@@ -13,7 +13,7 @@ export async function sendVerificationEmail(input: {
   recipient: string;
   url: string;
 }): Promise<void> {
-  const env = getRuntimeEnv();
+  const env = getEmailEnv();
   const { error } = await getEmailClient().emails.send({
     from: env.RESEND_FROM_EMAIL,
     to: input.recipient,

@@ -250,6 +250,9 @@ button, input, select, textarea { font: inherit; }
 .globe { background: radial-gradient(circle at center, #0b3351, #020b14 65%); }
 .globe img { width: min(540px, 90%); max-height: 540px; object-fit: contain; filter: drop-shadow(0 0 28px rgb(78 180 255 / 35%)); }
 .map-pin { width: 16px; height: 16px; position: absolute; left: 52%; top: 42%; border: 2px solid white; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 5px rgb(246 193 75 / 22%); }
+.map-data-pin { position: absolute; width: .55rem; height: .55rem; padding: 0; border: 1px solid #fff5c7; border-radius: 50%; background: #d8a52d; box-shadow: 0 0 .45rem #d8a52d; transform: translate(-50%, -50%); cursor: pointer; }
+.map-data-pin.selected { width: .9rem; height: .9rem; background: #fff5c7; z-index: 2; }
+.selected-row { background: rgb(216 165 45 / 12%); }
 .campaign-table { min-width: 1350px; font-size: 11px; }
 .campaign-table td, .campaign-table th { white-space: nowrap; }
 .city-canvas { min-height: 520px; display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 8px; background: linear-gradient(135deg, #061725, #0d2b40); color: #79b8d9; }

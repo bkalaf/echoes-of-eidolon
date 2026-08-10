@@ -43,3 +43,11 @@ test("game and review routes expose routed and state-only tasks", async ({ page 
     await expect(page.getByText(text, { exact: true }).first()).toBeVisible();
   }
 });
+
+test("Atlas map loads and synchronizes the canonical Point of Interest selection", async ({ page }) => {
+  await page.goto("/admin/atlas/pois?state=ATLAS_POI_2D");
+  await expect(page.getByText("92 canonical Points of Interest")).toBeVisible();
+  await page.getByRole("button", { name: "Select World Tree" }).click();
+  await expect(page.getByText("POI-0007 · World Tree")).toBeVisible();
+  await expect(page.getByText("Kind: WORLD_TREE")).toBeVisible();
+});

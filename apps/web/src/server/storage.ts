@@ -1,11 +1,11 @@
 import { S3Client } from "@aws-sdk/client-s3";
 
-import { getRuntimeEnv } from "./env";
+import { getStorageEnv } from "./env";
 
 let client: S3Client | undefined;
 
 export function getObjectStorage(): { bucket: string; client: S3Client } {
-  const env = getRuntimeEnv();
+  const env = getStorageEnv();
   client ??= new S3Client({
     region: env.AWS_REGION,
     ...(env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY

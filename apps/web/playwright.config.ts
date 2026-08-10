@@ -9,6 +9,10 @@ export default defineConfig({
   },
   webServer: {
     command: "pnpm dev",
+    env: {
+      ATLAS_RELEASE_ROOT:
+        "../../EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE",
+    },
     url: "http://127.0.0.1:3000",
     reuseExistingServer: true,
   },

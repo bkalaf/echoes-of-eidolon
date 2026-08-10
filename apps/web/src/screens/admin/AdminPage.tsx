@@ -1,6 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import { AdminShell } from "../../components/shells/Shells";
 import { entityExamples, entityFields, entityForPath, type EntityName } from "../../content/entities";
+import type { AtlasCatalog } from "../../server/atlas";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -44,13 +48,38 @@ function PuzzlePage({ screen }: { screen: PageManifestEntry }) {
   return <><AdminHead screen={screen} description="Blueprint library with family, tier, challenge state, exactly two hints, and reusable components." /><div className="toolbar"><input className="input" placeholder="Search blueprints…" /><button className="button">Family</button><button className="button">Tier</button><span className="grow" /><a className="button" href="/admin/puzzles/components">Components</a><a className="button" href="/admin/puzzles/test-lab">Test lab</a><button className="button button--gold">New blueprint</button></div><section className="card"><table className="data-table"><thead><tr><th>Blueprint</th><th>Family</th><th>Tier</th><th>Hints</th><th>Timer</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr><td>PZB-014</td><td>LOGIC</td><td>III</td><td>2</td><td>25 days on acceptance</td><td>Ready</td><td>Edit / Test</td></tr><tr><td>PZB-031</td><td>SPATIAL</td><td>IV</td><td>2</td><td>25 days on acceptance</td><td>Draft</td><td>Edit / Test</td></tr></tbody></table></section><p className="notice">The canonical library contains 70 blueprints across five difficulty tiers.</p></>;
 }
 
+async function fetchAtlasCatalog(): Promise<AtlasCatalog> {
+  const response = await fetch("/api/atlas/catalog");
+  if (!response.ok) throw new Error("Canonical Atlas data is not configured.");
+  return response.json() as Promise<AtlasCatalog>;
+}
+
+function AtlasDataState({ is3d }: { is3d: boolean }) {
+  const atlas = useQuery({ queryKey: ["atlas", "catalog"], queryFn: fetchAtlasCatalog });
+  const [selectedId, setSelectedId] = useState<string>();
+
+  if (atlas.isPending) return <p className="notice">Validating the canonical Atlas release…</p>;
+  if (atlas.isError) return <p className="notice notice--warn">{atlas.error.message}</p>;
+
+  const selected = atlas.data.pointsOfInterest.find((poi) => poi.poiId === selectedId)
+    ?? atlas.data.pointsOfInterest[0];
+  return <><div className="atlas-layout"><section className={is3d ? "globe" : "map"}><img src={is3d ? "/assets/globe.png" : "/assets/world_map.png"} alt={is3d ? "3D globe view" : "2D world map"} />{!is3d && atlas.data.pointsOfInterest.map((poi) => <button aria-label={`Select ${poi.displayName ?? poi.workingLabel}`} className={`map-data-pin ${poi.poiId === selected.poiId ? "selected" : ""}`} key={poi.poiId} onClick={() => setSelectedId(poi.poiId)} style={{ left: `${((poi.longitude + 180) / 360) * 100}%`, top: `${((90 - poi.latitude) / 180) * 100}%` }} />)}</section><aside className="card"><p className="kicker">{atlas.data.releaseId}</p><h2>Selected Point of Interest</h2><p><strong>{selected.poiId} · {selected.displayName ?? selected.workingLabel}</strong></p><p>Name status: {selected.nameStatus}</p><p>Kind: {selected.category}</p><p>Region: {selected.regionId}</p><p>Longitude: {selected.longitude}</p><p>Latitude: {selected.latitude}</p><a className="button button--gold" href={`/admin/data/pointofinterest/${selected.poiId}`}>Open record</a></aside></div><section className="card table-scroll"><table className="data-table"><thead><tr><th>POI</th><th>Name</th><th>Status</th><th>Category</th><th>Region</th></tr></thead><tbody>{atlas.data.pointsOfInterest.map((poi) => <tr className={poi.poiId === selected.poiId ? "selected-row" : ""} key={poi.poiId} onClick={() => setSelectedId(poi.poiId)}><td>{poi.poiId}</td><td>{poi.displayName ?? poi.workingLabel}</td><td>{poi.nameStatus}</td><td>{poi.category}</td><td>{poi.regionId}</td></tr>)}</tbody></table></section><p className="notice">{atlas.data.pointsOfInterest.length} canonical Points of Interest · {atlas.data.coordinateReferenceSystem}</p></>;
+}
+
+function CanonicalSites({ screen }: { screen: PageManifestEntry }) {
+  const atlas = useQuery({ queryKey: ["atlas", "catalog"], queryFn: fetchAtlasCatalog });
+  if (atlas.isPending) return <><AdminHead screen={screen} description="Sites and their settlement state." /><p className="notice">Validating the canonical Atlas release…</p></>;
+  if (atlas.isError) return <><AdminHead screen={screen} description="Sites and their settlement state." /><p className="notice notice--warn">{atlas.error.message}</p></>;
+  return <><AdminHead screen={screen} description="Canonical settlement candidates from the validated Atlas release." /><section className="card table-scroll"><table className="data-table"><thead><tr><th>Site</th><th>Region</th><th>Classification</th><th>Longitude</th><th>Latitude</th><th>Task</th></tr></thead><tbody>{atlas.data.settlementSites.map((site) => <tr key={site.siteId}><td>{site.siteId}</td><td>{site.regionId}</td><td>{site.classification}</td><td>{site.longitude}</td><td>{site.latitude}</td><td>{site.siteId === "SITE-0081" ? <a href="/admin/atlas/sites/SITE-0081">Found City</a> : "—"}</td></tr>)}</tbody></table></section><p className="notice">{atlas.data.settlementSites.length} canonical settlement candidates.</p></>;
+}
+
 function AtlasPage({ screen }: { screen: PageManifestEntry }) {
   const isPoi = ["AT002", "AT003", "ADM032", "ATLAS_POI_2D", "ATLAS_POI_3D"].includes(screen.screenId);
   const is3d = ["AT003", "ATLAS_POI_3D"].includes(screen.screenId);
   if (screen.screenId === "AT004_FOUND_CITY") return <><AdminHead screen={screen} description="Found a city at SITE-0081 without selecting a world." /><div className="split"><form className="card form-grid"><label className="field">siteId<input className="input" value="SITE-0081" readOnly /></label><label className="field">settlement name<input className="input" /></label><label className="field">settlement size<select className="select"><option>City</option></select></label><label className="field">approved arrival<input className="input" value="90%" readOnly /></label><button className="button button--gold span-2">Found city</button></form><aside className="card"><h2>Population arrival</h2><p>Apply the approved 90% arrival to the selected Site population when the settlement is founded.</p><p className="notice notice--warn">Rounding remains owner-decision-required and is not guessed here.</p></aside></div></>;
   if (screen.screenId === "AT005_SETTLEMENT_DETAIL") return <><AdminHead screen={screen} description="Migrate population into SET-0001 while preserving exact Breed totals." /><div className="split"><section className="card"><h2>Source settlement</h2><label className="field">Settlement<select className="select"><option>SET-0002</option></select></label><label className="field">Population to migrate<input className="input" type="number" min="0" /></label><button className="button">Preview migration</button></section><aside className="card"><h2>Conservation check</h2><p>Each Breed population is conserved exactly between source and destination.</p><p>No allocation is applied unless sufficient source population exists.</p><button className="button button--gold">Apply migration</button></aside></div></>;
-  if (isPoi) return <><AdminHead screen={screen} description="Browse Points of Interest using an explicitly selected 2D map, 3D globe, or list view." /><div className="tabs"><a className={!is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a><button>List</button></div><div className="atlas-layout"><section className={is3d ? "globe" : "map"}><img src={is3d ? "/assets/globe.png" : "/assets/world_map.png"} alt={is3d ? "3D globe view" : "2D world map"} />{!is3d && <span className="map-pin" />}</section><aside className="card"><h2>Selected Point of Interest</h2><p><strong>POI-0042 · Worldroot</strong></p><p>Kind: WORLD_TREE</p><p>Region: R13</p><p>Longitude: 14.255</p><p>Latitude: 1.721</p><button className="button button--gold">Open record</button></aside></div></>;
-  if (["AT004", "ADM033"].includes(screen.screenId)) return <><AdminHead screen={screen} description="Sites and their settlement state." /><EntityTable screen={screen} entity="Site" /></>;
+  if (isPoi) return <><AdminHead screen={screen} description="Browse Points of Interest using an explicitly selected 2D map, 3D globe, or list view." /><div className="tabs"><a className={!is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><AtlasDataState is3d={is3d} /></>;
+  if (["AT004", "ADM033"].includes(screen.screenId)) return <CanonicalSites screen={screen} />;
   if (["AT005", "ADM034"].includes(screen.screenId)) return <><AdminHead screen={screen} description="Settlements and population migration tasks." /><EntityTable screen={screen} entity="Settlement" /></>;
   return <><AdminHead screen={screen} description="Manage Points of Interest, Sites and Settlements." /><div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>2D map, 3D globe and list views.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>Candidate sites and founding tasks.</p></a><a className="card" href="/admin/atlas/settlements"><h2>Settlements</h2><p>Settlement records and migrations.</p></a></div></>;
 }

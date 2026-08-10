@@ -4,10 +4,10 @@ import { betterAuth } from "better-auth";
 
 import { getDatabase } from "./database";
 import { sendVerificationEmail } from "./email";
-import { getRuntimeEnv } from "./env";
+import { getAuthEnv } from "./env";
 
 function createAuth() {
-  const env = getRuntimeEnv();
+  const env = getAuthEnv();
   const authUrl = new URL(env.BETTER_AUTH_URL);
   return betterAuth({
     appName: "Echoes of Eidolon",
