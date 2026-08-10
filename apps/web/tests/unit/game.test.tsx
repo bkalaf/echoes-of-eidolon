@@ -85,13 +85,23 @@ describe("game runtime boundary", () => {
   it.each([
     ["GAME002", /Knowledge records, discovery state/],
     ["GAME004", /No discovered Tome list/],
-    ["GAME005", /Player-safe layers, discovered geography/],
     ["GAME012", /exact Heirloom controlled values are owner-deferred/],
   ])("fails closed for unowned player data in %s", async (screenId, message) => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame(screenId);
 
     expect(await screen.findByText(message)).toBeInTheDocument();
+  });
+
+  it("reuses the textured Atlas globe without disclosing unowned player markers", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    renderGame("GAME005");
+
+    const globe = await screen.findByRole("application", { name: /Interactive Eidolon globe/ });
+    expect(globe.querySelector("img")).toHaveAttribute("src", expect.stringMatching(/digitaloceanspaces\.com\/assets\/[a-f0-9]{64}\.png$/));
+    expect(screen.getByText(/Player-safe layers, discovered geography/)).toBeInTheDocument();
+    expect(globe.querySelectorAll("button")).toHaveLength(0);
+    expect(screen.getByRole("button", { name: "Player overlays unavailable" })).toBeDisabled();
   });
 
   it("does not grant game access to an authenticated user without beta eligibility", async () => {
