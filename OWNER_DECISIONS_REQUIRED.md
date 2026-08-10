@@ -25,3 +25,16 @@ Existing repository options:
 - Add per-kind nullable columns and a guessed User relation, which would invent the event subject and database shape.
 Independent work continuing:
 - Pure validation/reduction behavior that does not choose a persistence owner, plus unrelated packet surfaces.
+
+OWNER_DECISION_REQUIRED: species-personality-values
+Subsystem: Data
+Blocked slice: Persist exactly twelve three-valued Species personality dimensions
+Question: What are the three allowed raw values for `LOQUACITY`, `EMOTIONAL_TEMPERATURE`, `OUTLOOK_ORIENTATION`, and `COLLABORATIVE_POSTURE`, and should all twelve dimension selections move onto Species directly?
+Why authority does not settle it:
+- The latest owner instruction supplies all twelve dimension keys and says each has exactly three dimension-specific values, but does not enumerate the last four value sets.
+- The current schema puts eight dimension selections on Breed and four unconstrained strings on PersonalityExpression; the v11.3 compact types retain that older split.
+Existing repository options:
+- Guess four three-value enums and move all fields to Species, which invents raw tokens and migration behavior.
+- Retain the current split, which violates the latest owner instruction that Species have exactly twelve dimensions.
+Independent work continuing:
+- Locking the twelve dimension keys and refusing unknown keys; no values or persistence locations are invented.
