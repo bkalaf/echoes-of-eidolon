@@ -43,25 +43,32 @@ export async function approveBetaInviteRequest(input: {
   requestId: string;
 }, database: Database = getDatabase()): Promise<void> {
   if (input.expiresAt.getTime() <= Date.now()) throw new Error("Invitation expiry must be in the future.");
-  const request = await database.betaInviteRequest.findUnique({ where: { id: input.requestId } });
-  if (!request || request.status !== "PENDING") throw new Error("A pending invitation request is required.");
-
   const code = randomBytes(24).toString("base64url");
   const codeHash = hashBetaInvitationCode(code);
   const invitationId = randomUUID();
-  await database.$transaction(async (transaction) => {
+  const request = await database.$transaction(async (transaction) => {
+    const claimed = await transaction.betaInviteRequest.updateMany({
+      where: { id: input.requestId, status: "PENDING" },
+      data: { status: "APPROVED" },
+    });
+    if (claimed.count !== 1) throw new Error("A pending invitation request is required.");
+    const approved = await transaction.betaInviteRequest.findUnique({
+      where: { id: input.requestId },
+      select: { email: true, id: true, status: true },
+    });
+    if (!approved || approved.status !== "APPROVED") throw new Error("The invitation request approval claim could not be verified.");
     await transaction.betaInvitationCode.upsert({
-      where: { requestId: request.id },
+      where: { requestId: approved.id },
       create: {
         id: invitationId,
-        requestId: request.id,
-        recipientEmail: request.email,
+        requestId: approved.id,
+        recipientEmail: approved.email,
         codeHash,
         expiresAt: input.expiresAt,
       },
       update: {
         id: invitationId,
-        recipientEmail: request.email,
+        recipientEmail: approved.email,
         codeHash,
         expiresAt: input.expiresAt,
         revokedAt: null,
@@ -69,16 +76,27 @@ export async function approveBetaInviteRequest(input: {
         consumedByUserId: null,
       },
     });
+    return approved;
   });
 
   try {
     await sendBetaInvitation({ code, expiresAt: input.expiresAt, recipient: request.email });
-    await database.betaInviteRequest.update({ where: { id: request.id }, data: { status: "INVITED" } });
+    const invited = await database.betaInviteRequest.updateMany({
+      where: { id: request.id, status: "APPROVED" },
+      data: { status: "INVITED" },
+    });
+    if (invited.count !== 1) throw new Error("The delivered invitation could not be marked invited.");
   } catch (error) {
-    await database.$transaction([
-      database.betaInvitationCode.update({ where: { requestId: request.id }, data: { revokedAt: new Date() } }),
-      database.betaInviteRequest.update({ where: { id: request.id }, data: { status: "PENDING" } }),
-    ]);
+    await database.$transaction(async (transaction) => {
+      await transaction.betaInvitationCode.updateMany({
+        where: { requestId: request.id, codeHash, revokedAt: null, consumedAt: null },
+        data: { revokedAt: new Date() },
+      });
+      await transaction.betaInviteRequest.updateMany({
+        where: { id: request.id, status: "APPROVED" },
+        data: { status: "PENDING" },
+      });
+    });
     throw error;
   }
 }

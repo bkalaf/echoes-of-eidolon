@@ -41,13 +41,17 @@ describe("beta invitation boundary", () => {
 
   it("requires an administrator-supplied future expiry and sends plaintext only by email", async () => {
     const upsert = vi.fn().mockResolvedValue({});
-    const update = vi.fn().mockResolvedValue({});
-    const transaction = { betaInvitationCode: { upsert }, betaInviteRequest: { update } };
-    const database = {
+    const claim = vi.fn().mockResolvedValue({ count: 1 });
+    const finish = vi.fn().mockResolvedValue({ count: 1 });
+    const transaction = {
+      betaInvitationCode: { upsert },
       betaInviteRequest: {
-        findUnique: vi.fn().mockResolvedValue({ id: "request-1", email: "friend@example.com", status: "PENDING" }),
-        update,
+        findUnique: vi.fn().mockResolvedValue({ id: "request-1", email: "friend@example.com", status: "APPROVED" }),
+        updateMany: claim,
       },
+    };
+    const database = {
+      betaInviteRequest: { updateMany: finish },
       betaInvitationCode: { update: vi.fn() },
       $transaction: vi.fn(async (work: unknown) => typeof work === "function"
         ? (work as (value: typeof transaction) => Promise<unknown>)(transaction)
@@ -62,23 +66,23 @@ describe("beta invitation boundary", () => {
     expect(persisted.codeHash).toBe(hashBetaInvitationCode(emailed.code));
     expect(persisted).not.toHaveProperty("code");
     expect(emailed.expiresAt).toEqual(expiresAt);
-    expect(update).toHaveBeenCalledWith(expect.objectContaining({ data: { status: "INVITED" } }));
+    expect(claim).toHaveBeenCalledWith({ where: { id: "request-1", status: "PENDING" }, data: { status: "APPROVED" } });
+    expect(finish).toHaveBeenCalledWith({ where: { id: "request-1", status: "APPROVED" }, data: { status: "INVITED" } });
   });
 
   it("revokes the code and returns the request to pending when email delivery fails", async () => {
     emailMocks.sendBetaInvitation.mockRejectedValue(new Error("delivery failed"));
-    const invitationUpdate = vi.fn().mockResolvedValue({});
-    const requestUpdate = vi.fn().mockResolvedValue({});
+    const invitationUpdate = vi.fn().mockResolvedValue({ count: 1 });
+    const requestUpdate = vi.fn().mockResolvedValue({ count: 1 });
     const transaction = {
-      betaInvitationCode: { upsert: vi.fn().mockResolvedValue({}) },
-      betaInviteRequest: { update: requestUpdate },
+      betaInvitationCode: { upsert: vi.fn().mockResolvedValue({}), updateMany: invitationUpdate },
+      betaInviteRequest: {
+        findUnique: vi.fn().mockResolvedValue({ id: "request-1", email: "friend@example.com", status: "APPROVED" }),
+        updateMany: requestUpdate,
+      },
     };
     const database = {
-      betaInviteRequest: {
-        findUnique: vi.fn().mockResolvedValue({ id: "request-1", email: "friend@example.com", status: "PENDING" }),
-        update: requestUpdate,
-      },
-      betaInvitationCode: { update: invitationUpdate },
+      betaInviteRequest: { updateMany: vi.fn() },
       $transaction: vi.fn(async (work: unknown) => typeof work === "function"
         ? (work as (value: typeof transaction) => Promise<unknown>)(transaction)
         : Promise.all(work as Promise<unknown>[])),
@@ -89,8 +93,29 @@ describe("beta invitation boundary", () => {
       requestId: "request-1",
     }, database)).rejects.toThrow("delivery failed");
 
-    expect(invitationUpdate).toHaveBeenCalledWith(expect.objectContaining({ data: { revokedAt: expect.any(Date) } }));
-    expect(requestUpdate).toHaveBeenCalledWith(expect.objectContaining({ data: { status: "PENDING" } }));
+    expect(invitationUpdate).toHaveBeenCalledWith(expect.objectContaining({ data: { revokedAt: expect.any(Date) }, where: expect.objectContaining({ codeHash: expect.any(String) }) }));
+    expect(requestUpdate).toHaveBeenCalledWith({ where: { id: "request-1", status: "APPROVED" }, data: { status: "PENDING" } });
+  });
+
+  it("allows only one caller to claim a pending request for approval", async () => {
+    const transaction = {
+      betaInvitationCode: { upsert: vi.fn() },
+      betaInviteRequest: {
+        findUnique: vi.fn(),
+        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+      },
+    };
+    const database = {
+      $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)),
+    } as unknown as PrismaClient;
+
+    await expect(approveBetaInviteRequest({
+      expiresAt: new Date(Date.now() + 60_000),
+      requestId: "request-1",
+    }, database)).rejects.toThrow(/pending invitation request/);
+
+    expect(transaction.betaInvitationCode.upsert).not.toHaveBeenCalled();
+    expect(emailMocks.sendBetaInvitation).not.toHaveBeenCalled();
   });
 
   it("atomically consumes a matching code and grants only beta access", async () => {
