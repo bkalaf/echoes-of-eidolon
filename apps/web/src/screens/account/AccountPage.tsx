@@ -1,72 +1,142 @@
-import type { PageManifestEntry } from "../../lib/page-manifest";
+import { useState } from "react";
+import type { ReactNode } from "react";
+
 import { AccountShell } from "../../components/shells/Shells";
+import { authClient } from "../../lib/auth-client";
+import type { PageManifestEntry } from "../../lib/page-manifest";
+
+interface AccountUser {
+  displayUsername?: string | null;
+  email: string;
+  name: string;
+  username?: string | null;
+}
 
 function AccountHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ACCOUNT · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
 }
 
-function Profile({ screen }: { screen: PageManifestEntry }) {
-  const modal = screen.screenId === "ACC002" || screen.screenId === "ACC003";
-  return <><AccountHead screen={screen} description="Account identity and profile details." /><div className="split"><form className="card form-grid"><label className="field">Username<input className="input" value="player-one" readOnly /></label><label className="field">Email<input className="input" value="player@example.com" readOnly /></label><label className="field">Display name<input className="input" defaultValue="Player One" /></label><label className="field">Time zone<input className="input" defaultValue="America/Los_Angeles" /></label><button className="button button--gold">Save changes</button></form><aside className="card"><h2>Account</h2><p>Email changes require verification.</p><p>Username cannot be changed.</p><a className="button" href="/account/profile?state=ACC002">Change email</a><h3>Authorized sessions</h3><p>Review devices with active account sessions.</p></aside></div>{modal && <div className="modal-backdrop"><section className="modal-card" role="dialog" aria-modal="true"><p className="kicker">CHANGE EMAIL</p><h2>{screen.screenId === "ACC003" ? "Verify the new email address." : "Change account email."}</h2>{screen.screenId === "ACC003" ? <><p>Verification code sent to <strong>new@example.com</strong>.</p><label className="field">Verification code<input className="input" defaultValue="654321" /></label><p>The current account email is unchanged until verification succeeds.</p></> : <><label className="field">New email<input className="input" type="email" /></label><label className="field">Current password<input className="input" type="password" /></label></>}<div className="action-row"><a className="button" href="/account/profile">Back</a>{screen.screenId === "ACC003" && <button className="button">Resend</button>}<button className="button button--gold">{screen.screenId === "ACC003" ? "Verify & Change Email" : "Send Verification"}</button></div></section></div>}</>;
+function Deferred({ children }: { children: ReactNode }) {
+  return <section className="card"><h2>Owner-deferred</h2><p>{children}</p><p className="notice notice--warn">No account data or success state is fabricated while this owner is absent.</p></section>;
 }
 
-const subscriptionStates: Record<string, { notice: string; tone?: string; action?: string }> = {
-  ACC005: { notice: "No active subscription.", action: "Subscribe" },
-  ACC006: { notice: "Payment accepted.", tone: "good", action: "Continue" },
-  ACC007: { notice: "Card declined. No subscription change was made.", tone: "bad", action: "Try another card" },
-  ACC008: { notice: "Subscription active.", tone: "good", action: "Manage subscription" },
-  ACC009: { notice: "Confirm subscription cancellation.", tone: "bad", action: "Cancel subscription" },
-  ACC010: { notice: "Subscription history.", action: "Download receipt" },
-};
+function resultError(result: { error: { message?: string } | null }): string | undefined {
+  return result.error?.message ?? (result.error ? "The account request failed." : undefined);
+}
+
+function Profile({ screen, user }: { screen: PageManifestEntry; user: AccountUser }) {
+  const [displayName, setDisplayName] = useState(user.name);
+  const [newEmail, setNewEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const [emailStep, setEmailStep] = useState<"request" | "verify">(
+    screen.screenId === "ACC003" ? "verify" : "request",
+  );
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string>();
+  const [error, setError] = useState<string>();
+  const modal = screen.screenId === "ACC002" || screen.screenId === "ACC003";
+
+  const saveName = async () => {
+    setBusy(true);
+    setError(undefined);
+    const result = await authClient.updateUser({ name: displayName });
+    setBusy(false);
+    const nextError = resultError(result);
+    if (nextError) setError(nextError);
+    else setMessage("Display name saved.");
+  };
+
+  const sendChangeEmailCode = async () => {
+    setBusy(true);
+    setError(undefined);
+    const signIn = await authClient.signIn.email({ email: user.email, password });
+    const signInError = resultError(signIn);
+    if (signInError) {
+      setBusy(false);
+      setError(signInError);
+      return;
+    }
+    const result = await authClient.emailOtp.sendVerificationOtp({
+      email: newEmail,
+      type: "change-email",
+    });
+    setBusy(false);
+    const nextError = resultError(result);
+    if (nextError) setError(nextError);
+    else {
+      setEmailStep("verify");
+      setMessage("Verification code sent to the new email address.");
+    }
+  };
+
+  const changeEmail = async () => {
+    setBusy(true);
+    setError(undefined);
+    const result = await authClient.emailOtp.changeEmail({ newEmail, otp: code });
+    setBusy(false);
+    const nextError = resultError(result);
+    if (nextError) setError(nextError);
+    else setMessage("Email address changed.");
+  };
+
+  return <><AccountHead screen={screen} description="Account identity and profile details." /><div className="split"><section className="card form-grid"><label className="field">Username<input className="input" value={user.displayUsername ?? user.username ?? ""} readOnly /></label><label className="field">Email<input className="input" value={user.email} readOnly /></label><label className="field span-2">Display name<input className="input" value={displayName} onChange={(event) => setDisplayName(event.target.value)} /></label><button className="button button--gold" disabled={busy || !displayName.trim()} onClick={saveName}>Save changes</button></section><aside className="card"><h2>Account</h2><p>Email changes require verification.</p><p>Username cannot be changed.</p><a className="button" href="/account/profile?state=ACC002">Change email</a><h3>Authorized sessions</h3><p>Session inventory is provided by Better Auth; session-management UI remains owner-deferred.</p></aside></div>{error && <p className="notice notice--bad" role="alert">{error}</p>}{message && <p className="notice notice--good" role="status">{message}</p>}{modal && <div className="modal-backdrop"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="change-email-title"><p className="kicker">CHANGE EMAIL</p><h2 id="change-email-title">{emailStep === "verify" ? "Verify the new email address." : "Change account email."}</h2>{emailStep === "verify" ? <><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label><label className="field">Verification code<input className="input" inputMode="numeric" value={code} onChange={(event) => setCode(event.target.value)} /></label><p>The current account email is unchanged until verification succeeds.</p></> : <><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label><label className="field">Current password<input className="input" type="password" value={password} onChange={(event) => setPassword(event.target.value)} /></label></>}<div className="action-row"><a className="button" href="/account/profile">Back</a>{emailStep === "verify" && <button className="button" disabled={busy || !newEmail} onClick={sendChangeEmailCode}>Resend</button>}<button className="button button--gold" disabled={busy || !newEmail || (emailStep === "request" ? !password : !code)} onClick={emailStep === "verify" ? changeEmail : sendChangeEmailCode}>{emailStep === "verify" ? "Verify & Change Email" : "Send Verification"}</button></div></section></div>}</>;
+}
 
 function Subscription({ screen }: { screen: PageManifestEntry }) {
-  const state = subscriptionStates[screen.screenId] ?? subscriptionStates.ACC005!;
-  return <><AccountHead screen={screen} description="Subscription status, billing state and history." /><p className={`notice notice--${state.tone ?? "warn"}`}>{state.notice}</p><div className="grid-2"><article className="card"><h2>Membership</h2><p>Current plan</p><p className="stat">{screen.screenId === "ACC008" ? "Active" : "Not subscribed"}</p><button className={`button ${state.tone === "bad" ? "button--danger" : "button--gold"}`}>{state.action}</button></article><article className="card"><h2>Payment</h2><div className="payment-element">Stripe Payment Element<small>Payment details are hosted by Stripe.</small></div></article></div></>;
+  return <><AccountHead screen={screen} description="Subscription status, billing state and history." /><Deferred>The packet establishes Stripe as the payment owner, but it supplies no subscription product, price, entitlement, or persisted subscription contract.</Deferred></>;
 }
 
 function Orders({ screen }: { screen: PageManifestEntry }) {
-  const detail = screen.screenId !== "ACC011";
-  return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." />{detail ? <div className="split"><article className="card"><h2>Order EID-1042</h2><dl className="details"><dt>Status</dt><dd>In production</dd><dt>Total</dt><dd>$54.00</dd><dt>Delivery</dt><dd>Standard shipping</dd></dl>{screen.screenId === "ACC013" && <><h3>Return request</h3><label className="field">Reason<select className="select"><option>Wrong item</option><option>Damaged item</option></select></label><button className="button button--gold">Submit return request</button></>}</article><aside className="card"><h2>Fulfillment</h2><p>Printful production and shipping status is displayed separately from Stripe payment status.</p></aside></div> : <section className="card"><table className="data-table"><thead><tr><th>Order</th><th>Date</th><th>Status</th><th>Total</th></tr></thead><tbody><tr><td><a href="/account/orders/EID-1042">EID-1042</a></td><td>August 8, 2026</td><td>In production</td><td>$54.00</td></tr></tbody></table></section>}</>;
+  return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." /><div className="grid-2"><Deferred>No Order persistence or authenticated order-query contract is supplied.</Deferred><section className="card"><h2>Provider boundary</h2><p>Stripe payment and Printful fulfillment remain separate. No order or fulfillment state is inferred from provider configuration.</p></section></div></>;
 }
 
 function Settings({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Accessibility, communication and account preferences." /><form className="card settings-list"><label><input type="checkbox" defaultChecked /> Email notifications</label><label><input type="checkbox" defaultChecked /> Show explicit challenge countdowns</label><label><input type="checkbox" /> Reduce motion</label><label className="field">Text size<select className="select" defaultValue="Default"><option>Default</option><option>Large</option></select></label><button className="button button--gold">Save settings</button></form></>;
+  return <><AccountHead screen={screen} description="Accessibility, communication and account preferences." /><Deferred>The reviewed settings fields have no supplied persistence owner. They remain unavailable instead of being stored in an invented browser or database schema.</Deferred></>;
 }
 
 function Progress({ screen }: { screen: PageManifestEntry }) {
-  const noCountdown = screen.screenId === "ACC017";
-  return <><AccountHead screen={screen} description="Current campaign progress and explicit challenge timing." /><div className="grid-3"><article className="card"><h2>Current book</h2><p className="stat">Book 1</p><p>Opening journey</p></article><article className="card"><h2>Knowledge</h2><p className="stat">18</p><p>Items discovered</p></article><article className="card"><h2>Challenge countdown</h2><p className="stat">{noCountdown ? "None" : "02:14:32"}</p><p>{noCountdown ? "No current countdown." : "An accepted timed challenge is active."}</p></article></div></>;
+  return <><AccountHead screen={screen} description="Current campaign progress and explicit challenge timing." /><Deferred>Campaign progress, Knowledge counts, and challenge countdowns require the player-runtime state owner, which is not supplied.</Deferred></>;
 }
 
 function Achievements({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Unlocked and discoverable achievements." /><div className="grid-3">{["First Steps", "Careful Listener", "Source Checked"].map((name, index) => <article className="card" key={name}><span className={`tag ${index < 2 ? "tag--good" : ""}`}>{index < 2 ? "UNLOCKED" : "LOCKED"}</span><h2>{name}</h2><p>{index < 2 ? "Earned during current play." : "Requirements remain undisclosed."}</p></article>)}</div></>;
+  return <><AccountHead screen={screen} description="Unlocked and discoverable achievements." /><Deferred>Achievement definitions exist, but player award state, thresholds, and disclosure rules are not supplied.</Deferred></>;
 }
 
 function Support({ screen }: { screen: PageManifestEntry }) {
-  if (screen.screenId === "ACC020") return <><AccountHead screen={screen} description="Create a help ticket." /><form className="form-card"><label className="field">Topic<select className="select"><option>Account</option><option>Game</option><option>Store order</option></select></label><label className="field">Subject<input className="input" /></label><label className="field">Description<textarea className="textarea" /></label><button className="button button--gold">Create ticket</button></form></>;
-  if (screen.screenId === "ACC021") return <><AccountHead screen={screen} description="Help ticket detail and replies." /><div className="split"><article className="card"><h2>Ticket TKT-0042</h2><p>Account access question</p><span className="tag">OPEN</span><label className="field">Reply<textarea className="textarea" /></label><button className="button button--gold">Send reply</button></article><aside className="card"><h2>History</h2><p>Created August 8, 2026</p><p>Awaiting support response</p></aside></div></>;
-  return <><AccountHead screen={screen} description="Help tickets and support responses." /><section className="card"><a className="button button--gold" href="/account/support/new">Create help ticket</a><table className="data-table"><thead><tr><th>Ticket</th><th>Subject</th><th>Status</th></tr></thead><tbody><tr><td><a href="/account/support/TKT-0042">TKT-0042</a></td><td>Account access question</td><td>Open</td></tr></tbody></table></section></>;
+  const task = screen.screenId === "ACC020" ? "ticket creation" : screen.screenId === "ACC021" ? "ticket replies" : "ticket listing";
+  return <><AccountHead screen={screen} description="Player support is separate from company contact." /><Deferred>Support recipient configuration exists, but {task} requires a ticket persistence, identity, status, and reply-delivery contract.</Deferred></>;
 }
 
 function Invitations({ screen }: { screen: PageManifestEntry }) {
-  const pending = screen.screenId === "ACC023";
-  return <><AccountHead screen={screen} description="Request an invitation for another participant." /><section className="form-card">{pending ? <><p className="notice notice--warn">Invitation request pending.</p><p>The request will remain here until it is approved or declined.</p></> : <form><label className="field">Email<input className="input" type="email" /></label><label className="field">Message<textarea className="textarea" /></label><button className="button button--gold">Request invite</button></form>}</section></>;
+  return <><AccountHead screen={screen} description="Request an invitation for another participant." /><Deferred>Invitation issuance, request persistence, review states, and redemption verification are not supplied.</Deferred></>;
 }
 
 function BetaLanding({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Approval state: AUTHENTICATED" /><div className="checkout-layout"><section className="card"><p className="kicker">BETA</p><h2>Beta is Invite Only</h2><p>Your account is participating in the current beta. USER and MEMBER have the same beta-access status.</p><p className="notice">Optional membership changes configured perks; it does not purchase participation.</p><div className="action-row"><a className="button button--gold" href="/game">Continue Game</a><a className="button" href="/status/releases">Release Notes</a></div></section><form className="card form-stack"><h2>Invite a friend</h2><p>You may request an invitation for someone you know. Requests enter the admin review queue.</p><label className="field">Name<input className="input" defaultValue="Friend name" /></label><label className="field">Email<input className="input" type="email" defaultValue="friend@example.com" /></label><label className="field">Reason<input className="input" defaultValue="Why should they join?" /></label><button className="button">Request invite</button></form></div><article className="card import-preview"><h2>What's new in 0.2.0</h2><p>Read release notes without exposing unrevealed story details.</p></article></>;
+  return <><AccountHead screen={screen} description="Authenticated account landing." /><div className="grid-2"><section className="card"><h2>Account access</h2><p>The Better Auth session is active.</p><a className="button" href="/account/profile">View profile</a></section><Deferred>Beta participation and MEMBER/USER access require an account-access owner and role model.</Deferred></div></>;
+}
+
+function SignedInAccountPage({ screen, user }: { screen: PageManifestEntry; user: AccountUser }) {
+  if (screen.screenId === "ACC030") return <BetaLanding screen={screen} />;
+  if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) return <Profile screen={screen} user={user} />;
+  if (screen.screenId >= "ACC005" && screen.screenId <= "ACC010") return <Subscription screen={screen} />;
+  if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) return <Orders screen={screen} />;
+  if (["ACC014", "ACC015"].includes(screen.screenId)) return <Settings screen={screen} />;
+  if (["ACC016", "ACC017"].includes(screen.screenId)) return <Progress screen={screen} />;
+  if (screen.screenId === "ACC018") return <Achievements screen={screen} />;
+  if (["ACC019", "ACC020", "ACC021"].includes(screen.screenId)) return <Support screen={screen} />;
+  return <Invitations screen={screen} />;
 }
 
 export function AccountPage({ screen }: { screen: PageManifestEntry }) {
+  const session = authClient.useSession();
   let page;
-  if (screen.screenId === "ACC030") page = <BetaLanding screen={screen} />;
-  else if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) page = <Profile screen={screen} />;
-  else if (screen.screenId >= "ACC005" && screen.screenId <= "ACC010") page = <Subscription screen={screen} />;
-  else if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) page = <Orders screen={screen} />;
-  else if (["ACC014", "ACC015"].includes(screen.screenId)) page = <Settings screen={screen} />;
-  else if (["ACC016", "ACC017"].includes(screen.screenId)) page = <Progress screen={screen} />;
-  else if (screen.screenId === "ACC018") page = <Achievements screen={screen} />;
-  else if (["ACC019", "ACC020", "ACC021"].includes(screen.screenId)) page = <Support screen={screen} />;
-  else page = <Invitations screen={screen} />;
+  if (session.isPending) {
+    page = <><AccountHead screen={screen} description="Checking account session." /><p className="notice">Checking account session…</p></>;
+  } else if (!session.data) {
+    page = <><AccountHead screen={screen} description="A signed-in account is required." /><section className="card"><h2>Sign in required</h2><p>No account, order, progress, or support data is shown without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
+  } else {
+    page = <SignedInAccountPage screen={screen} user={session.data.user} />;
+  }
   return <AccountShell>{page}</AccountShell>;
 }
