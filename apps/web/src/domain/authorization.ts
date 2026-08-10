@@ -22,3 +22,7 @@ export function resolveAuthorizationRole(
 export function canAccessAdministration(role: AuthorizationRole): boolean {
   return role === "admin" || role === "owner";
 }
+
+export function canAccessGame(role: AuthorizationRole): boolean {
+  return role === "member" || role === "admin" || role === "owner";
+}

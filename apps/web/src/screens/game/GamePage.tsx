@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { GameShell } from "../../components/shells/Shells";
+import { canAccessGame, resolveAuthorizationRole } from "../../domain/authorization";
 import { calendarContract } from "../../domain/invariants";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
@@ -67,11 +69,27 @@ function SignedInGamePage({ screen }: { screen: PageManifestEntry }) {
 
 export function GamePage({ screen }: { screen: PageManifestEntry }) {
   const session = authClient.useSession();
+  const organizationRole = useQuery({
+    queryKey: ["authorization", "game-role", session.data?.user.id],
+    enabled: Boolean(session.data),
+    queryFn: async () => {
+      const result = await authClient.organization.getActiveMemberRole();
+      if (result.error) throw new Error(result.error.message ?? "Organization authorization could not be verified.");
+      return result.data?.role ?? null;
+    },
+    retry: false,
+  });
   let page: ReactNode;
   if (session.isPending) {
     page = <><GameHead title={screen.title} description="Checking player session." /><p className="notice">Checking player session…</p></>;
   } else if (!session.data) {
     page = <><GameHead title={screen.title} description="An authenticated player session is required." /><section className="game-deferred"><h2>Sign in required</h2><p>No player, story, location, discovery, or challenge state is shown without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
+  } else if (organizationRole.isPending) {
+    page = <><GameHead title={screen.title} description="Checking game authorization." /><p className="notice">Checking organization authorization…</p></>;
+  } else if (organizationRole.isError) {
+    page = <><GameHead title={screen.title} description="Game authorization could not be verified." /><section className="game-deferred"><h2>Game access unavailable</h2><p>Access fails closed when the active organization role cannot be verified.</p></section></>;
+  } else if (!canAccessGame(resolveAuthorizationRole(true, organizationRole.data))) {
+    page = <><GameHead title={screen.title} description="Member access is required." /><section className="game-deferred"><h2>Member access required</h2><p>A signed-in user role does not grant game access. A verified member, admin, or owner role is required.</p></section></>;
   } else {
     page = <SignedInGamePage screen={screen} />;
   }

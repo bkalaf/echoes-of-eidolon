@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   authorizationRoles,
   canAccessAdministration,
+  canAccessGame,
   resolveAuthorizationRole,
 } from "../../src/domain/authorization";
 
@@ -25,5 +26,9 @@ describe("authorization roles", () => {
 
   it("allows only admin and owner into Administration", () => {
     expect(authorizationRoles.filter(canAccessAdministration)).toEqual(["admin", "owner"]);
+  });
+
+  it("allows member, admin and owner into the game", () => {
+    expect(authorizationRoles.filter(canAccessGame)).toEqual(["member", "admin", "owner"]);
   });
 });
