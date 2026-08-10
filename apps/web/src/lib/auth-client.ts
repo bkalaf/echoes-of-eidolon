@@ -5,12 +5,13 @@ import { inferAdditionalFields } from "better-auth/client/plugins";
 import { organizationClient } from "better-auth/client/plugins";
 import { usernameClient } from "better-auth/client/plugins";
 import { twoFactorClient } from "better-auth/client/plugins";
+import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
 
 export const authClient = createAuthClient({
   plugins: [
     usernameClient(),
     emailOTPClient(),
-    organizationClient(),
+    organizationClient({ ac: organizationAccessControl, roles: organizationRoles }),
     twoFactorClient({ twoFactorPage: "/auth/two-factor" }),
     passkeyClient(),
     inferAdditionalFields({

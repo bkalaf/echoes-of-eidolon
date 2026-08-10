@@ -38,16 +38,17 @@ function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
 
-  const load = async () => {
-    setLoading(true);
-    const result = await authClient.listSessions();
-    setLoading(false);
-    const nextError = resultError(result);
-    if (nextError) setError(nextError);
-    else setSessions(result.data ?? []);
-  };
-
-  useEffect(() => { void load(); }, []);
+  useEffect(() => {
+    let active = true;
+    void authClient.listSessions().then((result) => {
+      if (!active) return;
+      setLoading(false);
+      const nextError = resultError(result);
+      if (nextError) setError(nextError);
+      else setSessions(result.data ?? []);
+    });
+    return () => { active = false; };
+  }, []);
 
   const revoke = async (token: string) => {
     if (token === currentToken) {

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { entityFields, entityForPath, type EntityName } from "../../content/entities";
+import { entityFields, entityForPath } from "../../content/entities";
 import {
   createDefaultFieldMapping,
   parseEntityImport,

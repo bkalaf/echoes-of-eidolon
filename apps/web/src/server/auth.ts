@@ -8,6 +8,7 @@ import { twoFactor } from "better-auth/plugins/two-factor";
 import { username } from "better-auth/plugins/username";
 import { z } from "zod";
 
+import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
 import { getDatabase } from "./database";
 import { sendAuthenticationCode, sendOrganizationInvitation } from "./email";
 import { getAuthEnv } from "./env";
@@ -86,8 +87,10 @@ function createAuth() {
         },
       }),
       organization({
+        ac: organizationAccessControl,
         allowUserToCreateOrganization: false,
         requireEmailVerificationOnInvitation: true,
+        roles: organizationRoles,
         sendInvitationEmail: async ({ email, id, organization: invitedOrganization }) => {
           const invitationUrl = new URL("/auth/redeem-invite", authUrl.origin);
           invitationUrl.searchParams.set("id", id);

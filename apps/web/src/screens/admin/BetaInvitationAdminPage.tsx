@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { adminCapabilities, hasAdminCapability, type AuthorizationRole } from "../../domain/authorization";
+import { adminCapabilities, hasAdminCapability } from "../../domain/authorization";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface BetaInviteRow {
