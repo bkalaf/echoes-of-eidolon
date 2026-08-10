@@ -228,4 +228,16 @@ describe("account session boundary", () => {
     }));
     expect(screen.queryByText(/rejected|queue position|pending review/i)).not.toBeInTheDocument();
   });
+
+  it("does not infer a successful invitation submission from a reviewed screen state", () => {
+    authMocks.useSession.mockReturnValue({
+      data: { session: { token: "current-token" }, user: { email: "player@example.test", name: "Player", username: "player" } },
+      isPending: false,
+    });
+    render(<AccountPage screen={accountScreen("ACC023")} />);
+
+    expect(screen.getByRole("button", { name: "Submit request" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Invitation request received" })).not.toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
+  });
 });

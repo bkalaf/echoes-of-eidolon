@@ -35,6 +35,8 @@ describe("authorized R08 Atlas administration", () => {
   it("loads canonical coordinate-derived POIs and synchronizes selection", async () => {
     renderAtlas("ATLAS_POI_2D");
     expect(await screen.findByText("2 canonical Points of Interest · EPSG:4326 · R08-TEST")).toBeInTheDocument();
+    expect(screen.getByText("Select a Point of Interest from the map or table.")).toBeInTheDocument();
+    expect(screen.queryByText("POI-0001 · Harbor")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Select World Tree" }));
     expect(screen.getByText("POI-0007 · World Tree")).toBeInTheDocument();
     expect(screen.getAllByText("WORLD_TREE")).toHaveLength(2);

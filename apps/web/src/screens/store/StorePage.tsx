@@ -10,10 +10,17 @@ function ConfigurationNotice() {
   return <p className="notice notice--warn">Merchandise purchase is unavailable until {merchandiseConfigurationRequired.join(", ")}. No product mapping, price, variant, or availability is fabricated.</p>;
 }
 
+const categoryProductType = {
+  STORE02: "POSTER",
+  STORE03: "MUG",
+  STORE04: "HOODIE",
+} as const;
+
 function Catalog({ screen }: { screen: PageManifestEntry }) {
+  const productType = categoryProductType[screen.screenId as keyof typeof categoryProductType];
   const selected = screen.screenId === "STORE01"
     ? storeProductTypes
-    : storeProductTypes.filter((product) => screen.title.toLowerCase().includes(product.name.toLowerCase()));
+    : storeProductTypes.filter((product) => product.productType === productType);
   return <><StoreHead title={screen.title} path={screen.path ?? "/store"} description="The configured merchandise catalog." /><p className="notice">The initial catalog is limited to exactly one Poster, one Mug, and one Hoodie. Exact artwork mapping remains unresolved configuration.</p><div className="product-grid">{selected.map((product) => <article className="product-card" key={product.productType}><div className="product-art" aria-hidden="true"><span>—</span></div><h2>{product.name}</h2><p>Price and variants unavailable</p><a className="button" href={product.categoryPath}>View category</a></article>)}</div><ConfigurationNotice /></>;
 }
 

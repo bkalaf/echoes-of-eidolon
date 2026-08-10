@@ -196,7 +196,7 @@ function Invitations({ screen }: { screen: PageManifestEntry }) {
   const [friendName, setFriendName] = useState("");
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
-  const [submitted, setSubmitted] = useState(screen.screenId === "ACC023");
+  const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
 

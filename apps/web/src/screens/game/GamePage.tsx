@@ -43,7 +43,7 @@ function WitnessTrial({ screen }: { screen: PageManifestEntry }) {
 }
 
 function Companions({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="The Companion relationship joins three distinct world-matching Protagonists through one Soul and one Heirloom." /><div className="grid-3">{["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist"].map((world) => <article className="card" key={world}><h2>{world}</h2><p>No player-visible linked identity is available.</p></article>)}</div><section className="card companion-link"><span>Soul</span><span>Heirloom</span></section><p className="notice notice--warn">The Heirloom enum and Companion relationships are specified. Actual Companion records and player disclosure state are not connected.</p></>;
+  return <><GameHead title={screen.title} description="Current player-visible companion group and selected companion details." /><div className="grid-2"><section className="card"><h2>Companion group</h2><p>No player-visible Companion records are available.</p></section><section className="card"><h2>Companion details</h2><p>No Companion is selected.</p></section></div><p className="notice notice--warn">Companion identities, health, relationships, and Heirloom details require player-runtime source rows. Internal story structure is not projected into this screen.</p></>;
 }
 
 function Calendar({ screen }: { screen: PageManifestEntry }) {

@@ -18,6 +18,13 @@ describe("store interaction boundaries", () => {
     expect(screen.queryByText(/\$24|\$32|\$64|Conjunction 1 — Mug/)).not.toBeInTheDocument();
   });
 
+  it("uses explicit manifest identity rather than inferring a category from its title", () => {
+    render(<StorePage screen={{ ...storeScreen("STORE02"), title: "Store Category" }} />);
+    expect(screen.getByRole("heading", { name: "Poster" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Mug" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Hoodie" })).not.toBeInTheDocument();
+  });
+
   it("does not create a cart line for an unconfigured product", () => {
     render(<StorePage screen={storeScreen("STORE05")} />);
     expect(screen.getByRole("button", { name: "Add to cart unavailable" })).toBeDisabled();

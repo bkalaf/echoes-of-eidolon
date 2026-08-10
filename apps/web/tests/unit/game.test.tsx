@@ -90,12 +90,22 @@ describe("game runtime boundary", () => {
   it.each([
     ["GAME002", /Knowledge records, discovery state/],
     ["GAME004", /No discovered Tome list/],
-    ["GAME012", /Actual Companion records and player disclosure state are not connected/],
+    ["GAME012", /Companion identities, health, relationships, and Heirloom details require player-runtime source rows/],
   ])("fails closed for unowned player data in %s", async (screenId, message) => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame(screenId);
 
     expect(await screen.findByText(message)).toBeInTheDocument();
+  });
+
+  it("does not expose internal Companion WorldKey structure to the player", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    renderGame("GAME012");
+
+    expect(await screen.findByRole("heading", { name: "Companions" })).toBeInTheDocument();
+    for (const internalLabel of ["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist", "three distinct world-matching Protagonists"]) {
+      expect(screen.queryByText(internalLabel, { exact: true })).not.toBeInTheDocument();
+    }
   });
 
   it("places unavailable Tome page numbers at the bottom outer corners", async () => {

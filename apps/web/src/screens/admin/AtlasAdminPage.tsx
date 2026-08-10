@@ -34,14 +34,14 @@ function AtlasStatus({ children }: { children: string }) {
 }
 
 function PoiDetail({ atlas, selectedId }: { atlas: AtlasCatalog; selectedId?: string }) {
-  const point = atlas.pointsOfInterest.find((candidate) => candidate.poiId === selectedId)
-    ?? atlas.pointsOfInterest[0];
-  if (!point) return <AtlasStatus>No canonical Point of Interest is available.</AtlasStatus>;
+  if (!selectedId) return <aside className="card"><h2>Point of Interest details</h2><p>Select a Point of Interest from the map or table.</p></aside>;
+  const point = atlas.pointsOfInterest.find((candidate) => candidate.poiId === selectedId);
+  if (!point) return <AtlasStatus>The selected Point of Interest is not present in the canonical catalog.</AtlasStatus>;
   return <aside className="card"><p className="kicker">{atlas.releaseId}</p><h2>Selected Point of Interest</h2><p><strong>{point.poiId} · {point.displayName ?? point.workingLabel}</strong></p><dl className="detail-list"><dt>Name status</dt><dd>{point.nameStatus}</dd><dt>Kind</dt><dd>{point.category}</dd><dt>Region</dt><dd>{point.regionId}</dd><dt>Longitude</dt><dd>{point.longitude}</dd><dt>Latitude</dt><dd>{point.latitude}</dd></dl><a className="button button--gold" href={`/admin/data/pointofinterest/${encodeURIComponent(point.poiId)}`}>Open record</a></aside>;
 }
 
 function PoiAtlas({ atlas, globe }: { atlas: AtlasCatalog; globe: boolean }) {
-  const [selectedId, setSelectedId] = useState(atlas.pointsOfInterest[0]?.poiId);
+  const [selectedId, setSelectedId] = useState<string>();
   return <><div className="tabs"><a className={!globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><div className="atlas-layout"><section>{globe ? <AtlasGlobe onSelect={setSelectedId} points={atlas.pointsOfInterest} selectedId={selectedId} /> : <div className="map"><img src={managedAssetUrl("atlas.official-world-founding-cities")} alt="Eidolon world map" />{atlas.pointsOfInterest.map((point) => <button aria-label={`Select ${point.displayName ?? point.workingLabel}`} className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`} key={point.poiId} onClick={() => setSelectedId(point.poiId)} style={{ left: `${((point.longitude + 180) / 360) * 100}%`, top: `${((90 - point.latitude) / 180) * 100}%` }} />)}</div>}</section><PoiDetail atlas={atlas} selectedId={selectedId} /></div><section className="card"><DataTable columns={poiColumns} data={atlas.pointsOfInterest} getRowId={(point) => point.poiId} onRowActivate={(point) => setSelectedId(point.poiId)} preferenceKey="admin.atlas.points-of-interest" rowClassName={(point) => point.poiId === selectedId ? "selected-row" : undefined} /></section><p className="notice">{atlas.pointsOfInterest.length} canonical Points of Interest · {atlas.coordinateReferenceSystem} · {atlas.releaseId}</p></>;
 }
 
