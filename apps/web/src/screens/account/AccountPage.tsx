@@ -133,7 +133,7 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
 }
 
 function Subscription({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Subscription status, billing state and history." /><Deferred>The packet establishes Stripe as the payment owner, but it supplies no subscription product, price, entitlement, or persisted subscription contract.</Deferred></>;
+  return <><AccountHead screen={screen} description="Subscription status, billing state and history." /><Deferred>The $9.99 monthly server-authoritative subscription and append-only membership entitlement rules are specified. Stripe subscription state and membership-ledger persistence are not connected to this screen.</Deferred></>;
 }
 
 function Orders({ screen }: { screen: PageManifestEntry }) {

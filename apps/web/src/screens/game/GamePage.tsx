@@ -39,11 +39,11 @@ function Maps({ screen }: { screen: PageManifestEntry }) {
 }
 
 function WitnessTrial({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="Witness trial acceptance and challenge state." /><section className="trial-warning"><h2>Witness Trial</h2><p>Trial duration, hint sequence, retry rules, acceptance, timing, and persistence require the unresolved puzzle-runtime contract.</p><p className="notice notice--warn">No countdown starts and no challenge is accepted from this screen.</p><div className="action-row"><a className="button" href="/game">Return to game</a><button className="button button--gold" disabled>Accept unavailable</button></div></section></>;
+  return <><GameHead title={screen.title} description="Witness trial acceptance and challenge state." /><section className="trial-warning"><h2>Witness Trial</h2><p>The 2,160,000-second acceptance window and the DIRECTIONAL then GUIDED hint sequence are specified. No persisted challenge instance is connected to this screen.</p><p className="notice notice--warn">No countdown starts and no challenge is accepted from this screen.</p><div className="action-row"><a className="button" href="/game">Return to game</a><button className="button button--gold" disabled>Accept unavailable</button></div></section></>;
 }
 
 function Companions({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="The Companion relationship joins three distinct world-matching Protagonists through one Soul and one Heirloom." /><div className="grid-3">{["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist"].map((world) => <article className="card" key={world}><h2>{world}</h2><p>No player-visible linked identity is available.</p></article>)}</div><section className="card companion-link"><span>Soul</span><span>Heirloom</span></section><p className="notice notice--warn">Companion records, player disclosure, and the exact Heirloom controlled values are owner-deferred.</p></>;
+  return <><GameHead title={screen.title} description="The Companion relationship joins three distinct world-matching Protagonists through one Soul and one Heirloom." /><div className="grid-3">{["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist"].map((world) => <article className="card" key={world}><h2>{world}</h2><p>No player-visible linked identity is available.</p></article>)}</div><section className="card companion-link"><span>Soul</span><span>Heirloom</span></section><p className="notice notice--warn">The Heirloom enum and Companion relationships are specified. Actual Companion records and player disclosure state are not connected.</p></>;
 }
 
 function Calendar({ screen }: { screen: PageManifestEntry }) {

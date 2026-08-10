@@ -56,7 +56,7 @@ export function AtlasAdminPage({ screen }: { screen: PageManifestEntry }) {
   const poiScreen = ["AT002", "AT003", "ADM032", "ATLAS_POI_2D", "ATLAS_POI_3D"].includes(screen.screenId);
   if (poiScreen) return <PoiAtlas atlas={atlas.data} globe={["AT003", "ATLAS_POI_3D"].includes(screen.screenId)} />;
   if (["AT004", "ADM033"].includes(screen.screenId)) return <Sites atlas={atlas.data} />;
-  if (screen.screenId === "AT004_FOUND_CITY") return <AtlasStatus>City founding remains unavailable until the required population-arrival rounding rule is supplied.</AtlasStatus>;
+  if (screen.screenId === "AT004_FOUND_CITY") return <AtlasStatus>The 90% ceiling and largest-remainder founding rules are specified. City founding remains unavailable until the atomic settlement persistence service is connected.</AtlasStatus>;
   if (["AT005", "ADM034", "AT005_SETTLEMENT_DETAIL"].includes(screen.screenId)) return <AtlasStatus>Settlement persistence and exact Breed-conserving migration require the typed settlement repository.</AtlasStatus>;
   return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Settlements</h2><p>Canonical Site mirrors are read-only until the typed import repository is connected.</p></article></div>;
 }

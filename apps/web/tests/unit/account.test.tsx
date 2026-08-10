@@ -109,6 +109,7 @@ describe("account session boundary", () => {
 
     expect(screen.getByRole("heading", { name: "Subscription - Active" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Owner-deferred" })).toBeInTheDocument();
+    expect(screen.getByText(/\$9\.99 monthly/)).toBeInTheDocument();
     expect(screen.queryByText("Subscription active.")).not.toBeInTheDocument();
   });
 

@@ -58,12 +58,13 @@ describe("game runtime boundary", () => {
     expect(screen.queryByText(/Mae|Archivist|18:42/)).not.toBeInTheDocument();
   });
 
-  it("does not invent Witness trial timing, hints, retry, or acceptance", async () => {
+  it("shows only supplied Witness timing and hints without fabricating acceptance state", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame("GAME011");
 
     expect(await screen.findByRole("button", { name: "Accept unavailable" })).toBeDisabled();
-    expect(screen.getByText(/duration, hint sequence, retry rules/)).toBeInTheDocument();
+    expect(screen.getByText(/2,160,000-second acceptance window/)).toBeInTheDocument();
+    expect(screen.getByText(/DIRECTIONAL then GUIDED/)).toBeInTheDocument();
     expect(screen.queryByText(/15 minutes|Available in sequence|18:42 remaining/)).not.toBeInTheDocument();
   });
 
@@ -89,7 +90,7 @@ describe("game runtime boundary", () => {
   it.each([
     ["GAME002", /Knowledge records, discovery state/],
     ["GAME004", /No discovered Tome list/],
-    ["GAME012", /exact Heirloom controlled values are owner-deferred/],
+    ["GAME012", /Actual Companion records and player disclosure state are not connected/],
   ])("fails closed for unowned player data in %s", async (screenId, message) => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame(screenId);
