@@ -1719,12 +1719,61 @@ model CapabilityDefinition {
 }
 
 model AchievementDefinition {
-  achievementDefinitionId String  @id
+  achievementDefinitionId String        @id
   name                    String
   chainKey                String
   rank                    Int
   imageAssetId            String?
   status                  String
+  imageAsset              ManagedAsset? @relation("AchievementImageAsset", fields: [imageAssetId], references: [managedAssetId], onDelete: SetNull)
+
+  @@index([imageAssetId])
+}
+
+model ManagedAsset {
+  managedAssetId       String                  @id
+  sha256               String                  @unique
+  objectKey            String                  @unique
+  mediaKind            ManagedAssetMediaKind
+  mimeType             String
+  byteSize             BigInt
+  purposeLinks         AssetPurposeLink[]
+  generatedFromPrompts PromptVersion[]         @relation("PromptGeneratedAsset")
+  achievementImages    AchievementDefinition[] @relation("AchievementImageAsset")
+}
+
+model AssetPurposeLink {
+  assetPurposeLinkId String       @id
+  managedAssetId     String
+  purpose            String       @unique
+  managedAsset       ManagedAsset @relation(fields: [managedAssetId], references: [managedAssetId], onDelete: Cascade)
+
+  @@index([managedAssetId])
+}
+
+model PromptRecord {
+  promptRecordId String          @id
+  family         PromptFamily
+  purpose        String
+  status         PromptStatus
+  targetType     String
+  targetId       String
+  versions       PromptVersion[]
+}
+
+model PromptVersion {
+  promptVersionId         String        @id
+  promptRecordId          String
+  version                 Int
+  promptText              String
+  responseContract        Json
+  generatedManagedAssetId String?
+  createdAt               DateTime      @default(now())
+  promptRecord            PromptRecord  @relation(fields: [promptRecordId], references: [promptRecordId], onDelete: Cascade)
+  generatedManagedAsset   ManagedAsset? @relation("PromptGeneratedAsset", fields: [generatedManagedAssetId], references: [managedAssetId], onDelete: SetNull)
+
+  @@unique([promptRecordId, version])
+  @@index([generatedManagedAssetId])
 }
 
 model SpeciesGroup {

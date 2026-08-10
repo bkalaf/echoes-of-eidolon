@@ -8,6 +8,10 @@ import { URL } from "node:url";
 import { promisify } from "node:util";
 
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
+
+import { PrismaClient } from "../src/generated/prisma/client.ts";
 
 import {
   assertManagedAssetSignature,
@@ -149,6 +153,55 @@ async function collectEntries(config) {
   return entries;
 }
 
+function mediaKindForMimeType(mimeType) {
+  if (mimeType.startsWith("image/")) return "IMAGE";
+  if (mimeType.startsWith("audio/")) return "AUDIO";
+  if (mimeType.startsWith("video/")) return "VIDEO";
+  throw new Error(`Unsupported managed asset MIME type: ${mimeType}`);
+}
+
+async function persistManifest(manifest) {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) throw new Error("DATABASE_URL is required to persist managed assets");
+  const pool = new Pool({ connectionString: databaseUrl });
+  const database = new PrismaClient({ adapter: new PrismaPg(pool) });
+  try {
+    await database.$transaction(async (transaction) => {
+      for (const [purpose, record] of Object.entries(manifest)) {
+        const managedAssetId = record.sha256;
+        const asset = await transaction.managedAsset.upsert({
+          where: { sha256: record.sha256 },
+          create: {
+            managedAssetId,
+            sha256: record.sha256,
+            objectKey: record.objectKey,
+            mediaKind: mediaKindForMimeType(record.mimeType),
+            mimeType: record.mimeType,
+            byteSize: BigInt(record.byteSize),
+          },
+          update: {},
+        });
+        if (
+          asset.objectKey !== record.objectKey ||
+          asset.mediaKind !== mediaKindForMimeType(record.mimeType) ||
+          asset.mimeType !== record.mimeType ||
+          asset.byteSize !== BigInt(record.byteSize)
+        ) {
+          throw new Error(`Persisted final-byte identity conflicts with ${purpose}`);
+        }
+        await transaction.assetPurposeLink.upsert({
+          where: { purpose },
+          create: { assetPurposeLinkId: purpose, managedAssetId: asset.managedAssetId, purpose },
+          update: { managedAssetId: asset.managedAssetId },
+        });
+      }
+    });
+  } finally {
+    await database.$disconnect();
+    await pool.end();
+  }
+}
+
 async function main() {
   const config = JSON.parse(await readFile(configPath, "utf8"));
   const location = spacesLocation();
@@ -220,6 +273,7 @@ async function main() {
   }
 
   await mkdir(dirname(manifestPath), { recursive: true });
+  await persistManifest(manifest);
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
   process.stdout.write(`manifest ${Object.keys(manifest).length} ${manifestPath}\n`);
 }

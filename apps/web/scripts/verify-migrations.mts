@@ -16,6 +16,15 @@ function run(command: string, args: string[], environment: NodeJS.ProcessEnv): P
   });
 }
 
+async function expectDatabaseRejection(work: () => Promise<unknown>, message: string): Promise<void> {
+  try {
+    await work();
+  } catch {
+    return;
+  }
+  throw new Error(message);
+}
+
 const configuredUrl = new URL(process.env.DATABASE_URL ?? "");
 if (!["127.0.0.1", "localhost"].includes(configuredUrl.hostname)) {
   throw new Error("Migration verification only runs against local PostgreSQL.");
@@ -37,6 +46,47 @@ try {
     "exec", "prisma", "migrate", "diff",
     "--from-config-datasource", "--to-schema", "prisma/schema.prisma", "--exit-code",
   ], environment);
+
+  const verification = new Client({ connectionString: verificationUrl.toString() });
+  await verification.connect();
+  try {
+    const hash = "a".repeat(64);
+    await verification.query(
+      `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize")
+       VALUES ($1, $1, $2, 'IMAGE', 'image/png', 1)`,
+      [hash, `assets/${hash}.png`],
+    );
+    await verification.query(
+      `INSERT INTO "AssetPurposeLink" ("assetPurposeLinkId", "managedAssetId", "purpose") VALUES ('purpose', $1, 'purpose')`,
+      [hash],
+    );
+    await verification.query(
+      `INSERT INTO "PromptRecord" ("promptRecordId", "family", "purpose", "status", "targetType", "targetId")
+       VALUES ('prompt', 'IMAGE', 'purpose', 'OUTSTANDING', 'target', 'target')`,
+    );
+    await verification.query(
+      `INSERT INTO "PromptVersion" ("promptVersionId", "promptRecordId", "version", "promptText", "responseContract")
+       VALUES ('version', 'prompt', 0, 'text', '{}'::jsonb)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "PromptVersion" SET "promptText" = 'changed' WHERE "promptVersionId" = 'version'`),
+      "PromptVersion update was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`DELETE FROM "PromptVersion" WHERE "promptVersionId" = 'version'`),
+      "PromptVersion delete was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize")
+         VALUES ('invalid', $1, 'assets/not-the-hash.png', 'IMAGE', 'image/png', 1)`,
+        ["b".repeat(64)],
+      ),
+      "ManagedAsset object-key mismatch was not rejected",
+    );
+  } finally {
+    await verification.end();
+  }
 } finally {
   await admin.query(`DROP DATABASE IF EXISTS "${databaseName}" WITH (FORCE)`);
   await admin.end();

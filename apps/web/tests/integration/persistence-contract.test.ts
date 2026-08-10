@@ -122,4 +122,24 @@ describe("persistence contract", () => {
     expect(migration).toContain("BreedPopulation contains rows and requires an explicitly approved event migration");
     expect(migration).toContain("Site settlement link conflicts with Settlement.siteId authority");
   });
+
+  it("deduplicates managed assets by final bytes and preserves immutable prompt versions", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810120000_managed_assets_and_prompts/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "ManagedAsset"');
+    expect(migration).toContain('CREATE TABLE "AssetPurposeLink"');
+    expect(migration).toContain('ManagedAsset_sha256_key');
+    expect(migration).toContain('ManagedAsset_object_key_check');
+    expect(migration).toContain('AssetPurposeLink_purpose_key');
+    expect(migration).toContain('CREATE TABLE "PromptRecord"');
+    expect(migration).toContain('CREATE TABLE "PromptVersion"');
+    expect(migration).toContain('PromptVersion_promptRecordId_version_key');
+    expect(migration).toContain('PromptVersion_generatedManagedAssetId_fkey');
+    expect(migration).toContain('PromptVersion_reject_update');
+    expect(migration).toContain('PromptVersion_reject_delete');
+    expect(migration).toContain('AchievementDefinition_imageAssetId_fkey');
+    expect(migration).not.toContain('PromptVersion_version_check');
+  });
 });
