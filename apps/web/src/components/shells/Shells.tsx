@@ -103,8 +103,8 @@ export function GameShell({ children }: { children: ReactNode }) {
     <div className="game-shell">
       <main>{children}</main>
       <footer className="game-bottom-bar">
-        <span>Location</span>
-        <span>Date · Weekday · Time</span>
+        <span>Location unavailable</span>
+        <span>Date · Weekday · Time unavailable</span>
         <nav aria-label="Game tools">
           <a href="/game/knowledge">Knowledge</a>
           <a href="/game/bookshelf">Bookshelf</a>

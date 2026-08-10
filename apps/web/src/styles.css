@@ -331,10 +331,21 @@ button, input, select, textarea { font: inherit; }
 .calendar { max-width: 1000px; margin: 0 auto; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
 .calendar header { display: flex; align-items: center; justify-content: space-between; }
 .calendar header h2 { color: var(--gold); font-family: Georgia, serif; }
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
 .calendar-grid > * { min-height: 54px; padding: 8px; border: 1px solid var(--line); border-radius: 4px; background: #061725; color: var(--text); text-align: left; }
 .calendar-grid strong { min-height: auto; color: #7fc5e8; }
-.calendar-grid .today { border-color: var(--gold); color: var(--gold); }
+.calendar-day { display: block; }
+.pre-year-days { display: flex; align-items: center; gap: 8px; margin: 16px 0; }
+.pre-year-days h3 { margin: 0 auto 0 0; color: var(--gold); font-family: Georgia, serif; }
+.pre-year-days span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 4px; }
+.game-deferred { max-width: 760px; margin: 60px auto; padding: 28px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--panel); }
+.game-viewport--unavailable { min-height: 620px; background: radial-gradient(circle at 50% 30%, #123754, #020b14 70%); }
+.game-runtime-empty { position: absolute; z-index: 2; inset: 0; display: grid; place-content: center; gap: 10px; padding: 30px; }
+.game-runtime-empty .game-deferred { margin: 0; }
+.game-runtime-empty textarea { display: block; width: min(680px, 80vw); min-height: 90px; margin-top: 8px; }
+.knowledge-graph--empty { display: grid; place-content: center; }
+.page-paper--empty { display: grid; align-content: center; }
+.player-map--empty { place-content: center; padding-left: 24px; }
 .game-modal { inset: 0 0 64px; }
 .game-modal .modal-card { display: grid; gap: 14px; }
 

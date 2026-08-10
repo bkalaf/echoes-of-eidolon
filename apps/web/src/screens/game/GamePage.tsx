@@ -1,66 +1,79 @@
-import type { PageManifestEntry } from "../../lib/page-manifest";
+import type { ReactNode } from "react";
+
 import { GameShell } from "../../components/shells/Shells";
+import { calendarContract } from "../../domain/invariants";
+import { authClient } from "../../lib/auth-client";
+import type { PageManifestEntry } from "../../lib/page-manifest";
 
 function GameHead({ title, description }: { title: string; description: string }) {
   return <header className="game-page-head"><p className="kicker">PLAYER VIEW</p><h1>{title}</h1><p>{description}</p></header>;
 }
 
-function Viewport({ screen }: { screen: PageManifestEntry }) {
-  const singleExit = ["GAME010", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId);
-  const noCountdown = screen.screenId === "GAME_VIEW_NO_COUNTDOWN";
-  return <section className="game-viewport"><img src="/assets/landing_hero_background.jpg" alt="Player view over the city beneath three moons" /><div className="game-hud"><div className="dialog"><p className="kicker">Mae'vyri</p><p>“You came back. Did the archive tell you why the Beacon was sealed?”</p><label>Speak or type freely<textarea placeholder="Speak or type your response…" /></label><div className="action-row"><button className="button button--gold">Send</button></div></div>{singleExit && <aside className="exits"><h2>Exit</h2><button>Harbor Gate</button></aside>}</div>{!noCountdown && <div className="countdown"><span>Witness trial</span><strong>18:42 remaining</strong></div>}</section>;
+function DeferredRuntime({ children }: { children: ReactNode }) {
+  return <section className="game-deferred"><h2>Player runtime owner-deferred</h2><p>{children}</p><p className="notice notice--warn">No player location, discovery, story, or challenge state is fabricated while the runtime contract is absent.</p></section>;
 }
 
-function EffectiveViewport({ screen }: { screen: PageManifestEntry }) {
+function RuntimeViewport({ screen }: { screen: PageManifestEntry }) {
   const nearby = screen.screenId === "GAME008";
-  const exits = screen.screenId === "GAME009" || screen.screenId === "GAME010";
-  const single = screen.screenId === "GAME010";
-  return <section className="sky-viewport"><div className="moons" aria-label="Three moons"><span /><span /><span /></div><div className="sky-copy"><p className="kicker">Effective viewport</p><h1>The sky moves with the world.</h1><p>Foreground story content sits over the deterministic sky renderer. Travel accelerates time.</p></div>{nearby && <aside className="sky-panel left"><h2>Nearby</h2><button>Mae’vyri</button><button>Archivist</button></aside>}{exits && <aside className="sky-panel right"><h2>Exits</h2>{(single ? ["North - Plaza"] : ["North - Plaza", "East - Archive", "Down - Canal"]).map((exit) => <button key={exit}>{exit}</button>)}</aside>}</section>;
+  const exits = ["GAME009", "GAME010", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId);
+  return <><GameHead title={screen.title} description="The reviewed game viewport preserves freeform voice/text interaction and runtime-owned context." /><section className="game-viewport game-viewport--unavailable"><div className="game-runtime-empty"><DeferredRuntime>NPC identity and dialogue, BottomBar date/time/location, Witness state, and player-known surroundings require an authenticated player-runtime response.</DeferredRuntime><label>Speak or type freely<textarea placeholder="Player runtime unavailable" disabled /></label><button className="button button--gold" disabled>Send unavailable</button></div>{nearby && <aside className="exits"><h2>Nearby</h2><p>No player-known nearby records are available.</p></aside>}{exits && <aside className="exits"><h2>Exits</h2><p>No player-known exit records are available.</p></aside>}</section></>;
 }
 
 function Knowledge({ screen }: { screen: PageManifestEntry }) {
-  if (screen.screenId === "GAME003") return <><GameHead title={screen.title} description="Inspect one Knowledge Base item without leaving the graph." /><div className="knowledge-graph"><span className="knowledge-node selected">KB-001</span><span className="knowledge-node n2">KB-002</span><span className="knowledge-node n3">KB-003</span><section className="knowledge-detail"><h2>Selected knowledge</h2><p>Title</p><p>Base content and linked records appear here.</p><button className="button">Close</button></section></div></>;
-  if (screen.screenId === "GAME016") return <><GameHead title={screen.title} description="View discovered Knowledge Base items against the current timeline." /><div className="timeline-view"><aside>{["Earlier", "Current", "Later"].map((name) => <button key={name}>{name}</button>)}</aside><section>{[1,2,3,4].map((n) => <article className="card" key={n}><span className="tag">KB-{String(n).padStart(3, "0")}</span><h2>Timeline item</h2><p>Discovered context is ordered without revealing undiscovered events.</p></article>)}</section></div></>;
-  return <><GameHead title="Knowledge Base Graph" description="Browse discovered knowledge and its visible relationships." /><div className="knowledge-graph"><span className="knowledge-node selected">KB-001</span><span className="knowledge-node n2">KB-002</span><span className="knowledge-node n3">KB-003</span><span className="knowledge-node n4">KB-004</span><div className="graph-line l1" /><div className="graph-line l2" /><aside className="graph-legend"><h2>Visible links</h2><p>Source</p><p>Person</p><p>Place</p><a className="button" href="/game/knowledge?state=GAME016">Timeline</a></aside></div></>;
+  const timeline = screen.screenId === "GAME016";
+  const detail = screen.screenId === "GAME003";
+  return <><GameHead title={screen.title} description={timeline ? "Discovered Knowledge items ordered against the player-visible timeline." : detail ? "Inspect one discovered Knowledge item without leaving its context." : "Browse discovered Knowledge and player-visible relationships."} /><div className={timeline ? "timeline-view" : "knowledge-graph knowledge-graph--empty"}><DeferredRuntime>Knowledge records, discovery state, visible links, content, and timeline placement require the player-runtime disclosure contract.</DeferredRuntime></div></>;
 }
 
 function Bookshelf({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="Read discovered Tomes from the player bookshelf." /><div className="reader"><aside className="books"><h2>Bookshelf</h2>{["Tome I", "Tome II", "Tome III"].map((name, index) => <button className={index === 0 ? "selected" : ""} key={name}>{name}</button>)}</aside><article className="page-paper"><p className="kicker">TOME-001</p><h2>Tome I</h2><p>Discovered Tome content is shown here with readable typography and page navigation.</p><div className="reader-controls"><button className="button">Previous</button><span>Page 1 of 12</span><button className="button">Next</button></div></article></div></>;
+  return <><GameHead title={screen.title} description="Read discovered Tomes with the reviewed bookshelf and paginated reader." /><div className="reader"><aside className="books"><h2>Bookshelf</h2><p>No discovered Tome list is available.</p></aside><article className="page-paper page-paper--empty"><h2>No Tome selected</h2><p>Tome identity, content, discovery state, and pagination require player-runtime source rows.</p><div className="reader-controls"><button className="button" disabled>Previous</button><span>Page unavailable</span><button className="button" disabled>Next</button></div></article></div></>;
 }
 
 function Maps({ screen }: { screen: PageManifestEntry }) {
   const globe = ["GAME005", "GAM005", "GAME_GLOBE_PRESENT", "GAME_GLOBE_TIMELINE", "GAME013"].includes(screen.screenId);
   const timeline = screen.screenId === "GAME_GLOBE_TIMELINE";
-  const city = screen.screenId === "GAME007";
-  return <><GameHead title={screen.title} description={timeline ? "Inspect the player globe at a visible timeline position." : globe ? "Inspect the player globe and discovered locations." : city ? "Navigate the discovered city map." : "Navigate discovered continent and city maps."} /><div className="player-map"><img src={globe ? "/assets/globe.png" : "/assets/world_map.png"} alt={globe ? "Player globe" : "Player map"} /><aside><h2>{timeline ? "Timeline" : "Map layers"}</h2>{timeline ? <><input type="range" min="0" max="100" defaultValue="65" /><p>Visible date only</p></> : ["Discovered places", "Routes", "Current location"].map((name) => <label key={name}><input type="checkbox" defaultChecked /> {name}</label>)}<a className="button" href={globe ? "/game/maps" : "/game/maps/globe"}>{globe ? "Map" : "Globe"}</a></aside></div></>;
+  return <><GameHead title={screen.title} description={timeline ? "Inspect the globe at a player-visible timeline position." : `Navigate the player-known ${globe ? "globe" : "map"}.`} /><div className="player-map player-map--empty"><DeferredRuntime>Player-safe layers, discovered geography, current location, routes, and visible timeline data have no supplied disclosure contract.</DeferredRuntime><aside><h2>{timeline ? "Timeline" : "Map layers"}</h2><p>No player-known layer data is available.</p><button className="button" disabled>{globe ? "Map unavailable" : "Globe unavailable"}</button></aside></div></>;
 }
 
 function WitnessTrial({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="A timed Witness trial begins only after explicit acceptance." /><section className="trial-warning"><p className="kicker">TIMED CHALLENGE</p><h2>Witness Trial</h2><p>The countdown begins only when you accept. Leaving ordinary play does not start this timer.</p><dl><dt>Duration</dt><dd>15 minutes</dd><dt>Hints</dt><dd>Available in sequence</dd><dt>Retry</dt><dd>Available</dd></dl><div className="action-row"><a className="button" href="/game">Not now</a><button className="button button--gold">Accept challenge</button></div></section></>;
+  return <><GameHead title={screen.title} description="Witness trial acceptance and challenge state." /><section className="trial-warning"><h2>Witness Trial</h2><p>Trial duration, hint sequence, retry rules, acceptance, timing, and persistence require the unresolved puzzle-runtime contract.</p><p className="notice notice--warn">No countdown starts and no challenge is accepted from this screen.</p><div className="action-row"><a className="button" href="/game">Return to game</a><button className="button button--gold" disabled>Accept unavailable</button></div></section></>;
 }
 
 function Companions({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="Companions link the Concord, Ruin and Schism Protagonists through one Soul and Heirloom." /><div className="grid-3">{["Concord", "Ruin", "Schism"].map((world) => <article className="card" key={world}><p className="kicker">{world}</p><h2>Protagonist</h2><p>Linked companion identity</p></article>)}</div><section className="card companion-link"><span>Soul</span><span>Heirloom</span></section></>;
+  return <><GameHead title={screen.title} description="The Companion relationship joins three distinct world-matching Protagonists through one Soul and one Heirloom." /><div className="grid-3">{["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist"].map((world) => <article className="card" key={world}><h2>{world}</h2><p>No player-visible linked identity is available.</p></article>)}</div><section className="card companion-link"><span>Soul</span><span>Heirloom</span></section><p className="notice notice--warn">Companion records, player disclosure, and the exact Heirloom controlled values are owner-deferred.</p></>;
 }
 
 function Calendar({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="Player calendar with current date, weekday and visible events." /><section className="calendar"><header><button className="button">Previous</button><h2>Current Month</h2><button className="button">Next</button></header><div className="calendar-grid">{["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => <strong key={day}>{day}</strong>)}{Array.from({length: 35}, (_, index) => <button className={index === 16 ? "today" : ""} key={index}>{index < 3 || index > 32 ? "" : index - 2}</button>)}</div></section></>;
+  const countedWeekdays = Array.from({ length: calendarContract.countedWeekdays }, (_, index) => `Counted weekday ${index + 1}`);
+  const monthDays = Array.from({ length: calendarContract.daysPerMonth }, (_, index) => index + 1);
+  const preYearDays = Array.from({ length: calendarContract.preYearStoryDays }, (_, index) => index + 1);
+  return <><GameHead title={screen.title} description="Authoritative calendar structure without invented ordinal names, dates, or events." /><section className="calendar"><header><button className="button" disabled>Previous</button><div><h2>Month unavailable</h2><p>{calendarContract.monthsPerYear} months per year · {calendarContract.daysPerMonth} days per month</p></div><button className="button" disabled>Next</button></header><div className="pre-year-days" aria-label="Pre-year story days"><h3>Pre-year story days</h3>{preYearDays.map((day) => <span key={day}>Story day {day}</span>)}</div><div className="calendar-grid" role="grid" aria-label="Calendar month">{countedWeekdays.map((day) => <strong key={day}>{day}</strong>)}{monthDays.map((day) => <span className="calendar-day" key={day}>{day}</span>)}</div><p className="notice notice--warn">{calendarContract.excludedWeekday} is hidden and excluded from the counted week. Exact weekday and month names, current date, and visible event rows require the authoritative ordinal/runtime source rows.</p></section></>;
 }
 
 function SettingsOverlay({ screen }: { screen: PageManifestEntry }) {
-  return <><Viewport screen={screen} /><div className="modal-backdrop game-modal"><section className="modal-card" role="dialog" aria-modal="true"><p className="kicker">SHARED SETTINGS</p><h2>Game Settings</h2><label><input type="checkbox" defaultChecked /> Show explicit challenge countdowns</label><label><input type="checkbox" /> Reduce motion</label><label className="field">Text size<select className="select"><option>Default</option><option>Large</option></select></label><div className="action-row"><button className="button">Cancel</button><button className="button button--gold">Save settings</button></div></section></div></>;
+  return <><RuntimeViewport screen={screen} /><div className="modal-backdrop game-modal"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="game-settings-title"><p className="kicker">SHARED SETTINGS</p><h2 id="game-settings-title">Game Settings</h2><p>The reviewed settings controls have no supplied persistence owner or stored-value contract.</p><p className="notice notice--warn">Settings remain unavailable instead of being stored in an invented browser or database schema.</p><a className="button" href="/game">Close</a></section></div></>;
+}
+
+function SignedInGamePage({ screen }: { screen: PageManifestEntry }) {
+  if (["GAME001", "GAME008", "GAME009", "GAME010", "GAM001", "GAME_VIEW_FULL", "GAME_VIEW_NO_COUNTDOWN", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId)) return <RuntimeViewport screen={screen} />;
+  if (["GAME002", "GAME003", "GAME016", "GAM002"].includes(screen.screenId)) return <Knowledge screen={screen} />;
+  if (["GAME004", "GAM003"].includes(screen.screenId)) return <Bookshelf screen={screen} />;
+  if (["GAME005", "GAME006", "GAME007", "GAME013", "GAM004", "GAM005", "GAME_GLOBE_PRESENT", "GAME_GLOBE_TIMELINE"].includes(screen.screenId)) return <Maps screen={screen} />;
+  if (screen.screenId === "GAME011") return <WitnessTrial screen={screen} />;
+  if (screen.screenId === "GAME012") return <Companions screen={screen} />;
+  if (screen.screenId === "GAME014") return <Calendar screen={screen} />;
+  return <SettingsOverlay screen={screen} />;
 }
 
 export function GamePage({ screen }: { screen: PageManifestEntry }) {
-  let page;
-  if (["GAME001", "GAME008", "GAME009", "GAME010"].includes(screen.screenId)) page = <EffectiveViewport screen={screen} />;
-  else if (["GAM001", "GAME_VIEW_FULL", "GAME_VIEW_NO_COUNTDOWN", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId)) page = <Viewport screen={screen} />;
-  else if (["GAME002", "GAME003", "GAME016", "GAM002"].includes(screen.screenId)) page = <Knowledge screen={screen} />;
-  else if (["GAME004", "GAM003"].includes(screen.screenId)) page = <Bookshelf screen={screen} />;
-  else if (["GAME005", "GAME006", "GAME007", "GAME013", "GAM004", "GAM005", "GAME_GLOBE_PRESENT", "GAME_GLOBE_TIMELINE"].includes(screen.screenId)) page = <Maps screen={screen} />;
-  else if (screen.screenId === "GAME011") page = <WitnessTrial screen={screen} />;
-  else if (screen.screenId === "GAME012") page = <Companions screen={screen} />;
-  else if (screen.screenId === "GAME014") page = <Calendar screen={screen} />;
-  else page = <SettingsOverlay screen={screen} />;
+  const session = authClient.useSession();
+  let page: ReactNode;
+  if (session.isPending) {
+    page = <><GameHead title={screen.title} description="Checking player session." /><p className="notice">Checking player session…</p></>;
+  } else if (!session.data) {
+    page = <><GameHead title={screen.title} description="An authenticated player session is required." /><section className="game-deferred"><h2>Sign in required</h2><p>No player, story, location, discovery, or challenge state is shown without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
+  } else {
+    page = <SignedInGamePage screen={screen} />;
+  }
   return <GameShell><main className="game-page">{page}</main></GameShell>;
 }
