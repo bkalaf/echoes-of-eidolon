@@ -153,4 +153,31 @@ describe("account session boundary", () => {
     await waitFor(() => expect(authMocks.revokeOtherSessions).toHaveBeenCalledTimes(1));
     expect(authMocks.revokeSession).not.toHaveBeenCalledWith({ token: "current-token" });
   });
+
+  it("submits the friend beta-invitation request without exposing moderation state", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { session: { token: "current-token" }, user: { email: "player@example.test", name: "Player", username: "player" } },
+      isPending: false,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ received: true }),
+      ok: true,
+    }));
+    render(<AccountPage screen={accountScreen("ACC022")} />);
+    fireEvent.change(screen.getByLabelText("Friend name"), { target: { value: "Friend Name" } });
+    fireEvent.change(screen.getByLabelText("Friend email"), { target: { value: "friend@example.test" } });
+    fireEvent.change(screen.getByLabelText("Reason"), { target: { value: "We want to investigate together." } });
+    fireEvent.click(screen.getByRole("button", { name: "Submit request" }));
+
+    expect(await screen.findByRole("heading", { name: "Invitation request received" })).toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledWith("/api/beta-invitations/request", expect.objectContaining({
+      body: JSON.stringify({
+        email: "friend@example.test",
+        friendName: "Friend Name",
+        reason: "We want to investigate together.",
+      }),
+      method: "POST",
+    }));
+    expect(screen.queryByText(/rejected|queue position|pending review/i)).not.toBeInTheDocument();
+  });
 });

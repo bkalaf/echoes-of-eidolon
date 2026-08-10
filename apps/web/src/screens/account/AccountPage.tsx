@@ -160,7 +160,28 @@ function Support({ screen }: { screen: PageManifestEntry }) {
 }
 
 function Invitations({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Request an invitation for another participant." /><Deferred>Invitation issuance, request persistence, review states, and redemption verification are not supplied.</Deferred></>;
+  const [friendName, setFriendName] = useState("");
+  const [email, setEmail] = useState("");
+  const [reason, setReason] = useState("");
+  const [submitted, setSubmitted] = useState(screen.screenId === "ACC023");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const submit = async () => {
+    setBusy(true);
+    setError(undefined);
+    const response = await fetch("/api/beta-invitations/request", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, friendName, reason }),
+    });
+    const result = await response.json() as { error?: string };
+    setBusy(false);
+    if (!response.ok) setError(result.error ?? "Invitation request could not be submitted.");
+    else setSubmitted(true);
+  };
+
+  return <><AccountHead screen={screen} description="Request a beta invitation for another participant." />{submitted ? <section className="card"><h2>Invitation request received</h2><p>Thank you. The request was submitted successfully.</p><p>The request is not shown with an internal approval, rejection, queue, or pending status. If an invitation is issued, it is delivered through the invitation flow.</p><a className="button" href="/account">Back to Account</a></section> : <div className="grid-2"><section className="card form-grid"><h2 className="span-2">Request a friend invitation</h2><label className="field">Friend name<input className="input" value={friendName} onChange={(event) => setFriendName(event.target.value)} /></label><label className="field">Friend email<input className="input" type="email" value={email} onChange={(event) => setEmail(event.target.value)} /></label><label className="field span-2">Reason<textarea className="textarea" value={reason} onChange={(event) => setReason(event.target.value)} /></label><button className="button button--gold" disabled={busy || !friendName.trim() || !email.trim() || !reason.trim()} onClick={submit}>{busy ? "Submitting…" : "Submit request"}</button>{error && <p className="notice notice--bad span-2" role="alert">{error}</p>}</section><aside className="card"><h2>Beta is invite only</h2><p>A request is not an invitation. Administrative review is required, and approval sends the actual invitation by email.</p><p>Redemption grants beta/player eligibility only. It does not grant an authorization role or membership benefits.</p></aside></div>}</>;
 }
 
 function BetaLanding({ screen }: { screen: PageManifestEntry }) {
