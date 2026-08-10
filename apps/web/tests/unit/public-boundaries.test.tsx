@@ -68,6 +68,16 @@ describe("public mutation boundaries", () => {
     expect(screen.getByRole("button", { name: "Donate unavailable" })).toBeDisabled();
   });
 
+  it("shows the exact donation membership grant for the selected amount", () => {
+    render(<PublicPage screen={publicScreen("PUB009")} />);
+
+    fireEvent.change(screen.getByLabelText("Amount in US dollars"), { target: { value: "50" } });
+
+    expect(screen.getByText("$50.00")).toBeInTheDocument();
+    expect(screen.getByText("+6 months")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Donate unavailable" })).toBeDisabled();
+  });
+
   it("does not turn the reviewed eligible donation state into a live eligibility result", () => {
     render(<PublicPage screen={publicScreen("PUB021")} />);
     expect(screen.getByRole("heading", { name: "Eligibility unavailable" })).toBeInTheDocument();
