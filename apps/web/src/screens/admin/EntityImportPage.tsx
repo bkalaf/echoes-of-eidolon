@@ -27,6 +27,7 @@ const typedImportKeys = {
   Layette: "layette",
   Pillar: "pillar",
   PersonalityExpression: "personalityexpression",
+  PointOfInterest: "pointofinterest",
   Lesson: "lesson",
   LegendaryReward: "legendaryreward",
   Soul: "soul",

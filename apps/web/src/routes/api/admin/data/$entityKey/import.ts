@@ -18,6 +18,7 @@ import { applyConstellationImport } from "../../../../../server/constellation-im
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "../../../../../server/import-errors";
 import { applyPillarImport } from "../../../../../server/pillar-import";
 import { applyPersonalityExpressionImport } from "../../../../../server/personality-expression-import";
+import { applyPointOfInterestImport } from "../../../../../server/point-of-interest-import";
 import { applyTransitionImport } from "../../../../../server/transition-import";
 import { applySpeciesGroupImport } from "../../../../../server/species-group-import";
 
@@ -82,6 +83,8 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             result = await applyPersonalityExpressionImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else if (params.entityKey === "speciesgroup") {
             result = await applySpeciesGroupImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
+          } else if (params.entityKey === "pointofinterest") {
+            result = await applyPointOfInterestImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else {
             throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${params.entityKey}.`);
           }
