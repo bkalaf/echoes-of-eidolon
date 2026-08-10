@@ -43,19 +43,14 @@ describe("canonical domain invariants", () => {
     ])).toThrow("CONCORD Companion slot requires a CONCORD Protagonist");
   });
 
-  it("requires exactly two authored Puzzle Blueprint hints", () => {
+  it("keeps mutable root fields separate from immutable Puzzle Blueprint versions", () => {
     const blueprint = puzzleBlueprintSchema.parse({
       puzzleBlueprintId: "PUZ-1",
-      family: "sequence",
-      difficultyTier: 3,
-      hint1: "First authored hint",
-      hint2: "Second authored hint",
-      generatorVersion: 1,
+      family: "LOGIC_CONSTRAINT",
+      difficultyTier: "TIER_3_EXPERT",
     });
-    expect(Object.keys(blueprint).filter((key) => key.startsWith("hint"))).toEqual([
-      "hint1",
-      "hint2",
-    ]);
+    expect(blueprint).not.toHaveProperty("hint1");
+    expect(blueprint).not.toHaveProperty("generatorVersion");
   });
 
   it("plans same-world migration with exact Breed conservation", () => {

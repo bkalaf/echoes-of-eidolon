@@ -1146,31 +1146,32 @@ enum AuthorizationRole {
 }
 
 model User {
-  id                  String               @id
+  id                  String                    @id
   name                String
-  username            String?              @unique
+  username            String?                   @unique
   displayUsername     String?
-  email               String               @unique
-  emailVerified       Boolean              @default(false)
+  email               String                    @unique
+  emailVerified       Boolean                   @default(false)
   image               String?
   eligibilityStatus   AgeEligibility
-  betaEligible        Boolean              @default(false)
-  role                AuthorizationRole    @default(user)
-  banned              Boolean              @default(false)
+  betaEligible        Boolean                   @default(false)
+  role                AuthorizationRole         @default(user)
+  banned              Boolean                   @default(false)
   banReason           String?
   banExpires          DateTime?
-  twoFactorEnabled    Boolean              @default(false)
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
+  twoFactorEnabled    Boolean                   @default(false)
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
   sessions            Session[]
   accounts            Account[]
   passkeys            Passkey[]
   memberships         Member[]
-  sentInvitations     Invitation[]         @relation("InvitationInviter")
-  betaInviteRequests  BetaInviteRequest[]  @relation("BetaInviteRequester")
-  consumedBetaInvites BetaInvitationCode[] @relation("BetaInviteConsumer")
+  sentInvitations     Invitation[]              @relation("InvitationInviter")
+  betaInviteRequests  BetaInviteRequest[]       @relation("BetaInviteRequester")
+  consumedBetaInvites BetaInvitationCode[]      @relation("BetaInviteConsumer")
   twoFactors          TwoFactor[]
   capabilityEvents    CapabilityEvent[]
+  puzzleAcceptances   PuzzleChallengeAccepted[]
 }
 
 model Session {
@@ -1866,11 +1867,44 @@ model SpeciesGroup {
 }
 
 model PuzzleBlueprint {
-  puzzleBlueprintId String       @id
-  family            String
-  difficultyTier    Int
-  hint1             String
-  hint2             String
-  generatorVersion  Int
+  puzzleBlueprintId String                   @id
+  family            PuzzleFamily
+  difficultyTier    PuzzleDifficultyTier
+  versions          PuzzleBlueprintVersion[]
   antagonists       Antagonist[]
+}
+
+model PuzzleBlueprintVersion {
+  puzzleBlueprintId String
+  generatorVersion  Int
+  createdAt         DateTime                  @default(now())
+  puzzleBlueprint   PuzzleBlueprint           @relation(fields: [puzzleBlueprintId], references: [puzzleBlueprintId], onDelete: Cascade)
+  hints             PuzzleHintTemplate[]
+  acceptances       PuzzleChallengeAccepted[]
+
+  @@id([puzzleBlueprintId, generatorVersion])
+}
+
+model PuzzleHintTemplate {
+  puzzleBlueprintId String
+  generatorVersion  Int
+  level             Int
+  kind              PuzzleHintKind
+  template          String
+  puzzleVersion     PuzzleBlueprintVersion @relation(fields: [puzzleBlueprintId, generatorVersion], references: [puzzleBlueprintId, generatorVersion], onDelete: Cascade, map: "PuzzleHintTemplate_version_fkey")
+
+  @@id([puzzleBlueprintId, generatorVersion, level])
+}
+
+model PuzzleChallengeAccepted {
+  puzzleChallengeAcceptedId String                 @id
+  userId                    String
+  puzzleBlueprintId         String
+  generatorVersion          Int
+  acceptedAt                DateTime               @default(now())
+  user                      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  puzzleVersion             PuzzleBlueprintVersion @relation(fields: [puzzleBlueprintId, generatorVersion], references: [puzzleBlueprintId, generatorVersion], onDelete: Restrict, map: "PuzzleChallengeAccepted_version_fkey")
+
+  @@index([userId])
+  @@index([puzzleBlueprintId, generatorVersion], map: "PuzzleChallengeAccepted_version_idx")
 }

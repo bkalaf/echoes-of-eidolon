@@ -156,4 +156,4 @@ export interface PersonalityExpression { personalityExpressionId: string; name: 
 export interface CapabilityDefinition { capabilityDefinitionId: string; key: string; valueType: 'BOOLEAN'|'SCORE'; minValue?: number; maxValue?: number; description: string; }
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
 export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }
-export interface PuzzleBlueprint { puzzleBlueprintId: string; family: string; difficultyTier: 1|2|3|4|5; hint1: string; hint2: string; generatorVersion: number; }
+export interface PuzzleBlueprint { puzzleBlueprintId: string; family: 'TEXT_LANGUAGE_LITERARY'|'CRYPTO_NUMERIC_DATA'|'VISUAL_COLOR_OPTICAL'|'SPATIAL_FOLDING_GEOMETRY'|'AUDIO_MUSIC_SPECTRAL'|'LOGIC_CONSTRAINT'|'HISTORICAL_RESEARCH'|'CONSTRUCTION_SIMULATION'|'CROSS_MODAL'; difficultyTier: 'TIER_1_INITIATE'|'TIER_2_ADEPT'|'TIER_3_EXPERT'|'TIER_4_MASTER'|'TIER_5_ORDEAL'; }

@@ -54,17 +54,8 @@ export function validateCompanionWorldSlots(
 
 export const puzzleBlueprintSchema = z.object({
   puzzleBlueprintId: z.string().min(1),
-  family: z.string().min(1),
-  difficultyTier: z.union([
-    z.literal(1),
-    z.literal(2),
-    z.literal(3),
-    z.literal(4),
-    z.literal(5),
-  ]),
-  hint1: z.string().min(1),
-  hint2: z.string().min(1),
-  generatorVersion: z.number().int(),
+  family: z.enum(["TEXT_LANGUAGE_LITERARY", "CRYPTO_NUMERIC_DATA", "VISUAL_COLOR_OPTICAL", "SPATIAL_FOLDING_GEOMETRY", "AUDIO_MUSIC_SPECTRAL", "LOGIC_CONSTRAINT", "HISTORICAL_RESEARCH", "CONSTRUCTION_SIMULATION", "CROSS_MODAL"]),
+  difficultyTier: z.enum(["TIER_1_INITIATE", "TIER_2_ADEPT", "TIER_3_EXPERT", "TIER_4_MASTER", "TIER_5_ORDEAL"]),
 }) satisfies z.ZodType<PuzzleBlueprint>;
 
 const migrationRowSchema = z.object({

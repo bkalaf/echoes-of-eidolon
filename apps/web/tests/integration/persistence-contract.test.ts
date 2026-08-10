@@ -172,4 +172,21 @@ describe("persistence contract", () => {
     expect(migration).toContain('KnowledgeBaseDisclosure_validate');
     expect(migration).toContain('KnowledgeBaseDisclosureCitation_citationId_fkey');
   });
+
+  it("separates stable PuzzleBlueprint roots from immutable versions, hints, and acceptance timing", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810150000_puzzle_versions_and_acceptance/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "PuzzleBlueprintVersion"');
+    expect(migration).toContain('PRIMARY KEY ("puzzleBlueprintId", "generatorVersion")');
+    expect(migration).toContain('CREATE TABLE "PuzzleHintTemplate"');
+    expect(migration).toContain('PuzzleHintTemplate_shape_check');
+    expect(migration).toContain('DEFERRABLE INITIALLY DEFERRED');
+    expect(migration).toContain('PuzzleBlueprintVersion_reject_update');
+    expect(migration).toContain('PuzzleHintTemplate_reject_update');
+    expect(migration).toContain('CREATE TABLE "PuzzleChallengeAccepted"');
+    expect(migration).toContain('PuzzleChallengeAccepted_reject_update');
+    expect(migration).not.toContain('"endsAt"');
+  });
 });

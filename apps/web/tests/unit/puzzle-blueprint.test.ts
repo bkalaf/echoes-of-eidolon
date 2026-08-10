@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { challengeWindowFromAcceptance, puzzleChallengeDurationSeconds, validateInitialPuzzleBank, type PuzzleBlueprintSeed } from "../../src/domain/puzzle-blueprint";
+import { challengeWindowFromAcceptance, deterministicPuzzlePreviewKey, puzzleChallengeDurationSeconds, puzzleDifficultyTiers, puzzleFamilies, validateInitialPuzzleBank, type PuzzleBlueprintSeed } from "../../src/domain/puzzle-blueprint";
 
 function validBank(): PuzzleBlueprintSeed[] {
   return Array.from({ length: 70 }, (_, index) => ({
     puzzleBlueprintId: `PUZZLE-${String(index + 1).padStart(3, "0")}`,
-    difficultyTier: (Math.floor(index / 14) + 1) as 1 | 2 | 3 | 4 | 5,
+    family: puzzleFamilies[index % puzzleFamilies.length]!,
+    difficultyTier: puzzleDifficultyTiers[Math.floor(index / 14)]!,
     generatorVersion: 1,
     hints: [
       { level: 1, kind: "DIRECTIONAL", template: `Direction ${index}`, containsAnswer: false },
@@ -19,8 +20,8 @@ describe("Puzzle Blueprint contracts", () => {
     expect(() => validateInitialPuzzleBank(validBank())).not.toThrow();
     expect(() => validateInitialPuzzleBank(validBank().slice(0, 69))).toThrow(/exactly 70/);
     const wrongTier = validBank();
-    wrongTier[0] = { ...wrongTier[0]!, difficultyTier: 2 };
-    expect(() => validateInitialPuzzleBank(wrongTier)).toThrow(/tier 1/);
+    wrongTier[0] = { ...wrongTier[0]!, difficultyTier: "TIER_2_ADEPT" };
+    expect(() => validateInitialPuzzleBank(wrongTier)).toThrow(/TIER_1_INITIATE/);
 
     const zeroVersion = validBank();
     zeroVersion[0] = { ...zeroVersion[0]!, generatorVersion: 0 };
@@ -34,5 +35,12 @@ describe("Puzzle Blueprint contracts", () => {
     expect(puzzleChallengeDurationSeconds).toBe(2_160_000);
     expect(window.endsAt.getTime() - window.acceptedAt.getTime()).toBe(2_160_000_000);
     expect(Object.isFrozen(window)).toBe(true);
+  });
+
+  it("derives preview identity from blueprint, campaign, player, attempt, and seed without starting a timer", () => {
+    const input = { puzzleBlueprintId: "PZ", generatorVersion: 0, campaignId: "CAM", playerId: "PLAYER", attempt: 2, seed: "SEED" };
+    expect(deterministicPuzzlePreviewKey(input)).toBe(deterministicPuzzlePreviewKey({ ...input }));
+    expect(deterministicPuzzlePreviewKey({ ...input, seed: "OTHER" })).not.toBe(deterministicPuzzlePreviewKey(input));
+    expect(deterministicPuzzlePreviewKey(input)).not.toMatch(/acceptedAt|endsAt|timer/);
   });
 });

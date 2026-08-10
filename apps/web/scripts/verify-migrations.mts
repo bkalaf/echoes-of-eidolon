@@ -25,6 +25,20 @@ async function expectDatabaseRejection(work: () => Promise<unknown>, message: st
   throw new Error(message);
 }
 
+async function expectTransactionRejection(client: Client, work: () => Promise<void>, message: string): Promise<void> {
+  await client.query("BEGIN");
+  let rejected = false;
+  try {
+    await work();
+    await client.query("COMMIT");
+  } catch {
+    rejected = true;
+  } finally {
+    await client.query("ROLLBACK");
+  }
+  if (!rejected) throw new Error(message);
+}
+
 const configuredUrl = new URL(process.env.DATABASE_URL ?? "");
 if (!["127.0.0.1", "localhost"].includes(configuredUrl.hostname)) {
   throw new Error("Migration verification only runs against local PostgreSQL.");
@@ -137,6 +151,46 @@ try {
          ) VALUES ('bad-disclosure', 'knowledge-one', 'capability-definition', 1, 'EQ', true, 'REPLACE_BLOCK', 'block-two')`,
       ),
       "Cross-entry knowledge disclosure anchor was not rejected",
+    );
+
+    await verification.query(
+      `INSERT INTO "PuzzleBlueprint" ("puzzleBlueprintId", "family", "difficultyTier")
+       VALUES ('puzzle', 'LOGIC_CONSTRAINT', 'TIER_1_INITIATE')`,
+    );
+    await verification.query("BEGIN");
+    await verification.query(
+      `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion") VALUES ('puzzle', 0)`,
+    );
+    await verification.query(
+      `INSERT INTO "PuzzleHintTemplate" ("puzzleBlueprintId", "generatorVersion", "level", "kind", "template") VALUES
+       ('puzzle', 0, 1, 'DIRECTIONAL', 'Direction'),
+       ('puzzle', 0, 2, 'GUIDED', 'Guide')`,
+    );
+    await verification.query("COMMIT");
+    await expectTransactionRejection(
+      verification,
+      async () => {
+        await verification.query(
+          `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion") VALUES ('puzzle', 1)`,
+        );
+        await verification.query(
+          `INSERT INTO "PuzzleHintTemplate" ("puzzleBlueprintId", "generatorVersion", "level", "kind", "template")
+           VALUES ('puzzle', 1, 1, 'DIRECTIONAL', 'Only one')`,
+        );
+      },
+      "PuzzleBlueprintVersion with one hint was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "PuzzleHintTemplate" SET "template" = 'Changed' WHERE "puzzleBlueprintId" = 'puzzle' AND "generatorVersion" = 0 AND "level" = 1`),
+      "PuzzleHintTemplate update was not rejected",
+    );
+    await verification.query(
+      `INSERT INTO "PuzzleChallengeAccepted" ("puzzleChallengeAcceptedId", "userId", "puzzleBlueprintId", "generatorVersion")
+       VALUES ('acceptance', 'capability-user', 'puzzle', 0)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "PuzzleChallengeAccepted" SET "acceptedAt" = CURRENT_TIMESTAMP WHERE "puzzleChallengeAcceptedId" = 'acceptance'`),
+      "PuzzleChallengeAccepted update was not rejected",
     );
   } finally {
     await verification.end();
