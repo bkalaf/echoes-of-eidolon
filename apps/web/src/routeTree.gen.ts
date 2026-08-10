@@ -27,6 +27,9 @@ import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
+import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
+import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/admin/settlements/migrate'
 import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
@@ -126,6 +129,24 @@ const ApiAdminBetaInvitationsIndexRoute =
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminSettlementsCompleteNamingRoute =
+  ApiAdminSettlementsCompleteNamingRouteImport.update({
+    id: '/api/admin/settlements/complete-naming',
+    path: '/api/admin/settlements/complete-naming',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminSettlementsFoundCityRoute =
+  ApiAdminSettlementsFoundCityRouteImport.update({
+    id: '/api/admin/settlements/found-city',
+    path: '/api/admin/settlements/found-city',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminSettlementsMigrateRoute =
+  ApiAdminSettlementsMigrateRouteImport.update({
+    id: '/api/admin/settlements/migrate',
+    path: '/api/admin/settlements/migrate',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminAccountsUserIdRoleRoute =
   ApiAdminAccountsUserIdRoleRouteImport.update({
     id: '/role',
@@ -162,6 +183,9 @@ export interface FileRoutesByFullPath {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
+  '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
+  '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
@@ -185,6 +209,9 @@ export interface FileRoutesByTo {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
+  '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
+  '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
@@ -209,6 +236,9 @@ export interface FileRoutesById {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
+  '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
+  '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
@@ -234,6 +264,9 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/settlements/complete-naming'
+    | '/api/admin/settlements/found-city'
+    | '/api/admin/settlements/migrate'
     | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
     | '/api/admin/accounts/$userId/role'
@@ -257,6 +290,9 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/settlements/complete-naming'
+    | '/api/admin/settlements/found-city'
+    | '/api/admin/settlements/migrate'
     | '/api/admin/accounts'
     | '/api/admin/beta-invitations'
     | '/api/admin/accounts/$userId/role'
@@ -280,6 +316,9 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/settlements/complete-naming'
+    | '/api/admin/settlements/found-city'
+    | '/api/admin/settlements/migrate'
     | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
     | '/api/admin/accounts/$userId/role'
@@ -304,6 +343,9 @@ export interface RootRouteChildren {
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
+  ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
+  ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
+  ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -438,6 +480,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/settlements/complete-naming': {
+      id: '/api/admin/settlements/complete-naming'
+      path: '/api/admin/settlements/complete-naming'
+      fullPath: '/api/admin/settlements/complete-naming'
+      preLoaderRoute: typeof ApiAdminSettlementsCompleteNamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/settlements/found-city': {
+      id: '/api/admin/settlements/found-city'
+      path: '/api/admin/settlements/found-city'
+      fullPath: '/api/admin/settlements/found-city'
+      preLoaderRoute: typeof ApiAdminSettlementsFoundCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/settlements/migrate': {
+      id: '/api/admin/settlements/migrate'
+      path: '/api/admin/settlements/migrate'
+      fullPath: '/api/admin/settlements/migrate'
+      preLoaderRoute: typeof ApiAdminSettlementsMigrateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/accounts/$userId/role': {
       id: '/api/admin/accounts/$userId/role'
       path: '/role'
@@ -493,6 +556,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
+  ApiAdminSettlementsCompleteNamingRoute:
+    ApiAdminSettlementsCompleteNamingRoute,
+  ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
+  ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
