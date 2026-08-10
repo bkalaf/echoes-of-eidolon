@@ -44,7 +44,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <a href="/legal">Legal</a>
           <a href="/status">Status</a>
         </nav>
-        <span>ECHOES OF EIDOLON · REVIEW WIREFRAME</span>
+        <span>© Echoes of Eidolon</span>
       </footer>
     </div>
   );

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
@@ -44,6 +50,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/about': typeof AboutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/about': typeof AboutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -59,19 +67,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/about': typeof AboutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
+  fullPaths:
+    '/' | '/$' | '/about' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
+  to:
+    '/' | '/$' | '/about' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/$'
+    | '/about'
     | '/api/health'
     | '/api/atlas/catalog'
     | '/api/auth/$'
@@ -80,6 +92,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  AboutRoute: typeof AboutRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -99,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/health': {
@@ -128,6 +148,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  AboutRoute: AboutRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
