@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { BoundedNumberField, OtpInput } from "../../src/components/ui/controls";
+import { BoundedNumberField, FiniteChipSelection, OtpInput } from "../../src/components/ui/controls";
 import { numericControlContracts } from "../../src/domain/numeric-controls";
 
 describe("hardened numeric controls", () => {
@@ -29,5 +29,26 @@ describe("hardened numeric controls", () => {
     expect(input).toHaveAttribute("type", "text");
     fireEvent.input(input, { target: { value: "12a34-567" } });
     expect(input).toHaveValue("123456");
+  });
+});
+
+describe("finite enum chip controls", () => {
+  it("sorts and labels raw tokens while deriving stable color from the allowed-token index", () => {
+    const onChange = vi.fn();
+    render(<FiniteChipSelection
+      allowedTokens={["CHANGE", "ANGER", "ACCOUNTABILITY"]}
+      label="Personality family"
+      multiple
+      onChange={onChange}
+      selectedTokens={["CHANGE", "ACCOUNTABILITY"]}
+    />);
+
+    const selected = screen.getByRole("group", { name: "Personality family" }).querySelectorAll("button");
+    expect([...selected].map((button) => button.dataset.token)).toEqual(["ACCOUNTABILITY", "CHANGE"]);
+    expect(selected[0]).toHaveClass("finite-chip--tone-0");
+    expect(selected[1]).toHaveClass("finite-chip--tone-2");
+    expect(screen.getByRole("button", { name: "Clear Accountability" })).toHaveValue("ACCOUNTABILITY");
+    fireEvent.click(screen.getByRole("button", { name: "Clear Accountability" }));
+    expect(onChange).toHaveBeenCalledWith(["CHANGE"]);
   });
 });

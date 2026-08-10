@@ -4,7 +4,7 @@ import type {
   ReactNode,
   SelectHTMLAttributes,
 } from "react";
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 import { numericControlContracts, type NumericControlKey } from "../../domain/numeric-controls";
 
@@ -62,6 +62,42 @@ export function HardenedSelect({
 
 export function Chip({ children, tone = "cyan" }: { children: ReactNode; tone?: string }) {
   return <span className={`chip chip--${tone}`}>{children}</span>;
+}
+
+function enumTokenLabel(token: string): string {
+  return token
+    .split("_")
+    .map((word) => `${word.charAt(0)}${word.slice(1).toLowerCase()}`)
+    .join(" ");
+}
+
+export function FiniteChipSelection({
+  allowedTokens,
+  label,
+  multiple = false,
+  onChange,
+  selectedTokens,
+}: {
+  allowedTokens: readonly string[];
+  label: string;
+  multiple?: boolean;
+  onChange: (tokens: string[]) => void;
+  selectedTokens: readonly string[];
+}) {
+  const labelId = useId();
+  const orderedAllowed = [...allowedTokens].sort((left, right) => left.localeCompare(right));
+  const allowed = new Set(orderedAllowed);
+  if (allowed.size !== orderedAllowed.length) throw new Error("Finite selections require unique allowed tokens.");
+  if (selectedTokens.some((token) => !allowed.has(token))) throw new Error("Finite selection contains an unregistered token.");
+  if (!multiple && selectedTokens.length > 1) throw new Error("Single selection accepts at most one token.");
+
+  const selected = orderedAllowed.filter((token) => selectedTokens.includes(token));
+  const unselected = orderedAllowed.filter((token) => !selectedTokens.includes(token));
+  const tone = (token: string) => orderedAllowed.indexOf(token) % 8;
+  const select = (token: string) => onChange(multiple ? [...selected, token] : [token]);
+  const clear = (token: string) => onChange(selected.filter((entry) => entry !== token));
+
+  return <div className="finite-selection"><strong id={labelId}>{label}</strong><div aria-labelledby={labelId} className="finite-selection__selected" role="group">{selected.length === 0 ? <span className="muted">No value selected</span> : selected.map((token) => <button aria-label={`Clear ${enumTokenLabel(token)}`} aria-pressed="true" className={`finite-chip finite-chip--tone-${tone(token)}`} data-token={token} key={token} onClick={() => clear(token)} type="button" value={token}>{enumTokenLabel(token)} <span aria-hidden="true">×</span></button>)}</div>{unselected.length > 0 && <details className="finite-selection__options"><summary>Add value</summary><div>{unselected.map((token) => <button aria-label={`Select ${enumTokenLabel(token)}`} aria-pressed="false" className={`finite-chip finite-chip--tone-${tone(token)}`} data-token={token} key={token} onClick={() => select(token)} type="button" value={token}>{enumTokenLabel(token)}</button>)}</div></details>}</div>;
 }
 
 export const OtpInput = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLInputElement>, "inputMode" | "maxLength" | "minLength" | "pattern" | "type">>(function OtpInput({ className = "", onInput, ...props }, ref) {

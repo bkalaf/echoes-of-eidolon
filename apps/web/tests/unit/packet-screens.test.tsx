@@ -45,4 +45,26 @@ describe("packet screens", () => {
       cleanup();
     }
   });
+
+  it("renders the locked Personality Family examples instead of invented enum controls", () => {
+    renderPacket("TOOL003");
+
+    expect(screen.getAllByRole("button", { name: /Clear / })).toHaveLength(13);
+    expect(screen.getAllByRole("button", { name: "Clear Accountability" })).toHaveLength(2);
+    expect(screen.queryByText("World")).not.toBeInTheDocument();
+    expect(screen.queryByText("Species kind")).not.toBeInTheDocument();
+    expect(screen.queryByText("Timeline event type")).not.toBeInTheDocument();
+  });
+
+  it("fails closed for an unknown review-tool screen", () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    render(
+      <QueryClientProvider client={queryClient}>
+        <PacketScreen screen={{ ...entry("TOO001"), screenId: "TOOL_UNKNOWN" }} />
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Review tool unavailable" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Untitled task" })).not.toBeInTheDocument();
+  });
 });

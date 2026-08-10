@@ -110,6 +110,19 @@ button, input, select, textarea { font: inherit; }
 .chip--cyan { background: #6fd3ff; }
 .chip--gold { background: #efb83a; }
 .chip--green { background: #51d29a; }
+.finite-selection { display: grid; gap: 10px; }
+.finite-selection__selected, .finite-selection__options > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.finite-selection__options summary { cursor: pointer; margin-bottom: 8px; }
+.finite-chip { border: 1px solid currentColor; border-radius: 999px; background: #071522; padding: 6px 10px; color: #d7e8f5; cursor: pointer; }
+.finite-chip:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+.finite-chip--tone-0 { color: #71d7ff; }
+.finite-chip--tone-1 { color: #c69cff; }
+.finite-chip--tone-2 { color: #ff978f; }
+.finite-chip--tone-3 { color: #f2c766; }
+.finite-chip--tone-4 { color: #73dbbd; }
+.finite-chip--tone-5 { color: #f7a8d7; }
+.finite-chip--tone-6 { color: #9bb8ff; }
+.finite-chip--tone-7 { color: #d0df78; }
 .topic--tone-0 { --topic-accent: #6fd3ff; }
 .topic--tone-1 { --topic-accent: #efb83a; }
 .topic--tone-2 { --topic-accent: #51d29a; }
