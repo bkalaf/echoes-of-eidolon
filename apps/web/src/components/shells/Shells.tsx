@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { managedAssetUrl } from "../../content/managed-assets";
 import { authClient } from "../../lib/auth-client";
@@ -26,6 +26,29 @@ function PublicAuthControls() {
   return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;
 }
 
+function EligibleDonateLink() {
+  const session = authClient.useSession();
+  const userId = session.data?.user.id;
+  const [access, setAccess] = useState<{ canPlay: boolean; userId: string }>();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+    if (!userId) return () => controller.abort();
+
+    void fetch("/api/player/access", { signal: controller.signal })
+      .then(async (response) => response.ok ? response.json() as Promise<{ canPlay?: unknown }> : undefined)
+      .then((result) => { if (active) setAccess({ canPlay: result?.canPlay === true, userId }); })
+      .catch(() => { if (active) setAccess({ canPlay: false, userId }); });
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [userId]);
+
+  return access && access.userId === userId && access.canPlay ? <a href="/donate">Donate</a> : null;
+}
+
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
     <div className="site-shell">
@@ -49,6 +72,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <a href="/about">About Us</a>
           <a href="/contact">Contact Us</a>
           <a href="/legal">Legal</a>
+          <EligibleDonateLink />
         </nav>
         <span>© Echoes of Eidolon</span>
       </footer>

@@ -52,6 +52,7 @@ describe("public home", () => {
     expect(screen.getByRole("link", { name: "Enter Game" })).toHaveAttribute("href", "/game");
     expect(screen.getByRole("link", { name: "Account" })).toHaveClass("avatar-link");
     expect(screen.getByRole("link", { name: "Sign Out" })).toHaveAttribute("href", "/auth/sign-out");
+    expect(await screen.findByRole("link", { name: "Donate" })).toHaveAttribute("href", "/donate");
     expect(screen.queryByRole("link", { name: "Sign In" })).not.toBeInTheDocument();
   });
 
@@ -69,5 +70,6 @@ describe("public home", () => {
     renderHome();
     expect(await screen.findByRole("heading", { name: "Player eligibility required" })).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Enter Game" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Donate" })).not.toBeInTheDocument();
   });
 });
