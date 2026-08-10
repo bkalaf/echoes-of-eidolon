@@ -11,6 +11,18 @@ closed-world packet and current workspace inputs remain unchanged and controllin
 - Legacy carry-over: none. No prior repository, implementation, schema, route,
   test, deployment, or convention is an input to this build.
 
+## Owner-supplied repository contract
+
+- Node: `22.22.0`
+- Package manager: `pnpm@10.33.2`
+- Workspace: enabled
+- Web application path: `apps/web`
+- Required root files: `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`
+- Required app files: `apps/web/package.json`, `apps/web/tsconfig.json`
+- Required verification order: lint, typecheck, unit, integration, E2E, build
+- Web framework, renderer, server framework, persistence technology, and test
+  framework: not supplied; no choice is recorded in this precheck.
+
 ## Existing code owners
 
 There were no application files or existing code owners at intake. The following
