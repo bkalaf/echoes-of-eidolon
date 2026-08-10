@@ -6,3 +6,549 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum WorldKey {
+  CONCORD
+  RUIN
+  SCHISM
+}
+
+enum SpeciesKind {
+  HUMAN
+  BEAST
+  MYTHOS
+  PET
+}
+
+enum ProtagonistImportance {
+  MINOR
+  MAJOR
+}
+
+enum TimelineEventType {
+  HISTORICAL
+  ATROCITY
+  EXODUS
+  IN_TRANSIT
+}
+
+enum InterludeType {
+  WWII
+  HISTORICAL
+  MYTH
+  SCIENCE
+  DEJA_VU
+  OTHER
+}
+
+enum StructureOrientation {
+  ORDERED
+  NEUTRAL
+  CHAOS
+}
+
+enum OperatingStyle {
+  TEAMWORK
+  SITUATIONAL
+  SOLO
+}
+
+enum Motivation {
+  ALTRUISTIC
+  RECIPROCAL
+  SELFISH
+}
+
+enum AdministrationMode {
+  CENTRALIZED
+  DELEGATED
+  DISTRIBUTED
+}
+
+enum AuthoritySource {
+  APPOINTMENT
+  DIVINE_MANDATE
+  ELECTION
+}
+
+enum LegitimacyBasis {
+  ANCESTRAL
+  CHARTERED
+  MARTIAL
+}
+
+enum AllocationMode {
+  CUSTOMARY
+  MARKET
+  PLANNED
+}
+
+enum OwnershipMode {
+  COMMON_USE
+  SHARED_TITLE
+  SINGLE_ENTITY
+}
+
+enum PoliticalForm {
+  ACCLAIMED_IMPERATOR
+  APPOINTED_COMMISSION
+  APPOINTED_DIRECTORATE
+  CAPTAINS_COUNCIL
+  CHIEFTAIN_COUNCIL
+  CONSECRATED_REPUBLIC
+  COVENANT_ASSEMBLY
+  COVENANT_CROWN
+  DELEGATE_LEAGUE
+  DIVINE_THRONE
+  ELDER_MOOT
+  ELECTED_EXECUTIVE
+  ELECTIVE_CROWN
+  ESTATES_DIET
+  FEUDAL_ORDER
+  FREE_COMPANY
+  GARRISON_COMMAND
+  HALLOWED_CUSTOM
+  JUNTA
+  MILITANT_ORDER
+  MILITANT_THEOCRACY
+  POPULAR_FEDERATION
+  RAIDER_CONFEDERACY
+  REGENT_THRONE
+  REPUBLIC
+  TEMPLE_HIERARCHY
+  ZEALOT_BANDS
+}
+
+enum EconomicForm {
+  COMMAND_DEMESNE
+  COMMUNE_PLAN
+  FOLK_COMMONS
+  GUILD_COMPACT
+  MONOPOLY_ESTATE
+  OPEN_BAZAAR
+  SHAREHOLDER_BOURSE
+  SYNDICATE_CARTEL
+  TRIBUTARY_DEMESNE
+}
+
+enum CitationQuality {
+  HIGH
+  MEDIUM
+  LOW
+  UNVERIFIED
+}
+
+enum CapabilityValueType {
+  BOOLEAN
+  SCORE
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  passkeys      Passkey[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+model Passkey {
+  id           String   @id
+  name         String?
+  publicKey    String
+  userId       String
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime @default(now())
+  aaguid       String?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([credentialID])
+  @@index([userId])
+}
+
+model Species {
+  speciesId            String      @id
+  name                 String
+  speciesKind          SpeciesKind
+  scientificName       String?
+  taxonomy             Json?
+  appearance           String[]
+  accent               String[]
+  anthropomorphization String[]
+}
+
+model Breed {
+  breedId              String                @id
+  name                 String
+  speciesId            String
+  cultureId            String?
+  appearance           String[]
+  accent               String[]
+  costume              String[]
+  architecture         String[]
+  structuralStability  Float?
+  motivation           Motivation?
+  operatingStyle       OperatingStyle?
+  structureOrientation StructureOrientation?
+  administrationMode   AdministrationMode?
+  ownershipMode        OwnershipMode?
+  allocationMode       AllocationMode?
+  legitimacyBasis      LegitimacyBasis?
+  authoritySource      AuthoritySource?
+  politicalForm        PoliticalForm?
+  economicForm         EconomicForm?
+
+  @@index([speciesId])
+  @@index([cultureId])
+}
+
+model Culture {
+  cultureId                String   @id
+  culturePoolId            String
+  cultureName              String
+  hamletArchitecture       String
+  villageArchitecture      String
+  townArchitecture         String
+  cityArchitecture         String
+  metropolisArchitecture   String
+  architectureColorPalette String[]
+  clothingPalette          String[]
+  clothing                 String
+}
+
+model Character {
+  characterId String @id
+  displayName String
+  breedId     String
+
+  @@index([breedId])
+}
+
+model Protagonist {
+  protagonistId String                @id
+  characterId   String
+  importance    ProtagonistImportance
+  worldKey      WorldKey?
+
+  @@index([characterId])
+}
+
+model Architect {
+  architectId  String  @id
+  departmentId String
+  name         String
+  profession   String?
+}
+
+model Antagonist {
+  antagonistId          String    @id
+  characterId           String
+  worldKey              WorldKey?
+  family                String
+  trueFlawName          String
+  witnessName           String
+  presentsAs            String
+  inversionRule         String
+  architectId           String
+  apparentDomain        String
+  realDomain            String
+  color                 Json
+  legendaryRewardId     String
+  puzzleBlueprintId     String
+  constellationBeforeId String?
+  constellationAfterId  String?
+
+  @@index([characterId])
+  @@index([architectId])
+  @@index([legendaryRewardId])
+  @@index([puzzleBlueprintId])
+}
+
+model Witness {
+  witnessId     String  @id
+  antagonist1Id String
+  antagonist2Id String?
+}
+
+model Soul {
+  soulId String @id
+  name   String
+}
+
+model Companion {
+  companionKey         String @id
+  concordProtagonistId String
+  ruinProtagonistId    String
+  schismProtagonistId  String
+  soulId               String
+  heirloom             String
+}
+
+model TimelineEvent {
+  timelineEventId   String            @id
+  name              String
+  timelineEventType TimelineEventType
+  summary           String
+}
+
+model Interlude {
+  interludeId   String        @id
+  name          String
+  interludeType InterludeType
+  summary       String
+}
+
+model InterludeSubstitution {
+  interludeSubstitutionId String @id
+  interludeId             String
+  replacementInterludeId  String
+  reason                  String
+}
+
+model Pillar {
+  pillarId   String  @id
+  name       String
+  domain     String?
+  seatNumber Int?
+}
+
+model LegendaryReward {
+  legendaryRewardId String @id
+  name              String
+  description       String
+}
+
+model Lesson {
+  lessonId    String @id
+  name        String
+  description String
+}
+
+model Tome {
+  tomeId String  @id
+  title  String
+  author String?
+}
+
+model Transition {
+  transitionId String @id
+  name         String
+  bookA        Int
+  bookB        Int
+  summary      String
+}
+
+model Constellation {
+  constellationId String  @id
+  name            String
+  rightAscension  String?
+  declination     String?
+}
+
+model Ark {
+  arkId  String @id
+  name   String
+  status String
+}
+
+model PointOfInterest {
+  pointOfInterestId String @id
+  name              String
+  kind              String
+  regionId          String
+  longitude         Float
+  latitude          Float
+
+  @@index([regionId])
+}
+
+model Site {
+  siteId        String  @id
+  regionId      String
+  candidateType String
+  longitude     Float
+  latitude      Float
+  settlementId  String?
+
+  @@index([regionId])
+  @@index([settlementId])
+}
+
+model Settlement {
+  settlementId String @id
+  siteId       String
+  name         String
+  size         String
+  regionId     String
+
+  @@index([siteId])
+  @@index([regionId])
+}
+
+model BreedPopulation {
+  settlementId String
+  worldKey     WorldKey
+  year         Int
+  breedId      String
+  population   Int
+
+  @@id([settlementId, worldKey, year, breedId])
+  @@index([breedId])
+}
+
+model Source {
+  sourceId        String   @id
+  title           String
+  authors         String[]
+  publisher       String?
+  publicationDate String?
+  sourceType      String
+  urlOrIdentifier String?
+}
+
+model Citation {
+  citationId String           @id
+  sourceId   String
+  locator    String?
+  rendering  String
+  quality    CitationQuality?
+
+  @@index([sourceId])
+}
+
+model Research {
+  researchId      String          @id
+  ownerEntityType String
+  ownerEntityId   String
+  notes           String
+  citationId      String
+  citationQuality CitationQuality
+
+  @@index([citationId])
+  @@index([ownerEntityType, ownerEntityId])
+}
+
+model KnowledgeBaseItem {
+  knowledgeBaseItemId String @id
+  entityType          String
+  entityId            String
+  title               String
+  baseContent         String
+
+  @@index([entityType, entityId])
+}
+
+model Definition {
+  definitionId String @id
+  term         String
+  definition   String
+}
+
+model Matrix {
+  matrixId       String   @id
+  regionId       String
+  latticeId      String
+  culturePoolIds String[]
+}
+
+model Layette {
+  layetteId   String @id
+  name        String
+  description String
+}
+
+model PersonalityExpression {
+  personalityExpressionId String @id
+  name                    String
+  loquacity               String
+  emotionalTemperature    String
+  outlookOrientation      String
+  collaborativePosture    String
+}
+
+model CapabilityDefinition {
+  capabilityDefinitionId String              @id
+  key                    String              @unique
+  valueType              CapabilityValueType
+  minValue               Int?
+  maxValue               Int?
+  description            String
+}
+
+model AchievementDefinition {
+  achievementDefinitionId String  @id
+  name                    String
+  chainKey                String
+  rank                    Int
+  imageAssetId            String?
+  status                  String
+}
+
+model SpeciesGroup {
+  speciesGroupId String      @id
+  name           String
+  speciesKind    SpeciesKind
+  description    String?
+}
+
+model PuzzleBlueprint {
+  puzzleBlueprintId String @id
+  family            String
+  difficultyTier    Int
+  hint1             String
+  hint2             String
+  generatorVersion  Int
+}
