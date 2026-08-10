@@ -84,26 +84,14 @@ function InvitePage() {
 
 function SignedInHome() {
   const session = authClient.useSession();
-  const organizationRole = useQuery({
-    queryKey: ["authorization", "public-home-role", session.data?.user.id],
-    enabled: Boolean(session.data),
-    queryFn: async () => {
-      const result = await authClient.organization.getActiveMemberRole();
-      if (result.error) throw new Error(result.error.message ?? "Organization authorization could not be verified.");
-      return result.data?.role ?? null;
-    },
-    retry: false,
-  });
 
   if (session.isPending) return <><PageHead eyebrow="Home" title="Checking account session." description="Account state is loading." /><p className="notice">Checking account session…</p></>;
   if (!session.data) return <><PageHead eyebrow="Home" title="Sign in required" description="A signed-in account is required for role-specific home content." /><a className="button button--gold" href="/auth/sign-in">Sign In</a></>;
-  if (organizationRole.isPending) return <><PageHead eyebrow="Home" title="Checking authorization." description="The active organization role is loading." /><p className="notice">Checking organization authorization…</p></>;
-  if (organizationRole.isError) return <><PageHead eyebrow="Home" title="Authorization unavailable" description="The active organization role could not be verified." /><p className="notice notice--warn">Role-specific content fails closed.</p></>;
 
-  const role = resolveAuthorizationRole(true, organizationRole.data);
-  if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>No active organization membership was verified. Member and administrative content is not shown.</p></section></>;
-  if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your organization authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the verified active organization role.</p><a className="button button--gold" href="/admin">Open Administration</a></section></>;
-  return <><PageHead eyebrow="Home" title="Welcome back." description="Your organization access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
+  const role = resolveAuthorizationRole(true, session.data.user.role);
+  if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>The account role does not establish beta/player eligibility or membership benefits.</p></section></>;
+  if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your account authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the server-owned account role.</p><a className="button button--gold" href="/admin">Open Administration</a></section></>;
+  return <><PageHead eyebrow="Home" title="Welcome back." description="Your account access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
 }
 
 export function PublicPage({ screen }: { screen: PageManifestEntry }) {

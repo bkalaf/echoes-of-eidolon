@@ -13,22 +13,15 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
   const session = await getAuth().api.getSession({ headers: request.headers });
   if (!session) return null;
 
-  const organizationId = session.session.activeOrganizationId;
-  const membership = organizationId
-    ? await getDatabase().member.findUnique({
-      where: { organizationId_userId: { organizationId, userId: session.user.id } },
-      select: { role: true },
-    })
-    : null;
   const user = await getDatabase().user.findUniqueOrThrow({
     where: { id: session.user.id },
-    select: { betaEligible: true, email: true },
+    select: { betaEligible: true, email: true, role: true },
   });
 
   return {
     betaEligible: user.betaEligible,
     email: user.email,
-    role: resolveAuthorizationRole(true, membership?.role),
+    role: resolveAuthorizationRole(true, user.role),
     userId: session.user.id,
   };
 }

@@ -2,12 +2,14 @@ import { passkey } from "@better-auth/passkey";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
 import { betterAuth } from "better-auth";
 import { APIError } from "better-auth/api";
+import { admin } from "better-auth/plugins/admin";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { organization } from "better-auth/plugins/organization";
 import { twoFactor } from "better-auth/plugins/two-factor";
 import { username } from "better-auth/plugins/username";
 import { z } from "zod";
 
+import { accountAuthorizationAccessControl, accountAuthorizationRoles } from "../domain/authorization-access";
 import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
 import { getDatabase } from "./database";
 import { sendAuthenticationCode, sendOrganizationInvitation } from "./email";
@@ -62,6 +64,12 @@ function createAuth() {
       updateAge: 60 * 60 * 24,
     },
     plugins: [
+      admin({
+        ac: accountAuthorizationAccessControl,
+        adminRoles: ["admin", "owner"],
+        defaultRole: "user",
+        roles: accountAuthorizationRoles,
+      }),
       username(),
       emailOTP({
         allowedAttempts: 3,

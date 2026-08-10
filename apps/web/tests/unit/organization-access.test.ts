@@ -7,7 +7,7 @@ import {
 } from "../../src/domain/organization-access";
 
 describe("Better Auth organization access control", () => {
-  it("prevents admins from changing organization authorization roles", () => {
+  it("prevents admins from changing organization membership roles", () => {
     expect(organizationAdminRole.authorize({ member: ["update"] }).success).toBe(false);
     expect(organizationOwnerRole.authorize({ member: ["update"] }).success).toBe(true);
   });

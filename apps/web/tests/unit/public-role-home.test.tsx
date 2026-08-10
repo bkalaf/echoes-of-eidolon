@@ -3,13 +3,11 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const authMocks = vi.hoisted(() => ({
-  getActiveMemberRole: vi.fn(),
   useSession: vi.fn(),
 }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
-    organization: { getActiveMemberRole: authMocks.getActiveMemberRole },
     useSession: authMocks.useSession,
   },
 }));
@@ -40,9 +38,8 @@ describe("role-specific public home", () => {
     expect(screen.queryByText(/Admin access|Member access/)).not.toBeInTheDocument();
   });
 
-  it("does not let an admin state request elevate a member", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "member" }, error: null });
+  it("does not let a member account enter administration", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "member" } }, isPending: false });
     renderHome();
     expect(await screen.findByRole("heading", { name: "Member access level" })).toBeInTheDocument();
     expect(screen.getByText(/does not establish beta\/player eligibility/)).toBeInTheDocument();
@@ -50,8 +47,7 @@ describe("role-specific public home", () => {
   });
 
   it.each(["admin", "owner"] as const)("shows verified %s access", async (role) => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role } }, isPending: false });
     renderHome();
     expect(await screen.findByRole("heading", { name: role === "owner" ? "Owner access" : "Admin access" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open Administration" })).toHaveAttribute("href", "/admin");

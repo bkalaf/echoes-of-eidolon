@@ -154,6 +154,13 @@ enum BetaInviteRequestStatus {
   REJECTED
 }
 
+enum AuthorizationRole {
+  user
+  member
+  admin
+  owner
+}
+
 model User {
   id                String                   @id
   name              String
@@ -164,6 +171,10 @@ model User {
   image             String?
   eligibilityStatus AccountEligibilityStatus
   betaEligible       Boolean                  @default(false)
+  role               AuthorizationRole        @default(user)
+  banned             Boolean                  @default(false)
+  banReason          String?
+  banExpires         DateTime?
   twoFactorEnabled   Boolean                  @default(false)
   createdAt         DateTime                 @default(now())
   updatedAt         DateTime                 @updatedAt
@@ -187,6 +198,7 @@ model Session {
   userAgent            String?
   userId               String
   activeOrganizationId String?
+  impersonatedBy       String?
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])

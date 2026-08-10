@@ -21,10 +21,10 @@ describe("authorization roles", () => {
     [true, "member", "member"],
     [true, "admin", "admin"],
     [true, "owner", "owner"],
-    [true, "member,admin", "admin"],
+    [true, "member,admin", "user"],
     [true, "unknown", "user"],
-  ] as const)("resolves authenticated=%s organizationRole=%s to %s", (authenticated, organizationRole, expected) => {
-    expect(resolveAuthorizationRole(authenticated, organizationRole)).toBe(expected);
+  ] as const)("resolves authenticated=%s accountRole=%s to %s", (authenticated, accountRole, expected) => {
+    expect(resolveAuthorizationRole(authenticated, accountRole)).toBe(expected);
   });
 
   it("allows only admin and owner into Administration", () => {

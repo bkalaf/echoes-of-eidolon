@@ -4,13 +4,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const authMocks = vi.hoisted(() => ({
-  getActiveMemberRole: vi.fn(),
   useSession: vi.fn(),
 }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
-    organization: { getActiveMemberRole: authMocks.getActiveMemberRole },
     useSession: authMocks.useSession,
   },
 }));
@@ -57,8 +55,7 @@ describe("administrative authorization boundary", () => {
     ["ADM014", /payments, orders, and fulfillment state/],
     ["OPS001", /restart controls, and deployment controls/],
   ])("does not treat a member as an administrator for %s", async (screenId, scope) => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "member" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "member" } }, isPending: false });
     renderAdmin(screenId);
 
     expect(await screen.findByRole("heading", { name: "Administrative access denied" })).toBeInTheDocument();
@@ -67,29 +64,23 @@ describe("administrative authorization boundary", () => {
   });
 
   it.each(["admin", "owner"] as const)("authorizes the %s role", async (role) => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role } }, isPending: false });
     renderAdmin("DATA003");
 
     expect(await screen.findByRole("heading", { name: "Administrative authorization verified" })).toBeInTheDocument();
     expect(screen.getByText(role)).toBeInTheDocument();
   });
 
-  it("fails closed when Better Auth cannot verify the active organization role", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({
-      data: null,
-      error: { message: "No active organization" },
-    });
+  it("fails closed when Better Auth returns an unknown account role", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "unexpected" } }, isPending: false });
     renderAdmin("DATA003");
 
-    expect(await screen.findByRole("heading", { name: "Administrative access unavailable" })).toBeInTheDocument();
-    expect(screen.getByText(/fails closed/)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Administrative access denied" })).toBeInTheDocument();
+    expect(screen.getByText(/Current authorization role:/)).toHaveTextContent("user");
   });
 
   it("never renders fabricated admin records or action results", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     renderAdmin("ADM005");
 
     await screen.findByRole("heading", { name: "Administrative authorization verified" });
@@ -98,8 +89,7 @@ describe("administrative authorization boundary", () => {
   });
 
   it("lets an administrator validate and preview concrete entity import rows without applying them", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     renderAdmin("DATA_SOUL_IMPORT");
 
     const input = await screen.findByRole("textbox", { name: "Paste structured data" });
@@ -113,8 +103,7 @@ describe("administrative authorization boundary", () => {
   });
 
   it("reports unmapped fields before an entity import can pass validation", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "owner" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "owner" } }, isPending: false });
     renderAdmin("DATA_SOUL_IMPORT");
 
     const input = await screen.findByRole("textbox", { name: "Paste structured data" });
@@ -126,8 +115,7 @@ describe("administrative authorization boundary", () => {
   });
 
   it("lets an admin review beta requests but not change authorization roles", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     renderAdmin("ADM003");
 
     expect((await screen.findByText("reviewInvitations")).parentElement).toHaveTextContent("reviewInvitations: granted");
@@ -136,8 +124,7 @@ describe("administrative authorization boundary", () => {
   });
 
   it("requires an explicit expiry before approving and sending a beta invitation", async () => {
-    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     vi.stubGlobal("fetch", vi.fn()
       .mockResolvedValueOnce({
         json: async () => ({

@@ -11,18 +11,12 @@ export type AdminCapability = (typeof adminCapabilities)[number];
 
 export function resolveAuthorizationRole(
   authenticated: boolean,
-  organizationRole?: string | null,
+  accountRole?: string | null,
 ): AuthorizationRole {
   if (!authenticated) return "guest";
-  const roles = new Set(
-    (organizationRole ?? "")
-      .split(",")
-      .map((role) => role.trim().toLowerCase())
-      .filter(Boolean),
-  );
-  if (roles.has("owner")) return "owner";
-  if (roles.has("admin")) return "admin";
-  if (roles.has("member")) return "member";
+  if (accountRole === "owner") return "owner";
+  if (accountRole === "admin") return "admin";
+  if (accountRole === "member") return "member";
   return "user";
 }
 
