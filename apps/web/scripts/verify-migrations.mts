@@ -236,6 +236,61 @@ try {
       () => verification.query(`UPDATE "MembershipGrant" SET "amountCents" = 1000 WHERE "membershipGrantId" = 'subscription-grant'`),
       "MembershipGrant update was not rejected",
     );
+
+    await verification.query(
+      `INSERT INTO "StoreProduct" ("storeProductId", "name", "active") VALUES ('store-product', 'Configured product', true)`,
+    );
+    await verification.query(
+      `INSERT INTO "StoreVariant" (
+         "storeVariantId", "storeProductId", "priceCents", "stripePriceReference", "printfulVariantReference", "available"
+       ) VALUES ('store-variant', 'store-product', 1000, 'stripe-price', 'printful-variant', true)`,
+    );
+    await verification.query(
+      `INSERT INTO "Order" ("orderId", "userId", "stripeCheckoutReference")
+       VALUES ('store-order', 'capability-user', 'stripe-checkout')`,
+    );
+    await verification.query(
+      `INSERT INTO "OrderLine" ("orderLineId", "orderId", "storeVariantId", "quantity", "unitPriceCents")
+       VALUES ('order-line', 'store-order', 'store-variant', 2, 1000)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "OrderLine" ("orderLineId", "orderId", "storeVariantId", "quantity", "unitPriceCents")
+         VALUES ('bad-order-line', 'store-order', 'store-variant', 1, 1)`,
+      ),
+      "Browser-authored OrderLine price was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "PrintfulFulfillmentSubmission" (
+           "printfulFulfillmentSubmissionId", "orderPaymentConfirmationId", "providerOrderReference"
+         ) VALUES ('early-fulfillment', 'missing-confirmation', 'early-provider-order')`,
+      ),
+      "Printful fulfillment without payment confirmation was not rejected",
+    );
+    await verification.query(
+      `INSERT INTO "StripeWebhookEvent" ("stripeWebhookEventId", "eventType", "payloadSha256", "processedAt")
+       VALUES ('stripe-event', 'confirmed', $1, CURRENT_TIMESTAMP)`,
+      ["c".repeat(64)],
+    );
+    await verification.query(
+      `INSERT INTO "OrderPaymentConfirmation" (
+         "orderPaymentConfirmationId", "orderId", "stripeWebhookEventId", "amountCents", "confirmedAt"
+       ) VALUES ('payment-confirmation', 'store-order', 'stripe-event', 2000, CURRENT_TIMESTAMP)`,
+    );
+    await verification.query(
+      `INSERT INTO "PrintfulFulfillmentSubmission" (
+         "printfulFulfillmentSubmissionId", "orderPaymentConfirmationId", "providerOrderReference"
+       ) VALUES ('fulfillment', 'payment-confirmation', 'printful-order')`,
+    );
+    await verification.query(
+      `INSERT INTO "OrderReturnEligibility" ("orderReturnEligibilityId", "orderId", "eligibleAt")
+       VALUES ('return-eligibility', 'store-order', CURRENT_TIMESTAMP)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "StripeWebhookEvent" SET "eventType" = 'changed' WHERE "stripeWebhookEventId" = 'stripe-event'`),
+      "StripeWebhookEvent update was not rejected",
+    );
   } finally {
     await verification.end();
   }

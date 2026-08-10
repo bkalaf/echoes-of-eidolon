@@ -1173,6 +1173,7 @@ model User {
   capabilityEvents    CapabilityEvent[]
   puzzleAcceptances   PuzzleChallengeAccepted[]
   membershipGrants    MembershipGrant[]
+  orders              Order[]
 }
 
 model Session {
@@ -1824,6 +1825,7 @@ model ManagedAsset {
   purposeLinks         AssetPurposeLink[]
   generatedFromPrompts PromptVersion[]         @relation("PromptGeneratedAsset")
   achievementImages    AchievementDefinition[] @relation("AchievementImageAsset")
+  storeProductArtwork  StoreProduct[]          @relation("StoreProductArtwork")
 }
 
 model AssetPurposeLink {
@@ -1899,6 +1901,110 @@ model Perk {
   name        String
   description String
   status      PerkStatus
+}
+
+model StoreProduct {
+  storeProductId String         @id
+  name           String         @unique
+  artworkAssetId String?
+  active         Boolean        @default(false)
+  artworkAsset   ManagedAsset?  @relation("StoreProductArtwork", fields: [artworkAssetId], references: [managedAssetId], onDelete: SetNull)
+  variants       StoreVariant[]
+
+  @@index([artworkAssetId])
+}
+
+model StoreVariant {
+  storeVariantId           String       @id
+  storeProductId           String
+  size                     String?
+  color                    String?
+  priceCents               Int
+  stripePriceReference     String       @unique
+  printfulVariantReference String       @unique
+  available                Boolean      @default(false)
+  storeProduct             StoreProduct @relation(fields: [storeProductId], references: [storeProductId], onDelete: Cascade)
+  orderLines               OrderLine[]
+
+  @@index([storeProductId])
+}
+
+model Order {
+  orderId                 String                    @id
+  userId                  String
+  stripeCheckoutReference String                    @unique
+  createdAt               DateTime                  @default(now())
+  user                    User                      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  lines                   OrderLine[]
+  paymentConfirmation     OrderPaymentConfirmation?
+  refunds                 OrderRefund[]
+  returnEligibility       OrderReturnEligibility?
+
+  @@index([userId, createdAt])
+}
+
+model OrderLine {
+  orderLineId    String       @id
+  orderId        String
+  storeVariantId String
+  quantity       Int
+  unitPriceCents Int
+  order          Order        @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  storeVariant   StoreVariant @relation(fields: [storeVariantId], references: [storeVariantId], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([storeVariantId])
+}
+
+model StripeWebhookEvent {
+  stripeWebhookEventId String                    @id
+  eventType            String
+  payloadSha256        String
+  receivedAt           DateTime                  @default(now())
+  processedAt          DateTime
+  paymentConfirmation  OrderPaymentConfirmation?
+  refunds              OrderRefund[]
+}
+
+model OrderPaymentConfirmation {
+  orderPaymentConfirmationId String                         @id
+  orderId                    String                         @unique
+  stripeWebhookEventId       String                         @unique
+  provider                   PaymentProvider                @default(STRIPE)
+  amountCents                Int
+  confirmedAt                DateTime
+  order                      Order                          @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
+  stripeWebhookEvent         StripeWebhookEvent             @relation(fields: [stripeWebhookEventId], references: [stripeWebhookEventId], onDelete: Restrict)
+  fulfillment                PrintfulFulfillmentSubmission?
+}
+
+model PrintfulFulfillmentSubmission {
+  printfulFulfillmentSubmissionId String                   @id
+  orderPaymentConfirmationId      String                   @unique(map: "PrintfulFulfillment_confirmation_key")
+  provider                        FulfillmentProvider      @default(PRINTFUL)
+  providerOrderReference          String                   @unique(map: "PrintfulFulfillment_provider_order_key")
+  submittedAt                     DateTime                 @default(now())
+  orderPaymentConfirmation        OrderPaymentConfirmation @relation(fields: [orderPaymentConfirmationId], references: [orderPaymentConfirmationId], onDelete: Restrict, map: "PrintfulFulfillment_confirmation_fkey")
+}
+
+model OrderRefund {
+  orderRefundId        String             @id
+  orderId              String
+  stripeWebhookEventId String             @unique
+  provider             PaymentProvider    @default(STRIPE)
+  amountCents          Int
+  refundedAt           DateTime
+  order                Order              @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
+  stripeWebhookEvent   StripeWebhookEvent @relation(fields: [stripeWebhookEventId], references: [stripeWebhookEventId], onDelete: Restrict)
+
+  @@index([orderId, refundedAt])
+}
+
+model OrderReturnEligibility {
+  orderReturnEligibilityId String   @id
+  orderId                  String   @unique
+  eligibleAt               DateTime
+  order                    Order    @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
 }
 
 model SpeciesGroup {

@@ -206,4 +206,20 @@ describe("persistence contract", () => {
     expect(migration).not.toMatch(/ALTER TABLE "User".*"role"/s);
     expect(migration).not.toMatch(/ALTER TABLE "User".*"betaEligible"/s);
   });
+
+  it("makes Stripe confirmation structural authority for Printful fulfillment", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810170000_commerce_payment_fulfillment/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "StripeWebhookEvent"');
+    expect(migration).toContain('StripeWebhookEvent_payload_hash_check');
+    expect(migration).toContain('CREATE TABLE "OrderPaymentConfirmation"');
+    expect(migration).toContain('CREATE TABLE "PrintfulFulfillmentSubmission"');
+    expect(migration).toContain('PrintfulFulfillment_confirmation_fkey');
+    expect(migration).toContain('OrderLine_validate_price');
+    expect(migration).toContain('OrderRefund_validate');
+    expect(migration).toContain('CREATE TABLE "OrderReturnEligibility"');
+    expect(migration).toContain('StripeWebhookEvent_reject_update');
+  });
 });

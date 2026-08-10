@@ -14,3 +14,8 @@ export function getPayments(): Stripe {
 export function getStripeWebhookSecret(): string {
   return getPaymentsEnv().STRIPE_WEBHOOK_SECRET;
 }
+
+export function verifyStripeWebhook(rawBody: Uint8Array, signature: string): { stripeWebhookEventId: string; eventType: string } {
+  const event = getPayments().webhooks.constructEvent(rawBody, signature, getStripeWebhookSecret());
+  return { stripeWebhookEventId: event.id, eventType: event.type };
+}
