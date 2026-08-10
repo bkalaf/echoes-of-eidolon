@@ -52,4 +52,12 @@ describe("role-specific public home", () => {
     expect(await screen.findByRole("heading", { name: role === "owner" ? "Owner access" : "Admin access" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open Administration" })).toHaveAttribute("href", "/admin");
   });
+
+  it("does not normalize an unknown stored role into a supplied access level", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "unexpected" } }, isPending: false });
+    renderHome();
+
+    expect(await screen.findByRole("heading", { name: "Authorization unavailable" })).toBeInTheDocument();
+    expect(screen.queryByText(/User access|Member access level|Admin access|Owner access/)).not.toBeInTheDocument();
+  });
 });

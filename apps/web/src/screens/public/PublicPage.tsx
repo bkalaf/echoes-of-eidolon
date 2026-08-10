@@ -106,9 +106,11 @@ function SignedInHome() {
   if (!session.data) return <><PageHead eyebrow="Home" title="Sign in required" description="A signed-in account is required for role-specific home content." /><a className="button button--gold" href="/auth/sign-in">Sign In</a></>;
 
   const role = resolveAuthorizationRole(true, session.data.user.role);
+  if (!role) return <><PageHead eyebrow="Home" title="Authorization unavailable" description="The stored account role is not registered." /><section className="card"><p>No access level or capability is inferred from an unknown role.</p></section></>;
   if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>The account role does not establish beta/player eligibility or membership benefits.</p></section></>;
   if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your account authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the server-owned account role.</p><a className="button button--gold" href="/admin">Open Administration</a></section></>;
-  return <><PageHead eyebrow="Home" title="Welcome back." description="Your account access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
+  if (role === "member") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
+  return <><PageHead eyebrow="Home" title="Authorization unavailable" description="No supplied account access level matched." /></>;
 }
 
 export function PublicPage({ screen }: { screen: PageManifestEntry }) {

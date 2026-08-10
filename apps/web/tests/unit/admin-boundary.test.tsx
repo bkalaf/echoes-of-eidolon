@@ -76,7 +76,7 @@ describe("administrative authorization boundary", () => {
     renderAdmin("DATA003");
 
     expect(await screen.findByRole("heading", { name: "Administrative access denied" })).toBeInTheDocument();
-    expect(screen.getByText(/Current authorization role:/)).toHaveTextContent("user");
+    expect(screen.getByText(/Current authorization role:/)).toHaveTextContent("unrecognized");
   });
 
   it("never renders fabricated admin records or action results", async () => {

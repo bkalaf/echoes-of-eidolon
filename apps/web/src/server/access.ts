@@ -32,12 +32,14 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
     },
   });
   const membership = projectMembershipEntitlement(user.membershipGrants, new Date());
+  const role = resolveAuthorizationRole(true, user.role);
+  if (!role) throw new Response("Authorization role unavailable.", { status: 403 });
 
   return {
     betaEligible: user.betaEligible,
     email: user.email,
     membershipEntitled: membership.active,
-    role: resolveAuthorizationRole(true, user.role),
+    role,
     sessionToken: session.session.token,
     userId: session.user.id,
   };

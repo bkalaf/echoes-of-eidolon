@@ -40,8 +40,8 @@ function authorizationScope(screen: PageManifestEntry) {
   return "This administrative task cannot disclose records, counts, status, or actions until an authoritative role field and server-side authorization owner are supplied.";
 }
 
-function DeniedAdminTask({ screen, role }: { screen: PageManifestEntry; role: AuthorizationRole }) {
-  return <><AdminHead screen={screen} description="Administrative authorization is required for this reviewed task." /><section className="card"><h2>Administrative access denied</h2><p>Current authorization role: <strong>{role}</strong>.</p><p>{authorizationScope(screen)}</p><p className="notice notice--warn">Only the admin and owner roles may enter Administration. No record, count, provider state, or success result is exposed.</p></section></>;
+function DeniedAdminTask({ screen, role }: { screen: PageManifestEntry; role: AuthorizationRole | null }) {
+  return <><AdminHead screen={screen} description="Administrative authorization is required for this reviewed task." /><section className="card"><h2>Administrative access denied</h2><p>Current authorization role: <strong>{role ?? "unrecognized"}</strong>.</p><p>{authorizationScope(screen)}</p><p className="notice notice--warn">Only the admin and owner roles may enter Administration. No record, count, provider state, or success result is exposed.</p></section></>;
 }
 
 function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; screen: PageManifestEntry; role: "admin" | "owner" }) {

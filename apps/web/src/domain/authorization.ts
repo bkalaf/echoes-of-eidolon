@@ -12,20 +12,21 @@ export type AdminCapability = (typeof adminCapabilities)[number];
 export function resolveAuthorizationRole(
   authenticated: boolean,
   accountRole?: string | null,
-): AuthorizationRole {
+): AuthorizationRole | null {
   if (!authenticated) return "guest";
   if (accountRole === "owner") return "owner";
   if (accountRole === "admin") return "admin";
   if (accountRole === "member") return "member";
-  return "user";
+  if (accountRole === "user") return "user";
+  return null;
 }
 
-export function canAccessAdministration(role: AuthorizationRole): boolean {
+export function canAccessAdministration(role: AuthorizationRole | null): boolean {
   return role === "admin" || role === "owner";
 }
 
 export function hasAdminCapability(
-  role: AuthorizationRole,
+  role: AuthorizationRole | null,
   capability: AdminCapability,
 ): boolean {
   if (!canAccessAdministration(role)) return false;
@@ -33,7 +34,7 @@ export function hasAdminCapability(
 }
 
 export function canAccessGame(
-  role: AuthorizationRole,
+  role: AuthorizationRole | null,
   betaEligible: boolean,
 ): boolean {
   if (role === "guest") return false;

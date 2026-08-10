@@ -17,12 +17,12 @@ describe("authorization roles", () => {
 
   it.each([
     [false, null, "guest"],
-    [true, null, "user"],
+    [true, null, null],
     [true, "member", "member"],
     [true, "admin", "admin"],
     [true, "owner", "owner"],
-    [true, "member,admin", "user"],
-    [true, "unknown", "user"],
+    [true, "member,admin", null],
+    [true, "unknown", null],
   ] as const)("resolves authenticated=%s accountRole=%s to %s", (authenticated, accountRole, expected) => {
     expect(resolveAuthorizationRole(authenticated, accountRole)).toBe(expected);
   });
