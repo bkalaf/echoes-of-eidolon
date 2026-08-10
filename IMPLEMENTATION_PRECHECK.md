@@ -20,8 +20,15 @@ closed-world packet and current workspace inputs remain unchanged and controllin
 - Required root files: `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`
 - Required app files: `apps/web/package.json`, `apps/web/tsconfig.json`
 - Required verification order: lint, typecheck, unit, integration, E2E, build
-- Web framework, renderer, server framework, persistence technology, and test
-  framework: not supplied; no choice is recorded in this precheck.
+- Module format: ESM
+- Application: React 19, TanStack React Start/Router/Query/Table, Vite 8,
+  Nitro 3
+- UI: Tailwind CSS 4 and React Hook Form
+- Data: PostgreSQL, Prisma 7 with `@prisma/adapter-pg`, Zod, AJV, YAML
+- Authentication: Better Auth `1.6.25`, Prisma adapter, Passkey
+- External service owners: AWS S3, Resend, Stripe
+- Testing: Vitest, Testing Library, jsdom, Playwright
+- Development/build: TypeScript 6, TSX, ESLint
 
 ## Existing code owners
 

@@ -7,9 +7,13 @@
 # Local dependencies and generated output.
 node_modules/
 dist/
+.output/
+.tanstack/
 coverage/
 playwright-report/
 test-results/
 *.log
 .DS_Store
-
+.env
+.env.*
+!.env.example
