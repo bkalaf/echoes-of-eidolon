@@ -10,9 +10,9 @@ describe("active page manifest", () => {
 
   it("preserves the approved shell ownership counts", () => {
     const groups = manifestByShell();
-    expect(groups.public).toHaveLength(38);
+    expect(groups.public).toHaveLength(36);
     expect(groups.auth).toHaveLength(10);
-    expect(groups.account).toHaveLength(21);
+    expect(groups.account).toHaveLength(23);
     expect(groups.store).toHaveLength(12);
     expect(groups.admin).toHaveLength(151);
     expect(groups.game).toHaveLength(14);

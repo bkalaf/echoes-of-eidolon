@@ -59,3 +59,22 @@ test("Atlas data is not disclosed without administrative authorization", async (
   await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
   await expect(page.getByText("92 canonical Points of Interest")).not.toBeVisible();
 });
+
+test("crawlability allowlists public pages and excludes protected surfaces", async ({ page, request }) => {
+  const robots = await request.get("/robots.txt");
+  expect(robots.status()).toBe(200);
+  expect(await robots.text()).toContain("Disallow: /store/orders/");
+
+  const sitemap = await request.get("/sitemap.xml");
+  const sitemapBody = await sitemap.text();
+  expect(sitemap.status()).toBe(200);
+  expect(sitemapBody).toContain("/features/free-to-play</loc>");
+  expect(sitemapBody).not.toMatch(/\/auth|\/account|\/admin|\/game|\/review|\/store\/orders/);
+
+  await page.goto("/features/free-to-play");
+  await expect(page.getByRole("heading", { name: "Free to Play. Open to Everyone." })).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index,follow");
+
+  await page.goto("/auth/sign-in");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,nofollow");
+});

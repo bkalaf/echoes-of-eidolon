@@ -7,6 +7,7 @@ import { HomePage } from "../screens/public/HomePage";
 
 export const Route = createFileRoute("/")({
   validateSearch: z.object({ state: z.string().optional() }),
+  head: () => ({ meta: [{ name: "robots", content: "index,follow" }] }),
   component: IndexRoute,
 });
 

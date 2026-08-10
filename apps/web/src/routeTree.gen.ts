@@ -12,7 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as FeaturesFreeToPlayRouteImport } from './routes/features.free-to-play'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
@@ -40,9 +43,24 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/api/health',
   path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesFreeToPlayRoute = FeaturesFreeToPlayRouteImport.update({
+  id: '/features/free-to-play',
+  path: '/features/free-to-play',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAtlasCatalogRoute = ApiAtlasCatalogRouteImport.update({
@@ -111,7 +129,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -128,7 +149,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -146,7 +170,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
+  '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -165,7 +192,10 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/about'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/api/health'
+    | '/features/free-to-play'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -182,7 +212,10 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/about'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/api/health'
+    | '/features/free-to-play'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -199,7 +232,10 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/about'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/api/health'
+    | '/features/free-to-play'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -217,7 +253,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   AboutRoute: typeof AboutRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  FeaturesFreeToPlayRoute: typeof FeaturesFreeToPlayRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
@@ -253,11 +292,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/health': {
       id: '/api/health'
       path: '/api/health'
       fullPath: '/api/health'
       preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/free-to-play': {
+      id: '/features/free-to-play'
+      path: '/features/free-to-play'
+      fullPath: '/features/free-to-play'
+      preLoaderRoute: typeof FeaturesFreeToPlayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/atlas/catalog': {
@@ -358,7 +418,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AboutRoute: AboutRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiHealthRoute: ApiHealthRoute,
+  FeaturesFreeToPlayRoute: FeaturesFreeToPlayRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,

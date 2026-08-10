@@ -23,17 +23,17 @@ export type ShellKind =
 export const pageManifest = Object.freeze(manifest as PageManifestEntry[]);
 
 export function shellFor(entry: PageManifestEntry): ShellKind {
-  const path = entry.path;
-  if (path === null) return "state-only";
+  if (entry.path === null) return "state-only";
+  const path = entry.path.replace(/^Modal in /, "");
   if (path.startsWith("/admin")) return "admin";
   if (path.startsWith("/account") || path.startsWith("/settings")) {
     return "account";
   }
-  if (path.startsWith("/auth") || path.startsWith("Modal in /auth")) {
+  if (path.startsWith("/auth")) {
     return "auth";
   }
   if (path.startsWith("/store")) return "store";
-  if (path.startsWith("/game") || path.startsWith("Modal in /game")) {
+  if (path.startsWith("/game")) {
     return "game";
   }
   if (path.startsWith("/tools") || path.startsWith("/review")) {
