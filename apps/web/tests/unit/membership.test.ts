@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { activePerks, addAnchoredCalendarMonths, donationMonths, planMembershipGrant, projectDonationRefund, subscriptionPriceCents, voiceWindowSeconds } from "../../src/domain/membership";
+import { activePerks, addAnchoredCalendarMonths, donationMonths, planMembershipGrant, projectDonationRefund, projectMembershipEntitlement, subscriptionPriceCents, voiceWindowSeconds } from "../../src/domain/membership";
 
 describe("membership entitlement ledger", () => {
   it("uses the exact server subscription price and donation formula", () => {
@@ -56,6 +56,36 @@ describe("membership entitlement ledger", () => {
   it("changes only the voice window, not authorization or beta eligibility", () => {
     expect(voiceWindowSeconds(false)).toBe(15);
     expect(voiceWindowSeconds(true)).toBe(30);
+  });
+
+  it("projects active membership from grant windows and append-only refund ends", () => {
+    const membership = projectMembershipEntitlement([{
+      effectiveStartAt: new Date("2027-01-01T00:00:00.000Z"),
+      effectiveEndAt: new Date("2027-07-01T00:00:00.000Z"),
+      revocations: [{ effectiveEndAfter: new Date("2027-04-01T00:00:00.000Z") }],
+    }], new Date("2027-03-01T00:00:00.000Z"));
+    expect(membership.active).toBe(true);
+    expect(membership.effectiveEndAt?.toISOString()).toBe("2027-04-01T00:00:00.000Z");
+    expect(projectMembershipEntitlement([{
+      effectiveStartAt: new Date("2027-01-01T00:00:00.000Z"),
+      effectiveEndAt: new Date("2027-07-01T00:00:00.000Z"),
+      revocations: [{ effectiveEndAfter: new Date("2027-04-01T00:00:00.000Z") }],
+    }], new Date("2027-04-01T00:00:00.000Z"))).toEqual({ active: false, effectiveEndAt: null });
+  });
+
+  it("extends only through continuous stacked membership windows", () => {
+    const grant = (start: string, end: string) => ({
+      effectiveEndAt: new Date(end),
+      effectiveStartAt: new Date(start),
+      revocations: [],
+    });
+    const projection = projectMembershipEntitlement([
+      grant("2027-01-01T00:00:00.000Z", "2027-02-01T00:00:00.000Z"),
+      grant("2027-01-10T00:00:00.000Z", "2027-02-15T00:00:00.000Z"),
+      grant("2027-02-15T00:00:00.000Z", "2027-03-01T00:00:00.000Z"),
+      grant("2027-04-01T00:00:00.000Z", "2027-05-01T00:00:00.000Z"),
+    ], new Date("2027-01-15T00:00:00.000Z"));
+    expect(projection.effectiveEndAt?.toISOString()).toBe("2027-03-01T00:00:00.000Z");
   });
 
   it("projects only ACTIVE perks while preserving inactive rows for administration", () => {

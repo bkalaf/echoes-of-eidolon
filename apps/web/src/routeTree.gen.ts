@@ -16,6 +16,7 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as FeaturesFreeToPlayRouteImport } from './routes/features.free-to-play'
+import { Route as ApiAccountMembershipRouteImport } from './routes/api/account/membership'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
@@ -63,6 +64,11 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
 const FeaturesFreeToPlayRoute = FeaturesFreeToPlayRouteImport.update({
   id: '/features/free-to-play',
   path: '/features/free-to-play',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountMembershipRoute = ApiAccountMembershipRouteImport.update({
+  id: '/api/account/membership',
+  path: '/api/account/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAtlasCatalogRoute = ApiAtlasCatalogRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/health': typeof ApiHealthRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/api/health'
     | '/features/free-to-play'
+    | '/api/account/membership'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/api/health'
     | '/features/free-to-play'
+    | '/api/account/membership'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/api/health'
     | '/features/free-to-play'
+    | '/api/account/membership'
     | '/api/atlas/catalog'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
@@ -283,6 +295,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiHealthRoute: typeof ApiHealthRoute
   FeaturesFreeToPlayRoute: typeof FeaturesFreeToPlayRoute
+  ApiAccountMembershipRoute: typeof ApiAccountMembershipRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
@@ -346,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/features/free-to-play'
       fullPath: '/features/free-to-play'
       preLoaderRoute: typeof FeaturesFreeToPlayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/membership': {
+      id: '/api/account/membership'
+      path: '/api/account/membership'
+      fullPath: '/api/account/membership'
+      preLoaderRoute: typeof ApiAccountMembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/atlas/catalog': {
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiHealthRoute: ApiHealthRoute,
   FeaturesFreeToPlayRoute: FeaturesFreeToPlayRoute,
+  ApiAccountMembershipRoute: ApiAccountMembershipRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,

@@ -34,6 +34,47 @@ export interface MembershipGrantWindow {
   monthsGranted: number;
 }
 
+export interface MembershipEntitlementGrant {
+  effectiveEndAt: Date;
+  effectiveStartAt: Date;
+  revocations: readonly { effectiveEndAfter: Date }[];
+}
+
+export interface MembershipEntitlementProjection {
+  active: boolean;
+  effectiveEndAt: Date | null;
+}
+
+function projectedGrantWindow(grant: MembershipEntitlementGrant): { end: Date; start: Date } {
+  const start = new Date(grant.effectiveStartAt.getTime());
+  const end = new Date(grant.revocations.reduce(
+    (earliest, revocation) => Math.min(earliest, revocation.effectiveEndAfter.getTime()),
+    grant.effectiveEndAt.getTime(),
+  ));
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end.getTime() < start.getTime()) {
+    throw new Error("Membership entitlement window is invalid.");
+  }
+  return { end, start };
+}
+
+export function projectMembershipEntitlement(
+  grants: readonly MembershipEntitlementGrant[],
+  now: Date,
+): MembershipEntitlementProjection {
+  if (Number.isNaN(now.getTime())) throw new Error("Membership projection time is invalid.");
+  const windows = grants.map(projectedGrantWindow).sort((left, right) => left.start.getTime() - right.start.getTime());
+  const currentWindows = windows.filter((window) => window.start.getTime() <= now.getTime() && now.getTime() < window.end.getTime());
+  if (currentWindows.length === 0) return { active: false, effectiveEndAt: null };
+
+  let continuousEnd = new Date(Math.max(...currentWindows.map((window) => window.end.getTime())));
+  for (const window of windows) {
+    if (window.start.getTime() < now.getTime()) continue;
+    if (window.start.getTime() > continuousEnd.getTime()) break;
+    if (window.end.getTime() > continuousEnd.getTime()) continuousEnd = new Date(window.end.getTime());
+  }
+  return { active: true, effectiveEndAt: continuousEnd };
+}
+
 export function planMembershipGrant(
   now: Date,
   monthsGranted: number,

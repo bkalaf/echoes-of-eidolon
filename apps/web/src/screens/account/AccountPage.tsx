@@ -21,6 +21,20 @@ interface AccountSession {
   userAgent?: string | null;
 }
 
+interface MembershipProjection {
+  active: boolean;
+  activePerks: Array<{ description: string; name: string; perkId: string }>;
+  effectiveEndAt: string | null;
+  grants: Array<{
+    effectiveEndAt: string;
+    effectiveStartAt: string;
+    membershipGrantId: string;
+    monthsGranted: number;
+    source: "DONATION" | "SUBSCRIPTION";
+  }>;
+  voiceWindowSeconds: number;
+}
+
 function AccountHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ACCOUNT · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
 }
@@ -133,7 +147,28 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
 }
 
 function Subscription({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Subscription status, billing state and history." /><Deferred>The $9.99 monthly server-authoritative subscription and append-only membership entitlement rules are specified. Stripe subscription state and membership-ledger persistence are not connected to this screen.</Deferred></>;
+  const [membership, setMembership] = useState<MembershipProjection>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/account/membership").then(async (response) => {
+      const result = await response.json() as MembershipProjection & { error?: string };
+      if (!active) return;
+      setLoading(false);
+      if (!response.ok) setError(result.error ?? "Membership entitlement could not be loaded.");
+      else setMembership(result);
+    }).catch(() => {
+      if (!active) return;
+      setLoading(false);
+      setError("Membership entitlement could not be loaded.");
+    });
+    return () => { active = false; };
+  }, []);
+
+  const providerStateScreen = ["ACC006", "ACC007", "ACC009"].includes(screen.screenId);
+  return <><AccountHead screen={screen} description="Subscription status, billing state and history." />{loading ? <p className="notice">Loading membership entitlement…</p> : error || !membership ? <p className="notice notice--bad" role="alert">{error ?? "Membership entitlement could not be loaded."}</p> : <div className="stack"><section className="card"><h2>Membership entitlement</h2><dl className="detail-list"><dt>Status</dt><dd>{membership.active ? "Active" : "Inactive"}</dd><dt>Effective end</dt><dd>{membership.effectiveEndAt ? new Date(membership.effectiveEndAt).toLocaleString() : "No active entitlement"}</dd><dt>Voice window</dt><dd>{membership.voiceWindowSeconds} seconds</dd></dl><p className="muted">Membership benefits do not grant an authorization role or beta/player eligibility.</p></section>{screen.screenId === "ACC010" && <section className="card"><h2>Membership history</h2>{membership.grants.length === 0 ? <p>No membership grants.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Source</th><th>Months</th><th>Effective start</th><th>Effective end</th></tr></thead><tbody>{membership.grants.map((grant) => <tr key={grant.membershipGrantId}><td>{grant.source}</td><td>{grant.monthsGranted}</td><td>{new Date(grant.effectiveStartAt).toLocaleString()}</td><td>{new Date(grant.effectiveEndAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section>}{membership.activePerks.length > 0 && <section className="card"><h2>Active perks</h2><ul>{membership.activePerks.map((perk) => <li key={perk.perkId}><strong>{perk.name}</strong>: {perk.description}</li>)}</ul></section>}{providerStateScreen && <Deferred>Stripe payment acceptance, decline, and cancellation actions require a persisted provider operation for this account. The membership ledger above is authoritative and no provider result is inferred from it.</Deferred>}</div>}</>;
 }
 
 function Orders({ screen }: { screen: PageManifestEntry }) {

@@ -1,10 +1,12 @@
 import { canAccessAdministration, canAccessGame, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
+import { projectMembershipEntitlement, voiceWindowSeconds } from "../domain/membership";
 import { getAuth } from "./auth";
 import { getDatabase } from "./database";
 
 export interface ServerAccessContext {
   betaEligible: boolean;
   email: string;
+  membershipEntitled: boolean;
   role: AuthorizationRole;
   sessionToken: string;
   userId: string;
@@ -16,12 +18,25 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
 
   const user = await getDatabase().user.findUniqueOrThrow({
     where: { id: session.user.id },
-    select: { betaEligible: true, email: true, role: true },
+    select: {
+      betaEligible: true,
+      email: true,
+      role: true,
+      membershipGrants: {
+        select: {
+          effectiveEndAt: true,
+          effectiveStartAt: true,
+          revocations: { select: { effectiveEndAfter: true } },
+        },
+      },
+    },
   });
+  const membership = projectMembershipEntitlement(user.membershipGrants, new Date());
 
   return {
     betaEligible: user.betaEligible,
     email: user.email,
+    membershipEntitled: membership.active,
     role: resolveAuthorizationRole(true, user.role),
     sessionToken: session.session.token,
     userId: session.user.id,
@@ -65,6 +80,8 @@ export function playerAccessResponse(access: ServerAccessContext) {
   return {
     betaEligible: access.betaEligible,
     canPlay: canAccessGame(access.role, access.betaEligible),
+    membershipEntitled: access.membershipEntitled,
     role: access.role,
+    voiceWindowSeconds: voiceWindowSeconds(access.membershipEntitled),
   };
 }

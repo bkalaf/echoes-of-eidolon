@@ -100,17 +100,28 @@ describe("account session boundary", () => {
     expect(screen.getByRole("button", { name: "Send Verification" })).toBeDisabled();
   });
 
-  it("shows unowned subscription state as deferred instead of active or declined", () => {
+  it("renders only server-projected membership state and keeps it separate from role and beta eligibility", async () => {
     authMocks.useSession.mockReturnValue({
       data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
       isPending: false,
     });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        active: false,
+        activePerks: [],
+        effectiveEndAt: null,
+        grants: [],
+        voiceWindowSeconds: 15,
+      }),
+      ok: true,
+    }));
     render(<AccountPage screen={accountScreen("ACC008")} />);
 
     expect(screen.getByRole("heading", { name: "Subscription - Active" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Owner-deferred" })).toBeInTheDocument();
-    expect(screen.getByText(/\$9\.99 monthly/)).toBeInTheDocument();
-    expect(screen.queryByText("Subscription active.")).not.toBeInTheDocument();
+    expect(await screen.findByText("Inactive")).toBeInTheDocument();
+    expect(screen.getByText("No active entitlement")).toBeInTheDocument();
+    expect(screen.getByText(/do not grant an authorization role or beta\/player eligibility/)).toBeInTheDocument();
+    expect(screen.queryByText("Active", { exact: true })).not.toBeInTheDocument();
   });
 
   it("lists current and other sessions and never offers to revoke the current session", async () => {

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { projectMembershipEntitlement } from "../../../../domain/membership";
 import { requireAdministration } from "../../../../server/access";
 import { getDatabase } from "../../../../server/database";
 
@@ -36,13 +37,25 @@ export const Route = createFileRoute("/api/admin/accounts/$userId")({
                   userAgent: true,
                 },
               },
+              membershipGrants: {
+                select: {
+                  effectiveEndAt: true,
+                  effectiveStartAt: true,
+                  revocations: { select: { effectiveEndAfter: true } },
+                },
+              },
             },
           });
           if (!account) return Response.json({ error: "Account not found." }, { status: 404 });
-          const { id, sessions, ...fields } = account;
+          const { id, membershipGrants, sessions, ...fields } = account;
+          const membership = projectMembershipEntitlement(membershipGrants, new Date());
           return Response.json({
             account: {
               ...fields,
+              membership: {
+                active: membership.active,
+                effectiveEndAt: membership.effectiveEndAt?.toISOString() ?? null,
+              },
               userId: id,
               sessions: sessions.map(({ id: sessionId, ...session }) => ({ ...session, sessionId })),
             },
