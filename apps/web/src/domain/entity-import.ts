@@ -21,66 +21,74 @@ function normalizeRecordArray(value: unknown): ImportRecord[] {
   });
 }
 
-function parseCsvRows(source: string): string[][] {
-  const rows: string[][] = [];
-  let row: string[] = [];
-  let field = "";
-  let quoted = false;
-
-  const finishField = () => {
-    row.push(field);
-    field = "";
-  };
-  const finishRow = () => {
-    finishField();
-    if (row.some((value) => value !== "")) rows.push(row);
-    row = [];
-  };
-
-  for (let index = 0; index < source.length; index += 1) {
-    const character = source[index]!;
-    if (quoted) {
-      if (character === '"') {
-        if (source[index + 1] === '"') {
-          field += '"';
-          index += 1;
-        } else {
-          quoted = false;
-        }
-      } else {
-        field += character;
-      }
-    } else if (character === '"' && field === "") {
-      quoted = true;
-    } else if (character === ",") {
-      finishField();
-    } else if (character === "\n") {
-      finishRow();
-    } else if (character !== "\r") {
-      field += character;
-    }
-  }
-  if (quoted) throw new Error("CSV contains an unterminated quoted field.");
-  if (field !== "" || row.length > 0) finishRow();
-  return rows;
-}
-
-function parseCsv(source: string): ImportRecord[] {
-  const [rawHeaders, ...rows] = parseCsvRows(source);
-  if (!rawHeaders) throw new Error("CSV requires a header row.");
-  const headers = rawHeaders.map((header, index) =>
-    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
-  );
-  if (headers.some((header) => !header)) throw new Error("CSV headers cannot be empty.");
+function tableRecords(rawHeaders: string[], rows: string[][], format: string): ImportRecord[] {
+  const headers = rawHeaders.map((header, index) => index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim());
+  if (headers.some((header) => !header)) throw new Error(`${format} headers cannot be empty.`);
   const duplicate = headers.find((header, index) => headers.indexOf(header) !== index);
-  if (duplicate) throw new Error(`Duplicate CSV header: ${duplicate}`);
+  if (duplicate) throw new Error(`Duplicate ${format} header: ${duplicate}`);
 
   return rows.map((values, index) => {
     if (values.length > headers.length) {
-      throw new Error(`CSV row ${index + 2} has more values than headers.`);
+      throw new Error(`${format} row ${index + 2} has more values than headers.`);
     }
     return Object.fromEntries(headers.map((header, column) => [header, values[column] ?? ""]));
   });
+}
+
+function splitMarkdownRow(line: string): string[] {
+  const trimmed = line.trim().replace(/^\|/, "").replace(/\|$/, "");
+  const cells: string[] = [];
+  let cell = "";
+  let escaped = false;
+  for (const character of trimmed) {
+    if (escaped) {
+      cell += character;
+      escaped = false;
+    } else if (character === "\\") {
+      escaped = true;
+    } else if (character === "|") {
+      cells.push(cell.trim());
+      cell = "";
+    } else {
+      cell += character;
+    }
+  }
+  if (escaped) cell += "\\";
+  cells.push(cell.trim());
+  return cells;
+}
+
+function parseMarkdownTable(source: string): ImportRecord[] {
+  const lines = source.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length < 3) throw new Error("Markdown import requires a header, separator, and at least one data row.");
+  const headers = splitMarkdownRow(lines[0]!);
+  const separators = splitMarkdownRow(lines[1]!);
+  if (separators.length !== headers.length || separators.some((cell) => !/^:?-{3,}:?$/.test(cell))) {
+    throw new Error("Markdown table separator does not match the header.");
+  }
+  return tableRecords(headers, lines.slice(2).map(splitMarkdownRow), "Markdown");
+}
+
+function directTableCells(row: Element): string[] {
+  return Array.from(row.children)
+    .filter((child) => child.tagName === "TH" || child.tagName === "TD")
+    .map((cell) => cell.textContent?.trim() ?? "");
+}
+
+function parseHtmlTable(source: string): ImportRecord[] {
+  const document = new DOMParser().parseFromString(source, "text/html");
+  const tables = document.querySelectorAll("table");
+  if (tables.length !== 1) throw new Error("HTML import requires exactly one table.");
+  const table = tables[0]!;
+  if (table.querySelector("[rowspan]:not([rowspan='1']), [colspan]:not([colspan='1'])")) {
+    throw new Error("HTML import does not support merged table cells.");
+  }
+  const rows = Array.from(table.querySelectorAll("tr"));
+  const headerRow = rows[0];
+  if (!headerRow) throw new Error("HTML table requires a header row.");
+  const headers = directTableCells(headerRow);
+  if (headers.length === 0) throw new Error("HTML table requires header cells.");
+  return tableRecords(headers, rows.slice(1).map(directTableCells), "HTML");
 }
 
 export function parseEntityImport(source: string, fileName: string): ImportRecord[] {
@@ -89,8 +97,9 @@ export function parseEntityImport(source: string, fileName: string): ImportRecor
   if (extension === "yaml" || extension === "yml") {
     return normalizeRecordArray(parseYaml(source) as unknown);
   }
-  if (extension === "csv") return parseCsv(source);
-  throw new Error("Unsupported import format. Use JSON, YAML, or CSV.");
+  if (extension === "md" || extension === "markdown") return parseMarkdownTable(source);
+  if (extension === "html" || extension === "htm") return parseHtmlTable(source);
+  throw new Error("Unsupported import format. Use JSON, YAML, Markdown, or HTML tables.");
 }
 
 function collectSourceFields(rows: ImportRecord[]): string[] {

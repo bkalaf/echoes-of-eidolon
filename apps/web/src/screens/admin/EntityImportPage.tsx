@@ -11,8 +11,9 @@ import {
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 const importFormats = {
-  csv: "import.csv",
+  html: "import.html",
   json: "import.json",
+  markdown: "import.md",
   yaml: "import.yaml",
 } as const;
 
@@ -70,7 +71,7 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
       </div>
       <p>Validate structured input, map every source field, and review concrete rows before any mutation.</p>
       <div className="form-grid">
-        <label className="field">Input format<select className="select" value={format} onChange={(event) => setFormat(event.target.value as ImportFormat)}><option value="json">JSON</option><option value="yaml">YAML</option><option value="csv">CSV</option></select></label>
+        <label className="field">Input format<select className="select" value={format} onChange={(event) => setFormat(event.target.value as ImportFormat)}><option value="json">JSON</option><option value="yaml">YAML</option><option value="markdown">Markdown table</option><option value="html">HTML table</option></select></label>
         <label className="field span-2">Paste structured data<textarea className="textarea" rows={10} value={source} onChange={(event) => setSource(event.target.value)} placeholder={`Paste a ${format.toUpperCase()} array of ${entity} records`} /></label>
       </div>
       <button className="button button--gold" disabled={!source.trim()} onClick={preview}>Validate & Preview</button>

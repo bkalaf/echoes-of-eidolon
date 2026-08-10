@@ -16,17 +16,23 @@ describe("entity import parsing", () => {
     ]);
   });
 
-  it("parses quoted CSV values including commas and escaped quotes", () => {
-    expect(
-      parseEntityImport('definitionId,term,definition\nDEF-1,"Signal, Lost","A ""quoted"" term"\n', "records.csv"),
-    ).toEqual([
-      { definitionId: "DEF-1", term: "Signal, Lost", definition: 'A "quoted" term' },
+  it("parses Markdown tables including escaped delimiters", () => {
+    expect(parseEntityImport("| definitionId | term | definition |\n| --- | --- | --- |\n| DEF-1 | Signal\\|Lost | Source-backed |", "records.md")).toEqual([
+      { definitionId: "DEF-1", term: "Signal|Lost", definition: "Source-backed" },
     ]);
   });
 
-  it("rejects unsupported files, duplicate CSV headers, and non-record rows", () => {
+  it("parses HTML tables as inert text records", () => {
+    expect(parseEntityImport("<table><thead><tr><th>soulId</th><th>name</th></tr></thead><tbody><tr><td>SOUL-3</td><td>Three</td></tr></tbody></table>", "records.html")).toEqual([
+      { soulId: "SOUL-3", name: "Three" },
+    ]);
+  });
+
+  it("rejects unsupported files, ambiguous tables, and non-record rows", () => {
     expect(() => parseEntityImport("x", "records.txt")).toThrow("Unsupported import format");
-    expect(() => parseEntityImport("id,id\n1,2\n", "records.csv")).toThrow("Duplicate CSV header");
+    expect(() => parseEntityImport("| id | id |\n| --- | --- |\n| 1 | 2 |", "records.md")).toThrow("Duplicate Markdown header");
+    expect(() => parseEntityImport("<table></table><table></table>", "records.html")).toThrow("exactly one table");
+    expect(() => parseEntityImport("<table><tr><th rowspan='2'>id</th></tr><tr><td>1</td></tr></table>", "records.html")).toThrow("merged table cells");
     expect(() => parseEntityImport('["not a record"]', "records.json")).toThrow("must be an object");
   });
 });
