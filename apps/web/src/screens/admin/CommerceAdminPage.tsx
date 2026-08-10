@@ -47,11 +47,25 @@ async function loadCommerce() {
   return { orders: result.orders, products: result.products };
 }
 
-export function CommerceAdminPage({ screen }: { screen: PageManifestEntry }) {
+function CommerceRecords({ view }: { view: "orders" | "products" }) {
   const commerce = useQuery({ queryKey: ["admin", "commerce"], queryFn: loadCommerce, retry: false });
   if (commerce.isPending) return <p className="notice">Loading commerce records…</p>;
   if (commerce.isError) return <p className="notice notice--bad" role="alert">{commerce.error.message}</p>;
-  const orders = screen.path?.startsWith("/admin/orders");
-  if (orders) return <section className="card"><h2>Orders</h2><p>Payment is confirmed only by a persisted signed Stripe webhook; Printful submission is shown only when linked to that confirmation.</p>{commerce.data.orders.length === 0 ? <p>No merchandise orders are stored.</p> : <DataTable columns={orderColumns} data={commerce.data.orders} getRowId={(order) => order.orderId} preferenceKey="admin.commerce.orders" />}</section>;
-  return <div className="stack"><section className="card"><h2>Configured merchandise</h2><p>Prices, variants, availability, and artwork are server-owned configuration. Missing configuration remains unavailable.</p>{commerce.data.products.length === 0 ? <p>No Store products are configured.</p> : <DataTable columns={productColumns} data={commerce.data.products} getRowId={(product) => product.storeProductId} preferenceKey="admin.commerce.products" />}</section>{screen.screenId === "ADM011" && <p className="notice notice--warn">No Store Category persistence contract exists; categories are not inferred from product names.</p>}</div>;
+  if (view === "orders") return <section className="card"><h2>Merchandise orders</h2><p>Payment is confirmed only by a persisted signed Stripe webhook; Printful submission is shown only when linked to that confirmation.</p>{commerce.data.orders.length === 0 ? <p>No merchandise orders are stored.</p> : <DataTable columns={orderColumns} data={commerce.data.orders} getRowId={(order) => order.orderId} preferenceKey="admin.commerce.orders" />}</section>;
+  return <section className="card"><h2>Configured merchandise</h2><p>Prices, variants, availability, and artwork are server-owned configuration. Missing configuration remains unavailable.</p>{commerce.data.products.length === 0 ? <p>No Store products are configured.</p> : <DataTable columns={productColumns} data={commerce.data.products} getRowId={(product) => product.storeProductId} preferenceKey="admin.commerce.products" />}</section>;
+}
+
+function UnavailableCommerce({ heading }: { heading: string }) {
+  return <section className="card"><h2>{heading}</h2><p>No other commerce workflow or records are substituted for this screen.</p></section>;
+}
+
+export function CommerceAdminPage({ screen }: { screen: PageManifestEntry }) {
+  if (["ADM010", "ADM012"].includes(screen.screenId)) return <CommerceRecords view="products" />;
+  if (["ADM014", "ADM015"].includes(screen.screenId)) return <CommerceRecords view="orders" />;
+  if (screen.screenId === "ADM011") return <UnavailableCommerce heading="Store category workflow unavailable" />;
+  if (screen.screenId === "ADM013") return <UnavailableCommerce heading="Store item editor unavailable" />;
+  if (screen.screenId === "ADM016") return <UnavailableCommerce heading="Subscription order workflow unavailable" />;
+  if (screen.screenId === "ADM017") return <UnavailableCommerce heading="Donation order workflow unavailable" />;
+  if (screen.screenId === "ADM018") return <UnavailableCommerce heading="Order detail workflow unavailable" />;
+  return <UnavailableCommerce heading="Commerce workflow unavailable" />;
 }

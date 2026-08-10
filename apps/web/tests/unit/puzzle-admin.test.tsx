@@ -10,6 +10,10 @@ function renderPuzzle(screenId: string) {
   return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage screen={screenEntry} /></QueryClientProvider>);
 }
 
+function renderUnknownPuzzle() {
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage screen={{ originalPage: 0, page: 0, path: "/admin/puzzles/unknown", reviewOrder: 0, screenId: "UNKNOWN", source: "TEST", title: "Unknown" }} /></QueryClientProvider>);
+}
+
 describe("Puzzle Designer persistence projection", () => {
   beforeEach(() => vi.clearAllMocks());
 
@@ -52,5 +56,12 @@ describe("Puzzle Designer persistence projection", () => {
     renderPuzzle("PZ003");
     expect(await screen.findByText(/Preview generation and editor writes remain unavailable/)).toBeInTheDocument();
     expect(screen.queryByText(/accepted|ends at|answer:/i)).not.toBeInTheDocument();
+  });
+
+  it("does not reinterpret an unknown puzzle screen as an editor", () => {
+    vi.stubGlobal("fetch", vi.fn());
+    renderUnknownPuzzle();
+    expect(screen.getByRole("heading", { name: "Puzzle workflow unavailable" })).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
   });
 });

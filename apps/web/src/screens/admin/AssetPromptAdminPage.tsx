@@ -78,5 +78,7 @@ function PromptManager({ outstandingOnly }: { outstandingOnly: boolean }) {
 export function AssetPromptAdminPage({ screen }: { screen: PageManifestEntry }) {
   if (screen.path === "/admin/assets/audio") return <AssetManager mediaKind="AUDIO" />;
   if (screen.path === "/admin/assets/video") return <AssetManager mediaKind="VIDEO" />;
-  return <PromptManager outstandingOnly={screen.screenId === "ADM034"} />;
+  if (screen.path === "/admin/prompts" && screen.screenId === "ADM033") return <PromptManager outstandingOnly={false} />;
+  if (screen.path === "/admin/prompts" && screen.screenId === "ADM034") return <PromptManager outstandingOnly />;
+  return <section className="card"><h2>Asset or prompt workflow unavailable</h2><p>No managed-asset or Prompt Manager workflow is inferred for this screen.</p></section>;
 }

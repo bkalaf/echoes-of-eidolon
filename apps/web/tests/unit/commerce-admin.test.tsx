@@ -10,6 +10,10 @@ function renderCommerce(screenId: string) {
   return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><CommerceAdminPage screen={entry} /></QueryClientProvider>);
 }
 
+function renderUnknownCommerce() {
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><CommerceAdminPage screen={{ originalPage: 0, page: 0, path: "/admin/store/unknown", reviewOrder: 0, screenId: "UNKNOWN", source: "TEST", title: "Unknown" }} /></QueryClientProvider>);
+}
+
 describe("commerce administration projection", () => {
   beforeEach(() => vi.clearAllMocks());
 
@@ -48,5 +52,25 @@ describe("commerce administration projection", () => {
     expect(screen.getByText("Stripe confirmed")).toBeInTheDocument();
     expect(screen.getByText("Not submitted")).toBeInTheDocument();
     expect(screen.getByText("Not eligible")).toBeInTheDocument();
+  });
+
+  it.each([
+    ["ADM011", "Store category workflow unavailable"],
+    ["ADM013", "Store item editor unavailable"],
+    ["ADM016", "Subscription order workflow unavailable"],
+    ["ADM017", "Donation order workflow unavailable"],
+    ["ADM018", "Order detail workflow unavailable"],
+  ])("does not substitute another workflow for %s", (screenId, heading) => {
+    vi.stubGlobal("fetch", vi.fn());
+    renderCommerce(screenId);
+    expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("fails closed for an unknown commerce screen", () => {
+    vi.stubGlobal("fetch", vi.fn());
+    renderUnknownCommerce();
+    expect(screen.getByRole("heading", { name: "Commerce workflow unavailable" })).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
   });
 });

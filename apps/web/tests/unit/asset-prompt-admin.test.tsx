@@ -10,6 +10,10 @@ function renderAdminState(screenId: string) {
   return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><AssetPromptAdminPage screen={entry} /></QueryClientProvider>);
 }
 
+function renderUnknownAdminState() {
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><AssetPromptAdminPage screen={{ originalPage: 0, page: 0, path: "/admin/assets/unknown", reviewOrder: 0, screenId: "UNKNOWN", source: "TEST", title: "Unknown" }} /></QueryClientProvider>);
+}
+
 describe("managed asset and prompt administration", () => {
   beforeEach(() => vi.clearAllMocks());
 
@@ -66,5 +70,12 @@ describe("managed asset and prompt administration", () => {
     renderAdminState("ADM032");
     expect(await screen.findByText("No managed video assets are stored.")).toBeInTheDocument();
     expect(screen.queryByText(/sample|placeholder/i)).not.toBeInTheDocument();
+  });
+
+  it("does not reinterpret an unknown asset screen as Prompt Manager", () => {
+    vi.stubGlobal("fetch", vi.fn());
+    renderUnknownAdminState();
+    expect(screen.getByRole("heading", { name: "Asset or prompt workflow unavailable" })).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
   });
 });
