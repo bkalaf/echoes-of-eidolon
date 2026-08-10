@@ -6,6 +6,7 @@ import {
   accountOwnerRole,
   accountUserRole,
 } from "../../src/domain/authorization-access";
+import { roleUpdateSchema } from "../../src/routes/api/admin/accounts/$userId/role";
 
 describe("Better Auth account authorization", () => {
   it("allows only owners to change stored authorization roles", () => {
@@ -13,6 +14,11 @@ describe("Better Auth account authorization", () => {
     expect(accountMemberRole.authorize({ user: ["set-role"] }).success).toBe(false);
     expect(accountAdminRole.authorize({ user: ["set-role"] }).success).toBe(false);
     expect(accountOwnerRole.authorize({ user: ["set-role"] }).success).toBe(true);
+  });
+
+  it("rejects fabricated fields in an authorization-role update", () => {
+    expect(roleUpdateSchema.safeParse({ role: "member" }).success).toBe(true);
+    expect(roleUpdateSchema.safeParse({ role: "member", username: "replacement" }).success).toBe(false);
   });
 
   it("allows admins and owners to administer users and sessions", () => {

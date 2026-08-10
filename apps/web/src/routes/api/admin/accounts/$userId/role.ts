@@ -4,7 +4,7 @@ import { z } from "zod";
 import { requireAdminCapability } from "../../../../../server/access";
 import { getDatabase } from "../../../../../server/database";
 
-const roleSchema = z.object({ role: z.enum(["user", "member", "admin", "owner"]) });
+export const roleUpdateSchema = z.object({ role: z.enum(["user", "member", "admin", "owner"]) }).strict();
 
 export const Route = createFileRoute("/api/admin/accounts/$userId/role")({
   server: {
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/admin/accounts/$userId/role")({
       PATCH: async ({ params, request }) => {
         try {
           await requireAdminCapability(request, "changeAuthorizationRoles");
-          const { role } = roleSchema.parse(await request.json());
+          const { role } = roleUpdateSchema.parse(await request.json());
           const account = await getDatabase().user.update({
             where: { id: params.userId },
             data: { role },

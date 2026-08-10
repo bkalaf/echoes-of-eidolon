@@ -8,7 +8,7 @@ export const witnessSchema = z
     witnessId: z.string().min(1),
     antagonist1Id: z.string().min(1),
     antagonist2Id: z.string().min(1).nullish(),
-  })
+  }).strict()
   .refine(
     (witness) =>
       !witness.antagonist2Id || witness.antagonist1Id !== witness.antagonist2Id,
@@ -22,7 +22,7 @@ export const companionSchema = z.object({
   schismProtagonistId: z.string().min(1),
   soulId: z.string().min(1),
   heirloom: z.enum(Heirloom),
-}).refine((companion) => new Set([
+}).strict().refine((companion) => new Set([
   companion.concordProtagonistId,
   companion.ruinProtagonistId,
   companion.schismProtagonistId,
@@ -53,12 +53,12 @@ export const puzzleBlueprintSchema = z.object({
   puzzleBlueprintId: z.string().min(1),
   family: z.enum(PuzzleFamily),
   difficultyTier: z.enum(PuzzleDifficultyTier),
-}) satisfies z.ZodType<PuzzleBlueprint>;
+}).strict() satisfies z.ZodType<PuzzleBlueprint>;
 
 const migrationRowSchema = z.object({
   breedId: z.string().min(1),
   population: z.number().int().positive(),
-});
+}).strict();
 
 export const migrationRequestSchema = z
   .object({
@@ -67,7 +67,7 @@ export const migrationRequestSchema = z
     originSettlementId: z.string().min(1),
     destinationSettlementId: z.string().min(1),
     rows: z.array(migrationRowSchema).min(1),
-  })
+  }).strict()
   .refine((request) => request.originSettlementId !== request.destinationSettlementId, {
     message: "Origin and destination Settlements must be distinct",
   })

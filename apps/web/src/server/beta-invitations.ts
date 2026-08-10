@@ -11,11 +11,11 @@ export const betaInviteRequestInputSchema = z.object({
   email: z.email(),
   friendName: z.string().trim().min(1),
   reason: z.string().trim().min(1),
-});
+}).strict();
 
 export const betaInvitationRedemptionInputSchema = z.object({
   code: z.string().trim().min(1),
-});
+}).strict();
 
 export function hashBetaInvitationCode(code: string): string {
   return createHash("sha256").update(code).digest("hex");

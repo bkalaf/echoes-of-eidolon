@@ -4,7 +4,7 @@ import { z } from "zod";
 import { requireAdminCapability } from "../../../../../server/access";
 import { approveBetaInviteRequest } from "../../../../../server/beta-invitations";
 
-const approvalSchema = z.object({ expiresAt: z.iso.datetime() });
+export const betaInvitationApprovalSchema = z.object({ expiresAt: z.iso.datetime() }).strict();
 
 export const Route = createFileRoute("/api/admin/beta-invitations/$id/approve")({
   server: {
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/admin/beta-invitations/$id/approve")(
       POST: async ({ params, request }) => {
         try {
           await requireAdminCapability(request, "reviewInvitations");
-          const { expiresAt } = approvalSchema.parse(await request.json());
+          const { expiresAt } = betaInvitationApprovalSchema.parse(await request.json());
           await approveBetaInviteRequest({ expiresAt: new Date(expiresAt), requestId: params.id });
           return Response.json({ approved: true });
         } catch (error) {

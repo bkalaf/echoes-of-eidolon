@@ -51,6 +51,10 @@ describe("canonical domain invariants", () => {
     });
     expect(blueprint).not.toHaveProperty("hint1");
     expect(blueprint).not.toHaveProperty("generatorVersion");
+    expect(puzzleBlueprintSchema.safeParse({
+      ...blueprint,
+      generatorVersion: 1,
+    }).success).toBe(false);
   });
 
   it("plans same-world migration with exact Breed conservation", () => {

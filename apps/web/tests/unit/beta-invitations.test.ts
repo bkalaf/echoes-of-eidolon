@@ -14,6 +14,7 @@ import {
   hashBetaInvitationCode,
   redeemBetaInvitation,
 } from "../../src/server/beta-invitations";
+import { betaInvitationApprovalSchema } from "../../src/routes/api/admin/beta-invitations/$id/approve";
 
 describe("beta invitation boundary", () => {
   beforeEach(() => {
@@ -30,6 +31,20 @@ describe("beta invitation boundary", () => {
     })).toEqual({ email: "friend@example.com", friendName: longText, reason: longText });
     expect(betaInvitationRedemptionInputSchema.parse({ code: longText })).toEqual({ code: longText });
     expect(betaInviteRequestInputSchema.safeParse({ email: "friend@example.com", friendName: "", reason: "reason" }).success).toBe(false);
+  });
+
+  it("rejects unknown invitation fields instead of silently stripping them", () => {
+    expect(betaInviteRequestInputSchema.safeParse({
+      email: "friend@example.com",
+      friendName: "Friend",
+      reason: "Play together",
+      moderationState: "APPROVED",
+    }).success).toBe(false);
+    expect(betaInvitationRedemptionInputSchema.safeParse({ code: "code", role: "admin" }).success).toBe(false);
+    expect(betaInvitationApprovalSchema.safeParse({
+      expiresAt: "2026-08-20T12:00:00.000Z",
+      defaultExpiryDays: 7,
+    }).success).toBe(false);
   });
 
   it("hashes bearer codes with SHA-256 instead of persisting plaintext", () => {
