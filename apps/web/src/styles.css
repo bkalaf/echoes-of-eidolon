@@ -71,6 +71,10 @@ button, input, select, textarea { font: inherit; }
 .hero-copy > p:last-child { max-width: 470px; color: #c3d1db; font-size: 13px; line-height: 1.45; }
 
 .feature-band { padding: 14px 38px 4px; }
+.carousel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.carousel-head p { margin: 0; color: #8fb2c7; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.carousel-button { width: 34px; height: 30px; border: 1px solid var(--line-2); border-radius: 5px; background: #051725; color: #efc359; cursor: pointer; }
+.carousel-button:hover, .carousel-button:focus-visible { border-color: var(--gold); color: white; }
 .feature-carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-color: var(--line-2) transparent; padding-bottom: 7px; }
 .feature-card {
   flex: 0 0 250px;
@@ -86,6 +90,7 @@ button, input, select, textarea { font: inherit; }
   transition: border-color .2s, transform .2s;
 }
 .feature-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.feature-card.active { border-color: var(--gold); box-shadow: 0 0 0 1px rgb(239 195 89 / 22%); }
 .feature-card img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 1px solid #a97a17; }
 .feature-card strong { display: block; color: #efc359; font: 500 14px Georgia, serif; margin: 3px 0 7px; }
 .feature-card small { color: #b8c8d4; line-height: 1.32; font-size: 11px; }

@@ -1,7 +1,22 @@
+import { useRef, useState } from "react";
+
 import { PublicShell } from "../../components/shells/Shells";
 import { publicFeatures } from "../../content/public";
 
 export function HomePage() {
+  const [activeFeature, setActiveFeature] = useState(0);
+  const cards = useRef<Array<HTMLAnchorElement | null>>([]);
+
+  const selectFeature = (index: number) => {
+    const wrapped = (index + publicFeatures.length) % publicFeatures.length;
+    setActiveFeature(wrapped);
+    cards.current[wrapped]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  };
+
   return (
     <PublicShell>
       <section className="hero" aria-labelledby="home-heading">
@@ -23,9 +38,21 @@ export function HomePage() {
       </section>
 
       <section className="feature-band" aria-label="Features">
-        <div className="feature-carousel" role="list" tabIndex={0}>
-          {publicFeatures.map((feature) => (
-            <a className="feature-card" href={`/features/${feature.slug}`} key={feature.slug} role="listitem">
+        <header className="carousel-head">
+          <p aria-live="polite">
+            Feature {activeFeature + 1} of {publicFeatures.length}
+          </p>
+          <div className="action-row">
+            <button aria-label="Previous feature" className="carousel-button" onClick={() => selectFeature(activeFeature - 1)}>←</button>
+            <button aria-label="Next feature" className="carousel-button" onClick={() => selectFeature(activeFeature + 1)}>→</button>
+          </div>
+        </header>
+        <div className="feature-carousel" onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") selectFeature(activeFeature - 1);
+          if (event.key === "ArrowRight") selectFeature(activeFeature + 1);
+        }} role="list" tabIndex={0}>
+          {publicFeatures.map((feature, index) => (
+            <a aria-current={index === activeFeature ? "true" : undefined} className={`feature-card ${index === activeFeature ? "active" : ""}`} href={`/features/${feature.slug}`} key={feature.slug} onFocus={() => setActiveFeature(index)} ref={(node) => { cards.current[index] = node; }} role="listitem">
               <img src={feature.icon} alt="" />
               <span>
                 <strong>{feature.title}</strong>
