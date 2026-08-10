@@ -6,6 +6,7 @@ import { getDatabase } from "../../../../../server/database";
 import {
   applyDefinitionImport,
   applyLessonImport,
+  applyLegendaryRewardImport,
   applySoulImport,
   CanonicalImportDriftError,
   UnsupportedImportEntityError,
@@ -32,6 +33,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "lesson") {
             result = await applyLessonImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "legendaryreward") {
+            result = await applyLegendaryRewardImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {

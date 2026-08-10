@@ -3,10 +3,12 @@ import { describe, expect, it, vi } from "vitest";
 import {
   applyDefinitionImport,
   applyLessonImport,
+  applyLegendaryRewardImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
   parseLessonImportRows,
+  parseLegendaryRewardImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -235,5 +237,51 @@ describe("typed Lesson import", () => {
     await expect(applyLessonImport([{ ...row, description: "Changed" }], db))
       .rejects.toThrow("Canonical drift refused for Lesson LESSON-1");
     expect([...db.stored.values()]).toEqual([row]);
+  });
+});
+
+describe("typed LegendaryReward import", () => {
+  const row = {
+    description: "Supplied reward description",
+    legendaryRewardId: "REWARD-1",
+    name: "Supplied reward",
+  };
+  const stored = new Map<string, typeof row>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      legendaryReward: {
+        createMany(input: { data: typeof row[] }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { description: true; legendaryRewardId: true; name: true };
+          where: { legendaryRewardId: { in: string[] } };
+        }): Promise<typeof row[]>;
+      };
+    }) => Promise<Result>) => work({
+      legendaryReward: {
+        async createMany({ data }) {
+          for (const item of data) stored.set(item.legendaryRewardId, { ...item });
+          return { count: data.length };
+        },
+        async findMany({ where }) {
+          return where.legendaryRewardId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []);
+        },
+      },
+    })),
+  };
+
+  it("imports only exact authored fields without creating relationships", async () => {
+    stored.clear();
+    expect(parseLegendaryRewardImportRows([row])).toEqual([row]);
+    expect(() => parseLegendaryRewardImportRows([{ ...row, antagonistId: "ANT-1" }])).toThrow();
+    await expect(applyLegendaryRewardImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("legendaryreward", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+  });
+
+  it("rejects duplicates and canonical drift", async () => {
+    stored.clear();
+    stored.set(row.legendaryRewardId, row);
+    expect(() => parseLegendaryRewardImportRows([row, row])).toThrow("duplicates legendaryRewardId REWARD-1");
+    await expect(applyLegendaryRewardImport([{ ...row, name: "Changed" }], database))
+      .rejects.toThrow("Canonical drift refused for LegendaryReward REWARD-1");
   });
 });

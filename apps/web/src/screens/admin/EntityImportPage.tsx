@@ -22,6 +22,7 @@ type ImportFormat = keyof typeof importFormats;
 const typedImportKeys = {
   Definition: "definition",
   Lesson: "lesson",
+  LegendaryReward: "legendaryreward",
   Soul: "soul",
 } as const;
 

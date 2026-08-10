@@ -17,9 +17,16 @@ const lessonImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
 }).strict();
 
+const legendaryRewardImportRowSchema = z.object({
+  description: z.string().refine((value) => value.trim().length > 0, "description cannot be blank"),
+  legendaryRewardId: z.string().refine((value) => value.trim().length > 0, "legendaryRewardId cannot be blank"),
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
+export type LegendaryRewardImportRow = z.infer<typeof legendaryRewardImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -63,6 +70,20 @@ export interface LessonImportDatabase {
   transaction<Result>(work: (transaction: LessonImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface LegendaryRewardImportTransaction {
+  legendaryReward: {
+    createMany(input: { data: LegendaryRewardImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { description: true; legendaryRewardId: true; name: true };
+      where: { legendaryRewardId: { in: string[] } };
+    }): Promise<LegendaryRewardImportRow[]>;
+  };
+}
+
+export interface LegendaryRewardImportDatabase {
+  transaction<Result>(work: (transaction: LegendaryRewardImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -92,6 +113,18 @@ export function parseLessonImportRows(value: unknown): LessonImportRow[] {
   for (const row of rows) {
     if (identifiers.has(row.lessonId)) throw new Error(`Import duplicates lessonId ${row.lessonId}.`);
     identifiers.add(row.lessonId);
+  }
+  return rows;
+}
+
+export function parseLegendaryRewardImportRows(value: unknown): LegendaryRewardImportRow[] {
+  const rows = z.array(legendaryRewardImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.legendaryRewardId)) {
+      throw new Error(`Import duplicates legendaryRewardId ${row.legendaryRewardId}.`);
+    }
+    identifiers.add(row.legendaryRewardId);
   }
   return rows;
 }
@@ -168,13 +201,37 @@ export async function applyLessonImport(
   });
 }
 
+export async function applyLegendaryRewardImport(
+  value: unknown,
+  database: LegendaryRewardImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseLegendaryRewardImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.legendaryReward.findMany({
+      select: { description: true, legendaryRewardId: true, name: true },
+      where: { legendaryRewardId: { in: rows.map((row) => row.legendaryRewardId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.legendaryRewardId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.legendaryRewardId);
+      if (persisted && (persisted.name !== row.name || persisted.description !== row.description)) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for LegendaryReward ${row.legendaryRewardId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.legendaryRewardId));
+    if (missing.length > 0) await transaction.legendaryReward.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
   if (entityKey === "lesson") return applyLessonImport(value, database as LessonImportDatabase);
+  if (entityKey === "legendaryreward") return applyLegendaryRewardImport(value, database as LegendaryRewardImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }
