@@ -76,4 +76,33 @@ describe("persistence contract", () => {
     expect(migration).toContain("CREATE TYPE \"AuthorizationRole\" AS ENUM ('user', 'member', 'admin', 'owner')");
     expect(migration).toContain('ADD COLUMN "role" "AuthorizationRole" NOT NULL DEFAULT \'user\'');
   });
+
+  it("enforces the core domain relationship map with database foreign keys", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810100000_core_domain_relationships/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CONSTRAINT "Breed_speciesId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Breed_cultureId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Character_breedId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Protagonist_characterId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Antagonist_characterId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Witness_antagonist1Id_fkey"');
+    expect(migration).toContain('CONSTRAINT "Witness_antagonist2Id_fkey"');
+    expect(migration).toContain('CONSTRAINT "Citation_sourceId_fkey"');
+    expect(migration).toContain('CONSTRAINT "Research_citationId_fkey"');
+  });
+
+  it("fails closed when casting stored finite values and removes forbidden Research owner fields", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810100000_core_domain_relationships/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('USING ("culturePoolId"::text::"CulturePoolId")');
+    expect(migration).toContain('USING ("companionKey"::text::"CompanionKey")');
+    expect(migration).toContain('USING ("heirloom"::text::"Heirloom")');
+    expect(migration).not.toMatch(/DROP COLUMN "(culturePoolId|companionKey|heirloom|sourceType)"/);
+    expect(migration).toContain('DROP COLUMN "ownerEntityId"');
+    expect(migration).toContain('DROP COLUMN "ownerEntityType"');
+  });
 });

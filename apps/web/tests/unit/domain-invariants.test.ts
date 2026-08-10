@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import {
   calendarContract,
+  companionSchema,
   migrationConservesBreedPopulation,
   planMigration,
   puzzleBlueprintSchema,
+  validateCompanionWorldSlots,
   witnessSchema,
 } from "../../src/domain/invariants";
 
@@ -20,6 +22,25 @@ describe("canonical domain invariants", () => {
         antagonist2Id: "ANT-1",
       }),
     ).toThrow("distinct Antagonists");
+  });
+
+  it("requires three distinct Protagonists in their matching Companion world slots", () => {
+    const companion = companionSchema.parse({
+      companionKey: "A",
+      concordProtagonistId: "PRO-CONCORD",
+      ruinProtagonistId: "PRO-RUIN",
+      schismProtagonistId: "PRO-SCHISM",
+      soulId: "SOUL-1",
+      heirloom: "NECKLACE",
+    });
+    expect(validateCompanionWorldSlots(companion, [
+      { protagonistId: "PRO-CONCORD", characterId: "CHAR-1", importance: "MAJOR", worldKey: "CONCORD" },
+      { protagonistId: "PRO-RUIN", characterId: "CHAR-2", importance: "MAJOR", worldKey: "RUIN" },
+      { protagonistId: "PRO-SCHISM", characterId: "CHAR-3", importance: "MAJOR", worldKey: "SCHISM" },
+    ])).toEqual(companion);
+    expect(() => validateCompanionWorldSlots(companion, [
+      { protagonistId: "PRO-CONCORD", characterId: "CHAR-1", importance: "MAJOR", worldKey: "RUIN" },
+    ])).toThrow("CONCORD Companion slot requires a CONCORD Protagonist");
   });
 
   it("requires exactly two authored Puzzle Blueprint hints", () => {

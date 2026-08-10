@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { BreedPopulation, PuzzleBlueprint, Witness, WorldKey } from "./types";
+import type { BreedPopulation, Companion, Protagonist, PuzzleBlueprint, Witness, WorldKey } from "./types";
 
 export const witnessSchema = z
   .object({
@@ -13,6 +13,44 @@ export const witnessSchema = z
       !witness.antagonist2Id || witness.antagonist1Id !== witness.antagonist2Id,
     { message: "A Witness must reference one or two distinct Antagonists" },
   ) satisfies z.ZodType<Witness>;
+
+export const companionSchema = z.object({
+  companionKey: z.enum(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]),
+  concordProtagonistId: z.string().min(1),
+  ruinProtagonistId: z.string().min(1),
+  schismProtagonistId: z.string().min(1),
+  soulId: z.string().min(1),
+  heirloom: z.enum([
+    "NECKLACE", "BRACELET", "EARRINGS", "CLOAK_CLASP", "LIGHTER", "POCKETWATCH",
+    "COIN_HEAD_BLACKENED", "COIN_TAIL_BLACKENED", "RING", "TATTOO", "BIRTHMARK",
+    "BROOCH", "HAIR_BARRETTE", "BELT_BUCKLE", "BACKPACK_CLASP",
+  ]),
+}).refine((companion) => new Set([
+  companion.concordProtagonistId,
+  companion.ruinProtagonistId,
+  companion.schismProtagonistId,
+]).size === 3, {
+  message: "A Companion requires three distinct Protagonists",
+}) satisfies z.ZodType<Companion>;
+
+export function validateCompanionWorldSlots(
+  companionInput: Companion,
+  protagonists: readonly Protagonist[],
+): Companion {
+  const companion = companionSchema.parse(companionInput);
+  const protagonistsById = new Map(protagonists.map((protagonist) => [protagonist.protagonistId, protagonist]));
+  const slots = [
+    ["CONCORD", companion.concordProtagonistId],
+    ["RUIN", companion.ruinProtagonistId],
+    ["SCHISM", companion.schismProtagonistId],
+  ] as const;
+  for (const [worldKey, protagonistId] of slots) {
+    if (protagonistsById.get(protagonistId)?.worldKey !== worldKey) {
+      throw new Error(`${worldKey} Companion slot requires a ${worldKey} Protagonist`);
+    }
+  }
+  return companion;
+}
 
 export const puzzleBlueprintSchema = z.object({
   puzzleBlueprintId: z.string().min(1),

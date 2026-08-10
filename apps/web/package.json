@@ -9,6 +9,7 @@
     "db:migrate": "node scripts/run-with-local-secrets.mjs pnpm exec prisma migrate deploy",
     "db:up": "node scripts/run-with-local-secrets.mjs docker compose -f ../../compose.yaml up -d --wait",
     "db:down": "node scripts/run-with-local-secrets.mjs docker compose -f ../../compose.yaml stop postgres",
+    "db:verify-migrations": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/verify-migrations.mts",
     "generate": "prisma generate",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.ts",

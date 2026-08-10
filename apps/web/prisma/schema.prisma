@@ -1333,8 +1333,8 @@ model Species {
   scientificName       String?
   taxonomy             Json?
   appearance           String[]
-  accent               String[]
   anthropomorphization String[]
+  breeds               Breed[]
 }
 
 model Breed {
@@ -1357,14 +1357,17 @@ model Breed {
   authoritySource      AuthoritySource?
   politicalForm        PoliticalForm?
   economicForm         EconomicForm?
+  species              Species               @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
+  culture              Culture?              @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
+  characters           Character[]
 
   @@index([speciesId])
   @@index([cultureId])
 }
 
 model Culture {
-  cultureId                String   @id
-  culturePoolId            String
+  cultureId                String        @id
+  culturePoolId            CulturePoolId
   cultureName              String
   hamletArchitecture       String
   villageArchitecture      String
@@ -1374,35 +1377,44 @@ model Culture {
   architectureColorPalette String[]
   clothingPalette          String[]
   clothing                 String
+  breeds                   Breed[]
 }
 
 model Character {
-  characterId String @id
+  characterId String       @id
   displayName String
   breedId     String
+  breed       Breed        @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
+  protagonist Protagonist?
+  antagonist  Antagonist?
 
   @@index([breedId])
 }
 
 model Protagonist {
   protagonistId String                @id
-  characterId   String
+  characterId   String                @unique
   importance    ProtagonistImportance
   worldKey      WorldKey?
+  character     Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  concordFor    Companion[]           @relation("CompanionConcordProtagonist")
+  ruinFor       Companion[]           @relation("CompanionRuinProtagonist")
+  schismFor     Companion[]           @relation("CompanionSchismProtagonist")
 
   @@index([characterId])
 }
 
 model Architect {
-  architectId  String  @id
+  architectId  String       @id
   departmentId String
   name         String
   profession   String?
+  antagonists  Antagonist[]
 }
 
 model Antagonist {
-  antagonistId          String    @id
-  characterId           String
+  antagonistId          String          @id
+  characterId           String          @unique
   worldKey              WorldKey?
   family                String
   trueFlawName          String
@@ -1417,6 +1429,14 @@ model Antagonist {
   puzzleBlueprintId     String
   constellationBeforeId String?
   constellationAfterId  String?
+  character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  architect             Architect       @relation(fields: [architectId], references: [architectId], onDelete: Restrict)
+  legendaryReward       LegendaryReward @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
+  puzzleBlueprint       PuzzleBlueprint @relation(fields: [puzzleBlueprintId], references: [puzzleBlueprintId], onDelete: Restrict)
+  constellationBefore   Constellation?  @relation("AntagonistConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
+  constellationAfter    Constellation?  @relation("AntagonistConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
+  primaryForWitnesses   Witness[]       @relation("WitnessAntagonist1")
+  secondaryForWitnesses Witness[]       @relation("WitnessAntagonist2")
 
   @@index([characterId])
   @@index([architectId])
@@ -1425,23 +1445,38 @@ model Antagonist {
 }
 
 model Witness {
-  witnessId     String  @id
+  witnessId     String      @id
   antagonist1Id String
   antagonist2Id String?
+  antagonist1   Antagonist  @relation("WitnessAntagonist1", fields: [antagonist1Id], references: [antagonistId], onDelete: Restrict)
+  antagonist2   Antagonist? @relation("WitnessAntagonist2", fields: [antagonist2Id], references: [antagonistId], onDelete: Restrict)
+
+  @@index([antagonist1Id])
+  @@index([antagonist2Id])
 }
 
 model Soul {
-  soulId String @id
-  name   String
+  soulId     String      @id
+  name       String
+  companions Companion[]
 }
 
 model Companion {
-  companionKey         String @id
+  companionKey         CompanionKey @id
   concordProtagonistId String
   ruinProtagonistId    String
   schismProtagonistId  String
   soulId               String
-  heirloom             String
+  heirloom             Heirloom
+  concordProtagonist   Protagonist  @relation("CompanionConcordProtagonist", fields: [concordProtagonistId], references: [protagonistId], onDelete: Restrict)
+  ruinProtagonist      Protagonist  @relation("CompanionRuinProtagonist", fields: [ruinProtagonistId], references: [protagonistId], onDelete: Restrict)
+  schismProtagonist    Protagonist  @relation("CompanionSchismProtagonist", fields: [schismProtagonistId], references: [protagonistId], onDelete: Restrict)
+  soul                 Soul         @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
+
+  @@index([concordProtagonistId])
+  @@index([ruinProtagonistId])
+  @@index([schismProtagonistId])
+  @@index([soulId])
 }
 
 model TimelineEvent {
@@ -1452,17 +1487,24 @@ model TimelineEvent {
 }
 
 model Interlude {
-  interludeId   String        @id
-  name          String
-  interludeType InterludeType
-  summary       String
+  interludeId       String                  @id
+  name              String
+  interludeType     InterludeType
+  summary           String
+  substitutionsFrom InterludeSubstitution[] @relation("InterludeSubstitutionSource")
+  substitutionsTo   InterludeSubstitution[] @relation("InterludeSubstitutionReplacement")
 }
 
 model InterludeSubstitution {
-  interludeSubstitutionId String @id
+  interludeSubstitutionId String    @id
   interludeId             String
   replacementInterludeId  String
   reason                  String
+  interlude               Interlude @relation("InterludeSubstitutionSource", fields: [interludeId], references: [interludeId], onDelete: Cascade)
+  replacementInterlude    Interlude @relation("InterludeSubstitutionReplacement", fields: [replacementInterludeId], references: [interludeId], onDelete: Restrict)
+
+  @@index([interludeId])
+  @@index([replacementInterludeId])
 }
 
 model Pillar {
@@ -1473,9 +1515,10 @@ model Pillar {
 }
 
 model LegendaryReward {
-  legendaryRewardId String @id
+  legendaryRewardId String       @id
   name              String
   description       String
+  antagonists       Antagonist[]
 }
 
 model Lesson {
@@ -1499,23 +1542,25 @@ model Transition {
 }
 
 model Constellation {
-  constellationId String  @id
-  name            String
-  rightAscension  String?
-  declination     String?
+  constellationId   String       @id
+  name              String
+  rightAscension    String?
+  declination       String?
+  beforeAntagonists Antagonist[] @relation("AntagonistConstellationBefore")
+  afterAntagonists  Antagonist[] @relation("AntagonistConstellationAfter")
 }
 
 model Ark {
-  arkId  String @id
+  arkId  String    @id
   name   String
-  status String
+  status ArkStatus
 }
 
 model PointOfInterest {
-  pointOfInterestId String @id
+  pointOfInterestId String   @id
   name              String
   kind              String
-  regionId          String
+  regionId          RegionId
   longitude         Float
   latitude          Float
 
@@ -1557,45 +1602,60 @@ model BreedPopulation {
 }
 
 model Source {
-  sourceId        String   @id
+  sourceId        String     @id
   title           String
   authors         String[]
   publisher       String?
   publicationDate String?
-  sourceType      String
+  sourceType      SourceType
   urlOrIdentifier String?
+  citations       Citation[]
 }
 
 model Citation {
-  citationId String           @id
-  sourceId   String
-  locator    String?
-  rendering  String
-  quality    CitationQuality?
+  citationId     String                      @id
+  sourceId       String
+  locator        String?
+  rendering      String
+  quality        CitationQuality?
+  source         Source                      @relation(fields: [sourceId], references: [sourceId], onDelete: Restrict)
+  research       Research[]
+  knowledgeItems KnowledgeBaseItemCitation[]
 
   @@index([sourceId])
 }
 
 model Research {
-  researchId      String          @id
-  ownerEntityType String
-  ownerEntityId   String
-  notes           String
-  citationId      String
-  citationQuality CitationQuality
+  researchId String            @id
+  notes      String
+  citationId String
+  category   ResearchCategory?
+  citation   Citation          @relation(fields: [citationId], references: [citationId], onDelete: Restrict)
 
   @@index([citationId])
-  @@index([ownerEntityType, ownerEntityId])
 }
 
 model KnowledgeBaseItem {
-  knowledgeBaseItemId String @id
-  entityType          String
+  knowledgeBaseItemId String                      @id
+  entityType          EntityType
   entityId            String
   title               String
   baseContent         String
+  citations           KnowledgeBaseItemCitation[]
 
   @@index([entityType, entityId])
+}
+
+model KnowledgeBaseItemCitation {
+  knowledgeBaseItemId String
+  citationId          String
+  firstUseOrder       Int
+  knowledgeBaseItem   KnowledgeBaseItem @relation(fields: [knowledgeBaseItemId], references: [knowledgeBaseItemId], onDelete: Cascade)
+  citation            Citation          @relation(fields: [citationId], references: [citationId], onDelete: Restrict)
+
+  @@id([knowledgeBaseItemId, citationId])
+  @@unique([knowledgeBaseItemId, firstUseOrder])
+  @@index([citationId])
 }
 
 model Definition {
@@ -1605,10 +1665,10 @@ model Definition {
 }
 
 model Matrix {
-  matrixId       String   @id
-  regionId       String
-  latticeId      String
-  culturePoolIds String[]
+  matrixId       String          @id
+  regionId       RegionId
+  latticeId      LatticeId
+  culturePoolIds CulturePoolId[]
 }
 
 model Layette {
@@ -1618,12 +1678,12 @@ model Layette {
 }
 
 model PersonalityExpression {
-  personalityExpressionId String @id
+  personalityExpressionId String               @id
   name                    String
-  loquacity               String
-  emotionalTemperature    String
-  outlookOrientation      String
-  collaborativePosture    String
+  loquacity               Loquacity
+  emotionalTemperature    EmotionalTemperature
+  outlookOrientation      OutlookOrientation
+  collaborativePosture    CollaborativePosture
 }
 
 model CapabilityDefinition {
@@ -1652,10 +1712,11 @@ model SpeciesGroup {
 }
 
 model PuzzleBlueprint {
-  puzzleBlueprintId String @id
+  puzzleBlueprintId String       @id
   family            String
   difficultyTier    Int
   hint1             String
   hint2             String
   generatorVersion  Int
+  antagonists       Antagonist[]
 }

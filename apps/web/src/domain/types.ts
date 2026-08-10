@@ -27,6 +27,17 @@ export type EconomicForm =
   | 'COMMAND_DEMESNE' | 'COMMUNE_PLAN' | 'FOLK_COMMONS' | 'GUILD_COMPACT'
   | 'MONOPOLY_ESTATE' | 'OPEN_BAZAAR' | 'SHAREHOLDER_BOURSE'
   | 'SYNDICATE_CARTEL' | 'TRIBUTARY_DEMESNE';
+export type CulturePoolId = `CP${'01'|'02'|'03'|'04'|'05'|'06'|'07'|'08'|'09'|'10'|'11'|'12'|'13'|'14'|'15'|'16'|'17'|'18'|'19'|'20'|'21'|'22'|'23'|'24'|'25'}`;
+export type CompanionKey = 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K';
+export type Heirloom =
+  | 'NECKLACE' | 'BRACELET' | 'EARRINGS' | 'CLOAK_CLASP' | 'LIGHTER' | 'POCKETWATCH'
+  | 'COIN_HEAD_BLACKENED' | 'COIN_TAIL_BLACKENED' | 'RING' | 'TATTOO' | 'BIRTHMARK'
+  | 'BROOCH' | 'HAIR_BARRETTE' | 'BELT_BUCKLE' | 'BACKPACK_CLASP';
+export type CitationQuality = 'VERY_LOW'|'LOW'|'MODERATE'|'HIGH'|'VERY_HIGH';
+export type ResearchCategory =
+  | 'EXODUS_PROGRAM' | 'REWARD' | 'SPECIES' | 'HISTORICAL_EVENT' | 'CULTURAL_WOUND'
+  | 'PERSON' | 'PLACE' | 'INSTITUTION' | 'ORGANIZATION' | 'SYMBOL' | 'TOME'
+  | 'TECHNOLOGY_OR_SYSTEM' | 'OTHER';
 
 export interface Species {
   speciesId: string;
@@ -35,7 +46,6 @@ export interface Species {
   scientificName?: string | null;
   taxonomy?: { kingdom?: string; phylum?: string; className?: string; order?: string; family?: string; genus?: string; species?: string };
   appearance?: string[];
-  accent?: string[];
   anthropomorphization?: string[];
 }
 export interface Breed {
@@ -61,7 +71,7 @@ export interface Breed {
 }
 export interface Culture {
   cultureId: string;
-  culturePoolId: string;
+  culturePoolId: CulturePoolId;
   cultureName: string;
   hamletArchitecture: string;
   villageArchitecture: string;
@@ -95,9 +105,8 @@ export interface Antagonist {
 }
 export interface Witness { witnessId: string; antagonist1Id: Antagonist['antagonistId']; antagonist2Id?: Antagonist['antagonistId'] | null; }
 export interface Soul { soulId: string; name: string; }
-export type Heirloom = string;
 export interface Companion {
-  companionKey: string;
+  companionKey: CompanionKey;
   concordProtagonistId: Protagonist['protagonistId'];
   ruinProtagonistId: Protagonist['protagonistId'];
   schismProtagonistId: Protagonist['protagonistId'];
@@ -113,14 +122,14 @@ export interface Lesson { lessonId: string; name: string; description: string; }
 export interface Tome { tomeId: string; title: string; author?: string; }
 export interface Transition { transitionId: string; name: string; bookA: number; bookB: number; summary: string; }
 export interface Constellation { constellationId: string; name: string; rightAscension?: string; declination?: string; }
-export interface Ark { arkId: string; name: string; status: string; }
+export interface Ark { arkId: string; name: string; status: 'OPERATIONAL'|'CANNIBALIZED'|'DAMAGED'|'DESTROYED'; }
 export interface PointOfInterest { pointOfInterestId: string; name: string; kind: string; regionId: string; longitude: number; latitude: number; }
 export interface Site { siteId: string; regionId: string; candidateType: string; longitude: number; latitude: number; settlementId?: string | null; }
 export interface Settlement { settlementId: string; siteId: Site['siteId']; name: string; size: string; regionId: string; }
 export interface BreedPopulation { settlementId: Settlement['settlementId']; worldKey: WorldKey; year: number; breedId: Breed['breedId']; population: number; }
 export interface Source { sourceId: string; title: string; authors: string[]; publisher?: string; publicationDate?: string; sourceType: string; urlOrIdentifier?: string; }
-export interface Citation { citationId: string; sourceId: Source['sourceId']; locator?: string; rendering: string; quality?: 'HIGH'|'MEDIUM'|'LOW'|'UNVERIFIED'; }
-export interface Research { researchId: string; ownerEntityType: string; ownerEntityId: string; notes: string; citationId: Citation['citationId']; citationQuality: NonNullable<Citation['quality']>; }
+export interface Citation { citationId: string; sourceId: Source['sourceId']; locator?: string; rendering: string; quality?: CitationQuality; }
+export interface Research { researchId: string; notes: string; citationId: Citation['citationId']; category?: ResearchCategory | null; }
 export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: string; entityId: string; title: string; baseContent: string; }
 export interface Definition { definitionId: string; term: string; definition: string; }
 export interface Matrix { matrixId: string; regionId: string; latticeId: string; culturePoolIds: string[]; }
