@@ -53,7 +53,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
 interface SideShellProps {
   children: ReactNode;
   label: string;
-  navigation: readonly string[];
+  navigation: ReadonlyArray<readonly [string, string]>;
 }
 
 function SideShell({ children, label, navigation }: SideShellProps) {
@@ -65,8 +65,8 @@ function SideShell({ children, label, navigation }: SideShellProps) {
       </header>
       <aside className="workspace-sidebar">
         <strong>{label}</strong>
-        {navigation.map((item) => (
-          <span key={item}>{item}</span>
+        {navigation.map(([item, href]) => (
+          <a href={href} key={href}>{item}</a>
         ))}
       </aside>
       <main className="workspace-main">{children}</main>
@@ -80,7 +80,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 
 export function AccountShell({ children }: { children: ReactNode }) {
   return (
-    <SideShell label="Account" navigation={["Profile", "Subscription", "Orders", "Progress", "Support", "Settings"]}>
+    <SideShell label="Account" navigation={[["Profile", "/account/profile"], ["Subscription", "/account/subscription"], ["Orders", "/account/orders"], ["Settings", "/account/settings"], ["Progress", "/account/progress"], ["Achievements", "/account/achievements"], ["Support", "/account/support"], ["Invitations", "/account/invitations/request"]]}>
       {children}
     </SideShell>
   );
@@ -92,7 +92,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
 
 export function AdminShell({ children }: { children: ReactNode }) {
   return (
-    <SideShell label="Administration" navigation={["Dashboard", "Access", "Store", "Data", "Atlas", "Puzzles", "Campaign", "City Builder", "Operations"]}>
+    <SideShell label="Administration" navigation={[["Dashboard", "/admin"], ["Access", "/admin/access"], ["Store", "/admin/store"], ["Data", "/admin/data"], ["Atlas", "/admin/atlas"], ["Puzzles", "/admin/puzzles"], ["Campaign", "/admin/campaign"], ["City Builder", "/admin/city-builder"], ["Operations", "/admin/operations"]]}>
       {children}
     </SideShell>
   );

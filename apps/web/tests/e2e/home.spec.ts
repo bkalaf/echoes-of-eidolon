@@ -6,3 +6,15 @@ test("home exposes the approved public task and navigation", async ({ page }) =>
   await expect(page.getByRole("link", { name: "Sign In" })).toBeVisible();
   await expect(page.locator(".feature-card")).toHaveCount(9);
 });
+
+test("packet routes expose public, auth, account, and store tasks", async ({ page }) => {
+  for (const [path, heading] of [
+    ["/features", "Nine ways Echoes plays differently."],
+    ["/auth/sign-in", "Sign In"],
+    ["/account/subscription?state=ACC008", "Subscription - Active"],
+    ["/store/checkout/declined", "Payment Declined"],
+  ] as const) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+});

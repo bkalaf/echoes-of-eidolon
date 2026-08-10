@@ -60,3 +60,23 @@ export function manifestByShell() {
     },
   );
 }
+
+function normalizedPattern(path: string) {
+  return path.split("?")[0]?.replace(/^Modal in /, "") ?? path;
+}
+
+export function pathMatches(pattern: string, pathname: string) {
+  const patternParts = normalizedPattern(pattern).split("/").filter(Boolean);
+  const pathParts = pathname.split("/").filter(Boolean);
+  if (patternParts.length !== pathParts.length) return false;
+  return patternParts.every((part, index) => part.startsWith(":") || part === pathParts[index]);
+}
+
+export function screensForPath(pathname: string) {
+  return pageManifest.filter((entry) => entry.path !== null && pathMatches(entry.path, pathname));
+}
+
+export function screenForPath(pathname: string, requestedState?: string) {
+  const matches = screensForPath(pathname);
+  return matches.find((entry) => entry.screenId === requestedState) ?? matches[0];
+}
