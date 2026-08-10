@@ -34,7 +34,7 @@ export const Route = createFileRoute("/api/account/membership")({
           const membership = projectMembershipEntitlement(grants, new Date());
           return Response.json({
             active: membership.active,
-            activePerks: activePerks(perks).map(({ description, name, perkId }) => ({ description, name, perkId })),
+            activePerks: activePerks(perks, membership.active).map(({ description, name, perkId }) => ({ description, name, perkId })),
             effectiveEndAt: membership.effectiveEndAt?.toISOString() ?? null,
             grants: grants.map((grant) => ({
               effectiveEndAt: grant.revocations.reduce(

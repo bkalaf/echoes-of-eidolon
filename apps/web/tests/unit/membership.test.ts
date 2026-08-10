@@ -90,7 +90,8 @@ describe("membership entitlement ledger", () => {
 
   it("projects only ACTIVE perks while preserving inactive rows for administration", () => {
     const perks = [{ perkId: "A", status: "ACTIVE" as const }, { perkId: "I", status: "INACTIVE" as const }];
-    expect(activePerks(perks)).toEqual([{ perkId: "A", status: "ACTIVE" }]);
+    expect(activePerks(perks, true)).toEqual([{ perkId: "A", status: "ACTIVE" }]);
+    expect(activePerks(perks, false)).toEqual([]);
     expect(perks).toHaveLength(2);
   });
 });

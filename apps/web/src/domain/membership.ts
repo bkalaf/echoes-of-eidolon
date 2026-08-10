@@ -132,6 +132,9 @@ export function voiceWindowSeconds(hasActiveMembership: boolean): number {
   return hasActiveMembership ? memberVoiceWindowSeconds : ordinaryVoiceWindowSeconds;
 }
 
-export function activePerks<Perk extends { status: PerkStatus }>(perks: readonly Perk[]): Perk[] {
-  return perks.filter((perk) => perk.status === "ACTIVE");
+export function activePerks<Perk extends { status: PerkStatus }>(
+  perks: readonly Perk[],
+  membershipEntitled: boolean,
+): Perk[] {
+  return membershipEntitled ? perks.filter((perk) => perk.status === "ACTIVE") : [];
 }
