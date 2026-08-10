@@ -23,3 +23,19 @@ export async function sendVerificationEmail(input: {
 
   if (error) throw new Error(`Resend rejected the verification email: ${error.message}`);
 }
+
+export async function sendAuthenticationCode(input: {
+  recipient: string;
+  code: string;
+  purpose: "sign-in" | "email-verification" | "forget-password" | "change-email";
+}): Promise<void> {
+  const env = getEmailEnv();
+  const { error } = await getEmailClient().emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: input.recipient,
+    subject: "Your Echoes of Eidolon verification code",
+    text: `Your verification code is ${input.code}. Request type: ${input.purpose}.`,
+  });
+
+  if (error) throw new Error(`Resend rejected the verification code: ${error.message}`);
+}

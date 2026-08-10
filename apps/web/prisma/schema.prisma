@@ -143,17 +143,25 @@ enum CapabilityValueType {
   SCORE
 }
 
+enum AccountEligibilityStatus {
+  AGE_18_OR_OLDER
+  AGE_14_TO_17_WITH_GUARDIAN_PERMISSION
+}
+
 model User {
-  id            String    @id
-  name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  passkeys      Passkey[]
+  id                String                   @id
+  name              String
+  username          String?                  @unique
+  displayUsername   String?
+  email             String                   @unique
+  emailVerified     Boolean                  @default(false)
+  image             String?
+  eligibilityStatus AccountEligibilityStatus
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  sessions          Session[]
+  accounts          Account[]
+  passkeys          Passkey[]
 }
 
 model Session {

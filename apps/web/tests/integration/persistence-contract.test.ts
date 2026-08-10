@@ -26,4 +26,18 @@ describe("persistence contract", () => {
     expect(migration).toContain("BreedPopulation_nonnegative_check");
     expect(migration).toContain("PuzzleBlueprint_authored_hints_check");
   });
+
+  it("persists only the two reviewed account eligibility states", () => {
+    const migration = readFileSync(
+      resolve(
+        import.meta.dirname,
+        "../../prisma/migrations/20260810053000_account_eligibility/migration.sql",
+      ),
+      "utf8",
+    );
+    expect(migration).toContain("AGE_18_OR_OLDER");
+    expect(migration).toContain("AGE_14_TO_17_WITH_GUARDIAN_PERMISSION");
+    expect(migration).not.toContain('"dateOfBirth"');
+    expect(migration).not.toContain('"numericAge"');
+  });
 });
