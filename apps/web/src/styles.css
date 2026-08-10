@@ -228,6 +228,32 @@ button, input, select, textarea { font: inherit; }
 .cart-line { display: grid; grid-template-columns: 82px 1fr auto; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid #15354a; }
 .cart-line h2 { font: 700 16px Inter, sans-serif; color: white; }
 
+.toolbar { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; }
+.toolbar .input { flex: 1; }
+.toolbar .compact { width: 180px; }
+.grow { flex: 1; }
+.entity-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.entity-grid .card { min-height: 120px; }
+.entity-grid .card p { margin: 0 0 12px; }
+.table-scroll { overflow: auto; }
+.schema-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 12px; font-size: 11px; color: #b8cedb; }
+.schema-list span { padding: 4px 6px; border-bottom: 1px solid #123047; }
+.import-preview { margin-top: 14px; }
+.import-preview > .action-row { justify-content: space-between; }
+.import-preview .table-scroll { margin: 12px 0; }
+.tabs { display: flex; gap: 7px; margin-bottom: 12px; }
+.tabs a, .tabs button { padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: #041522; color: #9fc2d6; font-size: 12px; }
+.tabs .active { border-color: #326989; background: #113451; color: white; }
+.atlas-layout { display: grid; grid-template-columns: 1.55fr .75fr; gap: 14px; }
+.map, .globe { min-height: 600px; display: grid; place-items: center; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 8px; background: #03131f; }
+.map img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+.globe { background: radial-gradient(circle at center, #0b3351, #020b14 65%); }
+.globe img { width: min(540px, 90%); max-height: 540px; object-fit: contain; filter: drop-shadow(0 0 28px rgb(78 180 255 / 35%)); }
+.map-pin { width: 16px; height: 16px; position: absolute; left: 52%; top: 42%; border: 2px solid white; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 5px rgb(246 193 75 / 22%); }
+.campaign-table { min-width: 1350px; font-size: 11px; }
+.campaign-table td, .campaign-table th { white-space: nowrap; }
+.city-canvas { min-height: 520px; display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 8px; background: linear-gradient(135deg, #061725, #0d2b40); color: #79b8d9; }
+
 .not-found { min-height: 100vh; display: grid; place-content: center; justify-items: start; gap: 10px; padding: 30px; }
 .not-found h1 { margin: 0; font: 34px Georgia, serif; }
 
@@ -241,6 +267,8 @@ button, input, select, textarea { font: inherit; }
   .feature-band { padding-left: 0; padding-right: 0; }
   .features-overview, .feature-detail, .gameplay-layout, .contact-layout, .checkout-layout, .product-detail, .split { grid-template-columns: 1fr; }
   .feature-grid, .product-grid, .legal-grid, .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .entity-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .atlas-layout { grid-template-columns: 1fr; }
   .auth-page { grid-template-columns: minmax(0, 520px); }
 }
 
@@ -253,6 +281,7 @@ button, input, select, textarea { font: inherit; }
   .game-bottom-bar { overflow-x: auto; white-space: nowrap; }
   .public-page { padding: 20px 18px; }
   .feature-grid, .product-grid, .legal-grid, .service-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .entity-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .form-grid h2, .span-2 { grid-column: auto; }
 }

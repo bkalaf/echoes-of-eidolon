@@ -9,7 +9,8 @@ function concretePath(pattern: string) {
     .replaceAll(":orderid", "EID-1042")
     .replaceAll(":ticketid", "TKT-0042")
     .replaceAll(":token", "order-token")
-    .replaceAll(":slug", "conjunction-1-mug");
+    .replaceAll(":slug", "conjunction-1-mug")
+    .replaceAll(":id", "sample-record");
 }
 
 describe("packet route resolution", () => {
@@ -20,7 +21,7 @@ describe("packet route resolution", () => {
 
   it("resolves every routed public, auth, account, and store screen", () => {
     const groups = manifestByShell();
-    for (const shell of ["public", "auth", "account", "store"] as const) {
+    for (const shell of ["public", "auth", "account", "store", "admin"] as const) {
       for (const entry of groups[shell]) {
         if (!entry.path || entry.path === "/") continue;
         const resolved = screenForPath(concretePath(entry.path), entry.screenId);

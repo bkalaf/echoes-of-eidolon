@@ -13,6 +13,10 @@ describe("packet screens", () => {
     ["AUTH01", "Sign In"],
     ["ACC008", "Subscription - Active"],
     ["STORE10", "Order Confirmed"],
+    ["DATA_WITNESS_EDIT", "Edit Witness"],
+    ["DATA_BREED_IMPORT", "Bulk Import Breed"],
+    ["ATLAS_POI_3D", "Points of Interest — 3D View"],
+    ["CAMPAIGN_CONCORD", "Main 18-Book Planner — Concord"],
   ])("renders the %s reviewed task", (screenId, heading) => {
     render(<PacketScreen screen={entry(screenId)} />);
     expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
