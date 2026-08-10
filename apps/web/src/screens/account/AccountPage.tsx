@@ -57,19 +57,23 @@ function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
       return;
     }
     setBusy(true);
-    const result = await authClient.revokeSession({ token });
+    const response = await fetch("/api/account/sessions/revoke-other", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    const result = await response.json() as { error?: string };
     setBusy(false);
-    const nextError = resultError(result);
-    if (nextError) setError(nextError);
+    if (!response.ok) setError(result.error ?? "The other session could not be revoked.");
     else setSessions((current) => current.filter((session) => session.token !== token));
   };
 
   const revokeOthers = async () => {
     setBusy(true);
-    const result = await authClient.revokeOtherSessions();
+    const response = await fetch("/api/account/sessions/revoke-all-other", { method: "POST" });
+    const result = await response.json() as { error?: string };
     setBusy(false);
-    const nextError = resultError(result);
-    if (nextError) setError(nextError);
+    if (!response.ok) setError(result.error ?? "The other sessions could not be revoked.");
     else setSessions((current) => current.filter((session) => session.token === currentToken));
   };
 

@@ -6,6 +6,7 @@ export interface ServerAccessContext {
   betaEligible: boolean;
   email: string;
   role: AuthorizationRole;
+  sessionToken: string;
   userId: string;
 }
 
@@ -22,6 +23,7 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
     betaEligible: user.betaEligible,
     email: user.email,
     role: resolveAuthorizationRole(true, user.role),
+    sessionToken: session.session.token,
     userId: session.user.id,
   };
 }

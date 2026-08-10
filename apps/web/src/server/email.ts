@@ -40,22 +40,6 @@ export async function sendAuthenticationCode(input: {
   if (error) throw new Error(`Resend rejected the verification code: ${error.message}`);
 }
 
-export async function sendOrganizationInvitation(input: {
-  recipient: string;
-  organizationName: string;
-  url: string;
-}): Promise<void> {
-  const env = getEmailEnv();
-  const { error } = await getEmailClient().emails.send({
-    from: env.RESEND_FROM_EMAIL,
-    to: input.recipient,
-    subject: `Invitation to ${input.organizationName}`,
-    text: `Accept your Echoes of Eidolon invitation: ${input.url}`,
-  });
-
-  if (error) throw new Error(`Resend rejected the organization invitation: ${error.message}`);
-}
-
 export async function sendBetaInvitation(input: {
   code: string;
   expiresAt: Date;

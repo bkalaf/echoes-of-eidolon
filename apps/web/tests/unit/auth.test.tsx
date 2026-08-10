@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const authMocks = vi.hoisted(() => ({ sendOtp: vi.fn(), signInEmail: vi.fn(), useSession: vi.fn(), verifyOtp: vi.fn() }));
+const authMocks = vi.hoisted(() => ({ passkey: vi.fn(), sendOtp: vi.fn(), signInEmail: vi.fn(), useSession: vi.fn(), verifyOtp: vi.fn() }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
-    signIn: { email: authMocks.signInEmail },
+    signIn: { email: authMocks.signInEmail, passkey: authMocks.passkey },
     twoFactor: { sendOtp: authMocks.sendOtp, verifyOtp: authMocks.verifyOtp },
     useSession: authMocks.useSession,
   },
@@ -23,6 +23,7 @@ describe("reviewed authentication states", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     authMocks.sendOtp.mockResolvedValue({ data: { status: true }, error: null });
+    authMocks.passkey.mockResolvedValue({ data: {}, error: null });
     authMocks.signInEmail.mockResolvedValue({ data: {}, error: null });
     authMocks.verifyOtp.mockResolvedValue({ data: {}, error: null });
     authMocks.useSession.mockReturnValue({ data: null, isPending: false });
@@ -74,6 +75,16 @@ describe("reviewed authentication states", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Invalid credentials");
     expect(window.sessionStorage.getItem("echoes.login-soundtrack")).toBeNull();
+  });
+
+  it("preserves a safe return URL for passkey sign-in", async () => {
+    window.history.replaceState({}, "", "/auth/passkeys?returnTo=%2Fgame%2Fknowledge");
+    render(<AuthPage screen={authScreen("AUTH09")} />);
+    fireEvent.click(screen.getByRole("button", { name: "Continue with a passkey" }));
+
+    await waitFor(() => expect(authMocks.passkey).toHaveBeenCalledWith({
+      fetchOptions: { onSuccess: expect.any(Function) },
+    }));
   });
 
   it("redeems a bearer beta invitation without changing an organization role", async () => {

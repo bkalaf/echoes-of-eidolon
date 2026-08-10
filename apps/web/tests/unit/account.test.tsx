@@ -4,8 +4,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const authMocks = vi.hoisted(() => ({
   changeEmail: vi.fn(),
   listSessions: vi.fn(),
-  revokeOtherSessions: vi.fn(),
-  revokeSession: vi.fn(),
   sendVerificationOtp: vi.fn(),
   signInEmail: vi.fn(),
   updateUser: vi.fn(),
@@ -19,8 +17,6 @@ vi.mock("../../src/lib/auth-client", () => ({
       sendVerificationOtp: authMocks.sendVerificationOtp,
     },
     listSessions: authMocks.listSessions,
-    revokeOtherSessions: authMocks.revokeOtherSessions,
-    revokeSession: authMocks.revokeSession,
     signIn: { email: authMocks.signInEmail },
     updateUser: authMocks.updateUser,
     useSession: authMocks.useSession,
@@ -39,8 +35,10 @@ describe("account session boundary", () => {
     vi.clearAllMocks();
     authMocks.updateUser.mockResolvedValue({ error: null });
     authMocks.listSessions.mockResolvedValue({ data: [], error: null });
-    authMocks.revokeOtherSessions.mockResolvedValue({ data: { status: true }, error: null });
-    authMocks.revokeSession.mockResolvedValue({ data: { status: true }, error: null });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({}),
+      ok: true,
+    }));
   });
 
   it("does not expose fabricated account data without a session", () => {
@@ -145,11 +143,20 @@ describe("account session boundary", () => {
     render(<AccountPage screen={accountScreen("ACC004")} />);
     fireEvent.click(await screen.findByRole("button", { name: "Revoke this other session" }));
 
-    await waitFor(() => expect(authMocks.revokeSession).toHaveBeenCalledWith({ token: "other-token" }));
-    expect(authMocks.revokeSession).not.toHaveBeenCalledWith({ token: "current-token" });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/account/sessions/revoke-other",
+      expect.objectContaining({
+        body: JSON.stringify({ token: "other-token" }),
+        method: "POST",
+      }),
+    ));
+    expect(fetch).not.toHaveBeenCalledWith(
+      "/api/account/sessions/revoke-other",
+      expect.objectContaining({ body: JSON.stringify({ token: "current-token" }) }),
+    );
   });
 
-  it("uses Better Auth's other-session operation for revoke all other sessions", async () => {
+  it("uses the server-owned other-session operation for revoke all other sessions", async () => {
     authMocks.useSession.mockReturnValue({
       data: {
         session: { token: "current-token" },
@@ -167,8 +174,10 @@ describe("account session boundary", () => {
     render(<AccountPage screen={accountScreen("ACC004")} />);
     fireEvent.click(await screen.findByRole("button", { name: "Revoke all other sessions" }));
 
-    await waitFor(() => expect(authMocks.revokeOtherSessions).toHaveBeenCalledTimes(1));
-    expect(authMocks.revokeSession).not.toHaveBeenCalledWith({ token: "current-token" });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/account/sessions/revoke-all-other",
+      { method: "POST" },
+    ));
   });
 
   it("submits the friend beta-invitation request without exposing moderation state", async () => {

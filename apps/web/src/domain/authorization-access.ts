@@ -9,7 +9,6 @@ const administeredUserActions = [
   "ban",
   "delete",
   "set-password",
-  "set-email",
   "get",
   "update",
 ] as const;

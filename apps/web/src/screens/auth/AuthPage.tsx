@@ -161,7 +161,11 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setError(undefined);
     try {
       queueRandomLoginSoundtrack();
-      const result = await authClient.signIn.passkey();
+      const result = await authClient.signIn.passkey({
+        fetchOptions: {
+          onSuccess: () => window.location.assign(signedInReturnPath),
+        },
+      });
       const nextError = resultError(result);
       if (nextError) {
         clearQueuedLoginSoundtrack();

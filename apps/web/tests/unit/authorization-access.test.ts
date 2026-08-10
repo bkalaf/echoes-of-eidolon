@@ -22,6 +22,11 @@ describe("Better Auth account authorization", () => {
     expect(accountOwnerRole.authorize({ session: ["list", "revoke", "delete"] }).success).toBe(true);
   });
 
+  it("does not allow an administrator to bypass email re-verification", () => {
+    expect(accountAdminRole.authorize({ user: ["set-email"] }).success).toBe(false);
+    expect(accountOwnerRole.authorize({ user: ["set-email"] }).success).toBe(false);
+  });
+
   it("does not grant administration to users or members", () => {
     expect(accountUserRole.authorize({ user: ["list"] }).success).toBe(false);
     expect(accountMemberRole.authorize({ session: ["list"] }).success).toBe(false);

@@ -12,8 +12,10 @@ import { z } from "zod";
 import { accountAuthorizationAccessControl, accountAuthorizationRoles } from "../domain/authorization-access";
 import { organizationAccessControl, organizationRoles } from "../domain/organization-access";
 import { getDatabase } from "./database";
-import { sendAuthenticationCode, sendOrganizationInvitation } from "./email";
+import { sendAuthenticationCode } from "./email";
 import { getAuthEnv } from "./env";
+
+export const disabledDirectSessionRevocationPaths = ["/revoke-session", "/revoke-sessions"] as const;
 
 function createAuth() {
   const env = getAuthEnv();
@@ -59,6 +61,7 @@ function createAuth() {
       enabled: true,
       requireEmailVerification: true,
     },
+    disabledPaths: [...disabledDirectSessionRevocationPaths],
     session: {
       expiresIn: 60 * 60 * 24 * 7,
       updateAge: 60 * 60 * 24,
@@ -96,17 +99,7 @@ function createAuth() {
       organization({
         ac: organizationAccessControl,
         allowUserToCreateOrganization: false,
-        requireEmailVerificationOnInvitation: true,
         roles: organizationRoles,
-        sendInvitationEmail: async ({ email, id, organization: invitedOrganization }) => {
-          const invitationUrl = new URL("/auth/redeem-invite", authUrl.origin);
-          invitationUrl.searchParams.set("id", id);
-          await sendOrganizationInvitation({
-            recipient: email,
-            organizationName: invitedOrganization.name,
-            url: invitationUrl.toString(),
-          });
-        },
       }),
       passkey({
         origin: authUrl.origin,

@@ -21,6 +21,8 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
 import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
 import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
+import { Route as ApiAccountSessionsRevokeAllOtherRouteImport } from './routes/api/account/sessions/revoke-all-other'
+import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/account/sessions/revoke-other'
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
@@ -90,6 +92,18 @@ const ApiPlayerAccessRoute = ApiPlayerAccessRouteImport.update({
   path: '/api/player/access',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAccountSessionsRevokeAllOtherRoute =
+  ApiAccountSessionsRevokeAllOtherRouteImport.update({
+    id: '/api/account/sessions/revoke-all-other',
+    path: '/api/account/sessions/revoke-all-other',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountSessionsRevokeOtherRoute =
+  ApiAccountSessionsRevokeOtherRouteImport.update({
+    id: '/api/account/sessions/revoke-other',
+    path: '/api/account/sessions/revoke-other',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminAccountsIndexRoute = ApiAdminAccountsIndexRouteImport.update({
   id: '/api/admin/accounts/',
   path: '/api/admin/accounts/',
@@ -138,6 +152,8 @@ export interface FileRoutesByFullPath {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
+  '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -158,6 +174,8 @@ export interface FileRoutesByTo {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
+  '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
@@ -179,6 +197,8 @@ export interface FileRoutesById {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
+  '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -201,6 +221,8 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/sessions/revoke-all-other'
+    | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
     | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
@@ -221,6 +243,8 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/sessions/revoke-all-other'
+    | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
     | '/api/admin/accounts'
     | '/api/admin/beta-invitations'
@@ -241,6 +265,8 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/account/sessions/revoke-all-other'
+    | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
     | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
@@ -262,6 +288,8 @@ export interface RootRouteChildren {
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
   ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
   ApiPlayerAccessRoute: typeof ApiPlayerAccessRoute
+  ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
+  ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
@@ -355,6 +383,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPlayerAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/account/sessions/revoke-all-other': {
+      id: '/api/account/sessions/revoke-all-other'
+      path: '/api/account/sessions/revoke-all-other'
+      fullPath: '/api/account/sessions/revoke-all-other'
+      preLoaderRoute: typeof ApiAccountSessionsRevokeAllOtherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/sessions/revoke-other': {
+      id: '/api/account/sessions/revoke-other'
+      path: '/api/account/sessions/revoke-other'
+      fullPath: '/api/account/sessions/revoke-other'
+      preLoaderRoute: typeof ApiAccountSessionsRevokeOtherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/accounts/': {
       id: '/api/admin/accounts/'
       path: '/api/admin/accounts'
@@ -427,6 +469,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
   ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,
   ApiPlayerAccessRoute: ApiPlayerAccessRoute,
+  ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
+  ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,

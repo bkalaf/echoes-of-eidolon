@@ -20,11 +20,11 @@ export const organizationAdminRole = organizationAccessControl.newRole({
 });
 
 export const organizationOwnerRole = organizationAccessControl.newRole({
-  organization: ["update", "delete"],
-  member: ["create", "update", "delete"],
-  invitation: ["create", "cancel"],
-  team: ["create", "update", "delete"],
-  ac: ["create", "read", "update", "delete"],
+  organization: [],
+  member: [],
+  invitation: [],
+  team: [],
+  ac: [],
 });
 
 export const organizationRoles = {
