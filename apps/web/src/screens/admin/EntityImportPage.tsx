@@ -25,6 +25,7 @@ const typedImportKeys = {
   Definition: "definition",
   Interlude: "interlude",
   Layette: "layette",
+  Pillar: "pillar",
   Lesson: "lesson",
   LegendaryReward: "legendaryreward",
   Soul: "soul",
