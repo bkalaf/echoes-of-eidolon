@@ -8,6 +8,7 @@ import {
   applyInterludeImport,
   applyArkImport,
   applyLayetteImport,
+  applyTomeImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
@@ -17,6 +18,7 @@ import {
   parseInterludeImportRows,
   parseArkImportRows,
   parseLayetteImportRows,
+  parseTomeImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -456,5 +458,39 @@ describe("typed Layette import", () => {
     await expect(applyRegisteredEntityImport("layette", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
     await expect(applyLayetteImport([{ ...row, name: "Changed" }], database))
       .rejects.toThrow("Canonical drift refused for Layette LAYETTE-1");
+  });
+});
+
+describe("typed Tome import", () => {
+  const row = { author: null, title: "Supplied title", tomeId: "TOME-1" };
+  const stored = new Map<string, { author: string | null; title: string; tomeId: string }>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      tome: {
+        createMany(input: { data: Array<{ author: string | null; title: string; tomeId: string }> }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { author: true; title: true; tomeId: true };
+          where: { tomeId: { in: string[] } };
+        }): Promise<Array<{ author: string | null; title: string; tomeId: string }>>;
+      };
+    }) => Promise<Result>) => work({ tome: {
+      async createMany({ data }) { for (const item of data) stored.set(item.tomeId, { ...item }); return { count: data.length }; },
+      async findMany({ where }) { return where.tomeId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []); },
+    } })),
+  };
+
+  it("requires author to be explicitly nonblank or null", () => {
+    expect(parseTomeImportRows([row])).toEqual([row]);
+    expect(parseTomeImportRows([{ ...row, author: "Supplied author" }])).toEqual([{ ...row, author: "Supplied author" }]);
+    expect(() => parseTomeImportRows([{ title: row.title, tomeId: row.tomeId }])).toThrow();
+    expect(() => parseTomeImportRows([{ ...row, author: "" }])).toThrow();
+  });
+
+  it("applies idempotently and treats null-to-text as drift", async () => {
+    stored.clear();
+    await expect(applyTomeImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("tome", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyTomeImport([{ ...row, author: "Changed" }], database))
+      .rejects.toThrow("Canonical drift refused for Tome TOME-1");
   });
 });

@@ -28,6 +28,7 @@ const typedImportKeys = {
   LegendaryReward: "legendaryreward",
   Soul: "soul",
   TimelineEvent: "timelineevent",
+  Tome: "tome",
 } as const;
 
 function displayValue(value: unknown): string {

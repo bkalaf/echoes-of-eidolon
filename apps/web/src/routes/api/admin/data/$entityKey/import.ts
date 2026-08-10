@@ -11,6 +11,7 @@ import {
   applyInterludeImport,
   applyArkImport,
   applyLayetteImport,
+  applyTomeImport,
   applySoulImport,
   CanonicalImportDriftError,
   UnsupportedImportEntityError,
@@ -57,6 +58,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "layette") {
             result = await applyLayetteImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "tome") {
+            result = await applyTomeImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {

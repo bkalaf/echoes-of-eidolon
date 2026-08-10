@@ -51,6 +51,12 @@ const layetteImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
 }).strict();
 
+const tomeImportRowSchema = z.object({
+  author: z.string().refine((value) => value.trim().length > 0, "author cannot be blank").nullable(),
+  title: z.string().refine((value) => value.trim().length > 0, "title cannot be blank"),
+  tomeId: z.string().refine((value) => value.trim().length > 0, "tomeId cannot be blank"),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
@@ -59,6 +65,7 @@ export type TimelineEventImportRow = z.infer<typeof timelineEventImportRowSchema
 export type InterludeImportRow = z.infer<typeof interludeImportRowSchema>;
 export type ArkImportRow = z.infer<typeof arkImportRowSchema>;
 export type LayetteImportRow = z.infer<typeof layetteImportRowSchema>;
+export type TomeImportRow = z.infer<typeof tomeImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -172,6 +179,20 @@ export interface LayetteImportDatabase {
   transaction<Result>(work: (transaction: LayetteImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface TomeImportTransaction {
+  tome: {
+    createMany(input: { data: TomeImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { author: true; title: true; tomeId: true };
+      where: { tomeId: { in: string[] } };
+    }): Promise<TomeImportRow[]>;
+  };
+}
+
+export interface TomeImportDatabase {
+  transaction<Result>(work: (transaction: TomeImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -255,6 +276,16 @@ export function parseLayetteImportRows(value: unknown): LayetteImportRow[] {
   for (const row of rows) {
     if (identifiers.has(row.layetteId)) throw new Error(`Import duplicates layetteId ${row.layetteId}.`);
     identifiers.add(row.layetteId);
+  }
+  return rows;
+}
+
+export function parseTomeImportRows(value: unknown): TomeImportRow[] {
+  const rows = z.array(tomeImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.tomeId)) throw new Error(`Import duplicates tomeId ${row.tomeId}.`);
+    identifiers.add(row.tomeId);
   }
   return rows;
 }
@@ -454,10 +485,33 @@ export async function applyLayetteImport(
   });
 }
 
+export async function applyTomeImport(
+  value: unknown,
+  database: TomeImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseTomeImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.tome.findMany({
+      select: { author: true, title: true, tomeId: true },
+      where: { tomeId: { in: rows.map((row) => row.tomeId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.tomeId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.tomeId);
+      if (persisted && (persisted.title !== row.title || persisted.author !== row.author)) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for Tome ${row.tomeId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.tomeId));
+    if (missing.length > 0) await transaction.tome.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase | ArkImportDatabase | LayetteImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase | ArkImportDatabase | LayetteImportDatabase | TomeImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
@@ -467,5 +521,6 @@ export async function applyRegisteredEntityImport(
   if (entityKey === "interlude") return applyInterludeImport(value, database as InterludeImportDatabase);
   if (entityKey === "ark") return applyArkImport(value, database as ArkImportDatabase);
   if (entityKey === "layette") return applyLayetteImport(value, database as LayetteImportDatabase);
+  if (entityKey === "tome") return applyTomeImport(value, database as TomeImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }
