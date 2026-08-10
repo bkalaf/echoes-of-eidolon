@@ -17,6 +17,7 @@ import {
 import { applyConstellationImport } from "../../../../../server/constellation-import";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "../../../../../server/import-errors";
 import { applyPillarImport } from "../../../../../server/pillar-import";
+import { applyTransitionImport } from "../../../../../server/transition-import";
 
 const requestSchema = z.object({ rows: z.array(z.unknown()) }).strict();
 
@@ -73,6 +74,8 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             result = await applyPillarImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
+          } else if (params.entityKey === "transition") {
+            result = await applyTransitionImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else {
             throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${params.entityKey}.`);
           }

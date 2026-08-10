@@ -31,6 +31,7 @@ const typedImportKeys = {
   Soul: "soul",
   TimelineEvent: "timelineevent",
   Tome: "tome",
+  Transition: "transition",
 } as const;
 
 function displayValue(value: unknown): string {
