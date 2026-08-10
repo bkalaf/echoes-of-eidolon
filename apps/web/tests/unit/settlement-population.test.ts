@@ -51,9 +51,9 @@ describe("settlement population authority", () => {
 
   it("replays ordered append-only deltas and derives dominant Breed and its actual nullable Culture", () => {
     const projection = replaySettlementPopulation("SW-1", [
-      { settlementWorldId: "SW-1", year: 2, sequence: 2, kind: "GROWTH", breedId: "BREED-A2", populationDelta: 5 },
-      { settlementWorldId: "SW-1", year: 1, sequence: 1, kind: "FOUNDING", breedId: "BREED-A1", populationDelta: 5 },
-      { settlementWorldId: "SW-1", year: 2, sequence: 1, kind: "GROWTH", breedId: "BREED-A1", populationDelta: 0 },
+      { settlementWorldId: "SW-1", year: 2, sequence: 2, eventType: "GROWTH", breedId: "BREED-A2", populationDelta: 5 },
+      { settlementWorldId: "SW-1", year: 1, sequence: 1, eventType: "FOUNDING", breedId: "BREED-A1", populationDelta: 5 },
+      { settlementWorldId: "SW-1", year: 2, sequence: 1, eventType: "GROWTH", breedId: "BREED-A1", populationDelta: 0 },
     ], breeds);
     expect(projection.totalPopulation).toBe(10);
     expect(projection.dominantBreedId).toBe("BREED-A1");
@@ -61,7 +61,7 @@ describe("settlement population authority", () => {
   });
 
   it("rejects duplicate event order, cross-world events, unknown Breeds, and negative replay", () => {
-    const event = { settlementWorldId: "SW-1", year: 1, sequence: 1, kind: "FOUNDING" as const, breedId: "BREED-A1", populationDelta: 1 };
+    const event = { settlementWorldId: "SW-1", year: 1, sequence: 1, eventType: "FOUNDING" as const, breedId: "BREED-A1", populationDelta: 1 };
     expect(() => replaySettlementPopulation("SW-1", [event, { ...event, breedId: "BREED-A2" }], breeds)).toThrow(/Duplicate population event order/);
     expect(() => replaySettlementPopulation("SW-2", [event], breeds)).toThrow(/another SettlementWorld/);
     expect(() => replaySettlementPopulation("SW-1", [{ ...event, breedId: "UNKNOWN" }], breeds)).toThrow(/Unknown Breed/);

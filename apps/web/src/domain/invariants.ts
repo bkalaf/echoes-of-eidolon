@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { BreedPopulation, Companion, Protagonist, PuzzleBlueprint, Witness, WorldKey } from "./types";
+import type { Companion, Protagonist, PuzzleBlueprint, Witness, WorldKey } from "./types";
 
 export const witnessSchema = z
   .object({
@@ -93,8 +93,16 @@ export type MigrationRequest = z.infer<typeof migrationRequestSchema>;
 export interface MigrationPlan {
   worldKey: WorldKey;
   year: number;
-  origin: BreedPopulation[];
-  destination: BreedPopulation[];
+  origin: MigrationPopulationDelta[];
+  destination: MigrationPopulationDelta[];
+}
+
+export interface MigrationPopulationDelta {
+  settlementId: string;
+  worldKey: WorldKey;
+  year: number;
+  breedId: string;
+  population: number;
 }
 
 export function planMigration(input: MigrationRequest): MigrationPlan {

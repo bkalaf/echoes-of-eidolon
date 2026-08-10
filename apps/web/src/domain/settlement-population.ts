@@ -23,7 +23,7 @@ export interface SettlementPopulationEvent {
   settlementWorldId: string;
   year: number;
   sequence: number;
-  kind: SettlementPopulationEventKind;
+  eventType: SettlementPopulationEventKind;
   breedId: string;
   populationDelta: number;
 }

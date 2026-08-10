@@ -105,4 +105,21 @@ describe("persistence contract", () => {
     expect(migration).toContain('DROP COLUMN "ownerEntityId"');
     expect(migration).toContain('DROP COLUMN "ownerEntityType"');
   });
+
+  it("makes SettlementWorld and ordered population events the persistence authority", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810110000_settlement_event_authority/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "SettlementWorld"');
+    expect(migration).toContain('CREATE TABLE "SettlementPopulationEvent"');
+    expect(migration).toContain('SettlementWorld_settlementId_worldKey_key');
+    expect(migration).toContain('SettlementPopulationEvent_settlementWorldId_year_sequence_key');
+    expect(migration).toContain('SettlementPopulationEvent_settlementWorldId_fkey');
+    expect(migration).toContain('SettlementPopulationEvent_breedId_fkey');
+    expect(migration).toContain('SettlementPopulationEvent_reject_update');
+    expect(migration).toContain('SettlementPopulationEvent_reject_delete');
+    expect(migration).toContain("BreedPopulation contains rows and requires an explicitly approved event migration");
+    expect(migration).toContain("Site settlement link conflicts with Settlement.siteId authority");
+  });
 });

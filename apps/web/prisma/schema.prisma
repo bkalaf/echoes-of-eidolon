@@ -1338,7 +1338,7 @@ model Species {
 }
 
 model Breed {
-  breedId              String                @id
+  breedId              String                      @id
   name                 String
   speciesId            String
   cultureId            String?
@@ -1357,16 +1357,18 @@ model Breed {
   authoritySource      AuthoritySource?
   politicalForm        PoliticalForm?
   economicForm         EconomicForm?
-  species              Species               @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
-  culture              Culture?              @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
+  species              Species                     @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
+  culture              Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
   characters           Character[]
+  populationEvents     SettlementPopulationEvent[]
+  dominantInWorlds     SettlementWorld[]           @relation("SettlementWorldDominantBreed")
 
   @@index([speciesId])
   @@index([cultureId])
 }
 
 model Culture {
-  cultureId                String        @id
+  cultureId                String            @id
   culturePoolId            CulturePoolId
   cultureName              String
   hamletArchitecture       String
@@ -1378,6 +1380,7 @@ model Culture {
   clothingPalette          String[]
   clothing                 String
   breeds                   Breed[]
+  settlementWorlds         SettlementWorld[]
 }
 
 model Character {
@@ -1568,36 +1571,56 @@ model PointOfInterest {
 }
 
 model Site {
-  siteId        String  @id
-  regionId      String
-  candidateType String
+  siteId        String                   @id
+  regionId      RegionId
+  candidateType SettlementClassification
   longitude     Float
   latitude      Float
-  settlementId  String?
+  settlement    Settlement?
 
   @@index([regionId])
-  @@index([settlementId])
 }
 
 model Settlement {
-  settlementId String @id
-  siteId       String
-  name         String
-  size         String
-  regionId     String
+  settlementId   String                   @id
+  siteId         String                   @unique
+  name           String?
+  classification SettlementClassification
+  site           Site                     @relation(fields: [siteId], references: [siteId], onDelete: Restrict)
+  worlds         SettlementWorld[]
 
   @@index([siteId])
-  @@index([regionId])
 }
 
-model BreedPopulation {
-  settlementId String
-  worldKey     WorldKey
-  year         Int
-  breedId      String
-  population   Int
+model SettlementWorld {
+  settlementWorldId String                      @id
+  settlementId      String
+  worldKey          WorldKey
+  totalPopulation   Int                         @default(0)
+  dominantBreedId   String?
+  cultureId         String?
+  settlement        Settlement                  @relation(fields: [settlementId], references: [settlementId], onDelete: Cascade)
+  dominantBreed     Breed?                      @relation("SettlementWorldDominantBreed", fields: [dominantBreedId], references: [breedId], onDelete: SetNull)
+  culture           Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: SetNull)
+  populationEvents  SettlementPopulationEvent[]
 
-  @@id([settlementId, worldKey, year, breedId])
+  @@unique([settlementId, worldKey])
+  @@index([dominantBreedId])
+  @@index([cultureId])
+}
+
+model SettlementPopulationEvent {
+  settlementPopulationEventId String                        @id
+  settlementWorldId           String
+  year                        Int
+  sequence                    Int
+  breedId                     String
+  eventType                   SettlementPopulationEventType
+  populationDelta             Int
+  settlementWorld             SettlementWorld               @relation(fields: [settlementWorldId], references: [settlementWorldId], onDelete: Cascade)
+  breed                       Breed                         @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
+
+  @@unique([settlementWorldId, year, sequence])
   @@index([breedId])
 }
 

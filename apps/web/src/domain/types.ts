@@ -124,9 +124,27 @@ export interface Transition { transitionId: string; name: string; bookA: number;
 export interface Constellation { constellationId: string; name: string; rightAscension?: string; declination?: string; }
 export interface Ark { arkId: string; name: string; status: 'OPERATIONAL'|'CANNIBALIZED'|'DAMAGED'|'DESTROYED'; }
 export interface PointOfInterest { pointOfInterestId: string; name: string; kind: string; regionId: string; longitude: number; latitude: number; }
-export interface Site { siteId: string; regionId: string; candidateType: string; longitude: number; latitude: number; settlementId?: string | null; }
-export interface Settlement { settlementId: string; siteId: Site['siteId']; name: string; size: string; regionId: string; }
-export interface BreedPopulation { settlementId: Settlement['settlementId']; worldKey: WorldKey; year: number; breedId: Breed['breedId']; population: number; }
+export type RegionId = `R${'01'|'02'|'03'|'04'|'05'|'06'|'07'|'08'|'09'|'10'|'11'|'12'|'13'|'14'|'15'|'16'|'17'|'18'|'19'|'20'|'21'|'22'|'23'|'24'|'25'}`;
+export type SettlementClassification = 'HAMLET'|'VILLAGE'|'TOWN'|'CITY'|'METROPOLIS';
+export interface Site { siteId: string; regionId: RegionId; candidateType: SettlementClassification; longitude: number; latitude: number; }
+export interface Settlement { settlementId: string; siteId: Site['siteId']; name: string | null; classification: SettlementClassification; }
+export interface SettlementWorld {
+  settlementWorldId: string;
+  settlementId: Settlement['settlementId'];
+  worldKey: WorldKey;
+  totalPopulation: number;
+  dominantBreedId: Breed['breedId'] | null;
+  cultureId: Culture['cultureId'] | null;
+}
+export interface SettlementPopulationEvent {
+  settlementPopulationEventId: string;
+  settlementWorldId: SettlementWorld['settlementWorldId'];
+  year: number;
+  sequence: number;
+  breedId: Breed['breedId'];
+  eventType: 'FOUNDING'|'GROWTH'|'MIGRATION_IN'|'MIGRATION_OUT';
+  populationDelta: number;
+}
 export interface Source { sourceId: string; title: string; authors: string[]; publisher?: string; publicationDate?: string; sourceType: string; urlOrIdentifier?: string; }
 export interface Citation { citationId: string; sourceId: Source['sourceId']; locator?: string; rendering: string; quality?: CitationQuality; }
 export interface Research { researchId: string; notes: string; citationId: Citation['citationId']; category?: ResearchCategory | null; }
