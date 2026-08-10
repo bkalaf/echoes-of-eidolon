@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { ArkStatus, InterludeType, TimelineEventType } from "../generated/prisma/enums";
+import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
 
 const soulImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
@@ -192,9 +193,6 @@ interface TomeImportTransaction {
 export interface TomeImportDatabase {
   transaction<Result>(work: (transaction: TomeImportTransaction) => Promise<Result>): Promise<Result>;
 }
-
-export class UnsupportedImportEntityError extends Error {}
-export class CanonicalImportDriftError extends Error {}
 
 export function parseSoulImportRows(value: unknown): SoulImportRow[] {
   const rows = z.array(soulImportRowSchema).min(1, "Import requires at least one row.").parse(value);

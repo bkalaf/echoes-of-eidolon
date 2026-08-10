@@ -13,9 +13,9 @@ import {
   applyLayetteImport,
   applyTomeImport,
   applySoulImport,
-  CanonicalImportDriftError,
-  UnsupportedImportEntityError,
 } from "../../../../../server/soul-import";
+import { applyConstellationImport } from "../../../../../server/constellation-import";
+import { CanonicalImportDriftError, UnsupportedImportEntityError } from "../../../../../server/import-errors";
 
 const requestSchema = z.object({ rows: z.array(z.unknown()) }).strict();
 
@@ -62,6 +62,10 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             });
           } else if (params.entityKey === "tome") {
             result = await applyTomeImport(input.rows, {
+              transaction: (work) => database.$transaction((transaction) => work(transaction)),
+            });
+          } else if (params.entityKey === "constellation") {
+            result = await applyConstellationImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
           } else {
