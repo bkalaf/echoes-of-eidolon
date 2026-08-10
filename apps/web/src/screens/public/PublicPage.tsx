@@ -22,7 +22,7 @@ function PageHead({ eyebrow, title, description }: { eyebrow: string; title: str
 }
 
 function FeaturesPage() {
-  return <><PageHead eyebrow="Features" title="Nine ways Echoes plays differently." description="Explore the systems behind the world, conversation, challenges and story." /><section className="features-overview"><div className="video-panel"><video controls preload="metadata" src={managedAssetUrl("video.good-versus-evil")}>Your browser does not support the captioned feature video.</video><div><strong>What makes Echoes of Eidolon different?</strong><small>Captioned feature video</small></div></div><div className="feature-grid">{publicFeatures.map((feature) => <a className="feature-tile" href={`/features/${feature.slug}`} key={feature.slug}><img src={feature.image ?? feature.icon} alt="" /><h2>{feature.title}</h2><p>{feature.summary}</p><span>View feature →</span></a>)}</div></section></>;
+  return <><div className="action-row"><a className="button" href="/">Back</a><a className="button" href="/">Home</a></div><PageHead eyebrow="Features" title="Nine ways Echoes plays differently." description="Explore the systems behind the world, conversation, challenges and story." /><section className="features-overview"><div className="video-panel"><video controls preload="metadata" src={managedAssetUrl("video.good-versus-evil")}>Your browser does not support the captioned feature video.</video><div><strong>What makes Echoes of Eidolon different?</strong><small>Captioned feature video</small></div></div><div className="feature-grid">{publicFeatures.map((feature) => <a className="feature-tile" href={`/features/${feature.slug}`} key={feature.slug}><img src={feature.image ?? feature.icon} alt="" /><h2>{feature.title}</h2><p>{feature.summary}</p><span>View feature →</span></a>)}</div></section></>;
 }
 
 function FeaturePage({ screen }: { screen: PageManifestEntry }) {
@@ -62,7 +62,9 @@ function StatusPage() {
 }
 
 function ReleasesPage({ detail }: { detail: boolean }) {
-  return <><PageHead eyebrow="Status" title={detail ? "Release Note Detail" : "Release Notes"} description="Player-visible release information." /><section className="card"><h2>Release notes unavailable</h2><p>No verified release-note or deployment-history source is configured. Version history and current-release claims are not fabricated.</p></section></>;
+  const unavailable = "No verified release-note or deployment-history source is configured. Version history and current-release claims are not fabricated.";
+  if (detail) return <><a className="back-link" href="/status/releases">← Back to Release Notes</a><PageHead eyebrow="Status" title="Release Note Detail" description="Player-visible release information." /><div className="release-layout"><aside className="card"><h2>Release archive</h2><p>No verified year, month, or release entries are available.</p></aside><article className="card"><h2>Release notes unavailable</h2><p>{unavailable}</p>{["Summary", "Added", "Changed", "Fixed", "Known issues"].map((section) => <section key={section}><h3>{section}</h3><p>No verified content is available.</p></section>)}</article></div></>;
+  return <><PageHead eyebrow="Status" title="Release Notes" description="Player-visible release information." /><div className="release-layout"><aside className="card"><h2>Release archive</h2><nav aria-label="Release archive by year and month"><p>No verified release years are available.</p></nav></aside><article className="card"><h2>Release notes unavailable</h2><p>{unavailable}</p><p>Selecting a release will show its Summary, Added, Changed, Fixed, and Known issues sections.</p></article></div></>;
 }
 
 function ContactPage() {

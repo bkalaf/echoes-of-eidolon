@@ -48,7 +48,16 @@ describe("public mutation boundaries", () => {
 
   it("does not fabricate version history without a release source", () => {
     render(<PublicPage screen={publicScreen("PUB017")} />);
+    expect(screen.getByRole("navigation", { name: "Release archive by year and month" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Release notes unavailable" })).toBeInTheDocument();
     expect(screen.queryByText(/v0\.2\.0|v0\.1\.9|v0\.1\.8/)).not.toBeInTheDocument();
+  });
+
+  it("preserves corrected release-detail navigation and sections without fake content", () => {
+    render(<PublicPage screen={publicScreen("PUB018")} />);
+    expect(screen.getByRole("link", { name: /Back to Release Notes/ })).toHaveAttribute("href", "/status/releases");
+    for (const section of ["Summary", "Added", "Changed", "Fixed", "Known issues"]) {
+      expect(screen.getByRole("heading", { name: section })).toBeInTheDocument();
+    }
   });
 });

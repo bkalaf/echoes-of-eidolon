@@ -20,7 +20,8 @@ function PublicAuthControls() {
   const session = authClient.useSession();
   if (session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
   if (session.data) {
-    return <div className="auth-actions"><a className="button button--default" href="/account/profile">Account</a><a className="button button--gold" href="/auth/sign-out">Sign Out</a></div>;
+    const initial = session.data.user.name?.trim().charAt(0).toUpperCase() || "A";
+    return <div className="auth-actions"><a aria-label="Account" className="avatar-link" href="/account/profile"><span aria-hidden="true">{initial}</span></a><a className="button button--gold" href="/auth/sign-out">Sign Out</a></div>;
   }
   return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;
 }
@@ -43,12 +44,10 @@ export function PublicShell({ children }: { children: ReactNode }) {
       </header>
       <main className="site-main">{children}</main>
       <footer className="public-footer">
-        <BrandLogo />
         <nav aria-label="Footer navigation">
           <a href="/about">About Us</a>
           <a href="/contact">Contact Us</a>
           <a href="/legal">Legal</a>
-          <a href="/status">Status</a>
         </nav>
         <span>© Echoes of Eidolon</span>
       </footer>

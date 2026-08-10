@@ -42,6 +42,7 @@ button, input, select, textarea { font: inherit; }
 .public-header nav { display: flex; gap: 24px; margin-left: auto; color: #b9cbd9; font-size: 13px; }
 .public-header nav a:hover, .public-header nav a:focus-visible { color: white; }
 .auth-actions { display: flex; gap: 8px; margin-left: 20px; }
+.avatar-link { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--gold); border-radius: 50%; background: #12324a; color: white; font-weight: 800; }
 .button {
   border: 1px solid var(--line-2);
   border-radius: 7px;
@@ -97,10 +98,9 @@ button, input, select, textarea { font: inherit; }
 .free-band { margin: 12px 38px 28px; border: 1px solid var(--line); border-radius: 8px; padding: 13px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #061b2a; }
 .free-band h2 { font: 500 17px Georgia, serif; margin: 0; color: #f2cc6b; }
 .free-band p { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
-.public-footer { min-height: 42px; border-top: 1px solid var(--line); display: flex; align-items: center; padding: 0 22px; background: #010812; color: #65849a; font-size: 10px; }
-.public-footer .brand-logo { height: 28px; width: auto; }
-.public-footer nav { display: flex; gap: 18px; margin-left: 28px; }
-.public-footer > span { margin-left: auto; color: #7894a8; }
+.public-footer { min-height: 52px; border-top: 1px solid var(--line); display: flex; align-items: center; padding: 0 22px; background: #010812; color: #a8c3d4; font-size: 12px; }
+.public-footer nav { display: flex; gap: 18px; }
+.public-footer > span { margin-left: auto; color: #9bb6c8; }
 
 .field { display: grid; gap: 6px; color: #8fb2c7; font-size: 12px; }
 .field small { color: var(--muted); }

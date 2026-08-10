@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
@@ -23,6 +23,8 @@ describe("public home", () => {
     expect(screen.getByRole("heading", { name: /when the moons align/i })).toBeVisible();
     expect(screen.getAllByRole("listitem")).toHaveLength(9);
     expect(screen.getByText("A subscription will never be required.")).toBeVisible();
+    expect(screen.getAllByAltText("Echoes of Eidolon")).toHaveLength(1);
+    expect(within(screen.getByRole("contentinfo")).queryByRole("link", { name: "Status" })).not.toBeInTheDocument();
   });
 
   it("moves through all nine features with controlled carousel navigation", () => {
@@ -48,7 +50,7 @@ describe("public home", () => {
     renderHome();
     expect(await screen.findByRole("heading", { name: "Echoes of Eidolon Beta" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Enter Game" })).toHaveAttribute("href", "/game");
-    expect(screen.getByRole("link", { name: "Account" })).toHaveAttribute("href", "/account/profile");
+    expect(screen.getByRole("link", { name: "Account" })).toHaveClass("avatar-link");
     expect(screen.getByRole("link", { name: "Sign Out" })).toHaveAttribute("href", "/auth/sign-out");
     expect(screen.queryByRole("link", { name: "Sign In" })).not.toBeInTheDocument();
   });
