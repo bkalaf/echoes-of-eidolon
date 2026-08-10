@@ -6,6 +6,7 @@ import { EntityImportPage } from "./EntityImportPage";
 import { BetaInvitationAdminPage } from "./BetaInvitationAdminPage";
 import { AccountAdminPage } from "./AccountAdminPage";
 import { AtlasAdminPage } from "./AtlasAdminPage";
+import { CampaignAdminPage } from "./CampaignAdminPage";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -45,7 +46,8 @@ function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; scr
   const isInvitationTask = ["ADM003", "ADM004", "ADM006"].includes(screen.screenId);
   const isAccountTask = ["ADM002", "ADM005"].includes(screen.screenId);
   const isAtlasTask = screen.path?.startsWith("/admin/atlas");
-  return <><AdminHead screen={screen} description="Account authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isAtlasTask ? <AtlasAdminPage screen={screen} /> : <section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section>}</>;
+  const isCampaignTask = screen.path?.startsWith("/admin/campaign");
+  return <><AdminHead screen={screen} description="Account authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isAtlasTask ? <AtlasAdminPage screen={screen} /> : isCampaignTask ? <CampaignAdminPage screen={screen} /> : <section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section>}</>;
 }
 
 export function AdminPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
