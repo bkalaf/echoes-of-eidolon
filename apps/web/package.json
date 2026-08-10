@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "start": "node .output/server/index.mjs",
+    "dev": "node scripts/run-with-local-secrets.mjs vite dev",
+    "start": "node scripts/run-with-local-secrets.mjs node .output/server/index.mjs",
+    "db:migrate": "node scripts/run-with-local-secrets.mjs pnpm exec prisma migrate deploy",
+    "db:up": "node scripts/run-with-local-secrets.mjs docker compose -f ../../compose.yaml up -d --wait",
+    "db:down": "node scripts/run-with-local-secrets.mjs docker compose -f ../../compose.yaml stop postgres",
     "generate": "prisma generate",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.ts",

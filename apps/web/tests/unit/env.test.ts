@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { parseRuntimeEnv } from "../../src/server/env";
+import { resolveObjectStorageLocation } from "../../src/server/storage";
 
 const validEnvironment = {
   DATABASE_URL: "postgresql://localhost/echoes",
@@ -27,5 +28,25 @@ describe("runtime environment", () => {
 
   it("rejects missing service configuration", () => {
     expect(() => parseRuntimeEnv({})).toThrow();
+  });
+
+  it("derives the S3-compatible location from a Spaces bucket endpoint", () => {
+    expect(
+      resolveObjectStorageLocation({
+        DIGITALOCEAN_SPACES_DRIVE_URL: "https://echoes.nyc3.digitaloceanspaces.com/",
+      }),
+    ).toEqual({
+      bucket: "echoes",
+      endpoint: "https://nyc3.digitaloceanspaces.com",
+      region: "nyc3",
+    });
+  });
+
+  it("rejects a Spaces URL that is not the bucket endpoint", () => {
+    expect(() =>
+      resolveObjectStorageLocation({
+        DIGITALOCEAN_SPACES_DRIVE_URL: "https://echoes.nyc3.digitaloceanspaces.com/assets/",
+      }),
+    ).toThrow("must be a bucket endpoint");
   });
 });
