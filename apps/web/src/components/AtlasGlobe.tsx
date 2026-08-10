@@ -8,10 +8,12 @@ export function AtlasGlobe({
   onSelect,
   points,
   selectedId,
+  unavailableMessage,
 }: {
   onSelect: (poiId: string) => void;
   points: CanonicalPointOfInterest[];
   selectedId?: string;
+  unavailableMessage?: string;
 }) {
   const [centerLongitude, setCenterLongitude] = useState(0);
   const [centerLatitude, setCenterLatitude] = useState(0);
@@ -49,7 +51,7 @@ export function AtlasGlobe({
     }}
     onPointerUp={(event) => {
       if (drag.current?.pointerId === event.pointerId) drag.current = undefined;
-      event.currentTarget.releasePointerCapture(event.pointerId);
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
     }}
     onWheel={(event) => {
       event.preventDefault();
@@ -69,5 +71,5 @@ export function AtlasGlobe({
         style={{ left: `${projected.xPercent}%`, top: `${projected.yPercent}%` }}
       />;
     })}
-  </div><div className="action-row"><button className="button" onClick={reset}>Reset globe</button><span className="muted">Center {centerLatitude.toFixed(0)}°, {centerLongitude.toFixed(0)}° · Zoom {zoom.toFixed(1)}×</span></div></div>;
+  </div>{unavailableMessage && <p className="notice notice--warn" role="status">{unavailableMessage}</p>}<div className="action-row"><button className="button" onClick={reset}>Reset globe</button><span className="muted">Center {centerLatitude.toFixed(0)}°, {centerLongitude.toFixed(0)}° · Zoom {zoom.toFixed(1)}×</span></div></div>;
 }

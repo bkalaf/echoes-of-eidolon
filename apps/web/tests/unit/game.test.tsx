@@ -100,6 +100,7 @@ describe("game runtime boundary", () => {
     const globe = await screen.findByRole("application", { name: /Interactive Eidolon globe/ });
     expect(globe.querySelector("img")).toHaveAttribute("src", expect.stringMatching(/digitaloceanspaces\.com\/assets\/[a-f0-9]{64}\.png$/));
     expect(screen.getByText(/Player-safe layers, discovered geography/)).toBeInTheDocument();
+    expect(screen.getByRole("status", { name: "" })).toHaveTextContent("Player-safe coordinate overlays are unavailable.");
     expect(globe.querySelectorAll("button")).toHaveLength(0);
     expect(screen.getByRole("button", { name: "Player overlays unavailable" })).toBeDisabled();
   });

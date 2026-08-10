@@ -281,6 +281,9 @@ button, input, select, textarea { font: inherit; }
 .atlas-globe:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .atlas-globe:active { cursor: grabbing; }
 .atlas-globe > img { width: 200%; height: 100%; position: absolute; left: -50%; top: 0; object-fit: cover; pointer-events: none; user-select: none; }
+@media (prefers-reduced-motion: reduce) {
+  .atlas-globe, .atlas-globe > img, .map-data-pin { scroll-behavior: auto; transition: none !important; }
+}
 .campaign-table { min-width: 1350px; font-size: 11px; }
 .campaign-table td, .campaign-table th { white-space: nowrap; }
 .city-canvas { min-height: 520px; display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 8px; background: linear-gradient(135deg, #061725, #0d2b40); color: #79b8d9; }

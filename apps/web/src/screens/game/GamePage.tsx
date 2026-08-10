@@ -35,7 +35,7 @@ function Bookshelf({ screen }: { screen: PageManifestEntry }) {
 function Maps({ screen }: { screen: PageManifestEntry }) {
   const globe = ["GAME005", "GAM005", "GAME_GLOBE_PRESENT", "GAME_GLOBE_TIMELINE", "GAME013"].includes(screen.screenId);
   const timeline = screen.screenId === "GAME_GLOBE_TIMELINE";
-  return <><GameHead title={screen.title} description={timeline ? "Inspect the globe at a player-visible timeline position." : `Navigate the player-known ${globe ? "globe" : "map"}.`} /><div className="player-map player-map--empty">{globe && <AtlasGlobe onSelect={() => undefined} points={[]} />}<DeferredRuntime>Player-safe layers, discovered geography, current location, routes, and visible timeline data have no supplied disclosure contract.</DeferredRuntime><aside><h2>{timeline ? "Timeline" : "Map layers"}</h2><p>No player-known layer data is available.</p><button className="button" disabled>Player overlays unavailable</button></aside></div></>;
+  return <><GameHead title={screen.title} description={timeline ? "Inspect the globe at a player-visible timeline position." : `Navigate the player-known ${globe ? "globe" : "map"}.`} /><div className="player-map player-map--empty">{globe && <AtlasGlobe onSelect={() => undefined} points={[]} unavailableMessage="Player-safe coordinate overlays are unavailable." />}<DeferredRuntime>Player-safe layers, discovered geography, current location, routes, and visible timeline data have no supplied disclosure contract.</DeferredRuntime><aside><h2>{timeline ? "Timeline" : "Map layers"}</h2><p>No player-known layer data is available.</p><button className="button" disabled>Player overlays unavailable</button></aside></div></>;
 }
 
 function WitnessTrial({ screen }: { screen: PageManifestEntry }) {
