@@ -127,6 +127,26 @@ describe("administrative authorization boundary", () => {
     expect(screen.queryByText("value")).not.toBeInTheDocument();
   });
 
+  it("dispatches Definition imports only to the literal typed Definition endpoint", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ changed: 1, unchanged: 0 }),
+      ok: true,
+    }));
+    renderAdmin("DATA_DEFINITION_IMPORT");
+
+    fireEvent.change(await screen.findByRole("textbox", { name: "Paste structured data" }), {
+      target: { value: '[{"definitionId":"DEF-1","term":"Supplied term","definition":"Supplied meaning"}]' },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Validate & Preview" }));
+    fireEvent.click(screen.getByRole("button", { name: "Apply Definition import" }));
+
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/admin/data/definition/import",
+      expect.objectContaining({ method: "POST" }),
+    ));
+  });
+
   it("lets an admin review beta requests but not change authorization roles", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     renderAdmin("ADM003");

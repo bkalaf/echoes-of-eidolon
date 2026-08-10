@@ -19,6 +19,11 @@ const importFormats = {
 
 type ImportFormat = keyof typeof importFormats;
 
+const typedImportKeys = {
+  Definition: "definition",
+  Soul: "soul",
+} as const;
+
 function displayValue(value: unknown): string {
   if (typeof value === "string") return value;
   return JSON.stringify(value) ?? "";
@@ -34,6 +39,9 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
   const [applyError, setApplyError] = useState<string>();
   const [applyResult, setApplyResult] = useState<{ changed: number; unchanged: number }>();
   const [applying, setApplying] = useState(false);
+  const typedImportKey = entity && entity in typedImportKeys
+    ? typedImportKeys[entity as keyof typeof typedImportKeys]
+    : undefined;
 
   const prepared = useMemo(
     () => entity && sourceRows.length > 0
@@ -69,12 +77,12 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
   };
 
   const apply = async () => {
-    if (entity !== "Soul" || !prepared || prepared.errors.length > 0) return;
+    if (!typedImportKey || !prepared || prepared.errors.length > 0) return;
     setApplying(true);
     setApplyError(undefined);
     setApplyResult(undefined);
     try {
-      const response = await fetch("/api/admin/data/soul/import", {
+      const response = await fetch(`/api/admin/data/${typedImportKey}/import`, {
         body: JSON.stringify({ rows: prepared.rows }),
         headers: { "content-type": "application/json" },
         method: "POST",
@@ -117,8 +125,8 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
         {prepared.errors.length > 0 && <div className="notice notice--bad" role="alert"><strong>Validation failed</strong><ul>{prepared.errors.map((error) => <li key={error}>{error}</li>)}</ul></div>}
         {prepared.errors.length === 0 && <div className="table-scroll"><table className="simple-table"><thead><tr>{entityFields[entity].map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody>{prepared.rows.map((row, index) => <tr key={`${String(row[entityFields[entity][0]])}-${index}`}>{entityFields[entity].map((field) => <td key={field}>{displayValue(row[field])}</td>)}</tr>)}</tbody></table></div>}
         <div className="action-row">
-          <button className="button button--gold" disabled={entity !== "Soul" || prepared.errors.length > 0 || applying} onClick={() => void apply()}>{applying ? "Applying…" : entity === "Soul" ? "Apply Soul import" : "Apply unavailable"}</button>
-          <p className="muted">{entity === "Soul" ? "The server revalidates this preview, refuses canonical drift, and applies all new rows in one transaction." : `Atomic apply is disabled until the typed ${entity} repository mutation is connected. Validation does not write data.`}</p>
+          <button className="button button--gold" disabled={!typedImportKey || prepared.errors.length > 0 || applying} onClick={() => void apply()}>{applying ? "Applying…" : typedImportKey ? `Apply ${entity} import` : "Apply unavailable"}</button>
+          <p className="muted">{typedImportKey ? "The server revalidates this preview, refuses canonical drift, and applies all new rows in one transaction." : `Atomic apply is disabled until the typed ${entity} repository mutation is connected. Validation does not write data.`}</p>
         </div>
         {applyResult && <p className="notice notice--good" role="status">Import complete: {applyResult.changed} changed, {applyResult.unchanged} unchanged.</p>}
         {applyError && <p className="notice notice--bad" role="alert">{applyError}</p>}

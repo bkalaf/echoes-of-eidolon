@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
+  applyDefinitionImport,
   applyRegisteredEntityImport,
   applySoulImport,
+  parseDefinitionImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -48,6 +50,39 @@ function database(initial: StoredSoul[] = []) {
     }
   });
 
+  return { stored, transaction };
+}
+
+interface StoredDefinition {
+  definition: string;
+  definitionId: string;
+  term: string;
+}
+
+function definitionDatabase(initial: StoredDefinition[] = []) {
+  const stored = new Map(initial.map((row) => [row.definitionId, { ...row }]));
+  const transaction = vi.fn(async <Result>(work: (client: {
+    definition: {
+      createMany(input: { data: StoredDefinition[] }): Promise<{ count: number }>;
+      findMany(input: {
+        select: { definition: true; definitionId: true; term: true };
+        where: { definitionId: { in: string[] } };
+      }): Promise<StoredDefinition[]>;
+    };
+  }) => Promise<Result>) => work({
+    definition: {
+      async createMany({ data }) {
+        for (const row of data) stored.set(row.definitionId, { ...row });
+        return { count: data.length };
+      },
+      async findMany({ where }) {
+        return where.definitionId.in.flatMap((definitionId) => {
+          const row = stored.get(definitionId);
+          return row ? [{ ...row }] : [];
+        });
+      },
+    },
+  }));
   return { stored, transaction };
 }
 
@@ -101,5 +136,49 @@ describe("typed Soul import", () => {
       { soulId: "SOUL-2", name: "Changed" },
     ], db)).rejects.toThrow("Canonical drift refused for Soul SOUL-2");
     expect([...db.stored.values()]).toEqual([{ soulId: "SOUL-2", name: "Canonical" }]);
+  });
+});
+
+describe("typed Definition import", () => {
+  it("accepts only the three exact nonblank persisted fields", () => {
+    expect(parseDefinitionImportRows([{
+      definition: "The supplied meaning.",
+      definitionId: "DEF-1",
+      term: "Supplied term",
+    }])).toEqual([{
+      definition: "The supplied meaning.",
+      definitionId: "DEF-1",
+      term: "Supplied term",
+    }]);
+    expect(() => parseDefinitionImportRows([{
+      definition: "The supplied meaning.",
+      definitionId: "DEF-1",
+      term: "Supplied term",
+      status: "READY",
+    }])).toThrow();
+    expect(() => parseDefinitionImportRows([{
+      definition: " ",
+      definitionId: "DEF-1",
+      term: "Supplied term",
+    }])).toThrow();
+  });
+
+  it("creates missing definitions and is idempotent on an exact rerun", async () => {
+    const db = definitionDatabase();
+    const rows = [{ definition: "Meaning", definitionId: "DEF-1", term: "Term" }];
+
+    await expect(applyDefinitionImport(rows, db)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("definition", rows, db)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    expect([...db.stored.values()]).toEqual(rows);
+  });
+
+  it("refuses drift in either authored field", async () => {
+    const db = definitionDatabase([{ definition: "Canonical", definitionId: "DEF-1", term: "Term" }]);
+    await expect(applyDefinitionImport([
+      { definition: "Changed", definitionId: "DEF-1", term: "Term" },
+    ], db)).rejects.toThrow("Canonical drift refused for Definition DEF-1");
+    expect([...db.stored.values()]).toEqual([
+      { definition: "Canonical", definitionId: "DEF-1", term: "Term" },
+    ]);
   });
 });
