@@ -45,6 +45,12 @@ const arkImportRowSchema = z.object({
   status: z.enum(ArkStatus),
 }).strict();
 
+const layetteImportRowSchema = z.object({
+  description: z.string().refine((value) => value.trim().length > 0, "description cannot be blank"),
+  layetteId: z.string().refine((value) => value.trim().length > 0, "layetteId cannot be blank"),
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
@@ -52,6 +58,7 @@ export type LegendaryRewardImportRow = z.infer<typeof legendaryRewardImportRowSc
 export type TimelineEventImportRow = z.infer<typeof timelineEventImportRowSchema>;
 export type InterludeImportRow = z.infer<typeof interludeImportRowSchema>;
 export type ArkImportRow = z.infer<typeof arkImportRowSchema>;
+export type LayetteImportRow = z.infer<typeof layetteImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -151,6 +158,20 @@ export interface ArkImportDatabase {
   transaction<Result>(work: (transaction: ArkImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface LayetteImportTransaction {
+  layette: {
+    createMany(input: { data: LayetteImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { description: true; layetteId: true; name: true };
+      where: { layetteId: { in: string[] } };
+    }): Promise<LayetteImportRow[]>;
+  };
+}
+
+export interface LayetteImportDatabase {
+  transaction<Result>(work: (transaction: LayetteImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -224,6 +245,16 @@ export function parseArkImportRows(value: unknown): ArkImportRow[] {
   for (const row of rows) {
     if (identifiers.has(row.arkId)) throw new Error(`Import duplicates arkId ${row.arkId}.`);
     identifiers.add(row.arkId);
+  }
+  return rows;
+}
+
+export function parseLayetteImportRows(value: unknown): LayetteImportRow[] {
+  const rows = z.array(layetteImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.layetteId)) throw new Error(`Import duplicates layetteId ${row.layetteId}.`);
+    identifiers.add(row.layetteId);
   }
   return rows;
 }
@@ -400,10 +431,33 @@ export async function applyArkImport(
   });
 }
 
+export async function applyLayetteImport(
+  value: unknown,
+  database: LayetteImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseLayetteImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.layette.findMany({
+      select: { description: true, layetteId: true, name: true },
+      where: { layetteId: { in: rows.map((row) => row.layetteId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.layetteId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.layetteId);
+      if (persisted && (persisted.name !== row.name || persisted.description !== row.description)) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for Layette ${row.layetteId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.layetteId));
+    if (missing.length > 0) await transaction.layette.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase | ArkImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase | InterludeImportDatabase | ArkImportDatabase | LayetteImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
@@ -412,5 +466,6 @@ export async function applyRegisteredEntityImport(
   if (entityKey === "timelineevent") return applyTimelineEventImport(value, database as TimelineEventImportDatabase);
   if (entityKey === "interlude") return applyInterludeImport(value, database as InterludeImportDatabase);
   if (entityKey === "ark") return applyArkImport(value, database as ArkImportDatabase);
+  if (entityKey === "layette") return applyLayetteImport(value, database as LayetteImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }

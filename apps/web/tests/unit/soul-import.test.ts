@@ -7,6 +7,7 @@ import {
   applyTimelineEventImport,
   applyInterludeImport,
   applyArkImport,
+  applyLayetteImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
@@ -15,6 +16,7 @@ import {
   parseTimelineEventImportRows,
   parseInterludeImportRows,
   parseArkImportRows,
+  parseLayetteImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -421,5 +423,38 @@ describe("typed Ark import", () => {
     await expect(applyRegisteredEntityImport("ark", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
     await expect(applyArkImport([{ ...row, status: "DAMAGED" }], database))
       .rejects.toThrow("Canonical drift refused for Ark ARK-1");
+  });
+});
+
+describe("typed Layette import", () => {
+  const row = { description: "Supplied description", layetteId: "LAYETTE-1", name: "Supplied layette" };
+  const stored = new Map<string, typeof row>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      layette: {
+        createMany(input: { data: typeof row[] }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { description: true; layetteId: true; name: true };
+          where: { layetteId: { in: string[] } };
+        }): Promise<typeof row[]>;
+      };
+    }) => Promise<Result>) => work({ layette: {
+      async createMany({ data }) { for (const item of data) stored.set(item.layetteId, { ...item }); return { count: data.length }; },
+      async findMany({ where }) { return where.layetteId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []); },
+    } })),
+  };
+
+  it("accepts exact nonblank scalar fields only", () => {
+    expect(parseLayetteImportRows([row])).toEqual([row]);
+    expect(() => parseLayetteImportRows([{ ...row, ownerId: "OWNER-1" }])).toThrow();
+    expect(() => parseLayetteImportRows([{ ...row, description: "" }])).toThrow();
+  });
+
+  it("applies idempotently and refuses drift", async () => {
+    stored.clear();
+    await expect(applyLayetteImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("layette", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyLayetteImport([{ ...row, name: "Changed" }], database))
+      .rejects.toThrow("Canonical drift refused for Layette LAYETTE-1");
   });
 });
