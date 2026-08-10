@@ -157,4 +157,19 @@ describe("persistence contract", () => {
     expect(migration).toContain('CapabilityEvent_reject_delete');
     expect(migration).toContain('AchievementDefinition_chainKey_rank_key');
   });
+
+  it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "KnowledgeBaseBlock"');
+    expect(migration).toContain('CREATE TABLE "KnowledgeBaseDisclosure"');
+    expect(migration).toContain('CREATE TABLE "KnowledgeBaseDisclosureBlock"');
+    expect(migration).toContain('CREATE TABLE "KnowledgeBaseDisclosureCitation"');
+    expect(migration).toContain('KnowledgeBaseDisclosure_requirement_value_check');
+    expect(migration).toContain('KnowledgeBaseDisclosure_anchor_check');
+    expect(migration).toContain('KnowledgeBaseDisclosure_validate');
+    expect(migration).toContain('KnowledgeBaseDisclosureCitation_citationId_fkey');
+  });
 });

@@ -112,6 +112,32 @@ try {
       () => verification.query(`DELETE FROM "CapabilityEvent" WHERE "capabilityEventId" = 'capability-event'`),
       "CapabilityEvent delete was not rejected",
     );
+
+    await verification.query(
+      `INSERT INTO "KnowledgeBaseItem" ("knowledgeBaseItemId", "entityType", "entityId", "title", "baseContent") VALUES
+       ('knowledge-one', 'CULTURE', 'culture-one', 'One', 'Base'),
+       ('knowledge-two', 'CULTURE', 'culture-two', 'Two', 'Base')`,
+    );
+    await verification.query(
+      `INSERT INTO "KnowledgeBaseBlock" ("knowledgeBaseBlockId", "knowledgeBaseItemId", "ordinal", "kind", "content") VALUES
+       ('block-one', 'knowledge-one', 0, 'PARAGRAPH', 'One'),
+       ('block-two', 'knowledge-two', 0, 'PARAGRAPH', 'Two')`,
+    );
+    await verification.query(
+      `INSERT INTO "KnowledgeBaseDisclosure" (
+         "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "capabilityDefinitionId", "ordinal", "operator",
+         "requiredBoolean", "mode", "anchorBlockId"
+       ) VALUES ('disclosure', 'knowledge-one', 'capability-definition', 0, 'EQ', true, 'REPLACE_BLOCK', 'block-one')`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "KnowledgeBaseDisclosure" (
+           "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "capabilityDefinitionId", "ordinal", "operator",
+           "requiredBoolean", "mode", "anchorBlockId"
+         ) VALUES ('bad-disclosure', 'knowledge-one', 'capability-definition', 1, 'EQ', true, 'REPLACE_BLOCK', 'block-two')`,
+      ),
+      "Cross-entry knowledge disclosure anchor was not rejected",
+    );
   } finally {
     await verification.end();
   }

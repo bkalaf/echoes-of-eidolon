@@ -1637,14 +1637,15 @@ model Source {
 }
 
 model Citation {
-  citationId     String                      @id
-  sourceId       String
-  locator        String?
-  rendering      String
-  quality        CitationQuality?
-  source         Source                      @relation(fields: [sourceId], references: [sourceId], onDelete: Restrict)
-  research       Research[]
-  knowledgeItems KnowledgeBaseItemCitation[]
+  citationId          String                            @id
+  sourceId            String
+  locator             String?
+  rendering           String
+  quality             CitationQuality?
+  source              Source                            @relation(fields: [sourceId], references: [sourceId], onDelete: Restrict)
+  research            Research[]
+  knowledgeItems      KnowledgeBaseItemCitation[]
+  disclosureCitations KnowledgeBaseDisclosureCitation[]
 
   @@index([sourceId])
 }
@@ -1666,8 +1667,67 @@ model KnowledgeBaseItem {
   title               String
   baseContent         String
   citations           KnowledgeBaseItemCitation[]
+  blocks              KnowledgeBaseBlock[]
+  disclosures         KnowledgeBaseDisclosure[]
 
   @@index([entityType, entityId])
+}
+
+model KnowledgeBaseBlock {
+  knowledgeBaseBlockId String                    @id
+  knowledgeBaseItemId  String
+  ordinal              Int
+  kind                 KnowledgeBaseBlockKind
+  content              String
+  knowledgeBaseItem    KnowledgeBaseItem         @relation(fields: [knowledgeBaseItemId], references: [knowledgeBaseItemId], onDelete: Cascade)
+  anchoredDisclosures  KnowledgeBaseDisclosure[]
+
+  @@unique([knowledgeBaseItemId, ordinal])
+}
+
+model KnowledgeBaseDisclosure {
+  knowledgeBaseDisclosureId String                            @id
+  knowledgeBaseItemId       String
+  capabilityDefinitionId    String
+  ordinal                   Int
+  operator                  CapabilityRequirementOperator
+  requiredBoolean           Boolean?
+  requiredNumber            Float?
+  requiredToken             String?
+  mode                      KnowledgeBaseDisclosureMode
+  anchorBlockId             String?
+  knowledgeBaseItem         KnowledgeBaseItem                 @relation(fields: [knowledgeBaseItemId], references: [knowledgeBaseItemId], onDelete: Cascade)
+  capabilityDefinition      CapabilityDefinition              @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+  anchorBlock               KnowledgeBaseBlock?               @relation(fields: [anchorBlockId], references: [knowledgeBaseBlockId], onDelete: Restrict)
+  blocks                    KnowledgeBaseDisclosureBlock[]
+  citations                 KnowledgeBaseDisclosureCitation[]
+
+  @@unique([knowledgeBaseItemId, ordinal])
+  @@index([capabilityDefinitionId])
+  @@index([anchorBlockId])
+}
+
+model KnowledgeBaseDisclosureBlock {
+  knowledgeBaseDisclosureBlockId String                  @id
+  knowledgeBaseDisclosureId      String
+  ordinal                        Int
+  kind                           KnowledgeBaseBlockKind
+  content                        String
+  disclosure                     KnowledgeBaseDisclosure @relation(fields: [knowledgeBaseDisclosureId], references: [knowledgeBaseDisclosureId], onDelete: Cascade)
+
+  @@unique([knowledgeBaseDisclosureId, ordinal], map: "KBDisclosureBlock_disclosure_ordinal_key")
+}
+
+model KnowledgeBaseDisclosureCitation {
+  knowledgeBaseDisclosureId String
+  citationId                String
+  firstUseOrder             Int
+  disclosure                KnowledgeBaseDisclosure @relation(fields: [knowledgeBaseDisclosureId], references: [knowledgeBaseDisclosureId], onDelete: Cascade)
+  citation                  Citation                @relation(fields: [citationId], references: [citationId], onDelete: Restrict)
+
+  @@id([knowledgeBaseDisclosureId, citationId])
+  @@unique([knowledgeBaseDisclosureId, firstUseOrder], map: "KBDisclosureCitation_disclosure_order_key")
+  @@index([citationId])
 }
 
 model KnowledgeBaseItemCitation {
@@ -1711,14 +1771,15 @@ model PersonalityExpression {
 }
 
 model CapabilityDefinition {
-  capabilityDefinitionId String              @id
-  key                    String              @unique
+  capabilityDefinitionId String                    @id
+  key                    String                    @unique
   valueKind              CapabilityValueKind
   minValue               Int?
   maxValue               Int?
-  enumValues             String[]            @default([])
+  enumValues             String[]                  @default([])
   description            String
   events                 CapabilityEvent[]
+  knowledgeDisclosures   KnowledgeBaseDisclosure[]
 }
 
 model CapabilityEvent {
