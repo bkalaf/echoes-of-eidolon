@@ -30,6 +30,7 @@ const typedImportKeys = {
   Lesson: "lesson",
   LegendaryReward: "legendaryreward",
   Soul: "soul",
+  SpeciesGroup: "speciesgroup",
   TimelineEvent: "timelineevent",
   Tome: "tome",
   Transition: "transition",
