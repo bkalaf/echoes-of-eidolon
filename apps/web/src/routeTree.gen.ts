@@ -26,7 +26,9 @@ import { Route as ApiAccountSessionsRevokeAllOtherRouteImport } from './routes/a
 import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/account/sessions/revoke-other'
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
+import { Route as ApiAdminAssetsIndexRouteImport } from './routes/api/admin/assets/index'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminPromptsIndexRouteImport } from './routes/api/admin/prompts/index'
 import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
@@ -124,12 +126,22 @@ const ApiAdminAccountsUserIdRoute = ApiAdminAccountsUserIdRouteImport.update({
   path: '/api/admin/accounts/$userId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminAssetsIndexRoute = ApiAdminAssetsIndexRouteImport.update({
+  id: '/api/admin/assets/',
+  path: '/api/admin/assets/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminBetaInvitationsIndexRoute =
   ApiAdminBetaInvitationsIndexRouteImport.update({
     id: '/api/admin/beta-invitations/',
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminPromptsIndexRoute = ApiAdminPromptsIndexRouteImport.update({
+  id: '/api/admin/prompts/',
+  path: '/api/admin/prompts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminPuzzlesBlueprintsRoute =
   ApiAdminPuzzlesBlueprintsRouteImport.update({
     id: '/api/admin/puzzles/blueprints',
@@ -195,7 +207,9 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
+  '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -222,7 +236,9 @@ export interface FileRoutesByTo {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
+  '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/prompts': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -250,7 +266,9 @@ export interface FileRoutesById {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
+  '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -279,7 +297,9 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/admin/accounts/'
+    | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/prompts/'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -306,7 +326,9 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/admin/accounts'
+    | '/api/admin/assets'
     | '/api/admin/beta-invitations'
+    | '/api/admin/prompts'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -333,7 +355,9 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/admin/accounts/'
+    | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/prompts/'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -361,7 +385,9 @@ export interface RootRouteChildren {
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
+  ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
+  ApiAdminPromptsIndexRoute: typeof ApiAdminPromptsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
 }
@@ -487,11 +513,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminAccountsUserIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/assets/': {
+      id: '/api/admin/assets/'
+      path: '/api/admin/assets'
+      fullPath: '/api/admin/assets/'
+      preLoaderRoute: typeof ApiAdminAssetsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/beta-invitations/': {
       id: '/api/admin/beta-invitations/'
       path: '/api/admin/beta-invitations'
       fullPath: '/api/admin/beta-invitations/'
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/prompts/': {
+      id: '/api/admin/prompts/'
+      path: '/api/admin/prompts'
+      fullPath: '/api/admin/prompts/'
+      preLoaderRoute: typeof ApiAdminPromptsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/puzzles/blueprints': {
@@ -583,7 +623,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
   ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
+  ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,
+  ApiAdminPromptsIndexRoute: ApiAdminPromptsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
 }
