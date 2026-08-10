@@ -1,0 +1,15 @@
+# Supplied delivery archives and extracted authority/input packages are retained
+# in the workspace but are not implementation source.
+/*.zip
+/Echoes_UI_Closed_World_Implementation_Handoff_v11_3/
+/EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE/
+
+# Local dependencies and generated output.
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+
