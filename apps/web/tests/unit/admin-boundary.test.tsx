@@ -34,6 +34,10 @@ function renderAdmin(screenId: string) {
 describe("administrative authorization boundary", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ requests: [] }),
+      ok: true,
+    }));
   });
 
   it("requires a session before exposing any administrative task", () => {
@@ -119,5 +123,49 @@ describe("administrative authorization boundary", () => {
 
     expect(screen.getByRole("alert")).toHaveTextContent("Source field unapproved must be mapped or ignored.");
     expect(screen.queryByText("value")).not.toBeInTheDocument();
+  });
+
+  it("lets an admin review beta requests but not change authorization roles", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    renderAdmin("ADM003");
+
+    expect((await screen.findByText("reviewInvitations")).parentElement).toHaveTextContent("reviewInvitations: granted");
+    expect(screen.getByText("changeAuthorizationRoles").parentElement).toHaveTextContent("changeAuthorizationRoles: not granted");
+    expect(screen.getByText(/Only OWNER may change authorization roles/)).toBeInTheDocument();
+  });
+
+  it("requires an explicit expiry before approving and sending a beta invitation", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce({
+        json: async () => ({
+          requests: [{
+            id: "request-1",
+            friendName: "Friend Name",
+            email: "friend@example.test",
+            reason: "Play together",
+            status: "PENDING",
+            createdAt: "2026-08-10T01:00:00Z",
+            invitation: null,
+          }],
+        }),
+        ok: true,
+      })
+      .mockResolvedValue({ json: async () => ({ approved: true }), ok: true }));
+    renderAdmin("ADM004");
+
+    const approve = await screen.findByRole("button", { name: "Approve & send" });
+    expect(approve).toBeDisabled();
+    fireEvent.change(screen.getByLabelText("Invitation expiry"), { target: { value: "2026-08-20T12:00" } });
+    expect(approve).toBeEnabled();
+    fireEvent.click(approve);
+
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/admin/beta-invitations/request-1/approve",
+      expect.objectContaining({ method: "POST" }),
+    ));
+    expect(screen.queryByText(/single-use-code|codeHash/)).not.toBeInTheDocument();
   });
 });
