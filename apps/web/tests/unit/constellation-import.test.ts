@@ -7,9 +7,9 @@ import {
 
 interface Row {
   constellationId: string;
-  declination: string | null;
+  declination?: string;
   name: string;
-  rightAscension: string | null;
+  rightAscension?: string;
 }
 
 function database(initial: Row[] = []) {
@@ -32,20 +32,13 @@ function database(initial: Row[] = []) {
 describe("typed Constellation import", () => {
   const row: Row = {
     constellationId: "CONSTELLATION-1",
-    declination: null,
     name: "Supplied constellation",
-    rightAscension: null,
   };
 
-  it("requires exact fields and explicit nullable coordinate strings", () => {
+  it("accepts omitted optional coordinate strings", () => {
     expect(parseConstellationImportRows([row])).toEqual([row]);
     expect(parseConstellationImportRows([{ ...row, declination: "Supplied declination" }]))
       .toEqual([{ ...row, declination: "Supplied declination" }]);
-    expect(() => parseConstellationImportRows([{
-      constellationId: row.constellationId,
-      name: row.name,
-      rightAscension: null,
-    }])).toThrow();
     expect(() => parseConstellationImportRows([{ ...row, rightAscension: "" }])).toThrow();
     expect(() => parseConstellationImportRows([{ ...row, worldKey: "CONCORD" }])).toThrow();
   });

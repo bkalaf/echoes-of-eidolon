@@ -2,15 +2,15 @@ import { z } from "zod";
 
 import { CanonicalImportDriftError } from "./import-errors";
 
-const nullableAuthoredString = z.string()
+const optionalAuthoredString = z.string()
   .refine((value) => value.trim().length > 0, "authored coordinate cannot be blank")
-  .nullable();
+  .optional();
 
 const constellationImportRowSchema = z.object({
   constellationId: z.string().refine((value) => value.trim().length > 0, "constellationId cannot be blank"),
-  declination: nullableAuthoredString,
+  declination: optionalAuthoredString,
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
-  rightAscension: nullableAuthoredString,
+  rightAscension: optionalAuthoredString,
 }).strict();
 
 export type ConstellationImportRow = z.infer<typeof constellationImportRowSchema>;
@@ -21,7 +21,7 @@ interface ConstellationImportTransaction {
     findMany(input: {
       select: { constellationId: true; declination: true; name: true; rightAscension: true };
       where: { constellationId: { in: string[] } };
-    }): Promise<ConstellationImportRow[]>;
+    }): Promise<Array<Omit<ConstellationImportRow, "declination" | "rightAscension"> & { declination: string | null; rightAscension: string | null }>>;
   };
 }
 
@@ -56,8 +56,8 @@ export async function applyConstellationImport(
       const persisted = existingById.get(row.constellationId);
       if (persisted && (
         persisted.name !== row.name ||
-        persisted.rightAscension !== row.rightAscension ||
-        persisted.declination !== row.declination
+        (persisted.rightAscension ?? null) !== (row.rightAscension ?? null) ||
+        (persisted.declination ?? null) !== (row.declination ?? null)
       )) {
         throw new CanonicalImportDriftError(`Canonical drift refused for Constellation ${row.constellationId}.`);
       }

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { applyPillarImport, parsePillarImportRows } from "../../src/server/pillar-import";
 
-interface Row { domain: string | null; name: string; pillarId: string; seatNumber: number | null }
+interface Row { domain?: string; name: string; pillarId: string; seatNumber?: number }
 
 function database(initial: Row[] = []) {
   const stored = new Map(initial.map((row) => [row.pillarId, { ...row }]));
@@ -22,13 +22,12 @@ function database(initial: Row[] = []) {
 }
 
 describe("typed Pillar import", () => {
-  const row: Row = { domain: null, name: "Supplied pillar", pillarId: "PILLAR-1", seatNumber: null };
+  const row: Row = { name: "Supplied pillar", pillarId: "PILLAR-1" };
 
-  it("requires explicit nullable fields without inventing a seat range", () => {
+  it("accepts omitted optional fields without inventing a seat range", () => {
     expect(parsePillarImportRows([row])).toEqual([row]);
     expect(parsePillarImportRows([{ ...row, domain: "Supplied domain", seatNumber: 0 }]))
       .toEqual([{ ...row, domain: "Supplied domain", seatNumber: 0 }]);
-    expect(() => parsePillarImportRows([{ name: row.name, pillarId: row.pillarId, seatNumber: null }])).toThrow();
     expect(() => parsePillarImportRows([{ ...row, seatNumber: 1.5 }])).toThrow();
     expect(() => parsePillarImportRows([{ ...row, book: 1 }])).toThrow();
   });

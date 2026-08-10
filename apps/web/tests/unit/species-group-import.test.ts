@@ -1,14 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { applySpeciesGroupImport, parseSpeciesGroupImportRows } from "../../src/server/species-group-import";
 
-const row = { description: null, name: "Supplied group", speciesGroupId: "GROUP-1", speciesKind: "BEAST" as const };
+const row = { name: "Supplied group", speciesGroupId: "GROUP-1", speciesKind: "BEAST" as const };
 
 describe("typed SpeciesGroup import", () => {
-  it("requires exact SpeciesKind and explicit nullable description", () => {
+  it("requires exact SpeciesKind and accepts omitted optional description", () => {
     expect(parseSpeciesGroupImportRows([row])).toEqual([row]);
     expect(() => parseSpeciesGroupImportRows([{ ...row, speciesKind: "CREATURE" }])).toThrow();
-    const missing = { ...row } as Partial<typeof row>; delete missing.description;
-    expect(() => parseSpeciesGroupImportRows([missing])).toThrow();
     expect(() => parseSpeciesGroupImportRows([{ ...row, speciesIds: [] }])).toThrow();
   });
 

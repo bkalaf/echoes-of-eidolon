@@ -3,10 +3,10 @@ import { z } from "zod";
 import { CanonicalImportDriftError } from "./import-errors";
 
 const pillarImportRowSchema = z.object({
-  domain: z.string().refine((value) => value.trim().length > 0, "domain cannot be blank").nullable(),
+  domain: z.string().refine((value) => value.trim().length > 0, "domain cannot be blank").optional(),
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
   pillarId: z.string().refine((value) => value.trim().length > 0, "pillarId cannot be blank"),
-  seatNumber: z.number().int().nullable(),
+  seatNumber: z.number().int().optional(),
 }).strict();
 
 export type PillarImportRow = z.infer<typeof pillarImportRowSchema>;
@@ -17,7 +17,7 @@ interface PillarImportTransaction {
     findMany(input: {
       select: { domain: true; name: true; pillarId: true; seatNumber: true };
       where: { pillarId: { in: string[] } };
-    }): Promise<PillarImportRow[]>;
+    }): Promise<Array<Omit<PillarImportRow, "domain" | "seatNumber"> & { domain: string | null; seatNumber: number | null }>>;
   };
 }
 
@@ -50,8 +50,8 @@ export async function applyPillarImport(
       const persisted = existingById.get(row.pillarId);
       if (persisted && (
         persisted.name !== row.name ||
-        persisted.domain !== row.domain ||
-        persisted.seatNumber !== row.seatNumber
+        (persisted.domain ?? null) !== (row.domain ?? null) ||
+        (persisted.seatNumber ?? null) !== (row.seatNumber ?? null)
       )) {
         throw new CanonicalImportDriftError(`Canonical drift refused for Pillar ${row.pillarId}.`);
       }

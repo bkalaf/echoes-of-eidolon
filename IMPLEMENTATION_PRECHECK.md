@@ -225,6 +225,10 @@ create product authority.
 - Made invitation, invitation approval, authorization-role update, Witness,
   Companion, Puzzle Blueprint, and migration objects fail closed on unknown
   fields instead of silently stripping fabricated submissions.
+- Corrected typed imports for packet fields declared optional (`Tome.author`,
+  Constellation coordinates, Pillar domain/seat, and SpeciesGroup description):
+  omission is accepted and compares idempotently with persisted PostgreSQL
+  `NULL`; the importer does not require an invented explicit-null convention.
 - Production application source contains no Patron, staff, Square, R06 release
   binding, fabricated merchandise values, public WorldKey/faction spoiler, or
   hard-coded example domain record identity. `R06` remains only as the required

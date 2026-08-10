@@ -3,7 +3,7 @@ import { SpeciesKind } from "../generated/prisma/enums";
 import { CanonicalImportDriftError } from "./import-errors";
 
 const schema = z.object({
-  description: z.string().refine((value) => value.trim().length > 0, "description cannot be blank").nullable(),
+  description: z.string().refine((value) => value.trim().length > 0, "description cannot be blank").optional(),
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
   speciesGroupId: z.string().refine((value) => value.trim().length > 0, "speciesGroupId cannot be blank"),
   speciesKind: z.enum(SpeciesKind),
@@ -11,7 +11,7 @@ const schema = z.object({
 export type SpeciesGroupImportRow = z.infer<typeof schema>;
 interface Tx { speciesGroup: {
   createMany(input: { data: SpeciesGroupImportRow[] }): Promise<{ count: number }>;
-  findMany(input: { select: { description: true; name: true; speciesGroupId: true; speciesKind: true }; where: { speciesGroupId: { in: string[] } } }): Promise<SpeciesGroupImportRow[]>;
+  findMany(input: { select: { description: true; name: true; speciesGroupId: true; speciesKind: true }; where: { speciesGroupId: { in: string[] } } }): Promise<Array<Omit<SpeciesGroupImportRow, "description"> & { description: string | null }>>;
 } }
 export interface SpeciesGroupImportDatabase { transaction<Result>(work: (transaction: Tx) => Promise<Result>): Promise<Result> }
 
@@ -25,7 +25,7 @@ export async function applySpeciesGroupImport(value: unknown, database: SpeciesG
   return database.transaction(async (transaction) => {
     const existing = await transaction.speciesGroup.findMany({ select: { description: true, name: true, speciesGroupId: true, speciesKind: true }, where: { speciesGroupId: { in: rows.map((row) => row.speciesGroupId) } } });
     const byId = new Map(existing.map((row) => [row.speciesGroupId, row]));
-    for (const row of rows) { const current = byId.get(row.speciesGroupId); if (current && (current.name !== row.name || current.description !== row.description || current.speciesKind !== row.speciesKind)) throw new CanonicalImportDriftError(`Canonical drift refused for SpeciesGroup ${row.speciesGroupId}.`); }
+    for (const row of rows) { const current = byId.get(row.speciesGroupId); if (current && (current.name !== row.name || (current.description ?? null) !== (row.description ?? null) || current.speciesKind !== row.speciesKind)) throw new CanonicalImportDriftError(`Canonical drift refused for SpeciesGroup ${row.speciesGroupId}.`); }
     const missing = rows.filter((row) => !byId.has(row.speciesGroupId)); if (missing.length) await transaction.speciesGroup.createMany({ data: missing });
     return { changed: missing.length, unchanged: rows.length - missing.length };
   });

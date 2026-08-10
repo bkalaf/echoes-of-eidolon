@@ -53,7 +53,7 @@ const layetteImportRowSchema = z.object({
 }).strict();
 
 const tomeImportRowSchema = z.object({
-  author: z.string().refine((value) => value.trim().length > 0, "author cannot be blank").nullable(),
+  author: z.string().refine((value) => value.trim().length > 0, "author cannot be blank").optional(),
   title: z.string().refine((value) => value.trim().length > 0, "title cannot be blank"),
   tomeId: z.string().refine((value) => value.trim().length > 0, "tomeId cannot be blank"),
 }).strict();
@@ -186,7 +186,7 @@ interface TomeImportTransaction {
     findMany(input: {
       select: { author: true; title: true; tomeId: true };
       where: { tomeId: { in: string[] } };
-    }): Promise<TomeImportRow[]>;
+    }): Promise<Array<Omit<TomeImportRow, "author"> & { author: string | null }>>;
   };
 }
 
@@ -496,7 +496,7 @@ export async function applyTomeImport(
     const existingById = new Map(existing.map((row) => [row.tomeId, row]));
     for (const row of rows) {
       const persisted = existingById.get(row.tomeId);
-      if (persisted && (persisted.title !== row.title || persisted.author !== row.author)) {
+      if (persisted && (persisted.title !== row.title || persisted.author !== (row.author ?? null))) {
         throw new CanonicalImportDriftError(`Canonical drift refused for Tome ${row.tomeId}.`);
       }
     }
