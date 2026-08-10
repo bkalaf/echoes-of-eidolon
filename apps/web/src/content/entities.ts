@@ -37,43 +37,6 @@ export const entityFields = {
 
 export type EntityName = keyof typeof entityFields;
 
-export const entityExamples: Record<EntityName, Record<string, string>> = {
-  AchievementDefinition: { achievementDefinitionId: "ACH-001", name: "First Signal", chainKey: "BEACON_DISCOVERY", rank: "1", imageAssetId: "ASSET-001", status: "ACTIVE" },
-  Antagonist: { antagonistId: "ANT-017", characterId: "CHAR-017", worldKey: "CONCORD", family: "REGRET", trueFlawName: "REGRET", witnessName: "REMORSE", presentsAs: "—", inversionRule: "—", architectId: "ARCH-017", apparentDomain: "—", realDomain: "—", color: "—", legendaryRewardId: "LR-001", puzzleBlueprintId: "PZB-014", constellationBeforeId: "CONST-017-A", constellationAfterId: "CONST-017-B" },
-  Architect: { architectId: "ARCH-017", departmentId: "DEPT-017", name: "Ysra F. Ashkeeper", profession: "Custodian" },
-  Ark: { arkId: "ARK-MICHAEL", name: "Michael", status: "ACTIVE" },
-  Breed: { breedId: "BREED_HOMO_SAPIEN_EXAMPLE", name: "Example Human Breed", speciesId: "HOMO_SAPIENS", cultureId: "CULTURE_EXAMPLE", accent: "Example accent description", structuralStability: "0.84" },
-  CapabilityDefinition: { capabilityDefinitionId: "CAP-001", key: "location.aqm.archive.discovered", valueType: "BOOLEAN", minValue: "", maxValue: "", description: "Player discovery state." },
-  Character: { characterId: "CHAR-ADDIE", displayName: "Adeshka H. Sonntag", breedId: "BREED_HOMO_SAPIEN_EXAMPLE" },
-  Citation: { citationId: "CIT-001", sourceId: "SRC-001", locator: "pp. 42-47", rendering: "Scholar, A. The Human Story, pp. 42-47.", quality: "HIGH" },
-  Companion: { companionKey: "COMP-ADDIE", concordProtagonistId: "PRO-ADDIE-C", ruinProtagonistId: "PRO-ADDIE-R", schismProtagonistId: "PRO-ADDIE-S", soulId: "SOUL-0001", heirloom: "THREAD" },
-  Constellation: { constellationId: "CONST-017-A", name: "The Lantern", rightAscension: "18h 14m", declination: "+22° 08'" },
-  Culture: { cultureId: "CULTURE_EXAMPLE", cultureName: "Example Culture", culturePoolId: "CP01", hamletArchitecture: "Timber hamlets", villageArchitecture: "Stone villages", townArchitecture: "Market towns" },
-  Definition: { definitionId: "DEF-001", term: "Conjunction", definition: "A qualifying lunar alignment accompanied by Beacon activation." },
-  Interlude: { interludeId: "INT-017", name: "Signals in the Dark", interludeType: "SCIENCE", summary: "A science interlude assigned within a single book." },
-  InterludeSubstitution: { interludeSubstitutionId: "IS-001", interludeId: "INT-017", replacementInterludeId: "INT-042", reason: "World-specific historical substitution." },
-  KnowledgeBaseItem: { knowledgeBaseItemId: "KB-001", entityType: "City", entityId: "SET-0001", title: "Suro Mara", baseContent: "Current player-readable knowledge about the city." },
-  Layette: { layetteId: "LAY-001", name: "Arrival Layette", description: "Standard starting inventory presentation." },
-  LegendaryReward: { legendaryRewardId: "LR-001", name: "Ariadne's Thread", description: "A legendary object tied to the Book 1 reward path." },
-  Lesson: { lessonId: "LES-001", name: "Cost of Silence", description: "A six-book lesson assignment used by the Campaign Manager." },
-  Matrix: { matrixId: "MATRIX-R01", regionId: "R01", latticeId: "L01", culturePoolIds: "CP01, CP07, CP19" },
-  PersonalityExpression: { personalityExpressionId: "PE-017", name: "Measured Diplomat", loquacity: "TO_THE_POINT", emotionalTemperature: "COMPOSED", outlookOrientation: "NEUTRAL", collaborativePosture: "JUST_ENOUGH" },
-  Pillar: { pillarId: "PIL-012", name: "Mercy", domain: "Care", seatNumber: "12" },
-  PointOfInterest: { pointOfInterestId: "POI-0042", name: "Worldroot", kind: "WORLD_TREE", regionId: "R13", longitude: "14.255", latitude: "1.721" },
-  Protagonist: { protagonistId: "PRO-ADDIE-C", characterId: "CHAR-ADDIE", importance: "MAJOR", worldKey: "CONCORD" },
-  Research: { researchId: "RES-001", ownerEntityType: "Species", ownerEntityId: "HOMO_SAPIENS", notes: "Primary research notes for the attached record.", citationId: "CIT-001", citationQuality: "HIGH" },
-  Settlement: { settlementId: "SET-0001", siteId: "SITE-0001", name: "Suro Mara", size: "METROPOLIS", regionId: "R04" },
-  Site: { siteId: "SITE-0081", regionId: "R01", candidateType: "METROPOLIS", longitude: "-71.422", latitude: "63.801", settlementId: "" },
-  Soul: { soulId: "SOUL-0001", name: "Addie Sonntag" },
-  Source: { sourceId: "SRC-001", title: "The Human Story", authors: "A. Scholar", publisher: "Example Press", publicationDate: "2024", sourceType: "BOOK" },
-  SpeciesGroup: { speciesGroupId: "H12", name: "Southern African Human Cultures", speciesKind: "HUMAN", description: "Grouping used for controlled authoring and filtering." },
-  Species: { speciesId: "HOMO_SAPIENS", name: "Human", speciesKind: "HUMAN", scientificName: "Homo sapiens" },
-  TimelineEvent: { timelineEventId: "TE-EX-001", name: "Northern Exodus", timelineEventType: "EXODUS", summary: "A campaign-linked Exodus event." },
-  Tome: { tomeId: "TOME-001", title: "The Broken Charter", author: "Unknown Archivist" },
-  Transition: { transitionId: "TR-01-18", name: "First and Last", bookA: "1", bookB: "18", summary: "Paired transition binding for the campaign structure." },
-  Witness: { witnessId: "WIT-001", antagonist1Id: "ANT-017", antagonist2Id: "ANT-018" },
-};
-
 const pathEntityAliases: Record<string, EntityName> = {
   "achievement-definition": "AchievementDefinition", achievementdefinition: "AchievementDefinition",
   antagonist: "Antagonist", architect: "Architect", ark: "Ark", breed: "Breed",

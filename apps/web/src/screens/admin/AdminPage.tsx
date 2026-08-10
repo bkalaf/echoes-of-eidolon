@@ -1,200 +1,49 @@
-import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-
 import { AdminShell } from "../../components/shells/Shells";
-import { entityExamples, entityFields, entityForPath, type EntityName } from "../../content/entities";
-import {
-  createDefaultFieldMapping,
-  parseEntityImport,
-  prepareEntityImport,
-  type FieldMapping,
-  type ImportRecord,
-} from "../../domain/entity-import";
+import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
-import type { AtlasCatalog } from "../../server/atlas";
-import type { PublicHealthReport, ServiceHealthStatus } from "../../server/health";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
 }
 
-async function fetchHealth(): Promise<PublicHealthReport> {
-  const response = await fetch("/api/health");
-  if (!response.ok) throw new Error("Service health could not be loaded.");
-  return response.json() as Promise<PublicHealthReport>;
-}
-
-function DataIndex({ screen }: { screen: PageManifestEntry }) {
-  return <><AdminHead screen={screen} description="Canonical object types and their administrative tasks." /><div className="entity-grid">{Object.entries(entityFields).map(([entity, fields]) => <a className="card" href={`/admin/data/${entity.toLowerCase()}`} key={entity}><h2>{entity}</h2><p>{fields.length} current fields</p><span>Open records →</span></a>)}</div></>;
-}
-
-function EntityTable({ screen, entity }: { screen: PageManifestEntry; entity: EntityName }) {
-  const fields = entityFields[entity];
-  const example = entityExamples[entity];
-  return <><AdminHead screen={screen} description={`${entity} records using the current canonical field contract.`} /><div className="toolbar"><input className="input" aria-label={`Search ${entity}`} placeholder={`Search ${entity}`} /><select className="select compact" aria-label="Status"><option>All statuses</option></select><a className="button" href={`${screen.path?.split("?")[0]}/import`}>Import</a><a className="button button--gold" href={`${screen.path?.split("?")[0]}/new`}>New {entity}</a></div><section className="card table-scroll"><table className="data-table"><thead><tr>{fields.slice(0, 6).map((field) => <th key={field}>{field}</th>)}<th>Actions</th></tr></thead><tbody><tr>{fields.slice(0, 6).map((field) => <td key={field}>{example[field] ?? ""}</td>)}<td><a href={`${screen.path?.split("?")[0]}/sample-record`}>Edit</a></td></tr></tbody></table></section></>;
-}
-
-function EntityEditor({ screen, entity }: { screen: PageManifestEntry; entity: EntityName }) {
-  const fields = entityFields[entity];
-  const example = entityExamples[entity];
-  return <><AdminHead screen={screen} description={`${entity} editor with entity-specific fields and controlled relationships.`} /><div className="split"><form className="card form-grid">{fields.map((field) => <label className={`field ${["description", "summary", "notes", "baseContent"].includes(field) ? "span-2" : ""}`} key={field}>{field}{["description", "summary", "notes", "baseContent"].includes(field) ? <textarea className="textarea" defaultValue={example[field] ?? ""} /> : <input className="input" defaultValue={example[field] ?? ""} />}</label>)}<div className="action-row span-2"><button className="button button--gold">Save changes</button><button className="button">Cancel</button></div></form><aside className="card"><h2>Record relationships</h2><p>Linked records use exact IDs and controlled lookups.</p><div className="schema-list">{fields.map((field) => <span key={field}>{field}</span>)}</div><h3>Change summary</h3><p>Fields changed in this editor update the selected canonical record only.</p></aside></div></>;
-}
-
-function EntityImport({ screen, entity }: { screen: PageManifestEntry; entity: EntityName }) {
-  const fields = entityFields[entity];
-  const [rows, setRows] = useState<ImportRecord[]>([]);
-  const [mapping, setMapping] = useState<FieldMapping>({});
-  const [sourceError, setSourceError] = useState<string>();
-  const [pastedSource, setPastedSource] = useState("");
-  const [pastedFormat, setPastedFormat] = useState("records.json");
-  const preview = useMemo(
-    () => prepareEntityImport(entity, rows, mapping),
-    [entity, mapping, rows],
-  );
-
-  const acceptSource = (source: string, fileName: string) => {
-    try {
-      const parsedRows = parseEntityImport(source, fileName);
-      setRows(parsedRows);
-      setMapping(createDefaultFieldMapping(entity, parsedRows));
-      setSourceError(undefined);
-    } catch (caught) {
-      setRows([]);
-      setMapping({});
-      setSourceError(caught instanceof Error ? caught.message : "Import source could not be parsed.");
-    }
-  };
-
-  const downloadReport = () => {
-    const report = JSON.stringify(
-      { entity, rowCount: rows.length, errors: preview.errors, rows: preview.rows },
-      null,
-      2,
-    );
-    const url = URL.createObjectURL(new Blob([report], { type: "application/json" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${entity.toLowerCase()}-validation.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const displayValue = (value: unknown) =>
-    typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value);
-
-  return <><AdminHead screen={screen} description={`Validate, map, and preview ${entity} rows without writing during preview.`} /><div className="grid-3"><section className="card"><h2>1 · Source</h2><p>Upload JSON, YAML or CSV data.</p><input aria-label="Import file" className="input" type="file" accept=".json,.yaml,.yml,.csv" onChange={async (event) => { const file = event.target.files?.[0]; if (file) acceptSource(await file.text(), file.name); }} /><label className="field">Paste format<select className="select" value={pastedFormat} onChange={(event) => setPastedFormat(event.target.value)}><option value="records.json">JSON</option><option value="records.yaml">YAML</option><option value="records.csv">CSV</option></select></label><label className="field">Paste structured data<textarea aria-label="Paste structured data" className="textarea" value={pastedSource} onChange={(event) => setPastedSource(event.target.value)} /></label><button className="button" disabled={!pastedSource.trim()} onClick={() => acceptSource(pastedSource, pastedFormat)}>Parse pasted data</button>{sourceError && <p className="notice notice--bad" role="alert">{sourceError}</p>}</section><section className="card"><h2>2 · Field mapping</h2>{preview.sourceFields.length === 0 ? <p>Load a source to inspect its fields.</p> : <div className="form-stack">{preview.sourceFields.map((sourceField) => <label className="field" key={sourceField}>{sourceField}<select aria-label={`Map ${sourceField}`} className="select" value={mapping[sourceField] === null ? "__ignore__" : mapping[sourceField] ?? ""} onChange={(event) => setMapping((current) => ({ ...current, [sourceField]: event.target.value === "__ignore__" ? null : event.target.value || undefined }))}><option value="">Unmapped</option><option value="__ignore__">Ignore</option>{fields.map((field) => <option value={field} key={field}>{field}</option>)}</select></label>)}</div>}<p>Every source field must be explicitly mapped or ignored.</p></section><section className="card"><h2>3 · Validation</h2>{rows.length === 0 ? <p>No rows loaded.</p> : preview.errors.length === 0 ? <p><span className="tag tag--good">{rows.length} valid {rows.length === 1 ? "row" : "rows"}</span></p> : <><span className="tag">Blocked</span><ul>{preview.errors.map((error) => <li key={error}>{error}</li>)}</ul></>}<p>Required record IDs and duplicate IDs are checked before preview.</p><p>Controlled values and referenced IDs require the authorized server apply contract.</p></section></div><section className="card import-preview"><div className="action-row"><h2>Preview</h2><span className="tag">No writes</span></div>{preview.rows.length === 0 ? <p>No preview rows.</p> : <div className="table-scroll"><table className="data-table"><thead><tr>{fields.slice(0, 6).map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody>{preview.rows.slice(0, 50).map((row, index) => <tr key={`${String(row[fields[0]])}-${index}`}>{fields.slice(0, 6).map((field) => <td key={field}>{displayValue(row[field])}</td>)}</tr>)}</tbody></table></div>}<div className="action-row"><button className="button button--gold" disabled>Apply unavailable</button><button className="button" disabled={rows.length === 0} onClick={downloadReport}>Download validation report</button></div><p className="notice notice--warn">Atomic apply remains disabled until the packet supplies an administrative authorization owner and complete server-side field/reference validators.</p></section></>;
-}
-
-function CreateAntagonist({ screen }: { screen: PageManifestEntry }) {
-  const fields = entityFields.Antagonist;
-  return <><AdminHead screen={screen} description="Create an Antagonist with direct current relationships." /><div className="split"><form className="card form-grid">{fields.map((field) => <label className="field" key={field}>{field}<input className="input" /></label>)}<button className="button button--gold span-2">Create Antagonist</button></form><aside className="card"><h2>Current constraints</h2><p>Each Antagonist links directly to one Architect, one LegendaryReward and one puzzle blueprint.</p><p>Constellation relationships are optional before/after links.</p></aside></div></>;
-}
-
-function CreateCharacter({ screen }: { screen: PageManifestEntry }) {
-  return <><AdminHead screen={screen} description="Create a Character through the current Character → Breed → Species/Culture relationship." /><div className="split"><form className="card form-grid"><label className="field">characterId<input className="input" /></label><label className="field">displayName<input className="input" /></label><label className="field span-2">breedId<select className="select"><option>Select Breed</option></select></label><button className="button button--gold span-2">Create Character</button></form><aside className="card"><h2>Resolved through Breed</h2><p>Species and optional Culture are displayed from the selected Breed. They are not separate Character fields.</p></aside></div></>;
-}
-
-function PuzzlePage({ screen }: { screen: PageManifestEntry }) {
-  if (["PZ002", "PZ003"].includes(screen.screenId)) return <><AdminHead screen={screen} description={screen.screenId === "PZ003" ? "Run a blueprint without changing canonical data." : "Edit the current puzzle blueprint contract."} /><div className="split"><form className="card form-grid"><label className="field">puzzleBlueprintId<input className="input" defaultValue="PB-001" /></label><label className="field">family<input className="input" /></label><label className="field">difficultyTier<input className="input" type="number" min="1" max="5" /></label><label className="field">generatorVersion<input className="input" type="number" min="1" /></label><label className="field span-2">hint1<textarea className="textarea" /></label><label className="field span-2">hint2<textarea className="textarea" /></label><button className="button button--gold span-2">{screen.screenId === "PZ003" ? "Run test" : "Save blueprint"}</button></form><aside className="card"><h2>{screen.screenId === "PZ003" ? "Validation" : "Preview"}</h2><p>Blueprint test output and validation appear here.</p></aside></div></>;
-  if (screen.screenId === "ADM029") return <><AdminHead screen={screen} description="Shared interaction components used by puzzle blueprints." /><div className="grid-3">{[["Cipher Grid", "Letter/number grid with keyboard and touch controls."], ["Sequence Rack", "Ordered slots with drag, keyboard pick-and-place and validation."], ["Spatial Board", "Grid-based placement with coordinates and alternate text description."], ["Audio Phrase", "Playable tonal phrase paired with non-audio notation."], ["Construction Tray", "Parts inventory with snap targets and reversible placement."], ["Source Reader", "Document excerpt with citations and selectable claims."]].map(([name, body]) => <article className="card" key={name}><h2>{name}</h2><p>{body}</p><span className="tag">Reusable</span></article>)}</div></>;
-  if (screen.screenId === "ADM030") return <><AdminHead screen={screen} description="Test puzzle blueprints and review validation results." /><div className="split"><section className="card"><h2>Test configuration</h2><label className="field">Blueprint<select className="select"><option>PB-001</option></select></label><label className="field">Difficulty tier<input className="input" type="number" min="1" max="5" /></label><button className="button button--gold">Run validation</button></section><aside className="card"><h2>Results</h2><p>No test has run in this session.</p></aside></div></>;
-  return <><AdminHead screen={screen} description="Blueprint library with family, tier, challenge state, exactly two hints, and reusable components." /><div className="toolbar"><input className="input" placeholder="Search blueprints…" /><button className="button">Family</button><button className="button">Tier</button><span className="grow" /><a className="button" href="/admin/puzzles/components">Components</a><a className="button" href="/admin/puzzles/test-lab">Test lab</a><button className="button button--gold">New blueprint</button></div><section className="card"><table className="data-table"><thead><tr><th>Blueprint</th><th>Family</th><th>Tier</th><th>Hints</th><th>Timer</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr><td>PZB-014</td><td>LOGIC</td><td>III</td><td>2</td><td>25 days on acceptance</td><td>Ready</td><td>Edit / Test</td></tr><tr><td>PZB-031</td><td>SPATIAL</td><td>IV</td><td>2</td><td>25 days on acceptance</td><td>Draft</td><td>Edit / Test</td></tr></tbody></table></section><p className="notice">The canonical library contains 70 blueprints across five difficulty tiers.</p></>;
-}
-
-async function fetchAtlasCatalog(): Promise<AtlasCatalog> {
-  const response = await fetch("/api/atlas/catalog");
-  if (!response.ok) throw new Error("Canonical Atlas data is not configured.");
-  return response.json() as Promise<AtlasCatalog>;
-}
-
-function AtlasDataState({ is3d }: { is3d: boolean }) {
-  const atlas = useQuery({ queryKey: ["atlas", "catalog"], queryFn: fetchAtlasCatalog });
-  const [selectedId, setSelectedId] = useState<string>();
-
-  if (atlas.isPending) return <p className="notice">Validating the canonical Atlas release…</p>;
-  if (atlas.isError) return <p className="notice notice--warn">{atlas.error.message}</p>;
-
-  const selected = atlas.data.pointsOfInterest.find((poi) => poi.poiId === selectedId)
-    ?? atlas.data.pointsOfInterest[0];
-  return <><div className="atlas-layout"><section className={is3d ? "globe" : "map"}><img src={is3d ? "/assets/globe.png" : "/assets/world_map.png"} alt={is3d ? "3D globe view" : "2D world map"} />{!is3d && atlas.data.pointsOfInterest.map((poi) => <button aria-label={`Select ${poi.displayName ?? poi.workingLabel}`} className={`map-data-pin ${poi.poiId === selected.poiId ? "selected" : ""}`} key={poi.poiId} onClick={() => setSelectedId(poi.poiId)} style={{ left: `${((poi.longitude + 180) / 360) * 100}%`, top: `${((90 - poi.latitude) / 180) * 100}%` }} />)}</section><aside className="card"><p className="kicker">{atlas.data.releaseId}</p><h2>Selected Point of Interest</h2><p><strong>{selected.poiId} · {selected.displayName ?? selected.workingLabel}</strong></p><p>Name status: {selected.nameStatus}</p><p>Kind: {selected.category}</p><p>Region: {selected.regionId}</p><p>Longitude: {selected.longitude}</p><p>Latitude: {selected.latitude}</p><a className="button button--gold" href={`/admin/data/pointofinterest/${selected.poiId}`}>Open record</a></aside></div><section className="card table-scroll"><table className="data-table"><thead><tr><th>POI</th><th>Name</th><th>Status</th><th>Category</th><th>Region</th></tr></thead><tbody>{atlas.data.pointsOfInterest.map((poi) => <tr className={poi.poiId === selected.poiId ? "selected-row" : ""} key={poi.poiId} onClick={() => setSelectedId(poi.poiId)}><td>{poi.poiId}</td><td>{poi.displayName ?? poi.workingLabel}</td><td>{poi.nameStatus}</td><td>{poi.category}</td><td>{poi.regionId}</td></tr>)}</tbody></table></section><p className="notice">{atlas.data.pointsOfInterest.length} canonical Points of Interest · {atlas.data.coordinateReferenceSystem}</p></>;
-}
-
-function CanonicalSites({ screen }: { screen: PageManifestEntry }) {
-  const atlas = useQuery({ queryKey: ["atlas", "catalog"], queryFn: fetchAtlasCatalog });
-  if (atlas.isPending) return <><AdminHead screen={screen} description="Sites and their settlement state." /><p className="notice">Validating the canonical Atlas release…</p></>;
-  if (atlas.isError) return <><AdminHead screen={screen} description="Sites and their settlement state." /><p className="notice notice--warn">{atlas.error.message}</p></>;
-  return <><AdminHead screen={screen} description="Canonical settlement candidates from the validated Atlas release." /><section className="card table-scroll"><table className="data-table"><thead><tr><th>Site</th><th>Region</th><th>Classification</th><th>Longitude</th><th>Latitude</th><th>Task</th></tr></thead><tbody>{atlas.data.settlementSites.map((site) => <tr key={site.siteId}><td>{site.siteId}</td><td>{site.regionId}</td><td>{site.classification}</td><td>{site.longitude}</td><td>{site.latitude}</td><td>{site.siteId === "SITE-0081" ? <a href="/admin/atlas/sites/SITE-0081">Found City</a> : "—"}</td></tr>)}</tbody></table></section><p className="notice">{atlas.data.settlementSites.length} canonical settlement candidates.</p></>;
-}
-
-function AtlasPage({ screen }: { screen: PageManifestEntry }) {
-  const isPoi = ["AT002", "AT003", "ADM032", "ATLAS_POI_2D", "ATLAS_POI_3D"].includes(screen.screenId);
-  const is3d = ["AT003", "ATLAS_POI_3D"].includes(screen.screenId);
-  if (screen.screenId === "AT004_FOUND_CITY") return <><AdminHead screen={screen} description="Found a city at SITE-0081 without selecting a world." /><div className="split"><form className="card form-grid"><label className="field">siteId<input className="input" value="SITE-0081" readOnly /></label><label className="field">settlement name<input className="input" /></label><label className="field">settlement size<select className="select"><option>City</option></select></label><label className="field">approved arrival<input className="input" value="90%" readOnly /></label><button className="button button--gold span-2">Found city</button></form><aside className="card"><h2>Population arrival</h2><p>Apply the approved 90% arrival to the selected Site population when the settlement is founded.</p><p className="notice notice--warn">Rounding remains owner-decision-required and is not guessed here.</p></aside></div></>;
-  if (screen.screenId === "AT005_SETTLEMENT_DETAIL") return <><AdminHead screen={screen} description="Migrate population into SET-0001 while preserving exact Breed totals." /><div className="split"><section className="card"><h2>Source settlement</h2><label className="field">Settlement<select className="select"><option>SET-0002</option></select></label><label className="field">Population to migrate<input className="input" type="number" min="0" /></label><button className="button">Preview migration</button></section><aside className="card"><h2>Conservation check</h2><p>Each Breed population is conserved exactly between source and destination.</p><p>No allocation is applied unless sufficient source population exists.</p><button className="button button--gold">Apply migration</button></aside></div></>;
-  if (isPoi) return <><AdminHead screen={screen} description="Browse Points of Interest using an explicitly selected 2D map, 3D globe, or list view." /><div className="tabs"><a className={!is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={is3d ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><AtlasDataState is3d={is3d} /></>;
-  if (["AT004", "ADM033"].includes(screen.screenId)) return <CanonicalSites screen={screen} />;
-  if (["AT005", "ADM034"].includes(screen.screenId)) return <><AdminHead screen={screen} description="Settlements and population migration tasks." /><EntityTable screen={screen} entity="Settlement" /></>;
-  return <><AdminHead screen={screen} description="Manage Points of Interest, Sites and Settlements." /><div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>2D map, 3D globe and list views.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>Candidate sites and founding tasks.</p></a><a className="card" href="/admin/atlas/settlements"><h2>Settlements</h2><p>Settlement records and migrations.</p></a></div></>;
-}
-
-function CampaignPage({ screen }: { screen: PageManifestEntry }) {
-  const planner = screen.path?.includes("planner");
-  if (!planner) return <><AdminHead screen={screen} description="Manage the three current campaign spans and their 18-book planners." /><div className="grid-3">{["Concord", "Ruin", "Schism"].map((world) => <a className="card" href={`/admin/campaign/planner?state=CAMPAIGN_${world.toUpperCase()}`} key={world}><h2>{world}</h2><p>Books 1–18</p><span>Open planner →</span></a>)}</div></>;
-  const world = screen.screenId.includes("RUIN") ? "Ruin" : screen.screenId.includes("SCHISM") ? "Schism" : "Concord";
-  return <><AdminHead screen={{...screen, title: `Main 18-Book Planner — ${world}`}} description={`${world} campaign assignments with direct Witness, Architect, Reward and TimelineEvent relationships.`} /><div className="toolbar"><button className="button">{world}</button><button className="button">Books 1–18</button><button className="button">All linked types</button><span className="grow" /><button className="button">Undo</button><button className="button">Redo</button></div>{screen.screenId === "CAM004" && <p className="notice notice--bad">Invalid Architect drop: the selected relationship is not accepted.</p>}<section className="card table-scroll"><table className="data-table campaign-table"><thead><tr>{["Book", "Pillar", "Lesson", "IN_TRANSIT", "EXODUS", "Transition", "DEJA_VU", "Companion", "ATROCITY", "Witness", "Architect", "Reward", "Interludes"].map((name) => <th key={name}>{name}</th>)}</tr></thead><tbody>{Array.from({length: 18}, (_, i) => <tr key={i}><td>{i + 1}</td><td>{i % 9 === 0 ? `PIL-${String(i / 9 + 1).padStart(2, "0")}` : "—"}</td><td>{i % 6 === 0 ? `LES-${String(i / 6 + 1).padStart(2, "0")}` : "—"}</td><td>{i % 6 === 0 ? `TE-IT-${i / 6 + 1}` : "—"}</td><td>{i % 3 === 0 ? `TE-EX-${i / 3 + 1}` : "—"}</td><td>{i % 2 ? "—" : `TR-${String(i + 1).padStart(2, "0")}`}</td><td>{i % 2 ? "—" : `INT-DV-${String(i + 1).padStart(2, "0")}`}</td><td>{i % 2 ? "—" : `COMP-${String(i + 1).padStart(2, "0")}`}</td><td>TE-A-{String(i + 1).padStart(2, "0")}</td><td>WIT-{String(i + 1).padStart(2, "0")}</td><td>ARCH-{String(i + 1).padStart(2, "0")}</td><td>LR-{String(i + 1).padStart(2, "0")}</td><td>{i % 3 === 2 ? "WWII · MYTH" : "SCIENCE"}</td></tr>)}</tbody></table></section><p className="notice">Linked groups: Witness ↔ Architect ↔ LegendaryReward ↔ ATROCITY TimelineEvent ↔ book interludes · Companion ↔ Transition ↔ DEJA_VU · Lesson ↔ IN_TRANSIT ↔ two EXODUS TimelineEvents.</p></>;
-}
-
-function CityPage({ screen }: { screen: PageManifestEntry }) {
-  const descriptions: Record<string, string> = { CITY01: "Cities and their district plans.", CITY02: "Parcels and street graph for the selected city.", CITY03: "Buildings and exterior composition.", CITY04: "Interior spaces and connections.", CITY05: "Preview the city with district overlays.", ADM037: "Build city structure from streets through interiors." };
-  return <><AdminHead screen={screen} description={descriptions[screen.screenId] ?? "City Builder task."} />{screen.screenId === "CITY05" ? <div className="atlas-layout"><section className="map"><img src="/assets/world_map.png" alt="City district overlay preview" /></section><aside className="card"><h2>District overlays</h2>{["Streets", "Parcels", "Buildings", "Interiors"].map((name) => <label key={name}><input type="checkbox" defaultChecked /> {name}</label>)}</aside></div> : <div className="split"><section className="card"><h2>{screen.title}</h2><div className="city-canvas">{screen.screenId === "CITY04" ? "Interior graph" : screen.screenId === "CITY03" ? "Building exteriors" : screen.screenId === "CITY02" ? "Parcel and street graph" : "City records"}</div></section><aside className="card"><h2>Selection</h2><label className="field">Name<input className="input" /></label><label className="field">Type<select className="select"><option>Select</option></select></label><button className="button button--gold">Save</button></aside></div>}</>;
-}
-
-const operationsStatusLabels: Record<ServiceHealthStatus, string> = {
-  operational: "Operational",
-  configured: "Configured",
-  unavailable: "Unavailable",
-  unmonitored: "Not monitored",
-};
-
-function OperationsPage({ screen }: { screen: PageManifestEntry }) {
-  const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth, refetchInterval: 30_000 });
-  if (screen.screenId === "OPS002") {
-    return <><AdminHead screen={screen} description="Prepare and inspect an approved release without conflating release notes with deployment state." /><div className="grid-2"><article className="card"><h2>Release candidate 0.2.0</h2><dl className="summary"><dt>Status</dt><dd>Awaiting owner authorization</dd><dt>Tests</dt><dd>Run through pnpm verify</dd><dt>Deployment</dt><dd>Blocked</dd><dt>Release notes</dt><dd><a href="/status/releases/0.2.0">View notes</a></dd></dl><button className="button" disabled>Deploy blocked</button></article><article className="card"><h2>Recent releases</h2><p>No deployment-history owner is configured.</p></article></div><p className="notice notice--warn">Deployment requires a separate explicit owner instruction.</p></>;
+function authorizationScope(screen: PageManifestEntry) {
+  if (screen.screenId.endsWith("_IMPORT") || screen.path?.includes("bulk-operations")) {
+    return "Import preview, validation reports, atomic apply, audit records, and external API status cannot be disclosed or invoked without administrative authorization.";
   }
-  return <><AdminHead screen={screen} description="Read-only service health. No restart action is exposed without an operations owner." />{health.isPending && <p className="notice">Checking service health…</p>}{health.isError && <p className="notice notice--bad">{health.error.message}</p>}<div className="grid-3">{health.data?.services.map((service) => <article className="card" key={service.name}><h2>{service.name}</h2><span className="tag">{operationsStatusLabels[service.status]}</span><p>{service.description}</p><button className="button" disabled>Restart unavailable</button></article>)}</div>{health.data && <p className="notice">Last checked {new Date(health.data.checkedAt).toLocaleString()}.</p>}</>;
-}
-
-function GeneralAdmin({ screen }: { screen: PageManifestEntry }) {
-  if (screen.screenId === "ADM001") return <><AdminHead screen={screen} description="Administrative overview and current work queues." /><div className="grid-3">{[["Access approvals", "0"], ["Store orders", "0"], ["Data validations", "0"], ["Release tasks", "0"], ["Prompt work", "0"], ["Operations alerts", "0"]].map(([name, count]) => <article className="card" key={name}><h2>{name}</h2><p className="stat">{count}</p></article>)}</div></>;
+  if (screen.path?.startsWith("/admin/data")) {
+    return "Canonical record lists, editors, relationship lookups, create actions, and persistence cannot be disclosed or invoked without administrative authorization.";
+  }
+  if (screen.path?.startsWith("/admin/atlas") || screen.path?.startsWith("/admin/cities") || screen.path === "/admin/city-builder") {
+    return "Atlas records, settlement operations, and city-authoring state cannot be disclosed or invoked without administrative authorization.";
+  }
+  if (screen.path?.startsWith("/admin/campaign") || screen.path?.startsWith("/admin/puzzles")) {
+    return "Campaign assignments, puzzle records, validation runs, and authoring actions cannot be disclosed or invoked without administrative authorization.";
+  }
+  if (screen.path?.startsWith("/admin/store") || screen.path?.startsWith("/admin/orders")) {
+    return "Catalog administration, payments, orders, and fulfillment state cannot be disclosed or invoked without administrative authorization.";
+  }
   if (screen.path?.startsWith("/admin/access")) {
-    if (screen.screenId === "ADM003") return <><AdminHead screen={screen} description="Assign and review administrative roles." /><div className="grid-3">{["USER", "MEMBER", "ADMIN"].map((role) => <article className="card" key={role}><h2>{role}</h2><p>Role assignment and access boundary.</p><button className="button">Review assignments</button></article>)}</div></>;
-    if (screen.screenId === "ADM004") return <><AdminHead screen={screen} description="Review invitation and access requests privately." /><section className="card"><table className="data-table"><thead><tr><th>Request</th><th>Email</th><th>Submitted</th><th>Decision</th></tr></thead><tbody><tr><td>INV-REQ-001</td><td>requester@example.com</td><td>Pending</td><td><button className="button button--good">Approve</button> <button className="button button--danger">Decline</button></td></tr></tbody></table></section></>;
-    if (screen.screenId === "ADM006") return <><AdminHead screen={screen} description="Create, inspect and revoke invitation codes." /><section className="card"><div className="toolbar"><button className="button button--gold">Create invitation code</button></div><table className="data-table"><thead><tr><th>Code</th><th>Status</th><th>Created</th><th>Action</th></tr></thead><tbody><tr><td>INV-••••</td><td>Available</td><td>Current review</td><td><button className="button button--danger">Revoke</button></td></tr></tbody></table></section></>;
-    return <><AdminHead screen={screen} description={screen.screenId === "ADM005" ? "Inspect account access, roles and sessions." : "Search accounts and inspect access."} /><div className="toolbar"><input className="input" placeholder="Search account email or username" /><button className="button">Role</button><button className="button">Beta access</button></div><section className="card"><table className="data-table"><thead><tr><th>Account</th><th>Email</th><th>Role</th><th>Beta</th><th>Sessions</th></tr></thead><tbody><tr><td>player-one</td><td>player@example.com</td><td>USER</td><td>Active</td><td>1</td></tr></tbody></table></section></>;
+    return "Account records, roles, sessions, invitation requests, and invitation codes cannot be disclosed or changed without an administrative authorization owner.";
   }
-  if (screen.path?.startsWith("/admin/perks")) return <><AdminHead screen={screen} description="Review donation-linked Member-time grants without fabricating other perks." /><div className="split"><section className="card"><h2>Donation amount</h2><label className="field">Amount<input className="input" value="$50.00" readOnly /></label><label className="field">Member time<input className="input" value="6 months" readOnly /></label></section><aside className="card"><h2>Boundary</h2><p>Donation payments and merchandise orders remain separate.</p></aside></div></>;
-  if (screen.path?.startsWith("/admin/store")) return <><AdminHead screen={screen} description="Manage the exact catalog of one mug, one hoodie and one poster." /><section className="card"><table className="data-table"><thead><tr><th>Item</th><th>Category</th><th>Artwork</th><th>Fulfillment</th><th>Status</th></tr></thead><tbody>{[["Conjunction 1 — Mug", "Mugs", "Conjunction 1"], ["Conjunction 9 — Hoodie", "Hoodies", "Conjunction 9"], ["Conjunction 17 — Poster", "Posters", "Conjunction 17"]].map(([item, category, artwork]) => <tr key={item}><td>{item}</td><td>{category}</td><td>{artwork}</td><td>Printful</td><td>Active</td></tr>)}</tbody></table></section></>;
-  if (screen.path?.startsWith("/admin/orders")) return <><AdminHead screen={screen} description="Merchandise, subscriptions and donations remain separate while Stripe and Printful states remain visible." /><section className="card"><div className="tabs"><button className="active">Merchandise</button><button>Subscriptions</button><button>Donations</button></div><table className="data-table"><thead><tr><th>Order</th><th>Kind</th><th>Stripe</th><th>Printful</th><th>Total</th></tr></thead><tbody><tr><td>EID-10482</td><td>Merchandise</td><td>Approved</td><td>Submission queued</td><td>$56.00</td></tr></tbody></table></section></>;
-  if (screen.path?.includes("bulk-operations")) return <><AdminHead screen={screen} description="Validate, map and preview before atomic bulk apply." /><div className="grid-3"><article className="card"><h2>Validate</h2><p>Required fields, controlled values and record links.</p><button className="button">Choose operation</button></article><article className="card"><h2>External API</h2><p>Scoped key status and permitted entities.</p><span className="tag">{screen.screenId === "ADM021" ? "ENABLED" : "DISABLED"}</span></article><article className="card"><h2>Recent activity</h2><p>Audit records identify preview and apply separately.</p><a className="button" href="/admin/data/bulk-operations?state=ADM022">Open audit</a></article></div></>;
-  if (screen.path?.startsWith("/admin/assets")) return <><AdminHead screen={screen} description={`Upload and manage ${screen.path.endsWith("audio") ? "audio" : "video"} assets through the configured S3 owner.`} /><div className="split"><form className="card form-stack"><h2>Upload asset</h2><input className="input" type="file" accept={screen.path.endsWith("audio") ? "audio/*" : "video/*"} /><label className="field">Accessible label<input className="input" /></label><button className="button button--gold">Upload</button></form><aside className="card"><h2>Managed assets</h2><p>Canonical asset records appear after successful storage.</p></aside></div></>;
-  if (screen.path === "/admin/prompts") return <><AdminHead screen={screen} description={screen.screenId === "ADM034" ? "Only prompt work still outstanding." : "Review current prompt records and status."} /><section className="card"><div className="toolbar"><input className="input" placeholder="Search prompts" /><button className="button">{screen.screenId === "ADM034" ? "Outstanding only" : "All statuses"}</button></div><table className="data-table"><thead><tr><th>Prompt</th><th>Owner</th><th>Status</th><th>Updated</th></tr></thead><tbody><tr><td>Current prompt record</td><td>Application</td><td>Outstanding</td><td>Current review</td></tr></tbody></table></section></>;
-  if (["OPS001", "OPS002"].includes(screen.screenId)) return <OperationsPage screen={screen} />;
-  return <><AdminHead screen={screen} description="Reviewed administration task." /></>;
+  if (["OPS001", "OPS002"].includes(screen.screenId)) {
+    return "Operational service detail, release state, restart controls, and deployment controls cannot be disclosed or invoked without administrative authorization and operations owners.";
+  }
+  return "This administrative task cannot disclose records, counts, status, or actions until an authoritative role field and server-side authorization owner are supplied.";
+}
+
+function DeferredAdminTask({ screen }: { screen: PageManifestEntry }) {
+  return <><AdminHead screen={screen} description="Administrative authorization is required for this reviewed task." /><section className="card"><h2>Administrative authorization owner-deferred</h2><p>{authorizationScope(screen)}</p><p className="notice notice--warn">A valid account session alone does not grant administrative access. No role, record, count, provider state, or success result is fabricated.</p></section></>;
 }
 
 export function AdminPage({ screen }: { screen: PageManifestEntry }) {
-  const entity = entityForPath(screen.path);
+  const session = authClient.useSession();
   let page;
-  if (screen.screenId === "DATA000") page = <DataIndex screen={screen} />;
-  else if (screen.screenId === "DATA_ANTAGONIST_NEW") page = <CreateAntagonist screen={screen} />;
-  else if (screen.screenId === "DATA_CHARACTER_NEW") page = <CreateCharacter screen={screen} />;
-  else if (screen.screenId.endsWith("_IMPORT") && entity) page = <EntityImport screen={screen} entity={entity} />;
-  else if (screen.screenId.endsWith("_EDIT") && entity) page = <EntityEditor screen={screen} entity={entity} />;
-  else if ((screen.screenId.startsWith("DATA") || screen.screenId === "DATA_ANTAGONIST_TABLE") && entity) page = <EntityTable screen={screen} entity={entity} />;
-  else if (screen.path?.startsWith("/admin/puzzles")) page = <PuzzlePage screen={screen} />;
-  else if (screen.path?.startsWith("/admin/atlas")) page = <AtlasPage screen={screen} />;
-  else if (screen.path?.startsWith("/admin/campaign")) page = <CampaignPage screen={screen} />;
-  else if (screen.path?.startsWith("/admin/cities") || screen.path === "/admin/city-builder") page = <CityPage screen={screen} />;
-  else page = <GeneralAdmin screen={screen} />;
+  if (session.isPending) {
+    page = <><AdminHead screen={screen} description="Checking account session." /><p className="notice">Checking account session…</p></>;
+  } else if (!session.data) {
+    page = <><AdminHead screen={screen} description="An authenticated account and administrative authorization are required." /><section className="card"><h2>Sign in required</h2><p>No administrative data or actions are exposed without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
+  } else {
+    page = <DeferredAdminTask screen={screen} />;
+  }
   return <AdminShell>{page}</AdminShell>;
 }
