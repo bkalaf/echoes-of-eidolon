@@ -27,6 +27,7 @@ import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
 import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/admin/settlements/migrate'
@@ -129,6 +130,12 @@ const ApiAdminBetaInvitationsIndexRoute =
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminPuzzlesBlueprintsRoute =
+  ApiAdminPuzzlesBlueprintsRouteImport.update({
+    id: '/api/admin/puzzles/blueprints',
+    path: '/api/admin/puzzles/blueprints',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminSettlementsCompleteNamingRoute =
   ApiAdminSettlementsCompleteNamingRouteImport.update({
     id: '/api/admin/settlements/complete-naming',
@@ -183,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -209,6 +217,7 @@ export interface FileRoutesByTo {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -236,6 +245,7 @@ export interface FileRoutesById {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -290,6 +301,7 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -316,6 +328,7 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -343,6 +356,7 @@ export interface RootRouteChildren {
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
+  ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRoute
   ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
@@ -480,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/puzzles/blueprints': {
+      id: '/api/admin/puzzles/blueprints'
+      path: '/api/admin/puzzles/blueprints'
+      fullPath: '/api/admin/puzzles/blueprints'
+      preLoaderRoute: typeof ApiAdminPuzzlesBlueprintsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/settlements/complete-naming': {
       id: '/api/admin/settlements/complete-naming'
       path: '/api/admin/settlements/complete-naming'
@@ -556,6 +577,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
+  ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRoute,
   ApiAdminSettlementsCompleteNamingRoute:
     ApiAdminSettlementsCompleteNamingRoute,
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
