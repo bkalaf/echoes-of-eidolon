@@ -20,11 +20,11 @@ function adminScreen(screenId: string) {
   return pageManifest.find((entry) => entry.screenId === screenId)!;
 }
 
-function renderAdmin(screenId: string) {
+function renderAdmin(screenId: string, pathname?: string) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
-      <AdminPage screen={adminScreen(screenId)} />
+      <AdminPage pathname={pathname} screen={adminScreen(screenId)} />
     </QueryClientProvider>,
   );
 }
@@ -81,7 +81,7 @@ describe("administrative authorization boundary", () => {
 
   it("never renders fabricated admin records or action results", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
-    renderAdmin("ADM005");
+    renderAdmin("ADM001");
 
     await screen.findByRole("heading", { name: "Administrative authorization verified" });
     expect(screen.queryByText(/player-one|player@example.com|INV-REQ-001|EID-10482/)).not.toBeInTheDocument();
@@ -154,5 +154,101 @@ describe("administrative authorization boundary", () => {
       expect.objectContaining({ method: "POST" }),
     ));
     expect(screen.queryByText(/single-use-code|codeHash/)).not.toBeInTheDocument();
+  });
+
+  it("projects account authorization and eligibility without session tokens", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "admin-1", role: "admin" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        accounts: [{
+          userId: "user-1",
+          name: "Account Name",
+          username: "account-name",
+          email: "account@example.test",
+          role: "member",
+          betaEligible: true,
+          banned: false,
+          createdAt: "2026-08-10T01:00:00Z",
+        }],
+        total: 1,
+      }),
+      ok: true,
+    }));
+    renderAdmin("ADM002", "/admin/access");
+
+    expect(await screen.findByRole("link", { name: "Account Name" })).toHaveAttribute("href", "/admin/access/user-1");
+    expect(screen.getByText("MEMBER")).toBeInTheDocument();
+    expect(screen.getByText("Yes")).toBeInTheDocument();
+    expect(screen.queryByText(/session-token|bearer-token/)).not.toBeInTheDocument();
+  });
+
+  it("shows account sessions to admins without exposing role mutation", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "admin-1", role: "admin" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        account: {
+          userId: "user-1",
+          name: "Account Name",
+          username: "account-name",
+          email: "account@example.test",
+          emailVerified: true,
+          eligibilityStatus: "ADULT_18_PLUS",
+          betaEligible: false,
+          role: "user",
+          banned: false,
+          banReason: null,
+          banExpires: null,
+          createdAt: "2026-08-10T01:00:00Z",
+          updatedAt: "2026-08-10T01:00:00Z",
+          sessions: [{
+            sessionId: "session-1",
+            createdAt: "2026-08-10T01:00:00Z",
+            updatedAt: "2026-08-10T02:00:00Z",
+            expiresAt: "2026-08-17T01:00:00Z",
+            ipAddress: null,
+            userAgent: "Test browser",
+          }],
+        },
+      }),
+      ok: true,
+    }));
+    renderAdmin("ADM005", "/admin/access/user-1");
+
+    expect(await screen.findByText("Test browser")).toBeInTheDocument();
+    expect(screen.getByText("Only an OWNER may change authorization roles.")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "OWNER" })).not.toBeInTheDocument();
+  });
+
+  it("offers the finite stored role set to owners and persists a selected role", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "owner-1", role: "owner" } }, isPending: false });
+    const account = {
+      userId: "user-1",
+      name: "Account Name",
+      username: "account-name",
+      email: "account@example.test",
+      emailVerified: true,
+      eligibilityStatus: "ADULT_18_PLUS",
+      betaEligible: false,
+      role: "user",
+      banned: false,
+      banReason: null,
+      banExpires: null,
+      createdAt: "2026-08-10T01:00:00Z",
+      updatedAt: "2026-08-10T01:00:00Z",
+      sessions: [],
+    };
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(async (_input: string, init?: RequestInit) => ({
+      json: async () => init?.method === "PATCH" ? { userId: "user-1", role: "admin" } : { account },
+      ok: true,
+    })));
+    renderAdmin("ADM005", "/admin/access/user-1");
+
+    const adminRole = await screen.findByRole("button", { name: "ADMIN" });
+    expect(["ADMIN", "MEMBER", "OWNER", "USER"].map((name) => screen.getByRole("button", { name }))).toHaveLength(4);
+    fireEvent.click(adminRole);
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/admin/accounts/user-1/role",
+      expect.objectContaining({ method: "PATCH", body: JSON.stringify({ role: "admin" }) }),
+    ));
   });
 });

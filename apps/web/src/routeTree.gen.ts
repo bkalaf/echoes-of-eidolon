@@ -18,7 +18,10 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
 import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
 import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
+import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
+import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
 
@@ -69,11 +72,27 @@ const ApiPlayerAccessRoute = ApiPlayerAccessRouteImport.update({
   path: '/api/player/access',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminAccountsIndexRoute = ApiAdminAccountsIndexRouteImport.update({
+  id: '/api/admin/accounts/',
+  path: '/api/admin/accounts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAccountsUserIdRoute = ApiAdminAccountsUserIdRouteImport.update({
+  id: '/api/admin/accounts/$userId',
+  path: '/api/admin/accounts/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminBetaInvitationsIndexRoute =
   ApiAdminBetaInvitationsIndexRouteImport.update({
     id: '/api/admin/beta-invitations/',
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminAccountsUserIdRoleRoute =
+  ApiAdminAccountsUserIdRoleRouteImport.update({
+    id: '/role',
+    path: '/role',
+    getParentRoute: () => ApiAdminAccountsUserIdRoute,
   } as any)
 const ApiAdminBetaInvitationsIdApproveRoute =
   ApiAdminBetaInvitationsIdApproveRouteImport.update({
@@ -98,7 +117,10 @@ export interface FileRoutesByFullPath {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
 }
@@ -112,7 +134,10 @@ export interface FileRoutesByTo {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
 }
@@ -127,7 +152,10 @@ export interface FileRoutesById {
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
 }
@@ -143,7 +171,10 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/admin/accounts/$userId'
+    | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
   fileRoutesByTo: FileRoutesByTo
@@ -157,7 +188,10 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/admin/accounts/$userId'
+    | '/api/admin/accounts'
     | '/api/admin/beta-invitations'
+    | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
   id:
@@ -171,7 +205,10 @@ export interface FileRouteTypes {
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/player/access'
+    | '/api/admin/accounts/$userId'
+    | '/api/admin/accounts/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
   fileRoutesById: FileRoutesById
@@ -186,6 +223,8 @@ export interface RootRouteChildren {
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
   ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
   ApiPlayerAccessRoute: typeof ApiPlayerAccessRoute
+  ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
+  ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -256,12 +295,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPlayerAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/accounts/': {
+      id: '/api/admin/accounts/'
+      path: '/api/admin/accounts'
+      fullPath: '/api/admin/accounts/'
+      preLoaderRoute: typeof ApiAdminAccountsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/accounts/$userId': {
+      id: '/api/admin/accounts/$userId'
+      path: '/api/admin/accounts/$userId'
+      fullPath: '/api/admin/accounts/$userId'
+      preLoaderRoute: typeof ApiAdminAccountsUserIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/beta-invitations/': {
       id: '/api/admin/beta-invitations/'
       path: '/api/admin/beta-invitations'
       fullPath: '/api/admin/beta-invitations/'
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/accounts/$userId/role': {
+      id: '/api/admin/accounts/$userId/role'
+      path: '/role'
+      fullPath: '/api/admin/accounts/$userId/role'
+      preLoaderRoute: typeof ApiAdminAccountsUserIdRoleRouteImport
+      parentRoute: typeof ApiAdminAccountsUserIdRoute
     }
     '/api/admin/beta-invitations/$id/approve': {
       id: '/api/admin/beta-invitations/$id/approve'
@@ -280,6 +340,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ApiAdminAccountsUserIdRouteChildren {
+  ApiAdminAccountsUserIdRoleRoute: typeof ApiAdminAccountsUserIdRoleRoute
+}
+
+const ApiAdminAccountsUserIdRouteChildren: ApiAdminAccountsUserIdRouteChildren =
+  {
+    ApiAdminAccountsUserIdRoleRoute: ApiAdminAccountsUserIdRoleRoute,
+  }
+
+const ApiAdminAccountsUserIdRouteWithChildren =
+  ApiAdminAccountsUserIdRoute._addFileChildren(
+    ApiAdminAccountsUserIdRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
@@ -290,6 +364,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
   ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,
   ApiPlayerAccessRoute: ApiPlayerAccessRoute,
+  ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
+  ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,

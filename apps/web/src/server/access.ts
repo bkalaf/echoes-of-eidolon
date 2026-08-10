@@ -1,4 +1,4 @@
-import { canAccessGame, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
+import { canAccessAdministration, canAccessGame, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
 import { getAuth } from "./auth";
 import { getDatabase } from "./database";
 
@@ -39,6 +39,14 @@ export async function requireAdminCapability(
   const access = await requireServerSession(request);
   if (!hasAdminCapability(access.role, capability)) {
     throw new Response("Administrative capability required.", { status: 403 });
+  }
+  return access;
+}
+
+export async function requireAdministration(request: Request): Promise<ServerAccessContext> {
+  const access = await requireServerSession(request);
+  if (!canAccessAdministration(access.role)) {
+    throw new Response("Administrative authorization required.", { status: 403 });
   }
   return access;
 }

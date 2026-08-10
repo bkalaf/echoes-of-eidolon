@@ -8,7 +8,7 @@ import { StorePage } from "./store/StorePage";
 import { GamePage } from "./game/GamePage";
 import { ToolsPage } from "./tools/ToolsPage";
 
-export function PacketScreen({ screen }: { screen?: PageManifestEntry }) {
+export function PacketScreen({ pathname, screen }: { pathname?: string; screen?: PageManifestEntry }) {
   if (!screen) {
     return (
       <main className="not-found">
@@ -34,7 +34,7 @@ export function PacketScreen({ screen }: { screen?: PageManifestEntry }) {
     case "account": return <AccountPage screen={screen} />;
     case "store": return <StorePage screen={screen} />;
     case "public": return <PublicPage screen={screen} />;
-    case "admin": return <AdminPage screen={screen} />;
+    case "admin": return <AdminPage pathname={pathname} screen={screen} />;
     case "game": return <GamePage screen={screen} />;
     case "tools-review": return <ToolsPage screen={screen} />;
     default:

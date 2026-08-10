@@ -14,5 +14,5 @@ function PacketRoute() {
   const { _splat = "" } = Route.useParams();
   const { state } = Route.useSearch();
   const screen = screenForPath(`/${_splat}`, state);
-  return <PacketScreen screen={screen} />;
+  return <PacketScreen pathname={`/${_splat}`} screen={screen} />;
 }

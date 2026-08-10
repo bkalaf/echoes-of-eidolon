@@ -4,6 +4,7 @@ import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import { EntityImportPage } from "./EntityImportPage";
 import { BetaInvitationAdminPage } from "./BetaInvitationAdminPage";
+import { AccountAdminPage } from "./AccountAdminPage";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -38,13 +39,15 @@ function DeniedAdminTask({ screen, role }: { screen: PageManifestEntry; role: Au
   return <><AdminHead screen={screen} description="Administrative authorization is required for this reviewed task." /><section className="card"><h2>Administrative access denied</h2><p>Current authorization role: <strong>{role}</strong>.</p><p>{authorizationScope(screen)}</p><p className="notice notice--warn">Only the admin and owner roles may enter Administration. No record, count, provider state, or success result is exposed.</p></section></>;
 }
 
-function AuthorizedAdminTask({ screen, role }: { screen: PageManifestEntry; role: "admin" | "owner" }) {
+function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; screen: PageManifestEntry; role: "admin" | "owner" }) {
   const isImport = screen.screenId.endsWith("_IMPORT");
   const isInvitationTask = ["ADM003", "ADM004", "ADM006"].includes(screen.screenId);
-  return <><AdminHead screen={screen} description="Account authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : <section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section>}</>;
+  const isAccountTask = ["ADM002", "ADM005"].includes(screen.screenId);
+  return <><AdminHead screen={screen} description="Account authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : <section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section>}</>;
 }
 
-export function AdminPage({ screen }: { screen: PageManifestEntry }) {
+export function AdminPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
+  const resolvedPathname = pathname ?? screen.path ?? "";
   const session = authClient.useSession();
   let page;
   if (session.isPending) {
@@ -54,7 +57,7 @@ export function AdminPage({ screen }: { screen: PageManifestEntry }) {
   } else {
     const role = resolveAuthorizationRole(true, session.data.user.role);
     page = canAccessAdministration(role)
-      ? <AuthorizedAdminTask screen={screen} role={role as "admin" | "owner"} />
+      ? <AuthorizedAdminTask pathname={resolvedPathname} screen={screen} role={role as "admin" | "owner"} />
       : <DeniedAdminTask screen={screen} role={role} />;
   }
   return <AdminShell>{page}</AdminShell>;

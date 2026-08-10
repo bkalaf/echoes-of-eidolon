@@ -13,5 +13,5 @@ export const Route = createFileRoute("/")({
 function IndexRoute() {
   const { state } = Route.useSearch();
   const selected = state ? pageManifest.find((entry) => entry.screenId === state) : undefined;
-  return selected ? <PacketScreen screen={selected} /> : <HomePage />;
+  return selected ? <PacketScreen pathname="/" screen={selected} /> : <HomePage />;
 }
