@@ -84,6 +84,34 @@ try {
       ),
       "ManagedAsset object-key mismatch was not rejected",
     );
+
+    await verification.query(
+      `INSERT INTO "User" ("id", "name", "email", "eligibilityStatus", "updatedAt")
+       VALUES ('capability-user', 'Capability User', 'capability@example.test', 'ADULT_18_PLUS', CURRENT_TIMESTAMP)`,
+    );
+    await verification.query(
+      `INSERT INTO "CapabilityDefinition" ("capabilityDefinitionId", "key", "valueKind", "description")
+       VALUES ('capability-definition', 'verified-key', 'BOOLEAN', 'verification definition')`,
+    );
+    await verification.query(
+      `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "valueBoolean")
+       VALUES ('capability-event', 'capability-user', 'capability-definition', 0, 'SET', true)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "valueBoolean")
+         VALUES ('bad-capability-event', 'capability-user', 'capability-definition', 1, 'ADD', true)`,
+      ),
+      "Invalid BOOLEAN capability operation was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "CapabilityEvent" SET "valueBoolean" = false WHERE "capabilityEventId" = 'capability-event'`),
+      "CapabilityEvent update was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`DELETE FROM "CapabilityEvent" WHERE "capabilityEventId" = 'capability-event'`),
+      "CapabilityEvent delete was not rejected",
+    );
   } finally {
     await verification.end();
   }

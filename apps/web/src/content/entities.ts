@@ -4,7 +4,7 @@ export const entityFields = {
   Architect: ["architectId", "departmentId", "name", "profession"],
   Ark: ["arkId", "name", "status"],
   Breed: ["breedId", "name", "speciesId", "cultureId", "appearance", "accent", "costume", "architecture", "structuralStability", "motivation", "operatingStyle", "structureOrientation", "administrationMode", "ownershipMode", "allocationMode", "legitimacyBasis", "authoritySource", "politicalForm", "economicForm"],
-  CapabilityDefinition: ["capabilityDefinitionId", "key", "valueType", "minValue", "maxValue", "description"],
+  CapabilityDefinition: ["capabilityDefinitionId", "key", "valueKind", "minValue", "maxValue", "enumValues", "description"],
   Character: ["characterId", "displayName", "breedId"],
   Citation: ["citationId", "sourceId", "locator", "rendering", "quality"],
   Companion: ["companionKey", "concordProtagonistId", "ruinProtagonistId", "schismProtagonistId", "soulId", "heirloom"],

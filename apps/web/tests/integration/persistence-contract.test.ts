@@ -142,4 +142,19 @@ describe("persistence contract", () => {
     expect(migration).toContain('AchievementDefinition_imageAssetId_fkey');
     expect(migration).not.toContain('PromptVersion_version_check');
   });
+
+  it("makes validated append-only CapabilityEvent rows the capability source of truth", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810130000_capability_event_authority/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('RENAME COLUMN "valueType" TO "valueKind"');
+    expect(migration).toContain('CREATE TABLE "CapabilityEvent"');
+    expect(migration).toContain('CapabilityEvent_exactly_one_value_check');
+    expect(migration).toContain('CapabilityEvent_userId_sequence_key');
+    expect(migration).toContain('CapabilityEvent_validate');
+    expect(migration).toContain('CapabilityEvent_reject_update');
+    expect(migration).toContain('CapabilityEvent_reject_delete');
+    expect(migration).toContain('AchievementDefinition_chainKey_rank_key');
+  });
 });

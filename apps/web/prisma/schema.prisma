@@ -1170,6 +1170,7 @@ model User {
   betaInviteRequests  BetaInviteRequest[]  @relation("BetaInviteRequester")
   consumedBetaInvites BetaInvitationCode[] @relation("BetaInviteConsumer")
   twoFactors          TwoFactor[]
+  capabilityEvents    CapabilityEvent[]
 }
 
 model Session {
@@ -1712,10 +1713,29 @@ model PersonalityExpression {
 model CapabilityDefinition {
   capabilityDefinitionId String              @id
   key                    String              @unique
-  valueType              CapabilityValueKind
+  valueKind              CapabilityValueKind
   minValue               Int?
   maxValue               Int?
+  enumValues             String[]            @default([])
   description            String
+  events                 CapabilityEvent[]
+}
+
+model CapabilityEvent {
+  capabilityEventId      String               @id
+  userId                 String
+  capabilityDefinitionId String
+  sequence               BigInt
+  operation              CapabilityOperation
+  valueBoolean           Boolean?
+  valueNumber            Float?
+  valueToken             String?
+  createdAt              DateTime             @default(now())
+  user                   User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+
+  @@unique([userId, sequence])
+  @@index([capabilityDefinitionId])
 }
 
 model AchievementDefinition {
@@ -1727,6 +1747,7 @@ model AchievementDefinition {
   status                  String
   imageAsset              ManagedAsset? @relation("AchievementImageAsset", fields: [imageAssetId], references: [managedAssetId], onDelete: SetNull)
 
+  @@unique([chainKey, rank])
   @@index([imageAssetId])
 }
 
