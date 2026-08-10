@@ -1138,13 +1138,6 @@ enum SpeciesDimensionValue {
   WITHHOLDING
 }
 
-enum AuthorizationRole {
-  user
-  member
-  admin
-  owner
-}
-
 model User {
   id                  String                    @id
   name                String
@@ -1155,7 +1148,7 @@ model User {
   image               String?
   eligibilityStatus   AgeEligibility
   betaEligible        Boolean                   @default(false)
-  role                AuthorizationRole         @default(user)
+  role                String                    @default("user")
   banned              Boolean                   @default(false)
   banReason           String?
   banExpires          DateTime?

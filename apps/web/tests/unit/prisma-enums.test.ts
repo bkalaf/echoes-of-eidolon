@@ -31,11 +31,12 @@ const suppliedEnumNames = [
 ] as const;
 
 describe("Prisma finite enum authority", () => {
-  it("defines all 92 supplied enums plus the separate Better Auth authorization enum", () => {
+  it("defines exactly the 92 supplied enums", () => {
     const actualNames = [...schema.matchAll(/^enum (\w+) \{/gm)].map((match) => match[1]);
-    expect(new Set(actualNames)).toEqual(new Set([...suppliedEnumNames, "AuthorizationRole"]));
+    expect(new Set(actualNames)).toEqual(new Set(suppliedEnumNames));
     expect(suppliedEnumNames).toHaveLength(92);
-    expect(actualNames).toHaveLength(93);
+    expect(actualNames).toHaveLength(92);
+    expect(schema).toContain('role                String                    @default("user")');
   });
 
   it("preserves all 31 externally governed hyphenated puzzle component values", () => {

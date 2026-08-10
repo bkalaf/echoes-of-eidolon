@@ -1,7 +1,5 @@
-CREATE TYPE "AuthorizationRole" AS ENUM ('user', 'member', 'admin', 'owner');
-
 ALTER TABLE "User"
-  ADD COLUMN "role" "AuthorizationRole" NOT NULL DEFAULT 'user',
+  ADD COLUMN "role" TEXT NOT NULL DEFAULT 'user',
   ADD COLUMN "banned" BOOLEAN NOT NULL DEFAULT false,
   ADD COLUMN "banReason" TEXT,
   ADD COLUMN "banExpires" TIMESTAMP(3);

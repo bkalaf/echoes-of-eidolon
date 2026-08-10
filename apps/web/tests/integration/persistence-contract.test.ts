@@ -68,13 +68,13 @@ describe("persistence contract", () => {
     expect(migration).toContain('Member_organizationId_userId_key');
   });
 
-  it("persists finite account authorization separately from organizations", () => {
+  it("persists Better Auth account authorization separately from organizations without adding a Prisma enum", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810080000_better_auth_account_authorization/migration.sql"),
       "utf8",
     );
-    expect(migration).toContain("CREATE TYPE \"AuthorizationRole\" AS ENUM ('user', 'member', 'admin', 'owner')");
-    expect(migration).toContain('ADD COLUMN "role" "AuthorizationRole" NOT NULL DEFAULT \'user\'');
+    expect(migration).not.toContain('CREATE TYPE "AuthorizationRole"');
+    expect(migration).toContain('ADD COLUMN "role" TEXT NOT NULL DEFAULT \'user\'');
   });
 
   it("enforces the core domain relationship map with database foreign keys", () => {
