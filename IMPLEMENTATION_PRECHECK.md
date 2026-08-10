@@ -151,6 +151,23 @@ continue. Only these dependent slices remain blocked:
 - Checked: direct owner provider boundary and local secret-key inventory only; secret values were not read
 - Current safe work: enforce that fulfillment cannot begin before confirmed Stripe payment and leave fulfillment unavailable
 
+### ODR-R007-SCREEN-REGISTRY
+
+- Subsystem: route/state registry and review acceptance
+- Blocked slice: claiming the final R007 screen count and Admin gap acceptance
+- Conflicting authority: the supplied v11.3 packet manifest contains 269 active entries, while the later direct owner requirement says the R007 screen count remains exactly 189 and the Admin gap stays empty
+- Missing decision/input: the authoritative 189-entry R007 registry, or an explicit disposition identifying which 80 packet entries are not counted; the meaning and exact bounds of the Admin gap also require an authoritative registry field or range
+- Checked: all 269 packet manifest entries, the 275-page review PDF inventory, and the later direct owner requirement
+- Current safe work: preserve the packet registry without deleting, merging, or reclassifying screens by inference; do not claim final count acceptance
+
+### ODR-SETTLEMENT-NAMING-PROMPT
+
+- Subsystem: Found City / Prompt Manager
+- Blocked slice: exposing the Found City mutation through HTTP
+- Missing decision/input: the exact server-owned NAMING prompt text, purpose, status, and response contract
+- Checked: settlement founding requirements, PromptRecord/PromptVersion contract, reviewed AT004 screen, and current owner inputs
+- Current safe work: keep the atomic internal founding service; reject browser-authored prompt fields and return unavailable until the server-owned prompt source is configured
+
 ## Subsequent owner inputs reconciled
 
 The initial unresolved list above has been narrowed by later direct owner input:
@@ -165,8 +182,9 @@ The initial unresolved list above has been narrowed by later direct owner input:
 - the production deployment sequence, dry-run behavior, backup-before-migration,
   health check, and application rollback boundary are supplied.
 
-These are no longer owner-decision gaps. Production deployment, production asset
-upload, and production data mutation remain unauthorized until separately requested.
+These are no longer owner-decision gaps. The managed-asset upload was explicitly
+authorized and completed through the final-byte pipeline. Production deployment
+and unrelated production data mutation remain unauthorized until separately requested.
 
 ## Intake verification
 
@@ -176,4 +194,35 @@ upload, and production data mutation remain unauthorized until separately reques
   text-inventoried and visually reviewed via contact sheets plus key full-size pages.
 - The v11.3 packet passed its complete `MANIFEST_v11_3.sha256` verification after
   exact recovery of nine source PNGs accidentally touched during thumbnail review.
-- No production system was contacted or mutated.
+- During intake verification, no production system was contacted or mutated.
+
+## Assumption audit
+
+The implementation was re-audited after fabricated merchandise presentation
+values were found. This section records implementation evidence only; it does not
+create product authority.
+
+- Removed merchandise price, dimension, material, and Conjunction-to-product
+  mapping claims. Store views now show only the three supplied product types and
+  persisted server configuration; unresolved values remain unavailable.
+- Removed the browser-authored Found City naming prompt boundary. The HTTP route
+  accepts only Site, WorldKey, year, and departure rows and remains unavailable
+  until the exact server-owned prompt source exists.
+- Replaced account-session client listing with a server projection. Other-session
+  bearer tokens never reach the account UI; the browser receives only a session
+  identifier, current/other state, last activity, expiry, IP, and device string.
+- Corrected perk projection so an ACTIVE perk is player-visible only when the
+  account also has an active membership entitlement. Authorization role and beta
+  eligibility remain independent.
+- Made invitation, invitation approval, authorization-role update, Witness,
+  Companion, Puzzle Blueprint, and migration objects fail closed on unknown
+  fields instead of silently stripping fabricated submissions.
+- Production application source contains no Patron, staff, Square, R06 release
+  binding, fabricated merchandise values, public WorldKey/faction spoiler, or
+  hard-coded example domain record identity. `R06` remains only as the required
+  `RegionId.R06` enum token among `R01..R25`.
+- Hard-coded monetary, duration, calendar, count, range, evidence-weight, and
+  access values remaining in application code were traced to direct owner input
+  or the packet authority. Unresolved authored capability keys/ceilings,
+  merchandise mappings/variants, calendar rows, legal prose, runtime records,
+  and provider outcomes are not synthesized.
