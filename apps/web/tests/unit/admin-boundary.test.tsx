@@ -88,8 +88,12 @@ describe("administrative authorization boundary", () => {
     expect(screen.queryByRole("button", { name: /Approve|Decline|Revoke|Deploy|Restart/ })).not.toBeInTheDocument();
   });
 
-  it("lets an administrator validate and preview concrete entity import rows without applying them", async () => {
+  it("lets an administrator preview and atomically apply typed Soul rows", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ changed: 1, unchanged: 0 }),
+      ok: true,
+    }));
     renderAdmin("DATA_SOUL_IMPORT");
 
     const input = await screen.findByRole("textbox", { name: "Paste structured data" });
@@ -99,7 +103,16 @@ describe("administrative authorization boundary", () => {
     expect(screen.getByRole("heading", { name: "Concrete preview" })).toBeInTheDocument();
     expect(screen.getByText("SOUL-1")).toBeInTheDocument();
     expect(screen.getByText("A supplied soul")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Apply unavailable" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "Apply Soul import" }));
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      "/api/admin/data/soul/import",
+      {
+        body: JSON.stringify({ rows: [{ soulId: "SOUL-1", name: "A supplied soul" }] }),
+        headers: { "content-type": "application/json" },
+        method: "POST",
+      },
+    ));
+    expect(await screen.findByRole("status")).toHaveTextContent("1 changed, 0 unchanged");
   });
 
   it("reports unmapped fields before an entity import can pass validation", async () => {

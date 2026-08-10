@@ -31,6 +31,9 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
   const [sourceRows, setSourceRows] = useState<ImportRecord[]>([]);
   const [mapping, setMapping] = useState<FieldMapping>({});
   const [parseError, setParseError] = useState<string>();
+  const [applyError, setApplyError] = useState<string>();
+  const [applyResult, setApplyResult] = useState<{ changed: number; unchanged: number }>();
+  const [applying, setApplying] = useState(false);
 
   const prepared = useMemo(
     () => entity && sourceRows.length > 0
@@ -49,6 +52,8 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
       setSourceRows(rows);
       setMapping(createDefaultFieldMapping(entity, rows));
       setParseError(undefined);
+      setApplyError(undefined);
+      setApplyResult(undefined);
     } catch (error) {
       setSourceRows([]);
       setMapping({});
@@ -61,6 +66,29 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
       ...current,
       [sourceField]: target === "__ignore__" ? null : target || undefined,
     }));
+  };
+
+  const apply = async () => {
+    if (entity !== "Soul" || !prepared || prepared.errors.length > 0) return;
+    setApplying(true);
+    setApplyError(undefined);
+    setApplyResult(undefined);
+    try {
+      const response = await fetch("/api/admin/data/soul/import", {
+        body: JSON.stringify({ rows: prepared.rows }),
+        headers: { "content-type": "application/json" },
+        method: "POST",
+      });
+      const result = await response.json() as { changed?: number; error?: string; unchanged?: number };
+      if (!response.ok || typeof result.changed !== "number" || typeof result.unchanged !== "number") {
+        throw new Error(result.error ?? "Import could not be applied.");
+      }
+      setApplyResult({ changed: result.changed, unchanged: result.unchanged });
+    } catch (error) {
+      setApplyError(error instanceof Error ? error.message : "Import could not be applied.");
+    } finally {
+      setApplying(false);
+    }
   };
 
   return <div className="stack">
@@ -88,7 +116,12 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
         <div className="action-row action-row--between"><h2>Concrete preview</h2><span className="tag">{prepared.rows.length} rows</span></div>
         {prepared.errors.length > 0 && <div className="notice notice--bad" role="alert"><strong>Validation failed</strong><ul>{prepared.errors.map((error) => <li key={error}>{error}</li>)}</ul></div>}
         {prepared.errors.length === 0 && <div className="table-scroll"><table className="simple-table"><thead><tr>{entityFields[entity].map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody>{prepared.rows.map((row, index) => <tr key={`${String(row[entityFields[entity][0]])}-${index}`}>{entityFields[entity].map((field) => <td key={field}>{displayValue(row[field])}</td>)}</tr>)}</tbody></table></div>}
-        <div className="action-row"><button className="button button--gold" disabled>Apply unavailable</button><p className="muted">Atomic apply is disabled until the typed {entity} repository mutation is connected. Validation does not write data.</p></div>
+        <div className="action-row">
+          <button className="button button--gold" disabled={entity !== "Soul" || prepared.errors.length > 0 || applying} onClick={() => void apply()}>{applying ? "Applying…" : entity === "Soul" ? "Apply Soul import" : "Apply unavailable"}</button>
+          <p className="muted">{entity === "Soul" ? "The server revalidates this preview, refuses canonical drift, and applies all new rows in one transaction." : `Atomic apply is disabled until the typed ${entity} repository mutation is connected. Validation does not write data.`}</p>
+        </div>
+        {applyResult && <p className="notice notice--good" role="status">Import complete: {applyResult.changed} changed, {applyResult.unchanged} unchanged.</p>}
+        {applyError && <p className="notice notice--bad" role="alert">{applyError}</p>}
       </section>
     </>}
   </div>;

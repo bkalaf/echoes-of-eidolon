@@ -42,6 +42,7 @@ import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/adm
 import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
+import { Route as ApiAdminDataEntityKeyImportRouteImport } from './routes/api/admin/data/$entityKey/import'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -220,6 +221,12 @@ const ApiAdminBetaInvitationsIdRejectRoute =
     path: '/api/admin/beta-invitations/$id/reject',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminDataEntityKeyImportRoute =
+  ApiAdminDataEntityKeyImportRouteImport.update({
+    id: '/api/admin/data/$entityKey/import',
+    path: '/api/admin/data/$entityKey/import',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -290,6 +298,7 @@ export interface FileRoutesByTo {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -326,6 +335,7 @@ export interface FileRoutesById {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/data/$entityKey/import'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -398,6 +409,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/data/$entityKey/import'
   id:
     | '__root__'
     | '/'
@@ -433,6 +445,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/data/$entityKey/import'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -468,6 +481,7 @@ export interface RootRouteChildren {
   ApiAdminPromptsIndexRoute: typeof ApiAdminPromptsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
+  ApiAdminDataEntityKeyImportRoute: typeof ApiAdminDataEntityKeyImportRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -703,6 +717,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIdRejectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/data/$entityKey/import': {
+      id: '/api/admin/data/$entityKey/import'
+      path: '/api/admin/data/$entityKey/import'
+      fullPath: '/api/admin/data/$entityKey/import'
+      preLoaderRoute: typeof ApiAdminDataEntityKeyImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -754,6 +775,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminPromptsIndexRoute: ApiAdminPromptsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
+  ApiAdminDataEntityKeyImportRoute: ApiAdminDataEntityKeyImportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
