@@ -15,6 +15,7 @@ describe("public mutation boundaries", () => {
     expect(screen.getAllByRole("button").filter((button) => button.classList.contains("topic"))).toHaveLength(8);
     expect(contactTopicTokens).toEqual([...contactTopicTokens].sort());
     expect(screen.getByRole("button", { name: "Clear General company inquiry" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Clear General company inquiry" })).toHaveClass("selected");
     fireEvent.click(screen.getByRole("button", { name: "Select Press and media" }));
     expect(screen.getByRole("button", { name: "Clear Press and media" })).toHaveClass("topic--tone-5");
     expect(document.querySelector<HTMLInputElement>('input[name="topic"]')).toHaveValue("PRESS");

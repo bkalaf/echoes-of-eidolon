@@ -93,6 +93,16 @@ describe("game runtime boundary", () => {
     expect(await screen.findByText(message)).toBeInTheDocument();
   });
 
+  it("places unavailable Tome page numbers at the bottom outer corners", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    renderGame("GAME004");
+
+    expect(await screen.findByLabelText("Left page number unavailable")).toHaveClass("tome-page-number--left");
+    expect(screen.getByLabelText("Right page number unavailable")).toHaveClass("tome-page-number--right");
+    expect(screen.getByRole("button", { name: "Previous" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Next" })).toBeDisabled();
+  });
+
   it("reuses the textured Atlas globe without disclosing unowned player markers", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame("GAME005");
