@@ -80,8 +80,8 @@ describe("public mutation boundaries", () => {
 
   it("does not turn the reviewed eligible donation state into a live eligibility result", () => {
     render(<PublicPage screen={publicScreen("PUB021")} />);
-    expect(screen.getByRole("heading", { name: "Eligibility unavailable" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Eligible participant" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Continue to donation checkout" })).not.toBeInTheDocument();
   });
 
   it("does not fabricate version history without a release source", () => {

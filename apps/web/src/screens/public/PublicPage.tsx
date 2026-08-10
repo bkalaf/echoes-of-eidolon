@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
 import { managedAssetUrl } from "../../content/managed-assets";
@@ -92,13 +92,40 @@ function LegalPage({ screen }: { screen: PageManifestEntry }) {
   return <><a className="back-link" href="/legal">← Legal</a><PageHead eyebrow="Legal document" title={screen.title.replace("Legal Document - ", "")} description="Current player-facing policy document." /><article className="paper"><h2>{screen.title.replace("Legal Document - ", "")}</h2><p>This implementation preserves the reviewed document task and navigation. Final legal prose requires owner-supplied approved copy.</p></article></>;
 }
 
-function DonationPage({ checkout, eligible }: { checkout?: boolean; eligible?: boolean }) {
+function DonationLanding() {
+  const session = authClient.useSession();
+  const userId = session.data?.user.id;
+  const [access, setAccess] = useState<{ canPlay: boolean; userId: string }>();
+
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    if (!userId) return () => controller.abort();
+    void fetch("/api/player/access", { signal: controller.signal }).then(async (response) => {
+      const result = response.ok ? await response.json() as { canPlay?: unknown } : undefined;
+      if (active) setAccess({ canPlay: result?.canPlay === true, userId });
+    }).catch(() => {
+      if (active) setAccess({ canPlay: false, userId });
+    });
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [userId]);
+
+  if (session.isPending) return <p className="notice">Checking account session…</p>;
+  if (!session.data) return <div className="grid-2"><article className="card"><h2>Guest information</h2><p>Sign in to verify participant eligibility before donating.</p><a className="button" href="/auth/sign-in?returnTo=%2Fdonate">Sign in</a></article><article className="card"><h2>Separate from merchandise</h2><p>A donation does not create a merchandise order or shipping address.</p></article></div>;
+  if (!access || access.userId !== userId) return <p className="notice">Checking donation eligibility…</p>;
+  return <div className="grid-2"><article className="card"><h2>{access.canPlay ? "Eligible participant" : "Donation eligibility required"}</h2><p>{access.canPlay ? "Contributions from $10 to $100 add the calculated membership time after server-confirmed payment." : "This signed-in account is not currently eligible to contribute."}</p>{access.canPlay && <a className="button button--gold" href="/donate/checkout">Continue to donation checkout</a>}</article><article className="card"><h2>Separate from access</h2><p>Donation-granted membership never changes authorization role or beta/player eligibility.</p></article></div>;
+}
+
+function DonationPage({ checkout }: { checkout?: boolean }) {
   const [amount, setAmount] = useState("");
   const amountCents = /^\d+(?:\.\d{1,2})?$/.test(amount) ? Math.round(Number(amount) * 100) : undefined;
   const months = amountCents !== undefined && amountCents >= 1_000 && amountCents <= 10_000
     ? donationMonths(amountCents)
     : undefined;
-  return <><PageHead eyebrow="Donation" title={checkout ? "Donation Checkout" : "Donate"} description={checkout ? "Donation payment remains separate from merchandise and shipping." : "Support Echoes of Eidolon without purchasing merchandise."} />{checkout ? <div className="checkout-layout"><section className="card"><h2>Donation amount</h2><label className="field">Amount in US dollars<input className="input" min="10" max="100" step="0.01" type="number" value={amount} onChange={(event) => setAmount(event.target.value)} /></label><p>Eligible contributions range from $10 to $100. No amount is selected by default.</p><p>No merchandise order or shipping address is created.</p></section><aside className="card"><h2>Summary</h2><p>Donation <strong>{amountCents === undefined ? "Not selected" : `$${(amountCents / 100).toFixed(2)}`}</strong></p><p>Member time <strong>{months === undefined ? "Select an eligible amount" : `+${months} ${months === 1 ? "month" : "months"}`}</strong></p><button className="button button--gold" disabled>Donate unavailable</button><p className="notice notice--warn">Stripe submission remains unavailable until a signed donation event is connected atomically to its membership grant.</p></aside></div> : <div className="grid-2"><article className="card"><h2>{eligible ? "Eligibility unavailable" : "Guest information"}</h2><p>{eligible ? "The reviewed eligible state does not prove that the current participant is eligible. No eligibility result is asserted without its grant owner." : "Sign in to begin an account-specific eligibility check when that owner is supplied."}</p><a className="button" href="/auth/sign-in">Sign in</a></article><article className="card"><h2>Separate from merchandise</h2><p>A donation does not create a merchandise order or shipping address.</p></article></div>}</>;
+  return <><PageHead eyebrow="Donation" title={checkout ? "Donation Checkout" : "Donate"} description={checkout ? "Donation payment remains separate from merchandise and shipping." : "Support Echoes of Eidolon without purchasing merchandise."} />{checkout ? <div className="checkout-layout"><section className="card"><h2>Donation amount</h2><label className="field">Amount in US dollars<input className="input" min="10" max="100" step="0.01" type="number" value={amount} onChange={(event) => setAmount(event.target.value)} /></label><p>Eligible contributions range from $10 to $100. No amount is selected by default.</p><p>No merchandise order or shipping address is created.</p></section><aside className="card"><h2>Summary</h2><p>Donation <strong>{amountCents === undefined ? "Not selected" : `$${(amountCents / 100).toFixed(2)}`}</strong></p><p>Member time <strong>{months === undefined ? "Select an eligible amount" : `+${months} ${months === 1 ? "month" : "months"}`}</strong></p><button className="button button--gold" disabled>Donate unavailable</button><p className="notice notice--warn">Stripe submission remains unavailable until a signed donation event is connected atomically to its membership grant.</p></aside></div> : <DonationLanding />}</>;
 }
 
 function InvitePage() {
@@ -130,7 +157,7 @@ export function PublicPage({ screen }: { screen: PageManifestEntry }) {
     if (screen.screenId === "PUB015") return <ContactPage />;
     if (screen.screenId.startsWith("LEGAL") || screen.screenId === "PUB019") return <LegalPage screen={screen} />;
     if (screen.screenId === "PUB009") return <DonationPage checkout />;
-    if (screen.screenId === "PUB020" || screen.screenId === "PUB021") return <DonationPage eligible={screen.screenId === "PUB021"} />;
+    if (screen.screenId === "PUB020" || screen.screenId === "PUB021") return <DonationPage />;
     if (screen.screenId === "PUB023") return <InvitePage />;
     return <><PageHead eyebrow={screen.screenId} title={screen.title} description="Reviewed public task." /></>;
   }, [screen]);
