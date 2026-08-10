@@ -251,13 +251,6 @@
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260.jpg",
     "sha256": "ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260"
   },
-  "store.conjunction-art": {
-    "byteSize": 425876,
-    "mimeType": "image/png",
-    "objectKey": "assets/d742bab7d13d158dc39fafaab47983c5722584fb71284b59dc6470de65f0948a.png",
-    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d742bab7d13d158dc39fafaab47983c5722584fb71284b59dc6470de65f0948a.png",
-    "sha256": "d742bab7d13d158dc39fafaab47983c5722584fb71284b59dc6470de65f0948a"
-  },
   "atlas.nimbus.biome-class": {
     "byteSize": 93014,
     "mimeType": "image/png",

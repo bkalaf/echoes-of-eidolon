@@ -7,7 +7,13 @@ import process from "node:process";
 import { URL } from "node:url";
 import { promisify } from "node:util";
 
-import { HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+import {
+  assertManagedAssetSignature,
+  finalByteIdentity,
+  normalizeManagedExtension,
+} from "./managed-asset-pipeline.mjs";
 
 const execute = promisify(execFile);
 const appRoot = resolve(import.meta.dirname, "..");
@@ -57,6 +63,10 @@ async function sha256(path) {
   return createHash("sha256").update(await readFile(path)).digest("hex");
 }
 
+async function assertFileSignature(path, extension) {
+  assertManagedAssetSignature(await readFile(path), extension);
+}
+
 async function mediaSignature(path, extension) {
   if ([".png", ".jpg", ".jpeg"].includes(extension)) {
     const { stdout } = await execute("magick", ["identify", "-format", "%m|%w|%h|%[channels]|%[bit-depth]", path]);
@@ -76,6 +86,7 @@ async function mediaSignature(path, extension) {
 }
 
 async function stripMetadata(source, target, extension) {
+  await assertFileSignature(source, extension);
   const before = await mediaSignature(source, extension);
   if (extension === ".mp3") {
     await execute("ffmpeg", [
@@ -88,9 +99,41 @@ async function stripMetadata(source, target, extension) {
     await execute("exiftool", ["-overwrite_original", "-all=", target]);
   }
   const after = await mediaSignature(target, extension);
+  await assertFileSignature(target, extension);
   if (before !== after) {
     throw new Error(`Metadata stripping changed the technical media signature for ${source}: ${before} -> ${after}`);
   }
+}
+
+function isMissingObject(error) {
+  return error?.name === "NoSuchKey" || error?.name === "NotFound" || error?.$metadata?.httpStatusCode === 404;
+}
+
+async function verifyRemoteObject(client, input) {
+  let remote;
+  try {
+    remote = await client.send(new GetObjectCommand({ Bucket: input.bucket, Key: input.objectKey }));
+  } catch (error) {
+    if (isMissingObject(error)) return false;
+    throw error;
+  }
+  if (!remote.Body) throw new Error(`Remote object has no body: ${input.objectKey}`);
+
+  const hash = createHash("sha256");
+  let byteSize = 0;
+  for await (const chunk of remote.Body) {
+    hash.update(chunk);
+    byteSize += chunk.byteLength;
+  }
+  if (
+    hash.digest("hex") !== input.sha256 ||
+    byteSize !== input.byteSize ||
+    remote.ContentLength !== input.byteSize ||
+    remote.ContentType !== input.mimeType
+  ) {
+    throw new Error(`Remote final-byte identity verification failed: ${input.objectKey}`);
+  }
+  return true;
 }
 
 async function collectEntries(config) {
@@ -123,6 +166,7 @@ async function main() {
     if (logicalKeys.has(entry.logicalKey)) throw new Error(`Duplicate logical asset key: ${entry.logicalKey}`);
     logicalKeys.add(entry.logicalKey);
     const extension = extname(entry.source).toLowerCase();
+    const normalizedExtension = normalizeManagedExtension(extension);
     const mimeType = mimeTypes[extension];
     if (!mimeType) throw new Error(`Unsupported managed asset extension: ${entry.source}`);
     const sourceInfo = await stat(entry.source);
@@ -130,8 +174,8 @@ async function main() {
 
     const temporaryPath = resolve(workingRoot, `${entry.logicalKey.replaceAll(/[^a-zA-Z0-9.-]/g, "-")}${extension}.tmp${extension}`);
     await stripMetadata(entry.source, temporaryPath, extension);
-    const hash = await sha256(temporaryPath);
-    const fileName = `${hash}${extension === ".jpeg" ? ".jpg" : extension}`;
+    const finalBytes = await readFile(temporaryPath);
+    const { fileName, sha256: hash } = finalByteIdentity(finalBytes, normalizedExtension);
     const localPath = resolve(localAssetRoot, fileName);
     const objectKey = `assets/${fileName}`;
     const finalInfo = await stat(temporaryPath);
@@ -143,18 +187,26 @@ async function main() {
       await rename(temporaryPath, localPath);
     }
 
-    await client.send(new PutObjectCommand({
-      ACL: "public-read",
-      Body: createReadStream(localPath),
-      Bucket: location.bucket,
-      CacheControl: "public, max-age=31536000, immutable",
-      ContentLength: finalInfo.size,
-      ContentType: mimeType,
-      Key: objectKey,
-    }));
-    const uploaded = await client.send(new HeadObjectCommand({ Bucket: location.bucket, Key: objectKey }));
-    if (uploaded.ContentLength !== finalInfo.size || uploaded.ContentType !== mimeType) {
-      throw new Error(`Uploaded object verification failed: ${entry.logicalKey}`);
+    const remoteIdentity = {
+      bucket: location.bucket,
+      byteSize: finalInfo.size,
+      mimeType,
+      objectKey,
+      sha256: hash,
+    };
+    if (!await verifyRemoteObject(client, remoteIdentity)) {
+      await client.send(new PutObjectCommand({
+        ACL: "public-read",
+        Body: createReadStream(localPath),
+        Bucket: location.bucket,
+        CacheControl: "public, max-age=31536000, immutable",
+        ContentLength: finalInfo.size,
+        ContentType: mimeType,
+        Key: objectKey,
+      }));
+      if (!await verifyRemoteObject(client, remoteIdentity)) {
+        throw new Error(`Uploaded object is unavailable: ${entry.logicalKey}`);
+      }
     }
 
     manifest[entry.logicalKey] = {
