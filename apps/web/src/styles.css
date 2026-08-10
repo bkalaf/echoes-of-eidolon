@@ -162,6 +162,15 @@ button, input, select, textarea { font: inherit; }
 .simple-table, .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .simple-table td, .data-table td, .data-table th { padding: 9px 8px; border-bottom: 1px solid #15354a; text-align: left; }
 .data-table th { color: #7db9da; background: #071725; }
+.data-table-engine { display: grid; gap: 10px; }
+.data-table-engine > .action-row { align-items: end; }
+.data-table-engine details { position: relative; }
+.data-table-engine summary { padding: 8px 10px; border: 1px solid var(--line-2); border-radius: 6px; cursor: pointer; }
+.column-controls { min-width: 240px; display: grid; gap: 6px; position: absolute; z-index: 4; right: 0; padding: 10px; border: 1px solid var(--line-2); border-radius: 6px; background: #071725; box-shadow: 0 10px 30px rgb(0 0 0 / 45%); }
+.column-controls > div { display: grid; grid-template-columns: 1fr auto auto; gap: 5px; align-items: center; }
+.column-controls button, .table-sort { border: 0; background: transparent; color: inherit; }
+.table-sort { width: 100%; padding: 0; text-align: left; font: inherit; cursor: pointer; }
+.table-sort:disabled { cursor: default; }
 
 .features-overview { display: grid; grid-template-columns: 1.05fr 1.25fr; gap: 16px; }
 .video-panel { min-height: 510px; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: #071725; }

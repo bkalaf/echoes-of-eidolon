@@ -2,9 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { AtlasGlobe } from "../../components/AtlasGlobe";
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { managedAssetUrl } from "../../content/managed-assets";
 import type { PageManifestEntry } from "../../lib/page-manifest";
-import type { AtlasCatalog } from "../../server/atlas";
+import type { AtlasCatalog, CanonicalPointOfInterest, CanonicalSettlementSite } from "../../server/atlas";
+
+const poiColumns: DataTableColumnDef<CanonicalPointOfInterest>[] = [
+  { accessorKey: "poiId", header: "POI" },
+  { accessorFn: (point) => point.displayName ?? point.workingLabel, id: "name", header: "Name" },
+  { accessorKey: "nameStatus", header: "Status" },
+  { accessorKey: "category", header: "Category" },
+  { accessorKey: "regionId", header: "Region" },
+];
+
+const siteColumns: DataTableColumnDef<CanonicalSettlementSite>[] = [
+  { accessorKey: "siteId", header: "Site" },
+  { accessorKey: "regionId", header: "Region" },
+  { accessorKey: "classification", header: "Classification" },
+  { accessorKey: "longitude", header: "Longitude" },
+  { accessorKey: "latitude", header: "Latitude" },
+];
 
 async function loadAtlas(): Promise<AtlasCatalog> {
   const response = await fetch("/api/atlas/catalog");
@@ -25,11 +42,11 @@ function PoiDetail({ atlas, selectedId }: { atlas: AtlasCatalog; selectedId?: st
 
 function PoiAtlas({ atlas, globe }: { atlas: AtlasCatalog; globe: boolean }) {
   const [selectedId, setSelectedId] = useState(atlas.pointsOfInterest[0]?.poiId);
-  return <><div className="tabs"><a className={!globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><div className="atlas-layout"><section>{globe ? <AtlasGlobe onSelect={setSelectedId} points={atlas.pointsOfInterest} selectedId={selectedId} /> : <div className="map"><img src={managedAssetUrl("atlas.official-world-founding-cities")} alt="Eidolon world map" />{atlas.pointsOfInterest.map((point) => <button aria-label={`Select ${point.displayName ?? point.workingLabel}`} className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`} key={point.poiId} onClick={() => setSelectedId(point.poiId)} style={{ left: `${((point.longitude + 180) / 360) * 100}%`, top: `${((90 - point.latitude) / 180) * 100}%` }} />)}</div>}</section><PoiDetail atlas={atlas} selectedId={selectedId} /></div><section className="card table-scroll"><table className="data-table"><thead><tr><th>POI</th><th>Name</th><th>Status</th><th>Category</th><th>Region</th></tr></thead><tbody>{atlas.pointsOfInterest.map((point) => <tr className={point.poiId === selectedId ? "selected-row" : ""} key={point.poiId} onClick={() => setSelectedId(point.poiId)}><td>{point.poiId}</td><td>{point.displayName ?? point.workingLabel}</td><td>{point.nameStatus}</td><td>{point.category}</td><td>{point.regionId}</td></tr>)}</tbody></table></section><p className="notice">{atlas.pointsOfInterest.length} canonical Points of Interest · {atlas.coordinateReferenceSystem} · {atlas.releaseId}</p></>;
+  return <><div className="tabs"><a className={!globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><div className="atlas-layout"><section>{globe ? <AtlasGlobe onSelect={setSelectedId} points={atlas.pointsOfInterest} selectedId={selectedId} /> : <div className="map"><img src={managedAssetUrl("atlas.official-world-founding-cities")} alt="Eidolon world map" />{atlas.pointsOfInterest.map((point) => <button aria-label={`Select ${point.displayName ?? point.workingLabel}`} className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`} key={point.poiId} onClick={() => setSelectedId(point.poiId)} style={{ left: `${((point.longitude + 180) / 360) * 100}%`, top: `${((90 - point.latitude) / 180) * 100}%` }} />)}</div>}</section><PoiDetail atlas={atlas} selectedId={selectedId} /></div><section className="card"><DataTable columns={poiColumns} data={atlas.pointsOfInterest} getRowId={(point) => point.poiId} onRowActivate={(point) => setSelectedId(point.poiId)} preferenceKey="admin.atlas.points-of-interest" rowClassName={(point) => point.poiId === selectedId ? "selected-row" : undefined} /></section><p className="notice">{atlas.pointsOfInterest.length} canonical Points of Interest · {atlas.coordinateReferenceSystem} · {atlas.releaseId}</p></>;
 }
 
 function Sites({ atlas }: { atlas: AtlasCatalog }) {
-  return <><section className="card table-scroll"><table className="data-table"><thead><tr><th>Site</th><th>Region</th><th>Classification</th><th>Longitude</th><th>Latitude</th></tr></thead><tbody>{atlas.settlementSites.map((site) => <tr key={site.siteId}><td>{site.siteId}</td><td>{site.regionId}</td><td>{site.classification}</td><td>{site.longitude}</td><td>{site.latitude}</td></tr>)}</tbody></table></section><p className="notice">{atlas.settlementSites.length} canonical settlement candidates · {atlas.releaseId}</p></>;
+  return <><section className="card"><DataTable columns={siteColumns} data={atlas.settlementSites} getRowId={(site) => site.siteId} preferenceKey="admin.atlas.sites" /></section><p className="notice">{atlas.settlementSites.length} canonical settlement candidates · {atlas.releaseId}</p></>;
 }
 
 export function AtlasAdminPage({ screen }: { screen: PageManifestEntry }) {

@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { AuthorizationRole } from "../../domain/authorization";
 
 const storedRoles = ["admin", "member", "owner", "user"] as const;
@@ -42,6 +43,14 @@ function RoleBadge({ role }: { role: string }) {
   return <span className="tag" data-color-index={storedRoles.indexOf(role as (typeof storedRoles)[number])}>{role.toUpperCase()}</span>;
 }
 
+const accountColumns: DataTableColumnDef<AccountListRow>[] = [
+  { accessorKey: "name", id: "account", header: "Account", cell: ({ row }) => <><a href={`/admin/access/${encodeURIComponent(row.original.userId)}`}>{row.original.name}</a><br /><span className="muted">@{row.original.username ?? "username unavailable"}</span></> },
+  { accessorKey: "email", header: "Email" },
+  { accessorKey: "role", header: "Role", cell: ({ row }) => <RoleBadge role={row.original.role} /> },
+  { accessorKey: "betaEligible", id: "betaEligibility", header: "Beta/player eligible", cell: ({ row }) => row.original.betaEligible ? "Yes" : "No" },
+  { accessorKey: "banned", id: "accountState", header: "Account state", cell: ({ row }) => row.original.banned ? "Banned" : "Active" },
+];
+
 function AccountsList() {
   const [search, setSearch] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
@@ -53,7 +62,7 @@ function AccountsList() {
     retry: false,
   });
 
-  return <section className="card"><div className="action-row action-row--between"><div><h2>Accounts</h2><p>Authorization role and beta/player eligibility are separate fields.</p></div><span className="tag">{accounts.data?.total ?? 0} records</span></div><form className="action-row" onSubmit={(event) => { event.preventDefault(); setSubmittedSearch(search.trim()); }}><label className="field">Search name, username, or email<input className="input" value={search} onChange={(event) => setSearch(event.target.value)} /></label><button className="button" type="submit">Search</button></form>{accounts.isPending ? <p className="notice">Loading accounts…</p> : accounts.isError ? <p className="notice notice--bad" role="alert">{accounts.error.message}</p> : accounts.data.accounts.length === 0 ? <p>No accounts matched.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Account</th><th>Email</th><th>Role</th><th>Beta/player eligible</th><th>Account state</th></tr></thead><tbody>{accounts.data.accounts.map((account) => <tr key={account.userId}><td><a href={`/admin/access/${encodeURIComponent(account.userId)}`}>{account.name}</a><br /><span className="muted">@{account.username ?? "username unavailable"}</span></td><td>{account.email}</td><td><RoleBadge role={account.role} /></td><td>{account.betaEligible ? "Yes" : "No"}</td><td>{account.banned ? "Banned" : "Active"}</td></tr>)}</tbody></table></div>}</section>;
+  return <section className="card"><div className="action-row action-row--between"><div><h2>Accounts</h2><p>Authorization role and beta/player eligibility are separate fields.</p></div><span className="tag">{accounts.data?.total ?? 0} records</span></div><form className="action-row" onSubmit={(event) => { event.preventDefault(); setSubmittedSearch(search.trim()); }}><label className="field">Search name, username, or email<input className="input" value={search} onChange={(event) => setSearch(event.target.value)} /></label><button className="button" type="submit">Search server</button></form>{accounts.isPending ? <p className="notice">Loading accounts…</p> : accounts.isError ? <p className="notice notice--bad" role="alert">{accounts.error.message}</p> : accounts.data.accounts.length === 0 ? <p>No accounts matched.</p> : <DataTable columns={accountColumns} data={accounts.data.accounts} getRowId={(account) => account.userId} preferenceKey="admin.accounts" />}</section>;
 }
 
 function AccountDetailView({ actorRole, userId }: { actorRole: "admin" | "owner"; userId: string }) {
