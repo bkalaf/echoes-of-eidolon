@@ -40,4 +40,19 @@ describe("persistence contract", () => {
     expect(migration).not.toContain('"dateOfBirth"');
     expect(migration).not.toContain('"numericAge"');
   });
+
+  it("persists the Better Auth Organizations authorization schema", () => {
+    const migration = readFileSync(
+      resolve(
+        import.meta.dirname,
+        "../../prisma/migrations/20260810060000_better_auth_organizations/migration.sql",
+      ),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "Organization"');
+    expect(migration).toContain('CREATE TABLE "Member"');
+    expect(migration).toContain('CREATE TABLE "Invitation"');
+    expect(migration).toContain('"activeOrganizationId"');
+    expect(migration).toContain('Member_organizationId_userId_key');
+  });
 });

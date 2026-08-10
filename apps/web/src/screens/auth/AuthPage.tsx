@@ -62,12 +62,18 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
   const [message, setMessage] = useState<string>();
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
-  const { register, handleSubmit, formState: { isValid } } = useForm<AuthFields>({ mode: "onChange" });
+  const invitationId = screen.screenId === "AUTH07" && typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("id") ?? ""
+    : "";
+  const { register, handleSubmit, formState: { isValid } } = useForm<AuthFields>({
+    defaultValues: { code: invitationId },
+    mode: "onChange",
+  });
   const usesEmail = ["AUTH01", "AUTH03", "AUTH04", "AUTH05"].includes(screen.screenId);
   const usesPassword = ["AUTH01", "AUTH03", "AUTH05"].includes(screen.screenId);
   const usesUsername = screen.screenId === "AUTH03";
   const usesCode = ["AUTH05", "AUTH07", "AUTH08"].includes(screen.screenId);
-  const unsupported = ["AUTH07", "AUTH08"].includes(screen.screenId);
+  const unsupported = screen.screenId === "AUTH08";
 
   const submit = async (values: AuthFields) => {
     setBusy(true);
@@ -105,6 +111,11 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
         const nextError = resultError(result);
         if (nextError) setError(nextError);
         else setMessage("Password reset completed.");
+      } else if (screen.screenId === "AUTH07") {
+        const result = await authClient.organization.acceptInvitation({ invitationId: values.code });
+        const nextError = resultError(result);
+        if (nextError) setError(nextError);
+        else setMessage("Invitation accepted.");
       }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "The authentication request failed.");
