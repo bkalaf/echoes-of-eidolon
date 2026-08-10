@@ -4,6 +4,7 @@ import { AdminShell } from "../../components/shells/Shells";
 import { canAccessAdministration, resolveAuthorizationRole, type AuthorizationRole } from "../../domain/authorization";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
+import { EntityImportPage } from "./EntityImportPage";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -39,7 +40,8 @@ function DeniedAdminTask({ screen, role }: { screen: PageManifestEntry; role: Au
 }
 
 function AuthorizedAdminTask({ screen, role }: { screen: PageManifestEntry; role: "admin" | "owner" }) {
-  return <><AdminHead screen={screen} description="Organization authorization was verified for this reviewed task." /><section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section></>;
+  const isImport = screen.screenId.endsWith("_IMPORT");
+  return <><AdminHead screen={screen} description="Organization authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : <section className="card"><h2>Administrative authorization verified</h2><p>Current authorization role: <strong>{role}</strong>.</p><p className="notice notice--warn">This task's records and actions remain unavailable until its server data adapter is connected. Authorization is no longer the blocker, and no sample data is substituted.</p></section>}</>;
 }
 
 export function AdminPage({ screen }: { screen: PageManifestEntry }) {

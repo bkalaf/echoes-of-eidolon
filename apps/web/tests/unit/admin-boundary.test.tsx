@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -90,5 +91,33 @@ describe("administrative authorization boundary", () => {
     await screen.findByRole("heading", { name: "Administrative authorization verified" });
     expect(screen.queryByText(/player-one|player@example.com|INV-REQ-001|EID-10482/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Approve|Decline|Revoke|Deploy|Restart/ })).not.toBeInTheDocument();
+  });
+
+  it("lets an administrator validate and preview concrete entity import rows without applying them", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "admin" }, error: null });
+    renderAdmin("DATA_SOUL_IMPORT");
+
+    const input = await screen.findByRole("textbox", { name: "Paste structured data" });
+    fireEvent.change(input, { target: { value: '[{"soulId":"SOUL-1","name":"A supplied soul"}]' } });
+    fireEvent.click(screen.getByRole("button", { name: "Validate & Preview" }));
+
+    expect(screen.getByRole("heading", { name: "Concrete preview" })).toBeInTheDocument();
+    expect(screen.getByText("SOUL-1")).toBeInTheDocument();
+    expect(screen.getByText("A supplied soul")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Apply unavailable" })).toBeDisabled();
+  });
+
+  it("reports unmapped fields before an entity import can pass validation", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "owner" }, error: null });
+    renderAdmin("DATA_SOUL_IMPORT");
+
+    const input = await screen.findByRole("textbox", { name: "Paste structured data" });
+    fireEvent.change(input, { target: { value: '[{"soulId":"SOUL-1","unapproved":"value"}]' } });
+    fireEvent.click(screen.getByRole("button", { name: "Validate & Preview" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Source field unapproved must be mapped or ignored.");
+    expect(screen.queryByText("value")).not.toBeInTheDocument();
   });
 });
