@@ -168,6 +168,14 @@ continue. Only these dependent slices remain blocked:
 - Checked: settlement founding requirements, PromptRecord/PromptVersion contract, reviewed AT004 screen, and current owner inputs
 - Current safe work: keep the atomic internal founding service; reject browser-authored prompt fields and return unavailable until the server-owned prompt source is configured
 
+### ODR-RESET-WORLDS
+
+- Subsystem: Settlement reset / City Builder
+- Blocked slice: exposing the destructive `RESET WORLDS` operation
+- Missing decision/input: the City graph persistence schema and the authoritative founder Species/Breed allocation input used by the immediate three-world reseed
+- Checked: typed confirmation, one-transaction reset, Site priority, 1,600-per-Species allocation, current Prisma schema, settlement services, and reviewed Atlas/City screens
+- Current safe work: preserve the deterministic Site-priority and founder-allocation validators; do not invent City deletion targets, founder records, or reseeded population events
+
 ## Subsequent owner inputs reconciled
 
 The initial unresolved list above has been narrowed by later direct owner input:
