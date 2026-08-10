@@ -22,7 +22,7 @@ export function validateInitialPuzzleBank(blueprints: readonly PuzzleBlueprintSe
     }
   }
   for (const blueprint of blueprints) {
-    if (!Number.isSafeInteger(blueprint.generatorVersion) || blueprint.generatorVersion < 1) throw new Error("Puzzle generator versions must be positive integers.");
+    if (!Number.isSafeInteger(blueprint.generatorVersion)) throw new Error("Puzzle generator versions must be integers.");
     if (blueprint.hints[0].level !== 1 || blueprint.hints[0].kind !== "DIRECTIONAL" || !blueprint.hints[0].template.trim()) {
       throw new Error("Hint level 1 must be a nonempty DIRECTIONAL template.");
     }

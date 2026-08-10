@@ -64,7 +64,7 @@ export const puzzleBlueprintSchema = z.object({
   ]),
   hint1: z.string().min(1),
   hint2: z.string().min(1),
-  generatorVersion: z.number().int().positive(),
+  generatorVersion: z.number().int(),
 }) satisfies z.ZodType<PuzzleBlueprint>;
 
 const migrationRowSchema = z.object({

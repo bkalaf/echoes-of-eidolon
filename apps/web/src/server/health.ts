@@ -1,6 +1,5 @@
 import { getAuth } from "./auth";
 import { getDatabase } from "./database";
-import { getPaymentsEnv, getStorageEnv } from "./env";
 
 export type ServiceHealthStatus = "operational" | "configured" | "unavailable" | "unmonitored";
 
@@ -65,20 +64,10 @@ function authenticationIsConfigured(): boolean {
   }
 }
 
-function commerceIsConfigured(): boolean {
-  try {
-    getPaymentsEnv();
-    getStorageEnv();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export async function getPublicHealthReport(): Promise<PublicHealthReport> {
   const databaseAvailable = await databaseIsAvailable();
   return buildPublicHealthReport({
     authenticationAvailable: databaseAvailable && authenticationIsConfigured(),
-    commerceConfigured: commerceIsConfigured(),
+    commerceConfigured: false,
   });
 }

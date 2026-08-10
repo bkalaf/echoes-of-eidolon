@@ -5,7 +5,6 @@ const authMocks = vi.hoisted(() => ({
   changeEmail: vi.fn(),
   listSessions: vi.fn(),
   sendVerificationOtp: vi.fn(),
-  signInEmail: vi.fn(),
   updateUser: vi.fn(),
   useSession: vi.fn(),
 }));
@@ -17,7 +16,6 @@ vi.mock("../../src/lib/auth-client", () => ({
       sendVerificationOtp: authMocks.sendVerificationOtp,
     },
     listSessions: authMocks.listSessions,
-    signIn: { email: authMocks.signInEmail },
     updateUser: authMocks.updateUser,
     useSession: authMocks.useSession,
   },
@@ -88,6 +86,18 @@ describe("account session boundary", () => {
     fireEvent.input(code, { target: { value: "12x3456" } });
     expect(code).toHaveValue("123456");
     expect(screen.getByRole("button", { name: "Verify & Change Email" })).toBeEnabled();
+  });
+
+  it("does not invent a current-password requirement for the change-email flow", () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
+      isPending: false,
+    });
+    render(<AccountPage screen={accountScreen("ACC002")} />);
+
+    expect(screen.getByLabelText("Current email")).toHaveAttribute("readonly");
+    expect(screen.queryByLabelText("Current password")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Send Verification" })).toBeDisabled();
   });
 
   it("shows unowned subscription state as deferred instead of active or declined", () => {

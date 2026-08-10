@@ -21,6 +21,10 @@ describe("Puzzle Blueprint contracts", () => {
     const wrongTier = validBank();
     wrongTier[0] = { ...wrongTier[0]!, difficultyTier: 2 };
     expect(() => validateInitialPuzzleBank(wrongTier)).toThrow(/tier 1/);
+
+    const zeroVersion = validBank();
+    zeroVersion[0] = { ...zeroVersion[0]!, generatorVersion: 0 };
+    expect(() => validateInitialPuzzleBank(zeroVersion)).not.toThrow();
   });
 
   it("starts the exact immutable timer only from challenge acceptance", () => {

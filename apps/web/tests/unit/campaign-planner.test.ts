@@ -25,14 +25,16 @@ describe("campaign planner contracts", () => {
 
   it("preserves the three exact linked drag groups", () => {
     expect(campaignLinkedGroups).toHaveLength(3);
-    expect(linkedCampaignGroup("WITNESS")).toContain("LEGENDARY_REWARD");
-    expect(linkedCampaignGroup("COMPANION")).toEqual(["COMPANION", "TRANSITION", "DEJA_VU"]);
+    expect(linkedCampaignGroup("WITNESS")?.required).toContainEqual({ count: 1, objectType: "LEGENDARY_REWARD" });
+    expect(linkedCampaignGroup("WITNESS")?.optional).toEqual([{ count: "ZERO_OR_MORE", objectType: "HISTORICAL_INTERLUDE" }]);
+    expect(linkedCampaignGroup("COMPANION")?.required.map((member) => member.objectType)).toEqual(["COMPANION", "TRANSITION", "DEJA_VU"]);
+    expect(linkedCampaignGroup("LESSON")?.required).toContainEqual({ count: 2, objectType: "EXODUS" });
     expect(linkedCampaignGroup("HOLIDAY")).toBeNull();
   });
 
   it("classifies only the controlled 54 Department rows", () => {
-    expect(departmentCampaignDisposition("DEPT-001")).toBe("NORMAL_WITNESS_PATH");
-    expect(departmentCampaignDisposition("DEPT-052")).toBe("NORMAL_WITNESS_PATH");
+    expect(departmentCampaignDisposition("DEPT-001")).toBe("NORMAL");
+    expect(departmentCampaignDisposition("DEPT-052")).toBe("NORMAL");
     expect(departmentCampaignDisposition("DEPT-053")).toBe("EXEMPT");
     expect(departmentCampaignDisposition("DEPT-054")).toBe("EXCLUDED");
     expect(() => departmentCampaignDisposition("DEPT-055")).toThrow(/controlled/);

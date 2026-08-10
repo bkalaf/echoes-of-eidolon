@@ -46,10 +46,12 @@ describe("public mutation boundaries", () => {
     expect(screen.getByRole("button", { name: "Submit unavailable" })).toBeDisabled();
   });
 
-  it("shows the reviewed donation amount and grant without enabling an unowned payment", () => {
+  it("does not turn the donation example into a default selection", () => {
     render(<PublicPage screen={publicScreen("PUB009")} />);
-    expect(screen.getAllByText("$50.00")).toHaveLength(2);
-    expect(screen.getByText("+6 months")).toBeInTheDocument();
+    expect(screen.getByLabelText("Amount in US dollars")).toHaveValue(null);
+    expect(screen.getByText("Not selected")).toBeInTheDocument();
+    expect(screen.queryByText("$50.00")).not.toBeInTheDocument();
+    expect(screen.queryByText("+6 months")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Donate unavailable" })).toBeDisabled();
   });
 

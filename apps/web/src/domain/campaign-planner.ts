@@ -19,11 +19,32 @@ export const campaignObjectTypes = [
 
 export type CampaignObjectType = (typeof campaignObjectTypes)[number];
 
+export interface CampaignLinkedGroupRule {
+  optional: readonly { count: "ZERO_OR_MORE"; objectType: CampaignObjectType }[];
+  required: readonly { count: number; objectType: CampaignObjectType }[];
+}
+
+const requiredOnce = (...objectTypes: CampaignObjectType[]) =>
+  objectTypes.map((objectType) => ({ count: 1, objectType }));
+
 export const campaignLinkedGroups = [
-  ["WITNESS", "ARCHITECT", "LEGENDARY_REWARD", "ATROCITY", "WWII_INTERLUDE", "MYTH_INTERLUDE", "SCIENCE_INTERLUDE", "HISTORICAL_INTERLUDE"],
-  ["COMPANION", "TRANSITION", "DEJA_VU"],
-  ["LESSON", "IN_TRANSIT", "EXODUS"],
-] as const satisfies readonly (readonly CampaignObjectType[])[];
+  {
+    required: requiredOnce("WITNESS", "ARCHITECT", "LEGENDARY_REWARD", "ATROCITY", "WWII_INTERLUDE", "MYTH_INTERLUDE", "SCIENCE_INTERLUDE"),
+    optional: [{ count: "ZERO_OR_MORE", objectType: "HISTORICAL_INTERLUDE" }],
+  },
+  {
+    required: requiredOnce("COMPANION", "TRANSITION", "DEJA_VU"),
+    optional: [],
+  },
+  {
+    required: [
+      { count: 1, objectType: "LESSON" },
+      { count: 1, objectType: "IN_TRANSIT" },
+      { count: 2, objectType: "EXODUS" },
+    ],
+    optional: [],
+  },
+] as const satisfies readonly CampaignLinkedGroupRule[];
 
 const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, index) => start + index);
 const pillarSpans = [range(1, 9), range(10, 18)];
@@ -58,15 +79,17 @@ export function isValidCampaignSpan(objectType: CampaignObjectType, books: reado
   return singleBookTypes.has(objectType) && normalized.length === 1;
 }
 
-export function linkedCampaignGroup(objectType: CampaignObjectType): readonly CampaignObjectType[] | null {
-  return campaignLinkedGroups.find((group) => group.includes(objectType as never)) ?? null;
+export function linkedCampaignGroup(objectType: CampaignObjectType): CampaignLinkedGroupRule | null {
+  return campaignLinkedGroups.find((group) =>
+    [...group.required, ...group.optional].some((member) => member.objectType === objectType),
+  ) ?? null;
 }
 
-export function departmentCampaignDisposition(departmentId: string): "NORMAL_WITNESS_PATH" | "EXEMPT" | "EXCLUDED" {
+export function departmentCampaignDisposition(departmentId: string): "NORMAL" | "EXEMPT" | "EXCLUDED" {
   const match = /^DEPT-(\d{3})$/.exec(departmentId);
   const ordinal = match ? Number(match[1]) : 0;
   if (ordinal < 1 || ordinal > 54) throw new Error("Department must be one of the controlled DEPT-001 through DEPT-054 rows.");
   if (ordinal === 53) return "EXEMPT";
   if (ordinal === 54) return "EXCLUDED";
-  return "NORMAL_WITNESS_PATH";
+  return "NORMAL";
 }
