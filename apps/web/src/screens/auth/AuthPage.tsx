@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { AuthShell } from "../../components/shells/Shells";
+import { safeSignedInReturnPath } from "../../domain/auth-navigation";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
@@ -65,6 +66,9 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
   const invitationId = screen.screenId === "AUTH07" && typeof window !== "undefined"
     ? new URLSearchParams(window.location.search).get("id") ?? ""
     : "";
+  const signedInReturnPath = typeof window === "undefined"
+    ? "/account/profile"
+    : safeSignedInReturnPath(new URLSearchParams(window.location.search).get("returnTo"), window.location.origin);
   const { register, handleSubmit, formState: { isValid } } = useForm<AuthFields>({
     defaultValues: { code: invitationId },
     mode: "onChange",
@@ -81,7 +85,11 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setMessage(undefined);
     try {
       if (screen.screenId === "AUTH01") {
-        const result = await authClient.signIn.email({ email: values.email, password: values.password });
+        const result = await authClient.signIn.email({
+          callbackURL: signedInReturnPath,
+          email: values.email,
+          password: values.password,
+        });
         const nextError = resultError(result);
         if (nextError) setError(nextError);
         else setMessage("Signed in.");

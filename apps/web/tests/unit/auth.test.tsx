@@ -1,10 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const authMocks = vi.hoisted(() => ({ sendOtp: vi.fn(), verifyOtp: vi.fn() }));
+const authMocks = vi.hoisted(() => ({ sendOtp: vi.fn(), signInEmail: vi.fn(), verifyOtp: vi.fn() }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
+    signIn: { email: authMocks.signInEmail },
     twoFactor: { sendOtp: authMocks.sendOtp, verifyOtp: authMocks.verifyOtp },
   },
 }));
@@ -20,6 +21,7 @@ describe("reviewed authentication states", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     authMocks.sendOtp.mockResolvedValue({ data: { status: true }, error: null });
+    authMocks.signInEmail.mockResolvedValue({ data: {}, error: null });
     authMocks.verifyOtp.mockResolvedValue({ data: {}, error: null });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       json: async () => ({ redeemed: true }),
@@ -35,6 +37,22 @@ describe("reviewed authentication states", () => {
     expect(screen.getByRole("radio", { name: "14–17 with verified guardian consent" })).toBeDisabled();
     expect(screen.getByText(/No date of birth or exact age is collected/)).toBeInTheDocument();
     expect(screen.queryByText("Invitation required")).not.toBeInTheDocument();
+  });
+
+  it("passes only a safe preserved return URL to Better Auth sign-in", async () => {
+    window.history.replaceState({}, "", "/auth/sign-in?returnTo=%2Fgame%2Fmaps%3Flayer%3Dknown");
+    render(<AuthPage screen={authScreen("AUTH01")} />);
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "player@example.com" } });
+    fireEvent.change(screen.getByLabelText("Password"), { target: { value: "long-password" } });
+    const submit = screen.getByRole("button", { name: "Sign In" });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.click(submit);
+
+    await waitFor(() => expect(authMocks.signInEmail).toHaveBeenCalledWith({
+      callbackURL: "/game/maps?layer=known",
+      email: "player@example.com",
+      password: "long-password",
+    }));
   });
 
   it("redeems a bearer beta invitation without changing an organization role", async () => {
