@@ -51,6 +51,14 @@ export async function requireAdministration(request: Request): Promise<ServerAcc
   return access;
 }
 
+export async function requireAtlasAccess(request: Request): Promise<ServerAccessContext> {
+  const access = await requireServerSession(request);
+  if (!canAccessAdministration(access.role) && !canAccessGame(access.role, access.betaEligible)) {
+    throw new Response("Atlas access requires administration or player eligibility.", { status: 403 });
+  }
+  return access;
+}
+
 export function playerAccessResponse(access: ServerAccessContext) {
   return {
     betaEligible: access.betaEligible,

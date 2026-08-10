@@ -53,6 +53,8 @@ test("review routes expose routed and state-only tasks", async ({ page }) => {
 });
 
 test("Atlas data is not disclosed without administrative authorization", async ({ page }) => {
+  const response = await page.request.get("/api/atlas/catalog");
+  expect(response.status()).toBe(401);
   await page.goto("/admin/atlas/pois?state=ATLAS_POI_2D");
   await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
   await expect(page.getByText("92 canonical Points of Interest")).not.toBeVisible();
