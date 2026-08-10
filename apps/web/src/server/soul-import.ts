@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { TimelineEventType } from "../generated/prisma/enums";
+
 const soulImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
   soulId: z.string().refine((value) => value.trim().length > 0, "soulId cannot be blank"),
@@ -23,10 +25,18 @@ const legendaryRewardImportRowSchema = z.object({
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
 }).strict();
 
+const timelineEventImportRowSchema = z.object({
+  name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
+  summary: z.string().refine((value) => value.trim().length > 0, "summary cannot be blank"),
+  timelineEventId: z.string().refine((value) => value.trim().length > 0, "timelineEventId cannot be blank"),
+  timelineEventType: z.enum(TimelineEventType),
+}).strict();
+
 export type SoulImportRow = z.infer<typeof soulImportRowSchema>;
 export type DefinitionImportRow = z.infer<typeof definitionImportRowSchema>;
 export type LessonImportRow = z.infer<typeof lessonImportRowSchema>;
 export type LegendaryRewardImportRow = z.infer<typeof legendaryRewardImportRowSchema>;
+export type TimelineEventImportRow = z.infer<typeof timelineEventImportRowSchema>;
 
 interface SoulImportTransaction {
   soul: {
@@ -84,6 +94,20 @@ export interface LegendaryRewardImportDatabase {
   transaction<Result>(work: (transaction: LegendaryRewardImportTransaction) => Promise<Result>): Promise<Result>;
 }
 
+interface TimelineEventImportTransaction {
+  timelineEvent: {
+    createMany(input: { data: TimelineEventImportRow[] }): Promise<{ count: number }>;
+    findMany(input: {
+      select: { name: true; summary: true; timelineEventId: true; timelineEventType: true };
+      where: { timelineEventId: { in: string[] } };
+    }): Promise<TimelineEventImportRow[]>;
+  };
+}
+
+export interface TimelineEventImportDatabase {
+  transaction<Result>(work: (transaction: TimelineEventImportTransaction) => Promise<Result>): Promise<Result>;
+}
+
 export class UnsupportedImportEntityError extends Error {}
 export class CanonicalImportDriftError extends Error {}
 
@@ -125,6 +149,18 @@ export function parseLegendaryRewardImportRows(value: unknown): LegendaryRewardI
       throw new Error(`Import duplicates legendaryRewardId ${row.legendaryRewardId}.`);
     }
     identifiers.add(row.legendaryRewardId);
+  }
+  return rows;
+}
+
+export function parseTimelineEventImportRows(value: unknown): TimelineEventImportRow[] {
+  const rows = z.array(timelineEventImportRowSchema).min(1, "Import requires at least one row.").parse(value);
+  const identifiers = new Set<string>();
+  for (const row of rows) {
+    if (identifiers.has(row.timelineEventId)) {
+      throw new Error(`Import duplicates timelineEventId ${row.timelineEventId}.`);
+    }
+    identifiers.add(row.timelineEventId);
   }
   return rows;
 }
@@ -224,14 +260,42 @@ export async function applyLegendaryRewardImport(
   });
 }
 
+export async function applyTimelineEventImport(
+  value: unknown,
+  database: TimelineEventImportDatabase,
+): Promise<{ changed: number; unchanged: number }> {
+  const rows = parseTimelineEventImportRows(value);
+  return database.transaction(async (transaction) => {
+    const existing = await transaction.timelineEvent.findMany({
+      select: { name: true, summary: true, timelineEventId: true, timelineEventType: true },
+      where: { timelineEventId: { in: rows.map((row) => row.timelineEventId) } },
+    });
+    const existingById = new Map(existing.map((row) => [row.timelineEventId, row]));
+    for (const row of rows) {
+      const persisted = existingById.get(row.timelineEventId);
+      if (persisted && (
+        persisted.name !== row.name ||
+        persisted.summary !== row.summary ||
+        persisted.timelineEventType !== row.timelineEventType
+      )) {
+        throw new CanonicalImportDriftError(`Canonical drift refused for TimelineEvent ${row.timelineEventId}.`);
+      }
+    }
+    const missing = rows.filter((row) => !existingById.has(row.timelineEventId));
+    if (missing.length > 0) await transaction.timelineEvent.createMany({ data: missing });
+    return { changed: missing.length, unchanged: rows.length - missing.length };
+  });
+}
+
 export async function applyRegisteredEntityImport(
   entityKey: string,
   value: unknown,
-  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase,
+  database: SoulImportDatabase | DefinitionImportDatabase | LessonImportDatabase | LegendaryRewardImportDatabase | TimelineEventImportDatabase,
 ) {
   if (entityKey === "soul") return applySoulImport(value, database as SoulImportDatabase);
   if (entityKey === "definition") return applyDefinitionImport(value, database as DefinitionImportDatabase);
   if (entityKey === "lesson") return applyLessonImport(value, database as LessonImportDatabase);
   if (entityKey === "legendaryreward") return applyLegendaryRewardImport(value, database as LegendaryRewardImportDatabase);
+  if (entityKey === "timelineevent") return applyTimelineEventImport(value, database as TimelineEventImportDatabase);
   throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${entityKey}.`);
 }

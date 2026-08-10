@@ -4,11 +4,13 @@ import {
   applyDefinitionImport,
   applyLessonImport,
   applyLegendaryRewardImport,
+  applyTimelineEventImport,
   applyRegisteredEntityImport,
   applySoulImport,
   parseDefinitionImportRows,
   parseLessonImportRows,
   parseLegendaryRewardImportRows,
+  parseTimelineEventImportRows,
   parseSoulImportRows,
 } from "../../src/server/soul-import";
 
@@ -283,5 +285,52 @@ describe("typed LegendaryReward import", () => {
     expect(() => parseLegendaryRewardImportRows([row, row])).toThrow("duplicates legendaryRewardId REWARD-1");
     await expect(applyLegendaryRewardImport([{ ...row, name: "Changed" }], database))
       .rejects.toThrow("Canonical drift refused for LegendaryReward REWARD-1");
+  });
+});
+
+describe("typed TimelineEvent import", () => {
+  const row = {
+    name: "Supplied event",
+    summary: "Supplied summary",
+    timelineEventId: "EVENT-1",
+    timelineEventType: "HISTORICAL" as const,
+  };
+  const stored = new Map<string, typeof row>();
+  const database = {
+    transaction: vi.fn(async <Result>(work: (client: {
+      timelineEvent: {
+        createMany(input: { data: typeof row[] }): Promise<{ count: number }>;
+        findMany(input: {
+          select: { name: true; summary: true; timelineEventId: true; timelineEventType: true };
+          where: { timelineEventId: { in: string[] } };
+        }): Promise<typeof row[]>;
+      };
+    }) => Promise<Result>) => work({
+      timelineEvent: {
+        async createMany({ data }) {
+          for (const item of data) stored.set(item.timelineEventId, { ...item });
+          return { count: data.length };
+        },
+        async findMany({ where }) {
+          return where.timelineEventId.in.flatMap((id) => stored.has(id) ? [{ ...stored.get(id)! }] : []);
+        },
+      },
+    })),
+  };
+
+  it("requires an exact Prisma TimelineEventType without a default", () => {
+    expect(parseTimelineEventImportRows([row])).toEqual([row]);
+    expect(() => parseTimelineEventImportRows([{ ...row, timelineEventType: "UNRESOLVED" }])).toThrow();
+    const missingType: Partial<typeof row> = { ...row };
+    delete missingType.timelineEventType;
+    expect(() => parseTimelineEventImportRows([missingType])).toThrow();
+  });
+
+  it("is idempotent and refuses finite-field drift", async () => {
+    stored.clear();
+    await expect(applyTimelineEventImport([row], database)).resolves.toEqual({ changed: 1, unchanged: 0 });
+    await expect(applyRegisteredEntityImport("timelineevent", [row], database)).resolves.toEqual({ changed: 0, unchanged: 1 });
+    await expect(applyTimelineEventImport([{ ...row, timelineEventType: "ATROCITY" }], database))
+      .rejects.toThrow("Canonical drift refused for TimelineEvent EVENT-1");
   });
 });
