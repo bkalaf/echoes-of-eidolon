@@ -44,7 +44,8 @@ describe("role-specific public home", () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "member" }, error: null });
     renderHome();
-    expect(await screen.findByRole("heading", { name: "Member access" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Member access level" })).toBeInTheDocument();
+    expect(screen.getByText(/does not establish beta\/player eligibility/)).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Open Administration" })).not.toBeInTheDocument();
   });
 

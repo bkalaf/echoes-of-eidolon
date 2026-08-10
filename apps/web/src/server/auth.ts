@@ -4,6 +4,7 @@ import { betterAuth } from "better-auth";
 import { APIError } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { organization } from "better-auth/plugins/organization";
+import { twoFactor } from "better-auth/plugins/two-factor";
 import { username } from "better-auth/plugins/username";
 import { z } from "zod";
 
@@ -22,6 +23,15 @@ function createAuth() {
     database: prismaAdapter(getDatabase(), { provider: "postgresql" }),
     databaseHooks: {
       user: {
+        create: {
+          before: async (user) => {
+            if (user.eligibilityStatus === "MINOR_14_17_GUARDIAN_CONSENTED") {
+              throw new APIError("BAD_REQUEST", {
+                message: "Guardian-consent verification is not yet available.",
+              });
+            }
+          },
+        },
         update: {
           before: async (user) => {
             if ("username" in user || "displayUsername" in user) {
@@ -34,10 +44,10 @@ function createAuth() {
     user: {
       additionalFields: {
         eligibilityStatus: {
-          type: ["AGE_18_OR_OLDER", "AGE_14_TO_17_WITH_GUARDIAN_PERMISSION"],
+          type: ["ADULT_18_PLUS", "MINOR_14_17_GUARDIAN_CONSENTED"],
           required: true,
           validator: {
-            input: z.enum(["AGE_18_OR_OLDER", "AGE_14_TO_17_WITH_GUARDIAN_PERMISSION"]),
+            input: z.enum(["ADULT_18_PLUS", "MINOR_14_17_GUARDIAN_CONSENTED"]),
           },
         },
       },
@@ -46,15 +56,33 @@ function createAuth() {
       enabled: true,
       requireEmailVerification: true,
     },
+    session: {
+      expiresIn: 60 * 60 * 24 * 7,
+      updateAge: 60 * 60 * 24,
+    },
     plugins: [
       username(),
       emailOTP({
+        allowedAttempts: 3,
         changeEmail: { enabled: true },
+        expiresIn: 60 * 10,
+        otpLength: 6,
         overrideDefaultEmailVerification: true,
         sendVerificationOnSignUp: true,
         storeOTP: "hashed",
         sendVerificationOTP: async ({ email, otp, type }) => {
           await sendAuthenticationCode({ recipient: email, code: otp, purpose: type });
+        },
+      }),
+      twoFactor({
+        otpOptions: {
+          allowedAttempts: 3,
+          digits: 6,
+          period: 10,
+          sendOTP: async ({ otp, user }) => {
+            await sendAuthenticationCode({ recipient: user.email, code: otp, purpose: "two-factor" });
+          },
+          storeOTP: "hashed",
         },
       }),
       organization({

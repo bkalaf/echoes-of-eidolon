@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import {
   authorizationRoles,
+  adminCapabilities,
   canAccessAdministration,
   canAccessGame,
+  hasAdminCapability,
+  hasMemberBenefits,
   resolveAuthorizationRole,
 } from "../../src/domain/authorization";
 
@@ -28,7 +31,36 @@ describe("authorization roles", () => {
     expect(authorizationRoles.filter(canAccessAdministration)).toEqual(["admin", "owner"]);
   });
 
-  it("allows member, admin and owner into the game", () => {
-    expect(authorizationRoles.filter(canAccessGame)).toEqual(["member", "admin", "owner"]);
+  it("gives admins the supplied capabilities except role changes", () => {
+    expect(adminCapabilities.filter((capability) => hasAdminCapability("admin", capability))).toEqual([
+      "reviewInvitations",
+      "configurePerks",
+      "operateBulkApi",
+    ]);
+    expect(adminCapabilities.filter((capability) => hasAdminCapability("owner", capability))).toEqual(adminCapabilities);
+    expect(adminCapabilities.some((capability) => hasAdminCapability("member", capability))).toBe(false);
+  });
+
+  it.each([
+    ["guest", false, false],
+    ["guest", true, false],
+    ["user", false, false],
+    ["user", true, true],
+    ["member", false, false],
+    ["member", true, true],
+    ["admin", false, false],
+    ["admin", true, true],
+    ["owner", false, true],
+    ["owner", true, true],
+  ] as const)("resolves game access for %s with betaEligible=%s", (role, betaEligible, expected) => {
+    expect(canAccessGame(role, betaEligible)).toBe(expected);
+  });
+
+  it("keeps membership benefits separate from authorization and beta eligibility", () => {
+    expect(hasMemberBenefits({ role: "member", membershipEntitled: true })).toBe(true);
+    expect(hasMemberBenefits({ role: "admin", membershipEntitled: false })).toBe(false);
+    expect(hasMemberBenefits({ role: "admin", membershipEntitled: true })).toBe(true);
+    expect(hasMemberBenefits({ role: "owner", membershipEntitled: true })).toBe(false);
+    expect(hasMemberBenefits({ role: "owner", membershipEntitled: false, ownerPolicyAllowsBenefits: true })).toBe(true);
   });
 });

@@ -2,14 +2,10 @@ import { render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const authMocks = vi.hoisted(() => ({
-  getActiveMemberRole: vi.fn(),
-  useSession: vi.fn(),
-}));
+const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
-    organization: { getActiveMemberRole: authMocks.getActiveMemberRole },
     useSession: authMocks.useSession,
   },
 }));
@@ -30,10 +26,17 @@ function renderGame(screenId: string) {
   );
 }
 
+function playerAccess(input: { betaEligible: boolean; canPlay: boolean; role: string }) {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    json: async () => input,
+    ok: true,
+  }));
+}
+
 describe("game runtime boundary", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: "member" }, error: null });
+    playerAccess({ betaEligible: true, canPlay: true, role: "member" });
   });
 
   it("does not expose player or story data without an authenticated session", () => {
@@ -91,30 +94,36 @@ describe("game runtime boundary", () => {
     expect(await screen.findByText(message)).toBeInTheDocument();
   });
 
-  it("does not grant game access to an authenticated user without membership", async () => {
+  it("does not grant game access to an authenticated user without beta eligibility", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role: null }, error: null });
+    playerAccess({ betaEligible: false, canPlay: false, role: "user" });
     renderGame("GAM001");
 
-    expect(await screen.findByRole("heading", { name: "Member access required" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Player eligibility required" })).toBeInTheDocument();
     expect(screen.queryByRole("textbox", { name: "Speak or type freely" })).not.toBeInTheDocument();
   });
 
-  it.each(["admin", "owner"])("grants game access to the %s organization role", async (role) => {
+  it("does not infer player eligibility from the admin authorization role", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({ data: { role }, error: null });
+    playerAccess({ betaEligible: false, canPlay: false, role: "admin" });
+    renderGame("GAME008");
+
+    expect(await screen.findByRole("heading", { name: "Player eligibility required" })).toBeInTheDocument();
+    expect(screen.queryByRole("textbox", { name: "Speak or type freely" })).not.toBeInTheDocument();
+  });
+
+  it("grants the owner access without a separate participation decision", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    playerAccess({ betaEligible: false, canPlay: true, role: "owner" });
     renderGame("GAME008");
 
     expect(await screen.findByRole("textbox", { name: "Speak or type freely" })).toBeDisabled();
-    expect(screen.queryByRole("heading", { name: "Member access required" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Player eligibility required" })).not.toBeInTheDocument();
   });
 
-  it("fails closed when the organization role cannot be verified", async () => {
+  it("fails closed when player eligibility cannot be verified", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    authMocks.getActiveMemberRole.mockResolvedValue({
-      data: null,
-      error: { message: "authorization unavailable" },
-    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
     renderGame("GAM001");
 
     expect(await screen.findByRole("heading", { name: "Game access unavailable" })).toBeInTheDocument();

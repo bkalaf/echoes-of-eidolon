@@ -103,7 +103,7 @@ function SignedInHome() {
   const role = resolveAuthorizationRole(true, organizationRole.data);
   if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>No active organization membership was verified. Member and administrative content is not shown.</p></section></>;
   if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your organization authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the verified active organization role.</p><a className="button button--gold" href="/admin">Open Administration</a></section></>;
-  return <><PageHead eyebrow="Home" title="Welcome back." description="Your organization membership was verified." /><section className="card"><h2>Member access</h2><p>Member access is verified. Game progress, release state, and subscription state are not inferred from that role.</p><a className="button" href="/account">Open Account</a></section></>;
+  return <><PageHead eyebrow="Home" title="Welcome back." description="Your organization access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
 }
 
 export function PublicPage({ screen }: { screen: PageManifestEntry }) {

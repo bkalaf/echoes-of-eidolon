@@ -144,8 +144,14 @@ enum CapabilityValueType {
 }
 
 enum AccountEligibilityStatus {
-  AGE_18_OR_OLDER
-  AGE_14_TO_17_WITH_GUARDIAN_PERMISSION
+  ADULT_18_PLUS
+  MINOR_14_17_GUARDIAN_CONSENTED
+}
+
+enum BetaInviteRequestStatus {
+  PENDING
+  INVITED
+  REJECTED
 }
 
 model User {
@@ -157,6 +163,8 @@ model User {
   emailVerified     Boolean                  @default(false)
   image             String?
   eligibilityStatus AccountEligibilityStatus
+  betaEligible       Boolean                  @default(false)
+  twoFactorEnabled   Boolean                  @default(false)
   createdAt         DateTime                 @default(now())
   updatedAt         DateTime                 @updatedAt
   sessions          Session[]
@@ -164,6 +172,9 @@ model User {
   passkeys          Passkey[]
   memberships       Member[]
   sentInvitations   Invitation[]             @relation("InvitationInviter")
+  betaInviteRequests BetaInviteRequest[]      @relation("BetaInviteRequester")
+  consumedBetaInvites BetaInvitationCode[]    @relation("BetaInviteConsumer")
+  twoFactors        TwoFactor[]
 }
 
 model Session {
@@ -220,6 +231,54 @@ model Invitation {
   @@index([organizationId])
   @@index([email])
   @@index([inviterId])
+}
+
+model TwoFactor {
+  id                      String    @id
+  secret                  String
+  backupCodes             String
+  userId                  String
+  verified                Boolean   @default(true)
+  failedVerificationCount Int       @default(0)
+  lockedUntil             DateTime?
+  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([secret])
+  @@index([userId])
+}
+
+model BetaInviteRequest {
+  id          String                  @id
+  requesterId String
+  friendName  String
+  email       String
+  reason      String
+  status      BetaInviteRequestStatus @default(PENDING)
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+  requester   User                    @relation("BetaInviteRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  invitation  BetaInvitationCode?
+
+  @@index([requesterId])
+  @@index([status])
+}
+
+model BetaInvitationCode {
+  id               String            @id
+  requestId        String            @unique
+  recipientEmail   String
+  codeHash         String            @unique
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  consumedAt       DateTime?
+  consumedByUserId String?
+  createdAt        DateTime          @default(now())
+  request          BetaInviteRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  consumedBy       User?             @relation("BetaInviteConsumer", fields: [consumedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([recipientEmail])
+  @@index([expiresAt])
+  @@index([consumedByUserId])
 }
 
 model Account {

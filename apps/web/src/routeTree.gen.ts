@@ -15,6 +15,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
+import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
+import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +49,23 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBetaInvitationsRedeemRoute =
+  ApiBetaInvitationsRedeemRouteImport.update({
+    id: '/api/beta-invitations/redeem',
+    path: '/api/beta-invitations/redeem',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiBetaInvitationsRequestRoute =
+  ApiBetaInvitationsRequestRouteImport.update({
+    id: '/api/beta-invitations/request',
+    path: '/api/beta-invitations/request',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPlayerAccessRoute = ApiPlayerAccessRouteImport.update({
+  id: '/api/player/access',
+  path: '/api/player/access',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +74,9 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
+  '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
+  '/api/player/access': typeof ApiPlayerAccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +85,9 @@ export interface FileRoutesByTo {
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
+  '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
+  '/api/player/access': typeof ApiPlayerAccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,14 +97,33 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
+  '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
+  '/api/player/access': typeof ApiPlayerAccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$' | '/about' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
+    | '/'
+    | '/$'
+    | '/about'
+    | '/api/health'
+    | '/api/atlas/catalog'
+    | '/api/auth/$'
+    | '/api/beta-invitations/redeem'
+    | '/api/beta-invitations/request'
+    | '/api/player/access'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/$' | '/about' | '/api/health' | '/api/atlas/catalog' | '/api/auth/$'
+    | '/'
+    | '/$'
+    | '/about'
+    | '/api/health'
+    | '/api/atlas/catalog'
+    | '/api/auth/$'
+    | '/api/beta-invitations/redeem'
+    | '/api/beta-invitations/request'
+    | '/api/player/access'
   id:
     | '__root__'
     | '/'
@@ -87,6 +132,9 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/atlas/catalog'
     | '/api/auth/$'
+    | '/api/beta-invitations/redeem'
+    | '/api/beta-invitations/request'
+    | '/api/player/access'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -96,6 +144,9 @@ export interface RootRouteChildren {
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
+  ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
+  ApiPlayerAccessRoute: typeof ApiPlayerAccessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -142,6 +193,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/beta-invitations/redeem': {
+      id: '/api/beta-invitations/redeem'
+      path: '/api/beta-invitations/redeem'
+      fullPath: '/api/beta-invitations/redeem'
+      preLoaderRoute: typeof ApiBetaInvitationsRedeemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/beta-invitations/request': {
+      id: '/api/beta-invitations/request'
+      path: '/api/beta-invitations/request'
+      fullPath: '/api/beta-invitations/request'
+      preLoaderRoute: typeof ApiBetaInvitationsRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/player/access': {
+      id: '/api/player/access'
+      path: '/api/player/access'
+      fullPath: '/api/player/access'
+      preLoaderRoute: typeof ApiPlayerAccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -152,6 +224,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHealthRoute: ApiHealthRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
+  ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,
+  ApiPlayerAccessRoute: ApiPlayerAccessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

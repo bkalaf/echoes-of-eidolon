@@ -27,7 +27,7 @@ export async function sendVerificationEmail(input: {
 export async function sendAuthenticationCode(input: {
   recipient: string;
   code: string;
-  purpose: "sign-in" | "email-verification" | "forget-password" | "change-email";
+  purpose: "sign-in" | "email-verification" | "forget-password" | "change-email" | "two-factor";
 }): Promise<void> {
   const env = getEmailEnv();
   const { error } = await getEmailClient().emails.send({
@@ -54,4 +54,20 @@ export async function sendOrganizationInvitation(input: {
   });
 
   if (error) throw new Error(`Resend rejected the organization invitation: ${error.message}`);
+}
+
+export async function sendBetaInvitation(input: {
+  code: string;
+  expiresAt: Date;
+  recipient: string;
+}): Promise<void> {
+  const env = getEmailEnv();
+  const { error } = await getEmailClient().emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: input.recipient,
+    subject: "Your Echoes of Eidolon beta invitation",
+    text: `Your one-time invitation code is ${input.code}. It expires at ${input.expiresAt.toISOString()}.`,
+  });
+
+  if (error) throw new Error(`Resend rejected the beta invitation: ${error.message}`);
 }

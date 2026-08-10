@@ -27,18 +27,30 @@ describe("persistence contract", () => {
     expect(migration).toContain("PuzzleBlueprint_authored_hints_check");
   });
 
-  it("persists only the two reviewed account eligibility states", () => {
+  it("renames age eligibility without storing date of birth or exact age", () => {
     const migration = readFileSync(
       resolve(
         import.meta.dirname,
-        "../../prisma/migrations/20260810053000_account_eligibility/migration.sql",
+        "../../prisma/migrations/20260810070000_identity_beta_and_two_factor/migration.sql",
       ),
       "utf8",
     );
-    expect(migration).toContain("AGE_18_OR_OLDER");
-    expect(migration).toContain("AGE_14_TO_17_WITH_GUARDIAN_PERMISSION");
+    expect(migration).toContain("ADULT_18_PLUS");
+    expect(migration).toContain("MINOR_14_17_GUARDIAN_CONSENTED");
     expect(migration).not.toContain('"dateOfBirth"');
-    expect(migration).not.toContain('"numericAge"');
+    expect(migration).not.toContain('"exactAge"');
+  });
+
+  it("persists beta invitations separately from roles and entitlements", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810070000_identity_beta_and_two_factor/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "BetaInviteRequest"');
+    expect(migration).toContain('CREATE TABLE "BetaInvitationCode"');
+    expect(migration).toContain('"codeHash" TEXT NOT NULL');
+    expect(migration).toContain('"betaEligible" BOOLEAN NOT NULL DEFAULT false');
+    expect(migration).not.toContain('"code" TEXT');
   });
 
   it("persists the Better Auth Organizations authorization schema", () => {
