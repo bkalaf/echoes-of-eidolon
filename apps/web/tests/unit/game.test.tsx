@@ -77,6 +77,10 @@ describe("game runtime boundary", () => {
     expect(screen.getByLabelText("Pre-year story days").querySelectorAll("span")).toHaveLength(3);
     expect(screen.getByText(/18 months per year · 27 days per month/)).toBeInTheDocument();
     expect(screen.getByText(/Sonntag is hidden and excluded/)).toBeInTheDocument();
+    expect(screen.getByText("Yearsend 25")).toBeInTheDocument();
+    expect(screen.getByText("Yearsend 26")).toBeInTheDocument();
+    expect(screen.getByText("Yearsend 27")).toBeInTheDocument();
+    expect(screen.queryByText("Story day 1")).not.toBeInTheDocument();
     for (const inventedName of ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]) {
       expect(screen.queryByText(inventedName, { exact: true })).not.toBeInTheDocument();
     }
