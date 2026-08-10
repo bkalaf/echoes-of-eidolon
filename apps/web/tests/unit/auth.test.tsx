@@ -94,6 +94,9 @@ describe("reviewed authentication states", () => {
 
   it("sends and verifies a six-digit email two-factor OTP", async () => {
     render(<AuthPage screen={authScreen("AUTH08")} />);
+    expect(screen.getByLabelText("6-digit code")).toHaveAttribute("type", "text");
+    expect(screen.getByLabelText("6-digit code")).toHaveAttribute("maxlength", "6");
+    expect(screen.getByLabelText("6-digit code")).toHaveAttribute("pattern", "[0-9]{6}");
     fireEvent.click(screen.getByRole("button", { name: "Send code" }));
     await waitFor(() => expect(authMocks.sendOtp).toHaveBeenCalledTimes(1));
     fireEvent.change(screen.getByLabelText("6-digit code"), { target: { value: "123456" } });

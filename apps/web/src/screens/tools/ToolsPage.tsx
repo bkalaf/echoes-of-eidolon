@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import { PublicShell } from "../../components/shells/Shells";
-import { HardenedSelect } from "../../components/ui/controls";
+import { BoundedNumberField, HardenedSelect } from "../../components/ui/controls";
 
 function ToolsHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">REVIEW TOOL · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -11,7 +11,7 @@ function Controls({ screen }: { screen: PageManifestEntry }) {
   const [value, setValue] = useState("");
   if (screen.screenId === "TOOL002") return <><ToolsHead screen={screen} description="Free-solo text control review." /><section className="form-card"><label className="field">Free-solo value<input className="input" value={value} onChange={(event) => setValue(event.target.value)} /></label><p>Current value: {value || "None"}</p></section></>;
   if (screen.screenId === "TOOL003") return <><ToolsHead screen={screen} description="Current controlled enum selectors." /><section className="form-card"><HardenedSelect label="World" value="CONCORD" onChange={() => undefined}><option>CONCORD</option><option>RUIN</option><option>SCHISM</option></HardenedSelect><HardenedSelect label="Species kind" value="HUMAN" onChange={() => undefined}><option>HUMAN</option><option>BEAST</option><option>MYTHOS</option><option>PET</option></HardenedSelect><HardenedSelect label="Timeline event type" value="HISTORICAL" onChange={() => undefined}><option>HISTORICAL</option><option>ATROCITY</option><option>EXODUS</option><option>IN_TRANSIT</option></HardenedSelect></section></>;
-  if (screen.screenId === "TOOL004") return <><ToolsHead screen={screen} description="Numeric control boundaries and invalid states." /><section className="form-card"><label className="field">Difficulty tier<input className="input" type="number" min="1" max="5" defaultValue="3" /></label><label className="field">Population<input className="input" type="number" min="0" step="1" /></label><label className="field">Longitude<input className="input" type="number" min="-180" max="180" step="0.001" /></label></section></>;
+  if (screen.screenId === "TOOL004") return <><ToolsHead screen={screen} description="Numeric control boundaries and invalid states." /><section className="form-card"><BoundedNumberField control="gameOrdinalDay" /><BoundedNumberField control="gameHour" /><BoundedNumberField control="gameMinute" /><BoundedNumberField control="gameYear" /><BoundedNumberField control="book" /><BoundedNumberField control="latitude" /><BoundedNumberField control="longitude" /></section></>;
   return <><ToolsHead screen={screen} description="Hardened lookup controls with visible selected values." /><section className="grid-3"><article className="card"><HardenedSelect label="Breed" value="" onChange={() => undefined}><option value="">Select Breed</option></HardenedSelect></article><article className="card"><HardenedSelect label="Antagonist 1" value="" onChange={() => undefined}><option value="">Select Antagonist</option></HardenedSelect></article><article className="card"><HardenedSelect label="Architect" value="" onChange={() => undefined}><option value="">Select Architect</option></HardenedSelect></article></section></>;
 }
 

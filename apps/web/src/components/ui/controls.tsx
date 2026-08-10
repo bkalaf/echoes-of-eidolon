@@ -4,6 +4,9 @@ import type {
   ReactNode,
   SelectHTMLAttributes,
 } from "react";
+import { forwardRef } from "react";
+
+import { numericControlContracts, type NumericControlKey } from "../../domain/numeric-controls";
 
 type ButtonVariant = "default" | "gold" | "danger" | "good";
 
@@ -59,4 +62,27 @@ export function HardenedSelect({
 
 export function Chip({ children, tone = "cyan" }: { children: ReactNode; tone?: string }) {
   return <span className={`chip chip--${tone}`}>{children}</span>;
+}
+
+export const OtpInput = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLInputElement>, "inputMode" | "maxLength" | "minLength" | "pattern" | "type">>(function OtpInput({ className = "", onInput, ...props }, ref) {
+  return <input
+    {...props}
+    autoComplete="one-time-code"
+    className={["input", "input--otp", className].filter(Boolean).join(" ")}
+    inputMode="numeric"
+    maxLength={6}
+    minLength={6}
+    onInput={(event) => {
+      event.currentTarget.value = event.currentTarget.value.replace(/\D/g, "").slice(0, 6);
+      onInput?.(event);
+    }}
+    pattern="[0-9]{6}"
+    ref={ref}
+    type="text"
+  />;
+});
+
+export function BoundedNumberField({ control, defaultValue }: { control: NumericControlKey; defaultValue?: number }) {
+  const contract = numericControlContracts[control];
+  return <label className="field">{contract.label}<input className="input" defaultValue={defaultValue} max={contract.max} min={contract.min} step={contract.step} type="number" /></label>;
 }

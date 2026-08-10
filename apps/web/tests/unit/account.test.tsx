@@ -75,6 +75,23 @@ describe("account session boundary", () => {
     await waitFor(() => expect(authMocks.updateUser).toHaveBeenCalledWith({ name: "Updated Name" }));
   });
 
+  it("uses the dedicated six-digit OTP control for email re-verification", () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
+      isPending: false,
+    });
+    render(<AccountPage screen={accountScreen("ACC003")} />);
+
+    const code = screen.getByLabelText("Verification code");
+    expect(code).toHaveAttribute("type", "text");
+    expect(code).toHaveAttribute("maxlength", "6");
+    expect(code).toHaveAttribute("pattern", "[0-9]{6}");
+    fireEvent.change(screen.getByLabelText("New email"), { target: { value: "new@example.test" } });
+    fireEvent.input(code, { target: { value: "12x3456" } });
+    expect(code).toHaveValue("123456");
+    expect(screen.getByRole("button", { name: "Verify & Change Email" })).toBeEnabled();
+  });
+
   it("shows unowned subscription state as deferred instead of active or declined", () => {
     authMocks.useSession.mockReturnValue({
       data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
