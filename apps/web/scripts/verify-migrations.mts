@@ -192,6 +192,50 @@ try {
       () => verification.query(`UPDATE "PuzzleChallengeAccepted" SET "acceptedAt" = CURRENT_TIMESTAMP WHERE "puzzleChallengeAcceptedId" = 'acceptance'`),
       "PuzzleChallengeAccepted update was not rejected",
     );
+
+    await verification.query(
+      `INSERT INTO "MembershipGrant" (
+         "membershipGrantId", "userId", "source", "sourceReference", "amountCents", "monthsGranted", "anchorDay",
+         "effectiveStartAt", "effectiveEndAt"
+       ) VALUES (
+         'subscription-grant', 'capability-user', 'SUBSCRIPTION', 'subscription-reference', 999, 1, 1,
+         '2030-01-01T00:00:00Z', '2030-02-01T00:00:00Z'
+       )`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "MembershipGrant" (
+           "membershipGrantId", "userId", "source", "sourceReference", "amountCents", "monthsGranted", "anchorDay",
+           "effectiveStartAt", "effectiveEndAt"
+         ) VALUES (
+           'bad-subscription-grant', 'capability-user', 'SUBSCRIPTION', 'bad-subscription-reference', 1000, 1, 1,
+           '2030-01-01T00:00:00Z', '2030-02-01T00:00:00Z'
+         )`,
+      ),
+      "Non-$9.99 subscription grant was not rejected",
+    );
+    await verification.query(
+      `INSERT INTO "MembershipGrant" (
+         "membershipGrantId", "userId", "source", "sourceReference", "amountCents", "monthsGranted", "anchorDay",
+         "effectiveStartAt", "effectiveEndAt"
+       ) VALUES (
+         'donation-grant', 'capability-user', 'DONATION', 'donation-reference', 5000, 6, 1,
+         '2030-01-01T00:00:00Z', '2030-07-01T00:00:00Z'
+       )`,
+    );
+    await verification.query(
+      `INSERT INTO "MembershipRevocation" (
+         "membershipRevocationId", "membershipGrantId", "reason", "refundReference", "refundedAmountCents",
+         "remainingNetAmountCents", "monthsAfterRefund", "effectiveEndBefore", "effectiveEndAfter"
+       ) VALUES (
+         'donation-revocation', 'donation-grant', 'DONATION_REFUND', 'refund-reference', 2500,
+         2500, 2, '2030-07-01T00:00:00Z', '2030-03-01T00:00:00Z'
+       )`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "MembershipGrant" SET "amountCents" = 1000 WHERE "membershipGrantId" = 'subscription-grant'`),
+      "MembershipGrant update was not rejected",
+    );
   } finally {
     await verification.end();
   }

@@ -1172,6 +1172,7 @@ model User {
   twoFactors          TwoFactor[]
   capabilityEvents    CapabilityEvent[]
   puzzleAcceptances   PuzzleChallengeAccepted[]
+  membershipGrants    MembershipGrant[]
 }
 
 model Session {
@@ -1857,6 +1858,47 @@ model PromptVersion {
 
   @@unique([promptRecordId, version])
   @@index([generatedManagedAssetId])
+}
+
+model MembershipGrant {
+  membershipGrantId String                 @id
+  userId            String
+  source            MembershipGrantSource
+  sourceReference   String
+  amountCents       Int
+  monthsGranted     Int
+  anchorDay         Int
+  effectiveStartAt  DateTime
+  effectiveEndAt    DateTime
+  createdAt         DateTime               @default(now())
+  user              User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revocations       MembershipRevocation[]
+
+  @@unique([source, sourceReference])
+  @@index([userId, effectiveStartAt])
+}
+
+model MembershipRevocation {
+  membershipRevocationId  String                     @id
+  membershipGrantId       String
+  reason                  MembershipRevocationReason
+  refundReference         String                     @unique
+  refundedAmountCents     Int
+  remainingNetAmountCents Int
+  monthsAfterRefund       Int
+  effectiveEndBefore      DateTime
+  effectiveEndAfter       DateTime
+  revokedAt               DateTime                   @default(now())
+  membershipGrant         MembershipGrant            @relation(fields: [membershipGrantId], references: [membershipGrantId], onDelete: Restrict)
+
+  @@index([membershipGrantId, revokedAt])
+}
+
+model Perk {
+  perkId      String     @id
+  name        String
+  description String
+  status      PerkStatus
 }
 
 model SpeciesGroup {

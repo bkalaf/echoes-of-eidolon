@@ -189,4 +189,21 @@ describe("persistence contract", () => {
     expect(migration).toContain('PuzzleChallengeAccepted_reject_update');
     expect(migration).not.toContain('"endsAt"');
   });
+
+  it("keeps membership grants and donation refund revocations in a separate append-only ledger", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810160000_membership_ledger/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "MembershipGrant"');
+    expect(migration).toContain('CREATE TABLE "MembershipRevocation"');
+    expect(migration).toContain('CREATE TABLE "Perk"');
+    expect(migration).toContain('"amountCents" = 999');
+    expect(migration).toContain('MembershipRevocation_validate');
+    expect(migration).toContain('attempts to revoke consumed entitlement time');
+    expect(migration).toContain('MembershipGrant_reject_update');
+    expect(migration).toContain('MembershipRevocation_reject_update');
+    expect(migration).not.toMatch(/ALTER TABLE "User".*"role"/s);
+    expect(migration).not.toMatch(/ALTER TABLE "User".*"betaEligible"/s);
+  });
 });
