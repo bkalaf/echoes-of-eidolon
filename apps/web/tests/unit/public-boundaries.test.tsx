@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
+import { contactTopicSchema, contactTopicTokens } from "../../src/domain/contact";
 import { PublicPage } from "../../src/screens/public/PublicPage";
 
 function publicScreen(screenId: string) {
@@ -12,8 +13,18 @@ describe("public mutation boundaries", () => {
   it("keeps all eight approved contact topics and blocks unowned delivery", () => {
     render(<PublicPage screen={publicScreen("PUB015")} />);
     expect(screen.getAllByRole("button").filter((button) => button.classList.contains("topic"))).toHaveLength(8);
+    expect(contactTopicTokens).toEqual([...contactTopicTokens].sort());
+    expect(screen.getByRole("button", { name: "Clear General company inquiry" })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(screen.getByRole("button", { name: "Select Press and media" }));
+    expect(screen.getByRole("button", { name: "Clear Press and media" })).toHaveClass("topic--tone-5");
+    expect(document.querySelector<HTMLInputElement>('input[name="topic"]')).toHaveValue("PRESS");
     expect(screen.getByRole("button", { name: "Send unavailable" })).toBeDisabled();
     expect(screen.getByText(/The support recipient is not reused/)).toBeInTheDocument();
+  });
+
+  it("rejects every fabricated company contact topic", () => {
+    expect(contactTopicSchema.safeParse("SUPPORT").success).toBe(false);
+    expect(contactTopicSchema.safeParse("GENERAL").success).toBe(true);
   });
 
   it("uses the exact invitation consent and blocks unowned issuance", () => {
