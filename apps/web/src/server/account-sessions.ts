@@ -13,20 +13,36 @@ interface AccountSessionOwner {
   userId: string;
 }
 
+export async function listAccountSessions(
+  input: AccountSessionOwner,
+  database: PrismaClient = getDatabase(),
+) {
+  const sessions = await database.session.findMany({
+    where: { userId: input.userId },
+    orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
+    select: {
+      expiresAt: true,
+      id: true,
+      ipAddress: true,
+      token: true,
+      updatedAt: true,
+      userAgent: true,
+    },
+  });
+  return sessions.map(({ id, token, ...session }) => ({
+    ...session,
+    isCurrent: token === input.currentSessionToken,
+    sessionId: id,
+  }));
+}
+
 export async function revokeOneOtherSession(
-  input: AccountSessionOwner & { token: string },
+  input: AccountSessionOwner & { sessionId: string },
   database: PrismaClient = getDatabase(),
 ): Promise<void> {
-  if (input.token === input.currentSessionToken) {
-    throw new AccountSessionRequestError(
-      "The current session cannot be revoked by an other-session action.",
-      400,
-    );
-  }
-
   const result = await database.session.deleteMany({
     where: {
-      token: input.token,
+      id: input.sessionId,
       userId: input.userId,
       NOT: { token: input.currentSessionToken },
     },

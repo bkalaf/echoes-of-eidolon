@@ -18,7 +18,8 @@ interface AccountUser {
 interface AccountSession {
   expiresAt: Date | string;
   ipAddress?: string | null;
-  token: string;
+  isCurrent: boolean;
+  sessionId: string;
   updatedAt: Date | string;
   userAgent?: string | null;
 }
@@ -79,6 +80,7 @@ function resultError(result: { error: { message?: string } | null }): string | u
 }
 
 function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
+  void currentToken;
   const [sessions, setSessions] = useState<AccountSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -86,31 +88,31 @@ function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
 
   useEffect(() => {
     let active = true;
-    void authClient.listSessions().then((result) => {
+    void fetch("/api/account/sessions/").then(async (response) => {
+      const result = await response.json() as { error?: string; sessions?: AccountSession[] };
       if (!active) return;
       setLoading(false);
-      const nextError = resultError(result);
-      if (nextError) setError(nextError);
-      else setSessions(result.data ?? []);
+      if (!response.ok || !result.sessions) setError(result.error ?? "Authorized sessions could not be loaded.");
+      else setSessions(result.sessions);
+    }).catch(() => {
+      if (!active) return;
+      setLoading(false);
+      setError("Authorized sessions could not be loaded.");
     });
     return () => { active = false; };
   }, []);
 
-  const revoke = async (token: string) => {
-    if (token === currentToken) {
-      setError("The current session cannot be revoked by an other-session action.");
-      return;
-    }
+  const revoke = async (sessionId: string) => {
     setBusy(true);
     const response = await fetch("/api/account/sessions/revoke-other", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ sessionId }),
     });
     const result = await response.json() as { error?: string };
     setBusy(false);
     if (!response.ok) setError(result.error ?? "The other session could not be revoked.");
-    else setSessions((current) => current.filter((session) => session.token !== token));
+    else setSessions((current) => current.filter((session) => session.sessionId !== sessionId));
   };
 
   const revokeOthers = async () => {
@@ -119,11 +121,11 @@ function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
     const result = await response.json() as { error?: string };
     setBusy(false);
     if (!response.ok) setError(result.error ?? "The other sessions could not be revoked.");
-    else setSessions((current) => current.filter((session) => session.token === currentToken));
+    else setSessions((current) => current.filter((session) => session.isCurrent));
   };
 
-  const otherCount = sessions.filter((session) => session.token !== currentToken).length;
-  return <section className="card span-2"><div className="action-row action-row--between"><div><h2>Authorized sessions</h2><p>Current and other signed-in devices.</p></div><button className="button" disabled={busy || otherCount === 0} onClick={revokeOthers}>Revoke all other sessions</button></div>{loading ? <p className="notice">Loading sessions…</p> : sessions.length === 0 ? <p>No active sessions were returned.</p> : <div className="stack">{sessions.map((session) => { const current = session.token === currentToken; return <article className="card" key={session.token}><div className="action-row action-row--between"><div><strong>{session.userAgent || "Unknown device"}</strong><p>{session.ipAddress || "IP unavailable"}</p><p>Last activity: {new Date(session.updatedAt).toLocaleString()}</p><p>Expires: {new Date(session.expiresAt).toLocaleString()}</p></div><div>{current ? <span className="tag">Current session</span> : <button className="button" disabled={busy} onClick={() => revoke(session.token)}>Revoke this other session</button>}</div></div></article>; })}</div>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section>;
+  const otherCount = sessions.filter((session) => !session.isCurrent).length;
+  return <section className="card span-2"><div className="action-row action-row--between"><div><h2>Authorized sessions</h2><p>Current and other signed-in devices.</p></div><button className="button" disabled={busy || otherCount === 0} onClick={revokeOthers}>Revoke all other sessions</button></div>{loading ? <p className="notice">Loading sessions…</p> : sessions.length === 0 ? <p>No active sessions were returned.</p> : <div className="stack">{sessions.map((session) => <article className="card" key={session.sessionId}><div className="action-row action-row--between"><div><strong>{session.userAgent || "Unknown device"}</strong><p>{session.ipAddress || "IP unavailable"}</p><p>Last activity: {new Date(session.updatedAt).toLocaleString()}</p><p>Expires: {new Date(session.expiresAt).toLocaleString()}</p></div><div>{session.isCurrent ? <span className="tag">Current session</span> : <button className="button" disabled={busy} onClick={() => revoke(session.sessionId)}>Revoke this other session</button>}</div></div></article>)}</div>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section>;
 }
 
 function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: string; screen: PageManifestEntry; user: AccountUser }) {

@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
   AccountSessionRequestError,
+  listAccountSessions,
   revokeAllOtherSessions,
   revokeOneOtherSession,
 } from "../../src/server/account-sessions";
@@ -16,17 +17,20 @@ function databaseWithDeleteResult(count: number) {
 }
 
 describe("account other-session revocation", () => {
-  it("rejects a fabricated one-other request for the current session before persistence", async () => {
-    const { database, deleteMany } = databaseWithDeleteResult(1);
+  it("projects session identifiers and current state without returning bearer tokens", async () => {
+    const findMany = vi.fn().mockResolvedValue([
+      { id: "session-current", token: "current-token", updatedAt: new Date(), expiresAt: new Date(), ipAddress: null, userAgent: null },
+      { id: "session-other", token: "other-token", updatedAt: new Date(), expiresAt: new Date(), ipAddress: null, userAgent: null },
+    ]);
+    const database = { session: { findMany } } as unknown as PrismaClient;
 
-    await expect(revokeOneOtherSession({
-      currentSessionToken: "current-token",
-      token: "current-token",
-      userId: "user-1",
-    }, database)).rejects.toEqual(expect.objectContaining<AccountSessionRequestError>({
-      status: 400,
-    }));
-    expect(deleteMany).not.toHaveBeenCalled();
+    const sessions = await listAccountSessions({ currentSessionToken: "current-token", userId: "user-1" }, database);
+
+    expect(sessions.map(({ sessionId, isCurrent }) => ({ sessionId, isCurrent }))).toEqual([
+      { sessionId: "session-current", isCurrent: true },
+      { sessionId: "session-other", isCurrent: false },
+    ]);
+    expect(sessions).not.toEqual(expect.arrayContaining([expect.objectContaining({ token: expect.anything() })]));
   });
 
   it("deletes one token only when it belongs to the authenticated user and is not current", async () => {
@@ -34,14 +38,14 @@ describe("account other-session revocation", () => {
 
     await revokeOneOtherSession({
       currentSessionToken: "current-token",
-      token: "other-token",
+      sessionId: "session-other",
       userId: "user-1",
     }, database);
 
     expect(deleteMany).toHaveBeenCalledWith({
       where: {
+        id: "session-other",
         NOT: { token: "current-token" },
-        token: "other-token",
         userId: "user-1",
       },
     });
@@ -52,7 +56,7 @@ describe("account other-session revocation", () => {
 
     await expect(revokeOneOtherSession({
       currentSessionToken: "current-token",
-      token: "another-users-token",
+      sessionId: "another-users-session",
       userId: "user-1",
     }, database)).rejects.toEqual(expect.objectContaining<AccountSessionRequestError>({
       status: 404,

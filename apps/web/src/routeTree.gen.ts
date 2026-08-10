@@ -24,6 +24,7 @@ import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta
 import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
 import { Route as ApiAccountOrdersIndexRouteImport } from './routes/api/account/orders/index'
 import { Route as ApiAccountOrdersOrderIdRouteImport } from './routes/api/account/orders/$orderId'
+import { Route as ApiAccountSessionsIndexRouteImport } from './routes/api/account/sessions/index'
 import { Route as ApiAccountSessionsRevokeAllOtherRouteImport } from './routes/api/account/sessions/revoke-all-other'
 import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/account/sessions/revoke-other'
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
@@ -117,6 +118,11 @@ const ApiAccountOrdersIndexRoute = ApiAccountOrdersIndexRouteImport.update({
 const ApiAccountOrdersOrderIdRoute = ApiAccountOrdersOrderIdRouteImport.update({
   id: '/api/account/orders/$orderId',
   path: '/api/account/orders/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountSessionsIndexRoute = ApiAccountSessionsIndexRouteImport.update({
+  id: '/api/account/sessions/',
+  path: '/api/account/sessions/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAccountSessionsRevokeAllOtherRoute =
@@ -239,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
+  '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -273,6 +280,7 @@ export interface FileRoutesByTo {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/account/orders': typeof ApiAccountOrdersIndexRoute
+  '/api/account/sessions': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
@@ -308,6 +316,7 @@ export interface FileRoutesById {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
+  '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/account/orders/'
+    | '/api/account/sessions/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -378,6 +388,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/account/orders'
+    | '/api/account/sessions'
     | '/api/admin/accounts'
     | '/api/admin/assets'
     | '/api/admin/beta-invitations'
@@ -412,6 +423,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/account/orders/'
+    | '/api/account/sessions/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
   ApiAccountOrdersIndexRoute: typeof ApiAccountOrdersIndexRoute
+  ApiAccountSessionsIndexRoute: typeof ApiAccountSessionsIndexRoute
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
@@ -562,6 +575,13 @@ declare module '@tanstack/react-router' {
       path: '/api/account/orders/$orderId'
       fullPath: '/api/account/orders/$orderId'
       preLoaderRoute: typeof ApiAccountOrdersOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/sessions/': {
+      id: '/api/account/sessions/'
+      path: '/api/account/sessions'
+      fullPath: '/api/account/sessions/'
+      preLoaderRoute: typeof ApiAccountSessionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/account/sessions/revoke-all-other': {
@@ -725,6 +745,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
   ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
   ApiAccountOrdersIndexRoute: ApiAccountOrdersIndexRoute,
+  ApiAccountSessionsIndexRoute: ApiAccountSessionsIndexRoute,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,

@@ -236,13 +236,13 @@ describe("account session boundary", () => {
       },
       isPending: false,
     });
-    authMocks.listSessions.mockResolvedValue({
-      data: [
-        { token: "current-token", userAgent: "Current browser", ipAddress: "127.0.0.1", updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
-        { token: "other-token", userAgent: "Other browser", ipAddress: "192.0.2.1", updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
-      ],
-      error: null,
-    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ sessions: [
+        { sessionId: "session-current", isCurrent: true, userAgent: "Current browser", ipAddress: "127.0.0.1", updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
+        { sessionId: "session-other", isCurrent: false, userAgent: "Other browser", ipAddress: "192.0.2.1", updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
+      ] }),
+      ok: true,
+    }));
     render(<AccountPage screen={accountScreen("ACC004")} />);
 
     expect(await screen.findByText("Current browser")).toBeInTheDocument();
@@ -259,26 +259,29 @@ describe("account session boundary", () => {
       },
       isPending: false,
     });
-    authMocks.listSessions.mockResolvedValue({
-      data: [
-        { token: "current-token", updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
-        { token: "other-token", updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
-      ],
-      error: null,
-    });
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({
+        json: async () => ({ sessions: [
+          { sessionId: "session-current", isCurrent: true, updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
+          { sessionId: "session-other", isCurrent: false, updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
+        ] }),
+        ok: true,
+      })
+      .mockResolvedValue({ json: async () => ({ revoked: true }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
     render(<AccountPage screen={accountScreen("ACC004")} />);
     fireEvent.click(await screen.findByRole("button", { name: "Revoke this other session" }));
 
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith(
       "/api/account/sessions/revoke-other",
       expect.objectContaining({
-        body: JSON.stringify({ token: "other-token" }),
+        body: JSON.stringify({ sessionId: "session-other" }),
         method: "POST",
       }),
     ));
-    expect(fetch).not.toHaveBeenCalledWith(
+    expect(fetchMock).not.toHaveBeenCalledWith(
       "/api/account/sessions/revoke-other",
-      expect.objectContaining({ body: JSON.stringify({ token: "current-token" }) }),
+      expect.objectContaining({ body: JSON.stringify({ sessionId: "session-current" }) }),
     );
   });
 
@@ -290,17 +293,20 @@ describe("account session boundary", () => {
       },
       isPending: false,
     });
-    authMocks.listSessions.mockResolvedValue({
-      data: [
-        { token: "current-token", updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
-        { token: "other-token", updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
-      ],
-      error: null,
-    });
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({
+        json: async () => ({ sessions: [
+          { sessionId: "session-current", isCurrent: true, updatedAt: "2026-08-10T01:00:00Z", expiresAt: "2026-08-17T01:00:00Z" },
+          { sessionId: "session-other", isCurrent: false, updatedAt: "2026-08-09T01:00:00Z", expiresAt: "2026-08-16T01:00:00Z" },
+        ] }),
+        ok: true,
+      })
+      .mockResolvedValue({ json: async () => ({ revokedCount: 1 }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
     render(<AccountPage screen={accountScreen("ACC004")} />);
     fireEvent.click(await screen.findByRole("button", { name: "Revoke all other sessions" }));
 
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith(
       "/api/account/sessions/revoke-all-other",
       { method: "POST" },
     ));
