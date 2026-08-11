@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -32,5 +35,14 @@ describe("managed asset final-byte pipeline", () => {
       fileName: "039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81.jpg",
       sha256: "039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81",
     });
+  });
+
+  it("gives the atomic production manifest transaction enough time for all managed assets", () => {
+    const importerSource = readFileSync(
+      resolve(process.cwd(), "scripts/import-managed-assets.mjs"),
+      "utf8",
+    );
+
+    expect(importerSource).toContain("{ timeout: 120_000 }");
   });
 });

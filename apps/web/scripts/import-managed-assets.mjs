@@ -280,7 +280,7 @@ async function persistManifest(manifest) {
           update: { managedAssetId: asset.managedAssetId },
         });
       }
-    });
+    }, { timeout: 120_000 });
   } finally {
     await database.$disconnect();
     await pool.end();
