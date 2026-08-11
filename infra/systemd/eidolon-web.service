@@ -18,7 +18,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectHome=true
 ProtectSystem=strict
-ReadWritePaths=/srv/eidolon/current/.output
+ReadWritePaths=/srv/eidolon/current/apps/web/.output
 
 [Install]
 WantedBy=multi-user.target

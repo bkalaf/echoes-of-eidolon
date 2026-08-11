@@ -195,7 +195,20 @@ fi
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate
 promotion_started=true
 run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"
-run_unlocked curl --fail --silent --show-error --max-time 20 "$EIDOLON_HEALTHCHECK_URL" >/dev/null
+health_ready=false
+for health_attempt in {1..20}; do
+  if run_unlocked curl --fail --silent --show-error --max-time 5 "$EIDOLON_HEALTHCHECK_URL" >/dev/null 2>&1; then
+    health_ready=true
+    break
+  fi
+  if ((health_attempt < 20)); then
+    run_unlocked sleep 1
+  fi
+done
+if ! $health_ready; then
+  echo "Application health check did not pass after 20 attempts." >&2
+  exit 1
+fi
 
 TZ=UTC printf -v record_timestamp '%(%Y-%m-%dT%H:%M:%SZ)T' -1
 backup_name="${backup_path##*/}"

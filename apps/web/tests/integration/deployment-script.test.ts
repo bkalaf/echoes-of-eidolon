@@ -61,6 +61,7 @@ describe("production deployment entry point", () => {
     expect(unit).toContain("Environment=PORT=3000");
     expect(unit).toContain("ExecStart=/usr/bin/env pnpm --filter @echoes/web start");
     expect(unit).toContain("NoNewPrivileges=true");
+    expect(unit).toContain("ReadWritePaths=/srv/eidolon/current/apps/web/.output");
   });
 
   it("binds the E2E readiness server to the same IPv4 loopback address Playwright probes", () => {
@@ -82,6 +83,13 @@ describe("production deployment entry point", () => {
     expect(source).toContain('run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres');
     expect(source).toContain('pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB"');
     expect(source).not.toMatch(/run_unlocked pg_dump/);
+  });
+
+  it("allows bounded service startup time before promotion health fails", () => {
+    const source = readFileSync(script, "utf8");
+    expect(source).toContain("for health_attempt in {1..20}");
+    expect(source).toContain("run_unlocked sleep 1");
+    expect(source).toContain("Application health check did not pass after 20 attempts.");
   });
 
   it("closes the serialized deployment lock for every post-lock subprocess", () => {
