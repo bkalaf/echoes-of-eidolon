@@ -1,21 +1,22 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
 import { PuzzleAdminPage } from "../../src/screens/admin/PuzzleAdminPage";
 
-function renderPuzzle(screenId: string) {
+function renderPuzzle(screenId: string, pathname?: string) {
   const screenEntry = pageManifest.find((entry) => entry.screenId === screenId)!;
-  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage screen={screenEntry} /></QueryClientProvider>);
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage pathname={pathname ?? screenEntry.path ?? ""} screen={screenEntry} /></QueryClientProvider>);
 }
 
 function renderUnknownPuzzle() {
-  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage screen={{ originalPage: 0, page: 0, path: "/admin/puzzles/unknown", reviewOrder: 0, screenId: "UNKNOWN", source: "TEST", title: "Unknown" }} /></QueryClientProvider>);
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzleAdminPage pathname="/admin/puzzles/unknown" screen={{ originalPage: 0, page: 0, path: "/admin/puzzles/unknown", reviewOrder: 0, screenId: "UNKNOWN", source: "TEST", title: "Unknown" }} /></QueryClientProvider>);
 }
 
 describe("Puzzle Designer persistence projection", () => {
   beforeEach(() => vi.clearAllMocks());
+  afterEach(() => vi.unstubAllGlobals());
 
   it("renders stored immutable versions and their exact hint order", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
@@ -51,11 +52,28 @@ describe("Puzzle Designer persistence projection", () => {
     expect(screen.queryByText(/PUZZLE-001|Direction 0|Guide 0/)).not.toBeInTheDocument();
   });
 
-  it("does not start a timer or fabricate preview content from an editor screen", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ blueprints: [], total: 0 }), ok: true }));
-    renderPuzzle("PZ003");
-    expect(await screen.findByText(/Preview generation and editor writes remain unavailable/)).toBeInTheDocument();
+  it("validates deterministic preview identity without starting a timer or fabricating puzzle content", async () => {
+    const fetchMock = vi.fn().mockImplementation(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
+      ? { json: async () => ({ key: "deterministic-key", timerStarted: false }), ok: true }
+      : { json: async () => ({ blueprints: [{ difficultyTier: "TIER_1_INITIATE", family: "LOGIC_CONSTRAINT", puzzleBlueprintId: "PUZZLE-SUPPLIED", versions: [{ createdAt: "2026-08-10T00:00:00.000Z", generatorVersion: 4, hints: [] }] }], total: 1 }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderPuzzle("PZ003", "/admin/puzzles/PUZZLE-SUPPLIED/test");
+    expect(await screen.findByText(/does not generate a puzzle instance or start/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Generator version"), { target: { value: "4" } });
+    fireEvent.change(screen.getByLabelText("Campaign ID"), { target: { value: "CAM-1" } });
+    fireEvent.change(screen.getByLabelText("Player ID"), { target: { value: "PLAYER-1" } });
+    fireEvent.change(screen.getByLabelText("Seed"), { target: { value: "seed" } });
+    fireEvent.click(screen.getByRole("button", { name: "Validate preview identity" }));
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Timer started: no"));
     expect(screen.queryByText(/accepted|ends at|answer:/i)).not.toBeInTheDocument();
+  });
+
+  it("lists only the canonical shared component identifiers without inventing configurations", () => {
+    vi.stubGlobal("fetch", vi.fn());
+    renderPuzzle("ADM029");
+    expect(screen.getByText("PUZCMP_MATRIX_LAB")).toBeInTheDocument();
+    expect(screen.getByText(/No persisted component configuration/)).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("does not reinterpret an unknown puzzle screen as an editor", () => {

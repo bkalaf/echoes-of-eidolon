@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 189 |
-| PARTIAL | 33 |
-| PLACEHOLDER | 49 |
+| IMPLEMENTED | 190 |
+| PARTIAL | 36 |
+| PLACEHOLDER | 45 |
 | MISSING | 2 |
 | **Total active V3 states** | **273** |
 
-Therefore **84 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **83 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -176,8 +176,8 @@ Therefore **84 of 273 active V3** wireframe pages/states are not fully implement
 | 134 | `DATA101` | Data - MLA Sources | `/admin/data/sources` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 135 | `DATA102` | Data - Citations | `/admin/data/citations` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 136 | `PZ001` | Puzzle Designer - Blueprints | `/admin/puzzles` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots, immutable versions, and governed hint metadata. |
-| 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
-| 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
+| 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PARTIAL** | Reads immutable history and appends a new generator version with exactly DIRECTIONAL then GUIDED hints; prompt, answer, status, assignment, and accessibility owners are absent. |
+| 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PARTIAL** | Validates deterministic identity against a persisted version without starting a timer; generator configuration, instance generation, and answer validation are absent. |
 | 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
 | 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
@@ -279,10 +279,10 @@ Therefore **84 of 273 active V3** wireframe pages/states are not fully implement
 | 237 | `DATA_TOME_IMPORT` | Bulk Import Tome | `/admin/data/tome/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 238 | `DATA_TRANSITION_IMPORT` | Bulk Import Transition | `/admin/data/transition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 239 | `DATA_WITNESS_IMPORT` | Bulk Import Witness | `/admin/data/witness/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
-| 240 | `ADM027` | Puzzle Designer | `/admin/puzzles` | **PARTIAL** | Shows the Blueprint list, but no designer/editor workflow exists. |
+| 240 | `ADM027` | Puzzle Designer | `/admin/puzzles` | **IMPLEMENTED** | Lists canonical roots and creates a stable root plus its initial immutable version and exactly two ordered hint templates in one transaction. |
 | 241 | `ADM028` | Puzzle Blueprints | `/admin/puzzles/blueprints` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots and immutable versions. |
-| 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PLACEHOLDER** | Explicit warning only; reusable component editing, generation, preview, and validation lab are absent. |
-| 243 | `ADM030` | Puzzle Test & Validation Lab | `/admin/puzzles/test-lab` | **PLACEHOLDER** | Explicit warning only; reusable component editing, generation, preview, and validation lab are absent. |
+| 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PARTIAL** | Lists the finite canonical PuzzleSharedComponentId set without invented labels; persisted configurations and Blueprint relationships are absent. |
+| 243 | `ADM030` | Puzzle Test & Validation Lab | `/admin/puzzles/test-lab` | **PARTIAL** | Validates deterministic preview identities for stored versions and proves no timer starts; generation, answer checking, and accessibility evaluation remain unavailable. |
 | 244 | `ADM031` | Atlas Manager | `/admin/atlas` | **IMPLEMENTED** | Dedicated atlas landing with canonical R08 counts and navigation. |
 | 245 | `ADM032` | Points of Interest — View Selector | `/admin/atlas/pois` | **IMPLEMENTED** | Dedicated 2D/3D POI selector backed by the canonical R08 catalog. |
 | 246 | `ATLAS_POI_2D` | Points of Interest — 2D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable canonical R08 POI visualization with table and detail. |

@@ -1,21 +1,36 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
+import { PuzzleDifficultyTier, PuzzleFamily, PuzzleSharedComponentId } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
+
+interface PuzzleVersionRow {
+  createdAt: string;
+  generatorVersion: number;
+  hints: Array<{ kind: string; level: number; template: string }>;
+}
 
 interface PuzzleBlueprintRow {
   difficultyTier: string;
   family: string;
   puzzleBlueprintId: string;
-  versions: Array<{
-    createdAt: string;
-    generatorVersion: number;
-    hints: Array<{ kind: string; level: number; template: string }>;
-  }>;
+  versions: PuzzleVersionRow[];
+}
+
+async function responseJson<T>(response: Response, fallback: string): Promise<T> {
+  const result = await response.json() as T & { error?: string };
+  if (!response.ok) throw new Error(result.error ?? fallback);
+  return result;
+}
+
+async function loadBlueprints() {
+  const result = await responseJson<{ blueprints: PuzzleBlueprintRow[]; total?: number }>(await fetch("/api/admin/puzzles/blueprints"), "Puzzle Blueprints could not be loaded.");
+  return { blueprints: result.blueprints, total: result.total ?? result.blueprints.length };
 }
 
 const columns: DataTableColumnDef<PuzzleBlueprintRow>[] = [
-  { accessorKey: "puzzleBlueprintId", header: "Puzzle Blueprint" },
+  { accessorKey: "puzzleBlueprintId", header: "Puzzle Blueprint", cell: ({ row }) => <a href={`/admin/puzzles/${encodeURIComponent(row.original.puzzleBlueprintId)}`}>{row.original.puzzleBlueprintId}</a> },
   { accessorKey: "family", header: "Family" },
   { accessorKey: "difficultyTier", header: "Difficulty tier" },
   { id: "latestVersion", header: "Latest generator version", cell: ({ row }) => row.original.versions[0]?.generatorVersion ?? "No version" },
@@ -27,22 +42,102 @@ const columns: DataTableColumnDef<PuzzleBlueprintRow>[] = [
   } },
 ];
 
-async function loadBlueprints() {
-  const response = await fetch("/api/admin/puzzles/blueprints");
-  const result = await response.json() as { blueprints?: PuzzleBlueprintRow[]; error?: string; total?: number };
-  if (!response.ok || !result.blueprints) throw new Error(result.error ?? "Puzzle Blueprints could not be loaded.");
-  return { blueprints: result.blueprints, total: result.total ?? result.blueprints.length };
-}
-
-function BlueprintList() {
+function BlueprintList({ allowCreate }: { allowCreate: boolean }) {
+  const client = useQueryClient();
+  const [puzzleBlueprintId, setPuzzleBlueprintId] = useState("");
+  const [family, setFamily] = useState(Object.values(PuzzleFamily)[0]!);
+  const [difficultyTier, setDifficultyTier] = useState(Object.values(PuzzleDifficultyTier)[0]!);
+  const [generatorVersion, setGeneratorVersion] = useState(1);
+  const [directionalHint, setDirectionalHint] = useState("");
+  const [guidedHint, setGuidedHint] = useState("");
+  const [message, setMessage] = useState("");
   const blueprints = useQuery({ queryKey: ["admin", "puzzles", "blueprints"], queryFn: loadBlueprints, retry: false });
+  const create = async () => {
+    setMessage("");
+    try {
+      await responseJson(await fetch("/api/admin/puzzles/blueprints", { body: JSON.stringify({ difficultyTier, directionalHint, family, generatorVersion, guidedHint, puzzleBlueprintId }), headers: { "content-type": "application/json" }, method: "POST" }), "Puzzle Blueprint could not be created.");
+      setMessage("Puzzle Blueprint root and initial immutable version created.");
+      setPuzzleBlueprintId(""); setDirectionalHint(""); setGuidedHint("");
+      await client.invalidateQueries({ queryKey: ["admin", "puzzles", "blueprints"] });
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Puzzle Blueprint could not be created.");
+    }
+  };
   if (blueprints.isPending) return <p className="notice">Loading Puzzle Blueprints…</p>;
   if (blueprints.isError) return <p className="notice notice--bad" role="alert">{blueprints.error.message}</p>;
-  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>Puzzle Blueprints</h2><p>Stable roots with immutable generator versions and exactly two authored answer-free hint templates.</p></div><span className="tag">{blueprints.data.total} / 70 roots</span></div>{blueprints.data.blueprints.length === 0 ? <p>No Puzzle Blueprint roots are stored.</p> : <DataTable columns={columns} data={blueprints.data.blueprints} getRowId={(blueprint) => blueprint.puzzleBlueprintId} preferenceKey="admin.puzzles.blueprints" />}</section><p className={`notice ${blueprints.data.total === 70 ? "notice--good" : "notice--warn"}`}>{blueprints.data.total === 70 ? "The initial bank contains exactly 70 roots." : "The initial 70-root bank is incomplete. Missing roots are not generated."}</p></div>;
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>Puzzle Blueprints</h2><p>Stable roots with immutable generator versions and exactly two authored answer-free hint templates.</p></div><span className="tag">{blueprints.data.total} / 70 roots</span></div>{blueprints.data.blueprints.length === 0 ? <p>No Puzzle Blueprint roots are stored.</p> : <DataTable columns={columns} data={blueprints.data.blueprints} getRowId={(blueprint) => blueprint.puzzleBlueprintId} preferenceKey="admin.puzzles.blueprints" />}</section><p className={`notice ${blueprints.data.total === 70 ? "notice--good" : "notice--warn"}`}>{blueprints.data.total === 70 ? "The initial bank contains exactly 70 roots." : "The initial 70-root bank is incomplete. Missing roots are not generated."}</p>{allowCreate && <section className="card form-grid"><h2 className="span-2">Create Puzzle Blueprint</h2><label className="field">Blueprint ID<input className="input" value={puzzleBlueprintId} onChange={(event) => setPuzzleBlueprintId(event.target.value)} /></label><label className="field">Generator version<input className="input" type="number" value={generatorVersion} onChange={(event) => setGeneratorVersion(Number(event.target.value))} /></label><label className="field">Family<select className="input" value={family} onChange={(event) => setFamily(event.target.value as typeof family)}>{Object.values(PuzzleFamily).map((value) => <option key={value}>{value}</option>)}</select></label><label className="field">Difficulty tier<select className="input" value={difficultyTier} onChange={(event) => setDifficultyTier(event.target.value as typeof difficultyTier)}>{Object.values(PuzzleDifficultyTier).map((value) => <option key={value}>{value}</option>)}</select></label><label className="field span-2">Hint 1 · DIRECTIONAL<textarea className="input" rows={4} value={directionalHint} onChange={(event) => setDirectionalHint(event.target.value)} /></label><label className="field span-2">Hint 2 · GUIDED<textarea className="input" rows={4} value={guidedHint} onChange={(event) => setGuidedHint(event.target.value)} /></label><p className="muted span-2">Hints must be authored without the answer. The repository has no stored answer contract, so semantic answer leakage cannot be automatically certified.</p><button className="button button--gold" disabled={!puzzleBlueprintId.trim() || !directionalHint.trim() || !guidedHint.trim() || !Number.isSafeInteger(generatorVersion)} onClick={() => void create()}>Create immutable version</button>{message && <p className={`notice span-2 ${message.startsWith("Puzzle Blueprint root") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section>}</div>;
 }
 
-export function PuzzleAdminPage({ screen }: { screen: PageManifestEntry }) {
-  if (["PZ001", "ADM027", "ADM028"].includes(screen.screenId)) return <BlueprintList />;
-  if (["PZ002", "PZ003", "ADM029", "ADM030"].includes(screen.screenId)) return <section className="card"><h2>{screen.title}</h2><p>The immutable Puzzle Blueprint roots, versions, and hint templates are connected.</p><p className="notice notice--warn">Preview generation and editor writes remain unavailable because no generator configuration or answer-validation record contract is stored.</p></section>;
+function blueprintIdFromPath(pathname: string): string | undefined {
+  const match = pathname.match(/^\/admin\/puzzles\/([^/]+)(?:\/test)?$/);
+  if (!match?.[1] || ["blueprints", "components", "test-lab"].includes(match[1])) return undefined;
+  return decodeURIComponent(match[1]);
+}
+
+function BlueprintEditor({ blueprintId }: { blueprintId: string }) {
+  const client = useQueryClient();
+  const blueprint = useQuery({
+    queryKey: ["admin", "puzzles", "blueprint", blueprintId],
+    queryFn: async () => responseJson<{ blueprint: PuzzleBlueprintRow }>(await fetch(`/api/admin/puzzles/blueprints/${encodeURIComponent(blueprintId)}`), "Puzzle Blueprint could not be loaded."),
+    retry: false,
+  });
+  const [generatorVersion, setGeneratorVersion] = useState<number>();
+  const [directionalHint, setDirectionalHint] = useState("");
+  const [guidedHint, setGuidedHint] = useState("");
+  const [message, setMessage] = useState("");
+  if (blueprint.isPending) return <p className="notice">Loading Puzzle Blueprint…</p>;
+  if (blueprint.isError) return <p className="notice notice--bad" role="alert">{blueprint.error.message}</p>;
+  const row = blueprint.data.blueprint;
+  const nextVersion = generatorVersion ?? ((row.versions[0]?.generatorVersion ?? 0) + 1);
+  const append = async () => {
+    setMessage("");
+    try {
+      await responseJson(await fetch(`/api/admin/puzzles/blueprints/${encodeURIComponent(blueprintId)}`, { body: JSON.stringify({ directionalHint, generatorVersion: nextVersion, guidedHint }), headers: { "content-type": "application/json" }, method: "PUT" }), "Puzzle version could not be created.");
+      setMessage(`Immutable generator version ${nextVersion} created.`); setDirectionalHint(""); setGuidedHint(""); setGeneratorVersion(undefined);
+      await client.invalidateQueries({ queryKey: ["admin", "puzzles", "blueprint", blueprintId] });
+      await client.invalidateQueries({ queryKey: ["admin", "puzzles", "blueprints"] });
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Puzzle version could not be created.");
+    }
+  };
+  return <div className="stack"><section className="card"><h2>{row.puzzleBlueprintId}</h2><dl className="detail-list"><dt>Family</dt><dd>{row.family}</dd><dt>Difficulty</dt><dd>{row.difficultyTier}</dd><dt>Versions</dt><dd>{row.versions.length}</dd></dl><p className="notice notice--warn">Prompt content, answer path, design status, assignments, and accessibility requirements have no canonical persisted owner and are not inferred.</p></section><section className="card"><h3>Immutable version history</h3>{row.versions.map((version) => <article className="inset-card" key={version.generatorVersion}><h4>Generator version {version.generatorVersion}</h4>{version.hints.map((hint) => <p key={hint.level}><strong>Hint {hint.level} · {hint.kind}</strong><br />{hint.template}</p>)}</article>)}</section><section className="card form-grid"><h3 className="span-2">Append generator version</h3><label className="field">Generator version<input className="input" type="number" value={nextVersion} onChange={(event) => setGeneratorVersion(Number(event.target.value))} /></label><span /><label className="field span-2">Hint 1 · DIRECTIONAL<textarea className="input" rows={4} value={directionalHint} onChange={(event) => setDirectionalHint(event.target.value)} /></label><label className="field span-2">Hint 2 · GUIDED<textarea className="input" rows={4} value={guidedHint} onChange={(event) => setGuidedHint(event.target.value)} /></label><button className="button button--gold" disabled={!Number.isSafeInteger(nextVersion) || !directionalHint.trim() || !guidedHint.trim()} onClick={() => void append()}>Append immutable version</button><a className="button" href={`/admin/puzzles/${encodeURIComponent(blueprintId)}/test`}>Open validation identity</a>{message && <p className={`notice span-2 ${message.startsWith("Immutable") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section></div>;
+}
+
+function PreviewIdentityLab({ fixedBlueprintId }: { fixedBlueprintId?: string }) {
+  const blueprints = useQuery({ queryKey: ["admin", "puzzles", "blueprints"], queryFn: loadBlueprints, retry: false });
+  const [selectedId, setSelectedId] = useState(fixedBlueprintId ?? "");
+  const [generatorVersion, setGeneratorVersion] = useState(1);
+  const [campaignId, setCampaignId] = useState("");
+  const [playerId, setPlayerId] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  const [seed, setSeed] = useState("");
+  const [result, setResult] = useState("");
+  if (blueprints.isPending) return <p className="notice">Loading Puzzle versions…</p>;
+  if (blueprints.isError) return <p className="notice notice--bad" role="alert">{blueprints.error.message}</p>;
+  const blueprintId = fixedBlueprintId ?? selectedId;
+  const validate = async () => {
+    try {
+      const response = await responseJson<{ key: string; timerStarted: false }>(await fetch("/api/admin/puzzles/preview", { body: JSON.stringify({ attempt, campaignId, generatorVersion, playerId, puzzleBlueprintId: blueprintId, seed }), headers: { "content-type": "application/json" }, method: "POST" }), "Preview identity could not be validated.");
+      setResult(`Validated deterministic identity: ${response.key}. Timer started: ${response.timerStarted ? "yes" : "no"}.`);
+    } catch (error) {
+      setResult(error instanceof Error ? error.message : "Preview identity could not be validated.");
+    }
+  };
+  return <section className="card form-grid"><h2 className="span-2">Puzzle Test & Validation Identity</h2><p className="span-2">Validate deterministic preview identity against a persisted immutable version. This does not generate a puzzle instance or start the player acceptance timer.</p>{fixedBlueprintId ? <p className="span-2"><strong>Blueprint:</strong> {fixedBlueprintId}</p> : <label className="field span-2">Puzzle Blueprint<select className="input" value={selectedId} onChange={(event) => { setSelectedId(event.target.value); const row = blueprints.data.blueprints.find((item) => item.puzzleBlueprintId === event.target.value); setGeneratorVersion(row?.versions[0]?.generatorVersion ?? 1); }}><option value="">Select a Blueprint</option>{blueprints.data.blueprints.map((row) => <option key={row.puzzleBlueprintId}>{row.puzzleBlueprintId}</option>)}</select></label>}<label className="field">Generator version<input className="input" type="number" value={generatorVersion} onChange={(event) => setGeneratorVersion(Number(event.target.value))} /></label><label className="field">Attempt<input className="input" min={0} type="number" value={attempt} onChange={(event) => setAttempt(Number(event.target.value))} /></label><label className="field">Campaign ID<input className="input" value={campaignId} onChange={(event) => setCampaignId(event.target.value)} /></label><label className="field">Player ID<input className="input" value={playerId} onChange={(event) => setPlayerId(event.target.value)} /></label><label className="field span-2">Seed<input className="input" value={seed} onChange={(event) => setSeed(event.target.value)} /></label><button className="button button--gold" disabled={!blueprintId || !campaignId || !playerId || !seed || !Number.isSafeInteger(generatorVersion) || !Number.isSafeInteger(attempt) || attempt < 0} onClick={() => void validate()}>Validate preview identity</button>{result && <p className={`notice span-2 ${result.startsWith("Validated") ? "notice--good" : "notice--bad"}`} role="status">{result}</p>}<p className="notice notice--warn span-2">Generator configuration and answer-validation records are absent, so generation, answer checking, and accessibility evaluation remain unavailable.</p></section>;
+}
+
+function SharedComponents() {
+  const components = Object.values(PuzzleSharedComponentId);
+  return <section className="card"><h2>Canonical shared component identifiers</h2><p>The finite identifiers are available to puzzle implementations. No persisted component configuration, Blueprint relationship, or authoring contract is supplied.</p><div className="tag-list">{components.map((component) => <span className="tag" key={component}>{component}</span>)}</div><p className="notice notice--warn">The identifiers are not treated as configured reusable components, and labels or behavior are not invented from their names.</p></section>;
+}
+
+export function PuzzleAdminPage({ pathname, screen }: { pathname: string; screen: PageManifestEntry }) {
+  if (["PZ001", "ADM027"].includes(screen.screenId)) return <BlueprintList allowCreate />;
+  if (screen.screenId === "ADM028") return <BlueprintList allowCreate={false} />;
+  const blueprintId = blueprintIdFromPath(pathname);
+  if (screen.screenId === "PZ002") return blueprintId ? <BlueprintEditor blueprintId={blueprintId} /> : <p className="notice notice--bad">The route does not identify a Puzzle Blueprint.</p>;
+  if (screen.screenId === "PZ003") return blueprintId ? <PreviewIdentityLab fixedBlueprintId={blueprintId} /> : <p className="notice notice--bad">The route does not identify a Puzzle Blueprint.</p>;
+  if (screen.screenId === "ADM029") return <SharedComponents />;
+  if (screen.screenId === "ADM030") return <PreviewIdentityLab />;
   return <section className="card"><h2>Puzzle workflow unavailable</h2><p>No Puzzle Designer workflow is inferred for this screen.</p></section>;
 }

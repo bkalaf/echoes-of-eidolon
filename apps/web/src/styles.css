@@ -168,6 +168,9 @@ button, input, select, textarea { font: inherit; }
 .notice--bad { border-color: var(--bad); background: #351318; color: #ffc2c8; }
 .tag { display: inline-flex; padding: 5px 8px; border: 1px solid var(--line-2); border-radius: 999px; color: #b8d9ec; font-size: 10px; }
 .tag--good { border-color: #27765b; color: #78e8b4; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.inset-card { margin-top: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: rgb(1 13 21 / 55%); }
+.inset-card h4 { margin: 0; color: #d9b85f; }
 .action-row, .auth-links { display: flex; align-items: center; gap: 8px; }
 .textarea { width: 100%; min-height: 112px; padding: 10px; border: 1px solid var(--line-2); border-radius: 6px; background: #03111d; color: var(--text); resize: vertical; }
 .wide { width: 100%; }

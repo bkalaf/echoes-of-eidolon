@@ -59,6 +59,7 @@ import { Route as ApiAdminPerksIndexRouteImport } from './routes/api/admin/perks
 import { Route as ApiAdminPerksPerkIdRouteImport } from './routes/api/admin/perks/$perkId'
 import { Route as ApiAdminPromptsIndexRouteImport } from './routes/api/admin/prompts/index'
 import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
+import { Route as ApiAdminPuzzlesPreviewRouteImport } from './routes/api/admin/puzzles/preview'
 import { Route as ApiAdminSettlementsIndexRouteImport } from './routes/api/admin/settlements/index'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
@@ -70,6 +71,7 @@ import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/ap
 import { Route as ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport } from './routes/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
 import { Route as ApiAdminDataEntityKeyRecordIdRouteImport } from './routes/api/admin/data/$entityKey/$recordId'
 import { Route as ApiAdminDataEntityKeyImportRouteImport } from './routes/api/admin/data/$entityKey/import'
+import { Route as ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRouteImport } from './routes/api/admin/puzzles/blueprints/$puzzleBlueprintId'
 import { Route as ApiAdminReleasesIdPublishRouteImport } from './routes/api/admin/releases/$id/publish'
 import { Route as ApiExternalDataEntityKeyRecordIdRouteImport } from './routes/api/external/data/$entityKey/$recordId'
 import { Route as ApiExternalDataEntityKeyImportRouteImport } from './routes/api/external/data/$entityKey/import'
@@ -335,6 +337,11 @@ const ApiAdminPuzzlesBlueprintsRoute =
     path: '/api/admin/puzzles/blueprints',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminPuzzlesPreviewRoute = ApiAdminPuzzlesPreviewRouteImport.update({
+  id: '/api/admin/puzzles/preview',
+  path: '/api/admin/puzzles/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminSettlementsIndexRoute =
   ApiAdminSettlementsIndexRouteImport.update({
     id: '/api/admin/settlements/',
@@ -400,6 +407,12 @@ const ApiAdminDataEntityKeyImportRoute =
     id: '/import',
     path: '/import',
     getParentRoute: () => ApiAdminDataEntityKeyRoute,
+  } as any)
+const ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute =
+  ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRouteImport.update({
+    id: '/$puzzleBlueprintId',
+    path: '/$puzzleBlueprintId',
+    getParentRoute: () => ApiAdminPuzzlesBlueprintsRoute,
   } as any)
 const ApiAdminReleasesIdPublishRoute =
   ApiAdminReleasesIdPublishRouteImport.update({
@@ -467,7 +480,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
-  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
+  '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -488,6 +502,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
@@ -534,7 +549,8 @@ export interface FileRoutesByTo {
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
-  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
+  '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -555,6 +571,7 @@ export interface FileRoutesByTo {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
@@ -602,7 +619,8 @@ export interface FileRoutesById {
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
-  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
+  '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
+  '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
@@ -623,6 +641,7 @@ export interface FileRoutesById {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
@@ -672,6 +691,7 @@ export interface FileRouteTypes {
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
+    | '/api/admin/puzzles/preview'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -692,6 +712,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
@@ -739,6 +760,7 @@ export interface FileRouteTypes {
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
+    | '/api/admin/puzzles/preview'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -759,6 +781,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
@@ -806,6 +829,7 @@ export interface FileRouteTypes {
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
+    | '/api/admin/puzzles/preview'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
@@ -826,6 +850,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
@@ -869,7 +894,8 @@ export interface RootRouteChildren {
   ApiAdminCitiesCityIdRoute: typeof ApiAdminCitiesCityIdRoute
   ApiAdminDataEntityKeyRoute: typeof ApiAdminDataEntityKeyRouteWithChildren
   ApiAdminPerksPerkIdRoute: typeof ApiAdminPerksPerkIdRoute
-  ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRoute
+  ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
+  ApiAdminPuzzlesPreviewRoute: typeof ApiAdminPuzzlesPreviewRoute
   ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
@@ -1240,6 +1266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminPuzzlesBlueprintsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/puzzles/preview': {
+      id: '/api/admin/puzzles/preview'
+      path: '/api/admin/puzzles/preview'
+      fullPath: '/api/admin/puzzles/preview'
+      preLoaderRoute: typeof ApiAdminPuzzlesPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/settlements/': {
       id: '/api/admin/settlements/'
       path: '/api/admin/settlements'
@@ -1316,6 +1349,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/admin/data/$entityKey/import'
       preLoaderRoute: typeof ApiAdminDataEntityKeyImportRouteImport
       parentRoute: typeof ApiAdminDataEntityKeyRoute
+    }
+    '/api/admin/puzzles/blueprints/$puzzleBlueprintId': {
+      id: '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
+      path: '/$puzzleBlueprintId'
+      fullPath: '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
+      preLoaderRoute: typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRouteImport
+      parentRoute: typeof ApiAdminPuzzlesBlueprintsRoute
     }
     '/api/admin/releases/$id/publish': {
       id: '/api/admin/releases/$id/publish'
@@ -1433,6 +1473,21 @@ const ApiAdminDataEntityKeyRouteWithChildren =
     ApiAdminDataEntityKeyRouteChildren,
   )
 
+interface ApiAdminPuzzlesBlueprintsRouteChildren {
+  ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute: typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
+}
+
+const ApiAdminPuzzlesBlueprintsRouteChildren: ApiAdminPuzzlesBlueprintsRouteChildren =
+  {
+    ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute:
+      ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute,
+  }
+
+const ApiAdminPuzzlesBlueprintsRouteWithChildren =
+  ApiAdminPuzzlesBlueprintsRoute._addFileChildren(
+    ApiAdminPuzzlesBlueprintsRouteChildren,
+  )
+
 interface ApiExternalDataEntityKeyRouteChildren {
   ApiExternalDataEntityKeyRecordIdRoute: typeof ApiExternalDataEntityKeyRecordIdRoute
   ApiExternalDataEntityKeyImportRoute: typeof ApiExternalDataEntityKeyImportRoute
@@ -1487,7 +1542,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminCitiesCityIdRoute: ApiAdminCitiesCityIdRoute,
   ApiAdminDataEntityKeyRoute: ApiAdminDataEntityKeyRouteWithChildren,
   ApiAdminPerksPerkIdRoute: ApiAdminPerksPerkIdRoute,
-  ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRoute,
+  ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRouteWithChildren,
+  ApiAdminPuzzlesPreviewRoute: ApiAdminPuzzlesPreviewRoute,
   ApiAdminSettlementsCompleteNamingRoute:
     ApiAdminSettlementsCompleteNamingRoute,
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
