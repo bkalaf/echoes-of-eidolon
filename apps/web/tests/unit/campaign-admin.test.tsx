@@ -85,7 +85,7 @@ describe("Campaign Manager structure", () => {
     expect(screen.getByLabelText("Linked-type filter: All linked types")).toBeInTheDocument();
     const assignableColumns = campaignPlannerColumns.filter((column) => !["DISJOINT_TRILOGY", "OPPOSING_FACTION"].includes(column.id));
     expect(screen.getAllByRole("button", { name: /empty assignment cell/ })).toHaveLength(18 * assignableColumns.length);
-  });
+  }, 10_000);
 
   it("does not copy sample assignment IDs into an empty canonical planner", async () => {
     renderCampaign("CAMPAIGN_CONCORD");

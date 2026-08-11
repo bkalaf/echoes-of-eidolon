@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { listPublicReleases } from "../../server/releases";
+import { getPublicReleaseIndex, listPublicReleases } from "../../server/releases";
 
 export const Route = createFileRoute("/api/releases")({
-  server: { handlers: { GET: async () => Response.json({ releases: await listPublicReleases() }) } },
+  server: { handlers: { GET: async () => Response.json({ currentVersion: getPublicReleaseIndex().currentVersion, releases: await listPublicReleases() }) } },
 });

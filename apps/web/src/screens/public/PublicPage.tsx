@@ -6,9 +6,11 @@ import { MarkdownDocument } from "../../components/MarkdownDocument";
 import { legalDocumentForScreen, legalDocuments, legalDocumentStatus, legalPublicationStatus } from "../../content/legal-documents";
 import { managedAssetUrl } from "../../content/managed-assets";
 import { publicFeatures, inviteConsent } from "../../content/public";
+import publicReleaseNotes from "../../data/public-release-notes.generated.json";
 import { canAccessAdministration, resolveAuthorizationRole } from "../../domain/authorization";
 import { contactTopicDetails, contactTopicTokens, type ContactTopic } from "../../domain/contact";
 import { donationMonths } from "../../domain/membership";
+import type { ReleaseNotes } from "../../domain/release-notes";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import type { PublicHealthReport, ServiceHealthStatus } from "../../server/health";
@@ -74,16 +76,16 @@ function StatusPage() {
     queryFn: async () => {
       const response = await fetch("/api/releases");
       if (!response.ok) throw new Error("Current release could not be loaded.");
-      return response.json() as Promise<{ releases: Array<{ version: string; summary: string; publishedAt: string }> }>;
+      return response.json() as Promise<{ currentVersion: string; releases: ReleaseNotes[] }>;
     },
   });
-  const currentRelease = releases.data?.releases[0];
+  const latestRelease = releases.data?.releases[0];
   const notice = health.isPending
     ? "Checking monitored public services…"
     : health.isError
       ? health.error.message
       : "Status checks loaded. Each service reports only what is currently verified.";
-  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2>{releases.isPending ? <p>Loading current release…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : currentRelease ? <><p><strong>{currentRelease.version}</strong></p><p>{currentRelease.summary}</p><small>Published {new Date(currentRelease.publishedAt).toLocaleDateString()}</small></> : <p>No player-visible release has been published.</p>}<a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
+  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2><p><strong>Application version {publicReleaseNotes.currentVersion}</strong></p>{releases.isPending ? <p>Loading current release…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : latestRelease ? <><h3>{latestRelease.title}</h3><p>{latestRelease.summary}</p><small>Published {latestRelease.releaseDate}</small><p><a href={`/status/releases/${encodeURIComponent(latestRelease.version)}`}>Read current release notes</a></p></> : <p>No player-visible release has been published.</p>}<a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
 }
 
 function releaseVersionFromPath(pathname?: string): string | undefined {
@@ -102,18 +104,19 @@ function ReleasesPage({ detail, pathname }: { detail: boolean; pathname?: string
     queryFn: async () => {
       const response = await fetch("/api/releases");
       if (!response.ok) throw new Error("Release notes could not be loaded.");
-      return response.json() as Promise<{ releases: Array<{ releaseId: string; version: string; gitSha: string; summary: string; publishedAt: string; notes: Array<{ category: string; content: string; ordinal: number }> }> }>;
+      return response.json() as Promise<{ currentVersion: string; releases: ReleaseNotes[] }>;
     },
   });
   const requestedVersion = detail ? releaseVersionFromPath(pathname) : undefined;
   const selected = detail
     ? releases.data?.releases.find((release) => release.version === requestedVersion)
     : releases.data?.releases[0];
-  const selectedIndex = selected ? releases.data?.releases.findIndex((release) => release.releaseId === selected.releaseId) ?? -1 : -1;
+  const selectedIndex = selected ? releases.data?.releases.findIndex((release) => release.version === selected.version) ?? -1 : -1;
   const previous = selectedIndex >= 0 ? releases.data?.releases[selectedIndex + 1] : undefined;
   const next = selectedIndex > 0 ? releases.data?.releases[selectedIndex - 1] : undefined;
-  const body = releases.isPending ? <p className="notice">Loading release notes…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : detail && requestedVersion && !selected ? <p className="notice notice--bad" role="alert">Published release {requestedVersion} was not found.</p> : !selected ? <p className="notice">No player-visible release has been published.</p> : <article className="card"><div className="action-row action-row--between"><div><h2>{selected.version}</h2><small>Published {new Date(selected.publishedAt).toLocaleDateString()} · build {selected.gitSha.slice(0, 12)}</small></div>{detail && <nav className="action-row" aria-label="Adjacent release notes">{previous ? <a className="button" href={`/status/releases/${encodeURIComponent(previous.version)}`}>Previous</a> : <button className="button" disabled>Previous</button>}{next ? <a className="button" href={`/status/releases/${encodeURIComponent(next.version)}`}>Next</a> : <button className="button" disabled>Next</button>}</nav>}</div><p>{selected.summary}</p>{["ADDED", "CHANGED", "FIXED", "SECURITY", "KNOWN_ISSUE"].map((category) => { const items = selected.notes.filter((note) => note.category === category); return items.length > 0 && <section key={category}><h3>{category.replaceAll("_", " ")}</h3><ul>{items.map((item) => <li key={`${category}-${item.ordinal}`}>{item.content}</li>)}</ul></section>; })}</article>;
-  return <>{detail && <a className="back-link" href="/status/releases">← Back to Release Notes</a>}<PageHead eyebrow="Status" title={detail ? selected?.version ?? "Release Note Detail" : "Release Notes"} description="Player-visible release information from published release records." /><div className="release-layout"><aside className="card"><h2>Release archive</h2>{releases.data?.releases.map((release) => <p key={release.releaseId}><a href={`/status/releases/${encodeURIComponent(release.version)}`}><strong>{release.version}</strong></a><br /><small>{new Date(release.publishedAt).toLocaleDateString()}</small></p>)}</aside>{body}</div></>;
+  const detailBody = releases.isPending ? <p className="notice">Loading release notes…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : detail && requestedVersion && !selected ? <p className="notice notice--bad" role="alert">Published release {requestedVersion} was not found.</p> : !selected ? <p className="notice">No player-visible release has been published.</p> : <article className="paper release-document"><div className="action-row action-row--between"><div><p className="kicker">Release {selected.version}</p><h2>{selected.title}</h2><small>Published {selected.releaseDate}</small></div>{detail && <nav className="action-row" aria-label="Adjacent release notes">{previous ? <a className="button" href={`/status/releases/${encodeURIComponent(previous.version)}`}>Previous</a> : <button className="button" disabled>Previous</button>}{next ? <a className="button" href={`/status/releases/${encodeURIComponent(next.version)}`}>Next</a> : <button className="button" disabled>Next</button>}</nav>}</div><p>{selected.summary}</p>{["ADDED", "CHANGED", "FIXED", "SECURITY", "KNOWN_ISSUE"].map((category) => { const items = selected.items.filter((item) => item.category === category); return items.length > 0 && <section key={category}><h3>{category.replaceAll("_", " ")}</h3>{items.map((item) => <article key={item.itemId}><h4>{item.title}</h4><MarkdownDocument source={item.body} /></article>)}</section>; })}</article>;
+  const archive = releases.isPending ? <p className="notice">Loading release notes…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : <section className="stack"><h2>Release archive</h2>{releases.data.releases.length === 0 ? <p className="notice">No player-visible release has been published.</p> : releases.data.releases.map((release) => <article className="card" key={release.version}><p className="kicker">Release {release.version}</p><h3>{release.title}</h3><p>{release.summary}</p><small>Published {release.releaseDate}</small><p><a className="button" href={`/status/releases/${encodeURIComponent(release.version)}`}>Read release notes</a></p></article>)}</section>;
+  return <>{detail && <a className="back-link" href="/status/releases">← Back to Release Notes</a>}<PageHead eyebrow="Status" title={detail ? selected?.title ?? "Release Note Detail" : "Release Notes"} description="Player-visible release information from owner-reviewed canonical notes." />{detail ? <div className="release-layout"><aside className="card"><h2>Release archive</h2>{releases.data?.releases.map((release) => <p key={release.version}><a href={`/status/releases/${encodeURIComponent(release.version)}`}><strong>{release.version}</strong></a><br /><small>{release.releaseDate}</small></p>)}</aside>{detailBody}</div> : archive}</>;
 }
 
 function ContactPage() {
@@ -182,9 +185,9 @@ function SignedInHome() {
 
   const role = resolveAuthorizationRole(true, session.data.user.role);
   if (!role) return <><PageHead eyebrow="Home" title="Authorization unavailable" description="The stored account role is not registered." /><section className="card"><p>No access level or capability is inferred from an unknown role.</p></section></>;
-  if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>The account role does not establish beta/player eligibility or membership benefits.</p></section></>;
-  if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your account authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the server-owned account role.</p><a className="button button--gold" href="/admin">Open Administration</a></section></>;
-  if (role === "member") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><a className="button" href="/account">Open Account</a></section></>;
+  if (role === "user") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account is signed in." /><section className="card"><h2>User access</h2><p>The account role does not establish beta/player eligibility or membership benefits.</p><a className="button" href="/status/releases">Release Notes</a></section></>;
+  if (canAccessAdministration(role)) return <><PageHead eyebrow="Home" title="Welcome back." description="Your account authorization was verified." /><section className="card"><h2>{role === "owner" ? "Owner" : "Admin"} access</h2><p>Administrative access is available through the server-owned account role.</p><div className="action-row"><a className="button button--gold" href="/admin">Open Administration</a><a className="button" href="/status/releases">Release Notes</a></div></section></>;
+  if (role === "member") return <><PageHead eyebrow="Home" title="Welcome back." description="Your account access level was verified." /><section className="card"><h2>Member access level</h2><p>This access level does not establish beta/player eligibility or a membership-benefit entitlement.</p><div className="action-row"><a className="button" href="/account">Open Account</a><a className="button" href="/status/releases">Release Notes</a></div></section></>;
   return <><PageHead eyebrow="Home" title="Authorization unavailable" description="No supplied account access level matched." /></>;
 }
 

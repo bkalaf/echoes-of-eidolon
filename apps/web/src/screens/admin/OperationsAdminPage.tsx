@@ -1,27 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
+import type { ReleaseNotes } from "../../domain/release-notes";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
-type AdminRelease = { releaseId: string; version: string; gitSha: string; status: string; summary: string; publishedAt: string | null };
-
 function ReleaseManager() {
-  const [version, setVersion] = useState("");
-  const [gitSha, setGitSha] = useState("");
-  const [summary, setSummary] = useState("");
-  const [message, setMessage] = useState("");
-  const [publishingId, setPublishingId] = useState<string>();
-  const releases = useQuery({ queryKey: ["admin", "releases"], queryFn: async () => { const response = await fetch("/api/admin/releases"); if (!response.ok) throw new Error("Release records could not be loaded."); return response.json() as Promise<{ releases: AdminRelease[] }>; } });
-  const publish = async (release: AdminRelease) => {
-    setPublishingId(release.releaseId);
-    setMessage("");
-    const response = await fetch(`/api/admin/releases/${encodeURIComponent(release.releaseId)}/publish`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ gitSha: release.gitSha }) });
-    const result = await response.json() as { error?: string };
-    setPublishingId(undefined);
-    setMessage(response.ok ? `Release notes ${release.version} published. No deployment was started.` : result.error ?? "Release notes could not be published.");
-    if (response.ok) await releases.refetch();
-  };
-  return <div className="stack"><section className="card form-grid"><h2 className="span-2">Create reviewed release draft</h2><label className="field">Version<input className="input" value={version} onChange={(event) => setVersion(event.target.value)} /></label><label className="field">Exact Git SHA<input className="input" maxLength={40} value={gitSha} onChange={(event) => setGitSha(event.target.value)} /></label><label className="field span-2">Player summary<textarea className="textarea" value={summary} onChange={(event) => setSummary(event.target.value)} /></label><button className="button button--gold" disabled={!version || !summary || !/^[0-9a-f]{40}$/.test(gitSha)} onClick={async () => { const response = await fetch("/api/admin/releases", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ audience: "BOTH", gitSha, notes: [], summary, version }) }); setMessage(response.ok ? "Release draft created. It is not published or deployed." : "Release draft could not be created."); if (response.ok) await releases.refetch(); }}>Create draft</button>{message && <p className="notice span-2" role="status">{message}</p>}</section><section className="card"><h2>Release records</h2>{releases.isPending ? <p>Loading releases…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : releases.data.releases.length === 0 ? <p>No release records.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Version</th><th>SHA</th><th>Status</th><th>Summary</th><th>Release notes</th><th>Deployment</th></tr></thead><tbody>{releases.data.releases.map((release) => <tr key={release.releaseId}><td>{release.version}</td><td><code>{release.gitSha}</code></td><td>{release.status}</td><td>{release.summary}</td><td>{release.status === "DRAFT" ? <button className="button" disabled={Boolean(publishingId)} onClick={() => void publish(release)}>{publishingId === release.releaseId ? "Publishing…" : "Publish reviewed notes"}</button> : release.publishedAt ? `Published ${new Date(release.publishedAt).toLocaleString()}` : "Not publishable"}</td><td><button className="button" disabled>Requires explicit authorization</button></td></tr>)}</tbody></table></div>}<p className="notice">Release-note publication changes only the persisted public notes state. Production deployment remains a separate, disabled operation and this surface accepts no shell commands.</p></section></div>;
+  const releases = useQuery({ queryKey: ["admin", "releases"], queryFn: async () => { const response = await fetch("/api/admin/releases"); if (!response.ok) throw new Error("Release records could not be loaded."); return response.json() as Promise<{ releases: ReleaseNotes[] }>; } });
+  return <div className="stack"><section className="card"><h2>Canonical release authority</h2><p>Release drafts are owner-reviewed Markdown in the production repository. Runtime forms cannot create or publish competing release records.</p></section><section className="card"><h2>Release records</h2>{releases.isPending ? <p>Loading releases…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : releases.data.releases.length === 0 ? <p>No canonical release records.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Version</th><th>Status</th><th>Title</th><th>Summary</th><th>Date</th><th>Items</th><th>Publication</th><th>Deployment</th></tr></thead><tbody>{releases.data.releases.map((release) => <tr key={release.version}><td>{release.version}</td><td>{release.status}</td><td>{release.title}</td><td>{release.summary}</td><td>{release.releaseDate ?? "Not assigned"}</td><td>{release.items.length}</td><td><button className="button" disabled>Owner-reviewed repository change required</button></td><td><button className="button" disabled>Requires explicit authorization</button></td></tr>)}</tbody></table></div>}<p className="notice">Generated drafts never publish notes. Publication, tags, GitHub Releases, migrations, and application deployment remain separate authorized operations.</p></section></div>;
 }
 
 function DocumentBuilder() {

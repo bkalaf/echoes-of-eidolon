@@ -61,6 +61,12 @@ try {
   await admin.query(`CREATE DATABASE "${databaseName}"`);
   const environment = { ...process.env, DATABASE_URL: verificationUrl.toString() };
   await run("pnpm", ["exec", "prisma", "migrate", "deploy"], environment);
+  await run("pnpm", ["exec", "tsx", "scripts/bootstrap-owner.mts"], {
+    ...environment,
+    OWNER_BOOTSTRAP_EMAIL: "owner-bootstrap-verification@example.test",
+    OWNER_BOOTSTRAP_SECRET: "migration-verification-owner-secret",
+    OWNER_BOOTSTRAP_USERNAME: "owner_verification",
+  });
   await run("pnpm", [
     "exec", "prisma", "migrate", "diff",
     "--from-config-datasource", "--to-schema", "prisma/schema.prisma", "--exit-code",
@@ -69,6 +75,16 @@ try {
   const verification = new Client({ connectionString: verificationUrl.toString() });
   await verification.connect();
   try {
+    const ownerAccount = await verification.query(
+      `SELECT u."email", u."username", u."role", u."emailVerified", a."providerId", a."password"
+       FROM "User" u JOIN "Account" a ON a."userId" = u."id"
+       WHERE u."email" = 'owner-bootstrap-verification@example.test'`,
+    );
+    if (ownerAccount.rows.length !== 1 || ownerAccount.rows[0]?.username !== "owner_verification"
+      || ownerAccount.rows[0]?.role !== "owner" || ownerAccount.rows[0]?.emailVerified !== true
+      || ownerAccount.rows[0]?.providerId !== "credential" || !ownerAccount.rows[0]?.password) {
+      throw new Error("Owner bootstrap did not create the exact verified credential account.");
+    }
     const hash = "a".repeat(64);
     await verification.query(
       `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize", "technicalMetadata")

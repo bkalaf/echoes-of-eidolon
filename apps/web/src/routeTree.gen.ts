@@ -36,6 +36,7 @@ import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
 import { Route as ApiPlayerCalendarRouteImport } from './routes/api/player/calendar'
 import { Route as ApiPlayerPuzzlesRouteImport } from './routes/api/player/puzzles'
 import { Route as ApiPlayerRuntimeRouteImport } from './routes/api/player/runtime'
+import { Route as ApiReleasesVersionRouteImport } from './routes/api/releases/$version'
 import { Route as ApiStoreCatalogRouteImport } from './routes/api/store/catalog'
 import { Route as ApiStoreCheckoutRouteImport } from './routes/api/store/checkout'
 import { Route as ApiStoreOrderLookupRouteImport } from './routes/api/store/order-lookup'
@@ -230,6 +231,11 @@ const ApiPlayerRuntimeRoute = ApiPlayerRuntimeRouteImport.update({
   id: '/api/player/runtime',
   path: '/api/player/runtime',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiReleasesVersionRoute = ApiReleasesVersionRouteImport.update({
+  id: '/$version',
+  path: '/$version',
+  getParentRoute: () => ApiReleasesRoute,
 } as any)
 const ApiStoreCatalogRoute = ApiStoreCatalogRouteImport.update({
   id: '/api/store/catalog',
@@ -561,7 +567,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/health': typeof ApiHealthRoute
-  '/api/releases': typeof ApiReleasesRoute
+  '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
@@ -581,6 +587,7 @@ export interface FileRoutesByFullPath {
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
+  '/api/releases/$version': typeof ApiReleasesVersionRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
@@ -647,7 +654,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/health': typeof ApiHealthRoute
-  '/api/releases': typeof ApiReleasesRoute
+  '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
@@ -667,6 +674,7 @@ export interface FileRoutesByTo {
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
+  '/api/releases/$version': typeof ApiReleasesVersionRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
@@ -734,7 +742,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/contact': typeof ApiContactRoute
   '/api/health': typeof ApiHealthRoute
-  '/api/releases': typeof ApiReleasesRoute
+  '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
@@ -754,6 +762,7 @@ export interface FileRoutesById {
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
+  '/api/releases/$version': typeof ApiReleasesVersionRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
@@ -842,6 +851,7 @@ export interface FileRouteTypes {
     | '/api/player/calendar'
     | '/api/player/puzzles'
     | '/api/player/runtime'
+    | '/api/releases/$version'
     | '/api/store/catalog'
     | '/api/store/checkout'
     | '/api/store/order-lookup'
@@ -928,6 +938,7 @@ export interface FileRouteTypes {
     | '/api/player/calendar'
     | '/api/player/puzzles'
     | '/api/player/runtime'
+    | '/api/releases/$version'
     | '/api/store/catalog'
     | '/api/store/checkout'
     | '/api/store/order-lookup'
@@ -1014,6 +1025,7 @@ export interface FileRouteTypes {
     | '/api/player/calendar'
     | '/api/player/puzzles'
     | '/api/player/runtime'
+    | '/api/releases/$version'
     | '/api/store/catalog'
     | '/api/store/checkout'
     | '/api/store/order-lookup'
@@ -1081,7 +1093,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiContactRoute: typeof ApiContactRoute
   ApiHealthRoute: typeof ApiHealthRoute
-  ApiReleasesRoute: typeof ApiReleasesRoute
+  ApiReleasesRoute: typeof ApiReleasesRouteWithChildren
   ApiVersionRoute: typeof ApiVersionRoute
   FeaturesFreeToPlayRoute: typeof FeaturesFreeToPlayRoute
   ApiAccountMembershipRoute: typeof ApiAccountMembershipRoute
@@ -1334,6 +1346,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/player/runtime'
       preLoaderRoute: typeof ApiPlayerRuntimeRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/releases/$version': {
+      id: '/api/releases/$version'
+      path: '/$version'
+      fullPath: '/api/releases/$version'
+      preLoaderRoute: typeof ApiReleasesVersionRouteImport
+      parentRoute: typeof ApiReleasesRoute
     }
     '/api/store/catalog': {
       id: '/api/store/catalog'
@@ -1737,6 +1756,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ApiReleasesRouteChildren {
+  ApiReleasesVersionRoute: typeof ApiReleasesVersionRoute
+}
+
+const ApiReleasesRouteChildren: ApiReleasesRouteChildren = {
+  ApiReleasesVersionRoute: ApiReleasesVersionRoute,
+}
+
+const ApiReleasesRouteWithChildren = ApiReleasesRoute._addFileChildren(
+  ApiReleasesRouteChildren,
+)
+
 interface ApiAdminCampaignRouteChildren {
   ApiAdminCampaignGroupingsRoute: typeof ApiAdminCampaignGroupingsRoute
   ApiAdminCampaignLinkedMoveRoute: typeof ApiAdminCampaignLinkedMoveRoute
@@ -1902,7 +1933,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiContactRoute: ApiContactRoute,
   ApiHealthRoute: ApiHealthRoute,
-  ApiReleasesRoute: ApiReleasesRoute,
+  ApiReleasesRoute: ApiReleasesRouteWithChildren,
   ApiVersionRoute: ApiVersionRoute,
   FeaturesFreeToPlayRoute: FeaturesFreeToPlayRoute,
   ApiAccountMembershipRoute: ApiAccountMembershipRoute,

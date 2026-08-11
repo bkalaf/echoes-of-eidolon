@@ -1,5 +1,6 @@
 import type { PrismaClient } from "../generated/prisma/client";
 import { getDatabase } from "./database";
+import { listAdministrativeReleases } from "./releases";
 
 export interface AdminDashboardProjection {
   atlas: { connections: number; regionMappings: number };
@@ -17,7 +18,7 @@ export async function getAdminDashboard(database: PrismaClient = getDatabase()):
   const [pendingInvitationRequests, outstandingPrompts, draftReleases, failedBulkOperations, activeSessions, regionMappings, connections] = await Promise.all([
     database.betaInviteRequest.count({ where: { status: "PENDING" } }),
     database.promptRecord.count({ where: { status: "OUTSTANDING" } }),
-    database.release.count({ where: { status: "DRAFT" } }),
+    listAdministrativeReleases().then((releases) => releases.filter((release) => release.status === "DRAFT").length),
     database.bulkOperationAudit.count({ where: { result: "FAILED" } }),
     database.externalBulkApiSession.count({ where: { expiresAt: { gt: now }, revokedAt: null, state: "ON" } }),
     database.regionLatticeMapping.count(),

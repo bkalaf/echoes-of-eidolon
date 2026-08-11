@@ -22,5 +22,6 @@ apps/web/src/generated/
 !.env.example
 /.local/
 /assets/managed/
+/docs/release-notes/.drafts/
 REMEDIATION/
 atlas/

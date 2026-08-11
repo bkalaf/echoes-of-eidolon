@@ -3,7 +3,11 @@ import { resolve } from "node:path";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
+
+vi.mock("../../src/lib/auth-client", () => ({ authClient: { useSession: authMocks.useSession } }));
 
 import { managedAssetUrl } from "../../src/content/managed-assets";
 import { contactTopicSchema, contactTopicTokens } from "../../src/domain/contact";
@@ -18,6 +22,12 @@ function renderWithQuery(screenId: string, pathname?: string) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(<QueryClientProvider client={queryClient}><PublicPage pathname={pathname} screen={publicScreen(screenId)} /></QueryClientProvider>);
 }
+
+beforeEach(() => {
+  authMocks.useSession.mockReturnValue({ data: null, isPending: false });
+});
+
+afterEach(() => vi.unstubAllGlobals());
 
 describe("public mutation boundaries", () => {
   it("uses the captioned Power of Three video in the responsive features panel", () => {
@@ -108,26 +118,27 @@ describe("public mutation boundaries", () => {
   });
 
   it("does not fabricate version history when no published release exists", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ releases: [] }) }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ currentVersion: "0.2.0", releases: [] }) }));
     renderWithQuery("PUB017");
     expect(await screen.findByText("No player-visible release has been published.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Release archive" })).toBeInTheDocument();
     expect(screen.queryByText(/v0\.2\.0|v0\.1\.9|v0\.1\.8/)).not.toBeInTheDocument();
   });
 
-  it("shows the latest authoritative published release on the public status page", async () => {
+  it("RN-023 shows the latest authoritative published release on the public status page", async () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
       if (url === "/api/health") return { ok: true, json: async () => ({ checkedAt: "2026-08-11T00:00:00Z", services: [] }) } as Response;
-      if (url === "/api/releases") return { ok: true, json: async () => ({ releases: [
-        { version: "0.2.0", summary: "Published player release", publishedAt: "2026-08-10T00:00:00Z" },
+      if (url === "/api/releases") return { ok: true, json: async () => ({ currentVersion: "0.2.0", releases: [
+        { version: "0.2.0", status: "PUBLISHED", title: "Current published release", summary: "Published player release", releaseDate: "2026-08-10", previousVersion: null, items: [] },
       ] }) } as Response;
       throw new Error(`Unexpected request: ${url}`);
     }));
 
     renderWithQuery("PUB016");
 
-    expect(await screen.findByText("0.2.0")).toBeInTheDocument();
+    expect(screen.getByText("Application version 0.2.0")).toBeInTheDocument();
+    expect(await screen.findByText("Current published release")).toBeInTheDocument();
     expect(screen.getByText("Published player release")).toBeInTheDocument();
     expect(screen.queryByText("No verified release source is configured.")).not.toBeInTheDocument();
     expect(screen.getByText("No maintenance schedule source is configured.")).toBeInTheDocument();
@@ -135,21 +146,36 @@ describe("public mutation boundaries", () => {
   });
 
   it("preserves corrected release-detail navigation without fake content", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ releases: [] }) }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ currentVersion: "0.2.0", releases: [] }) }));
     renderWithQuery("PUB018");
     expect(screen.getByRole("link", { name: /Back to Release Notes/ })).toHaveAttribute("href", "/status/releases");
     expect(await screen.findByText("No player-visible release has been published.")).toBeInTheDocument();
   });
 
-  it("selects a published release from the concrete version route and links adjacent releases", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ releases: [
-      { releaseId: "R-2", version: "0.2.0", gitSha: "2".repeat(40), summary: "Current supplied release", publishedAt: "2026-08-10T00:00:00Z", notes: [] },
-      { releaseId: "R-1", version: "0.1.0", gitSha: "1".repeat(40), summary: "Earlier supplied release", publishedAt: "2026-08-01T00:00:00Z", notes: [] },
+  it("RN-025 selects a published release from the concrete version route and links adjacent releases", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ currentVersion: "0.2.0", releases: [
+      { version: "0.2.0", status: "PUBLISHED", title: "Current release", summary: "Current supplied release", releaseDate: "2026-08-10", previousVersion: "0.1.0", items: [] },
+      { version: "0.1.0", status: "SUPERSEDED", title: "Earlier release", summary: "Earlier supplied release", releaseDate: "2026-08-01", previousVersion: null, items: [] },
     ] }) }));
     renderWithQuery("PUB018", "/status/releases/0.1.0");
-    expect(await screen.findByRole("heading", { name: "0.1.0", level: 1 })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Earlier release", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("Release 0.1.0")).toBeInTheDocument();
     expect(screen.getByText("Earlier supplied release")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Next" })).toHaveAttribute("href", "/status/releases/0.2.0");
     expect(screen.queryByText("Current supplied release")).not.toBeInTheDocument();
+  });
+
+  it("RN-024 renders the public archive in semantic order", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ currentVersion: "0.10.0", releases: [
+      { version: "0.10.0", status: "PUBLISHED", title: "Newer release", summary: "Newer", releaseDate: "2026-08-10", previousVersion: "0.9.0", items: [] },
+      { version: "0.9.0", status: "SUPERSEDED", title: "Older release", summary: "Older", releaseDate: "2026-08-01", previousVersion: null, items: [] },
+    ] }) }));
+
+    renderWithQuery("PUB017");
+
+    expect((await screen.findAllByRole("link", { name: "Read release notes" })).map((link) => link.getAttribute("href"))).toEqual([
+      "/status/releases/0.10.0",
+      "/status/releases/0.9.0",
+    ]);
   });
 });

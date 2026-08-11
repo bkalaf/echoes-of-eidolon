@@ -1,7 +1,7 @@
 {
   "name": "echoes-of-eidolon",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "packageManager": "pnpm@10.33.2",
   "engines": {
     "node": "22.22.0",
@@ -19,7 +19,9 @@
     "entity-admin:generate": "node apps/web/scripts/generate-entity-admin-contract.mjs",
     "types:catalog": "node apps/web/scripts/generate-type-catalog.mjs",
     "wireframes:reconcile": "node apps/web/scripts/reconcile-wireframes.mjs",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration && pnpm test:e2e && pnpm build"
+    "release:draft": "pnpm --filter @echoes/web release:draft",
+    "release:check": "pnpm --filter @echoes/web release:check",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration && pnpm test:e2e && pnpm build && pnpm release:check"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

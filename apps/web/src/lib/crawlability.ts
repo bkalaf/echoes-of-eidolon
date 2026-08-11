@@ -1,3 +1,4 @@
+import publicReleaseArtifact from "../data/public-release-notes.generated.json";
 import { pageManifest, pathMatches, shellFor } from "./page-manifest";
 
 const explicitlyPublicPaths = ["/about", "/features/free-to-play"] as const;
@@ -5,16 +6,21 @@ const explicitlyPublicPaths = ["/about", "/features/free-to-play"] as const;
 const crawlablePatterns = pageManifest
   .filter((entry) => entry.path !== null && ["public", "store"].includes(shellFor(entry)))
   .map((entry) => entry.path!.split("?")[0]!)
-  .filter((path) => !path.startsWith("/store/orders/"));
+  .filter((path) => !path.startsWith("/store/orders/") && path !== "/status/releases/:version");
+
+export const publishedReleasePaths = Object.freeze(
+  (publicReleaseArtifact.releases as Array<{ version: string }>).map((release) => `/status/releases/${release.version}`),
+);
 
 export const sitemapPaths = Object.freeze(
-  [...new Set([...crawlablePatterns.filter((path) => !path.includes(":")), ...explicitlyPublicPaths])]
+  [...new Set([...crawlablePatterns.filter((path) => !path.includes(":")), ...explicitlyPublicPaths, ...publishedReleasePaths])]
     .sort(),
 );
 
 export function isCrawlablePath(pathname: string): boolean {
   const normalized = pathname !== "/" ? pathname.replace(/\/$/, "") : pathname;
   return explicitlyPublicPaths.includes(normalized as (typeof explicitlyPublicPaths)[number])
+    || publishedReleasePaths.includes(normalized as (typeof publishedReleasePaths)[number])
     || crawlablePatterns.some((pattern) => pathMatches(pattern, normalized));
 }
 

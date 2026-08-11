@@ -52,6 +52,13 @@ describe("role-specific public home", () => {
     renderPublic();
     expect(await screen.findByRole("heading", { name: role === "owner" ? "Owner access" : "Admin access" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open Administration" })).toHaveAttribute("href", "/admin");
+    expect(screen.getByRole("link", { name: "Release Notes" })).toHaveAttribute("href", "/status/releases");
+  });
+
+  it("RN-028 RN-029 keeps published notes available from an authenticated home", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "member" } }, isPending: false });
+    renderPublic();
+    expect(await screen.findByRole("link", { name: "Release Notes" })).toHaveAttribute("href", "/status/releases");
   });
 
   it("does not normalize an unknown stored role into a supplied access level", async () => {

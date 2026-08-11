@@ -1,7 +1,7 @@
 {
   "name": "@echoes/web",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "node scripts/run-with-local-secrets.mjs vite dev",
@@ -15,7 +15,10 @@
     "atlas:import-sites": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-sites.mts",
     "atlas:import-naming": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-naming.mts",
     "owner:bootstrap": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/bootstrap-owner.mts",
-    "generate": "prisma generate && node scripts/generate-entity-admin-contract.mjs",
+    "release:draft": "tsx scripts/draft-release-notes.mts",
+    "release:check": "tsx scripts/check-release.mts",
+    "release:generate": "tsx scripts/generate-release-notes.mts",
+    "generate": "prisma generate && node scripts/generate-entity-admin-contract.mjs && pnpm release:generate",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
