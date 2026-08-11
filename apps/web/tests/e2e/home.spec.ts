@@ -17,6 +17,46 @@ test("public navigation remains readable at the supported mobile width", async (
   }
 });
 
+test("homepage hero preserves the source composition across supported viewports", async ({ page }) => {
+  for (const [width, height] of [
+    [2_560, 1_440],
+    [1_920, 1_080],
+    [1_440, 900],
+    [1_366, 768],
+    [1_024, 768],
+    [768, 1_024],
+    [390, 844],
+  ] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    const framing = await page.locator(".hero").evaluate((hero) => {
+      const image = hero.querySelector("img");
+      if (!image) throw new Error("Hero image is missing.");
+      const style = getComputedStyle(image);
+      const sourceAspectRatio = image.naturalWidth / image.naturalHeight;
+      const renderedImageHeight = Math.max(hero.clientHeight, hero.clientWidth / sourceAspectRatio);
+      return {
+        heroWidth: hero.clientWidth,
+        naturalHeight: image.naturalHeight,
+        naturalWidth: image.naturalWidth,
+        objectFit: style.objectFit,
+        objectPosition: style.objectPosition.split(" ").map((value) => Number.parseFloat(value)),
+        verticalVisibleFraction: hero.clientHeight / renderedImageHeight,
+      };
+    });
+
+    expect(framing.naturalWidth).toBe(1_672);
+    expect(framing.naturalHeight).toBe(941);
+    expect(framing.heroWidth).toBeGreaterThanOrEqual(width - 1);
+    expect(framing.heroWidth).toBeLessThanOrEqual(width);
+    expect(framing.objectFit).toBe("cover");
+    expect(framing.objectPosition[0]).toBeGreaterThanOrEqual(35);
+    expect(framing.objectPosition[0]).toBeLessThanOrEqual(45);
+    expect(framing.objectPosition[1]).toBeLessThanOrEqual(25);
+    expect(framing.verticalVisibleFraction).toBeGreaterThanOrEqual(0.9);
+  }
+});
+
 test("packet routes expose public, auth, account, and store tasks", async ({ page }) => {
   for (const [path, heading] of [
     ["/features", "Nine ways Echoes plays differently."],

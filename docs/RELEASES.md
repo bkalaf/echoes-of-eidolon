@@ -4,8 +4,8 @@
 
 - Target application release: `0.2.0`.
 - Canonical note: `docs/release-notes/0_2_0.md`.
-- Status: `DRAFT`.
-- Release date: `null` until an owner-authorized publication action.
+- Status: `PUBLISHED`.
+- Release date: `2026-08-11` by owner-authorized publication action.
 - Authoritative previous release/tag: none. The repository has no earlier release tag or canonical published note.
 
 ## Canonical files

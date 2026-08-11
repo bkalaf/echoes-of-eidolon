@@ -10,6 +10,7 @@ describe("closed-world crawlability", () => {
     "/features/a-living-world",
     "/features/free-to-play",
     "/store/products/official-print",
+    "/status/releases/0.2.0",
   ])("allowlists the approved public/store path %s", (path) => {
     expect(isCrawlablePath(path)).toBe(true);
   });
@@ -22,7 +23,6 @@ describe("closed-world crawlability", () => {
     "/review/navigation-states",
     "/store/orders/bearer-token",
     "/api/health",
-    "/status/releases/0.2.0",
     "/not-in-the-registry",
   ])("fails closed for non-public path %s", (path) => {
     expect(isCrawlablePath(path)).toBe(false);
@@ -32,7 +32,7 @@ describe("closed-world crawlability", () => {
     const sitemap = sitemapDocument("https://example.test");
     expect(sitemapPaths).toContain("/features/free-to-play");
     expect(sitemap).toContain("<loc>https://example.test/features</loc>");
-    expect(sitemap).not.toContain("/status/releases/0.2.0</loc>");
+    expect(sitemap).toContain("<loc>https://example.test/status/releases/0.2.0</loc>");
     expect(sitemap).not.toMatch(/:version|:slug|store\/orders|\/auth|\/admin|\/game|\/review/);
   });
 

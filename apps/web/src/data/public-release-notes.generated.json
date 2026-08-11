@@ -1,4 +1,140 @@
 {
   "currentVersion": "0.2.0",
-  "releases": []
+  "releases": [
+    {
+      "version": "0.2.0",
+      "status": "PUBLISHED",
+      "title": "Echoes of Eidolon 0.2.0",
+      "summary": "The first production-ready foundation for the public site, secure accounts, player access, commerce, administration, and world operations.",
+      "releaseDate": "2026-08-11",
+      "previousVersion": null,
+      "items": [
+        {
+          "itemId": "0.2.0:added:1",
+          "category": "ADDED",
+          "title": "Public world introduction",
+          "body": "The new public site introduces Echoes of Eidolon through nine feature stories, captioned media, gameplay and story overviews, a free-to-play commitment, and responsive navigation.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/",
+            "/features",
+            "/gameplay",
+            "/about"
+          ]
+        },
+        {
+          "itemId": "0.2.0:added:2",
+          "category": "ADDED",
+          "title": "Secure accounts and beta access",
+          "body": "Players can create and verify accounts, sign in with email or username, manage security settings, request beta invitations, and view account-owned progress, orders, membership, and support records.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/auth/sign-in",
+            "/auth/sign-up",
+            "/account"
+          ]
+        },
+        {
+          "itemId": "0.2.0:added:3",
+          "category": "ADDED",
+          "title": "Player support and commerce",
+          "body": "The Store supports privacy-safe guest and account order flows, while account support adds help tickets, order questions, return requests, donations, and optional monthly membership management.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/store",
+            "/account/support",
+            "/account/orders",
+            "/donate"
+          ]
+        },
+        {
+          "itemId": "0.2.0:added:4",
+          "category": "ADDED",
+          "title": "Governed administration workspaces",
+          "body": "Authorized operators can use server-protected workspaces for accounts, invitations, structured data, assets, prompts, commerce, Atlas records, settlements, cities, campaigns, puzzles, capabilities, and operational review.",
+          "audience": "OPERATORS",
+          "routes": [
+            "/admin"
+          ]
+        },
+        {
+          "itemId": "0.2.0:added:5",
+          "category": "ADDED",
+          "title": "Canonical Atlas and settlement operations",
+          "body": "Atlas tooling validates the authoritative world dataset, keeps Region and Lattice identities distinct, and supports map, globe, Site, Point of Interest, settlement, population, migration, and city-planning review without fabricating missing world data.",
+          "audience": "OPERATORS",
+          "routes": [
+            "/admin/atlas",
+            "/admin/cities",
+            "/admin/settlements"
+          ]
+        },
+        {
+          "itemId": "0.2.0:added:6",
+          "category": "ADDED",
+          "title": "Release and production safeguards",
+          "body": "Production operations are pinned to exact source revisions, verify the complete application gate, back up PostgreSQL before migrations, serialize deployments, record redacted outcomes, and retain application rollback support after failed health checks.",
+          "audience": "OPERATORS",
+          "routes": [
+            "/admin/operations",
+            "/status"
+          ]
+        },
+        {
+          "itemId": "0.2.0:changed:1",
+          "category": "CHANGED",
+          "title": "Authorization is server-owned",
+          "body": "Account role, player eligibility, membership benefits, and administrative access are separate server-authorized decisions; client-side visibility never grants access.",
+          "audience": "BOTH",
+          "routes": [
+            "/account",
+            "/admin",
+            "/game"
+          ]
+        },
+        {
+          "itemId": "0.2.0:changed:2",
+          "category": "CHANGED",
+          "title": "Privacy-first persistence",
+          "body": "Sensitive codes and temporary access keys are stored as hashes, provider callbacks are verified and idempotent, public order projections omit private payment details, and ordinary operational logs exclude private conversation content and credentials.",
+          "audience": "BOTH"
+        },
+        {
+          "itemId": "0.2.0:fixed:1",
+          "category": "FIXED",
+          "title": "Stable signed-in navigation",
+          "body": "Returning to the home page preserves the active account session and shows the correct signed-in experience.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/"
+          ]
+        },
+        {
+          "itemId": "0.2.0:fixed:2",
+          "category": "FIXED",
+          "title": "Responsive public media",
+          "body": "Public navigation remains readable on mobile, the home page preserves the beacon, illuminated clouds, floating city, moons, and foreground across responsive framing, and the captioned feature video fits compact portrait screens while expanding naturally in landscape.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/",
+            "/features"
+          ]
+        },
+        {
+          "itemId": "0.2.0:security:1",
+          "category": "SECURITY",
+          "title": "Hardened account and operations boundaries",
+          "body": "Authentication, account ownership, administrative mutations, external bulk access, deployment controls, and destructive world controls fail closed when authorization or required authority is absent.",
+          "audience": "BOTH"
+        },
+        {
+          "itemId": "0.2.0:known_issue:1",
+          "category": "KNOWN_ISSUE",
+          "title": "Deferred external and destructive operations",
+          "body": "Merchandise fulfillment remains inactive until approved product mappings and provider configuration are installed. Minor participation verification and world reset/reseed operations also remain unavailable until their exact authority is supplied.",
+          "audience": "BOTH"
+        }
+      ]
+    }
+  ]
 }

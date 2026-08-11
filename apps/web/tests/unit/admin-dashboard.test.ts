@@ -18,7 +18,7 @@ describe("administrative dashboard projection", () => {
     expect(result).toEqual({
       atlas: { connections: 44, regionMappings: 25 },
       externalBulkApi: { activeSessions: 0, state: "OFF" },
-      queues: { draftReleases: 1, failedBulkOperations: 2, outstandingPrompts: 18, pendingInvitationRequests: 12 },
+      queues: { draftReleases: 0, failedBulkOperations: 2, outstandingPrompts: 18, pendingInvitationRequests: 12 },
     });
     expect(database.betaInviteRequest.count).toHaveBeenCalledWith({ where: { status: "PENDING" } });
     expect(database.promptRecord.count).toHaveBeenCalledWith({ where: { status: "OUTSTANDING" } });
