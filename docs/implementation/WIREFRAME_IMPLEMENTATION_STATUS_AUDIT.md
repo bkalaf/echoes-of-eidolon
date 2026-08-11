@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 207 |
-| PARTIAL | 28 |
+| IMPLEMENTED | 209 |
+| PARTIAL | 26 |
 | PLACEHOLDER | 38 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **66 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **64 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -32,7 +32,7 @@ Therefore **66 of 273 active V3** wireframe pages/states are not fully implement
 2. **The normal Data admin surface is implemented for every active registered entity.** Its allowlist and field contracts are generated from the canonical entity registry and Prisma schema, with persisted list/search/create/edit/delete behavior.
 3. **Every active registered entity import has transaction-backed Apply.** JSON, YAML, Markdown, and HTML parsing feed exact-field validation; existing identities are idempotent only when canonical values match.
 4. **Player runtime pages remain incomplete.** Maps and globes now expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, achievements, and support still lack canonical player-facing owners.
-5. **Commerce is incomplete.** Catalog, cart, Stripe checkout initiation, and authenticated persisted-result resolution exist; return submission, subscriptions, admin item editing, guest lookup, and support are not complete.
+5. **Commerce is incomplete.** Catalog, administrator-authored product/variant configuration, cart, Stripe checkout initiation, and authenticated persisted-result resolution exist; return submission, subscriptions, guest lookup, and support are not complete.
 6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
 7. **No exhaustive visual acceptance exists for all 273 active V3 states.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
 
@@ -134,8 +134,8 @@ Therefore **66 of 273 active V3** wireframe pages/states are not fully implement
 | 92 | `ADM008` | Perk Detail/Edit | `/admin/perks/:id` | **IMPLEMENTED** | Reads and persists perk name, description, and active status. |
 | 93 | `ADM010` | Store Management | `/admin/store` | **IMPLEMENTED** | Projects persisted publication, provider-mapping, unconfirmed-order, and finite-category metrics plus the configured catalog; unresolved production activation remains explicitly owner-deferred. |
 | 94 | `ADM011` | Store Categories | `/admin/store/categories` | **IMPLEMENTED** | Projects the three finite canonical `StoreProductType` categories and their persisted item counts without creating a competing free-form taxonomy. |
-| 95 | `ADM012` | Store Items | `/admin/store/items` | **PARTIAL** | Lists and links persisted product, artwork, variant, price, availability, and provider-mapping state; creation and configuration mutations remain blocked by the owner-deferred merchandise mapping. |
-| 96 | `ADM013` | Store Item Editor | `/admin/store/items/:id` | **PARTIAL** | Resolves a concrete persisted product and exposes complete variant/configuration detail; editing remains blocked by missing authoritative artwork, provider variant, credential, and shipping configuration. |
+| 95 | `ADM012` | Store Items | `/admin/store/items` | **IMPLEMENTED** | Lists persisted product configuration and creates an explicitly authored unpublished product only for an unused finite category, validating any managed artwork reference without inventing provider values. |
+| 96 | `ADM013` | Store Item Editor | `/admin/store/items/:id` | **IMPLEMENTED** | Resolves and persists exact product, managed artwork, category, price, Stripe/Printful variant reference, availability, and publication configuration; publication fails closed until artwork and an available provider-mapped variant exist. |
 | 97 | `ADM014` | Order Management | `/admin/orders` | **IMPLEMENTED** | Projects all authoritative merchandise orders and donation transactions with separate record-type navigation and no inferred subscription purchases. |
 | 98 | `ADM015` | Order Management - Merchandise | `/admin/orders?tab=merchandise` | **IMPLEMENTED** | Projects merchandise payment, fulfillment, refund, and customer state only from the separate persisted records. |
 | 99 | `ADM016` | Order Management - Subscriptions | `/admin/orders?tab=subscriptions` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |

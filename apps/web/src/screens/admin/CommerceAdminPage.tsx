@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import type { ReactNode } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState, type ReactNode } from "react";
 
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
+import { storeProductTypes } from "../../domain/store";
 import type { StoreProductType, DonationCheckoutStatus } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
@@ -18,9 +19,11 @@ interface ProductVariant {
   color: string | null;
   priceCents: number;
   printfulConfigured: boolean;
+  printfulVariantReference: string;
   size: string | null;
   storeVariantId: string;
   stripeConfigured: boolean;
+  stripePriceReference: string;
 }
 
 interface ProductRow {
@@ -140,7 +143,26 @@ function Categories({ categories }: { categories: CategoryRow[] }) {
 }
 
 function ProductList({ products }: { products: ProductRow[] }) {
-  return <section className="card"><h2>Store items</h2><p>Prices, variants, availability, and artwork remain server-owned configuration. Missing values are not replaced with wireframe samples.</p>{products.length === 0 ? <p>No Store products are configured.</p> : <DataTable columns={productColumns} data={products} getRowId={(product) => product.storeProductId} preferenceKey="admin.commerce.products" />}</section>;
+  const queryClient = useQueryClient();
+  const availableTypes = storeProductTypes.filter((type) => !products.some((product) => product.productType === type.productType));
+  const [creating, setCreating] = useState(false);
+  const [storeProductId, setStoreProductId] = useState("");
+  const [name, setName] = useState("");
+  const [productType, setProductType] = useState<StoreProductType>(availableTypes[0]?.productType ?? "POSTER");
+  const [artworkAssetId, setArtworkAssetId] = useState("");
+  const [message, setMessage] = useState<string>();
+  const [error, setError] = useState<string>();
+  const [busy, setBusy] = useState(false);
+  const create = async () => {
+    setBusy(true); setError(undefined); setMessage(undefined);
+    const response = await fetch("/api/admin/commerce/products/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ artworkAssetId: artworkAssetId.trim() || null, name, productType, storeProductId }) });
+    const result = await response.json() as { error?: string };
+    setBusy(false);
+    if (!response.ok) { setError(result.error ?? "Store product could not be created."); return; }
+    await queryClient.invalidateQueries({ queryKey: ["admin", "commerce"] });
+    setCreating(false); setStoreProductId(""); setName(""); setArtworkAssetId(""); setMessage("Store product created as unpublished.");
+  };
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>Store items</h2><p>Author exact catalog, managed artwork, prices, provider mappings, availability, and publication state. No wireframe sample is saved automatically.</p></div><button className="button button--gold" disabled={availableTypes.length === 0} onClick={() => { setCreating((value) => !value); setProductType(availableTypes[0]?.productType ?? "POSTER"); }} type="button">{creating ? "Close" : "New item"}</button></div>{products.length === 0 ? <p>No Store products are configured.</p> : <DataTable columns={productColumns} data={products} getRowId={(product) => product.storeProductId} preferenceKey="admin.commerce.products" />}</section>{creating && <section className="card"><h2>Create unpublished item</h2><form className="form-grid" onSubmit={(event) => { event.preventDefault(); void create(); }}><label className="field">Product identifier<input className="input" value={storeProductId} onChange={(event) => setStoreProductId(event.target.value)} /></label><label className="field">Name<input className="input" value={name} onChange={(event) => setName(event.target.value)} /></label><label className="field">Canonical category<select className="select" value={productType} onChange={(event) => setProductType(event.target.value as StoreProductType)}>{availableTypes.map((type) => <option key={type.productType} value={type.productType}>{type.name}</option>)}</select></label><label className="field">Managed artwork identifier<input className="input" value={artworkAssetId} onChange={(event) => setArtworkAssetId(event.target.value)} /></label><button className="button button--gold" disabled={busy || !storeProductId.trim() || !name.trim()} type="submit">{busy ? "Creating…" : "Create item"}</button></form></section>}{message && <p className="notice notice--good" role="status">{message}</p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</div>;
 }
 
 function ProductDetail({ pathname, products }: { pathname: string; products: ProductRow[] }) {
@@ -150,7 +172,39 @@ function ProductDetail({ pathname, products }: { pathname: string; products: Pro
   const product = products.find((candidate) => candidate.storeProductId === productId);
   if (!productId) return <p className="notice notice--bad" role="alert">A concrete Store product identifier is required.</p>;
   if (!product) return <p className="notice notice--bad" role="alert">Store product {productId} was not found.</p>;
-  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{product.name}</h2><p>{product.storeProductId}</p></div><a className="button" href="/admin/store/items">All items</a></div><dl className="detail-list"><dt>Canonical category</dt><dd>{product.productType}</dd><dt>Published</dt><dd>{product.active ? "Yes" : "No"}</dd><dt>Artwork asset</dt><dd>{product.artworkAssetId ?? "Unconfigured"}</dd></dl></section><section className="card"><h2>Commerce configuration</h2>{product.variants.length === 0 ? <p>No variants are stored.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Variant</th><th>Size</th><th>Color</th><th>Price</th><th>Stripe</th><th>Printful</th><th>Available</th></tr></thead><tbody>{product.variants.map((variant) => <tr key={variant.storeVariantId}><td>{variant.storeVariantId}</td><td>{variant.size ?? "Not set"}</td><td>{variant.color ?? "Not set"}</td><td>{formatMoney(variant.priceCents)}</td><td>{variant.stripeConfigured ? "Configured" : "Missing"}</td><td>{variant.printfulConfigured ? "Configured" : "Missing"}</td><td>{variant.available ? "Yes" : "No"}</td></tr>)}</tbody></table></div>}<p className="notice notice--warn">Editing external mappings, prices, artwork, or publication state is unavailable until the owner-deferred merchandise configuration is supplied. No sample wireframe value can be saved here.</p></section></div>;
+  return <ProductEditor product={product} />;
+}
+
+function ProductEditor({ product }: { product: ProductRow }) {
+  const queryClient = useQueryClient();
+  const [name, setName] = useState(product.name);
+  const [productType, setProductType] = useState<StoreProductType>(product.productType);
+  const [artworkAssetId, setArtworkAssetId] = useState(product.artworkAssetId ?? "");
+  const [active, setActive] = useState(product.active);
+  const [storeVariantId, setStoreVariantId] = useState("");
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
+  const [priceCents, setPriceCents] = useState(0);
+  const [stripePriceReference, setStripePriceReference] = useState("");
+  const [printfulVariantReference, setPrintfulVariantReference] = useState("");
+  const [available, setAvailable] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string>();
+  const [error, setError] = useState<string>();
+  const refresh = async () => queryClient.invalidateQueries({ queryKey: ["admin", "commerce"] });
+  const perform = async (request: () => Promise<Response>, success: string) => {
+    setBusy(true); setMessage(undefined); setError(undefined);
+    const response = await request();
+    const result = await response.json() as { error?: string };
+    setBusy(false);
+    if (!response.ok) { setError(result.error ?? "Commerce configuration could not be saved."); return; }
+    await refresh(); setMessage(success);
+  };
+  const editVariant = (variant: ProductVariant) => {
+    setStoreVariantId(variant.storeVariantId); setSize(variant.size ?? ""); setColor(variant.color ?? ""); setPriceCents(variant.priceCents); setStripePriceReference(variant.stripePriceReference); setPrintfulVariantReference(variant.printfulVariantReference); setAvailable(variant.available);
+  };
+  const clearVariant = () => { setStoreVariantId(""); setSize(""); setColor(""); setPriceCents(0); setStripePriceReference(""); setPrintfulVariantReference(""); setAvailable(false); };
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{product.name}</h2><p>{product.storeProductId}</p></div><a className="button" href="/admin/store/items">All items</a></div><form className="form-grid" onSubmit={(event) => { event.preventDefault(); void perform(() => fetch(`/api/admin/commerce/products/${encodeURIComponent(product.storeProductId)}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ active, artworkAssetId: artworkAssetId.trim() || null, name, productType }) }), "Store product saved."); }}><label className="field">Name<input className="input" value={name} onChange={(event) => setName(event.target.value)} /></label><label className="field">Canonical category<select className="select" value={productType} onChange={(event) => setProductType(event.target.value as StoreProductType)}>{storeProductTypes.map((type) => <option key={type.productType} value={type.productType}>{type.name}</option>)}</select></label><label className="field span-2">Managed artwork identifier<input className="input" value={artworkAssetId} onChange={(event) => setArtworkAssetId(event.target.value)} /></label><label className="check"><input checked={active} type="checkbox" onChange={(event) => setActive(event.target.checked)} /> Published</label><button className="button button--gold" disabled={busy || !name.trim()} type="submit">Save item</button></form></section><section className="card"><div className="action-row action-row--between"><div><h2>Commerce variants</h2><p>Provider references are exact administrator-authored configuration. They are never inferred from labels.</p></div><button className="button" onClick={clearVariant} type="button">New variant</button></div>{product.variants.length === 0 ? <p>No variants are stored.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Variant</th><th>Size</th><th>Color</th><th>Price</th><th>Stripe</th><th>Printful</th><th>Available</th><th></th></tr></thead><tbody>{product.variants.map((variant) => <tr key={variant.storeVariantId}><td>{variant.storeVariantId}</td><td>{variant.size ?? "Not set"}</td><td>{variant.color ?? "Not set"}</td><td>{formatMoney(variant.priceCents)}</td><td>{variant.stripeConfigured ? "Configured" : "Missing"}</td><td>{variant.printfulConfigured ? "Configured" : "Missing"}</td><td>{variant.available ? "Yes" : "No"}</td><td><button className="button" onClick={() => editVariant(variant)} type="button">Edit</button></td></tr>)}</tbody></table></div>}<form className="form-grid" onSubmit={(event) => { event.preventDefault(); void perform(() => fetch(`/api/admin/commerce/products/${encodeURIComponent(product.storeProductId)}/variants`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ available, color: color.trim() || null, priceCents, printfulVariantReference, size: size.trim() || null, storeVariantId, stripePriceReference }) }), "Store variant saved."); }}><label className="field">Variant identifier<input className="input" disabled={product.variants.some((variant) => variant.storeVariantId === storeVariantId)} value={storeVariantId} onChange={(event) => setStoreVariantId(event.target.value)} /></label><label className="field">Price in cents<input className="input" min={1} type="number" value={priceCents || ""} onChange={(event) => setPriceCents(Number(event.target.value))} /></label><label className="field">Size<input className="input" value={size} onChange={(event) => setSize(event.target.value)} /></label><label className="field">Color<input className="input" value={color} onChange={(event) => setColor(event.target.value)} /></label><label className="field">Stripe price reference<input className="input" value={stripePriceReference} onChange={(event) => setStripePriceReference(event.target.value)} /></label><label className="field">Printful variant reference<input className="input" value={printfulVariantReference} onChange={(event) => setPrintfulVariantReference(event.target.value)} /></label><label className="check"><input checked={available} type="checkbox" onChange={(event) => setAvailable(event.target.checked)} /> Available</label><button className="button button--gold" disabled={busy || !storeVariantId.trim() || priceCents < 1 || !stripePriceReference.trim() || !printfulVariantReference.trim()} type="submit">Save variant</button></form></section>{message && <p className="notice notice--good" role="status">{message}</p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</div>;
 }
 
 function OrderTabs({ selected }: { selected: "all" | "donations" | "merchandise" | "subscriptions" }) {

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
@@ -30,6 +30,43 @@ describe("commerce administration projection", () => {
     expect(await screen.findByText("Owner supplied product")).toBeInTheDocument();
     expect(screen.getByText("Unconfigured")).toBeInTheDocument();
     expect(screen.queryByText(/\$24|\$32|\$64|11 oz|24 × 36/)).not.toBeInTheDocument();
+  });
+
+  it("creates an unpublished item from explicit administrator input", async () => {
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
+      ? { json: async () => ({ product: { storeProductId: "PRODUCT-1" } }), ok: true }
+      : { json: async () => ({ ...emptyProjection, categories: [
+        { activeItems: 0, categoryPath: "/store/categories/mugs", items: 0, name: "Mug", productType: "MUG" },
+      ] }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderCommerce("ADM012");
+    fireEvent.click(await screen.findByRole("button", { name: "New item" }));
+    fireEvent.change(screen.getByLabelText("Product identifier"), { target: { value: "PRODUCT-1" } });
+    fireEvent.change(screen.getByLabelText("Name"), { target: { value: "Owner item" } });
+    fireEvent.change(screen.getByLabelText("Canonical category"), { target: { value: "MUG" } });
+    fireEvent.click(screen.getByRole("button", { name: "Create item" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/commerce/products/", expect.objectContaining({
+      body: JSON.stringify({ artworkAssetId: null, name: "Owner item", productType: "MUG", storeProductId: "PRODUCT-1" }),
+      method: "POST",
+    })));
+  });
+
+  it("edits exact product and provider variant configuration", async () => {
+    const product = { active: false, artworkAssetId: "ASSET-1", name: "Owner item", productType: "MUG", storeProductId: "PRODUCT-1", variants: [{
+      available: false, color: "Blue", priceCents: 2400, printfulConfigured: true, printfulVariantReference: "PF-1", size: "11 oz", storeVariantId: "VARIANT-1", stripeConfigured: true, stripePriceReference: "price_1",
+    }] };
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => init?.method
+      ? { json: async () => ({ variant: {} }), ok: true }
+      : { json: async () => ({ ...emptyProjection, products: [product] }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderCommerce("ADM013", "/admin/store/items/PRODUCT-1");
+    fireEvent.click(await screen.findByRole("button", { name: "Edit" }));
+    fireEvent.change(screen.getByLabelText("Price in cents"), { target: { value: "2600" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save variant" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/commerce/products/PRODUCT-1/variants", expect.objectContaining({
+      body: JSON.stringify({ available: false, color: "Blue", priceCents: 2600, printfulVariantReference: "PF-1", size: "11 oz", storeVariantId: "VARIANT-1", stripePriceReference: "price_1" }),
+      method: "PUT",
+    })));
   });
 
   it("projects the finite canonical categories instead of inventing taxonomy records", async () => {

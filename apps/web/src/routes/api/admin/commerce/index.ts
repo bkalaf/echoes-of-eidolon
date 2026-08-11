@@ -105,10 +105,10 @@ export const Route = createFileRoute("/api/admin/commerce/")({
             })),
             products: products.map((product) => ({
               ...product,
-              variants: product.variants.map(({ printfulVariantReference, stripePriceReference, ...variant }) => ({
+              variants: product.variants.map((variant) => ({
                 ...variant,
-                printfulConfigured: Boolean(printfulVariantReference),
-                stripeConfigured: Boolean(stripePriceReference),
+                printfulConfigured: Boolean(variant.printfulVariantReference),
+                stripeConfigured: Boolean(variant.stripePriceReference),
               })),
             })),
           });

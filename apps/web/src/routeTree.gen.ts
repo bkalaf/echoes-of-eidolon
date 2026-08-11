@@ -71,6 +71,8 @@ import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/adm
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
 import { Route as ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport } from './routes/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+import { Route as ApiAdminCommerceProductsIndexRouteImport } from './routes/api/admin/commerce/products/index'
+import { Route as ApiAdminCommerceProductsProductIdRouteImport } from './routes/api/admin/commerce/products/$productId'
 import { Route as ApiAdminDataEntityKeyRecordIdRouteImport } from './routes/api/admin/data/$entityKey/$recordId'
 import { Route as ApiAdminDataEntityKeyImportRouteImport } from './routes/api/admin/data/$entityKey/import'
 import { Route as ApiAdminPromptsPromptRecordIdResultRouteImport } from './routes/api/admin/prompts/$promptRecordId/result'
@@ -80,6 +82,7 @@ import { Route as ApiAdminReleasesIdPublishRouteImport } from './routes/api/admi
 import { Route as ApiExternalDataEntityKeyRecordIdRouteImport } from './routes/api/external/data/$entityKey/$recordId'
 import { Route as ApiExternalDataEntityKeyImportRouteImport } from './routes/api/external/data/$entityKey/import'
 import { Route as ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRouteImport } from './routes/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+import { Route as ApiAdminCommerceProductsProductIdVariantsRouteImport } from './routes/api/admin/commerce/products/$productId/variants'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -410,6 +413,18 @@ const ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute =
     path: '/$capabilityDefinitionVersionId/activate',
     getParentRoute: () => ApiAdminCapabilitiesRoute,
   } as any)
+const ApiAdminCommerceProductsIndexRoute =
+  ApiAdminCommerceProductsIndexRouteImport.update({
+    id: '/api/admin/commerce/products/',
+    path: '/api/admin/commerce/products/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminCommerceProductsProductIdRoute =
+  ApiAdminCommerceProductsProductIdRouteImport.update({
+    id: '/api/admin/commerce/products/$productId',
+    path: '/api/admin/commerce/products/$productId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminDataEntityKeyRecordIdRoute =
   ApiAdminDataEntityKeyRecordIdRouteImport.update({
     id: '/$recordId',
@@ -463,6 +478,12 @@ const ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute =
     id: '/$rewardScoringPolicyId/activate',
     path: '/$rewardScoringPolicyId/activate',
     getParentRoute: () => ApiAdminCapabilitiesScoringRoute,
+  } as any)
+const ApiAdminCommerceProductsProductIdVariantsRoute =
+  ApiAdminCommerceProductsProductIdVariantsRouteImport.update({
+    id: '/variants',
+    path: '/variants',
+    getParentRoute: () => ApiAdminCommerceProductsProductIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -528,6 +549,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
+  '/api/admin/commerce/products/$productId': typeof ApiAdminCommerceProductsProductIdRouteWithChildren
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
@@ -536,7 +558,9 @@ export interface FileRoutesByFullPath {
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
+  '/api/admin/commerce/products/': typeof ApiAdminCommerceProductsIndexRoute
   '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
+  '/api/admin/commerce/products/$productId/variants': typeof ApiAdminCommerceProductsProductIdVariantsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -601,6 +625,7 @@ export interface FileRoutesByTo {
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
+  '/api/admin/commerce/products/$productId': typeof ApiAdminCommerceProductsProductIdRouteWithChildren
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
@@ -609,7 +634,9 @@ export interface FileRoutesByTo {
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
+  '/api/admin/commerce/products': typeof ApiAdminCommerceProductsIndexRoute
   '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
+  '/api/admin/commerce/products/$productId/variants': typeof ApiAdminCommerceProductsProductIdVariantsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -675,6 +702,7 @@ export interface FileRoutesById {
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
+  '/api/admin/commerce/products/$productId': typeof ApiAdminCommerceProductsProductIdRouteWithChildren
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
@@ -683,7 +711,9 @@ export interface FileRoutesById {
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
   '/api/external/data/$entityKey/import': typeof ApiExternalDataEntityKeyImportRoute
+  '/api/admin/commerce/products/': typeof ApiAdminCommerceProductsIndexRoute
   '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
+  '/api/admin/commerce/products/$productId/variants': typeof ApiAdminCommerceProductsProductIdVariantsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -750,6 +780,7 @@ export interface FileRouteTypes {
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+    | '/api/admin/commerce/products/$productId'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/prompts/$promptRecordId/result'
@@ -758,7 +789,9 @@ export interface FileRouteTypes {
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
+    | '/api/admin/commerce/products/'
     | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+    | '/api/admin/commerce/products/$productId/variants'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -823,6 +856,7 @@ export interface FileRouteTypes {
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+    | '/api/admin/commerce/products/$productId'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/prompts/$promptRecordId/result'
@@ -831,7 +865,9 @@ export interface FileRouteTypes {
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
+    | '/api/admin/commerce/products'
     | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+    | '/api/admin/commerce/products/$productId/variants'
   id:
     | '__root__'
     | '/'
@@ -896,6 +932,7 @@ export interface FileRouteTypes {
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+    | '/api/admin/commerce/products/$productId'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/prompts/$promptRecordId/result'
@@ -904,7 +941,9 @@ export interface FileRouteTypes {
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
     | '/api/external/data/$entityKey/import'
+    | '/api/admin/commerce/products/'
     | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+    | '/api/admin/commerce/products/$productId/variants'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -963,8 +1002,10 @@ export interface RootRouteChildren {
   ApiAdminSettlementsIndexRoute: typeof ApiAdminSettlementsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
+  ApiAdminCommerceProductsProductIdRoute: typeof ApiAdminCommerceProductsProductIdRouteWithChildren
   ApiAdminPromptsPromptRecordIdResultRoute: typeof ApiAdminPromptsPromptRecordIdResultRoute
   ApiAdminPromptsPromptRecordIdVersionsRoute: typeof ApiAdminPromptsPromptRecordIdVersionsRoute
+  ApiAdminCommerceProductsIndexRoute: typeof ApiAdminCommerceProductsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1403,6 +1444,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport
       parentRoute: typeof ApiAdminCapabilitiesRoute
     }
+    '/api/admin/commerce/products/': {
+      id: '/api/admin/commerce/products/'
+      path: '/api/admin/commerce/products'
+      fullPath: '/api/admin/commerce/products/'
+      preLoaderRoute: typeof ApiAdminCommerceProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/commerce/products/$productId': {
+      id: '/api/admin/commerce/products/$productId'
+      path: '/api/admin/commerce/products/$productId'
+      fullPath: '/api/admin/commerce/products/$productId'
+      preLoaderRoute: typeof ApiAdminCommerceProductsProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/data/$entityKey/$recordId': {
       id: '/api/admin/data/$entityKey/$recordId'
       path: '/$recordId'
@@ -1465,6 +1520,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
       preLoaderRoute: typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRouteImport
       parentRoute: typeof ApiAdminCapabilitiesScoringRoute
+    }
+    '/api/admin/commerce/products/$productId/variants': {
+      id: '/api/admin/commerce/products/$productId/variants'
+      path: '/variants'
+      fullPath: '/api/admin/commerce/products/$productId/variants'
+      preLoaderRoute: typeof ApiAdminCommerceProductsProductIdVariantsRouteImport
+      parentRoute: typeof ApiAdminCommerceProductsProductIdRoute
     }
   }
 }
@@ -1597,6 +1659,21 @@ const ApiExternalDataEntityKeyRouteWithChildren =
     ApiExternalDataEntityKeyRouteChildren,
   )
 
+interface ApiAdminCommerceProductsProductIdRouteChildren {
+  ApiAdminCommerceProductsProductIdVariantsRoute: typeof ApiAdminCommerceProductsProductIdVariantsRoute
+}
+
+const ApiAdminCommerceProductsProductIdRouteChildren: ApiAdminCommerceProductsProductIdRouteChildren =
+  {
+    ApiAdminCommerceProductsProductIdVariantsRoute:
+      ApiAdminCommerceProductsProductIdVariantsRoute,
+  }
+
+const ApiAdminCommerceProductsProductIdRouteWithChildren =
+  ApiAdminCommerceProductsProductIdRoute._addFileChildren(
+    ApiAdminCommerceProductsProductIdRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
@@ -1654,10 +1731,13 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementsIndexRoute: ApiAdminSettlementsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
+  ApiAdminCommerceProductsProductIdRoute:
+    ApiAdminCommerceProductsProductIdRouteWithChildren,
   ApiAdminPromptsPromptRecordIdResultRoute:
     ApiAdminPromptsPromptRecordIdResultRoute,
   ApiAdminPromptsPromptRecordIdVersionsRoute:
     ApiAdminPromptsPromptRecordIdVersionsRoute,
+  ApiAdminCommerceProductsIndexRoute: ApiAdminCommerceProductsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
