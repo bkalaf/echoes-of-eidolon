@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getAtlasCatalog } from "../../../server/atlas";
+import { getAtlasCatalogProjection } from "../../../server/atlas";
 import { requireAtlasAccess } from "../../../server/access";
 
 export const Route = createFileRoute("/api/atlas/catalog")({
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/api/atlas/catalog")({
       GET: async ({ request }) => {
         try {
           await requireAtlasAccess(request);
-          return Response.json(await getAtlasCatalog());
+          return Response.json(await getAtlasCatalogProjection());
         } catch (error) {
           if (error instanceof Response) return error;
           throw error;

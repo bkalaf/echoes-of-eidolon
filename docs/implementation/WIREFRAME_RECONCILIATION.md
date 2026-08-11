@@ -5,9 +5,9 @@
 - Status: PASS
 - Active v11.3 source rows: 269
 - Application registry rows: 269
-- V3 excluded base rows: 0
+- V3 excluded base rows: 3
 - V3 amendment rows: 7
-- Active mechanically derived rows: 276
+- Active mechanically derived rows: 273
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -18,7 +18,7 @@
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- V3 amendment manifest SHA-256: `78d605a3b8ce8f53b30802c3c96c4f5afc6e1c567b81c7a5b349251737a06d04`
+- V3 amendment manifest SHA-256: `4dbf9bda3bbffba2d2c7ced4d02497a10473f28736982bb9c7db03a7a7dcbd56`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -189,7 +189,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 158 | 160 | DATA024 | Data - InterludeSubstitution | /admin/data/interlude-substitution | OWNER_SUPPLIED_LOCKED_PNG |
 | 159 | 161 | DATA025 | Data - Definition | /admin/data/definition | OWNER_SUPPLIED_LOCKED_PNG |
 | 160 | 162 | DATA026 | Data - KnowledgeBaseItem | /admin/data/knowledge-base-item | OWNER_SUPPLIED_LOCKED_PNG |
-| 161 | 163 | DATA027 | Data - Matrix | /admin/data/matrix | REBUILT_V11_2_OWNER_REVIEW |
 | 162 | 164 | DATA028 | Data - Layette | /admin/data/layette | OWNER_SUPPLIED_LOCKED_PNG |
 | 163 | 165 | DATA029 | Data - Transition | /admin/data/transition | OWNER_SUPPLIED_LOCKED_PNG |
 | 164 | 166 | DATA030 | Data - CapabilityDefinition | /admin/data/capability-definition | OWNER_SUPPLIED_LOCKED_PNG |
@@ -218,7 +217,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 187 | 189 | TOOL006 | Public Navigation - Guest/User/Member States | /review/navigation-states | OWNER_SUPPLIED_LOCKED_PNG |
 | 188 | 190 | DATA_LEGENDARYREWARD_EDIT | Edit LegendaryReward | /admin/data/legendaryreward/sample-record | REBUILT_V11 |
 | 189 | 191 | DATA_LESSON_EDIT | Edit Lesson | /admin/data/lesson/sample-record | REBUILT_V11 |
-| 190 | 192 | DATA_MATRIX_EDIT | Edit Matrix | /admin/data/matrix/sample-record | REBUILT_V11 |
 | 191 | 193 | DATA_PERSONALITYEXPRESSION_EDIT | Edit PersonalityExpression | /admin/data/personalityexpression/sample-record | REBUILT_V11 |
 | 192 | 194 | DATA_PILLAR_EDIT | Edit Pillar | /admin/data/pillar/sample-record | REBUILT_V11 |
 | 193 | 195 | DATA_POINTOFINTEREST_EDIT | Edit PointOfInterest | /admin/data/pointofinterest/sample-record | REBUILT_V11 |
@@ -252,7 +250,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 221 | 223 | DATA_LAYETTE_IMPORT | Bulk Import Layette | /admin/data/layette/import | REBUILT_V11 |
 | 222 | 224 | DATA_LEGENDARYREWARD_IMPORT | Bulk Import LegendaryReward | /admin/data/legendaryreward/import | REBUILT_V11 |
 | 223 | 225 | DATA_LESSON_IMPORT | Bulk Import Lesson | /admin/data/lesson/import | REBUILT_V11 |
-| 224 | 226 | DATA_MATRIX_IMPORT | Bulk Import Matrix | /admin/data/matrix/import | REBUILT_V11 |
 | 225 | 227 | DATA_PERSONALITYEXPRESSION_IMPORT | Bulk Import PersonalityExpression | /admin/data/personalityexpression/import | REBUILT_V11 |
 | 226 | 228 | DATA_PILLAR_IMPORT | Bulk Import Pillar | /admin/data/pillar/import | REBUILT_V11 |
 | 227 | 229 | DATA_POINTOFINTEREST_IMPORT | Bulk Import PointOfInterest | /admin/data/pointofinterest/import | REBUILT_V11 |

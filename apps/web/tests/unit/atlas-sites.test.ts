@@ -15,13 +15,16 @@ function sites(): CanonicalSettlementSite[] {
 
 describe("canonical Atlas Site import", () => {
   it("creates all 400 mirrors in one transaction", async () => {
+    const enriched = sites();
+    (enriched[0] as CanonicalSettlementSite & { latticeId: string }).latticeId = "L01";
     const findUnique = vi.fn(async () => null);
     const create = vi.fn(async () => undefined);
     const transaction = { site: { findUnique, create } };
     const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) };
-    await expect(importCanonicalSites(sites(), database)).resolves.toEqual({ created: 400, unchanged: 0 });
+    await expect(importCanonicalSites(enriched, database)).resolves.toEqual({ created: 400, unchanged: 0 });
     expect(database.$transaction).toHaveBeenCalledOnce();
     expect(create).toHaveBeenCalledTimes(400);
+    expect(create.mock.calls[0]![0].data).not.toHaveProperty("latticeId");
   });
 
   it("is idempotent for exact mirrors and refuses canonical drift", async () => {

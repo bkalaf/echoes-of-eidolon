@@ -450,6 +450,54 @@ try {
     if (JSON.stringify(regrouped.rows[0]) !== JSON.stringify({ logicalKey: "A", bookNumbers: [4, 5, 6, 13, 14, 15] })) {
       throw new Error(`Atomic Disjoint Trilogy regroup did not persist exactly: ${JSON.stringify(regrouped.rows)}`);
     }
+
+    const mappingCounts = await verification.query(
+      `SELECT count(*)::int AS total, count(DISTINCT "regionId")::int AS regions,
+              count(DISTINCT "latticeId")::int AS lattices
+       FROM "RegionLatticeMapping"`,
+    );
+    if (JSON.stringify(mappingCounts.rows[0]) !== JSON.stringify({ total: 25, regions: 25, lattices: 25 })) {
+      throw new Error(`Atlas Region Mapping cardinality is invalid: ${JSON.stringify(mappingCounts.rows)}`);
+    }
+    const keyMappings = await verification.query(
+      `SELECT "regionId", "latticeId" FROM "RegionLatticeMapping" WHERE "regionId" IN ('R01', 'R06') ORDER BY "regionId"`,
+    );
+    if (JSON.stringify(keyMappings.rows) !== JSON.stringify([{ regionId: "R01", latticeId: "L03" }, { regionId: "R06", latticeId: "L14" }])) {
+      throw new Error(`Atlas Region Mapping contains suffix inference or lost R06/L14: ${JSON.stringify(keyMappings.rows)}`);
+    }
+    const connectionCounts = await verification.query(
+      `SELECT "connectionType", "wrapMode", count(*)::int AS count
+       FROM "AtlasConnection" GROUP BY "connectionType", "wrapMode" ORDER BY "connectionType"`,
+    );
+    if (JSON.stringify(connectionCounts.rows) !== JSON.stringify([
+      { connectionType: "BASE", wrapMode: "NONE", count: 38 },
+      { connectionType: "NORMAL", wrapMode: "NONE", count: 1 },
+      { connectionType: "LEFT_RIGHT_CROSSOVER", wrapMode: "DATE_LINE", count: 5 },
+    ])) {
+      throw new Error(`Atlas connection configuration is invalid: ${JSON.stringify(connectionCounts.rows)}`);
+    }
+    const pollutedTables = await verification.query(
+      `SELECT to_regclass('public."Matrix"') AS matrix, to_regclass('public."Lattice"') AS lattice`,
+    );
+    if (pollutedTables.rows[0]?.matrix !== null || pollutedTables.rows[0]?.lattice !== null) {
+      throw new Error(`Polluted Matrix or forbidden Lattice table remains: ${JSON.stringify(pollutedTables.rows)}`);
+    }
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "AtlasConnection" (
+           "atlasConnectionId", "fromLatticeId", "toLatticeId", "connectionType", "wrapMode", "locked"
+         ) VALUES ('bad-wrap', 'L02', 'L05', 'BASE', 'DATE_LINE', true)`,
+      ),
+      "Atlas connection accepted an invalid type/wrap combination",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "AtlasConnection" (
+           "atlasConnectionId", "fromLatticeId", "toLatticeId", "connectionType", "wrapMode", "locked"
+         ) VALUES ('bad-order', 'L05', 'L02', 'BASE', 'NONE', true)`,
+      ),
+      "Atlas connection accepted a reversed undirected pair",
+    );
   } finally {
     await verification.end();
   }
@@ -580,6 +628,13 @@ try {
     }
 
     await applyThrough("20260810270000_campaign_book_groupings");
+    await preCorrection.query(
+      `INSERT INTO "Matrix" ("matrixId", "regionId", "latticeId", "culturePoolIds")
+       VALUES ('polluted-matrix-row', 'R01', 'L01', ARRAY['CP01']::"CulturePoolId"[])`,
+    );
+    await applyThrough("20260810280000_atlas_region_lattice_topology");
+    const removedMatrix = await preCorrection.query(`SELECT to_regclass('public."Matrix"') AS matrix`);
+    if (removedMatrix.rows[0]?.matrix !== null) throw new Error("Forward Atlas migration did not remove the polluted Matrix table");
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

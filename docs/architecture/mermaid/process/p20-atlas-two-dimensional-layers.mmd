@@ -1,13 +1,15 @@
 %% Atlas two-dimensional layers
 flowchart LR
   Layerchoice0["Layer choice"]
-  Officialorpolitica1["Official or political asset"]
-  EPSG4326projection2["EPSG 4326 projection"]
-  Markeroverlay3["Marker overlay"]
-  Sharedselection4["Shared selection"]
-  Detailpanel5["Detail panel"]
-  Layerchoice0 --> Officialorpolitica1
-  Officialorpolitica1 --> EPSG4326projection2
-  EPSG4326projection2 --> Markeroverlay3
-  Markeroverlay3 --> Sharedselection4
-  Sharedselection4 --> Detailpanel5
+  PhysicalRegionSite1["Physical Region Site or POI coordinates"]
+  ResolveRegionthrou2["Resolve Region through Region Mapping"]
+  ExposederivedLatti3["Expose derived LatticeId"]
+  RenderEPSG4326mark4["Render EPSG 4326 marker overlay"]
+  Sharedselection5["Shared selection"]
+  Detailpanel6["Detail panel"]
+  Layerchoice0 --> PhysicalRegionSite1
+  PhysicalRegionSite1 --> ResolveRegionthrou2
+  ResolveRegionthrou2 --> ExposederivedLatti3
+  ExposederivedLatti3 --> RenderEPSG4326mark4
+  RenderEPSG4326mark4 --> Sharedselection5
+  Sharedselection5 --> Detailpanel6

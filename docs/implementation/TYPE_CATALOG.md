@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and mechanically reconciled 276-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 273-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 107
-- Controlled enums: 108
+- Persisted entity types: 108
+- Controlled enums: 110
 - HTTP method/path contracts: 61
-- Wireframe view-model rows: 276
-- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 19, store 12, admin 157, tools-review 5
+- Wireframe view-model rows: 273
+- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 19, store 12, admin 154, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -50,6 +50,8 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Ark | Persisted entity | Narrative data | `Ark` via typed import services | Admin Data, Campaign, Game | 3 |
 | PointOfInterest | Persisted entity | Atlas | `PointOfInterest` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 6 |
 | Site | Persisted entity | Atlas | `Site` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 6 |
+| RegionLatticeMapping | Persisted entity | Repository core | `RegionLatticeMapping` via Prisma and owning route service | Registry-linked screens | 3 |
+| AtlasConnection | Persisted entity | Repository core | `AtlasConnection` via Prisma and owning route service | Registry-linked screens | 6 |
 | Settlement | Persisted entity | Settlement simulation | `Settlement` via server/settlements.ts | Atlas Admin, Found City, Migrate | 6 |
 | SettlementWorld | Persisted entity | Settlement simulation | `SettlementWorld` via server/settlements.ts | Atlas Admin, Found City, Migrate | 12 |
 | SettlementPopulationEvent | Persisted entity | Settlement simulation | `SettlementPopulationEvent` via server/settlements.ts | Atlas Admin, Found City, Migrate | 9 |
@@ -65,7 +67,6 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | KnowledgeBaseDisclosureCitation | Persisted entity | Knowledge | `KnowledgeBaseDisclosureCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | KnowledgeBaseItemCitation | Persisted entity | Knowledge | `KnowledgeBaseItemCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | Definition | Persisted entity | Narrative data | `Definition` via typed import services | Admin Data, Campaign, Game | 3 |
-| Matrix | Persisted entity | Narrative data | `Matrix` via typed import services | Admin Data, Campaign, Game | 4 |
 | Layette | Persisted entity | Narrative data | `Layette` via typed import services | Admin Data, Campaign, Game | 3 |
 | PersonalityExpression | Persisted entity | Canonical data | `PersonalityExpression` via typed imports and server/breed-research.ts | Admin Data and Game | 2 |
 | CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 5 |
@@ -250,6 +251,8 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | SettlementSurfaceType | 10 | `LAND`, `COASTAL_LAND`, `SHALLOW_WATER`, `REEF`, `FLOATING_ISLAND`, `UNDERWATER`, `ICE`, `WETLAND`, `LAKE`, `DELTA` |
 | CharacterType | 3 | `MAJOR`, `SUPPORTING`, `EXTRA` |
 | LatticeId | 25 | `L01`, `L02`, `L03`, `L04`, `L05`, `L06`, `L07`, `L08`, `L09`, `L10`, `L11`, `L12`, `L13`, `L14`, `L15`, `L16`, `L17`, `L18`, `L19`, `L20`, `L21`, `L22`, `L23`, `L24`, `L25` |
+| AtlasConnectionType | 3 | `BASE`, `NORMAL`, `LEFT_RIGHT_CROSSOVER` |
+| AtlasWrapMode | 2 | `NONE`, `DATE_LINE` |
 | SettlementPopulationEventType | 4 | `FOUNDING`, `GROWTH`, `MIGRATION_IN`, `MIGRATION_OUT` |
 | CapabilityOperation | 3 | `SET`, `ADD`, `CLEAR` |
 | CapabilityRequirementOperator | 10 | `EXISTS`, `NOT_EXISTS`, `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`, `IN`, `NOT_IN` |
@@ -307,7 +310,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 276 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 273 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

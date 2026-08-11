@@ -9,4 +9,10 @@ erDiagram
   Settlement {
     string id PK
   }
+  RegionLatticeMapping {
+    string id PK
+  }
+  AtlasConnection {
+    string id PK
+  }
   Site ||--o| Settlement : "relates to"

@@ -133,7 +133,6 @@ export interface Citation { citationId: string; sourceId: Source['sourceId']; lo
 export interface Research { researchId: string; notes: string; citationId: Citation['citationId']; category?: ResearchCategory | null; }
 export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: EntityType; entityId: string; title: string; baseContent: string; }
 export interface Definition { definitionId: string; term: string; definition: string; }
-export interface Matrix { matrixId: string; regionId: string; latticeId: string; culturePoolIds: string[]; }
 export interface Layette { layetteId: string; name: string; description: string; }
 export interface PersonalityExpression { personalityExpressionId: string; name: string; }
 export interface CapabilityDefinition { capabilityDefinitionId: string; code: string; createdAt?: Date; }

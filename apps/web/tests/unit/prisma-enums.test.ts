@@ -22,7 +22,7 @@ const suppliedEnumNames = [
   "SoulDisposition", "ContinuityGroupType", "ContinuityPropagationMode", "NameGenderBucket",
   "FoodBroadCategory", "FoodSpecific", "TerrainBroad", "TerrainSpecific", "Motivation", "OperatingStyle",
   "StructureOrientation", "WorldKey", "CompanionKey", "RegionId", "NameStatus", "SettlementClassification",
-  "SettlementSurfaceType", "CharacterType", "LatticeId", "SettlementPopulationEventType", "CapabilityValueKind",
+  "SettlementSurfaceType", "CharacterType", "LatticeId", "AtlasConnectionType", "AtlasWrapMode", "SettlementPopulationEventType", "CapabilityValueKind",
   "CapabilityOperation", "CapabilityRequirementOperator", "CapabilityParameterKind", "CapabilityMonotonicPolicy",
   "CapabilityDefinitionVersionStatus", "CapabilityScopeType", "ScoringPolicyStatus", "RewardEvidenceKind",
   "FactionStandingEvidenceKind", "KnowledgeBaseBlockKind",

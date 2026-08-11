@@ -17,6 +17,8 @@ describe("canonical Atlas release", () => {
     expect(catalog.coordinateReferenceSystem).toBe("EPSG:4326");
     expect(catalog.pointsOfInterest).toHaveLength(92);
     expect(catalog.settlementSites).toHaveLength(400);
+    expect(catalog.pointsOfInterest.every((point) => !("latticeId" in point))).toBe(true);
+    expect(catalog.settlementSites.every((site) => !("latticeId" in site))).toBe(true);
 
     const created: unknown[] = [];
     const transaction = { site: { findUnique: async () => null, create: async (input: unknown) => { created.push(input); } } };

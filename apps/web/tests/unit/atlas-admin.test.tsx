@@ -14,9 +14,11 @@ const catalog = {
   worldId: "EIDOLON",
   coordinateReferenceSystem: "EPSG:4326",
   pointsOfInterest: [
-    { poiId: "POI-0001", workingLabel: "Harbor", displayName: null, nameStatus: "WORKING", category: "HARBOR", latitude: 0, longitude: 0, regionId: "REG-01" },
-    { poiId: "POI-0007", workingLabel: "World Tree", displayName: "World Tree", nameStatus: "CANONICAL", category: "WORLD_TREE", latitude: 10, longitude: 20, regionId: "REG-02" },
+    { poiId: "POI-0001", workingLabel: "Harbor", displayName: null, nameStatus: "WORKING", category: "HARBOR", latitude: 0, longitude: 0, regionId: "R01", latticeId: "L03" },
+    { poiId: "POI-0007", workingLabel: "World Tree", displayName: "World Tree", nameStatus: "CANONICAL", category: "WORLD_TREE", latitude: 10, longitude: 20, regionId: "R02", latticeId: "L01" },
   ],
+  regionMappings: [],
+  connections: [],
   settlementSites: [],
 };
 
@@ -40,6 +42,7 @@ describe("authorized R08 Atlas administration", () => {
     fireEvent.click(screen.getByRole("button", { name: "Select World Tree" }));
     expect(screen.getByText("POI-0007 · World Tree")).toBeInTheDocument();
     expect(screen.getAllByText("WORLD_TREE")).toHaveLength(2);
+    expect(screen.getAllByText("L01")).toHaveLength(2);
   });
 
   it("provides keyboard-operable textured globe controls", async () => {

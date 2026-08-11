@@ -223,6 +223,22 @@ describe("persistence contract", () => {
     expect(migration).not.toMatch(/"startBook"|"endBook"/);
   });
 
+  it("separates physical Region identity from Lattice topology and removes the polluted Matrix resource", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810280000_atlas_region_lattice_topology/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "RegionLatticeMapping"');
+    expect(migration).toContain('CREATE TABLE "AtlasConnection"');
+    expect(migration).not.toContain('CREATE TABLE "Lattice"');
+    expect(migration).toContain("('R01', 'L03', true)");
+    expect(migration).toContain("('R06', 'L14', true)");
+    expect(migration).toContain("'ATLAS-CONNECTION-L04-L11', 'L04', 'L11', 'NORMAL', 'NONE'");
+    expect(migration).toContain('AtlasConnection_distinct_ordered_endpoints_check');
+    expect(migration).toContain('AtlasConnection_type_wrap_check');
+    expect(migration).toContain('DROP TABLE "Matrix"');
+  });
+
   it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),

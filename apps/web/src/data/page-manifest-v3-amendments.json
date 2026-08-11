@@ -1,5 +1,9 @@
 {
-  "excludedScreenIds": [],
+  "excludedScreenIds": [
+    "DATA027",
+    "DATA_MATRIX_EDIT",
+    "DATA_MATRIX_IMPORT"
+  ],
   "additions": [
     {
       "page": 273,

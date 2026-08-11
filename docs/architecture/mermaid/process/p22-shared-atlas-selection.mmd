@@ -1,13 +1,17 @@
 %% Shared Atlas selection
 flowchart LR
-  Select2Dmarker0["Select 2D marker"]
-  CanonicalrecordID1["Canonical record ID"]
-  Selectionstore2["Selection store"]
-  Projectonglobe3["Project on globe"]
-  Opendetail4["Open detail"]
-  Playerdisclosurefi5["Player disclosure filter"]
-  Select2Dmarker0 --> CanonicalrecordID1
-  CanonicalrecordID1 --> Selectionstore2
-  Selectionstore2 --> Projectonglobe3
-  Projectonglobe3 --> Opendetail4
-  Opendetail4 --> Playerdisclosurefi5
+  Selectphysicalmark0["Select physical marker"]
+  Canonicalrecordand1["Canonical record and RegionId"]
+  ResolveRegionMappi2["Resolve Region Mapping"]
+  ProjectderivedLatt3["Project derived Lattice topology"]
+  Selectionstore4["Selection store"]
+  Projectcoordinates5["Project coordinates on globe"]
+  Opendetail6["Open detail"]
+  Playerdisclosurefi7["Player disclosure filter"]
+  Selectphysicalmark0 --> Canonicalrecordand1
+  Canonicalrecordand1 --> ResolveRegionMappi2
+  ResolveRegionMappi2 --> ProjectderivedLatt3
+  ProjectderivedLatt3 --> Selectionstore4
+  Selectionstore4 --> Projectcoordinates5
+  Projectcoordinates5 --> Opendetail6
+  Opendetail6 --> Playerdisclosurefi7

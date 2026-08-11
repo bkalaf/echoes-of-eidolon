@@ -5,48 +5,50 @@ import { AtlasGlobe } from "../../components/AtlasGlobe";
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { managedAssetUrl } from "../../content/managed-assets";
 import type { PageManifestEntry } from "../../lib/page-manifest";
-import type { AtlasCatalog, CanonicalPointOfInterest, CanonicalSettlementSite } from "../../server/atlas";
+import type { AtlasCatalogProjection, ProjectedPointOfInterest, ProjectedSettlementSite } from "../../server/atlas";
 import { SettlementAdminPage } from "./SettlementAdminPage";
 
-const poiColumns: DataTableColumnDef<CanonicalPointOfInterest>[] = [
+const poiColumns: DataTableColumnDef<ProjectedPointOfInterest>[] = [
   { accessorKey: "poiId", header: "POI" },
   { accessorFn: (point) => point.displayName ?? point.workingLabel, id: "name", header: "Name" },
   { accessorKey: "nameStatus", header: "Status" },
   { accessorKey: "category", header: "Category" },
   { accessorKey: "regionId", header: "Region" },
+  { accessorKey: "latticeId", header: "Derived lattice" },
 ];
 
-const siteColumns: DataTableColumnDef<CanonicalSettlementSite>[] = [
+const siteColumns: DataTableColumnDef<ProjectedSettlementSite>[] = [
   { accessorKey: "siteId", header: "Site" },
   { accessorKey: "regionId", header: "Region" },
+  { accessorKey: "latticeId", header: "Derived lattice" },
   { accessorKey: "classification", header: "Classification" },
   { accessorKey: "longitude", header: "Longitude" },
   { accessorKey: "latitude", header: "Latitude" },
 ];
 
-async function loadAtlas(): Promise<AtlasCatalog> {
+async function loadAtlas(): Promise<AtlasCatalogProjection> {
   const response = await fetch("/api/atlas/catalog");
   if (!response.ok) throw new Error("The validated R08 Atlas catalog could not be loaded.");
-  return response.json() as Promise<AtlasCatalog>;
+  return response.json() as Promise<AtlasCatalogProjection>;
 }
 
 function AtlasStatus({ children }: { children: string }) {
   return <p className="notice notice--warn" role="status">{children}</p>;
 }
 
-function PoiDetail({ atlas, selectedId }: { atlas: AtlasCatalog; selectedId?: string }) {
+function PoiDetail({ atlas, selectedId }: { atlas: AtlasCatalogProjection; selectedId?: string }) {
   if (!selectedId) return <aside className="card"><h2>Point of Interest details</h2><p>Select a Point of Interest from the map or table.</p></aside>;
   const point = atlas.pointsOfInterest.find((candidate) => candidate.poiId === selectedId);
   if (!point) return <AtlasStatus>The selected Point of Interest is not present in the canonical catalog.</AtlasStatus>;
-  return <aside className="card"><p className="kicker">{atlas.releaseId}</p><h2>Selected Point of Interest</h2><p><strong>{point.poiId} · {point.displayName ?? point.workingLabel}</strong></p><dl className="detail-list"><dt>Name status</dt><dd>{point.nameStatus}</dd><dt>Kind</dt><dd>{point.category}</dd><dt>Region</dt><dd>{point.regionId}</dd><dt>Longitude</dt><dd>{point.longitude}</dd><dt>Latitude</dt><dd>{point.latitude}</dd></dl><a className="button button--gold" href={`/admin/data/pointofinterest/${encodeURIComponent(point.poiId)}`}>Open record</a></aside>;
+  return <aside className="card"><p className="kicker">{atlas.releaseId}</p><h2>Selected Point of Interest</h2><p><strong>{point.poiId} · {point.displayName ?? point.workingLabel}</strong></p><dl className="detail-list"><dt>Name status</dt><dd>{point.nameStatus}</dd><dt>Kind</dt><dd>{point.category}</dd><dt>Region</dt><dd>{point.regionId}</dd><dt>Derived lattice</dt><dd>{point.latticeId}</dd><dt>Longitude</dt><dd>{point.longitude}</dd><dt>Latitude</dt><dd>{point.latitude}</dd></dl><a className="button button--gold" href={`/admin/data/pointofinterest/${encodeURIComponent(point.poiId)}`}>Open record</a></aside>;
 }
 
-function PoiAtlas({ atlas, globe }: { atlas: AtlasCatalog; globe: boolean }) {
+function PoiAtlas({ atlas, globe }: { atlas: AtlasCatalogProjection; globe: boolean }) {
   const [selectedId, setSelectedId] = useState<string>();
   return <><div className="tabs"><a className={!globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_2D">2D Map</a><a className={globe ? "active" : ""} href="/admin/atlas/pois?state=ATLAS_POI_3D">3D Globe</a></div><div className="atlas-layout"><section>{globe ? <AtlasGlobe onSelect={setSelectedId} points={atlas.pointsOfInterest} selectedId={selectedId} /> : <div className="map"><img src={managedAssetUrl("atlas.official-world-founding-cities")} alt="Eidolon world map" />{atlas.pointsOfInterest.map((point) => <button aria-label={`Select ${point.displayName ?? point.workingLabel}`} className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`} key={point.poiId} onClick={() => setSelectedId(point.poiId)} style={{ left: `${((point.longitude + 180) / 360) * 100}%`, top: `${((90 - point.latitude) / 180) * 100}%` }} />)}</div>}</section><PoiDetail atlas={atlas} selectedId={selectedId} /></div><section className="card"><DataTable columns={poiColumns} data={atlas.pointsOfInterest} getRowId={(point) => point.poiId} onRowActivate={(point) => setSelectedId(point.poiId)} preferenceKey="admin.atlas.points-of-interest" rowClassName={(point) => point.poiId === selectedId ? "selected-row" : undefined} /></section><p className="notice">{atlas.pointsOfInterest.length} canonical Points of Interest · {atlas.coordinateReferenceSystem} · {atlas.releaseId}</p></>;
 }
 
-function Sites({ atlas }: { atlas: AtlasCatalog }) {
+function Sites({ atlas }: { atlas: AtlasCatalogProjection }) {
   return <><section className="card"><DataTable columns={siteColumns} data={atlas.settlementSites} getRowId={(site) => site.siteId} preferenceKey="admin.atlas.sites" /></section><p className="notice">{atlas.settlementSites.length} canonical settlement candidates · {atlas.releaseId}</p></>;
 }
 
@@ -61,7 +63,7 @@ function AtlasCatalogPage({ view }: { view: AtlasView }) {
   if (view === "found-city") return <AtlasStatus>The atomic founding service, 90% ceiling, and largest-remainder rules are connected. Found City remains unavailable until the exact server-owned settlement naming prompt and response contract are supplied; the browser cannot author them.</AtlasStatus>;
   if (view === "settlements") return <SettlementAdminPage migrate={false} />;
   if (view === "migrate") return <SettlementAdminPage migrate />;
-  return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Settlements</h2><p>Canonical Site mirrors are read-only until the typed import repository is connected.</p></article></div>;
+  return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Region Mapping and topology</h2><p>{atlas.data.regionMappings.length} locked mappings · {atlas.data.connections.length} locked Lattice connections. Lattice values are derived at read time.</p></article></div>;
 }
 
 export function AtlasAdminPage({ screen }: { screen: PageManifestEntry }) {

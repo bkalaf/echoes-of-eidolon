@@ -6,7 +6,10 @@ import { resolve, sep } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import type { AnySchema } from "ajv";
 
-import type { NameStatus } from "../generated/prisma/enums";
+import { validateAtlasTopology, latticeForRegion, type AtlasTopology } from "../domain/atlas-topology";
+import type { LatticeId, NameStatus, RegionId } from "../generated/prisma/enums";
+import type { PrismaClient } from "../generated/prisma/client";
+import { getDatabase } from "./database";
 import { getAtlasEnv } from "./env";
 
 interface ArtifactReference {
@@ -38,17 +41,21 @@ export interface CanonicalPointOfInterest {
   category: string;
   latitude: number;
   longitude: number;
-  regionId: string;
+  regionId: RegionId;
+  [key: string]: unknown;
 }
 
 export interface CanonicalSettlementSite {
   siteId: string;
-  regionId: string;
+  regionId: RegionId;
   classification: string;
   latitude: number;
   longitude: number;
   [key: string]: unknown;
 }
+
+export type ProjectedPointOfInterest = CanonicalPointOfInterest & { latticeId: LatticeId };
+export type ProjectedSettlementSite = CanonicalSettlementSite & { latticeId: LatticeId };
 
 interface PointOfInterestDataset {
   pointsOfInterest: CanonicalPointOfInterest[];
@@ -66,8 +73,23 @@ export interface AtlasCatalog {
   settlementSites: CanonicalSettlementSite[];
 }
 
+export interface AtlasCatalogProjection extends Omit<AtlasCatalog, "pointsOfInterest" | "settlementSites"> {
+  connections: AtlasTopology["connections"];
+  pointsOfInterest: ProjectedPointOfInterest[];
+  regionMappings: AtlasTopology["mappings"];
+  settlementSites: ProjectedSettlementSite[];
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function omitCopiedLatticeId(record: CanonicalPointOfInterest): CanonicalPointOfInterest;
+export function omitCopiedLatticeId(record: CanonicalSettlementSite): CanonicalSettlementSite;
+export function omitCopiedLatticeId<T extends Record<string, unknown>>(record: T): Omit<T, "latticeId">;
+export function omitCopiedLatticeId<T extends Record<string, unknown>>(record: T): Omit<T, "latticeId"> {
+  const { latticeId: _copiedProjection, ...physicalRecord } = record;
+  return physicalRecord;
 }
 
 function collectArtifactReferences(value: unknown): ArtifactReference[] {
@@ -148,8 +170,8 @@ export async function loadAtlasRelease(root: string): Promise<AtlasCatalog> {
   const siteSchema = await readJson(artifactPath(root, "contracts/settlement_sites.schema.json"));
   assertSchema(siteSchema, siteValue, "Settlement Sites");
 
-  const pointsOfInterest = (poiValue as PointOfInterestDataset).pointsOfInterest;
-  const settlementSites = (siteValue as SettlementSiteDataset).settlementSites;
+  const pointsOfInterest = (poiValue as PointOfInterestDataset).pointsOfInterest.map((point) => omitCopiedLatticeId(point));
+  const settlementSites = (siteValue as SettlementSiteDataset).settlementSites.map((site) => omitCopiedLatticeId(site));
   if (pointsOfInterest.length !== manifest.datasets.pointsOfInterest.recordCount) {
     throw new Error("Points of Interest count does not match the release manifest");
   }
@@ -171,4 +193,28 @@ let catalog: Promise<AtlasCatalog> | undefined;
 export function getAtlasCatalog(): Promise<AtlasCatalog> {
   catalog ??= loadAtlasRelease(getAtlasEnv().EIDOLON_ATLAS_RELEASE_ROOT);
   return catalog;
+}
+
+export async function getAtlasTopology(database: PrismaClient = getDatabase()): Promise<AtlasTopology> {
+  const [mappings, connections] = await Promise.all([
+    database.regionLatticeMapping.findMany({ orderBy: { regionId: "asc" } }),
+    database.atlasConnection.findMany({ orderBy: [{ connectionType: "asc" }, { fromLatticeId: "asc" }, { toLatticeId: "asc" }] }),
+  ]);
+  return validateAtlasTopology({ mappings, connections });
+}
+
+export function projectAtlasCatalog(catalog: AtlasCatalog, topology: AtlasTopology): AtlasCatalogProjection {
+  const validated = validateAtlasTopology(topology);
+  return {
+    ...catalog,
+    connections: validated.connections,
+    regionMappings: validated.mappings,
+    pointsOfInterest: catalog.pointsOfInterest.map((point) => ({ ...point, latticeId: latticeForRegion(validated, point.regionId) })),
+    settlementSites: catalog.settlementSites.map((site) => ({ ...site, latticeId: latticeForRegion(validated, site.regionId) })),
+  };
+}
+
+export async function getAtlasCatalogProjection(database: PrismaClient = getDatabase()): Promise<AtlasCatalogProjection> {
+  const [physicalCatalog, topology] = await Promise.all([getAtlasCatalog(), getAtlasTopology(database)]);
+  return projectAtlasCatalog(physicalCatalog, topology);
 }

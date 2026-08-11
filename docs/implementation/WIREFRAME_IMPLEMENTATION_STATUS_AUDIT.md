@@ -2,7 +2,7 @@
 
 Date: 2026-08-10  
 Repository: `/home/bobby/echoes-of-eidolon`  
-Controlling registry: `apps/web/src/data/page-manifest.json` (v11.3, 269 reviewed pages/states)  
+Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base rows; 273 mechanically derived active V3 pages/states)
 Audited checkout: `a03b6588e0bba4f8c1df6f62bc12d94ecc3d014b` plus the current uncommitted implementation worktree
 
 ## Standard used
@@ -13,8 +13,11 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 - **PARTIAL** — task-specific UI exists, but a material state, action, parameter, or persistence path is missing or broken.
 - **PLACEHOLDER** — the registered task is deliberately represented by unavailable/deferred/static content.
 - **MISSING** — no task-specific page exists, or routing selects the wrong/generic fallback.
+- **SUPERSEDED** — a base-manifest state was explicitly removed by the controlling V3 amendment and is not active implementation scope.
 
-## Totals
+## Preserved base-audit totals
+
+These counts describe the original 269-row v11.3 audit before applying the V3 amendment or subsequent remediation commits. The final V3 status reconciliation is generated from the 273-row active registry after remediation; the three superseded Matrix rows below remain visible only as forensic base-manifest history.
 
 | Status | Count |
 | --- | ---: |
@@ -179,9 +182,9 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
 | 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
 | 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **MISSING** | Falls through to the generic authorized-admin card; create form and mutation are absent. |
-| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
-| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
-| 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Site records. |
+| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads canonical physical POIs and derives finite Lattice identity through the current 25-row Region Mapping. |
+| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads canonical physical POIs and derives finite Lattice identity through the current 25-row Region Mapping. |
+| 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads physical Site records and exposes Lattice identity only as a mapping-derived projection. |
 | 143 | `AT005` | Settlements | `/admin/atlas/settlements` | **IMPLEMENTED** | Reads persisted Settlements by explicitly selected world and links to migration. |
 | 144 | `DATA_CHARACTER_NEW` | Create Character | `/admin/data/character/new` | **MISSING** | Falls through to the generic authorized-admin card; create form and mutation are absent. |
 | 145 | `CITY01` | City Builder - Cities | `/admin/cities` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
@@ -200,7 +203,7 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 158 | `DATA024` | Data - InterludeSubstitution | `/admin/data/interlude-substitution` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
 | 159 | `DATA025` | Data - Definition | `/admin/data/definition` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
 | 160 | `DATA026` | Data - KnowledgeBaseItem | `/admin/data/knowledge-base-item` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 161 | `DATA027` | Data - Matrix | `/admin/data/matrix` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
+| 161 | `DATA027` | Data - Matrix | `/admin/data/matrix` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource; legitimate matrix-named views and concepts remain unaffected. |
 | 162 | `DATA028` | Data - Layette | `/admin/data/layette` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
 | 163 | `DATA029` | Data - Transition | `/admin/data/transition` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
 | 164 | `DATA030` | Data - CapabilityDefinition | `/admin/data/capability-definition` | **MISSING** | Falls through to the generic authorized-admin card; there is no CapabilityDefinition table, editor, create action, save mutation, or CapabilityEvent history/authoring view. |
@@ -229,7 +232,7 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 187 | `TOOL006` | Public Navigation - Guest/User/Member States | `/review/navigation-states` | **IMPLEMENTED** | Dedicated guest/user/member/admin/owner navigation-capability comparison. |
 | 188 | `DATA_LEGENDARYREWARD_EDIT` | Edit LegendaryReward | `/admin/data/legendaryreward/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
 | 189 | `DATA_LESSON_EDIT` | Edit Lesson | `/admin/data/lesson/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 190 | `DATA_MATRIX_EDIT` | Edit Matrix | `/admin/data/matrix/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
+| 190 | `DATA_MATRIX_EDIT` | Edit Matrix | `/admin/data/matrix/sample-record` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource. |
 | 191 | `DATA_PERSONALITYEXPRESSION_EDIT` | Edit PersonalityExpression | `/admin/data/personalityexpression/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
 | 192 | `DATA_PILLAR_EDIT` | Edit Pillar | `/admin/data/pillar/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
 | 193 | `DATA_POINTOFINTEREST_EDIT` | Edit PointOfInterest | `/admin/data/pointofinterest/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
@@ -263,7 +266,7 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 221 | `DATA_LAYETTE_IMPORT` | Bulk Import Layette | `/admin/data/layette/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
 | 222 | `DATA_LEGENDARYREWARD_IMPORT` | Bulk Import LegendaryReward | `/admin/data/legendaryreward/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
 | 223 | `DATA_LESSON_IMPORT` | Bulk Import Lesson | `/admin/data/lesson/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 224 | `DATA_MATRIX_IMPORT` | Bulk Import Matrix | `/admin/data/matrix/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
+| 224 | `DATA_MATRIX_IMPORT` | Bulk Import Matrix | `/admin/data/matrix/import` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource. |
 | 225 | `DATA_PERSONALITYEXPRESSION_IMPORT` | Bulk Import PersonalityExpression | `/admin/data/personalityexpression/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
 | 226 | `DATA_PILLAR_IMPORT` | Bulk Import Pillar | `/admin/data/pillar/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
 | 227 | `DATA_POINTOFINTEREST_IMPORT` | Bulk Import PointOfInterest | `/admin/data/pointofinterest/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |

@@ -819,6 +819,17 @@ enum LatticeId {
   L25
 }
 
+enum AtlasConnectionType {
+  BASE
+  NORMAL
+  LEFT_RIGHT_CROSSOVER
+}
+
+enum AtlasWrapMode {
+  NONE
+  DATE_LINE
+}
+
 enum SettlementPopulationEventType {
   FOUNDING
   GROWTH
@@ -1736,6 +1747,25 @@ model Site {
   @@index([regionId])
 }
 
+model RegionLatticeMapping {
+  regionId  RegionId  @id
+  latticeId LatticeId @unique
+  locked    Boolean   @default(true)
+}
+
+model AtlasConnection {
+  atlasConnectionId String              @id
+  fromLatticeId     LatticeId
+  toLatticeId       LatticeId
+  connectionType    AtlasConnectionType
+  wrapMode          AtlasWrapMode
+  locked            Boolean             @default(true)
+
+  @@unique([fromLatticeId, toLatticeId])
+  @@index([fromLatticeId])
+  @@index([toLatticeId])
+}
+
 model Settlement {
   settlementId   String                   @id
   siteId         String                   @unique
@@ -1919,13 +1949,6 @@ model Definition {
   definitionId String @id
   term         String
   definition   String
-}
-
-model Matrix {
-  matrixId       String          @id
-  regionId       RegionId
-  latticeId      LatticeId
-  culturePoolIds CulturePoolId[]
 }
 
 model Layette {
