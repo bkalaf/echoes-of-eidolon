@@ -88,8 +88,7 @@ export function omitCopiedLatticeId(record: CanonicalPointOfInterest): Canonical
 export function omitCopiedLatticeId(record: CanonicalSettlementSite): CanonicalSettlementSite;
 export function omitCopiedLatticeId<T extends Record<string, unknown>>(record: T): Omit<T, "latticeId">;
 export function omitCopiedLatticeId<T extends Record<string, unknown>>(record: T): Omit<T, "latticeId"> {
-  const { latticeId: _copiedProjection, ...physicalRecord } = record;
-  return physicalRecord;
+  return Object.fromEntries(Object.entries(record).filter(([key]) => key !== "latticeId")) as Omit<T, "latticeId">;
 }
 
 function collectArtifactReferences(value: unknown): ArtifactReference[] {
