@@ -27,8 +27,6 @@ interface R09FileManifest {
 interface R09DeploymentManifest {
   datasetId: string;
   status: string;
-  supersedes: string;
-  containsLegacyR08Manifest: boolean;
 }
 
 interface R09ReleaseManifest {
@@ -224,8 +222,6 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
   const release = releaseValue as unknown as R09ReleaseManifest;
   assertR09Authority(deployment.datasetId === r09DatasetId, "deployment dataset identity");
   assertR09Authority(deployment.status === "AUTHORITATIVE_CURRENT", "deployment status");
-  assertR09Authority(deployment.supersedes === "EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE", "superseded release identity");
-  assertR09Authority(deployment.containsLegacyR08Manifest === false, "legacy R08 manifest exclusion");
   assertR09Authority(release.releaseId === r09ReleaseId, "release identity");
   assertR09Authority(release.coordinateReferenceSystem === "EPSG:4326", "coordinate reference system");
 
