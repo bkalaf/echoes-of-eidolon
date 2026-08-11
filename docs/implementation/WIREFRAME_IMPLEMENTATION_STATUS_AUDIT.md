@@ -1,9 +1,9 @@
 # Wireframe Implementation Status Audit
 
-Date: 2026-08-10  
+Date: 2026-08-11
 Repository: `/home/bobby/echoes-of-eidolon`  
 Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 273 mechanically derived active V3 states)
-Audited checkout: archival checkpoint `7bf9cc3` plus the current focused remediation commits and Admin Data worktree
+Audited checkout: archival checkpoint `7bf9cc3` through remediation revision `028363e`
 
 ## Standard used
 
