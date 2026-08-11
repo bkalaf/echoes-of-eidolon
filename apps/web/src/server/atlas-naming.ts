@@ -69,5 +69,5 @@ export async function importAtlasNamingProximity(
       }
     }
     return { createdEligibility, createdFeatures, unchangedEligibility, unchangedFeatures };
-  });
+  }, { timeout: 120_000 });
 }
