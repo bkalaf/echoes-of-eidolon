@@ -38,6 +38,7 @@ function renderGameScreen(screenEntry: ReturnType<typeof gameScreen>) {
 function playerAccess(input: { betaEligible: boolean; canPlay: boolean; role: string }) {
   vi.stubGlobal("fetch", vi.fn().mockImplementation(async (request: RequestInfo | URL) => {
     const url = String(request);
+    if (url.includes("/api/atlas/catalog")) return { json: async () => ({ coordinateReferenceSystem: "EPSG:4326", pointsOfInterest: [], settlementSites: [] }), ok: true };
     if (url.includes("/api/player/runtime")) return { json: async () => ({ exits: [], location: null, nearby: [], sessionId: null, turns: [] }), ok: true };
     if (url.includes("/api/player/puzzles")) return { json: async () => ({ puzzles: [] }), ok: true };
     if (url.includes("/api/player/calendar")) return { json: async () => ({ months: [] }), ok: true };
@@ -149,16 +150,37 @@ describe("game runtime boundary", () => {
     expect(screen.getByRole("button", { name: "Next" })).toBeDisabled();
   });
 
-  it("reuses the textured Atlas globe without disclosing unowned player markers", async () => {
+  it("reuses the textured Atlas globe with the verified player-accessible catalog and no invented discovery labels", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(async (request: RequestInfo | URL) => {
+      const url = String(request);
+      if (url.includes("/api/player/access")) return { json: async () => ({ betaEligible: true, canPlay: true, role: "member" }), ok: true };
+      if (url.includes("/api/atlas/catalog")) return { json: async () => ({ coordinateReferenceSystem: "EPSG:4326", pointsOfInterest: [{ category: "SITE", displayName: "Supplied Harbor", latitude: 10, longitude: 20, nameStatus: "CANONICAL", poiId: "POI-1", regionId: "R01", workingLabel: "Supplied Harbor" }], settlementSites: [] }), ok: true };
+      return { json: async () => ({}), ok: true };
+    }));
     renderGame("GAME005");
 
     const globe = await screen.findByRole("application", { name: /Interactive Eidolon globe/ });
     expect(globe.querySelector("canvas")).toBeInTheDocument();
-    expect(screen.getByText(/Player-safe layers, discovered geography/)).toBeInTheDocument();
-    expect(screen.getByRole("status", { name: "" })).toHaveTextContent("Player-safe coordinate overlays are unavailable.");
-    expect(globe.querySelectorAll("[data-globe-marker]")).toHaveLength(0);
-    expect(screen.getByRole("button", { name: "Player overlays unavailable" })).toBeDisabled();
+    expect(globe.querySelectorAll("[data-globe-marker]")).toHaveLength(1);
+    expect(screen.getByText(/Discovery status, routes, politics, and historical visibility are not inferred/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Discovery overlays unavailable" })).toBeDisabled();
+    expect(screen.queryByText(/discovered/i)).not.toBeInTheDocument();
+  });
+
+  it("renders the verified physical Atlas map without claiming catalog entries are discovered", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(async (request: RequestInfo | URL) => {
+      const url = String(request);
+      if (url.includes("/api/player/access")) return { json: async () => ({ betaEligible: true, canPlay: true, role: "member" }), ok: true };
+      if (url.includes("/api/atlas/catalog")) return { json: async () => ({ coordinateReferenceSystem: "EPSG:4326", pointsOfInterest: [{ category: "SITE", displayName: "Supplied Harbor", latitude: 10, longitude: 20, nameStatus: "CANONICAL", poiId: "POI-1", regionId: "R01", workingLabel: "Supplied Harbor" }], settlementSites: [] }), ok: true };
+      return { json: async () => ({}), ok: true };
+    }));
+    renderGame("GAM004");
+    expect(await screen.findByRole("img", { name: "Eidolon world map" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Select Supplied Harbor" }));
+    expect(screen.getByText("R01")).toBeInTheDocument();
+    expect(screen.queryByText(/discovered/i)).not.toBeInTheDocument();
   });
 
   it("does not grant game access to an authenticated user without beta eligibility", async () => {
