@@ -1,0 +1,14 @@
+%% Population event authority
+erDiagram
+  SettlementWorld {
+    string id PK
+  }
+  SettlementPopulationEvent {
+    string id PK
+  }
+  Breed {
+    string id PK
+  }
+  Breed ||--o{ SettlementPopulationEvent : "relates to"
+  Breed ||--o{ SettlementWorld : "relates to"
+  SettlementWorld ||--o{ SettlementPopulationEvent : "relates to"

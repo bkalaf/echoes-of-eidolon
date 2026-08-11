@@ -1,0 +1,13 @@
+%% Prompt version ownership
+erDiagram
+  PromptRecord {
+    string id PK
+  }
+  PromptVersion {
+    string id PK
+  }
+  ManagedAsset {
+    string id PK
+  }
+  ManagedAsset ||--o{ PromptVersion : "relates to"
+  PromptRecord ||--o{ PromptVersion : "relates to"

@@ -5,8 +5,8 @@ import { describe, expect, it } from "vitest";
 
 import { puzzleDifficultyTiers, puzzleFamilies, puzzleHintKinds } from "../../src/domain/puzzle-blueprint";
 import { settlementPopulationEventKinds } from "../../src/domain/settlement-population";
-import { speciesPersonalityDimensions } from "../../src/domain/species-personality";
-import { PuzzleDifficultyTier, PuzzleFamily, PuzzleHintKind, SettlementPopulationEventType, SpeciesResearchDimension } from "../../src/generated/prisma/enums";
+import { breedPersonalityDimensions } from "../../src/domain/breed-personality";
+import { BreedResearchDimension, PuzzleDifficultyTier, PuzzleFamily, PuzzleHintKind, SettlementPopulationEventType } from "../../src/generated/prisma/enums";
 
 const schema = readFileSync(resolve(import.meta.dirname, "../../prisma/schema.prisma"), "utf8");
 const migration = readFileSync(resolve(
@@ -31,16 +31,18 @@ const suppliedEnumNames = [
   "FulfillmentProvider", "ProtagonistImportance", "ReleaseNotesStatus", "ReleaseAudience", "ReleaseNoteCategory",
   "KnowledgeBaseDisclosureMode", "PuzzleHintKind", "BulkOperation", "ImportAliasDisposition", "ImportResultState",
   "MembershipRevocationReason", "ManagedAssetMediaKind", "PromptFamily", "PromptStatus", "Loquacity",
-  "EmotionalTemperature", "OutlookOrientation", "CollaborativePosture", "SpeciesResearchDimension",
-  "SpeciesResearchReviewStatus", "SpeciesResearchProvenanceKind", "SpeciesDimensionValue",
+  "EmotionalTemperature", "OutlookOrientation", "CollaborativePosture", "BreedResearchDimension",
+  "BreedResearchReviewStatus", "BreedResearchProvenanceKind", "BreedDimensionValue",
+  "ContactTopic", "ContactRequestStatus", "GameTurnStatus", "DocumentDraftStatus", "DeploymentStatus", "CampaignObjectType",
+  "DonationCheckoutStatus", "StoreProductType",
 ] as const;
 
 describe("Prisma finite enum authority", () => {
-  it("defines exactly the 92 supplied enums", () => {
+  it("preserves the 92 supplied enums and the eight application runtime enums", () => {
     const actualNames = [...schema.matchAll(/^enum (\w+) \{/gm)].map((match) => match[1]);
     expect(new Set(actualNames)).toEqual(new Set(suppliedEnumNames));
-    expect(suppliedEnumNames).toHaveLength(92);
-    expect(actualNames).toHaveLength(92);
+    expect(suppliedEnumNames).toHaveLength(100);
+    expect(actualNames).toHaveLength(100);
     expect(schema).toContain('role                String                    @default("user")');
   });
 
@@ -65,6 +67,6 @@ describe("Prisma finite enum authority", () => {
     expect(puzzleDifficultyTiers).toEqual(Object.values(PuzzleDifficultyTier));
     expect(puzzleHintKinds).toEqual(Object.values(PuzzleHintKind));
     expect(settlementPopulationEventKinds).toEqual(Object.values(SettlementPopulationEventType));
-    expect(speciesPersonalityDimensions).toEqual(Object.values(SpeciesResearchDimension));
+    expect(breedPersonalityDimensions).toEqual(Object.values(BreedResearchDimension));
   });
 });

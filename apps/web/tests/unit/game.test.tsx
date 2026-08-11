@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -36,9 +36,12 @@ function renderGameScreen(screenEntry: ReturnType<typeof gameScreen>) {
 }
 
 function playerAccess(input: { betaEligible: boolean; canPlay: boolean; role: string }) {
-  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-    json: async () => input,
-    ok: true,
+  vi.stubGlobal("fetch", vi.fn().mockImplementation(async (request: RequestInfo | URL) => {
+    const url = String(request);
+    if (url.includes("/api/player/runtime")) return { json: async () => ({ exits: [], location: null, nearby: [], sessionId: null, turns: [] }), ok: true };
+    if (url.includes("/api/player/puzzles")) return { json: async () => ({ puzzles: [] }), ok: true };
+    if (url.includes("/api/player/calendar")) return { json: async () => ({ months: [] }), ok: true };
+    return { json: async () => input, ok: true };
   }));
 }
 
@@ -56,25 +59,44 @@ describe("game runtime boundary", () => {
     expect(screen.queryByText(/Mae'vyri|Harbor Gate|18:42/)).not.toBeInTheDocument();
   });
 
-  it("keeps freeform interaction and runtime context unavailable without a runtime owner", async () => {
+  it("loads player-safe context and enables the bounded runtime input", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame("GAME008");
 
-    expect(await screen.findByRole("textbox", { name: "Speak or type freely" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Send unavailable" })).toBeDisabled();
+    expect(await screen.findByRole("textbox", { name: "Speak or type freely" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();
     expect(screen.getByRole("heading", { name: "Nearby" })).toBeInTheDocument();
-    expect(screen.getByText("No player-known nearby records are available.")).toBeInTheDocument();
+    expect(await screen.findByText("No player-known nearby records.")).toBeInTheDocument();
     expect(screen.queryByText(/Mae|Archivist|18:42/)).not.toBeInTheDocument();
   });
 
-  it("shows only supplied Witness timing and hints without fabricating acceptance state", async () => {
+  it("does not offer acceptance when no Puzzle is assigned to the current campaign", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
     renderGame("GAME011");
 
-    expect(await screen.findByRole("button", { name: "Accept unavailable" })).toBeDisabled();
-    expect(screen.getByText(/2,160,000-second acceptance window/)).toBeInTheDocument();
-    expect(screen.getByText(/DIRECTIONAL then GUIDED/)).toBeInTheDocument();
+    expect(await screen.findByText(/No Puzzle Blueprint is assigned/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Accept challenge" })).not.toBeInTheDocument();
     expect(screen.queryByText(/15 minutes|Available in sequence|18:42 remaining/)).not.toBeInTheDocument();
+  });
+
+  it("starts a persisted challenge only after explicit acceptance and renders its server-owned window", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    let accepted = false;
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(async (request: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(request);
+      if (url.includes("/api/player/access")) return { json: async () => ({ betaEligible: true, canPlay: true, role: "member" }), ok: true };
+      if (url.includes("/api/player/puzzles") && init?.method === "POST") { accepted = true; return { json: async () => ({}), ok: true }; }
+      if (url.includes("/api/player/puzzles")) return { json: async () => ({ puzzles: [{ acceptance: accepted ? { acceptedAt: "2026-08-10T00:00:00.000Z", endsAt: "2099-08-10T00:00:00.000Z", puzzleChallengeAcceptedId: "ACCEPT-1", remainingSeconds: 2_160_000 } : null, difficultyTier: "TIER_1_INITIATE", family: "MUSIC", generatorVersion: 3, hints: accepted ? [{ kind: "DIRECTIONAL", level: 1, template: "Listen east." }, { kind: "GUIDED", level: 2, template: "Compare the second phrase." }] : [], name: "Assigned Trial", puzzleBlueprintId: "PUZZLE-1" }] }), ok: true };
+      return { json: async () => ({ exits: [], location: null, nearby: [], sessionId: null, turns: [] }), ok: true };
+    }));
+    renderGame("GAME011");
+
+    expect(await screen.findByText("Assigned Trial")).toBeInTheDocument();
+    expect(screen.queryByRole("timer")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Accept challenge" }));
+    expect(await screen.findByRole("timer")).toHaveTextContent(/seconds remaining/);
+    expect(screen.getByText("DIRECTIONAL").closest("li")).toHaveTextContent("Listen east.");
+    expect(screen.getByText("GUIDED").closest("li")).toHaveTextContent("Compare the second phrase.");
   });
 
   it("renders only the exact supplied calendar structure", async () => {
@@ -132,10 +154,10 @@ describe("game runtime boundary", () => {
     renderGame("GAME005");
 
     const globe = await screen.findByRole("application", { name: /Interactive Eidolon globe/ });
-    expect(globe.querySelector("img")).toHaveAttribute("src", expect.stringMatching(/digitaloceanspaces\.com\/assets\/[a-f0-9]{64}\.png$/));
+    expect(globe.querySelector("canvas")).toBeInTheDocument();
     expect(screen.getByText(/Player-safe layers, discovered geography/)).toBeInTheDocument();
     expect(screen.getByRole("status", { name: "" })).toHaveTextContent("Player-safe coordinate overlays are unavailable.");
-    expect(globe.querySelectorAll("button")).toHaveLength(0);
+    expect(globe.querySelectorAll("[data-globe-marker]")).toHaveLength(0);
     expect(screen.getByRole("button", { name: "Player overlays unavailable" })).toBeDisabled();
   });
 
@@ -162,7 +184,7 @@ describe("game runtime boundary", () => {
     playerAccess({ betaEligible: false, canPlay: true, role: "owner" });
     renderGame("GAME008");
 
-    expect(await screen.findByRole("textbox", { name: "Speak or type freely" })).toBeDisabled();
+    expect(await screen.findByRole("textbox", { name: "Speak or type freely" })).toBeEnabled();
     expect(screen.queryByRole("heading", { name: "Player eligibility required" })).not.toBeInTheDocument();
   });
 

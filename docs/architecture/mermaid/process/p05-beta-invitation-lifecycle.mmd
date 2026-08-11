@@ -1,0 +1,15 @@
+%% Beta invitation lifecycle
+flowchart LR
+  Consentrequest0["Consent request"]
+  Persistrequest1["Persist request"]
+  Adminreview2["Admin review"]
+  Issuecode3["Issue code"]
+  Emailcode4["Email code"]
+  Redeemonce5["Redeem once"]
+  Seteligibility6["Set eligibility"]
+  Consentrequest0 --> Persistrequest1
+  Persistrequest1 --> Adminreview2
+  Adminreview2 --> Issuecode3
+  Issuecode3 --> Emailcode4
+  Emailcode4 --> Redeemonce5
+  Redeemonce5 --> Seteligibility6

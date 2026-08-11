@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { PageManifestEntry } from "../../lib/page-manifest";
+import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
 import { PublicShell } from "../../components/shells/Shells";
 import { BoundedNumberField, FiniteChipSelection, HardenedSelect } from "../../components/ui/controls";
 import { PersonalityFamily } from "../../generated/prisma/enums";
@@ -8,7 +8,8 @@ const personalityFamilyTokens = Object.values(PersonalityFamily).sort((left, rig
 const reviewedMultiSelectTokens = personalityFamilyTokens.slice(0, 12);
 
 function ToolsHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
-  return <header className="workspace-page-head"><p className="kicker">REVIEW TOOL · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
+  const title = screen.screenId === "TOO001" ? "Wireframe Review Queue" : screen.title;
+  return <header className="workspace-page-head"><p className="kicker">REVIEW TOOL · {screen.screenId}</p><h1>{title}</h1><p>{description}</p></header>;
 }
 
 function Controls({ screen }: { screen: PageManifestEntry }) {
@@ -45,14 +46,10 @@ function ComponentComposer({ screen }: { screen: PageManifestEntry }) {
 }
 
 function ReviewQueue({ screen }: { screen: PageManifestEntry }) {
-  const rows = [
-    ["001", "PUB001", "Home", "Approved visual target"],
-    ["107", "DATA_ANTAGONIST_TABLE", "Antagonist Records", "Review"],
-    ["251", "AT004_FOUND_CITY", "Found City", "Review"],
-    ["253", "AT005_SETTLEMENT_DETAIL", "Migrate", "Review"],
-    ["255", "ADM036", "Campaign Planner", "Review"],
-  ] as const;
-  return <><ToolsHead screen={screen} description="Shared wireframe tooling without replacing task-specific page topology." /><div className="grid-2"><section className="card"><h2>Wireframe Review Queue</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Page</th><th>Screen</th><th>Title</th><th>State</th></tr></thead><tbody>{rows.map(([page, id, title, state]) => <tr key={id}><td>{page}</td><td>{id}</td><td>{title}</td><td>{state}</td></tr>)}</tbody></table></div></section><aside className="card"><h2>Review controls</h2><p>Open page, compare against owner-approved source, annotate, accept, or return for revision.</p><button className="button button--gold">Open selected</button></aside></div></>;
+  const [query, setQuery] = useState("");
+  const normalizedQuery = query.trim().toLowerCase();
+  const rows = pageManifest.filter((entry) => !normalizedQuery || [entry.screenId, entry.title, entry.path ?? "state-only"].some((value) => value.toLowerCase().includes(normalizedQuery)));
+  return <><ToolsHead screen={screen} description="All 269 active v11.3 screen/state records, backed directly by the one application registry." /><section className="card"><div className="toolbar"><label className="field grow">Find screen, title, or route<input className="input" value={query} onChange={(event) => setQuery(event.target.value)} /></label><span className="tag">{rows.length} of {pageManifest.length}</span></div><div className="table-scroll"><table className="simple-table"><thead><tr><th>Order</th><th>Screen/state</th><th>Title</th><th>Route or modal owner</th><th>Revision</th><th>Review</th></tr></thead><tbody>{rows.map((entry) => { const ownedPath = entry.path?.replace(/^Modal in /, ""); const href = ownedPath ? `${ownedPath}${ownedPath.includes("?") ? "&" : "?"}state=${encodeURIComponent(entry.screenId)}` : `/tools/wireframe-builder?state=${encodeURIComponent(entry.screenId)}`; return <tr key={`${entry.reviewOrder}-${entry.screenId}`}><td>{entry.reviewOrder}</td><td>{entry.screenId}</td><td>{entry.title}</td><td>{entry.path ?? "Owned state; no standalone route"}</td><td>v11.3</td><td><a className="button" href={href}>Open rendered UI</a></td></tr>; })}</tbody></table></div></section></>;
 }
 
 function Builder({ screen }: { screen: PageManifestEntry }) {

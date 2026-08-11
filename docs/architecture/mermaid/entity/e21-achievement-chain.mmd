@@ -1,0 +1,12 @@
+%% Achievement chain
+erDiagram
+  AchievementDefinition {
+    string id PK
+  }
+  ManagedAsset {
+    string id PK
+  }
+  CapabilityDefinition {
+    string id PK
+  }
+  AchievementDefinition ||--o| ManagedAsset : "relates to"

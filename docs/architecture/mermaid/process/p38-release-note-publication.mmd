@@ -1,0 +1,15 @@
+%% Release-note publication
+flowchart LR
+  VerifiedexactSHA0["Verified exact SHA"]
+  Draftnotesections1["Draft note sections"]
+  Review2["Review"]
+  PublishReleaseNote3["Publish ReleaseNoteItem rows"]
+  Bindrunningversion4["Bind running version"]
+  Publicarchive5["Public archive"]
+  Safeversionrespons6["Safe version response"]
+  VerifiedexactSHA0 --> Draftnotesections1
+  Draftnotesections1 --> Review2
+  Review2 --> PublishReleaseNote3
+  PublishReleaseNote3 --> Bindrunningversion4
+  Bindrunningversion4 --> Publicarchive5
+  Publicarchive5 --> Safeversionrespons6

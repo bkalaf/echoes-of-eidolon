@@ -78,6 +78,14 @@ export async function requireAtlasAccess(request: Request): Promise<ServerAccess
   return access;
 }
 
+export async function requirePlayerAccess(request: Request): Promise<ServerAccessContext> {
+  const access = await requireServerSession(request);
+  if (!canAccessGame(access.role, access.betaEligible)) {
+    throw new Response("Verified player eligibility required.", { status: 403 });
+  }
+  return access;
+}
+
 export function playerAccessResponse(access: ServerAccessContext) {
   return {
     betaEligible: access.betaEligible,

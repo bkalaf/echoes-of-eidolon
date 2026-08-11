@@ -1,0 +1,22 @@
+%% Settlement worlds
+erDiagram
+  Site {
+    string id PK
+  }
+  Settlement {
+    string id PK
+  }
+  SettlementWorld {
+    string id PK
+  }
+  Culture {
+    string id PK
+  }
+  Breed {
+    string id PK
+  }
+  Breed ||--o| Culture : "relates to"
+  Breed ||--o{ SettlementWorld : "relates to"
+  Culture ||--o{ SettlementWorld : "relates to"
+  Site ||--o| Settlement : "relates to"
+  Settlement ||--o{ SettlementWorld : "relates to"

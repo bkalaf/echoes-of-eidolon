@@ -1,0 +1,13 @@
+%% Printful fulfillment after payment
+flowchart LR
+  Confirmedorder0["Confirmed order"]
+  Assertpaymentconfi1["Assert payment confirmation"]
+  Buildconfiguredreq2["Build configured request"]
+  Printfulport3["Printful port"]
+  Persistsubmission4["Persist submission"]
+  Exposesafestatus5["Expose safe status"]
+  Confirmedorder0 --> Assertpaymentconfi1
+  Assertpaymentconfi1 --> Buildconfiguredreq2
+  Buildconfiguredreq2 --> Printfulport3
+  Printfulport3 --> Persistsubmission4
+  Persistsubmission4 --> Exposesafestatus5

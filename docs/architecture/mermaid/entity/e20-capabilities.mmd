@@ -1,0 +1,17 @@
+%% Capabilities
+erDiagram
+  User {
+    string id PK
+  }
+  CapabilityDefinition {
+    string id PK
+  }
+  CapabilityEvent {
+    string id PK
+  }
+  KnowledgeBaseDisclosure {
+    string id PK
+  }
+  User ||--o{ CapabilityEvent : "relates to"
+  KnowledgeBaseDisclosure ||--|| CapabilityDefinition : "relates to"
+  CapabilityDefinition ||--o{ CapabilityEvent : "relates to"

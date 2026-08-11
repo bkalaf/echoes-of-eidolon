@@ -1,0 +1,13 @@
+%% Release traceability
+erDiagram
+  Release {
+    string id PK
+  }
+  ReleaseNoteItem {
+    string id PK
+  }
+  DeploymentRecord {
+    string id PK
+  }
+  Release ||--o{ ReleaseNoteItem : "relates to"
+  Release ||--o{ DeploymentRecord : "relates to"

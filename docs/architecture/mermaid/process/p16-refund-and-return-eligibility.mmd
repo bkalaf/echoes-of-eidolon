@@ -1,0 +1,15 @@
+%% Refund and return eligibility
+flowchart LR
+  Orderstatus0["Order status"]
+  Configuredpolicy1["Configured policy"]
+  Returneligibility2["Return eligibility"]
+  Striperefund3["Stripe refund"]
+  Signedrefundevent4["Signed refund event"]
+  OrderRefund5["OrderRefund"]
+  Membershipadjustme6["Membership adjustment if donation"]
+  Orderstatus0 --> Configuredpolicy1
+  Configuredpolicy1 --> Returneligibility2
+  Returneligibility2 --> Striperefund3
+  Striperefund3 --> Signedrefundevent4
+  Signedrefundevent4 --> OrderRefund5
+  OrderRefund5 --> Membershipadjustme6

@@ -1,0 +1,14 @@
+%% Beta invitation ownership
+erDiagram
+  User {
+    string id PK
+  }
+  BetaInviteRequest {
+    string id PK
+  }
+  BetaInvitationCode {
+    string id PK
+  }
+  User ||--o{ BetaInviteRequest : "relates to"
+  User ||--o{ BetaInvitationCode : "relates to"
+  BetaInviteRequest ||--o| BetaInvitationCode : "relates to"

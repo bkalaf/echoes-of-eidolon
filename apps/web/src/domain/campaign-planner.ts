@@ -21,6 +21,10 @@ export const campaignObjectTypes = [
 
 export type CampaignObjectType = (typeof campaignObjectTypes)[number];
 
+export class CampaignBookRangeError extends Error {
+  override name = "CampaignBookRangeError";
+}
+
 export interface CampaignLinkedGroupRule {
   optional: readonly { count: "ZERO_OR_MORE"; objectType: CampaignObjectType }[];
   required: readonly { count: number; objectType: CampaignObjectType }[];
@@ -52,7 +56,6 @@ const range = (start: number, end: number) => Array.from({ length: end - start +
 const pillarSpans = [range(1, 9), range(10, 18)];
 const sixBookSpans = [range(1, 6), range(7, 12), range(13, 18)];
 const threeBookSpans = [range(1, 3), range(4, 6), range(7, 9), range(10, 12), range(13, 15), range(16, 18)];
-const pairedSpans = [[1, 18], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11], [12, 13], [14, 15], [16, 17]];
 const singleBookTypes = new Set<CampaignObjectType>([
   "ATROCITY", "WITNESS", "ARCHITECT", "LEGENDARY_REWARD",
   "WWII_INTERLUDE", "MYTH_INTERLUDE", "SCIENCE_INTERLUDE", "HISTORICAL_INTERLUDE",
@@ -64,11 +67,47 @@ function sameBooks(actual: readonly number[], expected: readonly number[]) {
 }
 
 function normalizeBooks(books: readonly number[]) {
-  if (books.length === 0) throw new Error("A campaign placement must include at least one Book.");
-  if (books.some((book) => !Number.isInteger(book) || book < 1 || book > 18)) throw new Error("Campaign Books must be integers from 1 through 18.");
+  if (books.length === 0) throw new CampaignBookRangeError("A campaign placement must include at least one Book.");
+  if (books.some((book) => !Number.isInteger(book) || book < 1 || book > 18)) throw new CampaignBookRangeError("Campaign Books must be integers from 1 through 18.");
   const normalized = [...new Set(books)].sort((a, b) => a - b);
-  if (normalized.length !== books.length) throw new Error("A campaign placement cannot repeat a Book.");
+  if (normalized.length !== books.length) throw new CampaignBookRangeError("A campaign placement cannot repeat a Book.");
   return normalized;
+}
+
+export interface CampaignBookRange {
+  endBook: number;
+  rowSpan: number;
+  startBook: number;
+}
+
+export function campaignBookRange(books: readonly number[]): CampaignBookRange {
+  const normalized = normalizeBooks(books);
+  const startBook = normalized[0]!;
+  const endBook = normalized.at(-1)!;
+  const rowSpan = endBook - startBook + 1;
+  if (rowSpan !== normalized.length) throw new CampaignBookRangeError("Campaign Books must form one contiguous range.");
+  return { endBook, rowSpan, startBook };
+}
+
+export function duologyCounterpart(bookNumber: number): number {
+  if (!Number.isInteger(bookNumber) || bookNumber < 1 || bookNumber > 18) throw new CampaignBookRangeError("A duology Book must be an integer from 1 through 18.");
+  return 19 - bookNumber;
+}
+
+export function isCanonicalDuologyPair(books: readonly number[]): boolean {
+  const normalized = normalizeBooks(books);
+  return normalized.length === 2 && normalized[1] === duologyCounterpart(normalized[0]!);
+}
+
+export function campaignPlacementBookRange(objectType: CampaignObjectType, books: readonly number[]): CampaignBookRange {
+  if (!isValidCampaignSpan(objectType, books)) throw new CampaignBookRangeError("The selected Books do not form a valid span for this campaign object type.");
+  const normalized = normalizeBooks(books);
+  if (objectType === "TRANSITION" || objectType === "DEJA_VU" || objectType === "COMPANION") {
+    const startBook = normalized[0]!;
+    const endBook = normalized[1]!;
+    return { endBook, rowSpan: endBook - startBook + 1, startBook };
+  }
+  return campaignBookRange(normalized);
 }
 
 export function isValidCampaignSpan(objectType: CampaignObjectType, books: readonly number[]): boolean {
@@ -76,7 +115,7 @@ export function isValidCampaignSpan(objectType: CampaignObjectType, books: reado
   if (objectType === "PILLAR") return pillarSpans.some((span) => sameBooks(normalized, span));
   if (objectType === "LESSON" || objectType === "IN_TRANSIT") return sixBookSpans.some((span) => sameBooks(normalized, span));
   if (objectType === "EXODUS") return threeBookSpans.some((span) => sameBooks(normalized, span));
-  if (objectType === "TRANSITION" || objectType === "DEJA_VU" || objectType === "COMPANION") return pairedSpans.some((span) => sameBooks(normalized, span));
+  if (objectType === "TRANSITION" || objectType === "DEJA_VU" || objectType === "COMPANION") return isCanonicalDuologyPair(normalized);
   if (objectType === "HOLIDAY") return normalized.length === 1 && holidayBooks.has(normalized[0]!);
   return singleBookTypes.has(objectType) && normalized.length === 1;
 }

@@ -1,0 +1,21 @@
+%% Identity and authentication
+erDiagram
+  User {
+    string id PK
+  }
+  Session {
+    string id PK
+  }
+  Account {
+    string id PK
+  }
+  Passkey {
+    string id PK
+  }
+  TwoFactor {
+    string id PK
+  }
+  User ||--o{ Session : "relates to"
+  User ||--o{ Account : "relates to"
+  User ||--o{ Passkey : "relates to"
+  User ||--o{ TwoFactor : "relates to"

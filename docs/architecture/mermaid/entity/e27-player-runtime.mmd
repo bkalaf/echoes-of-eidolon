@@ -1,0 +1,23 @@
+%% Player runtime
+erDiagram
+  User {
+    string id PK
+  }
+  GameSession {
+    string id PK
+  }
+  GameTurn {
+    string id PK
+  }
+  SettlementWorld {
+    string id PK
+  }
+  Character {
+    string id PK
+  }
+  KnowledgeBaseItem {
+    string id PK
+  }
+  User ||--o{ GameSession : "relates to"
+  SettlementWorld ||--o{ GameSession : "relates to"
+  GameSession ||--o{ GameTurn : "relates to"

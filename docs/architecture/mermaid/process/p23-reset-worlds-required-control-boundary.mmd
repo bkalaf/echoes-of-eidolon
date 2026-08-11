@@ -1,0 +1,15 @@
+%% Reset Worlds required control boundary
+flowchart LR
+  Ownerauthorization0["Owner authorization"]
+  Typedconfirmation1["Typed confirmation"]
+  Verifiedbackup2["Verified backup"]
+  Exactresetscopereq3["Exact reset scope required"]
+  Transactionalreset4["Transactional reset"]
+  Immediatecanonical5["Immediate canonical reseed"]
+  Commitandaudit6["Commit and audit"]
+  Ownerauthorization0 --> Typedconfirmation1
+  Typedconfirmation1 --> Verifiedbackup2
+  Verifiedbackup2 --> Exactresetscopereq3
+  Exactresetscopereq3 --> Transactionalreset4
+  Transactionalreset4 --> Immediatecanonical5
+  Immediatecanonical5 --> Commitandaudit6

@@ -1,0 +1,13 @@
+%% Donation checkout and membership grant
+flowchart LR
+  Eligibleuser0["Eligible user"]
+  Choose10to100dolla1["Choose 10 to 100 dollars"]
+  Stripecheckout2["Stripe checkout"]
+  Signedwebhook3["Signed webhook"]
+  Paymentconfirmatio4["Payment confirmation"]
+  Grant16or15months5["Grant 1 6 or 15 months"]
+  Eligibleuser0 --> Choose10to100dolla1
+  Choose10to100dolla1 --> Stripecheckout2
+  Stripecheckout2 --> Signedwebhook3
+  Signedwebhook3 --> Paymentconfirmatio4
+  Paymentconfirmatio4 --> Grant16or15months5

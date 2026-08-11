@@ -1,0 +1,13 @@
+%% Account session revocation
+flowchart LR
+  Listserverprojecti0["List server projection"]
+  Selectothersession1["Select other session"]
+  Reauthenticate2["Re-authenticate"]
+  Revoketoken3["Revoke token"]
+  Auditresult4["Audit result"]
+  Refreshlist5["Refresh list"]
+  Listserverprojecti0 --> Selectothersession1
+  Selectothersession1 --> Reauthenticate2
+  Reauthenticate2 --> Revoketoken3
+  Revoketoken3 --> Auditresult4
+  Auditresult4 --> Refreshlist5

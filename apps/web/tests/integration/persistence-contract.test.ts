@@ -158,6 +158,24 @@ describe("persistence contract", () => {
     expect(migration).toContain('AchievementDefinition_chainKey_rank_key');
   });
 
+  it("applies the resolved Breed research and exact CapabilityEvent owner corrections forward-only", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810180000_owner_corrections/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('ALTER TYPE "SpeciesResearchDimension" RENAME TO "BreedResearchDimension"');
+    expect(migration).toContain('CREATE TABLE "BreedResearchValue"');
+    expect(migration).toContain('CREATE TABLE "BreedResearchEvidence"');
+    expect(migration).toContain('BreedResearchEvidence_researchId_key');
+    expect(migration).toContain('Research_require_typed_owner');
+    expect(migration).toContain('RENAME COLUMN "valueBoolean" TO "booleanValue"');
+    expect(migration).toContain('RENAME COLUMN "valueNumber" TO "scoreValue"');
+    expect(migration).toContain('ADD COLUMN "counterValue" BIGINT');
+    expect(migration).toContain('"referenceEntityType" "EntityType"');
+    expect(migration).toContain('"occurredAt", "sequence", "capabilityEventId"');
+    expect(migration).toContain('Reduced COUNTER is outside its authored range');
+  });
+
   it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),

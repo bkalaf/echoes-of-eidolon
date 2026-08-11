@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { AccountShell } from "../../components/shells/Shells";
+import { SettingsPanel } from "../../components/SettingsPanel";
 import { OtpInput } from "../../components/ui/controls";
 import { subscriptionPriceCents } from "../../domain/membership";
 import type { MembershipGrantSource } from "../../generated/prisma/enums";
@@ -247,7 +248,7 @@ function Orders({ pathname, screen }: { pathname?: string; screen: PageManifestE
 }
 
 function Settings({ screen }: { screen: PageManifestEntry }) {
-  return <><AccountHead screen={screen} description="Accessibility, communication and account preferences." /><Deferred>The reviewed settings fields have no supplied persistence owner. They remain unavailable instead of being stored in an invented browser or database schema.</Deferred></>;
+  return <><AccountHead screen={screen} description="One persisted settings owner shared by standalone, account, and game surfaces." /><SettingsPanel /></>;
 }
 
 function Progress({ screen }: { screen: PageManifestEntry }) {

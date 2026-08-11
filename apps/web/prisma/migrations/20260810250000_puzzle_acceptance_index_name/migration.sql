@@ -1,0 +1,2 @@
+ALTER INDEX "PuzzleChallengeAccepted_userId_puzzleBlueprintId_generatorVersi"
+RENAME TO "PuzzleAcceptance_user_blueprint_version_key";

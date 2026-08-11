@@ -1,7 +1,12 @@
-import type { CapabilityOperation, CapabilityValueKind, RewardEvidenceKind } from "../generated/prisma/enums";
+import type { CapabilityOperation, CapabilityValueKind, EntityType, RewardEvidenceKind } from "../generated/prisma/enums";
 
 export type { CapabilityOperation, CapabilityValueKind, RewardEvidenceKind } from "../generated/prisma/enums";
-export type CapabilityValue = boolean | number | string;
+export interface CapabilityReferenceValue {
+  entityType: EntityType;
+  entityId: string;
+}
+
+export type CapabilityValue = boolean | number | bigint | string | CapabilityReferenceValue;
 
 export interface CapabilityDefinitionContract {
   capabilityDefinitionId: string;
@@ -10,14 +15,21 @@ export interface CapabilityDefinitionContract {
   minValue?: number | null;
   maxValue?: number | null;
   enumValues?: readonly string[];
+  allowedReferenceEntityTypes?: readonly EntityType[];
 }
 
 export interface CapabilityEventContract {
   capabilityEventId: string;
   capabilityDefinitionId: string;
+  occurredAt: Date;
   sequence: bigint;
   operation: CapabilityOperation;
-  value: CapabilityValue;
+  booleanValue?: boolean | null;
+  scoreValue?: number | null;
+  counterValue?: bigint | null;
+  enumValue?: string | null;
+  referenceEntityType?: EntityType | null;
+  referenceEntityId?: string | null;
 }
 
 export interface CapabilityStateEntry {
@@ -32,13 +44,47 @@ function assertFiniteNumber(value: CapabilityValue, definition: CapabilityDefini
   }
 }
 
+function eventValue(event: CapabilityEventContract, definition: CapabilityDefinitionContract): CapabilityValue {
+  const referencePresent = event.referenceEntityType != null || event.referenceEntityId != null;
+  const payloads = [
+    event.booleanValue != null,
+    event.scoreValue != null,
+    event.counterValue != null,
+    event.enumValue != null,
+    referencePresent,
+  ];
+  if (payloads.filter(Boolean).length !== 1) {
+    throw new Error(`Capability ${definition.key} requires exactly one logical value payload.`);
+  }
+  if (referencePresent) {
+    if (!event.referenceEntityType || !event.referenceEntityId) {
+      throw new Error(`Capability ${definition.key} requires both reference fields.`);
+    }
+    return { entityType: event.referenceEntityType, entityId: event.referenceEntityId };
+  }
+  return event.booleanValue ?? event.scoreValue ?? event.counterValue ?? event.enumValue!;
+}
+
 function validateValue(value: CapabilityValue, definition: CapabilityDefinitionContract): void {
   if (definition.valueKind === "BOOLEAN") {
     if (typeof value !== "boolean") throw new Error(`Capability ${definition.key} requires a boolean value.`);
     return;
   }
-  if (definition.valueKind === "SCORE" || definition.valueKind === "COUNTER") {
+  if (definition.valueKind === "SCORE") {
     assertFiniteNumber(value, definition);
+    return;
+  }
+  if (definition.valueKind === "COUNTER") {
+    if (typeof value !== "bigint") throw new Error(`Capability ${definition.key} requires an integer counter value.`);
+    return;
+  }
+  if (definition.valueKind === "REFERENCE") {
+    if (typeof value !== "object" || value === null || !("entityType" in value) || !("entityId" in value)) {
+      throw new Error(`Capability ${definition.key} requires a reference value.`);
+    }
+    if (!definition.allowedReferenceEntityTypes?.includes(value.entityType)) {
+      throw new Error(`Capability ${definition.key} received a disallowed reference entity type.`);
+    }
     return;
   }
   if (typeof value !== "string" || value.length === 0) {
@@ -50,11 +96,12 @@ function validateValue(value: CapabilityValue, definition: CapabilityDefinitionC
 }
 
 function assertRange(value: CapabilityValue, definition: CapabilityDefinitionContract): void {
-  if (typeof value !== "number") return;
-  if (definition.minValue != null && value < definition.minValue) {
+  if (typeof value !== "number" && typeof value !== "bigint") return;
+  const numeric = typeof value === "bigint" ? Number(value) : value;
+  if (definition.minValue != null && numeric < definition.minValue) {
     throw new Error(`Capability ${definition.key} is below its authored minimum.`);
   }
-  if (definition.maxValue != null && value > definition.maxValue) {
+  if (definition.maxValue != null && numeric > definition.maxValue) {
     throw new Error(`Capability ${definition.key} exceeds its authored maximum.`);
   }
 }
@@ -62,34 +109,45 @@ function assertRange(value: CapabilityValue, definition: CapabilityDefinitionCon
 export function reduceCapabilityEvents(
   definitions: readonly CapabilityDefinitionContract[],
   events: readonly CapabilityEventContract[],
+  referenceExists: (reference: CapabilityReferenceValue) => boolean = () => true,
 ): Map<string, CapabilityStateEntry> {
   const definitionById = new Map(definitions.map((definition) => [definition.capabilityDefinitionId, definition]));
   const seenEventIds = new Set<string>();
-  const seenSequences = new Set<bigint>();
   const state = new Map<string, CapabilityStateEntry>();
 
-  for (const event of [...events].sort((left, right) => left.sequence < right.sequence ? -1 : left.sequence > right.sequence ? 1 : 0)) {
+  for (const event of [...events].sort((left, right) =>
+    left.occurredAt.getTime() - right.occurredAt.getTime()
+      || (left.sequence < right.sequence ? -1 : left.sequence > right.sequence ? 1 : 0)
+      || left.capabilityEventId.localeCompare(right.capabilityEventId))) {
     if (seenEventIds.has(event.capabilityEventId)) throw new Error(`Duplicate CapabilityEvent ${event.capabilityEventId}.`);
-    if (seenSequences.has(event.sequence)) throw new Error(`Duplicate CapabilityEvent sequence ${event.sequence}.`);
     seenEventIds.add(event.capabilityEventId);
-    seenSequences.add(event.sequence);
 
     const definition = definitionById.get(event.capabilityDefinitionId);
     if (!definition) throw new Error(`Unknown CapabilityDefinition ${event.capabilityDefinitionId}.`);
     if (event.operation !== "SET" && event.operation !== "ADD") {
       throw new Error(`Capability ${definition.key} received an unsupported operation.`);
     }
-    validateValue(event.value, definition);
+    const payload = eventValue(event, definition);
+    validateValue(payload, definition);
+    if (definition.valueKind === "REFERENCE" && !referenceExists(payload as CapabilityReferenceValue)) {
+      throw new Error(`Capability ${definition.key} references an unknown domain identity.`);
+    }
 
-    let value = event.value;
+    let value = payload;
     if (event.operation === "ADD") {
       if (definition.valueKind !== "SCORE" && definition.valueKind !== "COUNTER") {
         throw new Error(`Capability ${definition.key} does not support ADD.`);
       }
-      assertFiniteNumber(event.value, definition);
-      const previous = state.get(definition.capabilityDefinitionId)?.value ?? 0;
-      if (typeof previous !== "number") throw new Error(`Capability ${definition.key} has nonnumeric state.`);
-      value = previous + event.value;
+      const previous = state.get(definition.capabilityDefinitionId)?.value
+        ?? (definition.valueKind === "COUNTER" ? 0n : 0);
+      if (definition.valueKind === "COUNTER") {
+        if (typeof payload !== "bigint" || typeof previous !== "bigint") throw new Error(`Capability ${definition.key} has noninteger state.`);
+        value = previous + payload;
+      } else {
+        assertFiniteNumber(payload, definition);
+        if (typeof previous !== "number") throw new Error(`Capability ${definition.key} has nonnumeric state.`);
+        value = previous + payload;
+      }
     }
     assertRange(value, definition);
     state.set(definition.capabilityDefinitionId, {

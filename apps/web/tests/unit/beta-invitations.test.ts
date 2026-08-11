@@ -25,12 +25,13 @@ describe("beta invitation boundary", () => {
   it("requires supplied invitation fields without inventing maximum lengths", () => {
     const longText = "x".repeat(10_000);
     expect(betaInviteRequestInputSchema.parse({
+      consent: true,
       email: "friend@example.com",
       friendName: longText,
       reason: longText,
-    })).toEqual({ email: "friend@example.com", friendName: longText, reason: longText });
+    })).toEqual({ consent: true, email: "friend@example.com", friendName: longText, reason: longText });
     expect(betaInvitationRedemptionInputSchema.parse({ code: longText })).toEqual({ code: longText });
-    expect(betaInviteRequestInputSchema.safeParse({ email: "friend@example.com", friendName: "", reason: "reason" }).success).toBe(false);
+    expect(betaInviteRequestInputSchema.safeParse({ consent: true, email: "friend@example.com", friendName: "", reason: "reason" }).success).toBe(false);
   });
 
   it("rejects unknown invitation fields instead of silently stripping them", () => {

@@ -1,5 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
+import { readFile, readdir } from "node:fs/promises";
+import { resolve } from "node:path";
 import process from "node:process";
 
 import { Client } from "pg";
@@ -45,10 +47,13 @@ if (!["127.0.0.1", "localhost"].includes(configuredUrl.hostname)) {
 }
 
 const databaseName = `eidolon_migration_verify_${randomUUID().replaceAll("-", "")}`;
+const preCorrectionDatabaseName = `eidolon_migration_precorrection_${randomUUID().replaceAll("-", "")}`;
 const adminUrl = new URL(configuredUrl);
 adminUrl.pathname = "/postgres";
 const verificationUrl = new URL(configuredUrl);
 verificationUrl.pathname = `/${databaseName}`;
+const preCorrectionUrl = new URL(configuredUrl);
+preCorrectionUrl.pathname = `/${preCorrectionDatabaseName}`;
 const admin = new Client({ connectionString: adminUrl.toString() });
 
 await admin.connect();
@@ -66,8 +71,8 @@ try {
   try {
     const hash = "a".repeat(64);
     await verification.query(
-      `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize")
-       VALUES ($1, $1, $2, 'IMAGE', 'image/png', 1)`,
+      `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize", "technicalMetadata")
+       VALUES ($1, $1, $2, 'IMAGE', 'image/png', 1, '{"kind":"image"}'::jsonb)`,
       [hash, `assets/${hash}.png`],
     );
     await verification.query(
@@ -92,8 +97,8 @@ try {
     );
     await expectDatabaseRejection(
       () => verification.query(
-        `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize")
-         VALUES ('invalid', $1, 'assets/not-the-hash.png', 'IMAGE', 'image/png', 1)`,
+        `INSERT INTO "ManagedAsset" ("managedAssetId", "sha256", "objectKey", "mediaKind", "mimeType", "byteSize", "technicalMetadata")
+         VALUES ('invalid', $1, 'assets/not-the-hash.png', 'IMAGE', 'image/png', 1, '{"kind":"image"}'::jsonb)`,
         ["b".repeat(64)],
       ),
       "ManagedAsset object-key mismatch was not rejected",
@@ -108,23 +113,68 @@ try {
        VALUES ('capability-definition', 'verified-key', 'BOOLEAN', 'verification definition')`,
     );
     await verification.query(
-      `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "valueBoolean")
+      `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "booleanValue")
        VALUES ('capability-event', 'capability-user', 'capability-definition', 0, 'SET', true)`,
     );
     await expectDatabaseRejection(
       () => verification.query(
-        `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "valueBoolean")
+        `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "booleanValue")
          VALUES ('bad-capability-event', 'capability-user', 'capability-definition', 1, 'ADD', true)`,
       ),
       "Invalid BOOLEAN capability operation was not rejected",
     );
     await expectDatabaseRejection(
-      () => verification.query(`UPDATE "CapabilityEvent" SET "valueBoolean" = false WHERE "capabilityEventId" = 'capability-event'`),
+      () => verification.query(`UPDATE "CapabilityEvent" SET "booleanValue" = false WHERE "capabilityEventId" = 'capability-event'`),
       "CapabilityEvent update was not rejected",
     );
     await expectDatabaseRejection(
       () => verification.query(`DELETE FROM "CapabilityEvent" WHERE "capabilityEventId" = 'capability-event'`),
       "CapabilityEvent delete was not rejected",
+    );
+
+    await verification.query(
+      `INSERT INTO "Species" ("speciesId", "name", "speciesKind", "appearance", "anthropomorphization")
+       VALUES ('species-research', 'Research Species', 'HUMAN', ARRAY[]::TEXT[], ARRAY[]::TEXT[])`,
+    );
+    await verification.query(
+      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "appearance", "accent", "costume", "architecture")
+       VALUES ('breed-research', 'Research Breed', 'species-research', ARRAY[]::TEXT[], ARRAY[]::TEXT[], ARRAY[]::TEXT[], ARRAY[]::TEXT[])`,
+    );
+    await verification.query(
+      `INSERT INTO "Source" ("sourceId", "title", "authors", "sourceType")
+       VALUES ('source-research', 'Legitimate source', ARRAY['Author'], 'BOOK')`,
+    );
+    await verification.query(
+      `INSERT INTO "Citation" ("citationId", "sourceId", "rendering")
+       VALUES ('citation-research', 'source-research', 'Author, Legitimate source')`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "Research" ("researchId", "notes", "citationId")
+         VALUES ('orphan-research', 'No typed owner', 'citation-research')`,
+      ),
+      "Orphan Research was not rejected",
+    );
+    await verification.query("BEGIN");
+    await verification.query(
+      `INSERT INTO "Research" ("researchId", "notes", "citationId")
+       VALUES ('typed-research', 'Typed evidence', 'citation-research')`,
+    );
+    await verification.query(
+      `INSERT INTO "BreedResearchValue" ("breedResearchValueId", "breedId", "dimension", "value")
+       VALUES ('breed-research-value', 'breed-research', 'LOQUACITY', 'TALKATIVE')`,
+    );
+    await verification.query(
+      `INSERT INTO "BreedResearchEvidence" ("breedResearchEvidenceId", "breedResearchValueId", "researchId")
+       VALUES ('breed-research-evidence', 'breed-research-value', 'typed-research')`,
+    );
+    await verification.query("COMMIT");
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "BreedResearchValue" ("breedResearchValueId", "breedId", "dimension", "value")
+         VALUES ('bad-breed-research-value', 'breed-research', 'LOQUACITY', 'JOYFUL')`,
+      ),
+      "Cross-dimension Breed research value was not rejected",
     );
 
     await verification.query(
@@ -238,7 +288,7 @@ try {
     );
 
     await verification.query(
-      `INSERT INTO "StoreProduct" ("storeProductId", "name", "active") VALUES ('store-product', 'Configured product', true)`,
+      `INSERT INTO "StoreProduct" ("storeProductId", "productType", "name", "active") VALUES ('store-product', 'POSTER', 'Configured product', true)`,
     );
     await verification.query(
       `INSERT INTO "StoreVariant" (
@@ -294,7 +344,87 @@ try {
   } finally {
     await verification.end();
   }
+
+  // Exercise forward data correction from a real historical schema rather than
+  // treating a clean install as proof that legacy rows survive the migrations.
+  await admin.query(`CREATE DATABASE "${preCorrectionDatabaseName}"`);
+  const preCorrection = new Client({ connectionString: preCorrectionUrl.toString() });
+  await preCorrection.connect();
+  try {
+    const migrationsRoot = resolve(import.meta.dirname, "../prisma/migrations");
+    const migrations = (await readdir(migrationsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    const applyThrough = async (lastMigration: string): Promise<void> => {
+      for (const migration of migrations.filter((name) => name <= lastMigration)) {
+        if (appliedMigrations.has(migration)) continue;
+        await preCorrection.query(await readFile(resolve(migrationsRoot, migration, "migration.sql"), "utf8"));
+        appliedMigrations.add(migration);
+      }
+    };
+    const appliedMigrations = new Set<string>();
+    await applyThrough("20260810170000_commerce_payment_fulfillment");
+    await preCorrection.query(
+      `INSERT INTO "User" ("id", "name", "email", "eligibilityStatus", "updatedAt")
+       VALUES ('legacy-user', 'Legacy User', 'legacy@example.test', 'ADULT_18_PLUS', CURRENT_TIMESTAMP)`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "CapabilityDefinition" ("capabilityDefinitionId", "key", "valueKind", "description", "minValue", "maxValue")
+       VALUES ('legacy-counter-definition', 'legacy-counter', 'COUNTER', 'Legacy counter', 0, 100)`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "CapabilityEvent" (
+         "capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "valueNumber", "createdAt"
+       ) VALUES ('legacy-counter-event', 'legacy-user', 'legacy-counter-definition', 4, 'SET', 7, '2026-08-01T00:00:00Z')`,
+    );
+
+    await applyThrough("20260810210000_store_product_type");
+    const oldPairs = [[1, 18], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11], [12, 13], [14, 15], [16, 17]];
+    await preCorrection.query(`INSERT INTO "Campaign" ("campaignId", "worldKey", "name") VALUES ('legacy-campaign', 'CONCORD', 'Legacy campaign')`);
+    for (const [ordinal, [bookA, bookB]] of oldPairs.entries()) {
+      await preCorrection.query(
+        `INSERT INTO "Transition" ("transitionId", "name", "bookA", "bookB", "summary") VALUES ($1, $2, $3, $4, 'Legacy pair')`,
+        [`legacy-transition-${ordinal}`, `Legacy transition ${ordinal}`, bookA, bookB],
+      );
+      await preCorrection.query(
+        `INSERT INTO "CampaignPlacement" (
+           "campaignPlacementId", "campaignId", "objectType", "objectId", "bookNumbers", "ordinal"
+         ) VALUES ($1, 'legacy-campaign', 'COMPANION', $2, $3, $4)`,
+        [`legacy-placement-${ordinal}`, `legacy-companion-${ordinal}`, [bookA, bookB], ordinal],
+      );
+    }
+
+    await applyThrough(migrations.at(-1) ?? "");
+    const legacyCapability = await preCorrection.query(
+      `SELECT "counterValue", "scoreValue", "occurredAt"::text AS "occurredAtText" FROM "CapabilityEvent" WHERE "capabilityEventId" = 'legacy-counter-event'`,
+    );
+    if (
+      legacyCapability.rows[0]?.counterValue !== "7" ||
+      legacyCapability.rows[0]?.scoreValue !== null ||
+      legacyCapability.rows[0]?.occurredAtText !== "2026-08-01 00:00:00"
+    ) {
+      throw new Error(`Representative legacy CapabilityEvent was not preserved by the owner correction migration: ${JSON.stringify(legacyCapability.rows)}`);
+    }
+    const expectedPairs = [[1, 18], [2, 17], [3, 16], [4, 15], [5, 14], [6, 13], [7, 12], [8, 11], [9, 10]];
+    const transitioned = await preCorrection.query(`SELECT "bookA", "bookB" FROM "Transition" ORDER BY "bookA"`);
+    const placed = await preCorrection.query(`SELECT "bookNumbers" FROM "CampaignPlacement" ORDER BY "bookNumbers"[1]`);
+    if (
+      JSON.stringify(transitioned.rows.map((row) => [row.bookA, row.bookB])) !== JSON.stringify(expectedPairs) ||
+      JSON.stringify(placed.rows.map((row) => row.bookNumbers)) !== JSON.stringify(expectedPairs)
+    ) {
+      throw new Error("Representative legacy duology rows were not translated to the canonical mirrored pairing");
+    }
+    const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
+    await run("pnpm", [
+      "exec", "prisma", "migrate", "diff",
+      "--from-config-datasource", "--to-schema", "prisma/schema.prisma", "--exit-code",
+    ], preCorrectionEnvironment);
+  } finally {
+    await preCorrection.end();
+  }
 } finally {
   await admin.query(`DROP DATABASE IF EXISTS "${databaseName}" WITH (FORCE)`);
+  await admin.query(`DROP DATABASE IF EXISTS "${preCorrectionDatabaseName}" WITH (FORCE)`);
   await admin.end();
 }

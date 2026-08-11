@@ -1,0 +1,13 @@
+%% Authenticated session resolution
+flowchart LR
+  Request0["Request"]
+  BetterAuth1["Better Auth"]
+  Session2["Session"]
+  User3["User"]
+  Roleprojection4["Role projection"]
+  Boundedresponse5["Bounded response"]
+  Request0 --> BetterAuth1
+  BetterAuth1 --> Session2
+  Session2 --> User3
+  User3 --> Roleprojection4
+  Roleprojection4 --> Boundedresponse5

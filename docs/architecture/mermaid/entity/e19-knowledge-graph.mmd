@@ -1,0 +1,26 @@
+%% Knowledge graph
+erDiagram
+  KnowledgeBaseItem {
+    string id PK
+  }
+  KnowledgeBaseBlock {
+    string id PK
+  }
+  KnowledgeBaseItemCitation {
+    string id PK
+  }
+  Citation {
+    string id PK
+  }
+  KnowledgeBaseDisclosure {
+    string id PK
+  }
+  KnowledgeBaseDisclosureBlock {
+    string id PK
+  }
+  Citation ||--o{ KnowledgeBaseItemCitation : "relates to"
+  KnowledgeBaseItem ||--o{ KnowledgeBaseItemCitation : "relates to"
+  KnowledgeBaseItem ||--o{ KnowledgeBaseBlock : "relates to"
+  KnowledgeBaseItem ||--o{ KnowledgeBaseDisclosure : "relates to"
+  KnowledgeBaseBlock ||--o{ KnowledgeBaseDisclosure : "relates to"
+  KnowledgeBaseDisclosure ||--o{ KnowledgeBaseDisclosureBlock : "relates to"

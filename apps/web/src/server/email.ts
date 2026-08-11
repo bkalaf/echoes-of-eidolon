@@ -55,3 +55,21 @@ export async function sendBetaInvitation(input: {
 
   if (error) throw new Error(`Resend rejected the beta invitation: ${error.message}`);
 }
+
+export async function sendCompanyContact(input: {
+  message: string;
+  recipient: string;
+  replyEmail: string;
+  topic: string;
+}): Promise<string> {
+  const env = getEmailEnv();
+  const { data, error } = await getEmailClient().emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: input.recipient,
+    replyTo: input.replyEmail,
+    subject: `Echoes company contact: ${input.topic}`,
+    text: `Topic: ${input.topic}\nReply email: ${input.replyEmail}\n\n${input.message}`,
+  });
+  if (error || !data?.id) throw new Error(`Resend rejected the company contact: ${error?.message ?? "missing delivery reference"}`);
+  return data.id;
+}

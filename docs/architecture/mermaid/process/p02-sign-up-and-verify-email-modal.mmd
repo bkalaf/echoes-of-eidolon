@@ -1,0 +1,13 @@
+%% Sign up and verify-email modal
+flowchart LR
+  SignUpform0["Sign Up form"]
+  Ageeligibility1["Age eligibility"]
+  CreateUser2["Create User"]
+  Sendverification3["Send verification"]
+  VerifyEmailmodal4["Verify Email modal"]
+  Verifiedsession5["Verified session"]
+  SignUpform0 --> Ageeligibility1
+  Ageeligibility1 --> CreateUser2
+  CreateUser2 --> Sendverification3
+  Sendverification3 --> VerifyEmailmodal4
+  VerifyEmailmodal4 --> Verifiedsession5

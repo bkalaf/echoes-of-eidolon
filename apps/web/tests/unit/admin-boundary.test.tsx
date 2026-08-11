@@ -67,8 +67,8 @@ describe("administrative authorization boundary", () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role } }, isPending: false });
     renderAdmin("DATA003");
 
-    expect(await screen.findByRole("heading", { name: "Administrative authorization verified" })).toBeInTheDocument();
-    expect(screen.getByText(role)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 1, name: "Data - Character" })).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`Administrative authorization verified for ${role}`))).toBeInTheDocument();
   });
 
   it("fails closed when Better Auth returns an unknown account role", async () => {
@@ -83,7 +83,7 @@ describe("administrative authorization boundary", () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
     renderAdmin("ADM001");
 
-    await screen.findByRole("heading", { name: "Administrative authorization verified" });
+    await screen.findByRole("heading", { level: 1, name: "Admin Dashboard" });
     expect(screen.queryByText(/player-one|player@example.com|INV-REQ-001|EID-10482/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Approve|Decline|Revoke|Deploy|Restart/ })).not.toBeInTheDocument();
   });

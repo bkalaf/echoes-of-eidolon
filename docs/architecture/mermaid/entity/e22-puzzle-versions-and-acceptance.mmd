@@ -1,0 +1,21 @@
+%% Puzzle versions and acceptance
+erDiagram
+  PuzzleBlueprint {
+    string id PK
+  }
+  PuzzleBlueprintVersion {
+    string id PK
+  }
+  PuzzleHintTemplate {
+    string id PK
+  }
+  PuzzleChallengeAccepted {
+    string id PK
+  }
+  User {
+    string id PK
+  }
+  User ||--o{ PuzzleChallengeAccepted : "relates to"
+  PuzzleBlueprint ||--o{ PuzzleBlueprintVersion : "relates to"
+  PuzzleBlueprintVersion ||--o{ PuzzleHintTemplate : "relates to"
+  PuzzleBlueprintVersion ||--o{ PuzzleChallengeAccepted : "relates to"

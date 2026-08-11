@@ -995,6 +995,77 @@ enum ReleaseNoteCategory {
   KNOWN_ISSUE
 }
 
+enum ContactTopic {
+  ACCESSIBILITY
+  CULTURAL_RESEARCH
+  GENERAL
+  LEGAL
+  PARTNERSHIP
+  PRESS
+  PRIVACY
+  SECURITY
+}
+
+enum ContactRequestStatus {
+  RECEIVED
+  DELIVERY_PENDING
+  DELIVERED
+  DELIVERY_FAILED
+}
+
+enum GameTurnStatus {
+  RECEIVED
+  PROVIDER_PENDING
+  COMPLETED
+  FAILED
+}
+
+enum DocumentDraftStatus {
+  DRAFT
+  REVIEWED
+  PUBLISHED
+}
+
+enum DeploymentStatus {
+  PLANNED
+  DEPLOYING
+  HEALTHY
+  FAILED
+  ROLLED_BACK
+}
+
+enum CampaignObjectType {
+  PILLAR
+  LESSON
+  IN_TRANSIT
+  EXODUS
+  TRANSITION
+  DEJA_VU
+  COMPANION
+  ATROCITY
+  WITNESS
+  ARCHITECT
+  LEGENDARY_REWARD
+  HOLIDAY
+  WWII_INTERLUDE
+  MYTH_INTERLUDE
+  SCIENCE_INTERLUDE
+  HISTORICAL_INTERLUDE
+}
+
+enum DonationCheckoutStatus {
+  PENDING
+  CONFIRMED
+  EXPIRED
+  FAILED
+}
+
+enum StoreProductType {
+  POSTER
+  MUG
+  HOODIE
+}
+
 enum KnowledgeBaseDisclosureMode {
   APPEND_BLOCKS
   INSERT_AFTER_BLOCK
@@ -1073,7 +1144,7 @@ enum CollaborativePosture {
   WITHHOLDING
 }
 
-enum SpeciesResearchDimension {
+enum BreedResearchDimension {
   ADMINISTRATION_MODE
   STRUCTURE_ORIENTATION
   OPERATING_STYLE
@@ -1088,19 +1159,19 @@ enum SpeciesResearchDimension {
   COLLABORATIVE_POSTURE
 }
 
-enum SpeciesResearchReviewStatus {
+enum BreedResearchReviewStatus {
   DRAFT
   PENDING_REVIEW
   APPROVED
   REJECTED
 }
 
-enum SpeciesResearchProvenanceKind {
+enum BreedResearchProvenanceKind {
   MANUAL
   IMPORT
 }
 
-enum SpeciesDimensionValue {
+enum BreedDimensionValue {
   CENTRALIZED
   DELEGATED
   DISTRIBUTED
@@ -1167,6 +1238,25 @@ model User {
   puzzleAcceptances   PuzzleChallengeAccepted[]
   membershipGrants    MembershipGrant[]
   orders              Order[]
+  gameSessions        GameSession[]
+  authoredDocuments   DocumentDraft[]
+  donationCheckouts   DonationCheckout[]
+  settings            UserSettings?
+}
+
+model UserSettings {
+  userId        String   @id
+  theme         String   @default("DARK")
+  textSize      String   @default("DEFAULT")
+  reducedMotion Boolean  @default(false)
+  highContrast  Boolean  @default(false)
+  captions      Boolean  @default(true)
+  musicEnabled  Boolean  @default(true)
+  musicVolume   Int      @default(70)
+  soundEnabled  Boolean  @default(true)
+  soundVolume   Int      @default(80)
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -1354,11 +1444,16 @@ model Breed {
   authoritySource      AuthoritySource?
   politicalForm        PoliticalForm?
   economicForm         EconomicForm?
+  loquacity            Loquacity?
+  emotionalTemperature EmotionalTemperature?
+  outlookOrientation   OutlookOrientation?
+  collaborativePosture CollaborativePosture?
   species              Species                     @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
   culture              Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
   characters           Character[]
   populationEvents     SettlementPopulationEvent[]
   dominantInWorlds     SettlementWorld[]           @relation("SettlementWorldDominantBreed")
+  researchValues       BreedResearchValue[]
 
   @@index([speciesId])
   @@index([cultureId])
@@ -1600,6 +1695,8 @@ model SettlementWorld {
   dominantBreed     Breed?                      @relation("SettlementWorldDominantBreed", fields: [dominantBreedId], references: [breedId], onDelete: SetNull)
   culture           Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: SetNull)
   populationEvents  SettlementPopulationEvent[]
+  cities            City[]
+  gameSessions      GameSession[]
 
   @@unique([settlementId, worldKey])
   @@index([dominantBreedId])
@@ -1647,13 +1744,36 @@ model Citation {
 }
 
 model Research {
-  researchId String            @id
-  notes      String
-  citationId String
-  category   ResearchCategory?
-  citation   Citation          @relation(fields: [citationId], references: [citationId], onDelete: Restrict)
+  researchId    String                 @id
+  notes         String
+  citationId    String
+  category      ResearchCategory?
+  citation      Citation               @relation(fields: [citationId], references: [citationId], onDelete: Restrict)
+  breedEvidence BreedResearchEvidence?
 
   @@index([citationId])
+}
+
+model BreedResearchValue {
+  breedResearchValueId String                  @id
+  breedId              String
+  dimension            BreedResearchDimension
+  value                BreedDimensionValue
+  breed                Breed                   @relation(fields: [breedId], references: [breedId], onDelete: Cascade)
+  evidence             BreedResearchEvidence[]
+
+  @@unique([breedId, dimension])
+  @@index([breedId])
+}
+
+model BreedResearchEvidence {
+  breedResearchEvidenceId String             @id
+  breedResearchValueId    String
+  researchId              String             @unique
+  breedResearchValue      BreedResearchValue @relation(fields: [breedResearchValueId], references: [breedResearchValueId], onDelete: Cascade)
+  research                Research           @relation(fields: [researchId], references: [researchId], onDelete: Restrict)
+
+  @@index([breedResearchValueId])
 }
 
 model KnowledgeBaseItem {
@@ -1758,24 +1878,21 @@ model Layette {
 }
 
 model PersonalityExpression {
-  personalityExpressionId String               @id
+  personalityExpressionId String @id
   name                    String
-  loquacity               Loquacity
-  emotionalTemperature    EmotionalTemperature
-  outlookOrientation      OutlookOrientation
-  collaborativePosture    CollaborativePosture
 }
 
 model CapabilityDefinition {
-  capabilityDefinitionId String                    @id
-  key                    String                    @unique
-  valueKind              CapabilityValueKind
-  minValue               Int?
-  maxValue               Int?
-  enumValues             String[]                  @default([])
-  description            String
-  events                 CapabilityEvent[]
-  knowledgeDisclosures   KnowledgeBaseDisclosure[]
+  capabilityDefinitionId      String                    @id
+  key                         String                    @unique
+  valueKind                   CapabilityValueKind
+  minValue                    Int?
+  maxValue                    Int?
+  enumValues                  String[]                  @default([])
+  allowedReferenceEntityTypes EntityType[]              @default([])
+  description                 String
+  events                      CapabilityEvent[]
+  knowledgeDisclosures        KnowledgeBaseDisclosure[]
 }
 
 model CapabilityEvent {
@@ -1784,14 +1901,19 @@ model CapabilityEvent {
   capabilityDefinitionId String
   sequence               BigInt
   operation              CapabilityOperation
-  valueBoolean           Boolean?
-  valueNumber            Float?
-  valueToken             String?
-  createdAt              DateTime             @default(now())
+  booleanValue           Boolean?
+  scoreValue             Float?
+  counterValue           BigInt?
+  enumValue              String?
+  referenceEntityType    EntityType?
+  referenceEntityId      String?
+  occurredAt             DateTime             @default(now())
+  sourceEntityType       EntityType?
+  sourceEntityId         String?
   user                   User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
 
-  @@unique([userId, sequence])
+  @@index([userId, occurredAt, sequence, capabilityEventId])
   @@index([capabilityDefinitionId])
 }
 
@@ -1815,6 +1937,7 @@ model ManagedAsset {
   mediaKind            ManagedAssetMediaKind
   mimeType             String
   byteSize             BigInt
+  technicalMetadata    Json
   purposeLinks         AssetPurposeLink[]
   generatedFromPrompts PromptVersion[]         @relation("PromptGeneratedAsset")
   achievementImages    AchievementDefinition[] @relation("AchievementImageAsset")
@@ -1897,11 +2020,12 @@ model Perk {
 }
 
 model StoreProduct {
-  storeProductId String         @id
-  name           String         @unique
+  storeProductId String           @id
+  productType    StoreProductType @unique
+  name           String           @unique
   artworkAssetId String?
-  active         Boolean        @default(false)
-  artworkAsset   ManagedAsset?  @relation("StoreProductArtwork", fields: [artworkAssetId], references: [managedAssetId], onDelete: SetNull)
+  active         Boolean          @default(false)
+  artworkAsset   ManagedAsset?    @relation("StoreProductArtwork", fields: [artworkAssetId], references: [managedAssetId], onDelete: SetNull)
   variants       StoreVariant[]
 
   @@index([artworkAssetId])
@@ -2046,6 +2170,225 @@ model PuzzleChallengeAccepted {
   user                      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   puzzleVersion             PuzzleBlueprintVersion @relation(fields: [puzzleBlueprintId, generatorVersion], references: [puzzleBlueprintId, generatorVersion], onDelete: Restrict, map: "PuzzleChallengeAccepted_version_fkey")
 
+  @@unique([userId, puzzleBlueprintId, generatorVersion], map: "PuzzleAcceptance_user_blueprint_version_key")
   @@index([userId])
   @@index([puzzleBlueprintId, generatorVersion], map: "PuzzleChallengeAccepted_version_idx")
+}
+
+model ContactRequest {
+  contactRequestId  String               @id
+  topic             ContactTopic
+  replyEmail        String
+  message           String
+  status            ContactRequestStatus @default(RECEIVED)
+  providerReference String?
+  failureReason     String?
+  createdAt         DateTime             @default(now())
+  deliveredAt       DateTime?
+
+  @@index([topic, createdAt])
+  @@index([status, createdAt])
+}
+
+model DonationCheckout {
+  donationCheckoutId      String                 @id
+  userId                  String
+  stripeCheckoutReference String?                @unique
+  amountCents             Int
+  monthsGranted           Int
+  status                  DonationCheckoutStatus @default(PENDING)
+  createdAt               DateTime               @default(now())
+  confirmedAt             DateTime?
+  user                    User                   @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([userId, createdAt])
+}
+
+model Release {
+  releaseId   String             @id
+  version     String
+  gitSha      String             @unique
+  status      ReleaseNotesStatus @default(DRAFT)
+  audience    ReleaseAudience
+  summary     String
+  createdAt   DateTime           @default(now())
+  publishedAt DateTime?
+  notes       ReleaseNoteItem[]
+  deployments DeploymentRecord[]
+
+  @@unique([version, audience])
+  @@index([status, publishedAt])
+}
+
+model ReleaseNoteItem {
+  releaseNoteItemId String              @id
+  releaseId         String
+  category          ReleaseNoteCategory
+  ordinal           Int
+  content           String
+  release           Release             @relation(fields: [releaseId], references: [releaseId], onDelete: Cascade)
+
+  @@unique([releaseId, category, ordinal])
+}
+
+model DeploymentRecord {
+  deploymentRecordId String           @id
+  releaseId          String
+  gitSha             String
+  status             DeploymentStatus
+  productionUrl      String
+  backupIdentifier   String?
+  startedAt          DateTime         @default(now())
+  completedAt        DateTime?
+  release            Release          @relation(fields: [releaseId], references: [releaseId], onDelete: Restrict)
+
+  @@index([gitSha, status])
+}
+
+model DocumentBucket {
+  documentBucketId String                @id
+  name             String
+  sourcePoints     DocumentSourcePoint[]
+  amendments       DocumentAmendment[]
+  drafts           DocumentDraft[]
+}
+
+model DocumentSourcePoint {
+  documentSourcePointId String         @id
+  documentBucketId      String
+  ordinal               Int
+  content               String
+  sourceLabel           String
+  bucket                DocumentBucket @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
+
+  @@unique([documentBucketId, ordinal])
+}
+
+model DocumentAmendment {
+  documentAmendmentId String         @id
+  documentBucketId    String
+  ordinal             Int
+  content             String
+  bucket              DocumentBucket @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
+
+  @@unique([documentBucketId, ordinal])
+}
+
+model DocumentDraft {
+  documentDraftId  String              @id
+  documentBucketId String
+  version          Int
+  status           DocumentDraftStatus @default(DRAFT)
+  content          String
+  sourcePointIds   String[]
+  amendmentIds     String[]
+  authoredByUserId String
+  createdAt        DateTime            @default(now())
+  bucket           DocumentBucket      @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
+  authoredBy       User                @relation(fields: [authoredByUserId], references: [id], onDelete: Restrict)
+
+  @@unique([documentBucketId, version])
+  @@index([authoredByUserId])
+}
+
+model GameSession {
+  gameSessionId     String           @id
+  userId            String
+  settlementWorldId String?
+  startedAt         DateTime         @default(now())
+  lastActiveAt      DateTime         @updatedAt
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settlementWorld   SettlementWorld? @relation(fields: [settlementWorldId], references: [settlementWorldId], onDelete: Cascade)
+  turns             GameTurn[]
+
+  @@index([userId, lastActiveAt])
+  @@index([settlementWorldId])
+}
+
+model GameTurn {
+  gameTurnId        String         @id
+  gameSessionId     String
+  sequence          Int
+  inputText         String
+  responseText      String?
+  status            GameTurnStatus @default(RECEIVED)
+  providerReference String?
+  failureReason     String?
+  createdAt         DateTime       @default(now())
+  completedAt       DateTime?
+  gameSession       GameSession    @relation(fields: [gameSessionId], references: [gameSessionId], onDelete: Cascade)
+
+  @@unique([gameSessionId, sequence])
+}
+
+model City {
+  cityId            String          @id
+  settlementWorldId String
+  name              String
+  geometryVersion   Int             @default(1)
+  settlementWorld   SettlementWorld @relation(fields: [settlementWorldId], references: [settlementWorldId], onDelete: Cascade)
+  parcels           Parcel[]
+  streets           Street[]
+  buildings         Building[]
+
+  @@unique([settlementWorldId])
+}
+
+model Parcel {
+  parcelId String @id
+  cityId   String
+  geometry Json
+  city     City   @relation(fields: [cityId], references: [cityId], onDelete: Cascade)
+
+  @@index([cityId])
+}
+
+model Street {
+  streetId String @id
+  cityId   String
+  geometry Json
+  city     City   @relation(fields: [cityId], references: [cityId], onDelete: Cascade)
+
+  @@index([cityId])
+}
+
+model Building {
+  buildingId String  @id
+  cityId     String
+  parcelId   String?
+  geometry   Json
+  city       City    @relation(fields: [cityId], references: [cityId], onDelete: Cascade)
+
+  @@index([cityId])
+}
+
+model Campaign {
+  campaignId String              @id
+  worldKey   WorldKey
+  name       String
+  placements CampaignPlacement[]
+
+  @@unique([worldKey])
+}
+
+model CampaignPlacement {
+  campaignPlacementId String             @id
+  campaignId          String
+  objectType          CampaignObjectType
+  objectId            String
+  bookNumbers         Int[]
+  ordinal             Int
+  campaign            Campaign           @relation(fields: [campaignId], references: [campaignId], onDelete: Cascade)
+
+  @@unique([campaignId, objectType, objectId])
+  @@unique([campaignId, ordinal])
+}
+
+model CalendarOrdinal {
+  calendarOrdinalId String @id
+  ordinalDay        Int    @unique
+  monthNumber       Int
+  dayOfMonth        Int
+  weekdayName       String
+  monthName         String
 }

@@ -32,7 +32,7 @@ export function PacketScreen({ pathname, screen }: { pathname?: string; screen?:
   switch (shellFor(screen)) {
     case "auth": return <AuthPage screen={screen} />;
     case "account": return <AccountPage pathname={pathname} screen={screen} />;
-    case "store": return <StorePage screen={screen} />;
+    case "store": return <StorePage pathname={pathname} screen={screen} />;
     case "public": return <PublicPage screen={screen} />;
     case "admin": return <AdminPage pathname={pathname} screen={screen} />;
     case "game": return <GamePage screen={screen} />;

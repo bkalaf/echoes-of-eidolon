@@ -1,0 +1,17 @@
+%% Managed asset final-byte intake
+flowchart LR
+  Exactsourcepreflig0["Exact source preflight"]
+  Magicvalidation1["Magic validation"]
+  Metadatastrip2["Metadata strip"]
+  Technicalprobe3["Technical probe"]
+  SHA256finalbytes4["SHA-256 final bytes"]
+  Spacesupload5["Spaces upload"]
+  Remotestreamverify6["Remote stream verify"]
+  Atomicpurposelink7["Atomic purpose link"]
+  Exactsourcepreflig0 --> Magicvalidation1
+  Magicvalidation1 --> Metadatastrip2
+  Metadatastrip2 --> Technicalprobe3
+  Technicalprobe3 --> SHA256finalbytes4
+  SHA256finalbytes4 --> Spacesupload5
+  Spacesupload5 --> Remotestreamverify6
+  Remotestreamverify6 --> Atomicpurposelink7

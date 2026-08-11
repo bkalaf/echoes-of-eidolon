@@ -1,0 +1,27 @@
+%% Campaign placement
+erDiagram
+  Campaign {
+    string id PK
+  }
+  CampaignPlacement {
+    string id PK
+  }
+  Pillar {
+    string id PK
+  }
+  Lesson {
+    string id PK
+  }
+  TimelineEvent {
+    string id PK
+  }
+  Interlude {
+    string id PK
+  }
+  Transition {
+    string id PK
+  }
+  Companion {
+    string id PK
+  }
+  Campaign ||--o{ CampaignPlacement : "relates to"

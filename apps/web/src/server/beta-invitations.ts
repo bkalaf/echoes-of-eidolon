@@ -8,6 +8,7 @@ import { sendBetaInvitation } from "./email";
 type Database = PrismaClient;
 
 export const betaInviteRequestInputSchema = z.object({
+  consent: z.literal(true),
   email: z.email(),
   friendName: z.string().trim().min(1),
   reason: z.string().trim().min(1),
@@ -22,6 +23,7 @@ export function hashBetaInvitationCode(code: string): string {
 }
 
 export async function submitBetaInviteRequest(input: {
+  consent: true;
   email: string;
   friendName: string;
   reason: string;

@@ -57,12 +57,12 @@ interface StripeWebhookDatabase<Transaction extends StripeWebhookTransaction> {
   $transaction<Result>(work: (transaction: Transaction) => Promise<Result>): Promise<Result>;
 }
 
-export async function processSignedStripeWebhook<Transaction extends StripeWebhookTransaction>(input: {
+export async function processSignedStripeWebhook<Event extends VerifiedStripeEvent, Transaction extends StripeWebhookTransaction>(input: {
   rawBody: Uint8Array;
   signature: string | null;
-  verify: (rawBody: Uint8Array, signature: string) => VerifiedStripeEvent;
+  verify: (rawBody: Uint8Array, signature: string) => Event;
   database: StripeWebhookDatabase<Transaction>;
-  process: (event: VerifiedStripeEvent, transaction: Transaction) => Promise<void>;
+  process: (event: Event, transaction: Transaction) => Promise<void>;
   processedAt: Date;
 }): Promise<"processed" | "duplicate"> {
   if (!input.signature) throw new Error("Stripe webhook signature is required.");

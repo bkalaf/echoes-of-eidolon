@@ -1,0 +1,15 @@
+%% Authenticated merchandise checkout
+flowchart LR
+  Cartlines0["Cart lines"]
+  Authenticate1["Authenticate"]
+  Resolvevariants2["Resolve variants"]
+  Authoritativeprice3["Authoritative prices"]
+  CreateOrder4["Create Order"]
+  Stripecheckout5["Stripe checkout"]
+  ReturnURL6["Return URL"]
+  Cartlines0 --> Authenticate1
+  Authenticate1 --> Resolvevariants2
+  Resolvevariants2 --> Authoritativeprice3
+  Authoritativeprice3 --> CreateOrder4
+  CreateOrder4 --> Stripecheckout5
+  Stripecheckout5 --> ReturnURL6

@@ -6,10 +6,13 @@ closed-world packet and current workspace inputs remain unchanged and controllin
 ## Starting repository
 
 - Workspace: `/home/bobby/echoes-of-eidolon`
-- Starting revision: no revision; this was an uninitialized new repository.
-- Initial branch created by `git init`: `main`.
-- Legacy carry-over: none. No prior repository, implementation, schema, route,
-  test, deployment, or convention is an input to this build.
+- Repository: `bkalaf/echoes-of-eidolon`.
+- Branch: `main`.
+- Audited starting revision: `a03b6588e0bba4f8c1df6f62bc12d94ecc3d014b`.
+- Starting revision matched `origin/main` when implementation began.
+- The repository was inspected as a fresh rebuild. Existing schema, migrations,
+  source, tests, handoff artifacts, and deployment boundaries were treated as
+  live inputs; no state from an older checkout was assumed.
 
 ## Owner-supplied repository contract
 
@@ -31,30 +34,29 @@ closed-world packet and current workspace inputs remain unchanged and controllin
 - Testing: Vitest, Testing Library, jsdom, Playwright
 - Development/build: TypeScript 6, TSX, ESLint
 
-## Existing code owners
+## Existing and extended code owners
 
-There were no application files or existing code owners at intake. The following
-owners must therefore be established by the new implementation without changing
-product semantics:
+The starting repository already contained the application foundation. This work
+extends those repository-native owners rather than creating parallel systems:
 
-| Concern | Existing owner at intake | New implementation boundary |
+| Concern | Repository owner | Current implementation boundary |
 |---|---|---|
-| Authentication/session | None | Auth/session adapter and Auth shell |
-| Data access | None | Typed repository interfaces; no invented domain records |
-| Routes | None | One manifest-backed route/state registry |
-| Assets/media | None | One final-byte managed-asset pipeline backed by DigitalOcean Spaces through its S3 API |
-| Atlas | None | Manifest-validated Atlas data loader and Atlas views |
-| Campaign | None | Campaign assignment service and planner state |
-| Puzzle | None | PuzzleBlueprint library/editor and deterministic generator boundary |
-| City Builder | None | One canonical city-geometry model with derived projections |
-| Game runtime | None | Dedicated game shell and player-safe view model |
-| Commerce | None | Stripe payment port and Printful fulfillment port; no alternate providers |
-| Operations | None | Read-only operations/release adapters until real hooks are supplied |
+| Authentication/session | Better Auth, access services, Auth/Account shells | Preserve canonical User/session ownership and fail-closed authorization |
+| Data access | Prisma schema, forward migrations, typed import services | Corrected Breed, Research, capability, Campaign, runtime, release, commerce, and settings contracts |
+| Routes | Manifest-backed TanStack route/state registry | Server-owned API projections and task-specific shell dispatch |
+| Assets/media | ManagedAsset, AssetPurposeLink, one importer | Final-byte sanitization, technical metadata, safe ZIP extraction, remote and DB/JSON drift verification |
+| Atlas | R08 validator/import boundary and Atlas screens | Owner WebGL2 sphere renderer and shared persisted Site/POI/Settlement selection |
+| Campaign | Campaign and CampaignPlacement | Canonical book membership, inclusive CSS Grid row spans, collision lanes, and mirrored duologies |
+| Puzzle | PuzzleBlueprint models/services | Immutable versions, exact hint validation, player acceptance, and persisted countdown |
+| City Builder | City, Parcel, Street, Building | Canonical geometry persistence; destructive reset remains blocked by missing exact reset/reseed input |
+| Game runtime | GameSession, GameTurn, Game shell | Authenticated player-safe location/turn, Puzzle, Calendar, and shared Settings projections |
+| Commerce | Store/Order/Stripe persistence | Signed idempotent Stripe confirmation and configured Printful adapter after payment |
+| Operations | Release, ReleaseNoteItem, DeploymentRecord | Bounded release metadata and version surfaces; deployment remains a separate explicit authorization boundary |
 
 ## Persistence and schemas
 
-- Persistence technology at intake: none; the implementation now uses PostgreSQL
-  through Prisma 7 and `@prisma/adapter-pg`.
+- Persistence technology at intake: PostgreSQL through Prisma 7 and
+  `@prisma/adapter-pg`; this work uses forward-only migrations.
 - Application schema: `apps/web/prisma/schema.prisma`.
 - Current field/relationship contract:
   `Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD/types/eidolon-domain-types.ts`.
@@ -141,24 +143,21 @@ continue. Only these dependent slices remain blocked:
 - Blocked slice: authoritative ordinal-day lookup and calendar projection
 - Missing input: `source_data/eidolon_ordinal_days_v3.json` is specified but is not present in this workspace
 - Checked: direct owner calendar rules and repository file inventory
-- Current safe work: render an honest unavailable state; do not reconstruct rows arithmetically
+- Current safe work completed: the persisted `CalendarOrdinal` projection and exact
+  486-row validator are implemented. The Game calendar renders canonical rows when
+  installed and an honest empty state otherwise; it does not synthesize names.
 
 ### ODR-PRINTFUL-CONFIGURATION
 
 - Subsystem: Commerce
-- Blocked slice: submitting paid merchandise for fulfillment
-- Missing input: no Printful credential/configuration key is present in `.local.example/secrets`
+- Blocked slice: external production activation of paid merchandise fulfillment
+- Missing input: production Printful credential/store configuration, configured
+  StoreVariant external variant references, and the owner-approved Stripe shipping-country allowlist
 - Checked: direct owner provider boundary and local secret-key inventory only; secret values were not read
-- Current safe work: enforce that fulfillment cannot begin before confirmed Stripe payment and leave fulfillment unavailable
-
-### ODR-R007-SCREEN-REGISTRY
-
-- Subsystem: route/state registry and review acceptance
-- Blocked slice: claiming the final R007 screen count and Admin gap acceptance
-- Conflicting authority: the supplied v11.3 packet manifest contains 269 active entries, while the later direct owner requirement says the R007 screen count remains exactly 189 and the Admin gap stays empty
-- Missing decision/input: the authoritative 189-entry R007 registry, or an explicit disposition identifying which 80 packet entries are not counted; the meaning and exact bounds of the Admin gap also require an authoritative registry field or range
-- Checked: all 269 packet manifest entries, the 275-page review PDF inventory, and the later direct owner requirement
-- Current safe work: preserve the packet registry without deleting, merging, or reclassifying screens by inference; do not claim final count acceptance
+- Current safe work completed: the typed Printful adapter, strict recipient and
+  configured-line validation, external-order idempotency, Stripe shipping capture,
+  retry-safe webhook sequencing, and tests are implemented. No provider request is
+  made without persisted Stripe payment confirmation.
 
 ### ODR-SETTLEMENT-NAMING-PROMPT
 
@@ -172,9 +171,13 @@ continue. Only these dependent slices remain blocked:
 
 - Subsystem: Settlement reset / City Builder
 - Blocked slice: exposing the destructive `RESET WORLDS` operation
-- Missing decision/input: the City graph persistence schema and the authoritative founder Species/Breed allocation input used by the immediate three-world reseed
-- Checked: typed confirmation, one-transaction reset, Site priority, 1,600-per-Species allocation, current Prisma schema, settlement services, and reviewed Atlas/City screens
-- Current safe work: preserve the deterministic Site-priority and founder-allocation validators; do not invent City deletion targets, founder records, or reseeded population events
+- Missing decision/input: the exact destructive reset scope/recovery contract and
+  authoritative founder Species/Breed allocation input used by the immediate three-world reseed
+- Checked: typed confirmation, one-transaction requirement, Site priority,
+  1,600-per-Species allocation, current City geometry schema, settlement services,
+  and reviewed Atlas/City screens
+- Current safe work: preserve deterministic Site-priority and founder-allocation
+  validators; do not invent deletion targets, founder records, or reseeded population events
 
 ## Subsequent owner inputs reconciled
 
@@ -190,9 +193,11 @@ The initial unresolved list above has been narrowed by later direct owner input:
 - the production deployment sequence, dry-run behavior, backup-before-migration,
   health check, and application rollback boundary are supplied.
 
-These are no longer owner-decision gaps. The managed-asset upload was explicitly
-authorized and completed through the final-byte pipeline. Production deployment
-and unrelated production data mutation remain unauthorized until separately requested.
+These are no longer owner-decision gaps. The current 269-row v11.3 registry is
+the controlling active count under the complete implementation prompt; obsolete
+189/222/272/361 counts are not applied. Managed objects were reconciled by final
+byte identity. Production asset-policy mutation and deployment remain paused
+until the owner gives the separately requested authorization.
 
 ## Intake verification
 

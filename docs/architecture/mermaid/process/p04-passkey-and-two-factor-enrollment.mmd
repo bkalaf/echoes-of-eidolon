@@ -1,0 +1,13 @@
+%% Passkey and two-factor enrollment
+flowchart LR
+  Securitysettings0["Security settings"]
+  Reauthenticate1["Re-authenticate"]
+  Registerfactor2["Register factor"]
+  Verifychallenge3["Verify challenge"]
+  Persistcredential4["Persist credential"]
+  Recoverystate5["Recovery state"]
+  Securitysettings0 --> Reauthenticate1
+  Reauthenticate1 --> Registerfactor2
+  Registerfactor2 --> Verifychallenge3
+  Verifychallenge3 --> Persistcredential4
+  Persistcredential4 --> Recoverystate5

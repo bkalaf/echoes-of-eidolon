@@ -46,6 +46,46 @@ export interface FoundCityResult {
   totalDeparting: number;
 }
 
+export async function listSettlementWorlds(worldKey: WorldKey, database: Database = getDatabase()) {
+  const worlds = await database.settlementWorld.findMany({
+    where: { worldKey },
+    orderBy: { settlementId: "asc" },
+    select: {
+      culture: { select: { cultureId: true, name: true } },
+      dominantBreed: { select: { breedId: true, name: true } },
+      settlement: {
+        select: {
+          classification: true,
+          name: true,
+          settlementId: true,
+          site: { select: { latitude: true, longitude: true, regionId: true, siteId: true } },
+        },
+      },
+      settlementWorldId: true,
+      totalPopulation: true,
+      worldKey: true,
+      populationEvents: { orderBy: [{ year: "asc" }, { sequence: "asc" }], select: { breedId: true, populationDelta: true, year: true } },
+    },
+  });
+  return worlds.map((world) => {
+    const populationByBreed = new Map<string, number>();
+    for (const event of world.populationEvents) populationByBreed.set(event.breedId, (populationByBreed.get(event.breedId) ?? 0) + event.populationDelta);
+    const populations = [...populationByBreed].map(([breedId, population]) => ({ breedId, population })).filter((row) => row.population > 0).sort((left, right) => left.breedId.localeCompare(right.breedId));
+    const eventTotal = populations.reduce((sum, row) => sum + row.population, 0);
+    if (eventTotal !== world.totalPopulation) throw new Error(`SettlementWorld ${world.settlementWorldId} population projection has drifted from its event ledger.`);
+    return {
+      culture: world.culture,
+      dominantBreed: world.dominantBreed,
+      latestYear: world.populationEvents.reduce((latest, event) => Math.max(latest, event.year), 0),
+      populations,
+      settlement: world.settlement,
+      settlementWorldId: world.settlementWorldId,
+      totalPopulation: world.totalPopulation,
+      worldKey: world.worldKey,
+    };
+  });
+}
+
 const settlementNamingResponseSchema = z.object({
   name: z.string().trim().min(1),
   nearby: z.array(z.never()).length(0),

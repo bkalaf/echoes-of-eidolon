@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import { inviteConsent, publicFeatures } from "../../src/content/public";
@@ -14,5 +17,15 @@ describe("current authority integration", () => {
   it("uses the exact invite consent and nine-feature public set", () => {
     expect(inviteConsent).toBe("I agree to be contacted by email.");
     expect(publicFeatures).toHaveLength(9);
+  });
+
+  it("ports the supplied globe renderer without its removed inspection overlays", () => {
+    const source = readFileSync(resolve(import.meta.dirname, "../../src/components/AtlasGlobe.tsx"), "utf8");
+    expect(source).toContain("makeSphere(latitudeSegments = 256, longitudeSegments = 512)");
+    expect(source).toContain('managedAssetUrl("atlas.nimbus.globe-albedo")');
+    expect(source).toContain("#version 300 es");
+    expect(source).not.toContain("Eidolon — Globe Inspection");
+    expect(source).not.toContain("Official founding-cities world map wrapped directly");
+    expect(source).not.toContain("Official world texture / 4096 × 2048");
   });
 });

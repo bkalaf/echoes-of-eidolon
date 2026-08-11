@@ -1,0 +1,21 @@
+%% Managed assets and purposes
+erDiagram
+  ManagedAsset {
+    string id PK
+  }
+  AssetPurposeLink {
+    string id PK
+  }
+  PromptVersion {
+    string id PK
+  }
+  AchievementDefinition {
+    string id PK
+  }
+  StoreProduct {
+    string id PK
+  }
+  AchievementDefinition ||--o| ManagedAsset : "relates to"
+  ManagedAsset ||--o{ AssetPurposeLink : "relates to"
+  ManagedAsset ||--o{ PromptVersion : "relates to"
+  ManagedAsset ||--o{ StoreProduct : "relates to"

@@ -1,0 +1,29 @@
+%% Story identity
+erDiagram
+  Character {
+    string id PK
+  }
+  Protagonist {
+    string id PK
+  }
+  Antagonist {
+    string id PK
+  }
+  Witness {
+    string id PK
+  }
+  Architect {
+    string id PK
+  }
+  LegendaryReward {
+    string id PK
+  }
+  PuzzleBlueprint {
+    string id PK
+  }
+  Character ||--o| Protagonist : "relates to"
+  Character ||--o| Antagonist : "relates to"
+  Architect ||--o{ Antagonist : "relates to"
+  Antagonist ||--|| LegendaryReward : "relates to"
+  Antagonist ||--|| PuzzleBlueprint : "relates to"
+  Antagonist ||--o{ Witness : "relates to"

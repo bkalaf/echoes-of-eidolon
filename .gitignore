@@ -3,6 +3,7 @@
 /*.zip
 /Echoes_UI_Closed_World_Implementation_Handoff_v11_3/
 /EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE/
+/ECHOES_OF_EIDOLON_COMPLETE_IMPLEMENTATION_PROMPT_PACK_20260810/
 
 # Local dependencies and generated output.
 node_modules/
@@ -20,3 +21,4 @@ apps/web/src/generated/
 !.env.example
 /.local/
 /assets/managed/
+REMEDIATION/

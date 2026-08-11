@@ -1,0 +1,15 @@
+%% Safe globe-package extraction
+flowchart LR
+  Newtemporaryroot0["New temporary root"]
+  Inventorycentraldi1["Inventory central directory"]
+  Rejectunsafetypesa2["Reject unsafe types and paths"]
+  Boundsizeandratio3["Bound size and ratio"]
+  Exactmembermatch4["Exact member match"]
+  Streamextract5["Stream extract"]
+  Checksuminventory6["Checksum inventory"]
+  Newtemporaryroot0 --> Inventorycentraldi1
+  Inventorycentraldi1 --> Rejectunsafetypesa2
+  Rejectunsafetypesa2 --> Boundsizeandratio3
+  Boundsizeandratio3 --> Exactmembermatch4
+  Exactmembermatch4 --> Streamextract5
+  Streamextract5 --> Checksuminventory6

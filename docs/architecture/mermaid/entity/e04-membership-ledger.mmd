@@ -1,0 +1,13 @@
+%% Membership ledger
+erDiagram
+  User {
+    string id PK
+  }
+  MembershipGrant {
+    string id PK
+  }
+  MembershipRevocation {
+    string id PK
+  }
+  User ||--o{ MembershipGrant : "relates to"
+  MembershipGrant ||--o{ MembershipRevocation : "relates to"

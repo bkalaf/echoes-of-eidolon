@@ -1,0 +1,15 @@
+%% Settlement population replay
+flowchart LR
+  Orderedappendonlye0["Ordered append-only events"]
+  Replaybyyearandseq1["Replay by year and sequence"]
+  Rejectnegativetota2["Reject negative totals"]
+  Rankpopulation3["Rank population"]
+  Breednametiebreak4["Breed-name tie break"]
+  BreedIDfinaltiebre5["Breed-ID final tie break"]
+  ProjectCulture6["Project Culture"]
+  Orderedappendonlye0 --> Replaybyyearandseq1
+  Replaybyyearandseq1 --> Rejectnegativetota2
+  Rejectnegativetota2 --> Rankpopulation3
+  Rankpopulation3 --> Breednametiebreak4
+  Breednametiebreak4 --> BreedIDfinaltiebre5
+  BreedIDfinaltiebre5 --> ProjectCulture6

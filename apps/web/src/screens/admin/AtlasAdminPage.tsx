@@ -6,6 +6,7 @@ import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { managedAssetUrl } from "../../content/managed-assets";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import type { AtlasCatalog, CanonicalPointOfInterest, CanonicalSettlementSite } from "../../server/atlas";
+import { SettlementAdminPage } from "./SettlementAdminPage";
 
 const poiColumns: DataTableColumnDef<CanonicalPointOfInterest>[] = [
   { accessorKey: "poiId", header: "POI" },
@@ -49,7 +50,7 @@ function Sites({ atlas }: { atlas: AtlasCatalog }) {
   return <><section className="card"><DataTable columns={siteColumns} data={atlas.settlementSites} getRowId={(site) => site.siteId} preferenceKey="admin.atlas.sites" /></section><p className="notice">{atlas.settlementSites.length} canonical settlement candidates · {atlas.releaseId}</p></>;
 }
 
-type AtlasView = "found-city" | "overview" | "poi-2d" | "poi-3d" | "settlements" | "sites";
+type AtlasView = "found-city" | "migrate" | "overview" | "poi-2d" | "poi-3d" | "settlements" | "sites";
 
 function AtlasCatalogPage({ view }: { view: AtlasView }) {
   const atlas = useQuery({ queryKey: ["atlas", "catalog", "R08"], queryFn: loadAtlas, retry: false });
@@ -58,7 +59,8 @@ function AtlasCatalogPage({ view }: { view: AtlasView }) {
   if (view === "poi-2d" || view === "poi-3d") return <PoiAtlas atlas={atlas.data} globe={view === "poi-3d"} />;
   if (view === "sites") return <Sites atlas={atlas.data} />;
   if (view === "found-city") return <AtlasStatus>The atomic founding service, 90% ceiling, and largest-remainder rules are connected. Found City remains unavailable until the exact server-owned settlement naming prompt and response contract are supplied; the browser cannot author them.</AtlasStatus>;
-  if (view === "settlements") return <AtlasStatus>Settlement persistence and exact Breed-conserving migration require the typed settlement repository.</AtlasStatus>;
+  if (view === "settlements") return <SettlementAdminPage migrate={false} />;
+  if (view === "migrate") return <SettlementAdminPage migrate />;
   return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Settlements</h2><p>Canonical Site mirrors are read-only until the typed import repository is connected.</p></article></div>;
 }
 
@@ -67,7 +69,8 @@ export function AtlasAdminPage({ screen }: { screen: PageManifestEntry }) {
   if (["AT003", "ATLAS_POI_3D"].includes(screen.screenId)) return <AtlasCatalogPage view="poi-3d" />;
   if (["AT004", "ADM033"].includes(screen.screenId)) return <AtlasCatalogPage view="sites" />;
   if (screen.screenId === "AT004_FOUND_CITY") return <AtlasCatalogPage view="found-city" />;
-  if (["AT005", "ADM034", "AT005_SETTLEMENT_DETAIL"].includes(screen.screenId)) return <AtlasCatalogPage view="settlements" />;
+  if (screen.screenId === "AT005_SETTLEMENT_DETAIL") return <AtlasCatalogPage view="migrate" />;
+  if (["AT005", "ADM034"].includes(screen.screenId)) return <AtlasCatalogPage view="settlements" />;
   if (screen.screenId === "ADM031") return <AtlasCatalogPage view="overview" />;
   return <section className="card"><h2>Atlas workflow unavailable</h2><p>No Atlas workflow is inferred for this screen.</p></section>;
 }

@@ -1,0 +1,17 @@
+%% Puzzle acceptance and countdown
+flowchart LR
+  Playerchallengeoff0["Player challenge offer"]
+  Explicitaccept1["Explicit accept"]
+  PersistacceptedAt2["Persist acceptedAt"]
+  Start2160000second3["Start 2160000 seconds"]
+  Generateinstance4["Generate instance"]
+  Directionalhint5["Directional hint"]
+  Guidedhint6["Guided hint"]
+  Submitanswer7["Submit answer"]
+  Playerchallengeoff0 --> Explicitaccept1
+  Explicitaccept1 --> PersistacceptedAt2
+  PersistacceptedAt2 --> Start2160000second3
+  Start2160000second3 --> Generateinstance4
+  Generateinstance4 --> Directionalhint5
+  Directionalhint5 --> Guidedhint6
+  Guidedhint6 --> Submitanswer7

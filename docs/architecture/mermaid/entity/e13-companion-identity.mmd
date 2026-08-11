@@ -1,0 +1,13 @@
+%% Companion identity
+erDiagram
+  Companion {
+    string id PK
+  }
+  Protagonist {
+    string id PK
+  }
+  Soul {
+    string id PK
+  }
+  Protagonist ||--o{ Companion : "relates to"
+  Soul ||--o{ Companion : "relates to"

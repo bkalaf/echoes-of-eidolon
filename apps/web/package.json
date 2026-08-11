@@ -11,6 +11,7 @@
     "db:down": "node scripts/run-with-local-secrets.mjs docker compose -f ../../compose.yaml stop postgres",
     "db:verify-migrations": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/verify-migrations.mts",
     "assets:import": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-managed-assets.mjs",
+    "assets:reconcile": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-managed-assets.mjs --verify-only",
     "atlas:import-sites": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-sites.mts",
     "generate": "prisma generate",
     "typecheck": "tsc --project tsconfig.json --noEmit",

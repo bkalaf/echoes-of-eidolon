@@ -12,6 +12,9 @@ const runtimeEnvObject = z.object({
   RESEND_FROM_EMAIL: z.string().email(),
   STRIPE_SECRET_KEY: z.string().min(1),
   STRIPE_WEBHOOK_SECRET: z.string().min(1),
+  STRIPE_SHIPPING_ALLOWED_COUNTRIES: z.string().min(2).optional(),
+  PRINTFUL_API_TOKEN: z.string().min(1).optional(),
+  PRINTFUL_STORE_ID: z.string().min(1).optional(),
 });
 
 export const runtimeEnvSchema = runtimeEnvObject;
@@ -39,6 +42,11 @@ const emailEnvSchema = runtimeEnvObject.pick({
 const paymentsEnvSchema = runtimeEnvObject.pick({
   STRIPE_SECRET_KEY: true,
   STRIPE_WEBHOOK_SECRET: true,
+  STRIPE_SHIPPING_ALLOWED_COUNTRIES: true,
+});
+const printfulEnvSchema = z.object({
+  PRINTFUL_API_TOKEN: z.string().min(1),
+  PRINTFUL_STORE_ID: z.string().min(1).optional(),
 });
 const atlasEnvSchema = z.object({ EIDOLON_ATLAS_RELEASE_ROOT: z.string().min(1) });
 
@@ -55,4 +63,5 @@ export const getAuthEnv = () => authEnvSchema.parse(process.env);
 export const getStorageEnv = () => storageEnvSchema.parse(process.env);
 export const getEmailEnv = () => emailEnvSchema.parse(process.env);
 export const getPaymentsEnv = () => paymentsEnvSchema.parse(process.env);
+export const getPrintfulEnv = () => printfulEnvSchema.parse(process.env);
 export const getAtlasEnv = () => atlasEnvSchema.parse(process.env);

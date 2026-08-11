@@ -1,0 +1,17 @@
+%% Owner WebGL2 globe renderer
+flowchart LR
+  Managedalbedo0["Managed albedo"]
+  WebGL2context1["WebGL2 context"]
+  Sphere256by5122["Sphere 256 by 512"]
+  UVandshaders3["UV and shaders"]
+  Lightingandcamera4["Lighting and camera"]
+  Inertiaandzoom5["Inertia and zoom"]
+  Separatemarkerproj6["Separate marker projection"]
+  Accessiblefallback7["Accessible fallback"]
+  Managedalbedo0 --> WebGL2context1
+  WebGL2context1 --> Sphere256by5122
+  Sphere256by5122 --> UVandshaders3
+  UVandshaders3 --> Lightingandcamera4
+  Lightingandcamera4 --> Inertiaandzoom5
+  Inertiaandzoom5 --> Separatemarkerproj6
+  Separatemarkerproj6 --> Accessiblefallback7

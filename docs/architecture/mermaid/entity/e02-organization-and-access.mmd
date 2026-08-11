@@ -1,0 +1,18 @@
+%% Organization and access
+erDiagram
+  Organization {
+    string id PK
+  }
+  Member {
+    string id PK
+  }
+  Invitation {
+    string id PK
+  }
+  User {
+    string id PK
+  }
+  User ||--o{ Member : "relates to"
+  User ||--o{ Invitation : "relates to"
+  Organization ||--o{ Member : "relates to"
+  Organization ||--o{ Invitation : "relates to"

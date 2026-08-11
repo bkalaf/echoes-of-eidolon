@@ -1,0 +1,13 @@
+%% Store catalog projection
+flowchart LR
+  StoreProduct0["StoreProduct"]
+  Availablevariants1["Available variants"]
+  Managedartwork2["Managed artwork"]
+  Serverprices3["Server prices"]
+  Catalogresponse4["Catalog response"]
+  Productscreen5["Product screen"]
+  StoreProduct0 --> Availablevariants1
+  Availablevariants1 --> Managedartwork2
+  Managedartwork2 --> Serverprices3
+  Serverprices3 --> Catalogresponse4
+  Catalogresponse4 --> Productscreen5

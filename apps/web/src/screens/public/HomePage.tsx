@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
 import { managedAssetUrl } from "../../content/managed-assets";
@@ -33,7 +33,9 @@ export function HomePage() {
     retry: false,
   });
   const [activeFeature, setActiveFeature] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
   const cards = useRef<Array<HTMLAnchorElement | null>>([]);
+  const direction = useRef<1 | -1>(1);
 
   const selectFeature = (index: number) => {
     const wrapped = (index + publicFeatures.length) % publicFeatures.length;
@@ -44,6 +46,27 @@ export function HomePage() {
       inline: "center",
     });
   };
+
+  useEffect(() => {
+    const media = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-reduced-motion: reduce)") : undefined;
+    if (carouselPaused || media?.matches || document.visibilityState !== "visible") return;
+    const timer = window.setInterval(() => {
+      setActiveFeature((current) => {
+        if (current === publicFeatures.length - 1) direction.current = -1;
+        else if (current === 0) direction.current = 1;
+        const next = current + direction.current;
+        cards.current[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        return next;
+      });
+    }, 3_000);
+    return () => window.clearInterval(timer);
+  }, [carouselPaused]);
+
+  useEffect(() => {
+    const onVisibilityChange = () => setCarouselPaused(document.visibilityState !== "visible");
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
 
   if (session.data && playerAccess.isPending) return <PublicShell><main className="public-page"><p className="notice">Checking player eligibility…</p></main></PublicShell>;
   if (session.data && playerAccess.isError) return <PublicShell><main className="public-page"><section className="card"><h1>Player access unavailable</h1><p>Access fails closed when beta/player eligibility cannot be verified.</p></section></main></PublicShell>;
@@ -79,7 +102,9 @@ export function HomePage() {
             <button aria-label="Next feature" className="carousel-button" onClick={() => selectFeature(activeFeature + 1)}>→</button>
           </div>
         </header>
-        <div className="feature-carousel" onKeyDown={(event) => {
+        <div className="feature-carousel" onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setCarouselPaused(false);
+        }} onFocus={() => setCarouselPaused(true)} onMouseEnter={() => setCarouselPaused(true)} onMouseLeave={() => setCarouselPaused(false)} onKeyDown={(event) => {
           if (event.key === "ArrowLeft") selectFeature(activeFeature - 1);
           if (event.key === "ArrowRight") selectFeature(activeFeature + 1);
         }} role="list" tabIndex={0}>

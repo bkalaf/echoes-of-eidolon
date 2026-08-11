@@ -4,321 +4,840 @@
     "mimeType": "image/png",
     "objectKey": "assets/42ecdc18776be2a524a00ebe4b758ae5f053e7f59b52bf1a032c5fb40fc5bc4e.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/42ecdc18776be2a524a00ebe4b758ae5f053e7f59b52bf1a032c5fb40fc5bc4e.png",
-    "sha256": "42ecdc18776be2a524a00ebe4b758ae5f053e7f59b52bf1a032c5fb40fc5bc4e"
+    "sha256": "42ecdc18776be2a524a00ebe4b758ae5f053e7f59b52bf1a032c5fb40fc5bc4e",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1983,
+      "height": 793,
+      "channels": "srgba 4.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "brand.logo": {
     "byteSize": 1829505,
     "mimeType": "image/png",
     "objectKey": "assets/b676e1df4cb926daa5cf6e4a73df54e71363d7f859547d418d79824240f278fb.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/b676e1df4cb926daa5cf6e4a73df54e71363d7f859547d418d79824240f278fb.png",
-    "sha256": "b676e1df4cb926daa5cf6e4a73df54e71363d7f859547d418d79824240f278fb"
+    "sha256": "b676e1df4cb926daa5cf6e4a73df54e71363d7f859547d418d79824240f278fb",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1983,
+      "height": 793,
+      "channels": "srgba 4.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "brand.mark-of-the-orbs": {
     "byteSize": 982466,
     "mimeType": "image/png",
     "objectKey": "assets/94408e2af86945b214f59abd67d4c0b8de3c011dcd800f71352df77884bc98c9.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/94408e2af86945b214f59abd67d4c0b8de3c011dcd800f71352df77884bc98c9.png",
-    "sha256": "94408e2af86945b214f59abd67d4c0b8de3c011dcd800f71352df77884bc98c9"
+    "sha256": "94408e2af86945b214f59abd67d4c0b8de3c011dcd800f71352df77884bc98c9",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 894,
+      "height": 993,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.a-living-world": {
     "byteSize": 2587180,
     "mimeType": "image/png",
     "objectKey": "assets/c25325553780dbc94da460e30cdbab018c5d5274b55bd107dbd07d22bf373360.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c25325553780dbc94da460e30cdbab018c5d5274b55bd107dbd07d22bf373360.png",
-    "sha256": "c25325553780dbc94da460e30cdbab018c5d5274b55bd107dbd07d22bf373360"
+    "sha256": "c25325553780dbc94da460e30cdbab018c5d5274b55bd107dbd07d22bf373360",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.forge-your-path": {
     "byteSize": 3085788,
     "mimeType": "image/png",
     "objectKey": "assets/1e5cab68a395e337c7bdb8a446abf3e0cee747419d93dfcdb379baa341923025.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/1e5cab68a395e337c7bdb8a446abf3e0cee747419d93dfcdb379baa341923025.png",
-    "sha256": "1e5cab68a395e337c7bdb8a446abf3e0cee747419d93dfcdb379baa341923025"
+    "sha256": "1e5cab68a395e337c7bdb8a446abf3e0cee747419d93dfcdb379baa341923025",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1448,
+      "height": 1086,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.leave-your-mark": {
     "byteSize": 2907686,
     "mimeType": "image/png",
     "objectKey": "assets/4a087a9f210979f6deda23f979531e0dcc71634c7ccaa5d91adfad92530eb4e7.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4a087a9f210979f6deda23f979531e0dcc71634c7ccaa5d91adfad92530eb4e7.png",
-    "sha256": "4a087a9f210979f6deda23f979531e0dcc71634c7ccaa5d91adfad92530eb4e7"
+    "sha256": "4a087a9f210979f6deda23f979531e0dcc71634c7ccaa5d91adfad92530eb4e7",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.real-challenges": {
     "byteSize": 3022089,
     "mimeType": "image/png",
     "objectKey": "assets/abb65ec541987bbc35e0c3f85e0f360f7e0712c923d0ef1dcfc2d77af0758a87.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/abb65ec541987bbc35e0c3f85e0f360f7e0712c923d0ef1dcfc2d77af0758a87.png",
-    "sha256": "abb65ec541987bbc35e0c3f85e0f360f7e0712c923d0ef1dcfc2d77af0758a87"
+    "sha256": "abb65ec541987bbc35e0c3f85e0f360f7e0712c923d0ef1dcfc2d77af0758a87",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.real-life-comes-first": {
     "byteSize": 2804369,
     "mimeType": "image/png",
     "objectKey": "assets/3c8359ed18e99ca34af45fac92dfbb7ee7e45bd25cbd3927c16d4229f3db81d3.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3c8359ed18e99ca34af45fac92dfbb7ee7e45bd25cbd3927c16d4229f3db81d3.png",
-    "sha256": "3c8359ed18e99ca34af45fac92dfbb7ee7e45bd25cbd3927c16d4229f3db81d3"
+    "sha256": "3c8359ed18e99ca34af45fac92dfbb7ee7e45bd25cbd3927c16d4229f3db81d3",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.speak-or-type-freely": {
     "byteSize": 2765805,
     "mimeType": "image/png",
     "objectKey": "assets/584331304c10439e51ecca64bb45533764fb1bd83dc41703fd4eae890e01ddab.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/584331304c10439e51ecca64bb45533764fb1bd83dc41703fd4eae890e01ddab.png",
-    "sha256": "584331304c10439e51ecca64bb45533764fb1bd83dc41703fd4eae890e01ddab"
+    "sha256": "584331304c10439e51ecca64bb45533764fb1bd83dc41703fd4eae890e01ddab",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.truth-still-matters": {
     "byteSize": 3191220,
     "mimeType": "image/png",
     "objectKey": "assets/11bd95d36a72bca687861cca8cff2972692339b206b391d56ea8e99263031ceb.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/11bd95d36a72bca687861cca8cff2972692339b206b391d56ea8e99263031ceb.png",
-    "sha256": "11bd95d36a72bca687861cca8cff2972692339b206b391d56ea8e99263031ceb"
+    "sha256": "11bd95d36a72bca687861cca8cff2972692339b206b391d56ea8e99263031ceb",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.unique-and-powerful-story": {
     "byteSize": 2519121,
     "mimeType": "image/png",
     "objectKey": "assets/f844ddd0452ee02eee98e9c27f019d95c3f515d1c7a8a034eb0bb4492f6366ec.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f844ddd0452ee02eee98e9c27f019d95c3f515d1c7a8a034eb0bb4492f6366ec.png",
-    "sha256": "f844ddd0452ee02eee98e9c27f019d95c3f515d1c7a8a034eb0bb4492f6366ec"
+    "sha256": "f844ddd0452ee02eee98e9c27f019d95c3f515d1c7a8a034eb0bb4492f6366ec",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1672,
+      "height": 941,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "soundtrack.english-anglo.city": {
     "byteSize": 7083072,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d.mp3",
-    "sha256": "7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d"
+    "sha256": "7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 240.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": 0
+    }
   },
   "soundtrack.english-anglo.tavern": {
     "byteSize": 8127264,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d.mp3",
-    "sha256": "aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d"
+    "sha256": "aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 277.368,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.3,
+      "peakVolumeDb": -0.9
+    }
   },
   "soundtrack.mississippian-eastern-woodlands.city": {
     "byteSize": 10305696,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e.mp3",
-    "sha256": "692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e"
+    "sha256": "692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 368.88,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.4,
+      "peakVolumeDb": 0
+    }
   },
   "soundtrack.mississippian-eastern-woodlands.tavern": {
     "byteSize": 13717632,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245.mp3",
-    "sha256": "dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245"
+    "sha256": "dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 480,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.3,
+      "peakVolumeDb": 0
+    }
   },
   "soundtrack.taino.city": {
     "byteSize": 8431584,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8.mp3",
-    "sha256": "4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8"
+    "sha256": "4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 292.68,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.8,
+      "peakVolumeDb": 0
+    }
   },
   "soundtrack.taino.tavern": {
     "byteSize": 8539152,
     "mimeType": "audio/mpeg",
     "objectKey": "assets/c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef.mp3",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef.mp3",
-    "sha256": "c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef"
+    "sha256": "c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 281.568,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.3,
+      "peakVolumeDb": 0
+    }
   },
   "video.good-versus-evil": {
     "byteSize": 13151922,
     "mimeType": "video/mp4",
     "objectKey": "assets/1e64cd09a8fd51f691772e398bdedd6cca700a3f3d052ad4e9a2dafba7b9ec99.mp4",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/1e64cd09a8fd51f691772e398bdedd6cca700a3f3d052ad4e9a2dafba7b9ec99.mp4",
-    "sha256": "1e64cd09a8fd51f691772e398bdedd6cca700a3f3d052ad4e9a2dafba7b9ec99"
+    "sha256": "1e64cd09a8fd51f691772e398bdedd6cca700a3f3d052ad4e9a2dafba7b9ec99",
+    "technicalMetadata": {
+      "kind": "video",
+      "durationSeconds": 65.3,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1",
+          "tags": {
+            "language": "und"
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 1,
+          "r_frame_rate": "0/0",
+          "tags": {
+            "language": "und"
+          }
+        }
+      ]
+    }
   },
   "video.power-of-three": {
     "byteSize": 59596132,
     "mimeType": "video/mp4",
     "objectKey": "assets/99d9fca5d2651bd4c8ac3fcb9a15120a7239a0a5c646891194b15d42d8f70a9a.mp4",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/99d9fca5d2651bd4c8ac3fcb9a15120a7239a0a5c646891194b15d42d8f70a9a.mp4",
-    "sha256": "99d9fca5d2651bd4c8ac3fcb9a15120a7239a0a5c646891194b15d42d8f70a9a"
+    "sha256": "99d9fca5d2651bd4c8ac3fcb9a15120a7239a0a5c646891194b15d42d8f70a9a",
+    "technicalMetadata": {
+      "kind": "video",
+      "durationSeconds": 503.458,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1",
+          "tags": {
+            "language": "und"
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 1,
+          "r_frame_rate": "0/0",
+          "tags": {
+            "language": "und"
+          }
+        }
+      ]
+    }
   },
   "video.year-zero-law": {
     "byteSize": 9214420,
     "mimeType": "video/mp4",
     "objectKey": "assets/9fc81891d596f2378197ebfa4e2ab83b87c136d53cab80156e7c109f1545402e.mp4",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/9fc81891d596f2378197ebfa4e2ab83b87c136d53cab80156e7c109f1545402e.mp4",
-    "sha256": "9fc81891d596f2378197ebfa4e2ab83b87c136d53cab80156e7c109f1545402e"
+    "sha256": "9fc81891d596f2378197ebfa4e2ab83b87c136d53cab80156e7c109f1545402e",
+    "technicalMetadata": {
+      "kind": "video",
+      "durationSeconds": 78.607,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1",
+          "tags": {
+            "language": "und"
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 1,
+          "r_frame_rate": "0/0",
+          "tags": {
+            "language": "und"
+          }
+        }
+      ]
+    }
   },
   "atlas.official-east-hemisphere": {
     "byteSize": 5149887,
     "mimeType": "image/png",
     "objectKey": "assets/70f164db04f16f6e04c329920eeb6a6e36261f51a6b10a0f41ed2f4d76da5f7f.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/70f164db04f16f6e04c329920eeb6a6e36261f51a6b10a0f41ed2f4d76da5f7f.png",
-    "sha256": "70f164db04f16f6e04c329920eeb6a6e36261f51a6b10a0f41ed2f4d76da5f7f"
+    "sha256": "70f164db04f16f6e04c329920eeb6a6e36261f51a6b10a0f41ed2f4d76da5f7f",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 2048,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.official-west-hemisphere": {
     "byteSize": 5054450,
     "mimeType": "image/png",
     "objectKey": "assets/e6fa8bbf3782db73c82adbc072adbdadaa109c9141ce74bc0e2090636f10ef80.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/e6fa8bbf3782db73c82adbc072adbdadaa109c9141ce74bc0e2090636f10ef80.png",
-    "sha256": "e6fa8bbf3782db73c82adbc072adbdadaa109c9141ce74bc0e2090636f10ef80"
+    "sha256": "e6fa8bbf3782db73c82adbc072adbdadaa109c9141ce74bc0e2090636f10ef80",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 2048,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.official-world-founding-cities": {
     "byteSize": 10264750,
     "mimeType": "image/png",
     "objectKey": "assets/fa31771f4c6d83a6730351cb45ccf61a02b2536198bb4e318a612beb0704d6b5.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/fa31771f4c6d83a6730351cb45ccf61a02b2536198bb4e318a612beb0704d6b5.png",
-    "sha256": "fa31771f4c6d83a6730351cb45ccf61a02b2536198bb4e318a612beb0704d6b5"
+    "sha256": "fa31771f4c6d83a6730351cb45ccf61a02b2536198bb4e318a612beb0704d6b5",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 4096,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.political-east-hemisphere": {
     "byteSize": 153180,
     "mimeType": "image/png",
     "objectKey": "assets/e5a7eccb83ce613987f1bf392ad3ca921a01663557ee22a8fce2cf65068cbd12.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/e5a7eccb83ce613987f1bf392ad3ca921a01663557ee22a8fce2cf65068cbd12.png",
-    "sha256": "e5a7eccb83ce613987f1bf392ad3ca921a01663557ee22a8fce2cf65068cbd12"
+    "sha256": "e5a7eccb83ce613987f1bf392ad3ca921a01663557ee22a8fce2cf65068cbd12",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 2048,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.political-west-hemisphere": {
     "byteSize": 186749,
     "mimeType": "image/png",
     "objectKey": "assets/57f612518cbd3ed3d0ae9c68095f8874f001a5a21d64d6cb3146d599e34c50bd.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/57f612518cbd3ed3d0ae9c68095f8874f001a5a21d64d6cb3146d599e34c50bd.png",
-    "sha256": "57f612518cbd3ed3d0ae9c68095f8874f001a5a21d64d6cb3146d599e34c50bd"
+    "sha256": "57f612518cbd3ed3d0ae9c68095f8874f001a5a21d64d6cb3146d599e34c50bd",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 2048,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.political-world-founding-cities": {
     "byteSize": 354305,
     "mimeType": "image/png",
     "objectKey": "assets/bf12026890277a14add56724fe14e037c45e35b901b0d67dcd2955321d7252ad.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/bf12026890277a14add56724fe14e037c45e35b901b0d67dcd2955321d7252ad.png",
-    "sha256": "bf12026890277a14add56724fe14e037c45e35b901b0d67dcd2955321d7252ad"
+    "sha256": "bf12026890277a14add56724fe14e037c45e35b901b0d67dcd2955321d7252ad",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 4096,
+      "height": 2048,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.01": {
     "byteSize": 9175,
     "mimeType": "image/jpeg",
     "objectKey": "assets/2672ed633f5dd64501feafe17503344933708779d07681c8a45338b6a0900b5d.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/2672ed633f5dd64501feafe17503344933708779d07681c8a45338b6a0900b5d.jpg",
-    "sha256": "2672ed633f5dd64501feafe17503344933708779d07681c8a45338b6a0900b5d"
+    "sha256": "2672ed633f5dd64501feafe17503344933708779d07681c8a45338b6a0900b5d",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.02": {
     "byteSize": 8784,
     "mimeType": "image/jpeg",
     "objectKey": "assets/7dee56ee7b65cd0a9e59ecd379f507daf62692e404311323ee96baf335a48a9e.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/7dee56ee7b65cd0a9e59ecd379f507daf62692e404311323ee96baf335a48a9e.jpg",
-    "sha256": "7dee56ee7b65cd0a9e59ecd379f507daf62692e404311323ee96baf335a48a9e"
+    "sha256": "7dee56ee7b65cd0a9e59ecd379f507daf62692e404311323ee96baf335a48a9e",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.03": {
     "byteSize": 9754,
     "mimeType": "image/jpeg",
     "objectKey": "assets/79378676343256ddda8d09f073051529f42e2ca1db077efad64f4841d4f148ee.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/79378676343256ddda8d09f073051529f42e2ca1db077efad64f4841d4f148ee.jpg",
-    "sha256": "79378676343256ddda8d09f073051529f42e2ca1db077efad64f4841d4f148ee"
+    "sha256": "79378676343256ddda8d09f073051529f42e2ca1db077efad64f4841d4f148ee",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.04": {
     "byteSize": 8951,
     "mimeType": "image/jpeg",
     "objectKey": "assets/925b6f2776a7f09ac4bfa8f2688b3d8e5ed6a01a5226b93f866058cf1d227ca0.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/925b6f2776a7f09ac4bfa8f2688b3d8e5ed6a01a5226b93f866058cf1d227ca0.jpg",
-    "sha256": "925b6f2776a7f09ac4bfa8f2688b3d8e5ed6a01a5226b93f866058cf1d227ca0"
+    "sha256": "925b6f2776a7f09ac4bfa8f2688b3d8e5ed6a01a5226b93f866058cf1d227ca0",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.05": {
     "byteSize": 8308,
     "mimeType": "image/jpeg",
     "objectKey": "assets/7c1294c8ee2bdebabb15e36d98386b748bc0d0e47e5c01ea6205931f2433f8aa.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/7c1294c8ee2bdebabb15e36d98386b748bc0d0e47e5c01ea6205931f2433f8aa.jpg",
-    "sha256": "7c1294c8ee2bdebabb15e36d98386b748bc0d0e47e5c01ea6205931f2433f8aa"
+    "sha256": "7c1294c8ee2bdebabb15e36d98386b748bc0d0e47e5c01ea6205931f2433f8aa",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.06": {
     "byteSize": 8411,
     "mimeType": "image/jpeg",
     "objectKey": "assets/63014d359da09b40c6942a6173d633fcd3ffaee6caedb245ca08f91788d4725c.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/63014d359da09b40c6942a6173d633fcd3ffaee6caedb245ca08f91788d4725c.jpg",
-    "sha256": "63014d359da09b40c6942a6173d633fcd3ffaee6caedb245ca08f91788d4725c"
+    "sha256": "63014d359da09b40c6942a6173d633fcd3ffaee6caedb245ca08f91788d4725c",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.07": {
     "byteSize": 9996,
     "mimeType": "image/jpeg",
     "objectKey": "assets/c4c803ee58d51da279b10aae43f498e01406c7cec9d99cf8bc28ed6937a8577b.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c4c803ee58d51da279b10aae43f498e01406c7cec9d99cf8bc28ed6937a8577b.jpg",
-    "sha256": "c4c803ee58d51da279b10aae43f498e01406c7cec9d99cf8bc28ed6937a8577b"
+    "sha256": "c4c803ee58d51da279b10aae43f498e01406c7cec9d99cf8bc28ed6937a8577b",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.08": {
     "byteSize": 9857,
     "mimeType": "image/jpeg",
     "objectKey": "assets/015fed1a5f879717b54ca1bca88d23cfd11f02d2c188fe7c0b17ba2cac606da9.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/015fed1a5f879717b54ca1bca88d23cfd11f02d2c188fe7c0b17ba2cac606da9.jpg",
-    "sha256": "015fed1a5f879717b54ca1bca88d23cfd11f02d2c188fe7c0b17ba2cac606da9"
+    "sha256": "015fed1a5f879717b54ca1bca88d23cfd11f02d2c188fe7c0b17ba2cac606da9",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "feature.icon.09": {
     "byteSize": 9485,
     "mimeType": "image/jpeg",
     "objectKey": "assets/055bc07244eeecd1a9c2d2566a84a7a5d0124a6ecbc968f18cb3fc380b65e8d4.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/055bc07244eeecd1a9c2d2566a84a7a5d0124a6ecbc968f18cb3fc380b65e8d4.jpg",
-    "sha256": "055bc07244eeecd1a9c2d2566a84a7a5d0124a6ecbc968f18cb3fc380b65e8d4"
+    "sha256": "055bc07244eeecd1a9c2d2566a84a7a5d0124a6ecbc968f18cb3fc380b65e8d4",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 144,
+      "height": 144,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "marketing.landing-hero": {
     "byteSize": 93155,
     "mimeType": "image/jpeg",
     "objectKey": "assets/ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260.jpg",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260.jpg",
-    "sha256": "ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260"
+    "sha256": "ee0cbd406df047d7ae197161750cd6c6398ca55e337f67fc52776e4026aea260",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "JPEG",
+      "width": 992,
+      "height": 383,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.biome-class": {
     "byteSize": 93014,
     "mimeType": "image/png",
     "objectKey": "assets/d9bb4709ccc2b02191b11bebcf162e9a637ed12ac2ec8566611f7d22cccff934.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d9bb4709ccc2b02191b11bebcf162e9a637ed12ac2ec8566611f7d22cccff934.png",
-    "sha256": "d9bb4709ccc2b02191b11bebcf162e9a637ed12ac2ec8566611f7d22cccff934"
+    "sha256": "d9bb4709ccc2b02191b11bebcf162e9a637ed12ac2ec8566611f7d22cccff934",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "gray  2.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.east-hemisphere": {
     "byteSize": 15371704,
     "mimeType": "image/png",
     "objectKey": "assets/f410117263590f57326ad04243304fccf0fc3b490ce0b6da457ac46e6b8e93a9.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f410117263590f57326ad04243304fccf0fc3b490ce0b6da457ac46e6b8e93a9.png",
-    "sha256": "f410117263590f57326ad04243304fccf0fc3b490ce0b6da457ac46e6b8e93a9"
+    "sha256": "f410117263590f57326ad04243304fccf0fc3b490ce0b6da457ac46e6b8e93a9",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 4096,
+      "height": 4096,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.globe-albedo": {
     "byteSize": 30938269,
     "mimeType": "image/png",
     "objectKey": "assets/c01e432ac4e1f9b44a50a480d07c8415829cfa92375f014b2e7b0840d5fa7368.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c01e432ac4e1f9b44a50a480d07c8415829cfa92375f014b2e7b0840d5fa7368.png",
-    "sha256": "c01e432ac4e1f9b44a50a480d07c8415829cfa92375f014b2e7b0840d5fa7368"
+    "sha256": "c01e432ac4e1f9b44a50a480d07c8415829cfa92375f014b2e7b0840d5fa7368",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.land-mask": {
     "byteSize": 98373,
     "mimeType": "image/png",
     "objectKey": "assets/e0bf0db0401b1732bceb5c07dbc44ef1ca003ee080ccd5f9fb04580ac8e58b1b.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/e0bf0db0401b1732bceb5c07dbc44ef1ca003ee080ccd5f9fb04580ac8e58b1b.png",
-    "sha256": "e0bf0db0401b1732bceb5c07dbc44ef1ca003ee080ccd5f9fb04580ac8e58b1b"
+    "sha256": "e0bf0db0401b1732bceb5c07dbc44ef1ca003ee080ccd5f9fb04580ac8e58b1b",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "gray  2.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.preview-east": {
     "byteSize": 1875884,
     "mimeType": "image/png",
     "objectKey": "assets/42e6afdba8aae2961ec534ab3057442e1840b648a0c6805adba48f92d3b5e575.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/42e6afdba8aae2961ec534ab3057442e1840b648a0c6805adba48f92d3b5e575.png",
-    "sha256": "42e6afdba8aae2961ec534ab3057442e1840b648a0c6805adba48f92d3b5e575"
+    "sha256": "42e6afdba8aae2961ec534ab3057442e1840b648a0c6805adba48f92d3b5e575",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1200,
+      "height": 1200,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.preview-prime-meridian": {
     "byteSize": 1874203,
     "mimeType": "image/png",
     "objectKey": "assets/007de2c3f1f5573e9b6e610eaeaec3dfbce3d635d3d6c3cdda0b944f636f75f1.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/007de2c3f1f5573e9b6e610eaeaec3dfbce3d635d3d6c3cdda0b944f636f75f1.png",
-    "sha256": "007de2c3f1f5573e9b6e610eaeaec3dfbce3d635d3d6c3cdda0b944f636f75f1"
+    "sha256": "007de2c3f1f5573e9b6e610eaeaec3dfbce3d635d3d6c3cdda0b944f636f75f1",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 1200,
+      "height": 1200,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.reef-mask": {
     "byteSize": 33688,
     "mimeType": "image/png",
     "objectKey": "assets/de9bd06420b46f287069d10dff65e5c35516dfa41f3a31ae58e035d20dbf3b83.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/de9bd06420b46f287069d10dff65e5c35516dfa41f3a31ae58e035d20dbf3b83.png",
-    "sha256": "de9bd06420b46f287069d10dff65e5c35516dfa41f3a31ae58e035d20dbf3b83"
+    "sha256": "de9bd06420b46f287069d10dff65e5c35516dfa41f3a31ae58e035d20dbf3b83",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "gray  2.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.relief-signed-16bit": {
     "byteSize": 19425153,
     "mimeType": "image/png",
     "objectKey": "assets/2a8920f6680048b578a33f8b98a0eb42300e82c7cc33bec912de412f4f60f1c2.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/2a8920f6680048b578a33f8b98a0eb42300e82c7cc33bec912de412f4f60f1c2.png",
-    "sha256": "2a8920f6680048b578a33f8b98a0eb42300e82c7cc33bec912de412f4f60f1c2"
+    "sha256": "2a8920f6680048b578a33f8b98a0eb42300e82c7cc33bec912de412f4f60f1c2",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "gray  1.0",
+      "bitDepth": 16,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.west-hemisphere": {
     "byteSize": 15428739,
     "mimeType": "image/png",
     "objectKey": "assets/f191948b765226dd63de5376eeae3ccb6c45fb9403ed3b956e071d0729fc4907.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f191948b765226dd63de5376eeae3ccb6c45fb9403ed3b956e071d0729fc4907.png",
-    "sha256": "f191948b765226dd63de5376eeae3ccb6c45fb9403ed3b956e071d0729fc4907"
+    "sha256": "f191948b765226dd63de5376eeae3ccb6c45fb9403ed3b956e071d0729fc4907",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 4096,
+      "height": 4096,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   },
   "atlas.nimbus.world-master": {
     "byteSize": 31076689,
     "mimeType": "image/png",
     "objectKey": "assets/389302b9fc7cef943d065e37b23325cab8dd907a871e55b271b6cfd31625f239.png",
     "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/389302b9fc7cef943d065e37b23325cab8dd907a871e55b271b6cfd31625f239.png",
-    "sha256": "389302b9fc7cef943d065e37b23325cab8dd907a871e55b271b6cfd31625f239"
+    "sha256": "389302b9fc7cef943d065e37b23325cab8dd907a871e55b271b6cfd31625f239",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "srgb  3.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   }
 }

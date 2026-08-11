@@ -1,0 +1,19 @@
+%% Exact-SHA production deployment
+flowchart LR
+  Pushed40characterS0["Pushed 40-character SHA"]
+  Completegates1["Complete gates"]
+  Dryrun2["Dry run"]
+  PostgreSQLbackup3["PostgreSQL backup"]
+  Assetreconcile4["Asset reconcile"]
+  Fetchexactcommit5["Fetch exact commit"]
+  Migratedeploy6["Migrate deploy"]
+  Restartsystemd7["Restart systemd"]
+  Smokeandversionpro8["Smoke and version proof"]
+  Pushed40characterS0 --> Completegates1
+  Completegates1 --> Dryrun2
+  Dryrun2 --> PostgreSQLbackup3
+  PostgreSQLbackup3 --> Assetreconcile4
+  Assetreconcile4 --> Fetchexactcommit5
+  Fetchexactcommit5 --> Migratedeploy6
+  Migratedeploy6 --> Restartsystemd7
+  Restartsystemd7 --> Smokeandversionpro8

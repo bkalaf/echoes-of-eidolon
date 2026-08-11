@@ -1,0 +1,15 @@
+%% Atlas managed media
+erDiagram
+  ManagedAsset {
+    string id PK
+  }
+  AssetPurposeLink {
+    string id PK
+  }
+  Site {
+    string id PK
+  }
+  PointOfInterest {
+    string id PK
+  }
+  ManagedAsset ||--o{ AssetPurposeLink : "relates to"

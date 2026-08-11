@@ -45,10 +45,10 @@ describe("authorized R08 Atlas administration", () => {
   it("provides keyboard-operable textured globe controls", async () => {
     renderAtlas("ATLAS_POI_3D");
     const globe = await screen.findByRole("application", { name: /Interactive Eidolon globe/ });
-    expect(globe.querySelector("img")).toHaveAttribute("src", expect.stringMatching(/digitaloceanspaces\.com\/assets\/[a-f0-9]{64}\.png$/));
+    expect(globe.querySelector("canvas")).toBeInTheDocument();
     fireEvent.keyDown(globe, { key: "ArrowRight" });
-    expect(screen.getByText(/Center 0°, 10°/)).toBeInTheDocument();
+    expect(screen.getByText(/Rotation -7°, -19°/)).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Reset globe" }));
-    expect(screen.getByText(/Center 0°, 0°/)).toBeInTheDocument();
+    expect(screen.getByText(/Rotation -7°, -26°/)).toBeInTheDocument();
   });
 });

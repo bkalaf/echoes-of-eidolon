@@ -1,0 +1,13 @@
+%% Signed Stripe webhook
+flowchart LR
+  Rawrequestbytes0["Raw request bytes"]
+  Verifysignature1["Verify signature"]
+  Deduplicateevent2["Deduplicate event"]
+  Databasetransactio3["Database transaction"]
+  Paymentconfirmatio4["Payment confirmation"]
+  Membershiporordert5["Membership or order transition"]
+  Rawrequestbytes0 --> Verifysignature1
+  Verifysignature1 --> Deduplicateevent2
+  Deduplicateevent2 --> Databasetransactio3
+  Databasetransactio3 --> Paymentconfirmatio4
+  Paymentconfirmatio4 --> Membershiporordert5

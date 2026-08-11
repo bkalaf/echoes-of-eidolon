@@ -1,0 +1,17 @@
+%% Application rollback boundary
+flowchart LR
+  Failedpostdeploych0["Failed post-deploy check"]
+  Recordfailure1["Record failure"]
+  Keepdatabasemigrat2["Keep database migration"]
+  Selectpriorhealthy3["Select prior healthy SHA"]
+  Deployapplicationo4["Deploy application only"]
+  Restartservice5["Restart service"]
+  Verifyhealth6["Verify health"]
+  Openrecoveryplan7["Open recovery plan"]
+  Failedpostdeploych0 --> Recordfailure1
+  Recordfailure1 --> Keepdatabasemigrat2
+  Keepdatabasemigrat2 --> Selectpriorhealthy3
+  Selectpriorhealthy3 --> Deployapplicationo4
+  Deployapplicationo4 --> Restartservice5
+  Restartservice5 --> Verifyhealth6
+  Verifyhealth6 --> Openrecoveryplan7

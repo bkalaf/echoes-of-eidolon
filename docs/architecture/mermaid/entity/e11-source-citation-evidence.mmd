@@ -1,0 +1,21 @@
+%% Source citation evidence
+erDiagram
+  Source {
+    string id PK
+  }
+  Citation {
+    string id PK
+  }
+  Research {
+    string id PK
+  }
+  KnowledgeBaseItemCitation {
+    string id PK
+  }
+  KnowledgeBaseDisclosureCitation {
+    string id PK
+  }
+  Source ||--o{ Citation : "relates to"
+  Citation ||--o{ Research : "relates to"
+  Citation ||--o{ KnowledgeBaseItemCitation : "relates to"
+  Citation ||--o{ KnowledgeBaseDisclosureCitation : "relates to"

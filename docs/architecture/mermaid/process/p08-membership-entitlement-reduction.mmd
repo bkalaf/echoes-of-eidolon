@@ -1,0 +1,13 @@
+%% Membership entitlement reduction
+flowchart LR
+  Paymentevidence0["Payment evidence"]
+  MembershipGrant1["MembershipGrant"]
+  MembershipRevocati2["MembershipRevocation"]
+  Chronologicalreduc3["Chronological reduction"]
+  Effectiveentitleme4["Effective entitlement"]
+  Memberbenefits5["Member benefits"]
+  Paymentevidence0 --> MembershipGrant1
+  MembershipGrant1 --> MembershipRevocati2
+  MembershipRevocati2 --> Chronologicalreduc3
+  Chronologicalreduc3 --> Effectiveentitleme4
+  Effectiveentitleme4 --> Memberbenefits5

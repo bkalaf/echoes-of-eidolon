@@ -1,0 +1,13 @@
+%% Profile change-email modal
+flowchart LR
+  Profile0["Profile"]
+  ChangeEmailmodal1["Change Email modal"]
+  Reauthenticate2["Re-authenticate"]
+  Sendverification3["Send verification"]
+  Confirmnewemail4["Confirm new email"]
+  Invalidateotherses5["Invalidate other sessions"]
+  Profile0 --> ChangeEmailmodal1
+  ChangeEmailmodal1 --> Reauthenticate2
+  Reauthenticate2 --> Sendverification3
+  Sendverification3 --> Confirmnewemail4
+  Confirmnewemail4 --> Invalidateotherses5

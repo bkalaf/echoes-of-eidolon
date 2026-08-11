@@ -1,0 +1,15 @@
+%% Migrate
+flowchart LR
+  OriginSettlementWo0["Origin SettlementWorld"]
+  Breedamounts1["Breed amounts"]
+  ExistingSettlement2["Existing Settlement or Site"]
+  Validatepopulation3["Validate population"]
+  Migrationoutevent4["Migration-out event"]
+  Migrationineventor5["Migration-in event or new city"]
+  RecomputedominantB6["Recompute dominant Breed"]
+  OriginSettlementWo0 --> Breedamounts1
+  Breedamounts1 --> ExistingSettlement2
+  ExistingSettlement2 --> Validatepopulation3
+  Validatepopulation3 --> Migrationoutevent4
+  Migrationoutevent4 --> Migrationineventor5
+  Migrationineventor5 --> RecomputedominantB6

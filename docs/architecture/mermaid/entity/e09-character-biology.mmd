@@ -1,0 +1,17 @@
+%% Character biology
+erDiagram
+  Species {
+    string id PK
+  }
+  Breed {
+    string id PK
+  }
+  Culture {
+    string id PK
+  }
+  Character {
+    string id PK
+  }
+  Species ||--o{ Breed : "relates to"
+  Breed ||--o| Culture : "relates to"
+  Breed ||--o{ Character : "relates to"

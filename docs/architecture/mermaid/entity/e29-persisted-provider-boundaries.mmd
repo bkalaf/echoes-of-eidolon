@@ -1,0 +1,19 @@
+%% Persisted provider boundaries
+erDiagram
+  StripeWebhookEvent {
+    string id PK
+  }
+  OrderPaymentConfirmation {
+    string id PK
+  }
+  PrintfulFulfillmentSubmission {
+    string id PK
+  }
+  ContactRequest {
+    string id PK
+  }
+  DonationCheckout {
+    string id PK
+  }
+  StripeWebhookEvent ||--o| OrderPaymentConfirmation : "relates to"
+  OrderPaymentConfirmation ||--o| PrintfulFulfillmentSubmission : "relates to"

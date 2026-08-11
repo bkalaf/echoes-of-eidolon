@@ -1,0 +1,15 @@
+%% Knowledge disclosure
+flowchart LR
+  Baseblocks0["Base blocks"]
+  Playercapabilityst1["Player capability state"]
+  Evaluaterequiremen2["Evaluate requirement"]
+  Revealappendorrepl3["Reveal append or replace"]
+  Collectvisiblecita4["Collect visible citations"]
+  Deduplicatefirstus5["Deduplicate first use"]
+  Playersaferesponse6["Player-safe response"]
+  Baseblocks0 --> Playercapabilityst1
+  Playercapabilityst1 --> Evaluaterequiremen2
+  Evaluaterequiremen2 --> Revealappendorrepl3
+  Revealappendorrepl3 --> Collectvisiblecita4
+  Collectvisiblecita4 --> Deduplicatefirstus5
+  Deduplicatefirstus5 --> Playersaferesponse6

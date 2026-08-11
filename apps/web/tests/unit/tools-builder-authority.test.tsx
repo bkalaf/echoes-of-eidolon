@@ -31,6 +31,7 @@ describe("wireframe tool authority", () => {
     renderTool("TOO001");
     expect(screen.getByRole("heading", { name: "Wireframe Review Queue" })).toBeInTheDocument();
     expect(screen.getByText("AT004_FOUND_CITY")).toBeInTheDocument();
+    expect(screen.getByText("269 of 269")).toBeInTheDocument();
     expect(screen.queryByText("Untitled task")).not.toBeInTheDocument();
   });
 });

@@ -1,0 +1,17 @@
+%% Atomic typed entity import
+flowchart LR
+  UploadJSONYAMLorCS0["Upload JSON YAML or CSV"]
+  Parse1["Parse"]
+  Mapfields2["Map fields"]
+  Validateexactschem3["Validate exact schema"]
+  Previewerrors4["Preview errors"]
+  Begintransaction5["Begin transaction"]
+  Createmissing6["Create missing"]
+  Rejectcanonicaldri7["Reject canonical drift"]
+  UploadJSONYAMLorCS0 --> Parse1
+  Parse1 --> Mapfields2
+  Mapfields2 --> Validateexactschem3
+  Validateexactschem3 --> Previewerrors4
+  Previewerrors4 --> Begintransaction5
+  Begintransaction5 --> Createmissing6
+  Createmissing6 --> Rejectcanonicaldri7

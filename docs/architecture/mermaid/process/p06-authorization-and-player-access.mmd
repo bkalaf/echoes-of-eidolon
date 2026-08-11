@@ -1,0 +1,13 @@
+%% Authorization and player access
+flowchart LR
+  Session0["Session"]
+  Canonicalrole1["Canonical role"]
+  Admincapability2["Admin capability"]
+  Betaeligibility3["Beta eligibility"]
+  Playeraccessdecisi4["Player access decision"]
+  Allowordeny5["Allow or deny"]
+  Session0 --> Canonicalrole1
+  Canonicalrole1 --> Admincapability2
+  Admincapability2 --> Betaeligibility3
+  Betaeligibility3 --> Playeraccessdecisi4
+  Playeraccessdecisi4 --> Allowordeny5

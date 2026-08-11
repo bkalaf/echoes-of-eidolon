@@ -1,0 +1,21 @@
+%% Document Builder
+erDiagram
+  DocumentBucket {
+    string id PK
+  }
+  DocumentSourcePoint {
+    string id PK
+  }
+  DocumentAmendment {
+    string id PK
+  }
+  DocumentDraft {
+    string id PK
+  }
+  User {
+    string id PK
+  }
+  User ||--o{ DocumentDraft : "relates to"
+  DocumentBucket ||--o{ DocumentSourcePoint : "relates to"
+  DocumentBucket ||--o{ DocumentAmendment : "relates to"
+  DocumentBucket ||--o{ DocumentDraft : "relates to"

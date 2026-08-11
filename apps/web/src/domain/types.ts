@@ -48,6 +48,10 @@ export interface Breed {
   authoritySource?: AuthoritySource | null;
   politicalForm?: PoliticalForm | null;
   economicForm?: EconomicForm | null;
+  loquacity?: Loquacity | null;
+  emotionalTemperature?: EmotionalTemperature | null;
+  outlookOrientation?: OutlookOrientation | null;
+  collaborativePosture?: CollaborativePosture | null;
 }
 export interface Culture {
   cultureId: string;
@@ -130,7 +134,7 @@ export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: En
 export interface Definition { definitionId: string; term: string; definition: string; }
 export interface Matrix { matrixId: string; regionId: string; latticeId: string; culturePoolIds: string[]; }
 export interface Layette { layetteId: string; name: string; description: string; }
-export interface PersonalityExpression { personalityExpressionId: string; name: string; loquacity: Loquacity; emotionalTemperature: EmotionalTemperature; outlookOrientation: OutlookOrientation; collaborativePosture: CollaborativePosture; }
+export interface PersonalityExpression { personalityExpressionId: string; name: string; }
 export interface CapabilityDefinition { capabilityDefinitionId: string; key: string; valueKind: CapabilityValueKind; minValue?: number; maxValue?: number; description: string; }
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
 export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }

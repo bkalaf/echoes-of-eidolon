@@ -1,0 +1,21 @@
+%% City geometry
+erDiagram
+  SettlementWorld {
+    string id PK
+  }
+  City {
+    string id PK
+  }
+  Parcel {
+    string id PK
+  }
+  Street {
+    string id PK
+  }
+  Building {
+    string id PK
+  }
+  SettlementWorld ||--o{ City : "relates to"
+  City ||--o{ Parcel : "relates to"
+  City ||--o{ Street : "relates to"
+  City ||--o{ Building : "relates to"

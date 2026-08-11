@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { applyTransitionImport, parseTransitionImportRows } from "../../src/server/transition-import";
 
-const row = { bookA: 1, bookB: 18, name: "Supplied transition", summary: "Supplied summary", transitionId: "TRANSITION-1" };
+const row = { bookA: 4, bookB: 15, name: "Supplied transition", summary: "Supplied summary", transitionId: "TRANSITION-1" };
 
 describe("typed Transition import", () => {
   it("requires one exact approved Book pair and exact fields", () => {
     expect(parseTransitionImportRows([row])).toEqual([row]);
-    expect(() => parseTransitionImportRows([{ ...row, bookB: 2 }])).toThrow();
+    expect(() => parseTransitionImportRows([{ ...row, bookB: 5 }])).toThrow();
     expect(() => parseTransitionImportRows([{ ...row, bookA: 0 }])).toThrow();
     expect(() => parseTransitionImportRows([{ ...row, worldKey: "CONCORD" }])).toThrow();
   });

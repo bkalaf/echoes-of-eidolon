@@ -1,0 +1,17 @@
+%% Authenticated game turn
+flowchart LR
+  Eligibleplayer0["Eligible player"]
+  Playersafecontext1["Player-safe context"]
+  Voiceortext2["Voice or text"]
+  Runtimeport3["Runtime port"]
+  Persistturn4["Persist turn"]
+  NPCresponse5["NPC response"]
+  Discoverychanges6["Discovery changes"]
+  Refreshviewport7["Refresh viewport"]
+  Eligibleplayer0 --> Playersafecontext1
+  Playersafecontext1 --> Voiceortext2
+  Voiceortext2 --> Runtimeport3
+  Runtimeport3 --> Persistturn4
+  Persistturn4 --> NPCresponse5
+  NPCresponse5 --> Discoverychanges6
+  Discoverychanges6 --> Refreshviewport7

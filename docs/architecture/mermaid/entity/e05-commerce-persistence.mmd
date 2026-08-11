@@ -1,0 +1,42 @@
+%% Commerce persistence
+erDiagram
+  User {
+    string id PK
+  }
+  StoreProduct {
+    string id PK
+  }
+  StoreVariant {
+    string id PK
+  }
+  Order {
+    string id PK
+  }
+  OrderLine {
+    string id PK
+  }
+  StripeWebhookEvent {
+    string id PK
+  }
+  OrderPaymentConfirmation {
+    string id PK
+  }
+  PrintfulFulfillmentSubmission {
+    string id PK
+  }
+  OrderRefund {
+    string id PK
+  }
+  OrderReturnEligibility {
+    string id PK
+  }
+  User ||--o{ Order : "relates to"
+  StoreProduct ||--o{ StoreVariant : "relates to"
+  StoreVariant ||--o{ OrderLine : "relates to"
+  Order ||--o{ OrderLine : "relates to"
+  Order ||--o| OrderPaymentConfirmation : "relates to"
+  Order ||--o{ OrderRefund : "relates to"
+  Order ||--o| OrderReturnEligibility : "relates to"
+  StripeWebhookEvent ||--o| OrderPaymentConfirmation : "relates to"
+  StripeWebhookEvent ||--o{ OrderRefund : "relates to"
+  OrderPaymentConfirmation ||--o| PrintfulFulfillmentSubmission : "relates to"

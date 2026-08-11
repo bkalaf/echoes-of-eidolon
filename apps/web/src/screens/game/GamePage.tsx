@@ -1,12 +1,24 @@
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 import { AtlasGlobe } from "../../components/AtlasGlobe";
+import { SettingsPanel } from "../../components/SettingsPanel";
 import { GameShell } from "../../components/shells/Shells";
 import type { AuthorizationRole } from "../../domain/authorization";
 import { calendarContract } from "../../domain/invariants";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
+
+interface PlayerPuzzle {
+  acceptance: null | { acceptedAt: string; endsAt: string; puzzleChallengeAcceptedId: string; remainingSeconds: number };
+  difficultyTier: string;
+  family: string;
+  generatorVersion: number;
+  hints: Array<{ kind: string; level: number; template: string }>;
+  name: string;
+  puzzleBlueprintId: string;
+}
 
 function GameHead({ title, description }: { title: string; description: string }) {
   return <header className="game-page-head"><p className="kicker">PLAYER VIEW</p><h1>{title}</h1><p>{description}</p></header>;
@@ -19,7 +31,18 @@ function DeferredRuntime({ children }: { children: ReactNode }) {
 function RuntimeViewport({ screen }: { screen: PageManifestEntry }) {
   const nearby = screen.screenId === "GAME008";
   const exits = ["GAME009", "GAME010", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId);
-  return <><GameHead title={screen.title} description="The reviewed game viewport preserves freeform voice/text interaction and runtime-owned context." /><section className="game-viewport game-viewport--unavailable"><div className="game-runtime-empty"><DeferredRuntime>NPC identity and dialogue, BottomBar date/time/location, Witness state, and player-known surroundings require an authenticated player-runtime response.</DeferredRuntime><label>Speak or type freely<textarea placeholder="Player runtime unavailable" disabled /></label><button className="button button--gold" disabled>Send unavailable</button></div>{nearby && <aside className="exits"><h2>Nearby</h2><p>No player-known nearby records are available.</p></aside>}{exits && <aside className="exits"><h2>Exits</h2><p>No player-known exit records are available.</p></aside>}</section></>;
+  const [inputText, setInputText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+  const runtime = useQuery({
+    queryKey: ["player-runtime"],
+    queryFn: async () => {
+      const response = await fetch("/api/player/runtime");
+      if (!response.ok) throw new Error("Player-safe runtime context could not be loaded.");
+      return response.json() as Promise<{ location: null | { classification: string; latitude: number; longitude: number; name: string | null; regionId: string; siteId: string; worldKey: string }; nearby: []; exits: []; turns: Array<{ gameTurnId: string; inputText: string; responseText: string | null; status: string }> }>;
+    },
+  });
+  return <><GameHead title={screen.title} description="Authenticated player-safe context with freeform text at the bounded NPC runtime port." /><section className="game-viewport"><div className="game-runtime-empty">{runtime.isPending && <p className="notice">Loading player context…</p>}{runtime.isError && <p className="notice notice--bad">{runtime.error.message}</p>}{runtime.data?.location && <section className="card"><p className="kicker">CURRENT LOCATION · {runtime.data.location.worldKey}</p><h2>{runtime.data.location.name ?? runtime.data.location.siteId}</h2><p>{runtime.data.location.classification} · {runtime.data.location.regionId}</p><p className="muted">{runtime.data.location.latitude}, {runtime.data.location.longitude}</p></section>}{runtime.data?.turns.map((turn) => <article className="card" key={turn.gameTurnId}><p><strong>You</strong> {turn.inputText}</p>{turn.responseText ? <p><strong>Response</strong> {turn.responseText}</p> : <small>{turn.status === "FAILED" ? "The external NPC runtime provider is not configured; the turn was recorded." : turn.status}</small>}</article>)}<form onSubmit={async (event) => { event.preventDefault(); if (!inputText.trim()) return; setSubmitting(true); setMessage(""); const response = await fetch("/api/player/runtime", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ inputText }) }); setInputText(""); setSubmitting(false); setMessage(response.status === 503 ? "Turn recorded. The external NPC runtime provider is not configured." : response.ok ? "Response received." : "The turn could not be recorded."); await runtime.refetch(); }}><label>Speak or type freely<textarea maxLength={4000} onChange={(event) => setInputText(event.target.value)} placeholder="What do you say or do?" value={inputText} /></label><button className="button button--gold" disabled={submitting || inputText.trim().length === 0}>{submitting ? "Sending…" : "Send"}</button>{message && <p className="notice" role="status">{message}</p>}</form></div>{nearby && <aside className="exits"><h2>Nearby</h2><p>{runtime.data?.nearby.length === 0 ? "No player-known nearby records." : "Loading…"}</p></aside>}{exits && <aside className="exits"><h2>Exits</h2><p>{runtime.data?.exits.length === 0 ? "No player-known exits." : "Loading…"}</p></aside>}</section></>;
 }
 
 function Knowledge({ screen }: { screen: PageManifestEntry }) {
@@ -39,7 +62,18 @@ function Maps({ screen }: { screen: PageManifestEntry }) {
 }
 
 function WitnessTrial({ screen }: { screen: PageManifestEntry }) {
-  return <><GameHead title={screen.title} description="Witness trial acceptance and challenge state." /><section className="trial-warning"><h2>Witness Trial</h2><p>The 2,160,000-second acceptance window and the DIRECTIONAL then GUIDED hint sequence are specified. No persisted challenge instance is connected to this screen.</p><p className="notice notice--warn">No countdown starts and no challenge is accepted from this screen.</p><div className="action-row"><a className="button" href="/game">Return to game</a><button className="button button--gold" disabled>Accept unavailable</button></div></section></>;
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [clock, setClock] = useState(() => Date.now());
+  const challenges = useQuery({ queryKey: ["player", "puzzles"], queryFn: async () => { const response = await fetch("/api/player/puzzles"); const result = await response.json() as { error?: string; puzzles?: PlayerPuzzle[] }; if (!response.ok || !result.puzzles) throw new Error(result.error ?? "Assigned challenges could not be loaded."); return result.puzzles; }, retry: false });
+  const puzzle = challenges.data?.[0];
+  useEffect(() => {
+    if (!puzzle?.acceptance) return;
+    const interval = window.setInterval(() => setClock(Date.now()), 1000);
+    return () => window.clearInterval(interval);
+  }, [puzzle?.acceptance]);
+  const remainingSeconds = puzzle?.acceptance ? Math.max(0, Math.ceil((new Date(puzzle.acceptance.endsAt).getTime() - clock) / 1000)) : null;
+  return <><GameHead title={screen.title} description="Explicit Witness Trial acceptance, immutable challenge timing, and ordered hints." /><section className="trial-warning"><h2>Witness Trial</h2>{challenges.isPending ? <p className="notice">Loading assigned challenge…</p> : challenges.isError ? <p className="notice notice--bad" role="alert">{challenges.error.message}</p> : !puzzle ? <p>No Puzzle Blueprint is assigned to the current campaign.</p> : <><p><strong>{puzzle.name}</strong></p><p>{puzzle.family} · {puzzle.difficultyTier} · generator version {puzzle.generatorVersion}</p>{puzzle.acceptance ? <><p className="notice notice--good" role="timer">{remainingSeconds} seconds remaining</p><p>Accepted {new Date(puzzle.acceptance.acceptedAt).toLocaleString()} · ends {new Date(puzzle.acceptance.endsAt).toLocaleString()}</p><ol>{puzzle.hints.map((hint) => <li key={hint.level}><strong>{hint.kind}</strong>: {hint.template}</li>)}</ol></> : <><p>The acceptance action starts the exact 2,160,000-second challenge window. It does not begin while this warning is merely viewed.</p><button className="button button--gold" disabled={busy} onClick={async () => { setBusy(true); setMessage(""); const response = await fetch("/api/player/puzzles", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ generatorVersion: puzzle.generatorVersion, puzzleBlueprintId: puzzle.puzzleBlueprintId }) }); const result = await response.json() as { error?: string }; setBusy(false); setMessage(response.ok ? "Challenge accepted." : result.error ?? "Challenge acceptance failed."); if (response.ok) await challenges.refetch(); }}>{busy ? "Accepting…" : "Accept challenge"}</button></>}{message && <p className="notice" role="status">{message}</p>}</>}<div className="action-row"><a className="button" href="/game">Return to game</a></div></section></>;
 }
 
 function Companions({ screen }: { screen: PageManifestEntry }) {
@@ -47,14 +81,17 @@ function Companions({ screen }: { screen: PageManifestEntry }) {
 }
 
 function Calendar({ screen }: { screen: PageManifestEntry }) {
-  const countedWeekdays = Array.from({ length: calendarContract.countedWeekdays }, (_, index) => `Counted weekday ${index + 1}`);
-  const monthDays = Array.from({ length: calendarContract.daysPerMonth }, (_, index) => index + 1);
+  const [monthIndex, setMonthIndex] = useState(0);
+  const calendar = useQuery({ queryKey: ["player", "calendar"], queryFn: async () => { const response = await fetch("/api/player/calendar"); const result = await response.json() as { months?: Array<{ monthName: string; monthNumber: number; days: Array<{ calendarOrdinalId: string; dayOfMonth: number; weekdayName: string }> }> }; if (!response.ok || !result.months) throw new Error("Calendar ordinals could not be loaded."); return result.months; }, retry: false });
+  const month = calendar.data?.[monthIndex];
+  const countedWeekdays = month ? [...new Set(month.days.map((day) => day.weekdayName))] : Array.from({ length: calendarContract.countedWeekdays }, (_, index) => `Counted weekday ${index + 1}`);
+  const monthDays = month?.days ?? Array.from({ length: calendarContract.daysPerMonth }, (_, index) => ({ calendarOrdinalId: `unavailable-${index + 1}`, dayOfMonth: index + 1, weekdayName: countedWeekdays[index % countedWeekdays.length]! }));
   const preYearDays = [25, 26, 27] as const;
-  return <><GameHead title={screen.title} description="Authoritative calendar structure without invented ordinal names, dates, or events." /><section className="calendar"><header><button className="button" disabled>Previous</button><div><h2>Month unavailable</h2><p>{calendarContract.monthsPerYear} months per year · {calendarContract.daysPerMonth} days per month</p></div><button className="button" disabled>Next</button></header><div className="pre-year-days" aria-label="Pre-year story days"><h3>Pre-year story days</h3>{preYearDays.map((day) => <span key={day}>Yearsend {day}</span>)}</div><div className="calendar-grid" role="grid" aria-label="Calendar month">{countedWeekdays.map((day) => <strong key={day}>{day}</strong>)}{monthDays.map((day) => <span className="calendar-day" key={day}>{day}</span>)}</div><p className="notice notice--warn">{calendarContract.excludedWeekday} is hidden and excluded from the counted week. Exact weekday and month names, current date, and visible event rows require the authoritative ordinal/runtime source rows.</p></section></>;
+  return <><GameHead title={screen.title} description="Authoritative persisted calendar ordinals and governed pre-year story days." /><section className="calendar">{calendar.isError && <p className="notice notice--bad" role="alert">{calendar.error.message}</p>}<header><button className="button" disabled={!month || monthIndex === 0} onClick={() => setMonthIndex((index) => index - 1)}>Previous</button><div><h2>{month?.monthName ?? (calendar.isPending ? "Loading month…" : "Month unavailable")}</h2><p>{calendarContract.monthsPerYear} months per year · {calendarContract.daysPerMonth} days per month</p></div><button className="button" disabled={!month || monthIndex === calendar.data!.length - 1} onClick={() => setMonthIndex((index) => index + 1)}>Next</button></header><div className="pre-year-days" aria-label="Pre-year story days"><h3>Pre-year story days</h3>{preYearDays.map((day) => <span key={day}>Yearsend {day}</span>)}</div><div className="calendar-grid" role="grid" aria-label="Calendar month">{countedWeekdays.map((day) => <strong key={day}>{day}</strong>)}{monthDays.map((day) => <span className="calendar-day" key={day.calendarOrdinalId}>{day.dayOfMonth}</span>)}</div><p className={`notice ${month ? "notice--good" : "notice--warn"}`}>{calendarContract.excludedWeekday} is hidden and excluded from the counted week. {month ? "Month and weekday names come from persisted CalendarOrdinal records." : "Exact weekday and month names require the authoritative CalendarOrdinal rows."}</p></section></>;
 }
 
 function SettingsOverlay({ screen }: { screen: PageManifestEntry }) {
-  return <><RuntimeViewport screen={screen} /><div className="modal-backdrop game-modal"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="game-settings-title"><p className="kicker">SHARED SETTINGS</p><h2 id="game-settings-title">Game Settings</h2><p>The reviewed settings controls have no supplied persistence owner or stored-value contract.</p><p className="notice notice--warn">Settings remain unavailable instead of being stored in an invented browser or database schema.</p><a className="button" href="/game">Close</a></section></div></>;
+  return <><RuntimeViewport screen={screen} /><div className="modal-backdrop game-modal"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="game-settings-title"><p className="kicker">SHARED SETTINGS</p><h2 id="game-settings-title">Settings</h2><p>The same persisted settings owner is used here, at <a href="/settings">/settings</a>, and in Account.</p><SettingsPanel closeHref="/game" /></section></div></>;
 }
 
 function SignedInGamePage({ screen }: { screen: PageManifestEntry }) {

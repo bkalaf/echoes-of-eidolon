@@ -1,0 +1,13 @@
+%% Puzzle blueprint versioning
+flowchart LR
+  Stableblueprintroo0["Stable blueprint root"]
+  Createimmutablever1["Create immutable version"]
+  Deterministicgener2["Deterministic generator"]
+  Twoanswerfreehints3["Two answer-free hints"]
+  Validationpreview4["Validation preview"]
+  Publishversion5["Publish version"]
+  Stableblueprintroo0 --> Createimmutablever1
+  Createimmutablever1 --> Deterministicgener2
+  Deterministicgener2 --> Twoanswerfreehints3
+  Twoanswerfreehints3 --> Validationpreview4
+  Validationpreview4 --> Publishversion5

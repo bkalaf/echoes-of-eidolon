@@ -290,15 +290,126 @@ button, input, select, textarea { font: inherit; }
 .map-data-pin.selected { width: .9rem; height: .9rem; background: #fff5c7; z-index: 2; }
 .selected-row { background: rgb(216 165 45 / 12%); }
 .atlas-globe-wrap { display: grid; gap: 10px; }
-.atlas-globe { width: min(620px, 100%); aspect-ratio: 1; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 50%; background: #020b14; box-shadow: inset -55px -25px 90px rgb(0 0 0 / 70%), 0 0 35px rgb(78 180 255 / 24%); touch-action: none; cursor: grab; }
+.atlas-globe { width: min(620px, 100%); aspect-ratio: 1; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 50%; background: #020b14; box-shadow: 0 0 35px rgb(78 180 255 / 24%); touch-action: none; cursor: grab; }
 .atlas-globe:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .atlas-globe:active { cursor: grabbing; }
-.atlas-globe > img { width: 200%; height: 100%; position: absolute; left: -50%; top: 0; object-fit: cover; pointer-events: none; user-select: none; }
+.atlas-globe > canvas, .atlas-globe-markers { width: 100%; height: 100%; position: absolute; inset: 0; }
+.atlas-globe > canvas { display: block; }
+.atlas-globe-markers { pointer-events: none; }
+.atlas-globe-markers .map-data-pin { pointer-events: auto; }
+.atlas-globe-message { position: absolute; z-index: 3; inset: 0; display: grid; place-items: center; margin: 0; padding: 20%; background: rgb(2 11 20 / 72%); color: #b9d6ed; text-align: center; }
+.atlas-globe-message--error { color: #ffb9b2; }
+.atlas-globe-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.atlas-globe-controls label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
 @media (prefers-reduced-motion: reduce) {
-  .atlas-globe, .atlas-globe > img, .map-data-pin { scroll-behavior: auto; transition: none !important; }
+  .atlas-globe, .map-data-pin { scroll-behavior: auto; transition: none !important; }
 }
+
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
+
+html[data-high-contrast="true"] {
+  --line: #4e91b9;
+  --muted: #bfd4e3;
+  --text: #f4f9fc;
+}
+
+.settings-panel { max-width: 920px; }
+.settings-options { display: grid; gap: .7rem; }
+.settings-options label { align-items: center; display: flex; gap: .6rem; }
+.settings-options input[type="range"] { flex: 1; }
 .campaign-table { min-width: 1350px; font-size: 11px; }
 .campaign-table td, .campaign-table th { white-space: nowrap; }
+.campaign-planner-card { padding: 8px; }
+.campaign-planner-grid {
+  display: grid;
+  min-width: 1850px;
+  grid-template-columns: 58px repeat(16, minmax(108px, 1fr));
+  grid-template-rows: 38px repeat(18, 44px);
+  border-top: 1px solid var(--line-2);
+  border-left: 1px solid var(--line-2);
+  font-size: 11px;
+}
+.campaign-planner-row { display: contents; }
+.campaign-planner-header,
+.campaign-planner-book,
+.campaign-planner-cell {
+  min-width: 0;
+  border-right: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line-2);
+}
+.campaign-planner-header {
+  z-index: 3;
+  padding: 10px 7px;
+  overflow: hidden;
+  background: #071725;
+  color: #7db9da;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.campaign-planner-book {
+  display: grid;
+  place-items: center;
+  background: #071725;
+  color: var(--gold);
+  font: 16px Georgia, serif;
+}
+.campaign-planner-cell {
+  z-index: 0;
+  padding: 0;
+  overflow: hidden;
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: #061725;
+  color: transparent;
+}
+.campaign-planner-row:nth-of-type(odd) .campaign-planner-cell { background: #051521; }
+.campaign-planner-cell .campaign-drop-target {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+}
+.campaign-planner-cell .campaign-drop-target:hover,
+.campaign-planner-cell .campaign-drop-target:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+  background: #0a2638;
+  color: #8fb2c7;
+}
+.campaign-placement-card {
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding: 7px 5px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #0c2a3e;
+  color: #d6e7f2;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  text-align: center;
+  white-space: normal;
+}
+.campaign-placement-card[draggable="true"] { cursor: grab; }
+.campaign-placement-card[draggable="true"]:active { cursor: grabbing; }
+.campaign-planner-card .notice { margin-bottom: 8px; }
+.campaign-planner-card .notice span { display: block; margin-top: 4px; }
 .city-canvas { min-height: 520px; display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 8px; background: linear-gradient(135deg, #061725, #0d2b40); color: #79b8d9; }
 
 .game-page { min-height: calc(100vh - 64px); padding: 20px; }

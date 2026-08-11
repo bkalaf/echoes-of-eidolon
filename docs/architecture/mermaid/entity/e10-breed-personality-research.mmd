@@ -1,0 +1,25 @@
+%% Breed personality research
+erDiagram
+  Breed {
+    string id PK
+  }
+  BreedResearchValue {
+    string id PK
+  }
+  BreedResearchEvidence {
+    string id PK
+  }
+  Research {
+    string id PK
+  }
+  Citation {
+    string id PK
+  }
+  Source {
+    string id PK
+  }
+  Breed ||--o{ BreedResearchValue : "relates to"
+  Source ||--o{ Citation : "relates to"
+  Citation ||--o{ Research : "relates to"
+  Research ||--o| BreedResearchEvidence : "relates to"
+  BreedResearchValue ||--o{ BreedResearchEvidence : "relates to"

@@ -1,0 +1,13 @@
+%% Company contact submission
+flowchart LR
+  Selecttopic0["Select topic"]
+  Validatefields1["Validate fields"]
+  PersistContactRequ2["Persist ContactRequest"]
+  Routerecipient3["Route recipient"]
+  Resenddelivery4["Resend delivery"]
+  Receiptandtarget5["Receipt and target"]
+  Selecttopic0 --> Validatefields1
+  Validatefields1 --> PersistContactRequ2
+  PersistContactRequ2 --> Routerecipient3
+  Routerecipient3 --> Resenddelivery4
+  Resenddelivery4 --> Receiptandtarget5

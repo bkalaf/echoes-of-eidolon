@@ -9,6 +9,7 @@ interface ManagedAssetRecord {
   objectKey: string;
   publicUrl: string;
   sha256: string;
+  technicalMetadata: Record<string, unknown>;
 }
 
 describe("managed asset manifest", () => {
@@ -24,6 +25,7 @@ describe("managed asset manifest", () => {
       expect(record.objectKey).toMatch(new RegExp(`^assets/${record.sha256}\\.[a-z0-9]+$`));
       expect(record.publicUrl).toBe(`https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/${record.objectKey}`);
       expect(record.byteSize).toBeGreaterThan(0);
+      expect(record.technicalMetadata).toEqual(expect.objectContaining({ kind: expect.any(String) }));
     }
   });
 

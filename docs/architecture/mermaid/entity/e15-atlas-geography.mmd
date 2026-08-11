@@ -1,0 +1,12 @@
+%% Atlas geography
+erDiagram
+  Site {
+    string id PK
+  }
+  PointOfInterest {
+    string id PK
+  }
+  Settlement {
+    string id PK
+  }
+  Site ||--o| Settlement : "relates to"
