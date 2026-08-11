@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { z } from "zod";
 
 import type { PrismaClient } from "../generated/prisma/client";
+import { resolveSettlementWorldName, type AtlasWorldKey } from "../domain/atlas-world-history";
 import { getDatabase } from "./database";
 
 const geometrySchema = z.unknown().refine(
@@ -51,19 +52,26 @@ export async function createCityProject(
 ) {
   const parsed = createCityProjectSchema.parse(input);
   const settlementWorld = await database.settlementWorld.findUnique({
-    include: { settlement: true },
+    include: { settlement: { include: { site: true } } },
     where: { settlementWorldId: parsed.settlementWorldId },
   });
   if (!settlementWorld) throw new CityBuilderConflictError(`SettlementWorld ${parsed.settlementWorldId} does not exist.`);
-  if (!settlementWorld.settlement.name) {
-    throw new CityBuilderConflictError("The Settlement must have a canonical name before a City geometry project can be created.");
+
+  const cityName = resolveSettlementWorldName({
+    fallbackName: settlementWorld.settlement.name,
+    regionId: settlementWorld.settlement.site.regionId,
+    worldKey: settlementWorld.worldKey as AtlasWorldKey,
+  });
+  if (!cityName) {
+    throw new CityBuilderConflictError("The SettlementWorld must have a resolvable canonical name before a City geometry project can be created.");
   }
+
   const existing = await database.city.findUnique({ where: { settlementWorldId: parsed.settlementWorldId } });
   if (existing) throw new CityBuilderConflictError(`SettlementWorld ${parsed.settlementWorldId} already owns City project ${existing.cityId}.`);
   return database.city.create({
     data: {
       cityId: randomUUID(),
-      name: settlementWorld.settlement.name,
+      name: cityName,
       settlementWorldId: parsed.settlementWorldId,
     },
     include: cityInclude,
