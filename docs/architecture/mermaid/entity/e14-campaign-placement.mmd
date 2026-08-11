@@ -6,6 +6,12 @@ erDiagram
   CampaignPlacement {
     string id PK
   }
+  BookGroupingDefinition {
+    string id PK
+  }
+  BookGroupingValue {
+    string id PK
+  }
   Pillar {
     string id PK
   }
@@ -25,3 +31,4 @@ erDiagram
     string id PK
   }
   Campaign ||--o{ CampaignPlacement : "relates to"
+  BookGroupingDefinition ||--o{ BookGroupingValue : "relates to"

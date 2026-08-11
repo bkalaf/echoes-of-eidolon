@@ -29,6 +29,7 @@ const suppliedEnumNames = [
   "CalendarTrigger", "SpeciesKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
   "EntityType", "Heirloom", "CitationQuality", "SourceType", "ContributorType", "ResearchCategory",
   "DepartmentWitnessPathStatus", "PuzzleSharedComponentId", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
+  "BookGroupingType", "BookGroupingEditability",
   "FriendInvitationRequestStatus", "ExternalBulkApiState", "MembershipGrantSource", "PerkStatus", "PaymentProvider",
   "FulfillmentProvider", "ProtagonistImportance", "ReleaseNotesStatus", "ReleaseAudience", "ReleaseNoteCategory",
   "KnowledgeBaseDisclosureMode", "PuzzleHintKind", "BulkOperation", "ImportAliasDisposition", "ImportResultState",

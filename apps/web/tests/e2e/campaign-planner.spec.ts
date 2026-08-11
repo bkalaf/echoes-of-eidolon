@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("Campaign Planner renders one card across its inclusive Book range", async ({ page }) => {
+test("Campaign Planner renders authoritative contiguous and mirrored Book geometry", async ({ page }) => {
   await page.route("**/api/auth/get-session", async (route) => {
     await route.fulfill({
       body: JSON.stringify({
@@ -16,12 +16,20 @@ test("Campaign Planner renders one card across its inclusive Book range", async 
       body: JSON.stringify({
         campaign: {
           name: "Concord Campaign",
-          placements: [{
-            bookNumbers: [7, 8, 9, 10, 11, 12],
-            campaignPlacementId: "six-book-browser-check",
-            objectId: "LESSON-SIX-BOOKS",
-            objectType: "LESSON",
-          }],
+          placements: [
+            {
+              bookNumbers: [7, 8, 9, 10, 11, 12],
+              campaignPlacementId: "six-book-browser-check",
+              objectId: "LESSON-SIX-BOOKS",
+              objectType: "LESSON",
+            },
+            {
+              bookNumbers: [4, 15],
+              campaignPlacementId: "mirrored-browser-check",
+              objectId: "A",
+              objectType: "COMPANION",
+            },
+          ],
         },
       }),
       contentType: "application/json",
@@ -37,4 +45,11 @@ test("Campaign Planner renders one card across its inclusive Book range", async 
   await expect(card).toHaveAttribute("data-book-span", "6");
   await expect(card).toHaveCSS("grid-row-start", "8");
   await expect(card).toHaveCSS("grid-row-end", "span 6");
+
+  const mirrored = page.locator('[data-logical-placement-id="mirrored-browser-check"]');
+  await expect(mirrored).toHaveCount(2);
+  await expect(mirrored.nth(0)).toHaveAttribute("data-start-book", "4");
+  await expect(mirrored.nth(1)).toHaveAttribute("data-start-book", "15");
+  await expect(mirrored.nth(0)).toHaveAttribute("data-book-span", "1");
+  await expect(mirrored.nth(1)).toHaveAttribute("data-book-span", "1");
 });

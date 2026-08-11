@@ -52,7 +52,7 @@ function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; scr
   const isInvitationTask = ["ADM003", "ADM004", "ADM006"].includes(screen.screenId);
   const isAccountTask = ["ADM002", "ADM005"].includes(screen.screenId);
   const isAtlasTask = screen.path?.startsWith("/admin/atlas");
-  const isCampaignTask = screen.path?.startsWith("/admin/campaign");
+  const isCampaignTask = screen.path?.startsWith("/admin/campaign") || screen.screenId === "CAM006";
   const isPuzzleTask = screen.path?.startsWith("/admin/puzzles");
   const isAssetPromptTask = screen.path?.startsWith("/admin/assets") || screen.path?.startsWith("/admin/prompts");
   const isCommerceTask = screen.path?.startsWith("/admin/store") || screen.path?.startsWith("/admin/orders");

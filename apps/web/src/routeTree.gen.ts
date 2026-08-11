@@ -46,6 +46,8 @@ import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/ac
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminAssetsIndexRouteImport } from './routes/api/admin/assets/index'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminCampaignGroupingsRouteImport } from './routes/api/admin/campaign/groupings'
+import { Route as ApiAdminCampaignLinkedMoveRouteImport } from './routes/api/admin/campaign/linked-move'
 import { Route as ApiAdminCapabilitiesInspectorRouteImport } from './routes/api/admin/capabilities/inspector'
 import { Route as ApiAdminCapabilitiesScoringRouteImport } from './routes/api/admin/capabilities/scoring'
 import { Route as ApiAdminCommerceIndexRouteImport } from './routes/api/admin/commerce/index'
@@ -255,6 +257,18 @@ const ApiAdminBetaInvitationsIndexRoute =
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminCampaignGroupingsRoute =
+  ApiAdminCampaignGroupingsRouteImport.update({
+    id: '/groupings',
+    path: '/groupings',
+    getParentRoute: () => ApiAdminCampaignRoute,
+  } as any)
+const ApiAdminCampaignLinkedMoveRoute =
+  ApiAdminCampaignLinkedMoveRouteImport.update({
+    id: '/linked-move',
+    path: '/linked-move',
+    getParentRoute: () => ApiAdminCampaignRoute,
+  } as any)
 const ApiAdminCapabilitiesInspectorRoute =
   ApiAdminCapabilitiesInspectorRouteImport.update({
     id: '/inspector',
@@ -373,7 +387,7 @@ export interface FileRoutesByFullPath {
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
-  '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
@@ -393,6 +407,8 @@ export interface FileRoutesByFullPath {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
+  '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
@@ -430,7 +446,7 @@ export interface FileRoutesByTo {
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
-  '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
@@ -450,6 +466,8 @@ export interface FileRoutesByTo {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
+  '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
@@ -488,7 +506,7 @@ export interface FileRoutesById {
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
-  '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
@@ -508,6 +526,8 @@ export interface FileRoutesById {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
+  '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
@@ -567,6 +587,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/campaign/groupings'
+    | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
@@ -624,6 +646,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/campaign/groupings'
+    | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
@@ -681,6 +705,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/campaign/groupings'
+    | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
@@ -719,7 +745,7 @@ export interface RootRouteChildren {
   FeaturesFreeToPlayRoute: typeof FeaturesFreeToPlayRoute
   ApiAccountMembershipRoute: typeof ApiAccountMembershipRoute
   ApiAccountSettingsRoute: typeof ApiAccountSettingsRoute
-  ApiAdminCampaignRoute: typeof ApiAdminCampaignRoute
+  ApiAdminCampaignRoute: typeof ApiAdminCampaignRouteWithChildren
   ApiAdminCapabilitiesRoute: typeof ApiAdminCapabilitiesRouteWithChildren
   ApiAdminDocumentsRoute: typeof ApiAdminDocumentsRoute
   ApiAdminReleasesRoute: typeof ApiAdminReleasesRouteWithChildren
@@ -1019,6 +1045,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/campaign/groupings': {
+      id: '/api/admin/campaign/groupings'
+      path: '/groupings'
+      fullPath: '/api/admin/campaign/groupings'
+      preLoaderRoute: typeof ApiAdminCampaignGroupingsRouteImport
+      parentRoute: typeof ApiAdminCampaignRoute
+    }
+    '/api/admin/campaign/linked-move': {
+      id: '/api/admin/campaign/linked-move'
+      path: '/linked-move'
+      fullPath: '/api/admin/campaign/linked-move'
+      preLoaderRoute: typeof ApiAdminCampaignLinkedMoveRouteImport
+      parentRoute: typeof ApiAdminCampaignRoute
+    }
     '/api/admin/capabilities/inspector': {
       id: '/api/admin/capabilities/inspector'
       path: '/inspector'
@@ -1148,6 +1188,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ApiAdminCampaignRouteChildren {
+  ApiAdminCampaignGroupingsRoute: typeof ApiAdminCampaignGroupingsRoute
+  ApiAdminCampaignLinkedMoveRoute: typeof ApiAdminCampaignLinkedMoveRoute
+}
+
+const ApiAdminCampaignRouteChildren: ApiAdminCampaignRouteChildren = {
+  ApiAdminCampaignGroupingsRoute: ApiAdminCampaignGroupingsRoute,
+  ApiAdminCampaignLinkedMoveRoute: ApiAdminCampaignLinkedMoveRoute,
+}
+
+const ApiAdminCampaignRouteWithChildren =
+  ApiAdminCampaignRoute._addFileChildren(ApiAdminCampaignRouteChildren)
+
 interface ApiAdminCapabilitiesScoringRouteChildren {
   ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute: typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
 }
@@ -1218,7 +1271,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesFreeToPlayRoute: FeaturesFreeToPlayRoute,
   ApiAccountMembershipRoute: ApiAccountMembershipRoute,
   ApiAccountSettingsRoute: ApiAccountSettingsRoute,
-  ApiAdminCampaignRoute: ApiAdminCampaignRoute,
+  ApiAdminCampaignRoute: ApiAdminCampaignRouteWithChildren,
   ApiAdminCapabilitiesRoute: ApiAdminCapabilitiesRouteWithChildren,
   ApiAdminDocumentsRoute: ApiAdminDocumentsRoute,
   ApiAdminReleasesRoute: ApiAdminReleasesRouteWithChildren,

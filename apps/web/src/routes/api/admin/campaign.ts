@@ -4,7 +4,7 @@ import { z } from "zod";
 import { WorldKey } from "../../../generated/prisma/enums";
 import { requireAdministration } from "../../../server/access";
 import { CampaignBookRangeError } from "../../../domain/campaign-planner";
-import { campaignPlacementInputSchema, getCampaign, saveCampaignPlacement } from "../../../server/campaigns";
+import { campaignPlacementInputSchema, getCampaignWorkspace, saveCampaignPlacement } from "../../../server/campaigns";
 
 export const Route = createFileRoute("/api/admin/campaign")({
   server: { handlers: {
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/admin/campaign")({
       try {
         await requireAdministration(request);
         const worldKey = z.enum(WorldKey).parse(new URL(request.url).searchParams.get("world"));
-        return Response.json({ campaign: await getCampaign(worldKey) });
+        return Response.json(await getCampaignWorkspace(worldKey));
       } catch (error) { if (error instanceof Response) return error; if (error instanceof z.ZodError) return Response.json({ error: "A valid campaign world is required." }, { status: 400 }); throw error; }
     },
     POST: async ({ request }) => {

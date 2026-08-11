@@ -6,8 +6,8 @@
 - Active v11.3 source rows: 269
 - Application registry rows: 269
 - V3 excluded base rows: 0
-- V3 amendment rows: 5
-- Active mechanically derived rows: 274
+- V3 amendment rows: 7
+- Active mechanically derived rows: 276
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -18,7 +18,7 @@
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- V3 amendment manifest SHA-256: `9305b1c48a817caa53f1dc743e727acf47f59d0c9ab8ac8a0f512a055a439c57`
+- V3 amendment manifest SHA-256: `78d605a3b8ce8f53b30802c3c96c4f5afc6e1c567b81c7a5b349251737a06d04`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -303,6 +303,8 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 272 | 275 | CAP03 | Address and Condition Builder | /admin/capabilities/condition-builder | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
 | 273 | 276 | CAP04 | Evidence Scoring Policies | /admin/capabilities/scoring | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
 | 274 | 277 | CAP05 | Event and Projection Inspector | /admin/capabilities/inspector | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
+| 275 | 278 | CAM006 | Book Grouping Membership Editor | state-only | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
+| 276 | 279 | CAM007 | Campaign Planner — Custom Column View | /admin/campaign/planner | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
 
 ## Supplemental source PNGs
 

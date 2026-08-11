@@ -45,6 +45,24 @@
       "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
       "originalPage": 277,
       "reviewOrder": 274
+    },
+    {
+      "page": 278,
+      "screenId": "CAM006",
+      "title": "Book Grouping Membership Editor",
+      "path": null,
+      "source": "V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2",
+      "originalPage": 278,
+      "reviewOrder": 275
+    },
+    {
+      "page": 279,
+      "screenId": "CAM007",
+      "title": "Campaign Planner — Custom Column View",
+      "path": "/admin/campaign/planner",
+      "source": "V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2",
+      "originalPage": 279,
+      "reviewOrder": 276
     }
   ]
 }

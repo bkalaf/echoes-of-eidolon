@@ -1100,6 +1100,22 @@ enum CampaignObjectType {
   HISTORICAL_INTERLUDE
 }
 
+enum BookGroupingType {
+  ATROCITY
+  DUOLOGY
+  EXODUS
+  LESSON
+  PILLAR
+  CAMPAIGN
+  DISJOINT_TRILOGY
+  OPPOSING_FACTION
+}
+
+enum BookGroupingEditability {
+  EDITABLE
+  LOCKED
+}
+
 enum DonationCheckoutStatus {
   PENDING
   CONFIRMED
@@ -2598,6 +2614,29 @@ model CampaignPlacement {
 
   @@unique([campaignId, objectType, objectId])
   @@unique([campaignId, ordinal])
+}
+
+model BookGroupingDefinition {
+  bookGroupingDefinitionId String                   @id
+  groupingType             BookGroupingType         @unique
+  editability              BookGroupingEditability
+  values                   BookGroupingValue[]
+}
+
+model BookGroupingValue {
+  bookGroupingValueId      String                 @id
+  bookGroupingDefinitionId String
+  worldKey                 WorldKey
+  logicalKey               String
+  bookNumbers              Int[]
+  valueRefType             EntityType?
+  valueRefId               String?
+  ordinal                  Int
+  definition               BookGroupingDefinition @relation(fields: [bookGroupingDefinitionId], references: [bookGroupingDefinitionId], onDelete: Restrict)
+
+  @@unique([bookGroupingDefinitionId, worldKey, logicalKey], map: "BookGroupingValue_definition_world_logical_key")
+  @@unique([bookGroupingDefinitionId, worldKey, ordinal], map: "BookGroupingValue_definition_world_ordinal_key")
+  @@index([worldKey, ordinal])
 }
 
 model CalendarOrdinal {

@@ -1,15 +1,17 @@
 %% Campaign planner persistence
 flowchart LR
   Worldcontext0["World context"]
-  Eighteenbooks1["Eighteen books"]
-  Draggovernedobject2["Drag governed object"]
-  Validatespan3["Validate span"]
-  Validatelinkedgrou4["Validate linked group"]
-  Persistassignment5["Persist assignment"]
-  Returnplannerproje6["Return planner projection"]
-  Worldcontext0 --> Eighteenbooks1
-  Eighteenbooks1 --> Draggovernedobject2
-  Draggovernedobject2 --> Validatespan3
-  Validatespan3 --> Validatelinkedgrou4
-  Validatelinkedgrou4 --> Persistassignment5
-  Persistassignment5 --> Returnplannerproje6
+  EighteenBookrows1["Eighteen Book rows"]
+  Draggovernedobject2["Drag governed object or edit explicit grouping membership"]
+  DeriveexactBookseg3["Derive exact Book segments"]
+  Validatecompleteli4["Validate complete linked group or three-value partition"]
+  Commitoneserializa5["Commit one serializable transaction"]
+  Returnplacementspl6["Return placements plus derived grouping projection"]
+  Rendereachcontiguo7["Render each contiguous segment by row span"]
+  Worldcontext0 --> EighteenBookrows1
+  EighteenBookrows1 --> Draggovernedobject2
+  Draggovernedobject2 --> DeriveexactBookseg3
+  DeriveexactBookseg3 --> Validatecompleteli4
+  Validatecompleteli4 --> Commitoneserializa5
+  Commitoneserializa5 --> Returnplacementspl6
+  Returnplacementspl6 --> Rendereachcontiguo7

@@ -206,6 +206,23 @@ describe("persistence contract", () => {
     expect(migration).toContain("No faction standing weights are owner-authorized");
   });
 
+  it("persists only editable explicit Book grouping membership and validates the full partition", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810270000_campaign_book_groupings/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "BookGroupingDefinition"');
+    expect(migration).toContain('CREATE TABLE "BookGroupingValue"');
+    expect(migration).toContain("'BOOK-GROUPING-DISJOINT-TRILOGY', 'DISJOINT_TRILOGY', 'EDITABLE'");
+    expect(migration).toContain("'BOOK-GROUPING-OPPOSING-FACTION', 'OPPOSING_FACTION', 'LOCKED'");
+    expect(migration).toContain("Only editable DISJOINT_TRILOGY values may be persisted");
+    expect(migration).toContain('cardinality(NEW."bookNumbers")');
+    expect(migration).toContain('CREATE CONSTRAINT TRIGGER "BookGroupingValue_partition"');
+    expect(migration).toContain("DEFERRABLE INITIALLY DEFERRED");
+    expect(migration).toContain("must contain three values covering Books 1 through 18 exactly once");
+    expect(migration).not.toMatch(/"startBook"|"endBook"/);
+  });
+
   it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),

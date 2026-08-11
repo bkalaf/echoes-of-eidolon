@@ -1,6 +1,25 @@
 import { describe, expect, it } from "vitest";
 
-import { CampaignBookRangeError, campaignBookRange, campaignLinkedGroups, campaignPlacementBookRange, departmentCampaignDisposition, duologyCounterpart, isCanonicalDuologyPair, isValidCampaignSpan, linkedCampaignGroup } from "../../src/domain/campaign-planner";
+import {
+  CampaignBookRangeError,
+  campaignBookRange,
+  campaignBookSegments,
+  campaignBooksForDrop,
+  campaignLinkedGroups,
+  campaignObjectTypes,
+  campaignPlannerColumns,
+  campaignPlacementBookRange,
+  campaignPlacementBookSegments,
+  defaultDisjointTrilogy,
+  departmentCampaignDisposition,
+  duologyCounterpart,
+  isCanonicalDuologyPair,
+  isValidCampaignSpan,
+  linkedCampaignGroup,
+  opposingFactionGrouping,
+  plannerColumnForObjectType,
+  validateDisjointTrilogy,
+} from "../../src/domain/campaign-planner";
 
 describe("campaign planner contracts", () => {
   it.each([
@@ -27,9 +46,60 @@ describe("campaign planner contracts", () => {
     expect(isValidCampaignSpan("COMPANION", [2, 3])).toBe(false);
   });
 
-  it("uses canonical duology endpoints as an inclusive visual range", () => {
-    expect(campaignPlacementBookRange("COMPANION", [4, 15])).toEqual({ endBook: 15, rowSpan: 12, startBook: 4 });
-    expect(campaignPlacementBookRange("TRANSITION", [9, 10])).toEqual({ endBook: 10, rowSpan: 2, startBook: 9 });
+  it("projects canonical duology membership as two exact Book segments", () => {
+    expect(campaignPlacementBookSegments("COMPANION", [4, 15])).toEqual([
+      { endBook: 4, rowSpan: 1, startBook: 4 },
+      { endBook: 15, rowSpan: 1, startBook: 15 },
+    ]);
+    expect(campaignPlacementBookSegments("TRANSITION", [9, 10])).toEqual([
+      { endBook: 9, rowSpan: 1, startBook: 9 },
+      { endBook: 10, rowSpan: 1, startBook: 10 },
+    ]);
+    expect(() => campaignPlacementBookRange("COMPANION", [4, 15])).toThrow(/multiple visual Book segments/);
+  });
+
+  it("projects non-contiguous explicit membership without filling its gaps", () => {
+    expect(campaignBookSegments([1, 2, 3, 10, 11, 12])).toEqual([
+      { endBook: 3, rowSpan: 3, startBook: 1 },
+      { endBook: 12, rowSpan: 3, startBook: 10 },
+    ]);
+  });
+
+  it("validates the editable Disjoint Trilogy as a complete three-value partition", () => {
+    for (const world of ["CONCORD", "RUIN", "SCHISM"] as const) {
+      const projected = validateDisjointTrilogy(defaultDisjointTrilogy(world), world);
+      expect(projected).toHaveLength(3);
+      expect(projected.flatMap((value) => value.bookNumbers).sort((a, b) => a - b)).toEqual(
+        Array.from({ length: 18 }, (_, index) => index + 1),
+      );
+      expect(projected.every((value) => value.segments.length === 2 && value.segments.every((segment) => segment.rowSpan === 3))).toBe(true);
+    }
+    const overlapping = defaultDisjointTrilogy("CONCORD").map((value) => ({ ...value, bookNumbers: [...value.bookNumbers] }));
+    overlapping[1]!.bookNumbers = [3, 4, 5, 13, 14, 15];
+    expect(() => validateDisjointTrilogy(overlapping, "CONCORD")).toThrow(/exactly once/);
+  });
+
+  it("derives locked Opposing Faction membership without persisting an editable choice", () => {
+    expect(opposingFactionGrouping("CONCORD")).toMatchObject({ logicalKey: "RUIN", editability: "LOCKED" });
+    expect(opposingFactionGrouping("RUIN")).toMatchObject({ logicalKey: "SCHISM", editability: "LOCKED" });
+    expect(opposingFactionGrouping("SCHISM")).toMatchObject({ logicalKey: "CONCORD", editability: "LOCKED" });
+    expect(opposingFactionGrouping("CONCORD").segments).toEqual([
+      { startBook: 1, endBook: 6, rowSpan: 6 },
+      { startBook: 13, endBook: 18, rowSpan: 6 },
+    ]);
+  });
+
+  it("derives valid placement membership from the drop target", () => {
+    expect(campaignBooksForDrop("PILLAR", 4)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(campaignBooksForDrop("LESSON", 8)).toEqual([7, 8, 9, 10, 11, 12]);
+    expect(campaignBooksForDrop("EXODUS", 17)).toEqual([16, 17, 18]);
+    expect(campaignBooksForDrop("COMPANION", 4)).toEqual([4, 15]);
+    expect(() => campaignBooksForDrop("HOLIDAY", 2)).toThrow(/cannot be placed/);
+  });
+
+  it("maps every campaign object type into the reviewed fourteen-column topology", () => {
+    expect(campaignPlannerColumns).toHaveLength(14);
+    for (const objectType of campaignObjectTypes) expect(plannerColumnForObjectType(objectType)).not.toBeNull();
   });
 
   it("accepts only the approved multi-book spans", () => {

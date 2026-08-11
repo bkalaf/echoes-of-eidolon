@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and mechanically reconciled 274-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 276-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 105
-- Controlled enums: 106
-- HTTP method/path contracts: 59
-- Wireframe view-model rows: 274
-- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 18, store 12, admin 156, tools-review 5
+- Persisted entity types: 107
+- Controlled enums: 108
+- HTTP method/path contracts: 61
+- Wireframe view-model rows: 276
+- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 19, store 12, admin 157, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -120,6 +120,8 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Building | Persisted entity | City geometry | `Building` via settlement and City services | Admin City Builder | 5 |
 | Campaign | Persisted entity | Repository core | `Campaign` via Prisma and owning route service | Registry-linked screens | 4 |
 | CampaignPlacement | Persisted entity | Repository core | `CampaignPlacement` via Prisma and owning route service | Registry-linked screens | 7 |
+| BookGroupingDefinition | Persisted entity | Repository core | `BookGroupingDefinition` via Prisma and owning route service | Registry-linked screens | 4 |
+| BookGroupingValue | Persisted entity | Repository core | `BookGroupingValue` via Prisma and owning route service | Registry-linked screens | 9 |
 | CalendarOrdinal | Persisted entity | Calendar | `CalendarOrdinal` via server/player-calendar.ts | Game Calendar | 6 |
 
 ## API request/response contracts
@@ -145,6 +147,8 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | GET | `/api/admin/beta-invitations` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/campaign/groupings` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/campaign/linked-move` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/capabilities` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/capabilities` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/capabilities/:capabilityDefinitionVersionId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -279,6 +283,8 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | DocumentDraftStatus | 3 | `DRAFT`, `REVIEWED`, `PUBLISHED` |
 | DeploymentStatus | 5 | `PLANNED`, `DEPLOYING`, `HEALTHY`, `FAILED`, `ROLLED_BACK` |
 | CampaignObjectType | 16 | `PILLAR`, `LESSON`, `IN_TRANSIT`, `EXODUS`, `TRANSITION`, `DEJA_VU`, `COMPANION`, `ATROCITY`, `WITNESS`, `ARCHITECT`, `LEGENDARY_REWARD`, `HOLIDAY`, `WWII_INTERLUDE`, `MYTH_INTERLUDE`, `SCIENCE_INTERLUDE`, `HISTORICAL_INTERLUDE` |
+| BookGroupingType | 8 | `ATROCITY`, `DUOLOGY`, `EXODUS`, `LESSON`, `PILLAR`, `CAMPAIGN`, `DISJOINT_TRILOGY`, `OPPOSING_FACTION` |
+| BookGroupingEditability | 2 | `EDITABLE`, `LOCKED` |
 | DonationCheckoutStatus | 4 | `PENDING`, `CONFIRMED`, `EXPIRED`, `FAILED` |
 | StoreProductType | 3 | `POSTER`, `MUG`, `HOODIE` |
 | KnowledgeBaseDisclosureMode | 4 | `APPEND_BLOCKS`, `INSERT_AFTER_BLOCK`, `REPLACE_BLOCK`, `REPLACE_ENTRY` |
@@ -301,7 +307,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 274 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 276 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

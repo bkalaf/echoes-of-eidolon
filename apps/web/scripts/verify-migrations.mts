@@ -396,6 +396,60 @@ try {
       () => verification.query(`UPDATE "StripeWebhookEvent" SET "eventType" = 'changed' WHERE "stripeWebhookEventId" = 'stripe-event'`),
       "StripeWebhookEvent update was not rejected",
     );
+
+    const groupingDefinitions = await verification.query(
+      `SELECT "groupingType", "editability" FROM "BookGroupingDefinition" ORDER BY "groupingType"`,
+    );
+    const groupingValues = await verification.query(
+      `SELECT "worldKey", "logicalKey", "bookNumbers" FROM "BookGroupingValue" ORDER BY "worldKey", "ordinal"`,
+    );
+    if (groupingDefinitions.rows.length !== 8 || groupingValues.rows.length !== 9) {
+      throw new Error(`Book grouping seed cardinality is invalid: ${JSON.stringify({ definitions: groupingDefinitions.rows, values: groupingValues.rows })}`);
+    }
+    if (groupingValues.rows.some((row) => row.bookNumbers.length !== 6)) {
+      throw new Error(`Disjoint Trilogy seed membership is invalid: ${JSON.stringify(groupingValues.rows)}`);
+    }
+    const persistedOpposing = await verification.query(
+      `SELECT count(*)::int AS count FROM "BookGroupingValue" value
+       JOIN "BookGroupingDefinition" definition USING ("bookGroupingDefinitionId")
+       WHERE definition."groupingType" = 'OPPOSING_FACTION'`,
+    );
+    if (persistedOpposing.rows[0]?.count !== 0) throw new Error("Opposing Faction must remain derived rather than persisted as an editable value");
+    await expectTransactionRejection(
+      verification,
+      async () => {
+        await verification.query(
+          `UPDATE "BookGroupingValue" SET "bookNumbers" = ARRAY[1,2,3,4,5,6]
+           WHERE "bookGroupingValueId" = 'BOOK-GROUPING-DISJOINT-CONCORD-A'`,
+        );
+      },
+      "A partial Disjoint Trilogy update was not rejected at commit",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "BookGroupingValue" (
+           "bookGroupingValueId", "bookGroupingDefinitionId", "worldKey", "logicalKey", "bookNumbers", "ordinal"
+         ) VALUES ('forbidden-opposing', 'BOOK-GROUPING-OPPOSING-FACTION', 'CONCORD', 'RUIN', ARRAY[1,2,3,4,5,6,13,14,15,16,17,18], 0)`,
+      ),
+      "A locked derived Book grouping value was persisted",
+    );
+    await verification.query("BEGIN");
+    await verification.query(
+      `UPDATE "BookGroupingValue" SET "bookNumbers" = ARRAY[4,5,6,13,14,15]
+       WHERE "bookGroupingValueId" = 'BOOK-GROUPING-DISJOINT-CONCORD-A'`,
+    );
+    await verification.query(
+      `UPDATE "BookGroupingValue" SET "bookNumbers" = ARRAY[1,2,3,10,11,12]
+       WHERE "bookGroupingValueId" = 'BOOK-GROUPING-DISJOINT-CONCORD-B'`,
+    );
+    await verification.query("COMMIT");
+    const regrouped = await verification.query(
+      `SELECT "logicalKey", "bookNumbers" FROM "BookGroupingValue"
+       WHERE "worldKey" = 'CONCORD' ORDER BY "ordinal"`,
+    );
+    if (JSON.stringify(regrouped.rows[0]) !== JSON.stringify({ logicalKey: "A", bookNumbers: [4, 5, 6, 13, 14, 15] })) {
+      throw new Error(`Atomic Disjoint Trilogy regroup did not persist exactly: ${JSON.stringify(regrouped.rows)}`);
+    }
   } finally {
     await verification.end();
   }
@@ -524,6 +578,8 @@ try {
     ])) {
       throw new Error(`Legacy concrete CapabilityDefinition was not preserved losslessly: ${JSON.stringify(preservedDefinition.rows)}`);
     }
+
+    await applyThrough("20260810270000_campaign_book_groupings");
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [
