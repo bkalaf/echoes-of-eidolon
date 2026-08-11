@@ -13,6 +13,7 @@ interface AssetRow {
   objectKey: string;
   purposeLinks: Array<{ purpose: string }>;
   sha256: string;
+  technicalMetadata: unknown;
 }
 
 interface PromptRow {
@@ -60,6 +61,7 @@ async function readJson<T>(response: Response): Promise<T> {
 }
 
 function AssetManager({ mediaKind }: { mediaKind: Extract<ManagedAssetMediaKind, "AUDIO" | "VIDEO"> }) {
+  const [selectedId, setSelectedId] = useState<string>();
   const assets = useQuery({
     queryKey: ["admin", "assets", mediaKind],
     queryFn: async () => readJson<{ assets: AssetRow[]; total: number }>(await fetch(`/api/admin/assets/?mediaKind=${mediaKind}`)),
@@ -67,7 +69,8 @@ function AssetManager({ mediaKind }: { mediaKind: Extract<ManagedAssetMediaKind,
   });
   if (assets.isPending) return <p className="notice">Loading managed {mediaKind.toLowerCase()} assets…</p>;
   if (assets.isError) return <p className="notice notice--bad" role="alert">{assets.error.message}</p>;
-  return <section className="card"><div className="action-row action-row--between"><div><h2>{mediaKind === "AUDIO" ? "Audio" : "Video"} assets</h2><p>Final sanitized bytes determine SHA-256 identity and object key.</p></div><span className="tag">{assets.data.total} records</span></div>{assets.data.assets.length === 0 ? <p>No managed {mediaKind.toLowerCase()} assets are stored.</p> : <DataTable columns={assetColumns} data={assets.data.assets} getRowId={(asset) => asset.managedAssetId} preferenceKey={`admin.assets.${mediaKind.toLowerCase()}`} />}<p className="muted">Storage credentials and workstation paths are not returned.</p></section>;
+  const selected = assets.data.assets.find((asset) => asset.managedAssetId === selectedId);
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{mediaKind === "AUDIO" ? "Audio" : "Video"} assets</h2><p>Final sanitized bytes determine SHA-256 identity and object key. Activate a row to open its verified metadata.</p></div><span className="tag">{assets.data.total} records</span></div>{assets.data.assets.length === 0 ? <p>No managed {mediaKind.toLowerCase()} assets are stored.</p> : <DataTable columns={assetColumns} data={assets.data.assets} getRowId={(asset) => asset.managedAssetId} onRowActivate={(asset) => setSelectedId(asset.managedAssetId)} preferenceKey={`admin.assets.${mediaKind.toLowerCase()}`} />}<p className="muted">Storage credentials and workstation paths are not returned.</p></section>{selected && <section className="card"><div className="action-row action-row--between"><div><h2>Managed asset detail</h2><p>{selected.managedAssetId}</p></div><button className="button" onClick={() => setSelectedId(undefined)} type="button">Close</button></div><dl className="detail-grid"><div><dt>Media kind</dt><dd>{selected.mediaKind}</dd></div><div><dt>MIME type</dt><dd>{selected.mimeType}</dd></div><div><dt>Bytes</dt><dd>{selected.byteSize}</dd></div><div><dt>SHA-256</dt><dd><code>{selected.sha256}</code></dd></div><div><dt>Final-byte object key</dt><dd><code>{selected.objectKey}</code></dd></div><div><dt>Purpose links</dt><dd>{selected.purposeLinks.map((link) => link.purpose).join(", ") || "None"}</dd></div></dl><h3>Technical probe</h3><pre>{JSON.stringify(selected.technicalMetadata, null, 2)}</pre><p className="notice">New or replacement bytes must use the existing sanitized managed-asset import pipeline; this page does not accept an unsafe second upload path.</p></section>}</div>;
 }
 
 function PromptManager({ outstandingOnly }: { outstandingOnly: boolean }) {

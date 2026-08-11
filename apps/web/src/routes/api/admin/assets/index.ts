@@ -26,6 +26,7 @@ export const Route = createFileRoute("/api/admin/assets/")({
               objectKey: true,
               purposeLinks: { orderBy: { purpose: "asc" }, select: { purpose: true } },
               sha256: true,
+              technicalMetadata: true,
             },
           });
           return Response.json({

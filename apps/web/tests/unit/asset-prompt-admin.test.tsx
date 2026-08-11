@@ -29,6 +29,7 @@ describe("managed asset and prompt administration", () => {
           objectKey,
           purposeLinks: [{ purpose: "login.soundtrack" }],
           sha256: "a".repeat(64),
+          technicalMetadata: { durationSeconds: 120, kind: "audio", streams: [{ channels: 2, codec_name: "mp3" }] },
         }],
         total: 1,
       }),
@@ -40,6 +41,10 @@ describe("managed asset and prompt administration", () => {
     expect(screen.getByText("login.soundtrack")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith("/api/admin/assets/?mediaKind=AUDIO");
     expect(screen.getByText(/Storage credentials and workstation paths are not returned/)).toBeInTheDocument();
+    fireEvent.click(screen.getByText("ASSET-1"));
+    expect(screen.getByRole("heading", { name: "Managed asset detail" })).toBeInTheDocument();
+    expect(screen.getByText(/"durationSeconds": 120/)).toBeInTheDocument();
+    expect(screen.getByText(/must use the existing sanitized managed-asset import pipeline/)).toBeInTheDocument();
   });
 
   it("uses the explicit OUTSTANDING filter and projects only stored prompt rows", async () => {
