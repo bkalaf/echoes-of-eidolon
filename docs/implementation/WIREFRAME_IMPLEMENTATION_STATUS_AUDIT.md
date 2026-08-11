@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 201 |
-| PARTIAL | 30 |
-| PLACEHOLDER | 42 |
+| IMPLEMENTED | 205 |
+| PARTIAL | 29 |
+| PLACEHOLDER | 39 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **72 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **68 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -32,7 +32,7 @@ Therefore **72 of 273 active V3** wireframe pages/states are not fully implement
 2. **The normal Data admin surface is implemented for every active registered entity.** Its allowlist and field contracts are generated from the canonical entity registry and Prisma schema, with persisted list/search/create/edit/delete behavior.
 3. **Every active registered entity import has transaction-backed Apply.** JSON, YAML, Markdown, and HTML parsing feed exact-field validation; existing identities are idempotent only when canonical values match.
 4. **Player runtime pages remain incomplete.** Maps and globes now expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, achievements, and support still lack canonical player-facing owners.
-5. **Commerce is incomplete.** Catalog read and Stripe checkout initiation exist; cart state, checkout result resolution, return submission, subscriptions, admin item editing, and support are not complete.
+5. **Commerce is incomplete.** Catalog, cart, Stripe checkout initiation, and authenticated persisted-result resolution exist; return submission, subscriptions, admin item editing, guest lookup, and support are not complete.
 6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
 7. **No exhaustive visual acceptance exists for all 273 active V3 states.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
 
@@ -116,11 +116,11 @@ Therefore **72 of 273 active V3** wireframe pages/states are not fully implement
 | 74 | `STORE03` | Store Category - Mugs | `/store/categories/mugs` | **IMPLEMENTED** | Reads server-configured catalog and variants; honest unavailable state is shown when configuration is absent. |
 | 75 | `STORE04` | Store Category - Hoodies | `/store/categories/hoodies` | **IMPLEMENTED** | Reads server-configured catalog and variants; honest unavailable state is shown when configuration is absent. |
 | 76 | `STORE05` | Product Detail | `/store/products/:slug` | **IMPLEMENTED** | Reads one configured product and its variants, with server-owned price and availability. |
-| 77 | `STORE06` | Cart | `/store/cart` | **PLACEHOLDER** | Informational card only; there is no cart owner, line mutation, quantity update, or persisted cart. |
-| 78 | `STORE07` | Checkout - Contact & Delivery | `/store/checkout` | **PARTIAL** | Can start Stripe Checkout for one selected variant, but the reviewed cart/contact/delivery composition is not implemented. |
+| 77 | `STORE06` | Cart | `/store/cart` | **IMPLEMENTED** | Stores only bounded variant IDs and quantities locally, resolves current names/prices from the server catalog, and supports add, quantity update, remove, totals, and checkout navigation. |
+| 78 | `STORE07` | Checkout - Contact & Delivery | `/store/checkout` | **IMPLEMENTED** | Submits all locally selected IDs/quantities for server-authoritative validation; authenticated contact and allowlisted delivery collection remain owned by hosted Stripe Checkout. |
 | 79 | `ADM002` | Server Operations | `/admin/server` | **PARTIAL** | Routes to bounded health/build/release/document operations; the reviewed server-operations controls are not implemented. |
-| 80 | `STORE09` | Checkout - Card Declined | `/store/checkout/declined` | **PLACEHOLDER** | Static warning only; route does not resolve a signed Stripe result or persisted order. |
-| 81 | `STORE10` | Checkout - Approved | `/store/checkout/approved` | **PLACEHOLDER** | Static warning only; route does not resolve a signed Stripe result or persisted order. |
+| 80 | `STORE09` | Checkout - Card Declined | `/store/checkout/declined` | **IMPLEMENTED** | Resolves the session reference only to an order owned by the authenticated account and reports the verified absence or presence of signed payment confirmation without inferring a decline reason. |
+| 81 | `STORE10` | Checkout - Approved | `/store/checkout/approved` | **IMPLEMENTED** | Resolves the owned persisted order and claims approval only when the signed Stripe webhook confirmation exists; otherwise it explicitly reports confirmation pending. |
 | 82 | `STORE11` | Guest Order Status | `/store/orders/:token` | **PLACEHOLDER** | Explicit unavailable card; guest order tokens/status are not implemented. |
 | 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **PLACEHOLDER** | Sign-in redirect only; there is no lookup form or order-resolution workflow. |
 | 84 | `STORE13` | Store Order Support | `/store/support` | **PLACEHOLDER** | Correctly dispatches the dedicated Store Support boundary, but submission remains unavailable because no authenticated order-support ticket owner exists. |

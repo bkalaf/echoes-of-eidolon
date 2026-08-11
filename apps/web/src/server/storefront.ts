@@ -34,14 +34,14 @@ export async function createStoreCheckout(input: { email: string; lines: z.infer
   const baseUrl = process.env.BETTER_AUTH_URL;
   if (!baseUrl) throw new Error("BETTER_AUTH_URL is required for Store checkout.");
   const checkout = await getPayments().checkout.sessions.create({
-    cancel_url: `${baseUrl}/store/checkout/declined`,
+    cancel_url: `${baseUrl}/store/checkout/declined?session_id={CHECKOUT_SESSION_ID}`,
     client_reference_id: orderId,
     customer_email: input.email,
     line_items: lines.map((line) => ({ price: line.stripePriceReference, quantity: line.quantity })),
     metadata: { orderId },
     mode: "payment",
     shipping_address_collection: { allowed_countries: getStoreShippingCountries() },
-    success_url: `${baseUrl}/store/checkout/approved`,
+    success_url: `${baseUrl}/store/checkout/approved?session_id={CHECKOUT_SESSION_ID}`,
   });
   try {
     await database.order.create({
@@ -58,6 +58,46 @@ export async function createStoreCheckout(input: { email: string; lines: z.infer
   }
   if (!checkout.url) throw new Error("Stripe did not return a hosted Store checkout URL.");
   return { checkoutUrl: checkout.url, orderId };
+}
+
+export async function getStoreCheckoutStatus(input: { checkoutReference: string; userId: string }, database: Database = getDatabase()) {
+  const order = await database.order.findFirst({
+    where: { stripeCheckoutReference: input.checkoutReference, userId: input.userId },
+    select: {
+      createdAt: true,
+      lines: {
+        orderBy: { orderLineId: "asc" },
+        select: {
+          orderLineId: true,
+          quantity: true,
+          storeVariant: { select: { color: true, size: true, storeProduct: { select: { name: true } } } },
+          unitPriceCents: true,
+        },
+      },
+      orderId: true,
+      paymentConfirmation: {
+        select: { amountCents: true, confirmedAt: true, fulfillment: { select: { submittedAt: true } } },
+      },
+    },
+  });
+  if (!order) return null;
+  return {
+    createdAt: order.createdAt,
+    lines: order.lines.map((line) => ({
+      color: line.storeVariant.color,
+      name: line.storeVariant.storeProduct.name,
+      orderLineId: line.orderLineId,
+      quantity: line.quantity,
+      size: line.storeVariant.size,
+      unitPriceCents: line.unitPriceCents,
+    })),
+    orderId: order.orderId,
+    payment: order.paymentConfirmation ? {
+      amountCents: order.paymentConfirmation.amountCents,
+      confirmedAt: order.paymentConfirmation.confirmedAt,
+      fulfillmentSubmittedAt: order.paymentConfirmation.fulfillment?.submittedAt ?? null,
+    } : null,
+  };
 }
 
 export async function confirmStoreCheckout(input: { amountTotal: number | null; checkoutReference: string; orderId: string; stripeWebhookEventId: string }, transaction: Parameters<Parameters<Database["$transaction"]>[0]>[0]) {

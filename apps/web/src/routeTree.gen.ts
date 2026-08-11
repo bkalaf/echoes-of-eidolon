@@ -66,6 +66,7 @@ import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
 import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/admin/settlements/migrate'
 import { Route as ApiExternalDataEntityKeyRouteImport } from './routes/api/external/data/$entityKey'
+import { Route as ApiStoreCheckoutStatusRouteImport } from './routes/api/store/checkout/status'
 import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
@@ -380,6 +381,11 @@ const ApiExternalDataEntityKeyRoute =
     path: '/api/external/data/$entityKey',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiStoreCheckoutStatusRoute = ApiStoreCheckoutStatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => ApiStoreCheckoutRoute,
+} as any)
 const ApiAdminAccountsUserIdRoleRoute =
   ApiAdminAccountsUserIdRoleRouteImport.update({
     id: '/role',
@@ -488,7 +494,7 @@ export interface FileRoutesByFullPath {
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
-  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
@@ -507,6 +513,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
@@ -560,7 +567,7 @@ export interface FileRoutesByTo {
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
-  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
@@ -579,6 +586,7 @@ export interface FileRoutesByTo {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/account/orders': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
@@ -633,7 +641,7 @@ export interface FileRoutesById {
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
-  '/api/store/checkout': typeof ApiStoreCheckoutRoute
+  '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
@@ -652,6 +660,7 @@ export interface FileRoutesById {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
@@ -726,6 +735,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/store/checkout/status'
     | '/api/account/orders/'
     | '/api/account/sessions/'
     | '/api/admin/accounts/'
@@ -798,6 +808,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/store/checkout/status'
     | '/api/account/orders'
     | '/api/account/sessions'
     | '/api/admin/accounts'
@@ -870,6 +881,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/store/checkout/status'
     | '/api/account/orders/'
     | '/api/account/sessions/'
     | '/api/admin/accounts/'
@@ -924,7 +936,7 @@ export interface RootRouteChildren {
   ApiPlayerPuzzlesRoute: typeof ApiPlayerPuzzlesRoute
   ApiPlayerRuntimeRoute: typeof ApiPlayerRuntimeRoute
   ApiStoreCatalogRoute: typeof ApiStoreCatalogRoute
-  ApiStoreCheckoutRoute: typeof ApiStoreCheckoutRoute
+  ApiStoreCheckoutRoute: typeof ApiStoreCheckoutRouteWithChildren
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
   ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRoute
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
@@ -1356,6 +1368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiExternalDataEntityKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/store/checkout/status': {
+      id: '/api/store/checkout/status'
+      path: '/status'
+      fullPath: '/api/store/checkout/status'
+      preLoaderRoute: typeof ApiStoreCheckoutStatusRouteImport
+      parentRoute: typeof ApiStoreCheckoutRoute
+    }
     '/api/admin/accounts/$userId/role': {
       id: '/api/admin/accounts/$userId/role'
       path: '/role'
@@ -1506,6 +1525,17 @@ const ApiAdminReleasesRouteChildren: ApiAdminReleasesRouteChildren = {
 const ApiAdminReleasesRouteWithChildren =
   ApiAdminReleasesRoute._addFileChildren(ApiAdminReleasesRouteChildren)
 
+interface ApiStoreCheckoutRouteChildren {
+  ApiStoreCheckoutStatusRoute: typeof ApiStoreCheckoutStatusRoute
+}
+
+const ApiStoreCheckoutRouteChildren: ApiStoreCheckoutRouteChildren = {
+  ApiStoreCheckoutStatusRoute: ApiStoreCheckoutStatusRoute,
+}
+
+const ApiStoreCheckoutRouteWithChildren =
+  ApiStoreCheckoutRoute._addFileChildren(ApiStoreCheckoutRouteChildren)
+
 interface ApiAdminAccountsUserIdRouteChildren {
   ApiAdminAccountsUserIdRoleRoute: typeof ApiAdminAccountsUserIdRoleRoute
 }
@@ -1596,7 +1626,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPlayerPuzzlesRoute: ApiPlayerPuzzlesRoute,
   ApiPlayerRuntimeRoute: ApiPlayerRuntimeRoute,
   ApiStoreCatalogRoute: ApiStoreCatalogRoute,
-  ApiStoreCheckoutRoute: ApiStoreCheckoutRoute,
+  ApiStoreCheckoutRoute: ApiStoreCheckoutRouteWithChildren,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
   ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRoute,
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,

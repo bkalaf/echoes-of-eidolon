@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { StoreShell } from "../../components/shells/Shells";
 import { merchandiseConfigurationRequired, storeProductTypes } from "../../domain/store";
+import { addStoreCartLine, normalizeStoreCart, storeCartStorageKey, updateStoreCartLine, type StoreCartLine } from "../../domain/store-cart";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 function StoreHead({ title, path, description }: { title: string; path: string; description: string }) {
@@ -32,6 +33,16 @@ async function loadCatalog(): Promise<CatalogProduct[]> {
   return (await response.json() as { products: CatalogProduct[] }).products;
 }
 
+function useStoreCart() {
+  const [lines, setLines] = useState<StoreCartLine[]>(() => {
+    if (typeof window === "undefined") return [];
+    try { return normalizeStoreCart(JSON.parse(window.localStorage.getItem(storeCartStorageKey) ?? "[]")); }
+    catch { return []; }
+  });
+  useEffect(() => { window.localStorage.setItem(storeCartStorageKey, JSON.stringify(lines)); }, [lines]);
+  return { lines, setLines };
+}
+
 function Catalog({ screen }: { screen: PageManifestEntry }) {
   const catalog = useQuery({ queryKey: ["store", "catalog"], queryFn: loadCatalog });
   const productType = categoryProductType[screen.screenId as keyof typeof categoryProductType];
@@ -42,26 +53,47 @@ function Catalog({ screen }: { screen: PageManifestEntry }) {
 
 function ProductDetail({ pathname }: { pathname?: string }) {
   const catalog = useQuery({ queryKey: ["store", "catalog"], queryFn: loadCatalog });
+  const cart = useStoreCart();
+  const [message, setMessage] = useState("");
   const productId = pathname?.split("/").at(-1);
   const product = catalog.data?.find((candidate) => candidate.storeProductId === productId);
-  return <><StoreHead title="Product Detail" path="/store/products/:slug" description="Configured merchandise product detail." />{catalog.isPending ? <p className="notice">Loading product…</p> : !product ? <section className="card"><h2>Product unavailable</h2><p>No configured product matches this route. Raw Stripe and Printful identifiers are never exposed.</p></section> : <section className="card"><h2>{product.name}</h2><ul>{product.variants.map((variant) => <li key={variant.storeVariantId}>{variant.size ?? "Standard"} · {variant.color ?? "Standard"} · ${(variant.priceCents / 100).toFixed(2)}</li>)}</ul><a className="button button--gold" href="/store/checkout">Choose at checkout</a></section>}</>;
+  return <><StoreHead title="Product Detail" path="/store/products/:slug" description="Configured merchandise product detail." />{catalog.isPending ? <p className="notice">Loading product…</p> : !product ? <section className="card"><h2>Product unavailable</h2><p>No configured product matches this route. Raw Stripe and Printful identifiers are never exposed.</p></section> : <section className="card"><h2>{product.name}</h2><div className="stack">{product.variants.map((variant) => <article className="action-row action-row--between" key={variant.storeVariantId}><span>{variant.size ?? "Standard"} · {variant.color ?? "Standard"} · ${(variant.priceCents / 100).toFixed(2)}</span><button className="button" onClick={() => { cart.setLines((lines) => addStoreCartLine(lines, variant.storeVariantId)); setMessage(`${product.name} added to cart.`); }} type="button">Add to cart</button></article>)}</div><div className="action-row"><a className="button button--gold" href="/store/cart">View cart ({cart.lines.reduce((sum, line) => sum + line.quantity, 0)})</a></div>{message && <p className="notice notice--good" role="status">{message}</p>}</section>}</>;
 }
 
 function Cart() {
-  return <><StoreHead title="Cart" path="/store/cart" description="Authenticated merchandise cart." /><section className="card"><h2>Your cart</h2><p>Select a server-configured variant at checkout. Guest checkout is not allowed and no browser-authored price is accepted.</p><div className="action-row"><a className="button" href="/auth/sign-in?returnTo=%2Fstore%2Fcart">Sign in</a><a className="button button--gold" href="/store/checkout">Open checkout</a></div></section></>;
+  const catalog = useQuery({ queryKey: ["store", "catalog"], queryFn: loadCatalog });
+  const cart = useStoreCart();
+  const variants = new Map(catalog.data?.flatMap((product) => product.variants.map((variant) => [variant.storeVariantId, { ...variant, productName: product.name }] as const)) ?? []);
+  const totalCents = cart.lines.reduce((sum, line) => sum + (variants.get(line.storeVariantId)?.priceCents ?? 0) * line.quantity, 0);
+  return <><StoreHead title="Cart" path="/store/cart" description="Browser-local merchandise selections resolved against the server catalog." /><section className="card"><h2>Your cart</h2><p>The cart stores only configured variant identifiers and quantities. Prices and availability are resolved from the server catalog again at checkout.</p>{catalog.isPending ? <p className="notice">Loading configured merchandise…</p> : cart.lines.length === 0 ? <p>Your cart is empty.</p> : <div className="stack">{cart.lines.map((line) => { const variant = variants.get(line.storeVariantId); return <article className="action-row action-row--between" key={line.storeVariantId}><div><strong>{variant?.productName ?? "Unavailable variant"}</strong><br /><span>{variant ? `${variant.size ?? "Standard"} · ${variant.color ?? "Standard"} · $${(variant.priceCents / 100).toFixed(2)}` : line.storeVariantId}</span></div><label className="field">Quantity<input aria-label={`Quantity for ${variant?.productName ?? line.storeVariantId}`} className="input" max={20} min={0} type="number" value={line.quantity} onChange={(event) => cart.setLines((lines) => updateStoreCartLine(lines, line.storeVariantId, Number(event.target.value)))} /></label><button className="button" onClick={() => cart.setLines((lines) => updateStoreCartLine(lines, line.storeVariantId, 0))} type="button">Remove</button></article>; })}<p><strong>Catalog total: ${(totalCents / 100).toFixed(2)}</strong></p></div>}<div className="action-row"><a className="button" href="/auth/sign-in?returnTo=%2Fstore%2Fcart">Sign in</a><a aria-disabled={cart.lines.length === 0 || cart.lines.some((line) => !variants.has(line.storeVariantId))} className="button button--gold" href={cart.lines.length > 0 && cart.lines.every((line) => variants.has(line.storeVariantId)) ? "/store/checkout" : undefined}>Open checkout</a></div><p className="muted">Guest checkout is not allowed; the checkout endpoint verifies player access and server-owned variants.</p></section></>;
 }
 
 function Checkout() {
   const catalog = useQuery({ queryKey: ["store", "catalog"], queryFn: loadCatalog });
+  const cart = useStoreCart();
   const variants = catalog.data?.flatMap((product) => product.variants.map((variant) => ({ ...variant, productName: product.name }))) ?? [];
-  const [variantId, setVariantId] = useState("");
-  const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
-  return <><StoreHead title="Checkout" path="/store/checkout" description="Authenticated Stripe checkout using server-owned variants and prices." /><section className="card form-grid"><h2 className="span-2">Merchandise checkout</h2><label className="field">Configured variant<select className="input" value={variantId} onChange={(event) => setVariantId(event.target.value)}><option value="">Select a variant</option>{variants.map((variant) => <option key={variant.storeVariantId} value={variant.storeVariantId}>{variant.productName} · {variant.size ?? "Standard"} · {variant.color ?? "Standard"} · ${(variant.priceCents / 100).toFixed(2)}</option>)}</select></label><label className="field">Quantity<input className="input" min={1} max={20} type="number" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))} /></label><button className="button button--gold" disabled={!variantId || !Number.isInteger(quantity) || quantity < 1 || quantity > 20} onClick={async () => { const response = await fetch("/api/store/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ lines: [{ quantity, storeVariantId: variantId }] }) }); const result = await response.json() as { checkoutUrl?: string; error?: string }; if (response.ok && result.checkoutUrl) window.location.assign(result.checkoutUrl); else setMessage(result.error ?? "Checkout could not be started."); }}>Continue to secure payment</button>{variants.length === 0 && !catalog.isPending && <ConfigurationNotice />}{message && <p className="notice notice--bad" role="alert">{message}</p>}</section></>;
+  const catalogVariantIds = new Set(variants.map((variant) => variant.storeVariantId));
+  const ready = cart.lines.length > 0 && cart.lines.every((line) => catalogVariantIds.has(line.storeVariantId));
+  return <><StoreHead title="Checkout" path="/store/checkout" description="Authenticated Stripe checkout using server-owned variants and prices." /><section className="card"><h2>Merchandise checkout</h2><p>Contact email comes from the authenticated account. Stripe securely collects the delivery address using the owner-approved server shipping-country allowlist.</p>{cart.lines.length === 0 ? <p>Your cart is empty.</p> : <ul>{cart.lines.map((line) => { const variant = variants.find((candidate) => candidate.storeVariantId === line.storeVariantId); return <li key={line.storeVariantId}>{variant ? `${variant.productName} · ${variant.size ?? "Standard"} · ${variant.color ?? "Standard"}` : "Unavailable variant"} · quantity {line.quantity}</li>; })}</ul>}<div className="action-row"><a className="button" href="/store/cart">Edit cart</a><button className="button button--gold" disabled={!ready} onClick={async () => { const response = await fetch("/api/store/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ lines: cart.lines }) }); const result = await response.json() as { checkoutUrl?: string; error?: string }; if (response.ok && result.checkoutUrl) window.location.assign(result.checkoutUrl); else setMessage(result.error ?? "Checkout could not be started."); }}>Continue to secure payment</button></div>{variants.length === 0 && !catalog.isPending && <ConfigurationNotice />}{message && <p className="notice notice--bad" role="alert">{message}</p>}</section></>;
 }
 
 function CheckoutResult({ approved }: { approved: boolean }) {
-  return <><StoreHead title={approved ? "Order Confirmation" : "Payment Declined"} path={approved ? "/store/checkout/approved" : "/store/checkout/declined"} description="Verified checkout result state." /><p className="notice notice--warn">No signed Stripe webhook result or persisted Order was supplied to this route. It does not create, confirm, decline, or fulfill an order.</p><a className="button" href="/store/cart">Return to cart</a></>;
+  const checkoutReference = typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("session_id")?.trim() ?? "";
+  const status = useQuery({
+    queryKey: ["store", "checkout-status", checkoutReference],
+    enabled: Boolean(checkoutReference),
+    queryFn: async () => {
+      const response = await fetch(`/api/store/checkout/status?sessionId=${encodeURIComponent(checkoutReference)}`);
+      const result = await response.json() as { error?: string; order?: { createdAt: string; lines: Array<{ color: string | null; name: string; orderLineId: string; quantity: number; size: string | null; unitPriceCents: number }>; orderId: string; payment: null | { amountCents: number; confirmedAt: string; fulfillmentSubmittedAt: string | null } } };
+      if (!response.ok || !result.order) throw new Error(result.error ?? "Checkout order could not be loaded.");
+      return result.order;
+    },
+    retry: false,
+  });
+  const order = status.data;
+  const confirmed = Boolean(order?.payment);
+  return <><StoreHead title={approved ? "Order Confirmation" : "Payment Not Completed"} path={approved ? "/store/checkout/approved" : "/store/checkout/declined"} description="Verified persisted checkout state." />{!checkoutReference ? <p className="notice notice--warn">A Stripe checkout session reference is required. No payment result is inferred from this route.</p> : status.isPending ? <p className="notice">Loading persisted order state…</p> : status.isError ? <p className="notice notice--bad" role="alert">{status.error.message}</p> : order ? <section className="card"><h2>Order {order.orderId}</h2><p className={`notice ${confirmed ? "notice--good" : "notice--warn"}`}>{confirmed ? `Payment confirmed ${new Date(order.payment!.confirmedAt).toLocaleString()}.` : approved ? "Stripe returned successfully, but the signed payment webhook has not been persisted yet. Refresh before treating this order as paid." : "No signed payment confirmation is stored for this order."}</p><ul>{order.lines.map((line) => <li key={line.orderLineId}>{line.name} · {line.size ?? "Standard"} · {line.color ?? "Standard"} · quantity {line.quantity} · ${((line.unitPriceCents * line.quantity) / 100).toFixed(2)}</li>)}</ul>{order.payment && <p><strong>Confirmed total: ${(order.payment.amountCents / 100).toFixed(2)}</strong><br />Fulfillment: {order.payment.fulfillmentSubmittedAt ? `submitted ${new Date(order.payment.fulfillmentSubmittedAt).toLocaleString()}` : "not submitted"}</p>}<div className="action-row"><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>View account order</a><a className="button" href="/store/cart">Return to cart</a></div></section> : null}</>;
 }
 
 function GuestStatus() {
