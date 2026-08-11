@@ -50,6 +50,13 @@ describe("store interaction boundaries", () => {
     expect(screen.getByText(/No signed Stripe webhook result/)).toBeInTheDocument();
   });
 
+  it("dispatches the registered Store Support screen without inventing a ticket mutation", () => {
+    renderStore("STORE13");
+    expect(screen.getByRole("heading", { name: "Store Order Support" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Store support owner-deferred" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Submit" })).not.toBeInTheDocument();
+  });
+
   it("blocks payment until a configured variant exists", async () => {
     renderStore("STORE07");
     expect(await screen.findByRole("button", { name: "Continue to secure payment" })).toBeDisabled();
@@ -57,7 +64,7 @@ describe("store interaction boundaries", () => {
   });
 
   it("fails closed for an unknown store screen", () => {
-    renderStore("STORE08", { screenId: "STORE_UNKNOWN" });
+    renderStore("STORE13", { screenId: "STORE_UNKNOWN" });
 
     expect(screen.getByRole("heading", { name: "Store screen unavailable" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Store support owner-deferred" })).not.toBeInTheDocument();

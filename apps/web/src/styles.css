@@ -169,6 +169,11 @@ button, input, select, textarea { font: inherit; }
 .tag { display: inline-flex; padding: 5px 8px; border: 1px solid var(--line-2); border-radius: 999px; color: #b8d9ec; font-size: 10px; }
 .tag--good { border-color: #27765b; color: #78e8b4; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.metric-card { display: grid; gap: 6px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: rgb(3 21 34 / 75%); color: var(--text); text-decoration: none; }
+.metric-card span { color: var(--gold); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.metric-card strong { font: 30px Georgia, serif; }
+.metric-card small { color: var(--muted); }
 .inset-card { margin-top: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: rgb(1 13 21 / 55%); }
 .inset-card h4 { margin: 0; color: #d9b85f; }
 .action-row, .auth-links { display: flex; align-items: center; gap: 8px; }
@@ -556,6 +561,7 @@ html[data-high-contrast="true"] {
   .features-overview, .feature-detail, .gameplay-layout, .contact-layout, .checkout-layout, .product-detail, .split, .campaign-grouping-editor { grid-template-columns: 1fr; }
   .feature-grid, .product-grid, .legal-grid, .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .entity-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .atlas-layout { grid-template-columns: 1fr; }
   .game-hud aside { display: none; }
   .builder-layout { grid-template-columns: 180px 1fr; }
@@ -571,7 +577,7 @@ html[data-high-contrast="true"] {
   .workspace-sidebar { border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; overflow-x: auto; }
   .game-bottom-bar { overflow-x: auto; white-space: nowrap; }
   .public-page { padding: 20px 18px; }
-  .feature-grid, .product-grid, .legal-grid, .service-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .feature-grid, .product-grid, .legal-grid, .service-grid, .grid-2, .grid-3, .metric-grid { grid-template-columns: 1fr; }
   .entity-grid { grid-template-columns: 1fr; }
   .reader, .player-map, .timeline-view, .builder-layout { grid-template-columns: 1fr; height: auto; }
   .player-map aside { border-left: 0; border-top: 1px solid var(--line); }

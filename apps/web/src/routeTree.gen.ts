@@ -24,6 +24,7 @@ import { Route as ApiAccountSettingsRouteImport } from './routes/api/account/set
 import { Route as ApiAdminBulkOperationsRouteImport } from './routes/api/admin/bulk-operations'
 import { Route as ApiAdminCampaignRouteImport } from './routes/api/admin/campaign'
 import { Route as ApiAdminCapabilitiesRouteImport } from './routes/api/admin/capabilities'
+import { Route as ApiAdminDashboardRouteImport } from './routes/api/admin/dashboard'
 import { Route as ApiAdminDocumentsRouteImport } from './routes/api/admin/documents'
 import { Route as ApiAdminReleasesRouteImport } from './routes/api/admin/releases'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
@@ -150,6 +151,11 @@ const ApiAdminCampaignRoute = ApiAdminCampaignRouteImport.update({
 const ApiAdminCapabilitiesRoute = ApiAdminCapabilitiesRouteImport.update({
   id: '/api/admin/capabilities',
   path: '/api/admin/capabilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminDashboardRoute = ApiAdminDashboardRouteImport.update({
+  id: '/api/admin/dashboard',
+  path: '/api/admin/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminDocumentsRoute = ApiAdminDocumentsRouteImport.update({
@@ -455,6 +461,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -524,6 +531,7 @@ export interface FileRoutesByTo {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -594,6 +602,7 @@ export interface FileRoutesById {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -665,6 +674,7 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/dashboard'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -734,6 +744,7 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/dashboard'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -803,6 +814,7 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/dashboard'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -873,6 +885,7 @@ export interface RootRouteChildren {
   ApiAdminBulkOperationsRoute: typeof ApiAdminBulkOperationsRoute
   ApiAdminCampaignRoute: typeof ApiAdminCampaignRouteWithChildren
   ApiAdminCapabilitiesRoute: typeof ApiAdminCapabilitiesRouteWithChildren
+  ApiAdminDashboardRoute: typeof ApiAdminDashboardRoute
   ApiAdminDocumentsRoute: typeof ApiAdminDocumentsRoute
   ApiAdminReleasesRoute: typeof ApiAdminReleasesRouteWithChildren
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
@@ -1019,6 +1032,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/capabilities'
       fullPath: '/api/admin/capabilities'
       preLoaderRoute: typeof ApiAdminCapabilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/dashboard': {
+      id: '/api/admin/dashboard'
+      path: '/api/admin/dashboard'
+      fullPath: '/api/admin/dashboard'
+      preLoaderRoute: typeof ApiAdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/documents': {
@@ -1521,6 +1541,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminBulkOperationsRoute: ApiAdminBulkOperationsRoute,
   ApiAdminCampaignRoute: ApiAdminCampaignRouteWithChildren,
   ApiAdminCapabilitiesRoute: ApiAdminCapabilitiesRouteWithChildren,
+  ApiAdminDashboardRoute: ApiAdminDashboardRoute,
   ApiAdminDocumentsRoute: ApiAdminDocumentsRoute,
   ApiAdminReleasesRoute: ApiAdminReleasesRouteWithChildren,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,

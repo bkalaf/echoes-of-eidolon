@@ -81,9 +81,15 @@ describe("administrative authorization boundary", () => {
 
   it("never renders fabricated admin records or action results", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1", role: "admin" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ atlas: { connections: 44, regionMappings: 25 }, externalBulkApi: { activeSessions: 0, state: "OFF" }, queues: { draftReleases: 1, failedBulkOperations: 2, outstandingPrompts: 3, pendingInvitationRequests: 4 } }),
+      ok: true,
+    }));
     renderAdmin("ADM001");
 
     await screen.findByRole("heading", { level: 1, name: "Admin Dashboard" });
+    expect(await screen.findByText("4", { selector: "strong" })).toBeInTheDocument();
+    expect(screen.getByText(/25 Region mappings · 44 Connections/)).toBeInTheDocument();
     expect(screen.queryByText(/player-one|player@example.com|INV-REQ-001|EID-10482/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Approve|Decline|Revoke|Deploy|Restart/ })).not.toBeInTheDocument();
   });

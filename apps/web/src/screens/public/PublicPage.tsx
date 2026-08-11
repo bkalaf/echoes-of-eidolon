@@ -75,7 +75,17 @@ function StatusPage() {
   return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2><p>No verified release source is configured.</p><a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
 }
 
-function ReleasesPage({ detail }: { detail: boolean }) {
+function releaseVersionFromPath(pathname?: string): string | undefined {
+  const encoded = pathname?.match(/^\/status\/releases\/([^/]+)$/)?.[1];
+  if (!encoded) return undefined;
+  try {
+    return decodeURIComponent(encoded);
+  } catch {
+    return undefined;
+  }
+}
+
+function ReleasesPage({ detail, pathname }: { detail: boolean; pathname?: string }) {
   const releases = useQuery({
     queryKey: ["public-releases"],
     queryFn: async () => {
@@ -84,9 +94,15 @@ function ReleasesPage({ detail }: { detail: boolean }) {
       return response.json() as Promise<{ releases: Array<{ releaseId: string; version: string; gitSha: string; summary: string; publishedAt: string; notes: Array<{ category: string; content: string; ordinal: number }> }> }>;
     },
   });
-  const selected = releases.data?.releases[0];
-  const body = releases.isPending ? <p className="notice">Loading release notes…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : !selected ? <p className="notice">No player-visible release has been published.</p> : <article className="card"><h2>{selected.version}</h2><p>{selected.summary}</p><small>Published {new Date(selected.publishedAt).toLocaleDateString()} · build {selected.gitSha.slice(0, 12)}</small>{["ADDED", "CHANGED", "FIXED", "SECURITY", "KNOWN_ISSUE"].map((category) => { const items = selected.notes.filter((note) => note.category === category); return items.length > 0 && <section key={category}><h3>{category.replaceAll("_", " ")}</h3><ul>{items.map((item) => <li key={`${category}-${item.ordinal}`}>{item.content}</li>)}</ul></section>; })}</article>;
-  return <>{detail && <a className="back-link" href="/status/releases">← Back to Release Notes</a>}<PageHead eyebrow="Status" title={detail ? "Release Note Detail" : "Release Notes"} description="Player-visible release information from published release records." /><div className="release-layout"><aside className="card"><h2>Release archive</h2>{releases.data?.releases.map((release) => <p key={release.releaseId}><strong>{release.version}</strong><br /><small>{new Date(release.publishedAt).toLocaleDateString()}</small></p>)}</aside>{body}</div></>;
+  const requestedVersion = detail ? releaseVersionFromPath(pathname) : undefined;
+  const selected = detail
+    ? releases.data?.releases.find((release) => release.version === requestedVersion)
+    : releases.data?.releases[0];
+  const selectedIndex = selected ? releases.data?.releases.findIndex((release) => release.releaseId === selected.releaseId) ?? -1 : -1;
+  const previous = selectedIndex >= 0 ? releases.data?.releases[selectedIndex + 1] : undefined;
+  const next = selectedIndex > 0 ? releases.data?.releases[selectedIndex - 1] : undefined;
+  const body = releases.isPending ? <p className="notice">Loading release notes…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : detail && requestedVersion && !selected ? <p className="notice notice--bad" role="alert">Published release {requestedVersion} was not found.</p> : !selected ? <p className="notice">No player-visible release has been published.</p> : <article className="card"><div className="action-row action-row--between"><div><h2>{selected.version}</h2><small>Published {new Date(selected.publishedAt).toLocaleDateString()} · build {selected.gitSha.slice(0, 12)}</small></div>{detail && <nav className="action-row" aria-label="Adjacent release notes">{previous ? <a className="button" href={`/status/releases/${encodeURIComponent(previous.version)}`}>Previous</a> : <button className="button" disabled>Previous</button>}{next ? <a className="button" href={`/status/releases/${encodeURIComponent(next.version)}`}>Next</a> : <button className="button" disabled>Next</button>}</nav>}</div><p>{selected.summary}</p>{["ADDED", "CHANGED", "FIXED", "SECURITY", "KNOWN_ISSUE"].map((category) => { const items = selected.notes.filter((note) => note.category === category); return items.length > 0 && <section key={category}><h3>{category.replaceAll("_", " ")}</h3><ul>{items.map((item) => <li key={`${category}-${item.ordinal}`}>{item.content}</li>)}</ul></section>; })}</article>;
+  return <>{detail && <a className="back-link" href="/status/releases">← Back to Release Notes</a>}<PageHead eyebrow="Status" title={detail ? selected?.version ?? "Release Note Detail" : "Release Notes"} description="Player-visible release information from published release records." /><div className="release-layout"><aside className="card"><h2>Release archive</h2>{releases.data?.releases.map((release) => <p key={release.releaseId}><a href={`/status/releases/${encodeURIComponent(release.version)}`}><strong>{release.version}</strong></a><br /><small>{new Date(release.publishedAt).toLocaleDateString()}</small></p>)}</aside>{body}</div></>;
 }
 
 function ContactPage() {
@@ -159,20 +175,20 @@ function SignedInHome() {
   return <><PageHead eyebrow="Home" title="Authorization unavailable" description="No supplied account access level matched." /></>;
 }
 
-export function PublicPage({ screen }: { screen: PageManifestEntry }) {
+export function PublicPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
   const content = useMemo(() => {
     if (screen.screenId === "PUB_HOME_ADMIN" || screen.screenId === "PUB_HOME_MEMBER") return <SignedInHome />;
     if (screen.screenId === "PUB002") return <FeaturesPage />;
     if (screen.screenId.startsWith("FEATURE_")) return <FeaturePage screen={screen} />;
     if (screen.screenId === "PUB003") return <GameplayPage />;
     if (screen.screenId === "PUB016") return <StatusPage />;
-    if (screen.screenId === "PUB017" || screen.screenId === "PUB018") return <ReleasesPage detail={screen.screenId === "PUB018"} />;
+    if (screen.screenId === "PUB017" || screen.screenId === "PUB018") return <ReleasesPage detail={screen.screenId === "PUB018"} pathname={pathname} />;
     if (screen.screenId === "PUB015") return <ContactPage />;
     if (screen.screenId.startsWith("LEGAL") || screen.screenId === "PUB019") return <LegalPage screen={screen} />;
     if (screen.screenId === "PUB009") return <DonationPage checkout />;
     if (screen.screenId === "PUB020" || screen.screenId === "PUB021") return <DonationPage />;
     if (screen.screenId === "PUB023") return <InvitePage />;
     return <><PageHead eyebrow={screen.screenId} title={screen.title} description="Reviewed public task." /></>;
-  }, [screen]);
+  }, [pathname, screen]);
   return <PublicShell><main className="public-page">{content}</main></PublicShell>;
 }

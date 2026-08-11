@@ -10,9 +10,9 @@ function publicScreen(screenId: string) {
   return pageManifest.find((entry) => entry.screenId === screenId)!;
 }
 
-function renderWithQuery(screenId: string) {
+function renderWithQuery(screenId: string, pathname?: string) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return render(<QueryClientProvider client={queryClient}><PublicPage screen={publicScreen(screenId)} /></QueryClientProvider>);
+  return render(<QueryClientProvider client={queryClient}><PublicPage pathname={pathname} screen={publicScreen(screenId)} /></QueryClientProvider>);
 }
 
 describe("public mutation boundaries", () => {
@@ -103,5 +103,17 @@ describe("public mutation boundaries", () => {
     renderWithQuery("PUB018");
     expect(screen.getByRole("link", { name: /Back to Release Notes/ })).toHaveAttribute("href", "/status/releases");
     expect(await screen.findByText("No player-visible release has been published.")).toBeInTheDocument();
+  });
+
+  it("selects a published release from the concrete version route and links adjacent releases", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ releases: [
+      { releaseId: "R-2", version: "0.2.0", gitSha: "2".repeat(40), summary: "Current supplied release", publishedAt: "2026-08-10T00:00:00Z", notes: [] },
+      { releaseId: "R-1", version: "0.1.0", gitSha: "1".repeat(40), summary: "Earlier supplied release", publishedAt: "2026-08-01T00:00:00Z", notes: [] },
+    ] }) }));
+    renderWithQuery("PUB018", "/status/releases/0.1.0");
+    expect(await screen.findByRole("heading", { name: "0.1.0", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("Earlier supplied release")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Next" })).toHaveAttribute("href", "/status/releases/0.2.0");
+    expect(screen.queryByText("Current supplied release")).not.toBeInTheDocument();
   });
 });

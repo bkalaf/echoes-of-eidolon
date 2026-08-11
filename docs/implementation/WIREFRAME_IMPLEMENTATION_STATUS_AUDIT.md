@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 190 |
-| PARTIAL | 36 |
-| PLACEHOLDER | 45 |
-| MISSING | 2 |
+| IMPLEMENTED | 194 |
+| PARTIAL | 33 |
+| PLACEHOLDER | 46 |
+| MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **83 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **79 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -55,7 +55,7 @@ Therefore **83 of 273 active V3** wireframe pages/states are not fully implement
 | 13 | `FEATURE_07` | Real Life Comes First | `/features/real-life-comes-first` | **IMPLEMENTED** | Dedicated feature detail with managed media and reviewed player-facing content. |
 | 14 | `PUB003` | Gameplay | `/gameplay` | **IMPLEMENTED** | Dedicated gameplay page with media and the reviewed gameplay sequence. |
 | 15 | `PUB017` | Release Notes | `/status/releases` | **IMPLEMENTED** | Reads and renders published release records from `/api/releases`. |
-| 16 | `PUB018` | Release Note Detail | `/status/releases/:version` | **PARTIAL** | Detail layout exists, but it always selects the first release and does not resolve the `:version` parameter. |
+| 16 | `PUB018` | Release Note Detail | `/status/releases/:version` | **IMPLEMENTED** | Resolves the concrete version against published player-visible releases, links the archive, and navigates adjacent releases without exposing drafts. |
 | 17 | `PUB015` | Contact Us | `/contact` | **IMPLEMENTED** | Contact form validates, persists, and attempts configured delivery through `/api/contact`. |
 | 18 | `PUB016` | Game & Server Status | `/status` | **PARTIAL** | Live health endpoint is rendered; maintenance, incident, and current-release sources are explicitly unconfigured. |
 | 19 | `PUB009` | Donation Checkout | `/donate/checkout` | **IMPLEMENTED** | Eligible donation amount starts server-owned Stripe Checkout; grant waits for signed webhook persistence. |
@@ -108,8 +108,8 @@ Therefore **83 of 273 active V3** wireframe pages/states are not fully implement
 | 66 | `ACC019` | Help Tickets | `/account/support` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
 | 67 | `ACC020` | Create Help Ticket | `/account/support/new` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
 | 68 | `ACC021` | Help Ticket Detail | `/account/support/:ticketid` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
-| 69 | `ACC022` | Request Invite | `/account/invitations/request` | **PARTIAL** | Form calls the invitation endpoint but omits the schema-required `consent: true`, so submission fails validation. |
-| 70 | `ACC023` | Invite Request - Pending | `/account/invitations/request` | **PARTIAL** | Uses the same broken request form as ACC022; direct entry does not render the requested pending state. |
+| 69 | `ACC022` | Request Invite | `/account/invitations/request` | **IMPLEMENTED** | Requires the exact approved contact consent and submits the strict persisted invitation request contract. |
+| 70 | `ACC023` | Invite Request - Pending | `/account/invitations/request` | **IMPLEMENTED** | Transitions to the received state only after a successful server response; direct entry remains fail-closed and does not infer moderation status. |
 | 71 | `ACC030` | Authenticated Beta Landing | `state-only` | **IMPLEMENTED** | Reads player access and renders the authenticated beta landing with bounded game entry. |
 | 72 | `STORE01` | Store Landing | `/store` | **IMPLEMENTED** | Reads server-configured catalog and variants; honest unavailable state is shown when configuration is absent. |
 | 73 | `STORE02` | Store Category - Posters | `/store/categories/posters` | **IMPLEMENTED** | Reads server-configured catalog and variants; honest unavailable state is shown when configuration is absent. |
@@ -123,8 +123,8 @@ Therefore **83 of 273 active V3** wireframe pages/states are not fully implement
 | 81 | `STORE10` | Checkout - Approved | `/store/checkout/approved` | **PLACEHOLDER** | Static warning only; route does not resolve a signed Stripe result or persisted order. |
 | 82 | `STORE11` | Guest Order Status | `/store/orders/:token` | **PLACEHOLDER** | Explicit unavailable card; guest order tokens/status are not implemented. |
 | 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **PLACEHOLDER** | Sign-in redirect only; there is no lookup form or order-resolution workflow. |
-| 84 | `STORE13` | Store Order Support | `/store/support` | **MISSING** | Dispatch checks nonexistent `STORE08`; this registered page falls to `Store screen unavailable`. |
-| 85 | `ADM001` | Admin Dashboard | `/admin` | **MISSING** | Falls through to the generic authorized-admin card; no dashboard metrics or task UI. |
+| 84 | `STORE13` | Store Order Support | `/store/support` | **PLACEHOLDER** | Correctly dispatches the dedicated Store Support boundary, but submission remains unavailable because no authenticated order-support ticket owner exists. |
+| 85 | `ADM001` | Admin Dashboard | `/admin` | **IMPLEMENTED** | Reads exact persisted invitation, prompt, release, bulk-audit, temporary API, and Atlas counts without inventing revenue, support, or store-exception metrics. |
 | 86 | `ADM002` | Accounts | `/admin/access` | **IMPLEMENTED** | Server-backed account search/list with links to account detail. |
 | 87 | `ADM003` | Roles | `/admin/access/roles` | **PARTIAL** | Displays the access/capability policy table, but provides no role-management workflow. |
 | 88 | `ADM004` | Invite/Access Approval Queue | `/admin/access/approvals` | **IMPLEMENTED** | Server-backed invitation approval/rejection queue with expiry and email issuance. |
@@ -195,7 +195,7 @@ Therefore **83 of 273 active V3** wireframe pages/states are not fully implement
 | 153 | `CAM004` | Campaign Planner - Invalid Architect Drop | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the requested reviewed planner state while preserving atomic linked placement validation and zero partial mutations. |
 | 154 | `CAM005` | Campaign Planner - Reward Binding | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the requested reviewed planner state while preserving atomic linked placement validation and zero partial mutations. |
 | 155 | `OPS001` | Operations | `/admin/operations` | **IMPLEMENTED** | Server-owned health/build links and persisted document-draft builder are wired; arbitrary shell execution is excluded. |
-| 156 | `OPS002` | Release Management | `/admin/operations/releases` | **PARTIAL** | Release drafts can be persisted, but the existing publish endpoint is not exposed and deployment remains separate. |
+| 156 | `OPS002` | Release Management | `/admin/operations/releases` | **PARTIAL** | Creates drafts and publishes matching reviewed release notes through the persisted endpoint; production deployment remains a separate explicitly unauthorized operation. |
 | 157 | `DATA023` | Data - SpeciesGroup | `/admin/data/species-group` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 158 | `DATA024` | Data - InterludeSubstitution | `/admin/data/interlude-substitution` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 159 | `DATA025` | Data - Definition | `/admin/data/definition` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
