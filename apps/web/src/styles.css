@@ -553,6 +553,7 @@ html[data-high-contrast="true"] {
 @media (max-width: 900px) {
   .public-header { flex-wrap: wrap; }
   .public-header nav { order: 3; width: 100%; overflow-x: auto; padding: 8px 0 2px; }
+  .public-header nav a { flex: 0 0 auto; white-space: nowrap; }
   .auth-actions { margin-left: auto; }
   .hero { height: 315px; }
   .hero-copy { top: 54px; }

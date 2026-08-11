@@ -7,6 +7,16 @@ test("home exposes the approved public task and navigation", async ({ page }) =>
   await expect(page.locator(".feature-card")).toHaveCount(9);
 });
 
+test("public navigation remains readable at the supported mobile width", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const navigation = page.getByRole("navigation", { name: "Primary navigation" });
+  await expect(navigation).toBeVisible();
+  for (const name of ["Features", "Gameplay", "Merchandise", "Game & Server Status", "Request an Invite"]) {
+    await expect(navigation.getByRole("link", { name })).toHaveCSS("white-space", "nowrap");
+  }
+});
+
 test("packet routes expose public, auth, account, and store tasks", async ({ page }) => {
   for (const [path, heading] of [
     ["/features", "Nine ways Echoes plays differently."],
