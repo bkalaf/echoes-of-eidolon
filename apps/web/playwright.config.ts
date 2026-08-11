@@ -14,7 +14,7 @@ export default defineConfig({
         "../../EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",
     },
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: true,
+    reuseExistingServer: false,
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },

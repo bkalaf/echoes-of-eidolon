@@ -64,6 +64,12 @@ const child = spawn(command, args, {
   stdio: "inherit",
 });
 
+for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"]) {
+  process.once(signal, () => {
+    if (!child.killed) child.kill(signal);
+  });
+}
+
 child.on("error", (error) => {
   throw error;
 });

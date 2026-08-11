@@ -8,6 +8,7 @@ import { describe, expect, it } from "vitest";
 const script = resolve(import.meta.dirname, "../../../../infra/scripts/deploy-production.sh");
 const serviceUnit = resolve(import.meta.dirname, "../../../../infra/systemd/eidolon-web.service");
 const playwrightConfig = resolve(import.meta.dirname, "../../playwright.config.ts");
+const localSecretsRunner = resolve(import.meta.dirname, "../../scripts/run-with-local-secrets.mjs");
 
 function fixture() {
   const root = mkdtempSync(resolve(tmpdir(), "eidolon-deploy-test-"));
@@ -67,6 +68,13 @@ describe("production deployment entry point", () => {
     expect(source).toContain('command: "pnpm dev --host 127.0.0.1"');
     expect(source).toContain('baseURL: "http://127.0.0.1:3000"');
     expect(source).toContain('url: "http://127.0.0.1:3000"');
+    expect(source).toContain("reuseExistingServer: false");
+  });
+
+  it("forwards termination signals so deployment test servers cannot survive their wrapper", () => {
+    const source = readFileSync(localSecretsRunner, "utf8");
+    expect(source).toContain('["SIGINT", "SIGTERM", "SIGHUP"]');
+    expect(source).toContain("child.kill(signal)");
   });
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
