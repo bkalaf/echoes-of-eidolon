@@ -9,6 +9,9 @@ User=eidolon
 Group=eidolon
 WorkingDirectory=/srv/eidolon/current
 EnvironmentFile=/etc/eidolon/deployment.env
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
 ExecStart=/usr/bin/env pnpm --filter @echoes/web start
 Restart=on-failure
 NoNewPrivileges=true

@@ -54,6 +54,9 @@ describe("production deployment entry point", () => {
     expect(unit).toContain("User=eidolon");
     expect(unit).toContain("Group=eidolon");
     expect(unit).toContain("EnvironmentFile=/etc/eidolon/deployment.env");
+    expect(unit).toContain("Environment=NODE_ENV=production");
+    expect(unit).toContain("Environment=HOST=127.0.0.1");
+    expect(unit).toContain("Environment=PORT=3000");
     expect(unit).toContain("ExecStart=/usr/bin/env pnpm --filter @echoes/web start");
     expect(unit).toContain("NoNewPrivileges=true");
   });
