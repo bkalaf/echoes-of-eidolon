@@ -8,7 +8,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "pnpm dev",
+    command: "pnpm dev --host 127.0.0.1",
     env: {
       EIDOLON_ATLAS_RELEASE_ROOT:
         "../../EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",

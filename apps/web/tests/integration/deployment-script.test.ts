@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 
 const script = resolve(import.meta.dirname, "../../../../infra/scripts/deploy-production.sh");
 const serviceUnit = resolve(import.meta.dirname, "../../../../infra/systemd/eidolon-web.service");
+const playwrightConfig = resolve(import.meta.dirname, "../../playwright.config.ts");
 
 function fixture() {
   const root = mkdtempSync(resolve(tmpdir(), "eidolon-deploy-test-"));
@@ -59,6 +60,13 @@ describe("production deployment entry point", () => {
     expect(unit).toContain("Environment=PORT=3000");
     expect(unit).toContain("ExecStart=/usr/bin/env pnpm --filter @echoes/web start");
     expect(unit).toContain("NoNewPrivileges=true");
+  });
+
+  it("binds the E2E readiness server to the same IPv4 loopback address Playwright probes", () => {
+    const source = readFileSync(playwrightConfig, "utf8");
+    expect(source).toContain('command: "pnpm dev --host 127.0.0.1"');
+    expect(source).toContain('baseURL: "http://127.0.0.1:3000"');
+    expect(source).toContain('url: "http://127.0.0.1:3000"');
   });
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
