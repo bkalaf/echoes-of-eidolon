@@ -10,7 +10,7 @@ import { pageManifest } from "../../src/lib/page-manifest";
 import { AdminPage } from "../../src/screens/admin/AdminPage";
 
 const catalog = {
-  releaseId: "R08-TEST",
+  releaseId: "R09-TEST",
   worldId: "EIDOLON",
   coordinateReferenceSystem: "EPSG:4326",
   pointsOfInterest: [
@@ -27,7 +27,7 @@ function renderAtlas(screenId: string) {
   return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><AdminPage pathname="/admin/atlas/pois" screen={entry} /></QueryClientProvider>);
 }
 
-describe("authorized R08 Atlas administration", () => {
+describe("authorized R09 Atlas administration", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     authMocks.useSession.mockReturnValue({ data: { user: { id: "admin-1", role: "admin" } }, isPending: false });
@@ -36,7 +36,7 @@ describe("authorized R08 Atlas administration", () => {
 
   it("loads canonical coordinate-derived POIs and synchronizes selection", async () => {
     renderAtlas("ATLAS_POI_2D");
-    expect(await screen.findByText("2 canonical Points of Interest · EPSG:4326 · R08-TEST")).toBeInTheDocument();
+    expect(await screen.findByText("2 canonical Points of Interest · EPSG:4326 · R09-TEST")).toBeInTheDocument();
     expect(screen.getByText("Select a Point of Interest from the map or table.")).toBeInTheDocument();
     expect(screen.queryByText("POI-0001 · Harbor")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Select World Tree" }));

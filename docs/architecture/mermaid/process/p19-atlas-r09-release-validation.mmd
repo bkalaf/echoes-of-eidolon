@@ -1,0 +1,13 @@
+%% Atlas R09 release validation
+flowchart LR
+  Resolvecontrolledd0["Resolve controlled dataset root"]
+  Verifydeploymentan1["Verify deployment and file manifests"]
+  ValidateJSONschema2["Validate JSON schemas"]
+  Checkcanonicalinva3["Check canonical invariants"]
+  LoadEPSG4326record4["Load EPSG 4326 records"]
+  Includeauthoritati5["Include authoritative SITE-0401"]
+  Resolvecontrolledd0 --> Verifydeploymentan1
+  Verifydeploymentan1 --> ValidateJSONschema2
+  ValidateJSONschema2 --> Checkcanonicalinva3
+  Checkcanonicalinva3 --> LoadEPSG4326record4
+  LoadEPSG4326record4 --> Includeauthoritati5

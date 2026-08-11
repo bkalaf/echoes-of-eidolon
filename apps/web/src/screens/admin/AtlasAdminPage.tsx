@@ -29,7 +29,7 @@ const siteColumns: DataTableColumnDef<ProjectedSettlementSite>[] = [
 
 async function loadAtlas(): Promise<AtlasCatalogProjection> {
   const response = await fetch("/api/atlas/catalog");
-  if (!response.ok) throw new Error("The validated R08 Atlas catalog could not be loaded.");
+  if (!response.ok) throw new Error("The validated R09 Atlas catalog could not be loaded.");
   return response.json() as Promise<AtlasCatalogProjection>;
 }
 
@@ -133,15 +133,15 @@ function FoundCity({ pathname }: { pathname?: string }) {
 type AtlasView = "found-city" | "migrate" | "overview" | "poi-2d" | "poi-3d" | "settlements" | "sites";
 
 function AtlasCatalogPage({ pathname, view }: { pathname?: string; view: AtlasView }) {
-  const atlas = useQuery({ queryKey: ["atlas", "catalog", "R08"], queryFn: loadAtlas, retry: false });
-  if (atlas.isPending) return <p className="notice">Validating the R08 Atlas release…</p>;
+  const atlas = useQuery({ queryKey: ["atlas", "catalog", "R09"], queryFn: loadAtlas, retry: false });
+  if (atlas.isPending) return <p className="notice">Validating the R09 Atlas release…</p>;
   if (atlas.isError) return <p className="notice notice--bad" role="alert">{atlas.error.message}</p>;
   if (view === "poi-2d" || view === "poi-3d") return <PoiAtlas atlas={atlas.data} globe={view === "poi-3d"} />;
   if (view === "sites") return <Sites atlas={atlas.data} />;
   if (view === "found-city") return <FoundCity pathname={pathname} />;
   if (view === "settlements") return <SettlementAdminPage migrate={false} />;
   if (view === "migrate") return <SettlementAdminPage migrate />;
-  return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R08 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R08 candidates.</p></a><article className="card"><h2>Region Mapping and topology</h2><p>{atlas.data.regionMappings.length} locked mappings · {atlas.data.connections.length} locked Lattice connections. Lattice values are derived at read time.</p></article></div>;
+  return <div className="grid-3"><a className="card" href="/admin/atlas/pois"><h2>Points of Interest</h2><p>{atlas.data.pointsOfInterest.length} canonical R09 records.</p></a><a className="card" href="/admin/atlas/sites"><h2>Sites</h2><p>{atlas.data.settlementSites.length} canonical R09 candidates.</p></a><article className="card"><h2>Region Mapping and topology</h2><p>{atlas.data.regionMappings.length} locked mappings · {atlas.data.connections.length} locked Lattice connections. Lattice values are derived at read time.</p></article></div>;
 }
 
 export function AtlasAdminPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {

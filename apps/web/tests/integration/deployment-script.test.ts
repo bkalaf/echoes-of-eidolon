@@ -12,10 +12,15 @@ function fixture() {
   const root = mkdtempSync(resolve(tmpdir(), "eidolon-deploy-test-"));
   const repository = resolve(root, "repository");
   const backups = resolve(root, "backups");
+  const atlas = resolve(root, "EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2");
   const compose = resolve(root, "compose.yaml");
   const envFile = resolve(root, "deployment.env");
   mkdirSync(repository);
   mkdirSync(backups);
+  mkdirSync(atlas);
+  for (const file of ["DEPLOYMENT_DATASET_MANIFEST.json", "FILE_MANIFEST.json", "R09_AUTHORITATIVE_RELEASE_MANIFEST.json"]) {
+    writeFileSync(resolve(atlas, file), "{}\n");
+  }
   writeFileSync(compose, "services: {}\n");
   execFileSync("git", ["init", "-q", repository]);
   execFileSync("git", ["-C", repository, "config", "user.email", "test@example.test"]);
@@ -30,6 +35,7 @@ function fixture() {
     "POSTGRES_PASSWORD=unused",
     "POSTGRES_USER=unused",
     `EIDOLON_BACKUP_DIR=${backups}`,
+    `EIDOLON_ATLAS_RELEASE_ROOT=${atlas}`,
     `EIDOLON_COMPOSE_FILE=${compose}`,
     `EIDOLON_DEPLOYMENT_LOCK_FILE=${resolve(root, "deployment.lock")}`,
     `EIDOLON_DEPLOYMENT_RECORD_FILE=${resolve(root, "deployments.log")}`,

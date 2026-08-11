@@ -13,6 +13,7 @@ export default tseslint.config(
       "**/routeTree.gen.ts",
       "Echoes_UI_Closed_World_Implementation_Handoff_v11_3/**",
       "EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE/**",
+      "EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2/**",
     ],
   },
   js.configs.recommended,

@@ -45,7 +45,7 @@ extends those repository-native owners rather than creating parallel systems:
 | Data access | Prisma schema, forward migrations, typed import services | Corrected Breed, Research, capability, Campaign, runtime, release, commerce, and settings contracts |
 | Routes | Manifest-backed TanStack route/state registry | Server-owned API projections and task-specific shell dispatch |
 | Assets/media | ManagedAsset, AssetPurposeLink, one importer | Final-byte sanitization, technical metadata, safe ZIP extraction, remote and DB/JSON drift verification |
-| Atlas | R08 validator/import boundary and Atlas screens | Owner WebGL2 sphere renderer and shared persisted Site/POI/Settlement selection |
+| Atlas | R09 authority validator/import boundary and Atlas screens | Owner WebGL2 sphere renderer and shared persisted Site/POI/Settlement selection |
 | Campaign | Campaign and CampaignPlacement | Canonical book membership, inclusive CSS Grid row spans, collision lanes, and mirrored duologies |
 | Puzzle | PuzzleBlueprint models/services | Immutable versions, exact hint validation, player acceptance, and persisted countdown |
 | City Builder | City, Parcel, Street, Building | Canonical geometry persistence; destructive reset remains blocked by missing exact reset/reseed input |
@@ -61,7 +61,7 @@ extends those repository-native owners rather than creating parallel systems:
 - Current field/relationship contract:
   `Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD/types/eidolon-domain-types.ts`.
 - Current Atlas schemas/contracts:
-  `EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE/contracts/`.
+  `EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2/contracts/`.
 - Implementation rule: interfaces and transaction services may be built around
   settled contracts, but unresolved persisted shapes are not encoded as database
   migrations while their semantics remain open.
@@ -91,9 +91,9 @@ inventory. Duplicate paths represent approved state variants, not duplicate rout
 |---|---|---|
 | Extracted v11.3 closed-world handoff packet | Per `HANDOUT_DISPOSITION_REGISTER.md` | Binding decisions, implementation inputs, visual references, and reference-only validation files are used only in their registered roles. |
 | `Echoes_UI_Closed_World_Implementation_Handoff_v11_3.zip` | `REFERENCE_ONLY` | Untouched delivery container used only for integrity recovery. |
-| Extracted R08 canonical Atlas integration release | `DATA_INPUT` | Atlas data and immutable data contracts only; it does not create app workflows or architecture. Runtime loading begins at exact root `atlas-data-release.json`. |
-| `EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE.zip` | `DATA_INPUT` | Untouched delivery container for the same Atlas release. |
-| Atlas `MASTER_IMPLEMENTATION_DATA_HANDOFF.md`, `README_DATA.md`, and R08 manifest/addendum | `IMPLEMENTATION_INPUT` for Atlas data loading | Establish bootstrap, validation, counts, coordinate rules, and the pending SITE-0401 exception. |
+| Extracted R09 authoritative deployment dataset | `DATA_INPUT` | Current Atlas data and immutable data contracts only; it does not create app workflows or architecture. Runtime loading begins at exact root `DEPLOYMENT_DATASET_MANIFEST.json` and verifies `FILE_MANIFEST.json`. |
+| `EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2.zip` | `DATA_INPUT` | SHA-256 `2972f9b225e3c7719ec7ca660324c5d72a2898c2c2190b96240d06a620596f44`; untouched delivery container for the current dataset. |
+| Atlas R09 deployment and release manifests | `IMPLEMENTATION_INPUT` for Atlas data loading | Establish bootstrap, validation, canonical counts, coordinate rules, and authoritative SITE-0401 placement. Embedded superseded prose is not deployment authority. |
 | Atlas canonical `data/`, `world.gpkg`, `contracts/`, and `src/globe-transform.*` | `DATA_INPUT` | Canonical application data/contract inputs. |
 | Atlas `diagnostics/`, `reports/`, `review/`, reconstruction READMEs, and tests | `REFERENCE_ONLY` | QA and reconstruction context only; not runtime records or product subsystems. |
 | Packet `assets/*` | `VISUAL_REFERENCE` | Copied into implementation only where required by an approved screen. |
@@ -101,9 +101,8 @@ inventory. Duplicate paths represent approved state variants, not duplicate rout
 | Packet validation JSON and SHA manifests | `REFERENCE_ONLY` | Integrity/review checks only, never product logic. |
 | Owner-supplied feature PNGs, soundtrack MP3s, captioned MP4s, logos, and Atlas image/texture files under `/home/bobby/Dropbox` | `DATA_INPUT` for managed assets | Source bytes only. They are sanitized, hashed from final bytes, renamed to the SHA-256 identity, and served from DigitalOcean Spaces; workstation paths and source filenames never become public identity. |
 
-Atlas R08 supplies one unresolved canonical location: Highcourt/Ascendancy
-`SITE-0401` has no approved latitude/longitude. It remains visibly pending and is
-not placed by inference.
+Atlas R09 resolves Highcourt/Ascendancy as `SITE-0401` in `R06` at latitude
+`20.360822`, longitude `-32.076454`, with surface type `FLOATING_ISLAND`.
 
 ## Owner decisions still required
 

@@ -179,8 +179,8 @@ Therefore **38 of 273 active V3** wireframe pages/states are not fully implement
 | 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PARTIAL** | Reads immutable history and appends a new generator version with exactly DIRECTIONAL then GUIDED hints; prompt, answer, status, assignment, and accessibility owners are absent. |
 | 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PARTIAL** | Validates deterministic identity against a persisted version without starting a timer; generator configuration, instance generation, and answer validation are absent. |
 | 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
-| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
-| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
+| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the authoritative R09 POI catalog with selectable 2D/3D visualization and record detail. |
+| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the authoritative R09 POI catalog with selectable 2D/3D visualization and record detail. |
 | 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Site records. |
 | 143 | `AT005` | Settlements | `/admin/atlas/settlements` | **IMPLEMENTED** | Reads persisted Settlements by explicitly selected world and links to migration. |
 | 144 | `DATA_CHARACTER_NEW` | Create Character | `/admin/data/character/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
@@ -283,10 +283,10 @@ Therefore **38 of 273 active V3** wireframe pages/states are not fully implement
 | 241 | `ADM028` | Puzzle Blueprints | `/admin/puzzles/blueprints` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots and immutable versions. |
 | 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PARTIAL** | Lists the finite canonical PuzzleSharedComponentId set without invented labels; persisted configurations and Blueprint relationships are absent. |
 | 243 | `ADM030` | Puzzle Test & Validation Lab | `/admin/puzzles/test-lab` | **PARTIAL** | Validates deterministic preview identities for stored versions and proves no timer starts; generation, answer checking, and accessibility evaluation remain unavailable. |
-| 244 | `ADM031` | Atlas Manager | `/admin/atlas` | **IMPLEMENTED** | Dedicated atlas landing with canonical R08 counts and navigation. |
-| 245 | `ADM032` | Points of Interest — View Selector | `/admin/atlas/pois` | **IMPLEMENTED** | Dedicated 2D/3D POI selector backed by the canonical R08 catalog. |
-| 246 | `ATLAS_POI_2D` | Points of Interest — 2D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable canonical R08 POI visualization with table and detail. |
-| 247 | `ATLAS_POI_3D` | Points of Interest — 3D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable canonical R08 POI visualization with table and detail. |
+| 244 | `ADM031` | Atlas Manager | `/admin/atlas` | **IMPLEMENTED** | Dedicated atlas landing with authoritative R09 counts and navigation. |
+| 245 | `ADM032` | Points of Interest — View Selector | `/admin/atlas/pois` | **IMPLEMENTED** | Dedicated 2D/3D POI selector backed by the authoritative R09 catalog. |
+| 246 | `ATLAS_POI_2D` | Points of Interest — 2D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable authoritative R09 POI visualization with table and detail. |
+| 247 | `ATLAS_POI_3D` | Points of Interest — 3D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable authoritative R09 POI visualization with table and detail. |
 | 248 | `ADM033` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Sites. |
 | 249 | `AT004_FOUND_CITY` | Found City — SITE-0081 | `/admin/atlas/sites/SITE-0081` | **IMPLEMENTED** | Inherits the selected current World, uses projected Breed departures and atomic 90% arrival/loss founding, then persists an immutable server-owned naming PromptVersion for explicit copy, validation, provenance, and atomic application to the Settlement and allowed unnamed features. |
 | 250 | `ADM034` | Settlements | `/admin/atlas/settlements` | **IMPLEMENTED** | Reads persisted Settlements by selected world. |

@@ -14,7 +14,7 @@ describe("Found City reviewed UI contract", () => {
   it("inherits current World, uses Breed rows, and completes the explicit copy/validate/apply handoff", async () => {
     const fetchMock = vi.fn(async (request: RequestInfo | URL, init?: RequestInit) => {
       const url = String(request);
-      if (url === "/api/atlas/catalog") return { ok: true, json: async () => ({ connections: [], coordinateReferenceSystem: "test", pointsOfInterest: [], regionMappings: [], releaseId: "R08", settlementSites: [] }) };
+      if (url === "/api/atlas/catalog") return { ok: true, json: async () => ({ connections: [], coordinateReferenceSystem: "test", pointsOfInterest: [], regionMappings: [], releaseId: "R09", settlementSites: [] }) };
       if (url.startsWith("/api/admin/settlements/?world=")) return { ok: true, json: async () => ({ settlements: [{ latestYear: 5, populations: [{ breedId: "BREED-A", population: 10 }], settlement: { name: "Origin", settlementId: "SET-ORIGIN" }, settlementWorldId: "SW-ORIGIN" }] }) };
       if (url === "/api/admin/settlements/found-city") return { ok: true, json: async () => ({ promptText: "EXACT PERSISTED PROMPT", promptVersionId: "PV-1", settlementId: "SET-NEW", totalArriving: 9, totalDeparting: 10 }) };
       if (url === "/api/admin/settlements/complete-naming") return { ok: true, json: async () => ({ promptTextResultId: "RESULT-1" }) };

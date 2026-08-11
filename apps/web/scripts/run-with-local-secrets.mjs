@@ -44,9 +44,9 @@ function loadLocalEnvironment() {
 
   const atlasRoot = resolve(
     repositoryRoot,
-    "EIDOLON_ATLAS_RECON_NIMBUS_P3V6_20260809_R08_CANONICAL_INTEGRATION_RELEASE",
+    "EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",
   );
-  if (existsSync(resolve(atlasRoot, "atlas-data-release.json"))) {
+  if (existsSync(resolve(atlasRoot, "DEPLOYMENT_DATASET_MANIFEST.json"))) {
     environment.EIDOLON_ATLAS_RELEASE_ROOT = atlasRoot;
   }
   const databaseUrl = new URL(environment.DATABASE_URL);
