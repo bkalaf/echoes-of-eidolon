@@ -10,7 +10,7 @@ afterEach(() => vi.unstubAllGlobals());
 describe("release-note operations boundary", () => {
   it("publishes a matching reviewed draft without exposing a deployment action", async () => {
     const release = { gitSha: "a".repeat(40), publishedAt: null, releaseId: "REL-1", status: "DRAFT", summary: "Reviewed notes", version: "0.2.0" };
-    const fetchMock = vi.fn().mockImplementation(async (request: RequestInfo | URL, init?: RequestInit) => String(request).includes("/publish")
+    const fetchMock = vi.fn().mockImplementation(async (request: RequestInfo | URL) => String(request).includes("/publish")
       ? { json: async () => ({ release: { ...release, status: "PUBLISHED" } }), ok: true }
       : { json: async () => ({ releases: [release] }), ok: true });
     vi.stubGlobal("fetch", fetchMock);

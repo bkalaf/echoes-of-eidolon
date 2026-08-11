@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 194 |
-| PARTIAL | 33 |
-| PLACEHOLDER | 46 |
+| IMPLEMENTED | 199 |
+| PARTIAL | 32 |
+| PLACEHOLDER | 42 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **79 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **74 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -132,15 +132,15 @@ Therefore **79 of 273 active V3** wireframe pages/states are not fully implement
 | 90 | `ADM006` | Invitation Codes | `/admin/access/invites` | **IMPLEMENTED** | Lists issued invitation lifecycle without exposing bearer codes. |
 | 91 | `ADM007` | Donation Perks | `/admin/perks` | **IMPLEMENTED** | Lists persisted donation perks. |
 | 92 | `ADM008` | Perk Detail/Edit | `/admin/perks/:id` | **IMPLEMENTED** | Reads and persists perk name, description, and active status. |
-| 93 | `ADM010` | Store Management | `/admin/store` | **PARTIAL** | Reads configured products and variants, but offers no product/category create or edit mutation. |
-| 94 | `ADM011` | Store Categories | `/admin/store/categories` | **PLACEHOLDER** | Explicit unavailable card; category management is absent. |
-| 95 | `ADM012` | Store Items | `/admin/store/items` | **PARTIAL** | Reads configured products and variants, but offers no product/category create or edit mutation. |
-| 96 | `ADM013` | Store Item Editor | `/admin/store/items/:id` | **PLACEHOLDER** | Explicit unavailable card; item editor and persistence are absent. |
-| 97 | `ADM014` | Order Management | `/admin/orders` | **PARTIAL** | Reads merchandise orders and provider state, but offers no admin order actions. |
-| 98 | `ADM015` | Order Management - Merchandise | `/admin/orders?tab=merchandise` | **PARTIAL** | Reads merchandise orders and provider state, but offers no admin order actions. |
+| 93 | `ADM010` | Store Management | `/admin/store` | **IMPLEMENTED** | Projects persisted publication, provider-mapping, unconfirmed-order, and finite-category metrics plus the configured catalog; unresolved production activation remains explicitly owner-deferred. |
+| 94 | `ADM011` | Store Categories | `/admin/store/categories` | **IMPLEMENTED** | Projects the three finite canonical `StoreProductType` categories and their persisted item counts without creating a competing free-form taxonomy. |
+| 95 | `ADM012` | Store Items | `/admin/store/items` | **PARTIAL** | Lists and links persisted product, artwork, variant, price, availability, and provider-mapping state; creation and configuration mutations remain blocked by the owner-deferred merchandise mapping. |
+| 96 | `ADM013` | Store Item Editor | `/admin/store/items/:id` | **PARTIAL** | Resolves a concrete persisted product and exposes complete variant/configuration detail; editing remains blocked by missing authoritative artwork, provider variant, credential, and shipping configuration. |
+| 97 | `ADM014` | Order Management | `/admin/orders` | **IMPLEMENTED** | Projects all authoritative merchandise orders and donation transactions with separate record-type navigation and no inferred subscription purchases. |
+| 98 | `ADM015` | Order Management - Merchandise | `/admin/orders?tab=merchandise` | **IMPLEMENTED** | Projects merchandise payment, fulfillment, refund, and customer state only from the separate persisted records. |
 | 99 | `ADM016` | Order Management - Subscriptions | `/admin/orders?tab=subscriptions` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
-| 100 | `ADM017` | Order Management - Donations | `/admin/orders?tab=donations` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
-| 101 | `ADM018` | Order Detail/Admin Actions | `/admin/orders/:id` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
+| 100 | `ADM017` | Order Management - Donations | `/admin/orders?tab=donations` | **IMPLEMENTED** | Projects persisted `DonationCheckout` amount, status, confirmation, account, and membership-month values without inferring provider outcomes. |
+| 101 | `ADM018` | Order Detail/Admin Actions | `/admin/orders/:id` | **PARTIAL** | Resolves a concrete merchandise order with lines, server total, payment, fulfillment, return, refund, and timeline detail; receipt and refund mutations remain disabled because no safe operation owner exists. |
 | 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
 | 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
 | 104 | `ADM022` | Bulk Operations - Audit / Recent Activity | `/admin/data/bulk-operations` | **IMPLEMENTED** | Reads append-only BulkOperationAudit records with actor/session attribution, result, count, time, and bounded detail. |

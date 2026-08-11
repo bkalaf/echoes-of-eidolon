@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { storeProductTypes } from "../../../../domain/store";
 import { requireAdministration } from "../../../../server/access";
 import { getDatabase } from "../../../../server/database";
 
@@ -9,13 +10,14 @@ export const Route = createFileRoute("/api/admin/commerce/")({
       GET: async ({ request }) => {
         try {
           await requireAdministration(request);
-          const [products, orders] = await Promise.all([
+          const [products, orders, donations] = await Promise.all([
             getDatabase().storeProduct.findMany({
               orderBy: { storeProductId: "asc" },
               select: {
                 active: true,
                 artworkAssetId: true,
                 name: true,
+                productType: true,
                 storeProductId: true,
                 variants: {
                   orderBy: { storeVariantId: "asc" },
@@ -38,6 +40,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                 lines: {
                   orderBy: { orderLineId: "asc" },
                   select: {
+                    orderLineId: true,
                     quantity: true,
                     storeVariant: {
                       select: {
@@ -58,13 +61,44 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                     fulfillment: { select: { submittedAt: true } },
                   },
                 },
-                refunds: { select: { amountCents: true, refundedAt: true } },
+                refunds: {
+                  orderBy: [{ refundedAt: "asc" }, { orderRefundId: "asc" }],
+                  select: { amountCents: true, refundedAt: true },
+                },
                 returnEligibility: { select: { eligibleAt: true } },
                 user: { select: { email: true, id: true } },
               },
             }),
+            getDatabase().donationCheckout.findMany({
+              orderBy: [{ createdAt: "desc" }, { donationCheckoutId: "asc" }],
+              select: {
+                amountCents: true,
+                confirmedAt: true,
+                createdAt: true,
+                donationCheckoutId: true,
+                monthsGranted: true,
+                status: true,
+                stripeCheckoutReference: true,
+                user: { select: { email: true, id: true } },
+              },
+            }),
           ]);
+          const categoryCounts = new Map(products.map((product) => [product.productType, product]));
           return Response.json({
+            categories: storeProductTypes.map((category) => {
+              const product = categoryCounts.get(category.productType);
+              return {
+                activeItems: product?.active ? 1 : 0,
+                categoryPath: category.categoryPath,
+                items: product ? 1 : 0,
+                name: category.name,
+                productType: category.productType,
+              };
+            }),
+            donations: donations.map(({ stripeCheckoutReference, ...donation }) => ({
+              ...donation,
+              stripeConfigured: Boolean(stripeCheckoutReference),
+            })),
             orders: orders.map((order) => ({
               ...order,
               refundedAmountCents: order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0),
