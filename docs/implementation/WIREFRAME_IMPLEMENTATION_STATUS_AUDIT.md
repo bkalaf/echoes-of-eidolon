@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 205 |
-| PARTIAL | 29 |
-| PLACEHOLDER | 39 |
+| IMPLEMENTED | 207 |
+| PARTIAL | 28 |
+| PLACEHOLDER | 38 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **68 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **66 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -122,11 +122,11 @@ Therefore **68 of 273 active V3** wireframe pages/states are not fully implement
 | 80 | `STORE09` | Checkout - Card Declined | `/store/checkout/declined` | **IMPLEMENTED** | Resolves the session reference only to an order owned by the authenticated account and reports the verified absence or presence of signed payment confirmation without inferring a decline reason. |
 | 81 | `STORE10` | Checkout - Approved | `/store/checkout/approved` | **IMPLEMENTED** | Resolves the owned persisted order and claims approval only when the signed Stripe webhook confirmation exists; otherwise it explicitly reports confirmation pending. |
 | 82 | `STORE11` | Guest Order Status | `/store/orders/:token` | **PLACEHOLDER** | Explicit unavailable card; guest order tokens/status are not implemented. |
-| 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **PLACEHOLDER** | Sign-in redirect only; there is no lookup form or order-resolution workflow. |
+| 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **IMPLEMENTED** | Accepts an order identifier and delegates to the existing authenticated, ownership-checked Account order detail without exposing guest order data. |
 | 84 | `STORE13` | Store Order Support | `/store/support` | **PLACEHOLDER** | Correctly dispatches the dedicated Store Support boundary, but submission remains unavailable because no authenticated order-support ticket owner exists. |
 | 85 | `ADM001` | Admin Dashboard | `/admin` | **IMPLEMENTED** | Reads exact persisted invitation, prompt, release, bulk-audit, temporary API, and Atlas counts without inventing revenue, support, or store-exception metrics. |
 | 86 | `ADM002` | Accounts | `/admin/access` | **IMPLEMENTED** | Server-backed account search/list with links to account detail. |
-| 87 | `ADM003` | Roles | `/admin/access/roles` | **PARTIAL** | Displays the access/capability policy table, but provides no role-management workflow. |
+| 87 | `ADM003` | Roles | `/admin/access/roles` | **IMPLEMENTED** | Displays the finite authorization-role and administrative-capability policy and links to the OWNER-only account-assignment workflow instead of inventing mutable role-definition records. |
 | 88 | `ADM004` | Invite/Access Approval Queue | `/admin/access/approvals` | **IMPLEMENTED** | Server-backed invitation approval/rejection queue with expiry and email issuance. |
 | 89 | `ADM005` | Account Detail | `/admin/access/:id` | **IMPLEMENTED** | Server-backed account detail; OWNER can persist role changes. |
 | 90 | `ADM006` | Invitation Codes | `/admin/access/invites` | **IMPLEMENTED** | Lists issued invitation lifecycle without exposing bearer codes. |

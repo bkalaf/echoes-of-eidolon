@@ -101,7 +101,9 @@ function GuestStatus() {
 }
 
 function Lookup() {
-  return <><StoreHead title="Order Lookup" path="/store/order-lookup" description="Authenticated order lookup." /><section className="form-card form-card--center"><h2>Sign in required</h2><p>Orders are available only through the authenticated account once order persistence is configured.</p><a className="button button--gold" href="/auth/sign-in?returnTo=%2Faccount%2Forders">Sign in</a></section></>;
+  const [orderId, setOrderId] = useState("");
+  const normalizedOrderId = orderId.trim();
+  return <><StoreHead title="Order Lookup" path="/store/order-lookup" description="Ownership-checked authenticated order lookup." /><section className="form-card form-card--center"><h2>Find an account order</h2><p>Enter the order identifier from your receipt. The Account order endpoint verifies ownership before returning any details.</p><label className="field">Order identifier<input className="input" value={orderId} onChange={(event) => setOrderId(event.target.value)} /></label><div className="action-row"><a className="button" href="/auth/sign-in?returnTo=%2Fstore%2Forder-lookup">Sign in</a>{normalizedOrderId ? <a className="button button--gold" href={`/account/orders/${encodeURIComponent(normalizedOrderId)}`}>Look up order</a> : <button className="button button--gold" disabled>Look up order</button>}</div><a href="/account/orders">View all account orders</a></section></>;
 }
 
 function StoreSupport() {

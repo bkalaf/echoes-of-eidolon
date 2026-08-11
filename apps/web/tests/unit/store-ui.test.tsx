@@ -100,6 +100,14 @@ describe("store interaction boundaries", () => {
     expect(screen.queryByRole("button", { name: "Submit" })).not.toBeInTheDocument();
   });
 
+  it("routes an entered order identifier to the ownership-checked Account detail", () => {
+    renderStore("STORE12");
+    expect(screen.getByRole("button", { name: "Look up order" })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText("Order identifier"), { target: { value: " ORDER-1 " } });
+    expect(screen.getByRole("link", { name: "Look up order" })).toHaveAttribute("href", "/account/orders/ORDER-1");
+    expect(screen.getByText(/verifies ownership/)).toBeInTheDocument();
+  });
+
   it("blocks payment until a configured variant exists", async () => {
     renderStore("STORE07");
     expect(await screen.findByRole("button", { name: "Continue to secure payment" })).toBeDisabled();
