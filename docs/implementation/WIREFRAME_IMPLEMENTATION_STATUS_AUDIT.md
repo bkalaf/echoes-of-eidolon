@@ -2,8 +2,8 @@
 
 Date: 2026-08-10  
 Repository: `/home/bobby/echoes-of-eidolon`  
-Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base rows; 273 mechanically derived active V3 pages/states)
-Audited checkout: `a03b6588e0bba4f8c1df6f62bc12d94ecc3d014b` plus the current uncommitted implementation worktree
+Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 273 mechanically derived active V3 states)
+Audited checkout: archival checkpoint `7bf9cc3` plus the current focused remediation commits and Admin Data worktree
 
 ## Standard used
 
@@ -13,31 +13,28 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 - **PARTIAL** — task-specific UI exists, but a material state, action, parameter, or persistence path is missing or broken.
 - **PLACEHOLDER** — the registered task is deliberately represented by unavailable/deferred/static content.
 - **MISSING** — no task-specific page exists, or routing selects the wrong/generic fallback.
-- **SUPERSEDED** — a base-manifest state was explicitly removed by the controlling V3 amendment and is not active implementation scope.
 
-## Preserved base-audit totals
-
-These counts describe the original 269-row v11.3 audit before applying the V3 amendment or subsequent remediation commits. The final V3 status reconciliation is generated from the 273-row active registry after remediation; the three superseded Matrix rows below remain visible only as forensic base-manifest history.
+## Totals
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 100 |
-| PARTIAL | 44 |
-| PLACEHOLDER | 54 |
-| MISSING | 71 |
-| **Total** | **269** |
+| IMPLEMENTED | 189 |
+| PARTIAL | 33 |
+| PLACEHOLDER | 49 |
+| MISSING | 2 |
+| **Total active V3 states** | **273** |
 
-Therefore **169 of 269** registered wireframe pages/states are not fully implemented under this standard.
+Therefore **84 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
-1. **Capability authoring is not implemented.** `DATA030` is a generic admin fallback. `DATA_CAPABILITYDEFINITION_IMPORT` can parse/map/preview, but Apply is disabled because there is no typed CapabilityDefinition import mutation. There is no CapabilityEvent authoring/history page.
-2. **The normal Data admin surface is largely absent.** The registered Data lists, both create pages, and all 18 edit pages fall through to the generic “no writable adapter” card.
-3. **Import support is uneven.** Fifteen entity import pages have typed transaction-backed Apply; nineteen are preview-only.
-4. **Player runtime pages are mostly shells.** Knowledge, Tomes, maps/globes, Companions, progress, achievements, and support lack their canonical player-facing data/workflow owners.
+1. **Capability authoring is implemented.** CAP01-CAP05 and DATA030 use the versioned definition/address/event/projection authority; legacy history is migrated only when semantics are deterministically recoverable.
+2. **The normal Data admin surface is implemented for every active registered entity.** Its allowlist and field contracts are generated from the canonical entity registry and Prisma schema, with persisted list/search/create/edit/delete behavior.
+3. **Every active registered entity import has transaction-backed Apply.** JSON, YAML, Markdown, and HTML parsing feed exact-field validation; existing identities are idempotent only when canonical values match.
+4. **Player runtime pages remain incomplete.** Maps and globes now expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, achievements, and support still lack canonical player-facing owners.
 5. **Commerce is incomplete.** Catalog read and Stripe checkout initiation exist; cart state, checkout result resolution, return submission, subscriptions, admin item editing, and support are not complete.
-6. **Campaign world planners are implemented, including real book-row spans.** The older `CAM002`–`CAM005` states do not select a world and therefore still render the landing instead of their reviewed planner/drop states.
-7. **No exhaustive visual acceptance exists for all 269 pages.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
+6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
+7. **No exhaustive visual acceptance exists for all 273 active V3 states.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
 
 ## Explicit page-by-page inventory
 
@@ -144,76 +141,76 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 99 | `ADM016` | Order Management - Subscriptions | `/admin/orders?tab=subscriptions` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
 | 100 | `ADM017` | Order Management - Donations | `/admin/orders?tab=donations` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
 | 101 | `ADM018` | Order Detail/Admin Actions | `/admin/orders/:id` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
-| 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **MISSING** | Falls through to the generic authorized-admin card; no bulk API, key, audit, or activity workflow. |
-| 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **MISSING** | Falls through to the generic authorized-admin card; no bulk API, key, audit, or activity workflow. |
-| 104 | `ADM022` | Bulk Operations - Audit / Recent Activity | `/admin/data/bulk-operations` | **MISSING** | Falls through to the generic authorized-admin card; no bulk API, key, audit, or activity workflow. |
-| 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **MISSING** | Falls through to the generic authorized-admin card; no Antagonist table or record actions. |
+| 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
+| 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
+| 104 | `ADM022` | Bulk Operations - Audit / Recent Activity | `/admin/data/bulk-operations` | **IMPLEMENTED** | Reads append-only BulkOperationAudit records with actor/session attribution, result, count, time, and bounded detail. |
+| 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 106 | `ADM031` | Asset Manager - Audio | `/admin/assets/audio` | **PARTIAL** | Reads persisted audio asset metadata; upload, replace, purpose-link, and edit actions are absent. |
 | 107 | `ADM032` | Asset Manager - Video | `/admin/assets/video` | **PARTIAL** | Reads persisted video asset metadata; upload, replace, purpose-link, and edit actions are absent. |
 | 108 | `ADM033` | Prompt Manager | `/admin/prompts` | **PARTIAL** | Reads prompt/version/result records, but cannot create prompts, append versions, or associate results. |
 | 109 | `ADM034` | Prompt Manager - Outstanding Only | `/admin/prompts` | **PARTIAL** | Filters outstanding prompts, but provides no completion or result-association action. |
-| 110 | `DATA000` | Data - Object Types | `/admin/data` | **MISSING** | Falls through to the generic authorized-admin card; no object-type index, table navigation, or record actions. |
-| 111 | `DATA001` | Data - Protagonist | `/admin/data/protagonist` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 112 | `DATA002` | Data - Culture | `/admin/data/culture` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 113 | `DATA003` | Data - Character | `/admin/data/character` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 114 | `DATA004` | Data - Witness | `/admin/data/witness` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 115 | `DATA005` | Data - Architect | `/admin/data/architect` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 116 | `DATA006` | Data - Antagonist | `/admin/data/antagonist` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 117 | `DATA007` | Data - Species | `/admin/data/species` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 118 | `DATA008` | Data - PersonalityExpression | `/admin/data/personality-expression` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 119 | `DATA009` | Data - TimelineEvent | `/admin/data/timeline-event` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 120 | `DATA010` | Data - Interlude | `/admin/data/interlude` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 121 | `DATA011` | Data - Pillar | `/admin/data/pillar` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 122 | `DATA012` | Data - Ark | `/admin/data/ark` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 123 | `DATA013` | Data - Constellation | `/admin/data/constellation` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 124 | `DATA014` | Data - Reward | `/admin/data/reward` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 125 | `DATA015` | Data - Soul | `/admin/data/soul` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 126 | `DATA016` | Data - PointOfInterest | `/admin/data/point-of-interest` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 127 | `DATA017` | Data - Site | `/admin/data/site` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 128 | `DATA018` | Data - Settlement | `/admin/data/settlement` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 129 | `DATA019` | Data - Breed | `/admin/data/breed` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 130 | `DATA020` | Data - Tome | `/admin/data/tome` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 131 | `DATA021` | Data - Lesson | `/admin/data/lesson` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 132 | `DATA022` | Data - Companion | `/admin/data/companion` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 133 | `DATA100` | Data - Research | `/admin/data/research` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 134 | `DATA101` | Data - MLA Sources | `/admin/data/sources` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 135 | `DATA102` | Data - Citations | `/admin/data/citations` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
+| 110 | `DATA000` | Data - Object Types | `/admin/data` | **IMPLEMENTED** | Registry-derived object-type index links every active canonical entity to persisted records and its validated import workflow. |
+| 111 | `DATA001` | Data - Protagonist | `/admin/data/protagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 112 | `DATA002` | Data - Culture | `/admin/data/culture` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 113 | `DATA003` | Data - Character | `/admin/data/character` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 114 | `DATA004` | Data - Witness | `/admin/data/witness` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 115 | `DATA005` | Data - Architect | `/admin/data/architect` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 116 | `DATA006` | Data - Antagonist | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 117 | `DATA007` | Data - Species | `/admin/data/species` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 118 | `DATA008` | Data - PersonalityExpression | `/admin/data/personality-expression` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 119 | `DATA009` | Data - TimelineEvent | `/admin/data/timeline-event` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 120 | `DATA010` | Data - Interlude | `/admin/data/interlude` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 121 | `DATA011` | Data - Pillar | `/admin/data/pillar` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 122 | `DATA012` | Data - Ark | `/admin/data/ark` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 123 | `DATA013` | Data - Constellation | `/admin/data/constellation` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 124 | `DATA014` | Data - Reward | `/admin/data/reward` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 125 | `DATA015` | Data - Soul | `/admin/data/soul` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 126 | `DATA016` | Data - PointOfInterest | `/admin/data/point-of-interest` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 127 | `DATA017` | Data - Site | `/admin/data/site` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 128 | `DATA018` | Data - Settlement | `/admin/data/settlement` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 129 | `DATA019` | Data - Breed | `/admin/data/breed` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 130 | `DATA020` | Data - Tome | `/admin/data/tome` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 131 | `DATA021` | Data - Lesson | `/admin/data/lesson` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 132 | `DATA022` | Data - Companion | `/admin/data/companion` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 133 | `DATA100` | Data - Research | `/admin/data/research` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 134 | `DATA101` | Data - MLA Sources | `/admin/data/sources` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 135 | `DATA102` | Data - Citations | `/admin/data/citations` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 136 | `PZ001` | Puzzle Designer - Blueprints | `/admin/puzzles` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots, immutable versions, and governed hint metadata. |
 | 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
 | 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PLACEHOLDER** | Explicit warning only; editor writes, generation, preview, and answer validation are unavailable. |
-| 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **MISSING** | Falls through to the generic authorized-admin card; create form and mutation are absent. |
-| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads canonical physical POIs and derives finite Lattice identity through the current 25-row Region Mapping. |
-| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads canonical physical POIs and derives finite Lattice identity through the current 25-row Region Mapping. |
-| 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads physical Site records and exposes Lattice identity only as a mapping-derived projection. |
+| 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
+| 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the canonical R08 POI catalog with selectable 2D/3D visualization and record detail. |
+| 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Site records. |
 | 143 | `AT005` | Settlements | `/admin/atlas/settlements` | **IMPLEMENTED** | Reads persisted Settlements by explicitly selected world and links to migration. |
-| 144 | `DATA_CHARACTER_NEW` | Create Character | `/admin/data/character/new` | **MISSING** | Falls through to the generic authorized-admin card; create form and mutation are absent. |
-| 145 | `CITY01` | City Builder - Cities | `/admin/cities` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
-| 146 | `CITY02` | City Builder - Parcels & Street Graph | `/admin/cities/:id/streets` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
-| 147 | `CITY03` | City Builder - Buildings & Exteriors | `/admin/cities/:id/exteriors` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
-| 148 | `CITY04` | City Builder - Interiors | `/admin/cities/:id/interiors` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
-| 149 | `CITY05` | City Builder - Preview / District Overlays | `/admin/cities/:id/preview` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
+| 144 | `DATA_CHARACTER_NEW` | Create Character | `/admin/data/character/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 145 | `CITY01` | City Builder - Cities | `/admin/cities` | **IMPLEMENTED** | Lists persisted City projects and creates the single project for a canonically named SettlementWorld without inventing a City name. |
+| 146 | `CITY02` | City Builder - Parcels & Street Graph | `/admin/cities/:id/streets` | **IMPLEMENTED** | Reads and transactionally upserts Parcel and Street geometry under one City owner while advancing the shared geometry version. |
+| 147 | `CITY03` | City Builder - Buildings & Exteriors | `/admin/cities/:id/exteriors` | **PARTIAL** | Reads/writes Building geometry and validates same-City Parcel membership; frontage, entrances, exterior views, and multi-parcel occupancy have no canonical owner. |
+| 148 | `CITY04` | City Builder - Interiors | `/admin/cities/:id/interiors` | **PLACEHOLDER** | Explicitly unavailable because the supplied domain has no Interior, Room, Passage, floor, or reachability owner; Building geometry is not repurposed. |
+| 149 | `CITY05` | City Builder - Preview / District Overlays | `/admin/cities/:id/preview` | **PARTIAL** | Reports the persisted structural geometry/version; no spatial-render or district-overlay contract exists, so the summary is not mislabeled as a render. |
 | 150 | `CAM001` | Campaign Builder - Landing | `/admin/campaign` | **IMPLEMENTED** | Dedicated Campaign Manager landing with explicit Concord/Ruin/Schism selection. |
-| 151 | `CAM002` | Campaign Planner | `/admin/campaign/planner` | **MISSING** | Registered state resolves to the Campaign Manager landing because only `CAMPAIGN_*` IDs select a world; requested planner/drop state is absent. |
-| 152 | `CAM003` | Campaign Planner - Witness Drop | `/admin/campaign/planner` | **MISSING** | Registered state resolves to the Campaign Manager landing because only `CAMPAIGN_*` IDs select a world; requested planner/drop state is absent. |
-| 153 | `CAM004` | Campaign Planner - Invalid Architect Drop | `/admin/campaign/planner` | **MISSING** | Registered state resolves to the Campaign Manager landing because only `CAMPAIGN_*` IDs select a world; requested planner/drop state is absent. |
-| 154 | `CAM005` | Campaign Planner - Reward Binding | `/admin/campaign/planner` | **MISSING** | Registered state resolves to the Campaign Manager landing because only `CAMPAIGN_*` IDs select a world; requested planner/drop state is absent. |
+| 151 | `CAM002` | Campaign Planner | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the Concord planner with persisted explicit Book membership, inclusive row spans, collision lanes, typed pools, and filters. |
+| 152 | `CAM003` | Campaign Planner - Witness Drop | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the requested reviewed planner state while preserving atomic linked placement validation and zero partial mutations. |
+| 153 | `CAM004` | Campaign Planner - Invalid Architect Drop | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the requested reviewed planner state while preserving atomic linked placement validation and zero partial mutations. |
+| 154 | `CAM005` | Campaign Planner - Reward Binding | `/admin/campaign/planner` | **IMPLEMENTED** | Dispatches the requested reviewed planner state while preserving atomic linked placement validation and zero partial mutations. |
 | 155 | `OPS001` | Operations | `/admin/operations` | **IMPLEMENTED** | Server-owned health/build links and persisted document-draft builder are wired; arbitrary shell execution is excluded. |
 | 156 | `OPS002` | Release Management | `/admin/operations/releases` | **PARTIAL** | Release drafts can be persisted, but the existing publish endpoint is not exposed and deployment remains separate. |
-| 157 | `DATA023` | Data - SpeciesGroup | `/admin/data/species-group` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 158 | `DATA024` | Data - InterludeSubstitution | `/admin/data/interlude-substitution` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 159 | `DATA025` | Data - Definition | `/admin/data/definition` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 160 | `DATA026` | Data - KnowledgeBaseItem | `/admin/data/knowledge-base-item` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 161 | `DATA027` | Data - Matrix | `/admin/data/matrix` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource; legitimate matrix-named views and concepts remain unaffected. |
-| 162 | `DATA028` | Data - Layette | `/admin/data/layette` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 163 | `DATA029` | Data - Transition | `/admin/data/transition` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
-| 164 | `DATA030` | Data - CapabilityDefinition | `/admin/data/capability-definition` | **MISSING** | Falls through to the generic authorized-admin card; there is no CapabilityDefinition table, editor, create action, save mutation, or CapabilityEvent history/authoring view. |
-| 165 | `DATA031` | Data - AchievementDefinition | `/admin/data/achievement-definition` | **MISSING** | No task-specific implementation was found; the route uses a generic fallback or wrong dispatch. |
+| 157 | `DATA023` | Data - SpeciesGroup | `/admin/data/species-group` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 158 | `DATA024` | Data - InterludeSubstitution | `/admin/data/interlude-substitution` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 159 | `DATA025` | Data - Definition | `/admin/data/definition` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 160 | `DATA026` | Data - KnowledgeBaseItem | `/admin/data/knowledge-base-item` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 161 | `DATA027` | Data - Matrix | `/admin/data/matrix` | **SUPERSEDED** | Removed by the V3 Atlas correction because Matrix was an invented domain entity. Legitimate descriptive uses of the word matrix remain. |
+| 162 | `DATA028` | Data - Layette | `/admin/data/layette` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 163 | `DATA029` | Data - Transition | `/admin/data/transition` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 164 | `DATA030` | Data - CapabilityDefinition | `/admin/data/capability-definition` | **IMPLEMENTED** | Dedicated versioned Capability registry/editor, condition builder, scoring policy view, and event/projection inspector use persisted authority. |
+| 165 | `DATA031` | Data - AchievementDefinition | `/admin/data/achievement-definition` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 166 | `GAME001` | Game - Effective Viewport | `state-only` | **IMPLEMENTED** | Authenticated player-safe runtime reads location/turns and persists freeform player input. |
 | 167 | `GAME002` | Knowledge Base - Graph | `/game/knowledge` | **PLACEHOLDER** | Owner-deferred Knowledge shell only; discovery, graph links, detail content, and timeline projection are absent. |
 | 168 | `GAME003` | Knowledge Base - Detail Card | `state-only` | **PLACEHOLDER** | Owner-deferred Knowledge shell only; discovery, graph links, detail content, and timeline projection are absent. |
 | 169 | `GAME004` | Bookshelf / Tome Reader | `state-only` | **PLACEHOLDER** | Empty bookshelf/reader shell; discovered Tome identity, content, and pagination are absent. |
-| 170 | `GAME005` | Maps - 3D Globe | `state-only` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
-| 171 | `GAME006` | Continent Map | `state-only` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
+| 170 | `GAME005` | Maps - 3D Globe | `state-only` | **PARTIAL** | Renders the authorized physical Atlas catalog on the globe; discovery, routes, politics, and historical visibility remain fail-closed. |
+| 171 | `GAME006` | Continent Map | `state-only` | **PARTIAL** | Renders the authorized physical Atlas catalog; no authoritative player-known regional filter or discovery projection exists. |
 | 172 | `GAME007` | City Map | `state-only` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
 | 173 | `GAME008` | Game - Nearby Characters | `state-only` | **PARTIAL** | Runtime location/turns work, but nearby-character and exit projections remain empty and have no disclosed row contract. |
 | 174 | `GAME009` | Game - Multiple Exits | `state-only` | **PARTIAL** | Runtime location/turns work, but nearby-character and exit projections remain empty and have no disclosed row contract. |
@@ -230,58 +227,58 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 185 | `TOOL004` | Control Gallery - Numeric | `state-only` | **IMPLEMENTED** | Dedicated interactive control-gallery state for the reviewed control family. |
 | 186 | `TOOL005` | Wireframe Builder - Component Composer | `state-only` | **IMPLEMENTED** | Interactive component composer for reviewed shared primitives. |
 | 187 | `TOOL006` | Public Navigation - Guest/User/Member States | `/review/navigation-states` | **IMPLEMENTED** | Dedicated guest/user/member/admin/owner navigation-capability comparison. |
-| 188 | `DATA_LEGENDARYREWARD_EDIT` | Edit LegendaryReward | `/admin/data/legendaryreward/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 189 | `DATA_LESSON_EDIT` | Edit Lesson | `/admin/data/lesson/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 190 | `DATA_MATRIX_EDIT` | Edit Matrix | `/admin/data/matrix/sample-record` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource. |
-| 191 | `DATA_PERSONALITYEXPRESSION_EDIT` | Edit PersonalityExpression | `/admin/data/personalityexpression/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 192 | `DATA_PILLAR_EDIT` | Edit Pillar | `/admin/data/pillar/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 193 | `DATA_POINTOFINTEREST_EDIT` | Edit PointOfInterest | `/admin/data/pointofinterest/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 194 | `DATA_PROTAGONIST_EDIT` | Edit Protagonist | `/admin/data/protagonist/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 195 | `DATA_RESEARCH_EDIT` | Edit Research | `/admin/data/research/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 196 | `DATA_SETTLEMENT_EDIT` | Edit Settlement | `/admin/data/settlement/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 197 | `DATA_SITE_EDIT` | Edit Site | `/admin/data/site/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 198 | `DATA_SOUL_EDIT` | Edit Soul | `/admin/data/soul/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 199 | `DATA_SOURCE_EDIT` | Edit Source | `/admin/data/source/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 200 | `DATA_SPECIESGROUP_EDIT` | Edit SpeciesGroup | `/admin/data/speciesgroup/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 201 | `DATA_SPECIES_EDIT` | Edit Species | `/admin/data/species/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 202 | `DATA_TIMELINEEVENT_EDIT` | Edit TimelineEvent | `/admin/data/timelineevent/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 203 | `DATA_TOME_EDIT` | Edit Tome | `/admin/data/tome/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 204 | `DATA_TRANSITION_EDIT` | Edit Transition | `/admin/data/transition/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 205 | `DATA_WITNESS_EDIT` | Edit Witness | `/admin/data/witness/sample-record` | **MISSING** | Falls through to the generic authorized-admin card; sample-record editor, load, validation, and save are absent. |
-| 206 | `DATA_ACHIEVEMENTDEFINITION_IMPORT` | Bulk Import AchievementDefinition | `/admin/data/achievementdefinition/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 207 | `DATA_ANTAGONIST_IMPORT` | Bulk Import Antagonist | `/admin/data/antagonist/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 208 | `DATA_ARCHITECT_IMPORT` | Bulk Import Architect | `/admin/data/architect/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 209 | `DATA_ARK_IMPORT` | Bulk Import Ark | `/admin/data/ark/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 210 | `DATA_BREED_IMPORT` | Bulk Import Breed | `/admin/data/breed/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 211 | `DATA_CAPABILITYDEFINITION_IMPORT` | Bulk Import CapabilityDefinition | `/admin/data/capabilitydefinition/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 212 | `DATA_CHARACTER_IMPORT` | Bulk Import Character | `/admin/data/character/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 213 | `DATA_CITATION_IMPORT` | Bulk Import Citation | `/admin/data/citation/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 214 | `DATA_COMPANION_IMPORT` | Bulk Import Companion | `/admin/data/companion/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 215 | `DATA_CONSTELLATION_IMPORT` | Bulk Import Constellation | `/admin/data/constellation/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 216 | `DATA_CULTURE_IMPORT` | Bulk Import Culture | `/admin/data/culture/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 217 | `DATA_DEFINITION_IMPORT` | Bulk Import Definition | `/admin/data/definition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 218 | `DATA_INTERLUDESUBSTITUTION_IMPORT` | Bulk Import InterludeSubstitution | `/admin/data/interludesubstitution/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 219 | `DATA_INTERLUDE_IMPORT` | Bulk Import Interlude | `/admin/data/interlude/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 220 | `DATA_KNOWLEDGEBASEITEM_IMPORT` | Bulk Import KnowledgeBaseItem | `/admin/data/knowledgebaseitem/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 221 | `DATA_LAYETTE_IMPORT` | Bulk Import Layette | `/admin/data/layette/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 222 | `DATA_LEGENDARYREWARD_IMPORT` | Bulk Import LegendaryReward | `/admin/data/legendaryreward/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 223 | `DATA_LESSON_IMPORT` | Bulk Import Lesson | `/admin/data/lesson/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 224 | `DATA_MATRIX_IMPORT` | Bulk Import Matrix | `/admin/data/matrix/import` | **SUPERSEDED** | Removed from the active V3 registry with the contaminated Matrix domain resource. |
-| 225 | `DATA_PERSONALITYEXPRESSION_IMPORT` | Bulk Import PersonalityExpression | `/admin/data/personalityexpression/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 226 | `DATA_PILLAR_IMPORT` | Bulk Import Pillar | `/admin/data/pillar/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 227 | `DATA_POINTOFINTEREST_IMPORT` | Bulk Import PointOfInterest | `/admin/data/pointofinterest/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 228 | `DATA_PROTAGONIST_IMPORT` | Bulk Import Protagonist | `/admin/data/protagonist/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 229 | `DATA_RESEARCH_IMPORT` | Bulk Import Research | `/admin/data/research/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 230 | `DATA_SETTLEMENT_IMPORT` | Bulk Import Settlement | `/admin/data/settlement/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 231 | `DATA_SITE_IMPORT` | Bulk Import Site | `/admin/data/site/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 232 | `DATA_SOUL_IMPORT` | Bulk Import Soul | `/admin/data/soul/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 233 | `DATA_SOURCE_IMPORT` | Bulk Import Source | `/admin/data/source/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 234 | `DATA_SPECIESGROUP_IMPORT` | Bulk Import SpeciesGroup | `/admin/data/speciesgroup/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 235 | `DATA_SPECIES_IMPORT` | Bulk Import Species | `/admin/data/species/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
-| 236 | `DATA_TIMELINEEVENT_IMPORT` | Bulk Import TimelineEvent | `/admin/data/timelineevent/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 237 | `DATA_TOME_IMPORT` | Bulk Import Tome | `/admin/data/tome/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 238 | `DATA_TRANSITION_IMPORT` | Bulk Import Transition | `/admin/data/transition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview is wired to a typed server mutation with transaction-backed apply. |
-| 239 | `DATA_WITNESS_IMPORT` | Bulk Import Witness | `/admin/data/witness/import` | **PARTIAL** | Parse/map/validate/preview works, but Apply is disabled because no typed repository mutation exists. |
+| 188 | `DATA_LEGENDARYREWARD_EDIT` | Edit LegendaryReward | `/admin/data/legendaryreward/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 189 | `DATA_LESSON_EDIT` | Edit Lesson | `/admin/data/lesson/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 190 | `DATA_MATRIX_EDIT` | Edit Matrix | `/admin/data/matrix/sample-record` | **SUPERSEDED** | Removed by the V3 Atlas correction because Matrix was an invented domain entity. Legitimate descriptive uses of the word matrix remain. |
+| 191 | `DATA_PERSONALITYEXPRESSION_EDIT` | Edit PersonalityExpression | `/admin/data/personalityexpression/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 192 | `DATA_PILLAR_EDIT` | Edit Pillar | `/admin/data/pillar/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 193 | `DATA_POINTOFINTEREST_EDIT` | Edit PointOfInterest | `/admin/data/pointofinterest/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 194 | `DATA_PROTAGONIST_EDIT` | Edit Protagonist | `/admin/data/protagonist/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 195 | `DATA_RESEARCH_EDIT` | Edit Research | `/admin/data/research/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 196 | `DATA_SETTLEMENT_EDIT` | Edit Settlement | `/admin/data/settlement/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 197 | `DATA_SITE_EDIT` | Edit Site | `/admin/data/site/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 198 | `DATA_SOUL_EDIT` | Edit Soul | `/admin/data/soul/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 199 | `DATA_SOURCE_EDIT` | Edit Source | `/admin/data/source/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 200 | `DATA_SPECIESGROUP_EDIT` | Edit SpeciesGroup | `/admin/data/speciesgroup/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 201 | `DATA_SPECIES_EDIT` | Edit Species | `/admin/data/species/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 202 | `DATA_TIMELINEEVENT_EDIT` | Edit TimelineEvent | `/admin/data/timelineevent/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 203 | `DATA_TOME_EDIT` | Edit Tome | `/admin/data/tome/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 204 | `DATA_TRANSITION_EDIT` | Edit Transition | `/admin/data/transition/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 205 | `DATA_WITNESS_EDIT` | Edit Witness | `/admin/data/witness/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 206 | `DATA_ACHIEVEMENTDEFINITION_IMPORT` | Bulk Import AchievementDefinition | `/admin/data/achievementdefinition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 207 | `DATA_ANTAGONIST_IMPORT` | Bulk Import Antagonist | `/admin/data/antagonist/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 208 | `DATA_ARCHITECT_IMPORT` | Bulk Import Architect | `/admin/data/architect/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 209 | `DATA_ARK_IMPORT` | Bulk Import Ark | `/admin/data/ark/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 210 | `DATA_BREED_IMPORT` | Bulk Import Breed | `/admin/data/breed/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 211 | `DATA_CAPABILITYDEFINITION_IMPORT` | Bulk Import CapabilityDefinition | `/admin/data/capabilitydefinition/import` | **IMPLEMENTED** | Structured preview applies through the specialized versioned Capability definition importer with transaction-backed validation and canonical-drift refusal. |
+| 212 | `DATA_CHARACTER_IMPORT` | Bulk Import Character | `/admin/data/character/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 213 | `DATA_CITATION_IMPORT` | Bulk Import Citation | `/admin/data/citation/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 214 | `DATA_COMPANION_IMPORT` | Bulk Import Companion | `/admin/data/companion/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 215 | `DATA_CONSTELLATION_IMPORT` | Bulk Import Constellation | `/admin/data/constellation/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 216 | `DATA_CULTURE_IMPORT` | Bulk Import Culture | `/admin/data/culture/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 217 | `DATA_DEFINITION_IMPORT` | Bulk Import Definition | `/admin/data/definition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 218 | `DATA_INTERLUDESUBSTITUTION_IMPORT` | Bulk Import InterludeSubstitution | `/admin/data/interludesubstitution/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 219 | `DATA_INTERLUDE_IMPORT` | Bulk Import Interlude | `/admin/data/interlude/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 220 | `DATA_KNOWLEDGEBASEITEM_IMPORT` | Bulk Import KnowledgeBaseItem | `/admin/data/knowledgebaseitem/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 221 | `DATA_LAYETTE_IMPORT` | Bulk Import Layette | `/admin/data/layette/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 222 | `DATA_LEGENDARYREWARD_IMPORT` | Bulk Import LegendaryReward | `/admin/data/legendaryreward/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 223 | `DATA_LESSON_IMPORT` | Bulk Import Lesson | `/admin/data/lesson/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 224 | `DATA_MATRIX_IMPORT` | Bulk Import Matrix | `/admin/data/matrix/import` | **SUPERSEDED** | Removed by the V3 Atlas correction because Matrix was an invented domain entity. Legitimate descriptive uses of the word matrix remain. |
+| 225 | `DATA_PERSONALITYEXPRESSION_IMPORT` | Bulk Import PersonalityExpression | `/admin/data/personalityexpression/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 226 | `DATA_PILLAR_IMPORT` | Bulk Import Pillar | `/admin/data/pillar/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 227 | `DATA_POINTOFINTEREST_IMPORT` | Bulk Import PointOfInterest | `/admin/data/pointofinterest/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 228 | `DATA_PROTAGONIST_IMPORT` | Bulk Import Protagonist | `/admin/data/protagonist/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 229 | `DATA_RESEARCH_IMPORT` | Bulk Import Research | `/admin/data/research/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 230 | `DATA_SETTLEMENT_IMPORT` | Bulk Import Settlement | `/admin/data/settlement/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 231 | `DATA_SITE_IMPORT` | Bulk Import Site | `/admin/data/site/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 232 | `DATA_SOUL_IMPORT` | Bulk Import Soul | `/admin/data/soul/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 233 | `DATA_SOURCE_IMPORT` | Bulk Import Source | `/admin/data/source/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 234 | `DATA_SPECIESGROUP_IMPORT` | Bulk Import SpeciesGroup | `/admin/data/speciesgroup/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 235 | `DATA_SPECIES_IMPORT` | Bulk Import Species | `/admin/data/species/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 236 | `DATA_TIMELINEEVENT_IMPORT` | Bulk Import TimelineEvent | `/admin/data/timelineevent/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 237 | `DATA_TOME_IMPORT` | Bulk Import Tome | `/admin/data/tome/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 238 | `DATA_TRANSITION_IMPORT` | Bulk Import Transition | `/admin/data/transition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 239 | `DATA_WITNESS_IMPORT` | Bulk Import Witness | `/admin/data/witness/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 240 | `ADM027` | Puzzle Designer | `/admin/puzzles` | **PARTIAL** | Shows the Blueprint list, but no designer/editor workflow exists. |
 | 241 | `ADM028` | Puzzle Blueprints | `/admin/puzzles/blueprints` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots and immutable versions. |
 | 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PLACEHOLDER** | Explicit warning only; reusable component editing, generation, preview, and validation lab are absent. |
@@ -298,7 +295,7 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 253 | `CAMPAIGN_CONCORD` | Main 18-Book Planner — Concord | `/admin/campaign/planner` | **IMPLEMENTED** | Full 18-book planner reads/writes canonical placements; cards use inclusive persisted book membership, collision lanes, and true row spans. |
 | 254 | `CAMPAIGN_RUIN` | Main 18-Book Planner — Ruin | `/admin/campaign/planner` | **IMPLEMENTED** | Full 18-book planner reads/writes canonical placements; cards use inclusive persisted book membership, collision lanes, and true row spans. |
 | 255 | `CAMPAIGN_SCHISM` | Main 18-Book Planner — Schism | `/admin/campaign/planner` | **IMPLEMENTED** | Full 18-book planner reads/writes canonical placements; cards use inclusive persisted book membership, collision lanes, and true row spans. |
-| 256 | `ADM037` | City Builder | `/admin/city-builder` | **MISSING** | Falls through to the generic authorized-admin card; no city, street, parcel, building, interior, or preview workflow. |
+| 256 | `ADM037` | City Builder | `/admin/city-builder` | **IMPLEMENTED** | Opens the canonical City project dashboard with SettlementWorld ownership, geometry counts/version, and project creation. |
 | 257 | `TOO001` | Wireframe Builder | `/tools/wireframe-builder` | **IMPLEMENTED** | Dedicated manifest-backed review queue with links to rendered UI. |
 | 258 | `TOO002` | Wireframe Component Library | `/tools/wireframe-builder/components` | **IMPLEMENTED** | Dedicated reviewed shared-component library. |
 | 259 | `TOO003` | Wireframe Templates | `/tools/wireframe-builder/templates` | **IMPLEMENTED** | Dedicated reviewed wireframe-template catalog. |
@@ -308,10 +305,17 @@ Therefore **169 of 269** registered wireframe pages/states are not fully impleme
 | 263 | `GAME_VIEW_SINGLE_EXIT` | Game Viewport — Single Exit | `/game` | **PARTIAL** | All three states reuse the same runtime viewport; the requested state-specific composition/countdown/exit behavior is not fully modeled. |
 | 264 | `GAM002` | Knowledge Base Graph | `/game/knowledge` | **PLACEHOLDER** | Owner-deferred Knowledge shell only; discovery, graph links, detail content, and timeline projection are absent. |
 | 265 | `GAM003` | Bookshelf | `/game/bookshelf` | **PLACEHOLDER** | Empty bookshelf/reader shell; discovered Tome identity, content, and pagination are absent. |
-| 266 | `GAM004` | Maps | `/game/maps` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
-| 267 | `GAM005` | Player Globe | `/game/maps/globe` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
-| 268 | `GAME_GLOBE_PRESENT` | Player Globe — Present | `/game/maps/globe` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
-| 269 | `GAME_GLOBE_TIMELINE` | Player Globe — Timeline | `/game/maps/globe` | **PLACEHOLDER** | Empty player map/globe shell; player-safe geography, overlays, discovery, routes, and timeline data are absent. |
+| 266 | `GAM004` | Maps | `/game/maps` | **PARTIAL** | Renders the managed 2D world map with authorized physical Atlas markers; catalog membership is not represented as player discovery. |
+| 267 | `GAM005` | Player Globe | `/game/maps/globe` | **PARTIAL** | Renders the authorized physical Atlas catalog on the managed WebGL globe; player discovery and routes remain unavailable. |
+| 268 | `GAME_GLOBE_PRESENT` | Player Globe — Present | `/game/maps/globe` | **PARTIAL** | Renders the authorized present physical catalog without inferring discovery or temporal disclosures. |
+| 269 | `GAME_GLOBE_TIMELINE` | Player Globe — Timeline | `/game/maps/globe` | **PARTIAL** | Keeps the present catalog visible but explicitly refuses to relabel it as historical because no player-visible timeline projection is persisted. |
+| 270 | `CAP01` | Capability Registry | `/admin/capabilities` | **IMPLEMENTED** | Lists persisted versioned definitions and exposes creation without treating legacy concrete keys as precedent for new definitions. |
+| 271 | `CAP02` | Capability Definition Editor | `/admin/capabilities/:capabilityDefinitionId` | **IMPLEMENTED** | Edits definitions by appending immutable versions and typed parameter definitions. |
+| 272 | `CAP03` | Address and Condition Builder | `/admin/capabilities/condition-builder` | **IMPLEMENTED** | Builds and validates fully bound capability addresses and recursive ALL/ANY/NOT conditions from canonical definitions. |
+| 273 | `CAP04` | Evidence Scoring Policies | `/admin/capabilities/scoring` | **IMPLEMENTED** | Reads persisted reward and faction scoring policies, weights, and evidence ownership without inventing missing weights. |
+| 274 | `CAP05` | Event and Projection Inspector | `/admin/capabilities/inspector` | **IMPLEMENTED** | Inspects append-only events and reduced current state and compares deterministic projection rebuilds. |
+| 275 | `CAM006` | Book Grouping Membership Editor | `state-only under /admin/campaign/planner` | **IMPLEMENTED** | Edits explicit disjoint Book membership as one logical grouping value while keeping the locked Opposing Faction overlay derived and read-only. |
+| 276 | `CAM007` | Campaign Planner — Custom Column View | `/admin/campaign/planner` | **IMPLEMENTED** | Persists local column order and visibility preferences without mutating CampaignPlacement or Book Grouping data. |
 
 ## Principal implementation evidence
 

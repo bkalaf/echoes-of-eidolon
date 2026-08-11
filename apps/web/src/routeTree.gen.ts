@@ -51,6 +51,8 @@ import { Route as ApiAdminCampaignGroupingsRouteImport } from './routes/api/admi
 import { Route as ApiAdminCampaignLinkedMoveRouteImport } from './routes/api/admin/campaign/linked-move'
 import { Route as ApiAdminCapabilitiesInspectorRouteImport } from './routes/api/admin/capabilities/inspector'
 import { Route as ApiAdminCapabilitiesScoringRouteImport } from './routes/api/admin/capabilities/scoring'
+import { Route as ApiAdminCitiesIndexRouteImport } from './routes/api/admin/cities/index'
+import { Route as ApiAdminCitiesCityIdRouteImport } from './routes/api/admin/cities/$cityId'
 import { Route as ApiAdminCommerceIndexRouteImport } from './routes/api/admin/commerce/index'
 import { Route as ApiAdminDataEntityKeyRouteImport } from './routes/api/admin/data/$entityKey'
 import { Route as ApiAdminPerksIndexRouteImport } from './routes/api/admin/perks/index'
@@ -292,6 +294,16 @@ const ApiAdminCapabilitiesScoringRoute =
     path: '/scoring',
     getParentRoute: () => ApiAdminCapabilitiesRoute,
   } as any)
+const ApiAdminCitiesIndexRoute = ApiAdminCitiesIndexRouteImport.update({
+  id: '/api/admin/cities/',
+  path: '/api/admin/cities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminCitiesCityIdRoute = ApiAdminCitiesCityIdRouteImport.update({
+  id: '/api/admin/cities/$cityId',
+  path: '/api/admin/cities/$cityId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminCommerceIndexRoute = ApiAdminCommerceIndexRouteImport.update({
   id: '/api/admin/commerce/',
   path: '/api/admin/commerce/',
@@ -452,6 +464,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
+  '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
@@ -464,6 +477,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/cities/': typeof ApiAdminCitiesIndexRoute
   '/api/admin/commerce/': typeof ApiAdminCommerceIndexRoute
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
@@ -517,6 +531,7 @@ export interface FileRoutesByTo {
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
+  '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
@@ -529,6 +544,7 @@ export interface FileRoutesByTo {
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/cities': typeof ApiAdminCitiesIndexRoute
   '/api/admin/commerce': typeof ApiAdminCommerceIndexRoute
   '/api/admin/perks': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts': typeof ApiAdminPromptsIndexRoute
@@ -583,6 +599,7 @@ export interface FileRoutesById {
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
+  '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
   '/api/admin/data/$entityKey': typeof ApiAdminDataEntityKeyRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
@@ -595,6 +612,7 @@ export interface FileRoutesById {
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
+  '/api/admin/cities/': typeof ApiAdminCitiesIndexRoute
   '/api/admin/commerce/': typeof ApiAdminCommerceIndexRoute
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
@@ -650,6 +668,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
+    | '/api/admin/cities/$cityId'
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
@@ -662,6 +681,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/cities/'
     | '/api/admin/commerce/'
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
@@ -715,6 +735,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
+    | '/api/admin/cities/$cityId'
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
@@ -727,6 +748,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts'
     | '/api/admin/assets'
     | '/api/admin/beta-invitations'
+    | '/api/admin/cities'
     | '/api/admin/commerce'
     | '/api/admin/perks'
     | '/api/admin/prompts'
@@ -780,6 +802,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/linked-move'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
+    | '/api/admin/cities/$cityId'
     | '/api/admin/data/$entityKey'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
@@ -792,6 +815,7 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
+    | '/api/admin/cities/'
     | '/api/admin/commerce/'
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
@@ -842,6 +866,7 @@ export interface RootRouteChildren {
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
+  ApiAdminCitiesCityIdRoute: typeof ApiAdminCitiesCityIdRoute
   ApiAdminDataEntityKeyRoute: typeof ApiAdminDataEntityKeyRouteWithChildren
   ApiAdminPerksPerkIdRoute: typeof ApiAdminPerksPerkIdRoute
   ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRoute
@@ -854,6 +879,7 @@ export interface RootRouteChildren {
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
+  ApiAdminCitiesIndexRoute: typeof ApiAdminCitiesIndexRoute
   ApiAdminCommerceIndexRoute: typeof ApiAdminCommerceIndexRoute
   ApiAdminPerksIndexRoute: typeof ApiAdminPerksIndexRoute
   ApiAdminPromptsIndexRoute: typeof ApiAdminPromptsIndexRoute
@@ -1158,6 +1184,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminCapabilitiesScoringRouteImport
       parentRoute: typeof ApiAdminCapabilitiesRoute
     }
+    '/api/admin/cities/': {
+      id: '/api/admin/cities/'
+      path: '/api/admin/cities'
+      fullPath: '/api/admin/cities/'
+      preLoaderRoute: typeof ApiAdminCitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/cities/$cityId': {
+      id: '/api/admin/cities/$cityId'
+      path: '/api/admin/cities/$cityId'
+      fullPath: '/api/admin/cities/$cityId'
+      preLoaderRoute: typeof ApiAdminCitiesCityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/commerce/': {
       id: '/api/admin/commerce/'
       path: '/api/admin/commerce'
@@ -1444,6 +1484,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
+  ApiAdminCitiesCityIdRoute: ApiAdminCitiesCityIdRoute,
   ApiAdminDataEntityKeyRoute: ApiAdminDataEntityKeyRouteWithChildren,
   ApiAdminPerksPerkIdRoute: ApiAdminPerksPerkIdRoute,
   ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRoute,
@@ -1457,6 +1498,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,
+  ApiAdminCitiesIndexRoute: ApiAdminCitiesIndexRoute,
   ApiAdminCommerceIndexRoute: ApiAdminCommerceIndexRoute,
   ApiAdminPerksIndexRoute: ApiAdminPerksIndexRoute,
   ApiAdminPromptsIndexRoute: ApiAdminPromptsIndexRoute,
