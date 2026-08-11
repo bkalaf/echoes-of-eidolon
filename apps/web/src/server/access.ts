@@ -1,4 +1,5 @@
 import { canAccessAdministration, canAccessGame, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
+import { isParticipationEligible } from "../domain/age-eligibility";
 import { projectMembershipEntitlement, voiceWindowSeconds } from "../domain/membership";
 import { getAuth } from "./auth";
 import { getDatabase } from "./database";
@@ -7,6 +8,7 @@ export interface ServerAccessContext {
   betaEligible: boolean;
   email: string;
   membershipEntitled: boolean;
+  participationEligible: boolean;
   role: AuthorizationRole;
   sessionToken: string;
   userId: string;
@@ -21,6 +23,11 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
     select: {
       betaEligible: true,
       email: true,
+      eligibilityStatus: true,
+      guardianConsents: {
+        orderBy: { consentedAt: "asc" },
+        select: { consentedAt: true, revokedAt: true, verificationMethod: true },
+      },
       role: true,
       membershipGrants: {
         select: {
@@ -34,11 +41,13 @@ export async function getServerAccessContext(request: Request): Promise<ServerAc
   const membership = projectMembershipEntitlement(user.membershipGrants, new Date());
   const role = resolveAuthorizationRole(true, user.role);
   if (!role) throw new Response("Authorization role unavailable.", { status: 403 });
+  const participationEligible = isParticipationEligible(user.eligibilityStatus, user.guardianConsents);
 
   return {
     betaEligible: user.betaEligible,
     email: user.email,
     membershipEntitled: membership.active,
+    participationEligible,
     role,
     sessionToken: session.session.token,
     userId: session.user.id,
@@ -72,7 +81,7 @@ export async function requireAdministration(request: Request): Promise<ServerAcc
 
 export async function requireAtlasAccess(request: Request): Promise<ServerAccessContext> {
   const access = await requireServerSession(request);
-  if (!canAccessAdministration(access.role) && !canAccessGame(access.role, access.betaEligible)) {
+  if (!canAccessAdministration(access.role) && !canAccessGame(access.role, access.betaEligible, access.participationEligible)) {
     throw new Response("Atlas access requires administration or player eligibility.", { status: 403 });
   }
   return access;
@@ -80,7 +89,7 @@ export async function requireAtlasAccess(request: Request): Promise<ServerAccess
 
 export async function requirePlayerAccess(request: Request): Promise<ServerAccessContext> {
   const access = await requireServerSession(request);
-  if (!canAccessGame(access.role, access.betaEligible)) {
+  if (!canAccessGame(access.role, access.betaEligible, access.participationEligible)) {
     throw new Response("Verified player eligibility required.", { status: 403 });
   }
   return access;
@@ -89,8 +98,9 @@ export async function requirePlayerAccess(request: Request): Promise<ServerAcces
 export function playerAccessResponse(access: ServerAccessContext) {
   return {
     betaEligible: access.betaEligible,
-    canPlay: canAccessGame(access.role, access.betaEligible),
+    canPlay: canAccessGame(access.role, access.betaEligible, access.participationEligible),
     membershipEntitled: access.membershipEntitled,
+    participationEligible: access.participationEligible,
     role: access.role,
     voiceWindowSeconds: voiceWindowSeconds(access.membershipEntitled),
   };

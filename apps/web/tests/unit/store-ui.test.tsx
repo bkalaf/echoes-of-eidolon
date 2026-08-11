@@ -59,9 +59,9 @@ describe("store interaction boundaries", () => {
     expect(await screen.findByText("Catalog total: $75.00")).toBeInTheDocument();
   });
 
-  it("requires sign-in and blocks guest checkout", () => {
+  it("offers guest checkout without requiring sign-in", () => {
     renderStore("STORE06");
-    expect(screen.getByText(/Guest checkout is not allowed/)).toBeInTheDocument();
+    expect(screen.getByText(/Guest checkout is available/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/auth/sign-in?returnTo=%2Fstore%2Fcart");
   });
 
@@ -93,19 +93,22 @@ describe("store interaction boundaries", () => {
     expect(screen.queryByText(/Payment confirmed/)).not.toBeInTheDocument();
   });
 
-  it("dispatches the registered Store Support screen without inventing a ticket mutation", () => {
+  it("renders order-linked Store Support intake without treating intake as a refund", () => {
     renderStore("STORE13");
     expect(screen.getByRole("heading", { name: "Store Order Support" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Store support owner-deferred" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Submit" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Order-linked support request" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Submit support request" })).toBeDisabled();
+    expect(screen.getByText(/does not issue a Stripe refund or alter Printful fulfillment/)).toBeInTheDocument();
   });
 
-  it("routes an entered order identifier to the ownership-checked Account detail", () => {
+  it("requires order number and email before requesting a privacy-safe private status link", () => {
     renderStore("STORE12");
-    expect(screen.getByRole("button", { name: "Look up order" })).toBeDisabled();
-    fireEvent.change(screen.getByLabelText("Order identifier"), { target: { value: " ORDER-1 " } });
-    expect(screen.getByRole("link", { name: "Look up order" })).toHaveAttribute("href", "/account/orders/ORDER-1");
-    expect(screen.getByText(/verifies ownership/)).toBeInTheDocument();
+    const lookup = screen.getByRole("button", { name: "Email private status link" });
+    expect(lookup).toBeDisabled();
+    fireEvent.change(screen.getByLabelText("Order number"), { target: { value: "ORDER-1" } });
+    fireEvent.change(screen.getByLabelText("Receipt email"), { target: { value: "player@example.test" } });
+    expect(lookup).toBeEnabled();
+    expect(screen.getByText(/same response is shown whether or not the combination matches/)).toBeInTheDocument();
   });
 
   it("blocks payment until a configured variant exists", async () => {
@@ -126,7 +129,7 @@ describe("store interaction boundaries", () => {
     await waitFor(() => expect(checkout).toBeEnabled());
     fireEvent.click(checkout);
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/store/checkout", expect.objectContaining({
-      body: JSON.stringify({ lines: [{ quantity: 2, storeVariantId: "VARIANT-1" }, { quantity: 1, storeVariantId: "VARIANT-2" }] }),
+      body: JSON.stringify({ email: undefined, lines: [{ quantity: 2, storeVariantId: "VARIANT-1" }, { quantity: 1, storeVariantId: "VARIANT-2" }] }),
       method: "POST",
     })));
   });

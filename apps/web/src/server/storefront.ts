@@ -2,13 +2,15 @@ import { randomUUID } from "node:crypto";
 import { z } from "zod";
 
 import { resolveAuthoritativeCheckoutLine } from "../domain/commerce";
-import type { PrismaClient } from "../generated/prisma/client";
+import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { getDatabase } from "./database";
 import { getPayments, getStoreShippingCountries } from "./payments";
+import { issueOrderAccessTokenData } from "./guest-orders";
 
 type Database = PrismaClient;
 
 export const storeCheckoutInputSchema = z.object({
+  email: z.email().optional(),
   lines: z.array(z.object({ quantity: z.int().min(1).max(20), storeVariantId: z.string().min(1) }).strict()).min(1).max(50),
 }).strict();
 
@@ -26,11 +28,12 @@ export async function getPublicCatalog(database: Database = getDatabase()) {
   });
 }
 
-export async function createStoreCheckout(input: { email: string; lines: z.infer<typeof storeCheckoutInputSchema>["lines"]; userId: string }, database: Database = getDatabase()) {
+export async function createStoreCheckout(input: { email: string; lines: z.infer<typeof storeCheckoutInputSchema>["lines"]; userId?: string }, database: Database = getDatabase()) {
   const ids = [...new Set(input.lines.map((line) => line.storeVariantId))];
   const variants = await database.storeVariant.findMany({ where: { storeVariantId: { in: ids } } });
   const lines = input.lines.map((line) => resolveAuthoritativeCheckoutLine(line, variants));
   const orderId = randomUUID();
+  const publicAccess = issueOrderAccessTokenData(orderId, input.email);
   const baseUrl = process.env.BETTER_AUTH_URL;
   if (!baseUrl) throw new Error("BETTER_AUTH_URL is required for Store checkout.");
   const checkout = await getPayments().checkout.sessions.create({
@@ -41,15 +44,23 @@ export async function createStoreCheckout(input: { email: string; lines: z.infer
     metadata: { orderId },
     mode: "payment",
     shipping_address_collection: { allowed_countries: getStoreShippingCountries() },
-    success_url: `${baseUrl}/store/checkout/approved?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${baseUrl}/store/orders/${publicAccess.token}`,
   });
   try {
     await database.order.create({
       data: {
         orderId,
+        contactEmail: input.email.trim().toLowerCase(),
         stripeCheckoutReference: checkout.id,
         userId: input.userId,
         lines: { create: lines.map((line) => ({ orderLineId: randomUUID(), quantity: line.quantity, storeVariantId: line.storeVariantId, unitPriceCents: line.unitPriceCents })) },
+        publicAccessTokens: { create: {
+          createdAt: publicAccess.data.createdAt,
+          emailHash: publicAccess.data.emailHash,
+          expiresAt: publicAccess.data.expiresAt,
+          orderPublicAccessTokenId: publicAccess.data.orderPublicAccessTokenId,
+          tokenHash: publicAccess.data.tokenHash,
+        } },
       },
     });
   } catch (error) {
@@ -100,10 +111,11 @@ export async function getStoreCheckoutStatus(input: { checkoutReference: string;
   };
 }
 
-export async function confirmStoreCheckout(input: { amountTotal: number | null; checkoutReference: string; orderId: string; stripeWebhookEventId: string }, transaction: Parameters<Parameters<Database["$transaction"]>[0]>[0]) {
+export async function confirmStoreCheckout(input: { amountTotal: number | null; checkoutReference: string; orderId: string; shippingSummary?: unknown; stripeWebhookEventId: string }, transaction: Parameters<Parameters<Database["$transaction"]>[0]>[0]) {
   const order = await transaction.order.findUnique({ where: { orderId: input.orderId }, include: { lines: true, paymentConfirmation: true } });
   if (!order || order.paymentConfirmation) return;
   const expectedAmount = order.lines.reduce((total, line) => total + line.quantity * line.unitPriceCents, 0);
   if (order.stripeCheckoutReference !== input.checkoutReference || expectedAmount !== input.amountTotal) throw new Error("Store checkout confirmation does not match the server-owned order.");
   await transaction.orderPaymentConfirmation.create({ data: { amountCents: expectedAmount, confirmedAt: new Date(), orderId: order.orderId, orderPaymentConfirmationId: randomUUID(), stripeWebhookEventId: input.stripeWebhookEventId } });
+  if (input.shippingSummary) await transaction.order.update({ where: { orderId: order.orderId }, data: { shippingSummary: input.shippingSummary as Prisma.InputJsonValue } });
 }

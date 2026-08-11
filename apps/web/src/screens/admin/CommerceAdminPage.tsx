@@ -36,7 +36,9 @@ interface ProductRow {
 }
 
 interface OrderRow {
+  contactEmail: string;
   createdAt: string;
+  helpTickets: Array<{ categoryKey: string; channel: string; helpTicketId: string; status: string; subject: string; updatedAt: string }>;
   lines: Array<{
     orderLineId: string;
     quantity: number;
@@ -48,7 +50,8 @@ interface OrderRow {
   refundedAmountCents: number;
   refunds: Array<{ amountCents: number; refundedAt: string }>;
   returnEligibility: { eligibleAt: string } | null;
-  user: { email: string; id: string };
+  returnRequest: { helpTicketId: string; submittedAt: string } | null;
+  user: { email: string; id: string } | null;
 }
 
 interface DonationRow {
@@ -62,11 +65,25 @@ interface DonationRow {
   user: { email: string; id: string };
 }
 
+interface SubscriptionRow {
+  cancelAtPeriodEnd: boolean;
+  canceledAt: string | null;
+  createdAt: string;
+  currentPeriodEndAt: string | null;
+  currentPeriodStartAt: string | null;
+  events: Array<{ eventType: string; occurredAt: string; providerStatus: string }>;
+  membershipSubscriptionId: string;
+  providerStatus: string;
+  updatedAt: string;
+  user: { email: string; id: string };
+}
+
 interface CommerceProjection {
   categories: CategoryRow[];
   donations: DonationRow[];
   orders: OrderRow[];
   products: ProductRow[];
+  subscriptions: SubscriptionRow[];
 }
 
 function formatMoney(cents: number) {
@@ -76,7 +93,7 @@ function formatMoney(cents: number) {
 async function loadCommerce(): Promise<CommerceProjection> {
   const response = await fetch("/api/admin/commerce/");
   const result = await response.json() as Partial<CommerceProjection> & { error?: string };
-  if (!response.ok || !result.categories || !result.donations || !result.orders || !result.products) {
+  if (!response.ok || !result.categories || !result.donations || !result.orders || !result.products || !result.subscriptions) {
     throw new Error(result.error ?? "Commerce records could not be loaded.");
   }
   return result as CommerceProjection;
@@ -113,7 +130,7 @@ const categoryColumns: DataTableColumnDef<CategoryRow>[] = [
 
 const orderColumns: DataTableColumnDef<OrderRow>[] = [
   { accessorKey: "orderId", header: "Order", cell: ({ row }) => <a href={`/admin/orders/${encodeURIComponent(row.original.orderId)}`}>{row.original.orderId}</a> },
-  { id: "account", header: "Account", cell: ({ row }) => row.original.user.email },
+  { id: "account", header: "Account / guest", cell: ({ row }) => row.original.user?.email ?? `${row.original.contactEmail} (guest)` },
   { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
   { id: "amount", header: "Amount", cell: ({ row }) => row.original.paymentConfirmation ? formatMoney(row.original.paymentConfirmation.amountCents) : "Unconfirmed" },
   { id: "payment", header: "Payment", cell: ({ row }) => row.original.paymentConfirmation ? "Stripe confirmed" : "Unconfirmed" },
@@ -129,6 +146,15 @@ const donationColumns: DataTableColumnDef<DonationRow>[] = [
   { accessorKey: "monthsGranted", header: "Membership months" },
   { accessorKey: "status", header: "Status" },
   { accessorKey: "confirmedAt", header: "Confirmed", cell: ({ row }) => row.original.confirmedAt ? new Date(row.original.confirmedAt).toLocaleString() : "Not confirmed" },
+];
+
+const subscriptionColumns: DataTableColumnDef<SubscriptionRow>[] = [
+  { accessorKey: "membershipSubscriptionId", header: "Subscription" },
+  { id: "account", header: "Account", cell: ({ row }) => row.original.user.email },
+  { accessorKey: "providerStatus", header: "Provider state" },
+  { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
+  { id: "renewal", header: "Renewal", cell: ({ row }) => row.original.cancelAtPeriodEnd ? "Cancels at period end" : "Enabled" },
+  { id: "events", header: "Persisted events", cell: ({ row }) => row.original.events.length },
 ];
 
 function StoreOverview({ data }: { data: CommerceProjection }) {
@@ -225,8 +251,12 @@ function Donations({ donations }: { donations: DonationRow[] }) {
   return <section className="card"><h2>Donation transactions</h2><p>Donation status, amount, and granted membership months are projected from `DonationCheckout`; provider results are never inferred.</p>{donations.length === 0 ? <p>No donation checkouts are stored.</p> : <DataTable columns={donationColumns} data={donations} getRowId={(donation) => donation.donationCheckoutId} preferenceKey="admin.commerce.donations" />}</section>;
 }
 
+function Subscriptions({ subscriptions }: { subscriptions: SubscriptionRow[] }) {
+  return <section className="card"><h2>Subscription transactions</h2><p>Provider lifecycle and renewal state come from persisted signed Stripe events. Member entitlement remains a separate append-only grant projection.</p>{subscriptions.length === 0 ? <p>No subscription records are stored.</p> : <DataTable columns={subscriptionColumns} data={subscriptions} getRowId={(subscription) => subscription.membershipSubscriptionId} preferenceKey="admin.commerce.subscriptions" />}</section>;
+}
+
 function OrderManagement({ data, selected }: { data: CommerceProjection; selected: "all" | "donations" | "merchandise" | "subscriptions" }) {
-  return <div className="stack"><OrderTabs selected={selected} />{selected === "subscriptions" ? <section className="card"><h2>Subscription transactions unavailable</h2><p>The repository has membership entitlement grants, but no authoritative subscription checkout or subscription-order persistence. Entitlements are not relabeled as purchases.</p></section> : selected === "donations" ? <Donations donations={data.donations} /> : selected === "merchandise" ? <MerchandiseOrders orders={data.orders} /> : <><MerchandiseOrders orders={data.orders} /><Donations donations={data.donations} /></>}</div>;
+  return <div className="stack"><OrderTabs selected={selected} />{selected === "subscriptions" ? <Subscriptions subscriptions={data.subscriptions} /> : selected === "donations" ? <Donations donations={data.donations} /> : selected === "merchandise" ? <MerchandiseOrders orders={data.orders} /> : <><MerchandiseOrders orders={data.orders} /><Subscriptions subscriptions={data.subscriptions} /><Donations donations={data.donations} /></>}</div>;
 }
 
 function OrderDetail({ orders, pathname }: { orders: OrderRow[]; pathname: string }) {
@@ -237,7 +267,7 @@ function OrderDetail({ orders, pathname }: { orders: OrderRow[]; pathname: strin
   if (!orderId) return <p className="notice notice--bad" role="alert">A concrete order identifier is required.</p>;
   if (!order) return <p className="notice notice--bad" role="alert">Order {orderId} was not found.</p>;
   const total = order.lines.reduce((sum, line) => sum + line.quantity * line.unitPriceCents, 0);
-  return <div className="stack"><div className="grid-2"><section className="card"><div className="action-row action-row--between"><div><h2>Order {order.orderId}</h2><p>{order.user.email}</p></div><a className="button" href="/admin/orders">All orders</a></div><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Server line total</dt><dd>{formatMoney(total)}</dd><dt>Payment</dt><dd>{order.paymentConfirmation ? `${formatMoney(order.paymentConfirmation.amountCents)} confirmed` : "Unconfirmed"}</dd><dt>Fulfillment</dt><dd>{order.paymentConfirmation?.fulfillment ? "Printful submitted" : "Not submitted"}</dd><dt>Refunded</dt><dd>{formatMoney(order.refundedAmountCents)}</dd><dt>Return eligibility</dt><dd>{order.returnEligibility ? new Date(order.returnEligibility.eligibleAt).toLocaleString() : "Not recorded"}</dd></dl></section><section className="card"><h2>Persisted timeline</h2><ol><li>Order created — {new Date(order.createdAt).toLocaleString()}</li>{order.paymentConfirmation && <li>Stripe payment confirmed — {new Date(order.paymentConfirmation.confirmedAt).toLocaleString()}</li>}{order.paymentConfirmation?.fulfillment && <li>Printful submitted — {new Date(order.paymentConfirmation.fulfillment.submittedAt).toLocaleString()}</li>}{order.refunds.map((refund, index) => <li key={`${refund.refundedAt}-${index}`}>Refund recorded ({formatMoney(refund.amountCents)}) — {new Date(refund.refundedAt).toLocaleString()}</li>)}</ol></section></div><section className="card"><h2>Order lines</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Item</th><th>Variant</th><th>Quantity</th><th>Unit price</th><th>Line total</th></tr></thead><tbody>{order.lines.map((line) => <tr key={line.orderLineId}><td>{line.storeVariant.storeProduct.name}</td><td>{[line.storeVariant.size, line.storeVariant.color].filter(Boolean).join(" · ") || line.storeVariant.storeVariantId}</td><td>{line.quantity}</td><td>{formatMoney(line.unitPriceCents)}</td><td>{formatMoney(line.quantity * line.unitPriceCents)}</td></tr>)}</tbody></table></div></section><section className="card"><h2>Administrative actions</h2><div className="action-row"><button className="button" disabled>Receipt delivery unavailable</button><button className="button" disabled>Refund requires signed Stripe operation</button></div><p className="notice notice--warn">No receipt delivery or refund mutation owner exists in the supplied implementation. Persisted webhook refunds remain visible above.</p></section></div>;
+  return <div className="stack"><div className="grid-2"><section className="card"><div className="action-row action-row--between"><div><h2>Order {order.orderId}</h2><p>{order.user?.email ?? `${order.contactEmail} (guest)`}</p></div><a className="button" href="/admin/orders">All orders</a></div><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Server line total</dt><dd>{formatMoney(total)}</dd><dt>Payment</dt><dd>{order.paymentConfirmation ? `${formatMoney(order.paymentConfirmation.amountCents)} confirmed` : "Unconfirmed"}</dd><dt>Fulfillment</dt><dd>{order.paymentConfirmation?.fulfillment ? "Printful submitted" : "Not submitted"}</dd><dt>Refunded</dt><dd>{formatMoney(order.refundedAmountCents)}</dd><dt>Return eligibility</dt><dd>{order.returnEligibility ? new Date(order.returnEligibility.eligibleAt).toLocaleString() : "Not recorded"}</dd><dt>Return request</dt><dd>{order.returnRequest ? `Submitted ${new Date(order.returnRequest.submittedAt).toLocaleString()}` : "None"}</dd></dl></section><section className="card"><h2>Persisted timeline</h2><ol><li>Order created — {new Date(order.createdAt).toLocaleString()}</li>{order.paymentConfirmation && <li>Stripe payment confirmed — {new Date(order.paymentConfirmation.confirmedAt).toLocaleString()}</li>}{order.paymentConfirmation?.fulfillment && <li>Printful submitted — {new Date(order.paymentConfirmation.fulfillment.submittedAt).toLocaleString()}</li>}{order.returnRequest && <li>Return request received — {new Date(order.returnRequest.submittedAt).toLocaleString()}</li>}{order.refunds.map((refund, index) => <li key={`${refund.refundedAt}-${index}`}>Refund recorded ({formatMoney(refund.amountCents)}) — {new Date(refund.refundedAt).toLocaleString()}</li>)}</ol></section></div><section className="card"><h2>Order support and return intake</h2>{order.helpTickets.length === 0 ? <p>No order-linked Help Tickets.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Ticket</th><th>Channel</th><th>Category</th><th>Subject</th><th>Status</th><th>Updated</th></tr></thead><tbody>{order.helpTickets.map((ticket) => <tr key={ticket.helpTicketId}><td>{ticket.helpTicketId}</td><td>{ticket.channel}</td><td>{ticket.categoryKey}</td><td>{ticket.subject}</td><td>{ticket.status}</td><td>{new Date(ticket.updatedAt).toLocaleString()}</td></tr>)}</tbody></table></div>}<p className="muted">Intake is visible for review; it does not authorize or execute a Stripe refund or Printful change.</p></section><section className="card"><h2>Order lines</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Item</th><th>Variant</th><th>Quantity</th><th>Unit price</th><th>Line total</th></tr></thead><tbody>{order.lines.map((line) => <tr key={line.orderLineId}><td>{line.storeVariant.storeProduct.name}</td><td>{[line.storeVariant.size, line.storeVariant.color].filter(Boolean).join(" · ") || line.storeVariant.storeVariantId}</td><td>{line.quantity}</td><td>{formatMoney(line.unitPriceCents)}</td><td>{formatMoney(line.quantity * line.unitPriceCents)}</td></tr>)}</tbody></table></div></section><section className="card"><h2>Administrative actions</h2><div className="action-row"><button className="button" disabled>Receipt delivery unavailable</button><button className="button" disabled>Refund requires signed Stripe operation</button></div><p className="notice notice--warn">No receipt delivery or refund mutation owner exists in the supplied implementation. Persisted webhook refunds remain visible above.</p></section></div>;
 }
 
 function UnknownCommerce() {

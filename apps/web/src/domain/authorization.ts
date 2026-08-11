@@ -36,9 +36,10 @@ export function hasAdminCapability(
 export function canAccessGame(
   role: AuthorizationRole | null,
   betaEligible: boolean,
+  participationEligible: boolean,
 ): boolean {
   if (role === "guest") return false;
-  return role === "owner" || betaEligible;
+  return participationEligible && betaEligible;
 }
 
 export function hasMemberBenefits(input: {

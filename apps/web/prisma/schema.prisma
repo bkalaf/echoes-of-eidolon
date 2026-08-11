@@ -1194,6 +1194,23 @@ enum PromptStatus {
   COMPLETED
 }
 
+enum HelpTicketStatus {
+  OPEN
+  RESOLVED
+}
+
+enum HelpTicketChannel {
+  PLAYER
+  STORE
+  RETURN
+}
+
+enum HelpTicketAuthorKind {
+  ACCOUNT
+  GUEST
+  SUPPORT
+}
+
 enum Loquacity {
   LIGHT_BANTER
   TALKATIVE
@@ -1284,39 +1301,54 @@ enum BreedDimensionValue {
 }
 
 model User {
-  id                  String                    @id
-  name                String
-  username            String?                   @unique
-  displayUsername     String?
-  email               String                    @unique
-  emailVerified       Boolean                   @default(false)
-  image               String?
-  eligibilityStatus   AgeEligibility
-  betaEligible        Boolean                   @default(false)
-  role                String                    @default("user")
-  banned              Boolean                   @default(false)
-  banReason           String?
-  banExpires          DateTime?
-  twoFactorEnabled    Boolean                   @default(false)
-  createdAt           DateTime                  @default(now())
-  updatedAt           DateTime                  @updatedAt
-  sessions            Session[]
-  accounts            Account[]
-  passkeys            Passkey[]
-  memberships         Member[]
-  sentInvitations     Invitation[]              @relation("InvitationInviter")
-  betaInviteRequests  BetaInviteRequest[]       @relation("BetaInviteRequester")
-  consumedBetaInvites BetaInvitationCode[]      @relation("BetaInviteConsumer")
-  twoFactors          TwoFactor[]
-  puzzleAcceptances   PuzzleChallengeAccepted[]
-  membershipGrants    MembershipGrant[]
-  orders              Order[]
-  gameSessions        GameSession[]
-  authoredDocuments   DocumentDraft[]
-  donationCheckouts   DonationCheckout[]
-  settings            UserSettings?
+  id                      String                    @id
+  name                    String
+  username                String?                   @unique
+  displayUsername         String?
+  email                   String                    @unique
+  emailVerified           Boolean                   @default(false)
+  image                   String?
+  eligibilityStatus       AgeEligibility
+  betaEligible            Boolean                   @default(false)
+  role                    String                    @default("user")
+  banned                  Boolean                   @default(false)
+  banReason               String?
+  banExpires              DateTime?
+  twoFactorEnabled        Boolean                   @default(false)
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  sessions                Session[]
+  accounts                Account[]
+  passkeys                Passkey[]
+  memberships             Member[]
+  sentInvitations         Invitation[]              @relation("InvitationInviter")
+  betaInviteRequests      BetaInviteRequest[]       @relation("BetaInviteRequester")
+  consumedBetaInvites     BetaInvitationCode[]      @relation("BetaInviteConsumer")
+  twoFactors              TwoFactor[]
+  puzzleAcceptances       PuzzleChallengeAccepted[]
+  membershipGrants        MembershipGrant[]
+  orders                  Order[]
+  guardianConsents        GuardianConsentRecord[]
+  subscriptions           MembershipSubscription[]
+  helpTickets             HelpTicket[]
+  helpTicketMessages      HelpTicketMessage[]
+  gameSessions            GameSession[]
+  authoredDocuments       DocumentDraft[]
+  donationCheckouts       DonationCheckout[]
+  settings                UserSettings?
   externalBulkApiSessions ExternalBulkApiSession[]
-  bulkOperationAudits BulkOperationAudit[]
+  bulkOperationAudits     BulkOperationAudit[]
+}
+
+model GuardianConsentRecord {
+  guardianConsentId  String    @id
+  accountId          String
+  consentedAt        DateTime
+  revokedAt          DateTime?
+  verificationMethod String
+  account            User      @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, consentedAt])
 }
 
 model UserSettings {
@@ -1738,13 +1770,36 @@ model PointOfInterest {
   @@index([regionId])
 }
 
+model AtlasNameableFeature {
+  featureId     String                   @id
+  featureType   String
+  name          String?
+  context       Json
+  eligibilities AtlasNamingEligibility[]
+}
+
+model AtlasNamingEligibility {
+  siteId     String
+  featureId  String
+  rank       Int
+  distanceKm Float?
+  site       Site                 @relation(fields: [siteId], references: [siteId], onDelete: Cascade)
+  feature    AtlasNameableFeature @relation(fields: [featureId], references: [featureId], onDelete: Cascade)
+
+  @@id([siteId, featureId])
+  @@unique([featureId, rank])
+  @@index([siteId, rank])
+}
+
 model Site {
-  siteId        String                   @id
-  regionId      RegionId
-  candidateType SettlementClassification
-  longitude     Float
-  latitude      Float
-  settlement    Settlement?
+  siteId            String                   @id
+  regionId          RegionId
+  candidateType     SettlementClassification
+  longitude         Float
+  latitude          Float
+  namingContext     Json?
+  settlement        Settlement?
+  namingEligibility AtlasNamingEligibility[]
 
   @@index([regionId])
 }
@@ -2254,18 +2309,31 @@ model PromptRecord {
 }
 
 model PromptVersion {
-  promptVersionId         String        @id
+  promptVersionId         String             @id
   promptRecordId          String
   version                 Int
   promptText              String
   responseContract        Json
   generatedManagedAssetId String?
-  createdAt               DateTime      @default(now())
-  promptRecord            PromptRecord  @relation(fields: [promptRecordId], references: [promptRecordId], onDelete: Cascade)
-  generatedManagedAsset   ManagedAsset? @relation("PromptGeneratedAsset", fields: [generatedManagedAssetId], references: [managedAssetId], onDelete: SetNull)
+  createdAt               DateTime           @default(now())
+  promptRecord            PromptRecord       @relation(fields: [promptRecordId], references: [promptRecordId], onDelete: Cascade)
+  generatedManagedAsset   ManagedAsset?      @relation("PromptGeneratedAsset", fields: [generatedManagedAssetId], references: [managedAssetId], onDelete: SetNull)
+  textResults             PromptTextResult[]
 
   @@unique([promptRecordId, version])
   @@index([generatedManagedAssetId])
+}
+
+model PromptTextResult {
+  promptTextResultId String        @id
+  promptVersionId    String
+  rawResponse        String
+  parsedResponse     Json
+  createdAt          DateTime      @default(now())
+  appliedAt          DateTime?
+  promptVersion      PromptVersion @relation(fields: [promptVersionId], references: [promptVersionId], onDelete: Restrict)
+
+  @@index([promptVersionId, createdAt])
 }
 
 model MembershipGrant {
@@ -2284,6 +2352,41 @@ model MembershipGrant {
 
   @@unique([source, sourceReference])
   @@index([userId, effectiveStartAt])
+}
+
+model MembershipSubscription {
+  membershipSubscriptionId    String                        @id
+  userId                      String
+  stripeCheckoutReference     String?                       @unique
+  stripeCustomerReference     String?
+  stripeSubscriptionReference String?                       @unique
+  providerStatus              String
+  cancelAtPeriodEnd           Boolean                       @default(false)
+  currentPeriodStartAt        DateTime?
+  currentPeriodEndAt          DateTime?
+  canceledAt                  DateTime?
+  createdAt                   DateTime                      @default(now())
+  updatedAt                   DateTime                      @updatedAt
+  user                        User                          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  events                      MembershipSubscriptionEvent[]
+
+  @@index([userId, updatedAt])
+  @@index([stripeCustomerReference])
+}
+
+model MembershipSubscriptionEvent {
+  membershipSubscriptionEventId String                 @id
+  membershipSubscriptionId      String
+  stripeEventId                 String                 @unique
+  eventType                     String
+  providerStatus                String
+  occurredAt                    DateTime
+  currentPeriodStartAt          DateTime?
+  currentPeriodEndAt            DateTime?
+  createdAt                     DateTime               @default(now())
+  subscription                  MembershipSubscription @relation(fields: [membershipSubscriptionId], references: [membershipSubscriptionId], onDelete: Cascade)
+
+  @@index([membershipSubscriptionId, occurredAt])
 }
 
 model MembershipRevocation {
@@ -2338,16 +2441,93 @@ model StoreVariant {
 
 model Order {
   orderId                 String                    @id
-  userId                  String
+  userId                  String?
+  contactEmail            String
+  shippingSummary         Json?
   stripeCheckoutReference String                    @unique
   createdAt               DateTime                  @default(now())
-  user                    User                      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  user                    User?                     @relation(fields: [userId], references: [id], onDelete: Restrict)
   lines                   OrderLine[]
   paymentConfirmation     OrderPaymentConfirmation?
   refunds                 OrderRefund[]
   returnEligibility       OrderReturnEligibility?
+  returnRequest           OrderReturnRequest?
+  helpTickets             HelpTicket[]
+  publicAccessTokens      OrderPublicAccessToken[]
 
   @@index([userId, createdAt])
+  @@index([contactEmail, createdAt])
+}
+
+model OrderPublicAccessToken {
+  orderPublicAccessTokenId String    @id
+  orderId                  String
+  tokenHash                String    @unique
+  emailHash                String
+  expiresAt                DateTime
+  revokedAt                DateTime?
+  createdAt                DateTime  @default(now())
+  order                    Order     @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+model HelpTicket {
+  helpTicketId  String              @id
+  userId        String?
+  contactEmail  String
+  orderId       String?
+  channel       HelpTicketChannel
+  categoryKey   String
+  subject       String
+  status        HelpTicketStatus    @default(OPEN)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  user          User?               @relation(fields: [userId], references: [id], onDelete: Restrict)
+  order         Order?              @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
+  messages      HelpTicketMessage[]
+  returnRequest OrderReturnRequest?
+
+  @@index([userId, status, updatedAt])
+  @@index([contactEmail, status, updatedAt])
+  @@index([orderId])
+}
+
+model HelpTicketMessage {
+  helpTicketMessageId String                 @id
+  helpTicketId        String
+  authorUserId        String?
+  authorKind          HelpTicketAuthorKind
+  message             String
+  createdAt           DateTime               @default(now())
+  helpTicket          HelpTicket             @relation(fields: [helpTicketId], references: [helpTicketId], onDelete: Cascade)
+  authorUser          User?                  @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+  attachments         HelpTicketAttachment[]
+
+  @@index([helpTicketId, createdAt])
+}
+
+model HelpTicketAttachment {
+  helpTicketAttachmentId String            @id
+  helpTicketMessageId    String
+  fileName               String
+  mimeType               String
+  byteSize               Int
+  sha256                 String
+  content                Bytes
+  createdAt              DateTime          @default(now())
+  message                HelpTicketMessage @relation(fields: [helpTicketMessageId], references: [helpTicketMessageId], onDelete: Cascade)
+
+  @@index([helpTicketMessageId])
+}
+
+model OrderReturnRequest {
+  orderReturnRequestId String     @id
+  orderId              String     @unique
+  helpTicketId         String     @unique
+  submittedAt          DateTime   @default(now())
+  order                Order      @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
+  helpTicket           HelpTicket @relation(fields: [helpTicketId], references: [helpTicketId], onDelete: Restrict)
 }
 
 model OrderLine {
@@ -2675,8 +2855,8 @@ model CampaignPlacement {
 }
 
 model BookGroupingDefinition {
-  bookGroupingDefinitionId String                   @id
-  groupingType             BookGroupingType         @unique
+  bookGroupingDefinitionId String                  @id
+  groupingType             BookGroupingType        @unique
   editability              BookGroupingEditability
   values                   BookGroupingValue[]
 }

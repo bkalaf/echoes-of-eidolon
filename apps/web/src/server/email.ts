@@ -73,3 +73,14 @@ export async function sendCompanyContact(input: {
   if (error || !data?.id) throw new Error(`Resend rejected the company contact: ${error?.message ?? "missing delivery reference"}`);
   return data.id;
 }
+
+export async function sendOrderStatusLink(input: { recipient: string; url: string }): Promise<void> {
+  const env = getEmailEnv();
+  const { error } = await getEmailClient().emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: input.recipient,
+    subject: "Your Echoes of Eidolon order status link",
+    text: `Use this private link to view your order status: ${input.url}`,
+  });
+  if (error) throw new Error(`Resend rejected the order-status email: ${error.message}`);
+}

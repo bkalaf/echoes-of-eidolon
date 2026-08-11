@@ -211,21 +211,46 @@ describe("account session boundary", () => {
     expect(screen.queryByText("Active", { exact: true })).not.toBeInTheDocument();
   });
 
-  it("shows the fixed monthly membership offer without enabling an unconnected checkout", async () => {
+  it("shows the fixed monthly membership offer through server-owned Stripe checkout", async () => {
     authMocks.useSession.mockReturnValue({
       data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
       isPending: false,
     });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-      json: async () => ({ active: false, activePerks: [], effectiveEndAt: null, grants: [], voiceWindowSeconds: 15 }),
+      json: async () => ({ active: false, activePerks: [], effectiveEndAt: null, grants: [], subscription: null, voiceWindowSeconds: 15 }),
       ok: true,
     }));
 
     render(<AccountPage screen={accountScreen("ACC005")} />);
 
-    expect(await screen.findByText("$9.99 monthly")).toBeInTheDocument();
+    expect(await screen.findByText("$9.99 per calendar month")).toBeInTheDocument();
     expect(screen.getByText("A subscription will never be required.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Start membership unavailable" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Subscribe with Stripe" })).toBeEnabled();
+  });
+
+  it.each([
+    ["ACC006", "Payment accepted"],
+    ["ACC007", "Payment not completed"],
+    ["ACC009", "Cancel renewal"],
+    ["ACC010", "Subscription event history"],
+  ])("renders reviewed subscription state %s from persisted provider truth", async (screenId, expectedHeading) => {
+    authMocks.useSession.mockReturnValue({ data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({
+        active: true,
+        activePerks: [],
+        effectiveEndAt: "2027-03-31T00:00:00.000Z",
+        grants: [{ effectiveEndAt: "2027-03-31T00:00:00.000Z", effectiveStartAt: "2027-02-28T00:00:00.000Z", membershipGrantId: "GRANT-1", monthsGranted: 1, source: "SUBSCRIPTION" }],
+        subscription: { cancelAtPeriodEnd: false, events: [{ eventType: "invoice.paid", occurredAt: "2027-02-28T00:00:00.000Z", providerStatus: "ACTIVE" }], providerStatus: "ACTIVE", stripeCustomerReference: "cus_1" },
+        voiceWindowSeconds: 30,
+      }),
+      ok: true,
+    }));
+
+    render(<AccountPage screen={accountScreen(screenId)} />);
+
+    expect((await screen.findAllByRole("heading", { name: expectedHeading })).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/2027/).length).toBeGreaterThan(0);
   });
 
   it("lists current and other sessions and never offers to revoke the current session", async () => {

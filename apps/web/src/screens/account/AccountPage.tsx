@@ -37,6 +37,15 @@ interface MembershipProjection {
     monthsGranted: number;
     source: MembershipGrantSource;
   }>;
+  subscription: null | {
+    cancelAtPeriodEnd: boolean;
+    canceledAt: string | null;
+    currentPeriodEndAt: string | null;
+    currentPeriodStartAt: string | null;
+    events: Array<{ eventType: string; occurredAt: string; providerStatus: string }>;
+    providerStatus: string;
+    stripeCustomerReference: string | null;
+  };
   voiceWindowSeconds: number;
 }
 
@@ -44,6 +53,7 @@ interface PlayerAccessProjection {
   betaEligible: boolean;
   canPlay: boolean;
   membershipEntitled: boolean;
+  participationEligible: boolean;
   role: string;
   voiceWindowSeconds: number;
 }
@@ -67,6 +77,36 @@ interface AccountOrderProjection {
   };
   refunds: Array<{ amountCents: number; refundedAt: string }>;
   returnEligibleAt: string | null;
+}
+
+interface HelpTicketProjection {
+  categoryKey: string;
+  channel: string;
+  createdAt: string;
+  helpTicketId: string;
+  messages: Array<{
+    attachments: Array<{ byteSize: number; fileName: string; helpTicketAttachmentId: string; mimeType: string }>;
+    authorKind: string;
+    createdAt: string;
+    helpTicketMessageId: string;
+    message: string;
+  }>;
+  orderId: string | null;
+  status: "OPEN" | "RESOLVED";
+  subject: string;
+  updatedAt: string;
+}
+
+async function encodedAttachment(file: File | null) {
+  if (!file) return [];
+  if (file.size > 5 * 1024 * 1024) throw new Error("Attachment must not exceed 5 MiB.");
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Attachment could not be read."));
+    reader.onload = () => resolve(String(reader.result));
+    reader.readAsDataURL(file);
+  });
+  return [{ base64: dataUrl.split(",")[1] ?? "", fileName: file.name, mimeType: file.type }];
 }
 
 function AccountHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
@@ -184,7 +224,9 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
 function Subscription({ screen }: { screen: PageManifestEntry }) {
   const [membership, setMembership] = useState<MembershipProjection>();
   const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
+  const [message, setMessage] = useState<string>();
 
   useEffect(() => {
     let active = true;
@@ -202,12 +244,57 @@ function Subscription({ screen }: { screen: PageManifestEntry }) {
     return () => { active = false; };
   }, []);
 
-  const providerStateScreen = ["ACC006", "ACC007", "ACC009"].includes(screen.screenId);
-  return <><AccountHead screen={screen} description="Subscription status, billing state and history." />{loading ? <p className="notice">Loading membership entitlement…</p> : error || !membership ? <p className="notice notice--bad" role="alert">{error ?? "Membership entitlement could not be loaded."}</p> : <div className="stack">{screen.screenId === "ACC005" && <section className="card"><h2>Monthly membership</h2><p><strong>{`$${(subscriptionPriceCents / 100).toFixed(2)} monthly`}</strong></p><p>A subscription will never be required.</p><button className="button button--gold" disabled>Start membership unavailable</button><p className="notice notice--warn">The displayed price is fixed by the server contract. No Stripe subscription operation is connected to this button.</p></section>}<section className="card"><h2>Membership entitlement</h2><dl className="detail-list"><dt>Status</dt><dd>{membership.active ? "Active" : "Inactive"}</dd><dt>Effective end</dt><dd>{membership.effectiveEndAt ? new Date(membership.effectiveEndAt).toLocaleString() : "No active entitlement"}</dd><dt>Voice window</dt><dd>{membership.voiceWindowSeconds} seconds</dd></dl><p className="muted">Membership benefits do not grant an authorization role or beta/player eligibility.</p></section>{screen.screenId === "ACC010" && <section className="card"><h2>Membership history</h2>{membership.grants.length === 0 ? <p>No membership grants.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Source</th><th>Months</th><th>Effective start</th><th>Effective end</th></tr></thead><tbody>{membership.grants.map((grant) => <tr key={grant.membershipGrantId}><td>{grant.source}</td><td>{grant.monthsGranted}</td><td>{new Date(grant.effectiveStartAt).toLocaleString()}</td><td>{new Date(grant.effectiveEndAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section>}{membership.activePerks.length > 0 && <section className="card"><h2>Active perks</h2><ul>{membership.activePerks.map((perk) => <li key={perk.perkId}><strong>{perk.name}</strong>: {perk.description}</li>)}</ul></section>}{providerStateScreen && <Deferred>Stripe payment acceptance, decline, and cancellation actions require a persisted provider operation for this account. The membership ledger above is authoritative and no provider result is inferred from it.</Deferred>}</div>}</>;
+  const post = async (endpoint: string) => {
+    setBusy(true);
+    setError(undefined);
+    setMessage(undefined);
+    const response = await fetch(endpoint, { method: "POST" });
+    const result = await response.json() as { checkoutUrl?: string; error?: string; portalUrl?: string; subscription?: MembershipProjection["subscription"] };
+    setBusy(false);
+    if (!response.ok) return setError(result.error ?? "The Stripe subscription operation failed.");
+    if (result.checkoutUrl || result.portalUrl) return window.location.assign(result.checkoutUrl ?? result.portalUrl!);
+    if (result.subscription) setMembership((current) => current ? { ...current, subscription: result.subscription! } : current);
+    setMessage("Subscription renewal cancellation is recorded. Existing Member time remains available through its current boundary.");
+  };
+
+  const subscription = membership?.subscription;
+  const providerStatus = subscription?.providerStatus ?? "NOT_SUBSCRIBED";
+  return <><AccountHead screen={screen} description="Subscription status, billing state and history." />{loading ? <p className="notice">Loading membership entitlement…</p> : error || !membership ? <p className="notice notice--bad" role="alert">{error ?? "Membership entitlement could not be loaded."}</p> : <div className="stack">
+    {screen.screenId === "ACC005" && <section className="card"><h2>Monthly membership</h2><p><strong>{`$${(subscriptionPriceCents / 100).toFixed(2)} per calendar month`}</strong></p><p>A subscription will never be required.</p><button className="button button--gold" disabled={busy} onClick={() => void post("/api/account/subscription/checkout")}>{busy ? "Opening Stripe…" : "Subscribe with Stripe"}</button><p className="muted">Member is an entitlement. It never changes your account, admin, invitation, or participation authorization.</p></section>}
+    {screen.screenId === "ACC006" && <section className="card"><h2>Payment accepted</h2><p className={`notice ${providerStatus === "ACTIVE" ? "notice--good" : "notice--warn"}`}>{providerStatus === "ACTIVE" ? "Stripe payment and the persisted subscription event are confirmed." : "Stripe returned successfully; waiting for the signed webhook before granting Member time."}</p></section>}
+    {screen.screenId === "ACC007" && <section className="card"><h2>Payment not completed</h2><p>No Member entitlement was granted by this declined/canceled browser state.</p><a className="button button--gold" href="/account/subscription?state=ACC005">Try again</a></section>}
+    {screen.screenId === "ACC009" && <section className="card"><h2>Cancel renewal</h2><p>Cancellation stops renewal. Already-earned access remains through its existing exclusive Member-through boundary.</p><button className="button button--gold" disabled={busy || !subscription || subscription.cancelAtPeriodEnd} onClick={() => void post("/api/account/subscription/cancel")}>{subscription?.cancelAtPeriodEnd ? "Renewal already canceled" : busy ? "Canceling…" : "Confirm cancellation"}</button></section>}
+    <section className="card"><h2>Membership entitlement</h2><dl className="detail-list"><dt>Provider state</dt><dd>{providerStatus}</dd><dt>Entitlement</dt><dd>{membership.active ? "Active" : "Inactive"}</dd><dt>Member through (exclusive)</dt><dd>{membership.effectiveEndAt ? new Date(membership.effectiveEndAt).toLocaleString() : "No active entitlement"}</dd><dt>Renewal</dt><dd>{subscription?.cancelAtPeriodEnd ? "Canceled at period end" : subscription ? "Enabled" : "Not subscribed"}</dd></dl><div className="action-row">{subscription?.stripeCustomerReference !== null && subscription && <button className="button" disabled={busy} onClick={() => void post("/api/account/subscription/portal")}>Manage payment method</button>}{screen.screenId === "ACC008" && subscription && !subscription.cancelAtPeriodEnd && <a className="button" href="/account/subscription?state=ACC009">Cancel renewal</a>}</div><p className="muted">Membership benefits do not grant an authorization role or beta/player eligibility.</p></section>
+    {screen.screenId === "ACC010" && <><section className="card"><h2>Membership grant history</h2>{membership.grants.length === 0 ? <p>No membership grants.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Source</th><th>Months</th><th>Effective start</th><th>Effective end</th></tr></thead><tbody>{membership.grants.map((grant) => <tr key={grant.membershipGrantId}><td>{grant.source}</td><td>{grant.monthsGranted}</td><td>{new Date(grant.effectiveStartAt).toLocaleString()}</td><td>{new Date(grant.effectiveEndAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section><section className="card"><h2>Subscription event history</h2>{!subscription?.events.length ? <p>No persisted subscription events.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Event</th><th>Status</th><th>Occurred</th></tr></thead><tbody>{subscription.events.map((event) => <tr key={`${event.eventType}:${event.occurredAt}`}><td>{event.eventType}</td><td>{event.providerStatus}</td><td>{new Date(event.occurredAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section></>}
+    {membership.activePerks.length > 0 && <section className="card"><h2>Active perks</h2><ul>{membership.activePerks.map((perk) => <li key={perk.perkId}><strong>{perk.name}</strong>: {perk.description}</li>)}</ul></section>}
+    {message && <p className="notice notice--good" role="status">{message}</p>}
+  </div>}</>;
 }
 
 function money(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
+}
+
+function ReturnRequestForm({ order }: { order: AccountOrderProjection }) {
+  const [subject, setSubject] = useState(`Return request for ${order.orderId}`);
+  const [message, setMessage] = useState("");
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState("");
+  const [error, setError] = useState("");
+  const submit = async () => {
+    setBusy(true); setError("");
+    try {
+      const attachments = await encodedAttachment(attachment);
+      const response = await fetch(`/api/account/orders/${encodeURIComponent(order.orderId)}/return`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ attachments, message, subject }) });
+      const body = await response.json() as { error?: string; ticket?: HelpTicketProjection };
+      if (!response.ok || !body.ticket) setError(body.error ?? "Return request could not be submitted.");
+      else setResult(`Return request ${body.ticket.helpTicketId} submitted for review. No refund or fulfillment change has been made.`);
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Return request could not be submitted."); }
+    setBusy(false);
+  };
+  if (result) return <section className="card"><h2>Return request received</h2><p className="notice notice--good" role="status">{result}</p><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>Back to order</a></section>;
+  return <section className="card form-grid"><h2 className="span-2">Return request</h2><p className="span-2">Return eligibility was recorded at {new Date(order.returnEligibleAt!).toLocaleString()}. Submission opens a review request; it does not issue a refund or cancel Printful fulfillment.</p><label className="field span-2">Subject<input className="input" value={subject} onChange={(event) => setSubject(event.target.value)} /></label><label className="field span-2">Reason and requested resolution<textarea className="textarea" value={message} onChange={(event) => setMessage(event.target.value)} /></label><label className="field span-2">Attachment<input accept="image/jpeg,image/png,image/webp,application/pdf,text/plain" type="file" onChange={(event) => setAttachment(event.target.files?.[0] ?? null)} /></label><button className="button button--gold" disabled={busy || !subject.trim() || !message.trim()} onClick={() => void submit()}>{busy ? "Submitting…" : "Submit return request"}</button>{error && <p className="notice notice--bad span-2" role="alert">{error}</p>}</section>;
 }
 
 function Orders({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
@@ -242,7 +329,7 @@ function Orders({ pathname, screen }: { pathname?: string; screen: PageManifestE
   else if (error) content = <p className="notice notice--bad" role="alert">{error}</p>;
   else if (!detail) content = orders.length === 0 ? <p>No merchandise orders.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Order</th><th>Created</th><th>Items</th><th>Payment</th><th>Fulfillment</th></tr></thead><tbody>{orders.map((item) => <tr key={item.orderId}><td><a href={`/account/orders/${encodeURIComponent(item.orderId)}`}>{item.orderId}</a></td><td>{new Date(item.createdAt).toLocaleString()}</td><td>{item.lines.reduce((sum, line) => sum + line.quantity, 0)}</td><td>{item.payment ? `${money(item.payment.amountCents)} confirmed` : "No confirmed payment"}</td><td>{item.payment?.fulfillmentSubmittedAt ? "Submitted to Printful" : "Not submitted"}</td></tr>)}</tbody></table></div>;
   else if (!order) content = <p className="notice notice--bad" role="alert">Order not found.</p>;
-  else if (screen.screenId === "ACC013") content = order.returnEligibleAt ? <section className="card"><h2>Return request</h2><p>Return eligibility was recorded at {new Date(order.returnEligibleAt).toLocaleString()}.</p><button className="button button--gold" disabled>Submit return unavailable</button><p className="notice notice--warn">No return-submission or refund workflow is inferred from eligibility alone.</p></section> : <section className="card"><h2>Return unavailable</h2><p>This order has no persisted return eligibility.</p><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>Back to order</a></section>;
+  else if (screen.screenId === "ACC013") content = order.returnEligibleAt ? <ReturnRequestForm order={order} /> : <section className="card"><h2>Return unavailable</h2><p>This order has no persisted return eligibility.</p><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>Back to order</a></section>;
   else content = <div className="stack"><section className="card"><h2>Order {order.orderId}</h2><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Payment</dt><dd>{order.payment ? `${money(order.payment.amountCents)} confirmed ${new Date(order.payment.confirmedAt).toLocaleString()}` : "No confirmed payment"}</dd><dt>Fulfillment</dt><dd>{order.payment?.fulfillmentSubmittedAt ? `Submitted ${new Date(order.payment.fulfillmentSubmittedAt).toLocaleString()}` : "Not submitted"}</dd><dt>Refunded</dt><dd>{money(order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0))}</dd></dl>{order.returnEligibleAt && <a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}/return`}>Request a return</a>}</section><section className="card"><h2>Items</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Product</th><th>Size</th><th>Color</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>{order.lines.map((line) => <tr key={line.orderLineId}><td>{line.name}</td><td>{line.size ?? "—"}</td><td>{line.color ?? "—"}</td><td>{line.quantity}</td><td>{money(line.unitPriceCents)}</td></tr>)}</tbody></table></div></section></div>;
 
   return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." />{content}<section className="card"><h2>Provider boundary</h2><p>Stripe payment and Printful fulfillment remain separate. Provider identifiers are not exposed.</p></section></>;
@@ -260,9 +347,58 @@ function Achievements({ screen }: { screen: PageManifestEntry }) {
   return <><AccountHead screen={screen} description="Unlocked and discoverable achievements." /><Deferred>Achievement definitions exist, but player award state, thresholds, and disclosure rules are not supplied.</Deferred></>;
 }
 
-function Support({ screen }: { screen: PageManifestEntry }) {
-  const task = screen.screenId === "ACC020" ? "ticket creation" : screen.screenId === "ACC021" ? "ticket replies" : "ticket listing";
-  return <><AccountHead screen={screen} description="Player support is separate from company contact." /><Deferred>Support recipient configuration exists, but {task} requires a ticket persistence, identity, status, and reply-delivery contract.</Deferred></>;
+function Support({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
+  const ticketId = pathname?.match(/^\/account\/support\/([^/]+)$/)?.[1];
+  const [tickets, setTickets] = useState<HelpTicketProjection[]>([]);
+  const [categoryKey, setCategoryKey] = useState("ACCOUNT_ACCESS");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const [loading, setLoading] = useState(screen.screenId !== "ACC020");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+  const [confirmation, setConfirmation] = useState<string>();
+
+  useEffect(() => {
+    if (screen.screenId === "ACC020") return;
+    let active = true;
+    const endpoint = ticketId ? `/api/account/support/${encodeURIComponent(ticketId)}` : "/api/account/support/";
+    void fetch(endpoint).then(async (response) => {
+      const result = await response.json() as { error?: string; ticket?: HelpTicketProjection; tickets?: HelpTicketProjection[] };
+      if (!active) return;
+      setLoading(false);
+      if (!response.ok) setError(result.error ?? "Help Tickets could not be loaded.");
+      else setTickets(result.ticket ? [result.ticket] : result.tickets ?? []);
+    }).catch(() => {
+      if (!active) return;
+      setLoading(false);
+      setError("Help Tickets could not be loaded.");
+    });
+    return () => { active = false; };
+  }, [screen.screenId, ticketId]);
+
+  const submit = async (reply: boolean) => {
+    setBusy(true); setError(undefined); setConfirmation(undefined);
+    try {
+      const attachments = await encodedAttachment(attachment);
+      const response = await fetch(reply ? `/api/account/support/${encodeURIComponent(ticketId!)}` : "/api/account/support/", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify(reply ? { attachments, message } : { attachments, categoryKey, message, subject }),
+      });
+      const result = await response.json() as { error?: string; ticket?: HelpTicketProjection };
+      if (!response.ok || !result.ticket) setError(result.error ?? "Help Ticket could not be submitted.");
+      else { setTickets([result.ticket]); setMessage(""); setAttachment(null); setConfirmation(reply ? "Reply added." : `Help Ticket ${result.ticket.helpTicketId} created.`); }
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Attachment could not be submitted."); }
+    setBusy(false);
+  };
+
+  const ticket = tickets[0];
+  let content;
+  if (screen.screenId === "ACC020") content = <section className="card form-grid"><h2 className="span-2">Create Help Ticket</h2><label className="field">Category<select className="select" value={categoryKey} onChange={(event) => setCategoryKey(event.target.value)}><option value="ACCOUNT_ACCESS">Account access</option><option value="GAMEPLAY">Gameplay</option><option value="TECHNICAL">Technical</option><option value="OTHER">Other player support</option></select></label><label className="field">Subject<input className="input" maxLength={200} value={subject} onChange={(event) => setSubject(event.target.value)} /></label><label className="field span-2">Message<textarea className="textarea" maxLength={10_000} value={message} onChange={(event) => setMessage(event.target.value)} /></label><label className="field span-2">Attachment (optional, up to 5 MiB)<input accept="image/jpeg,image/png,image/webp,application/pdf,text/plain" type="file" onChange={(event) => setAttachment(event.target.files?.[0] ?? null)} /></label><button className="button button--gold" disabled={busy || !subject.trim() || !message.trim()} onClick={() => void submit(false)}>{busy ? "Submitting…" : "Create Help Ticket"}</button></section>;
+  else if (loading) content = <p className="notice">Loading Help Tickets…</p>;
+  else if (screen.screenId === "ACC021") content = !ticket ? <p className="notice notice--bad">Help Ticket not found or permission denied.</p> : <div className="stack"><section className="card"><div className="action-row action-row--between"><div><p className="kicker">{ticket.categoryKey}</p><h2>{ticket.subject}</h2></div><span className="tag">{ticket.status}</span></div>{ticket.orderId && <p>Order: {ticket.orderId}</p>}</section><section className="card"><h2>Thread</h2>{ticket.messages.map((entry) => <article className="card" key={entry.helpTicketMessageId}><p className="kicker">{entry.authorKind} · {new Date(entry.createdAt).toLocaleString()}</p><p>{entry.message}</p>{entry.attachments.length > 0 && <ul>{entry.attachments.map((file) => <li key={file.helpTicketAttachmentId}>{file.fileName} · {file.mimeType} · {file.byteSize} bytes</li>)}</ul>}</article>)}</section><section className="card form-grid"><h2 className="span-2">Reply</h2><label className="field span-2">Message<textarea className="textarea" value={message} onChange={(event) => setMessage(event.target.value)} /></label><label className="field span-2">Attachment<input accept="image/jpeg,image/png,image/webp,application/pdf,text/plain" type="file" onChange={(event) => setAttachment(event.target.files?.[0] ?? null)} /></label><button className="button button--gold" disabled={busy || ticket.status !== "OPEN" || !message.trim()} onClick={() => void submit(true)}>Add Reply</button></section></div>;
+  else content = <div className="stack"><nav className="tabs" aria-label="Help Ticket views"><a href="/account/support#open">Open</a><a href="/account/support#resolved">Resolved</a><a href="/account/support/new">Create</a></nav>{tickets.length === 0 ? <section className="card"><h2>No Help Tickets</h2><p>Create a Help Ticket for account, gameplay, or technical support.</p><a className="button button--gold" href="/account/support/new">Create Help Ticket</a></section> : <><section className="card"><h2>Open</h2>{tickets.filter((item) => item.status === "OPEN").map((item) => <p key={item.helpTicketId}><a href={`/account/support/${encodeURIComponent(item.helpTicketId)}`}>{item.subject}</a> · {new Date(item.updatedAt).toLocaleString()}</p>)}</section><section className="card"><h2>Resolved</h2>{tickets.filter((item) => item.status === "RESOLVED").map((item) => <p key={item.helpTicketId}><a href={`/account/support/${encodeURIComponent(item.helpTicketId)}`}>{item.subject}</a> · {new Date(item.updatedAt).toLocaleString()}</p>)}</section></>}</div>;
+  return <><AccountHead screen={screen} description="Player/account/gameplay support is separate from company contact and Store order support." />{content}{error && <p className="notice notice--bad" role="alert">{error}</p>}{confirmation && <p className="notice notice--good" role="status">{confirmation}</p>}</>;
 }
 
 function Invitations({ screen }: { screen: PageManifestEntry }) {
@@ -320,18 +456,19 @@ function SignedInAccountPage({ currentSessionToken, pathname, screen, user }: { 
   if (["ACC014", "ACC015"].includes(screen.screenId)) return <Settings screen={screen} />;
   if (["ACC016", "ACC017"].includes(screen.screenId)) return <Progress screen={screen} />;
   if (screen.screenId === "ACC018") return <Achievements screen={screen} />;
-  if (["ACC019", "ACC020", "ACC021"].includes(screen.screenId)) return <Support screen={screen} />;
+  if (["ACC019", "ACC020", "ACC021"].includes(screen.screenId)) return <Support pathname={pathname} screen={screen} />;
   if (["ACC022", "ACC023"].includes(screen.screenId)) return <Invitations screen={screen} />;
   return <><AccountHead screen={screen} description="This account screen is not registered." /><section className="card"><h2>Account screen unavailable</h2><p>No account workflow is inferred for an unknown screen.</p></section></>;
 }
 
 export function AccountPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {
   const session = authClient.useSession();
+  const returnTo = pathname ?? (screen.path?.startsWith("/") ? screen.path : "/account");
   let page;
   if (session.isPending) {
     page = <><AccountHead screen={screen} description="Checking account session." /><p className="notice">Checking account session…</p></>;
   } else if (!session.data) {
-    page = <><AccountHead screen={screen} description="A signed-in account is required." /><section className="card"><h2>Sign in required</h2><p>No account, order, progress, or support data is shown without an authenticated session.</p><a className="button button--gold" href="/auth/sign-in">Sign In</a></section></>;
+    page = <><AccountHead screen={screen} description="A signed-in account is required." /><section className="card"><h2>Sign in required</h2><p>No account, order, progress, or support data is shown without an authenticated session.</p><a className="button button--gold" href={`/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`}>Sign In</a></section></>;
   } else {
     page = <SignedInAccountPage currentSessionToken={session.data.session?.token} pathname={pathname} screen={screen} user={session.data.user} />;
   }

@@ -38,12 +38,19 @@ import { Route as ApiPlayerPuzzlesRouteImport } from './routes/api/player/puzzle
 import { Route as ApiPlayerRuntimeRouteImport } from './routes/api/player/runtime'
 import { Route as ApiStoreCatalogRouteImport } from './routes/api/store/catalog'
 import { Route as ApiStoreCheckoutRouteImport } from './routes/api/store/checkout'
+import { Route as ApiStoreOrderLookupRouteImport } from './routes/api/store/order-lookup'
+import { Route as ApiStoreSupportRouteImport } from './routes/api/store/support'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ApiAccountOrdersIndexRouteImport } from './routes/api/account/orders/index'
 import { Route as ApiAccountOrdersOrderIdRouteImport } from './routes/api/account/orders/$orderId'
 import { Route as ApiAccountSessionsIndexRouteImport } from './routes/api/account/sessions/index'
 import { Route as ApiAccountSessionsRevokeAllOtherRouteImport } from './routes/api/account/sessions/revoke-all-other'
 import { Route as ApiAccountSessionsRevokeOtherRouteImport } from './routes/api/account/sessions/revoke-other'
+import { Route as ApiAccountSubscriptionCancelRouteImport } from './routes/api/account/subscription/cancel'
+import { Route as ApiAccountSubscriptionCheckoutRouteImport } from './routes/api/account/subscription/checkout'
+import { Route as ApiAccountSubscriptionPortalRouteImport } from './routes/api/account/subscription/portal'
+import { Route as ApiAccountSupportIndexRouteImport } from './routes/api/account/support/index'
+import { Route as ApiAccountSupportTicketIdRouteImport } from './routes/api/account/support/$ticketId'
 import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/accounts/index'
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminAssetsIndexRouteImport } from './routes/api/admin/assets/index'
@@ -62,11 +69,14 @@ import { Route as ApiAdminPromptsIndexRouteImport } from './routes/api/admin/pro
 import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
 import { Route as ApiAdminPuzzlesPreviewRouteImport } from './routes/api/admin/puzzles/preview'
 import { Route as ApiAdminSettlementsIndexRouteImport } from './routes/api/admin/settlements/index'
+import { Route as ApiAdminSettlementsApplyNamingRouteImport } from './routes/api/admin/settlements/apply-naming'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
 import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/admin/settlements/migrate'
 import { Route as ApiExternalDataEntityKeyRouteImport } from './routes/api/external/data/$entityKey'
 import { Route as ApiStoreCheckoutStatusRouteImport } from './routes/api/store/checkout/status'
+import { Route as ApiStoreOrdersPublicOrderTokenRouteImport } from './routes/api/store/orders/$publicOrderToken'
+import { Route as ApiAccountOrdersOrderIdReturnRouteImport } from './routes/api/account/orders/$orderId/return'
 import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
@@ -231,6 +241,16 @@ const ApiStoreCheckoutRoute = ApiStoreCheckoutRouteImport.update({
   path: '/api/store/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStoreOrderLookupRoute = ApiStoreOrderLookupRouteImport.update({
+  id: '/api/store/order-lookup',
+  path: '/api/store/order-lookup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStoreSupportRoute = ApiStoreSupportRouteImport.update({
+  id: '/api/store/support',
+  path: '/api/store/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe/webhook',
   path: '/api/stripe/webhook',
@@ -261,6 +281,35 @@ const ApiAccountSessionsRevokeOtherRoute =
   ApiAccountSessionsRevokeOtherRouteImport.update({
     id: '/api/account/sessions/revoke-other',
     path: '/api/account/sessions/revoke-other',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountSubscriptionCancelRoute =
+  ApiAccountSubscriptionCancelRouteImport.update({
+    id: '/api/account/subscription/cancel',
+    path: '/api/account/subscription/cancel',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountSubscriptionCheckoutRoute =
+  ApiAccountSubscriptionCheckoutRouteImport.update({
+    id: '/api/account/subscription/checkout',
+    path: '/api/account/subscription/checkout',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountSubscriptionPortalRoute =
+  ApiAccountSubscriptionPortalRouteImport.update({
+    id: '/api/account/subscription/portal',
+    path: '/api/account/subscription/portal',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountSupportIndexRoute = ApiAccountSupportIndexRouteImport.update({
+  id: '/api/account/support/',
+  path: '/api/account/support/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountSupportTicketIdRoute =
+  ApiAccountSupportTicketIdRouteImport.update({
+    id: '/api/account/support/$ticketId',
+    path: '/api/account/support/$ticketId',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiAdminAccountsIndexRoute = ApiAdminAccountsIndexRouteImport.update({
@@ -360,6 +409,12 @@ const ApiAdminSettlementsIndexRoute =
     path: '/api/admin/settlements/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminSettlementsApplyNamingRoute =
+  ApiAdminSettlementsApplyNamingRouteImport.update({
+    id: '/api/admin/settlements/apply-naming',
+    path: '/api/admin/settlements/apply-naming',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminSettlementsCompleteNamingRoute =
   ApiAdminSettlementsCompleteNamingRouteImport.update({
     id: '/api/admin/settlements/complete-naming',
@@ -389,6 +444,18 @@ const ApiStoreCheckoutStatusRoute = ApiStoreCheckoutStatusRouteImport.update({
   path: '/status',
   getParentRoute: () => ApiStoreCheckoutRoute,
 } as any)
+const ApiStoreOrdersPublicOrderTokenRoute =
+  ApiStoreOrdersPublicOrderTokenRouteImport.update({
+    id: '/api/store/orders/$publicOrderToken',
+    path: '/api/store/orders/$publicOrderToken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAccountOrdersOrderIdReturnRoute =
+  ApiAccountOrdersOrderIdReturnRouteImport.update({
+    id: '/return',
+    path: '/return',
+    getParentRoute: () => ApiAccountOrdersOrderIdRoute,
+  } as any)
 const ApiAdminAccountsUserIdRoleRoute =
   ApiAdminAccountsUserIdRoleRouteImport.update({
     id: '/role',
@@ -516,10 +583,16 @@ export interface FileRoutesByFullPath {
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
+  '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
+  '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
-  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
+  '/api/account/subscription/cancel': typeof ApiAccountSubscriptionCancelRoute
+  '/api/account/subscription/checkout': typeof ApiAccountSubscriptionCheckoutRoute
+  '/api/account/subscription/portal': typeof ApiAccountSubscriptionPortalRoute
+  '/api/account/support/$ticketId': typeof ApiAccountSupportTicketIdRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
@@ -530,13 +603,16 @@ export interface FileRoutesByFullPath {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
+  '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
+  '/api/account/support/': typeof ApiAccountSupportIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -545,6 +621,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements/': typeof ApiAdminSettlementsIndexRoute
+  '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -592,10 +669,16 @@ export interface FileRoutesByTo {
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
+  '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
+  '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
-  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
+  '/api/account/subscription/cancel': typeof ApiAccountSubscriptionCancelRoute
+  '/api/account/subscription/checkout': typeof ApiAccountSubscriptionCheckoutRoute
+  '/api/account/subscription/portal': typeof ApiAccountSubscriptionPortalRoute
+  '/api/account/support/$ticketId': typeof ApiAccountSupportTicketIdRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
@@ -606,13 +689,16 @@ export interface FileRoutesByTo {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
+  '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions': typeof ApiAccountSessionsIndexRoute
+  '/api/account/support': typeof ApiAccountSupportIndexRoute
   '/api/admin/accounts': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations': typeof ApiAdminBetaInvitationsIndexRoute
@@ -621,6 +707,7 @@ export interface FileRoutesByTo {
   '/api/admin/perks': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements': typeof ApiAdminSettlementsIndexRoute
+  '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -669,10 +756,16 @@ export interface FileRoutesById {
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/store/catalog': typeof ApiStoreCatalogRoute
   '/api/store/checkout': typeof ApiStoreCheckoutRouteWithChildren
+  '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
+  '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
-  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRoute
+  '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
+  '/api/account/subscription/cancel': typeof ApiAccountSubscriptionCancelRoute
+  '/api/account/subscription/checkout': typeof ApiAccountSubscriptionCheckoutRoute
+  '/api/account/subscription/portal': typeof ApiAccountSubscriptionPortalRoute
+  '/api/account/support/$ticketId': typeof ApiAccountSupportTicketIdRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
@@ -683,13 +776,16 @@ export interface FileRoutesById {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
+  '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
   '/api/account/sessions/': typeof ApiAccountSessionsIndexRoute
+  '/api/account/support/': typeof ApiAccountSupportIndexRoute
   '/api/admin/accounts/': typeof ApiAdminAccountsIndexRoute
   '/api/admin/assets/': typeof ApiAdminAssetsIndexRoute
   '/api/admin/beta-invitations/': typeof ApiAdminBetaInvitationsIndexRoute
@@ -698,6 +794,7 @@ export interface FileRoutesById {
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements/': typeof ApiAdminSettlementsIndexRoute
+  '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
@@ -747,10 +844,16 @@ export interface FileRouteTypes {
     | '/api/player/runtime'
     | '/api/store/catalog'
     | '/api/store/checkout'
+    | '/api/store/order-lookup'
+    | '/api/store/support'
     | '/api/stripe/webhook'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
+    | '/api/account/subscription/cancel'
+    | '/api/account/subscription/checkout'
+    | '/api/account/subscription/portal'
+    | '/api/account/support/$ticketId'
     | '/api/admin/accounts/$userId'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
@@ -761,13 +864,16 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
     | '/api/store/checkout/status'
+    | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders/'
     | '/api/account/sessions/'
+    | '/api/account/support/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -776,6 +882,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
     | '/api/admin/settlements/'
+    | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -823,10 +930,16 @@ export interface FileRouteTypes {
     | '/api/player/runtime'
     | '/api/store/catalog'
     | '/api/store/checkout'
+    | '/api/store/order-lookup'
+    | '/api/store/support'
     | '/api/stripe/webhook'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
+    | '/api/account/subscription/cancel'
+    | '/api/account/subscription/checkout'
+    | '/api/account/subscription/portal'
+    | '/api/account/support/$ticketId'
     | '/api/admin/accounts/$userId'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
@@ -837,13 +950,16 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
     | '/api/store/checkout/status'
+    | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders'
     | '/api/account/sessions'
+    | '/api/account/support'
     | '/api/admin/accounts'
     | '/api/admin/assets'
     | '/api/admin/beta-invitations'
@@ -852,6 +968,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks'
     | '/api/admin/prompts'
     | '/api/admin/settlements'
+    | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -899,10 +1016,16 @@ export interface FileRouteTypes {
     | '/api/player/runtime'
     | '/api/store/catalog'
     | '/api/store/checkout'
+    | '/api/store/order-lookup'
+    | '/api/store/support'
     | '/api/stripe/webhook'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
+    | '/api/account/subscription/cancel'
+    | '/api/account/subscription/checkout'
+    | '/api/account/subscription/portal'
+    | '/api/account/support/$ticketId'
     | '/api/admin/accounts/$userId'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
@@ -913,13 +1036,16 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
     | '/api/store/checkout/status'
+    | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders/'
     | '/api/account/sessions/'
+    | '/api/account/support/'
     | '/api/admin/accounts/'
     | '/api/admin/assets/'
     | '/api/admin/beta-invitations/'
@@ -928,6 +1054,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
     | '/api/admin/settlements/'
+    | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
@@ -976,22 +1103,31 @@ export interface RootRouteChildren {
   ApiPlayerRuntimeRoute: typeof ApiPlayerRuntimeRoute
   ApiStoreCatalogRoute: typeof ApiStoreCatalogRoute
   ApiStoreCheckoutRoute: typeof ApiStoreCheckoutRouteWithChildren
+  ApiStoreOrderLookupRoute: typeof ApiStoreOrderLookupRoute
+  ApiStoreSupportRoute: typeof ApiStoreSupportRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
-  ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRoute
+  ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRouteWithChildren
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
+  ApiAccountSubscriptionCancelRoute: typeof ApiAccountSubscriptionCancelRoute
+  ApiAccountSubscriptionCheckoutRoute: typeof ApiAccountSubscriptionCheckoutRoute
+  ApiAccountSubscriptionPortalRoute: typeof ApiAccountSubscriptionPortalRoute
+  ApiAccountSupportTicketIdRoute: typeof ApiAccountSupportTicketIdRoute
   ApiAdminAccountsUserIdRoute: typeof ApiAdminAccountsUserIdRouteWithChildren
   ApiAdminCitiesCityIdRoute: typeof ApiAdminCitiesCityIdRoute
   ApiAdminDataEntityKeyRoute: typeof ApiAdminDataEntityKeyRouteWithChildren
   ApiAdminPerksPerkIdRoute: typeof ApiAdminPerksPerkIdRoute
   ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   ApiAdminPuzzlesPreviewRoute: typeof ApiAdminPuzzlesPreviewRoute
+  ApiAdminSettlementsApplyNamingRoute: typeof ApiAdminSettlementsApplyNamingRoute
   ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
   ApiExternalDataEntityKeyRoute: typeof ApiExternalDataEntityKeyRouteWithChildren
+  ApiStoreOrdersPublicOrderTokenRoute: typeof ApiStoreOrdersPublicOrderTokenRoute
   ApiAccountOrdersIndexRoute: typeof ApiAccountOrdersIndexRoute
   ApiAccountSessionsIndexRoute: typeof ApiAccountSessionsIndexRoute
+  ApiAccountSupportIndexRoute: typeof ApiAccountSupportIndexRoute
   ApiAdminAccountsIndexRoute: typeof ApiAdminAccountsIndexRoute
   ApiAdminAssetsIndexRoute: typeof ApiAdminAssetsIndexRoute
   ApiAdminBetaInvitationsIndexRoute: typeof ApiAdminBetaInvitationsIndexRoute
@@ -1213,6 +1349,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStoreCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/store/order-lookup': {
+      id: '/api/store/order-lookup'
+      path: '/api/store/order-lookup'
+      fullPath: '/api/store/order-lookup'
+      preLoaderRoute: typeof ApiStoreOrderLookupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/store/support': {
+      id: '/api/store/support'
+      path: '/api/store/support'
+      fullPath: '/api/store/support'
+      preLoaderRoute: typeof ApiStoreSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/stripe/webhook': {
       id: '/api/stripe/webhook'
       path: '/api/stripe/webhook'
@@ -1253,6 +1403,41 @@ declare module '@tanstack/react-router' {
       path: '/api/account/sessions/revoke-other'
       fullPath: '/api/account/sessions/revoke-other'
       preLoaderRoute: typeof ApiAccountSessionsRevokeOtherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/subscription/cancel': {
+      id: '/api/account/subscription/cancel'
+      path: '/api/account/subscription/cancel'
+      fullPath: '/api/account/subscription/cancel'
+      preLoaderRoute: typeof ApiAccountSubscriptionCancelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/subscription/checkout': {
+      id: '/api/account/subscription/checkout'
+      path: '/api/account/subscription/checkout'
+      fullPath: '/api/account/subscription/checkout'
+      preLoaderRoute: typeof ApiAccountSubscriptionCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/subscription/portal': {
+      id: '/api/account/subscription/portal'
+      path: '/api/account/subscription/portal'
+      fullPath: '/api/account/subscription/portal'
+      preLoaderRoute: typeof ApiAccountSubscriptionPortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/support/': {
+      id: '/api/account/support/'
+      path: '/api/account/support'
+      fullPath: '/api/account/support/'
+      preLoaderRoute: typeof ApiAccountSupportIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/support/$ticketId': {
+      id: '/api/account/support/$ticketId'
+      path: '/api/account/support/$ticketId'
+      fullPath: '/api/account/support/$ticketId'
+      preLoaderRoute: typeof ApiAccountSupportTicketIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/accounts/': {
@@ -1381,6 +1566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminSettlementsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/settlements/apply-naming': {
+      id: '/api/admin/settlements/apply-naming'
+      path: '/api/admin/settlements/apply-naming'
+      fullPath: '/api/admin/settlements/apply-naming'
+      preLoaderRoute: typeof ApiAdminSettlementsApplyNamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/settlements/complete-naming': {
       id: '/api/admin/settlements/complete-naming'
       path: '/api/admin/settlements/complete-naming'
@@ -1415,6 +1607,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/store/checkout/status'
       preLoaderRoute: typeof ApiStoreCheckoutStatusRouteImport
       parentRoute: typeof ApiStoreCheckoutRoute
+    }
+    '/api/store/orders/$publicOrderToken': {
+      id: '/api/store/orders/$publicOrderToken'
+      path: '/api/store/orders/$publicOrderToken'
+      fullPath: '/api/store/orders/$publicOrderToken'
+      preLoaderRoute: typeof ApiStoreOrdersPublicOrderTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/orders/$orderId/return': {
+      id: '/api/account/orders/$orderId/return'
+      path: '/return'
+      fullPath: '/api/account/orders/$orderId/return'
+      preLoaderRoute: typeof ApiAccountOrdersOrderIdReturnRouteImport
+      parentRoute: typeof ApiAccountOrdersOrderIdRoute
     }
     '/api/admin/accounts/$userId/role': {
       id: '/api/admin/accounts/$userId/role'
@@ -1598,6 +1804,20 @@ const ApiStoreCheckoutRouteChildren: ApiStoreCheckoutRouteChildren = {
 const ApiStoreCheckoutRouteWithChildren =
   ApiStoreCheckoutRoute._addFileChildren(ApiStoreCheckoutRouteChildren)
 
+interface ApiAccountOrdersOrderIdRouteChildren {
+  ApiAccountOrdersOrderIdReturnRoute: typeof ApiAccountOrdersOrderIdReturnRoute
+}
+
+const ApiAccountOrdersOrderIdRouteChildren: ApiAccountOrdersOrderIdRouteChildren =
+  {
+    ApiAccountOrdersOrderIdReturnRoute: ApiAccountOrdersOrderIdReturnRoute,
+  }
+
+const ApiAccountOrdersOrderIdRouteWithChildren =
+  ApiAccountOrdersOrderIdRoute._addFileChildren(
+    ApiAccountOrdersOrderIdRouteChildren,
+  )
+
 interface ApiAdminAccountsUserIdRouteChildren {
   ApiAdminAccountsUserIdRoleRoute: typeof ApiAdminAccountsUserIdRoleRoute
 }
@@ -1704,23 +1924,32 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPlayerRuntimeRoute: ApiPlayerRuntimeRoute,
   ApiStoreCatalogRoute: ApiStoreCatalogRoute,
   ApiStoreCheckoutRoute: ApiStoreCheckoutRouteWithChildren,
+  ApiStoreOrderLookupRoute: ApiStoreOrderLookupRoute,
+  ApiStoreSupportRoute: ApiStoreSupportRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
-  ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRoute,
+  ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRouteWithChildren,
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,
+  ApiAccountSubscriptionCancelRoute: ApiAccountSubscriptionCancelRoute,
+  ApiAccountSubscriptionCheckoutRoute: ApiAccountSubscriptionCheckoutRoute,
+  ApiAccountSubscriptionPortalRoute: ApiAccountSubscriptionPortalRoute,
+  ApiAccountSupportTicketIdRoute: ApiAccountSupportTicketIdRoute,
   ApiAdminAccountsUserIdRoute: ApiAdminAccountsUserIdRouteWithChildren,
   ApiAdminCitiesCityIdRoute: ApiAdminCitiesCityIdRoute,
   ApiAdminDataEntityKeyRoute: ApiAdminDataEntityKeyRouteWithChildren,
   ApiAdminPerksPerkIdRoute: ApiAdminPerksPerkIdRoute,
   ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRouteWithChildren,
   ApiAdminPuzzlesPreviewRoute: ApiAdminPuzzlesPreviewRoute,
+  ApiAdminSettlementsApplyNamingRoute: ApiAdminSettlementsApplyNamingRoute,
   ApiAdminSettlementsCompleteNamingRoute:
     ApiAdminSettlementsCompleteNamingRoute,
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
   ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
   ApiExternalDataEntityKeyRoute: ApiExternalDataEntityKeyRouteWithChildren,
+  ApiStoreOrdersPublicOrderTokenRoute: ApiStoreOrdersPublicOrderTokenRoute,
   ApiAccountOrdersIndexRoute: ApiAccountOrdersIndexRoute,
   ApiAccountSessionsIndexRoute: ApiAccountSessionsIndexRoute,
+  ApiAccountSupportIndexRoute: ApiAccountSupportIndexRoute,
   ApiAdminAccountsIndexRoute: ApiAdminAccountsIndexRoute,
   ApiAdminAssetsIndexRoute: ApiAdminAssetsIndexRoute,
   ApiAdminBetaInvitationsIndexRoute: ApiAdminBetaInvitationsIndexRoute,

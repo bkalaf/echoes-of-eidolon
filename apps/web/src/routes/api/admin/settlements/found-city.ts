@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { WorldKey } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
+import { foundCity } from "../../../../server/settlements";
 
 export const foundCityInputSchema = z.object({
   departures: z.array(z.object({
@@ -21,10 +22,8 @@ export const Route = createFileRoute("/api/admin/settlements/found-city")({
       POST: async ({ request }) => {
         try {
           await requireAdministration(request);
-          foundCityInputSchema.parse(await request.json());
-          return Response.json({
-            error: "Found City requires a configured server-owned settlement naming prompt.",
-          }, { status: 503 });
+          const input = foundCityInputSchema.parse(await request.json());
+          return Response.json(await foundCity(input), { status: 201 });
         } catch (error) {
           if (error instanceof Response) return error;
           if (error instanceof z.ZodError) return Response.json({ error: "Found City input is invalid." }, { status: 400 });

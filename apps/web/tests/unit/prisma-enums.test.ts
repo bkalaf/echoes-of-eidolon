@@ -37,7 +37,7 @@ const suppliedEnumNames = [
   "EmotionalTemperature", "OutlookOrientation", "CollaborativePosture", "BreedResearchDimension",
   "BreedResearchReviewStatus", "BreedResearchProvenanceKind", "BreedDimensionValue",
   "ContactTopic", "ContactRequestStatus", "GameTurnStatus", "DocumentDraftStatus", "DeploymentStatus", "CampaignObjectType",
-  "DonationCheckoutStatus", "StoreProductType",
+  "DonationCheckoutStatus", "StoreProductType", "HelpTicketStatus", "HelpTicketChannel", "HelpTicketAuthorKind",
 ] as const;
 
 describe("Prisma finite enum authority", () => {
@@ -46,7 +46,7 @@ describe("Prisma finite enum authority", () => {
     expect(new Set(actualNames)).toEqual(new Set(suppliedEnumNames));
     expect(actualNames).toHaveLength(suppliedEnumNames.length);
     expect(new Set(actualNames).size).toBe(suppliedEnumNames.length);
-    expect(schema).toContain('role                String                    @default("user")');
+    expect(schema).toMatch(/^\s*role\s+String\s+@default\("user"\)$/m);
   });
 
   it("preserves all 31 externally governed hyphenated puzzle component values", () => {

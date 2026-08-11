@@ -7,6 +7,7 @@ import { getDatabase } from "../../../server/database";
 import { verifyStripeWebhookEvent } from "../../../server/payments";
 import { printfulRecipientFromStripe, submitPrintfulFulfillment } from "../../../server/printful";
 import { confirmStoreCheckout } from "../../../server/storefront";
+import { processSubscriptionStripeEvent } from "../../../server/subscriptions";
 
 export const Route = createFileRoute("/api/stripe/webhook")({
   server: { handlers: { POST: async ({ request }) => {
@@ -20,12 +21,13 @@ export const Route = createFileRoute("/api/stripe/webhook")({
           return verifiedEvent;
         },
         process: async ({ event }, transaction) => {
+          await processSubscriptionStripeEvent(event, transaction);
           if (event.type !== "checkout.session.completed") return;
           const session = event.data.object as Stripe.Checkout.Session;
           const donationCheckoutId = session.metadata?.donationCheckoutId;
           if (donationCheckoutId && session.payment_status === "paid") await confirmDonationCheckout({ amountTotal: session.amount_total, checkoutReference: session.id, donationCheckoutId }, transaction);
           const orderId = session.metadata?.orderId;
-          if (orderId && session.payment_status === "paid") await confirmStoreCheckout({ amountTotal: session.amount_total, checkoutReference: session.id, orderId, stripeWebhookEventId: event.id }, transaction);
+          if (orderId && session.payment_status === "paid") await confirmStoreCheckout({ amountTotal: session.amount_total, checkoutReference: session.id, orderId, shippingSummary: session.collected_information?.shipping_details ?? undefined, stripeWebhookEventId: event.id }, transaction);
         },
       });
       const event = verifiedEvent?.event;

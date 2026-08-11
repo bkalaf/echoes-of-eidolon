@@ -351,8 +351,8 @@ try {
        ) VALUES ('store-variant', 'store-product', 1000, 'stripe-price', 'printful-variant', true)`,
     );
     await verification.query(
-      `INSERT INTO "Order" ("orderId", "userId", "stripeCheckoutReference")
-       VALUES ('store-order', 'capability-user', 'stripe-checkout')`,
+      `INSERT INTO "Order" ("orderId", "userId", "contactEmail", "stripeCheckoutReference")
+       VALUES ('store-order', 'capability-user', 'player@example.test', 'stripe-checkout')`,
     );
     await verification.query(
       `INSERT INTO "OrderLine" ("orderLineId", "orderId", "storeVariantId", "quantity", "unitPriceCents")
@@ -670,6 +670,7 @@ try {
     const removedMatrix = await preCorrection.query(`SELECT to_regclass('public."Matrix"') AS matrix`);
     if (removedMatrix.rows[0]?.matrix !== null) throw new Error("Forward Atlas migration did not remove the polluted Matrix table");
     await applyThrough("20260810290000_external_bulk_api_audit");
+    await applyThrough("20260811010000_resolved_blockers_application_contracts");
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

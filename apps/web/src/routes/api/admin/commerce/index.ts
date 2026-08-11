@@ -10,7 +10,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
       GET: async ({ request }) => {
         try {
           await requireAdministration(request);
-          const [products, orders, donations] = await Promise.all([
+          const [products, orders, donations, subscriptions] = await Promise.all([
             getDatabase().storeProduct.findMany({
               orderBy: { storeProductId: "asc" },
               select: {
@@ -36,7 +36,12 @@ export const Route = createFileRoute("/api/admin/commerce/")({
             getDatabase().order.findMany({
               orderBy: [{ createdAt: "desc" }, { orderId: "asc" }],
               select: {
+                contactEmail: true,
                 createdAt: true,
+                helpTickets: {
+                  orderBy: [{ updatedAt: "desc" }, { helpTicketId: "asc" }],
+                  select: { categoryKey: true, channel: true, helpTicketId: true, status: true, subject: true, updatedAt: true },
+                },
                 lines: {
                   orderBy: { orderLineId: "asc" },
                   select: {
@@ -66,6 +71,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                   select: { amountCents: true, refundedAt: true },
                 },
                 returnEligibility: { select: { eligibleAt: true } },
+                returnRequest: { select: { helpTicketId: true, submittedAt: true } },
                 user: { select: { email: true, id: true } },
               },
             }),
@@ -79,6 +85,21 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                 monthsGranted: true,
                 status: true,
                 stripeCheckoutReference: true,
+                user: { select: { email: true, id: true } },
+              },
+            }),
+            getDatabase().membershipSubscription.findMany({
+              orderBy: [{ updatedAt: "desc" }, { membershipSubscriptionId: "asc" }],
+              select: {
+                cancelAtPeriodEnd: true,
+                canceledAt: true,
+                createdAt: true,
+                currentPeriodEndAt: true,
+                currentPeriodStartAt: true,
+                events: { orderBy: [{ occurredAt: "desc" }, { membershipSubscriptionEventId: "asc" }], select: { eventType: true, occurredAt: true, providerStatus: true } },
+                membershipSubscriptionId: true,
+                providerStatus: true,
+                updatedAt: true,
                 user: { select: { email: true, id: true } },
               },
             }),
@@ -111,6 +132,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                 stripeConfigured: Boolean(variant.stripePriceReference),
               })),
             })),
+            subscriptions,
           });
         } catch (error) {
           if (error instanceof Response) return error;

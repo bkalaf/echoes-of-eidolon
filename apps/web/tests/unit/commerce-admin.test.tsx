@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { pageManifest } from "../../src/lib/page-manifest";
 import { CommerceAdminPage } from "../../src/screens/admin/CommerceAdminPage";
 
-const emptyProjection = { categories: [], donations: [], orders: [], products: [] };
+const emptyProjection = { categories: [], donations: [], orders: [], products: [], subscriptions: [] };
 
 function renderCommerce(screenId: string, pathname?: string) {
   const entry = pageManifest.find((candidate) => candidate.screenId === screenId)!;
@@ -85,13 +85,16 @@ describe("commerce administration projection", () => {
 
   it("shows payment and fulfillment only from their separate persisted confirmations", async () => {
     mockCommerce({ orders: [{
+      contactEmail: "buyer@example.test",
       createdAt: "2026-08-10T00:00:00.000Z",
+      helpTickets: [],
       lines: [],
       orderId: "ORDER-1",
       paymentConfirmation: { amountCents: 5000, confirmedAt: "2026-08-10T00:01:00.000Z", fulfillment: null },
       refundedAmountCents: 0,
       refunds: [],
       returnEligibility: null,
+      returnRequest: null,
       user: { email: "buyer@example.test", id: "USER-1" },
     }] });
     renderCommerce("ADM014");
@@ -120,27 +123,32 @@ describe("commerce administration projection", () => {
 
   it("resolves a concrete order detail and keeps unowned mutations disabled", async () => {
     mockCommerce({ orders: [{
+      contactEmail: "buyer@example.test",
       createdAt: "2026-08-10T00:00:00.000Z",
+      helpTickets: [{ categoryKey: "RETURN_REQUEST", channel: "RETURN", helpTicketId: "TICKET-1", status: "OPEN", subject: "Return", updatedAt: "2026-08-10T00:04:00.000Z" }],
       lines: [{ orderLineId: "LINE-1", quantity: 2, storeVariant: { color: "Blue", size: "L", storeProduct: { name: "Configured item" }, storeVariantId: "VARIANT-1" }, unitPriceCents: 2500 }],
       orderId: "ORDER-1",
       paymentConfirmation: { amountCents: 5000, confirmedAt: "2026-08-10T00:01:00.000Z", fulfillment: { submittedAt: "2026-08-10T00:02:00.000Z" } },
       refundedAmountCents: 1000,
       refunds: [{ amountCents: 1000, refundedAt: "2026-08-10T00:03:00.000Z" }],
       returnEligibility: { eligibleAt: "2026-08-10T00:04:00.000Z" },
+      returnRequest: { helpTicketId: "TICKET-1", submittedAt: "2026-08-10T00:04:00.000Z" },
       user: { email: "buyer@example.test", id: "USER-1" },
     }] });
     renderCommerce("ADM018", "/admin/orders/ORDER-1");
     expect(await screen.findByRole("heading", { name: "Order ORDER-1" })).toBeInTheDocument();
     expect(screen.getByText("Configured item")).toBeInTheDocument();
+    expect(screen.getByText("TICKET-1")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Receipt delivery unavailable" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Refund requires signed Stripe operation" })).toBeDisabled();
   });
 
-  it("does not relabel membership grants as subscription purchases", async () => {
-    mockCommerce({});
+  it("projects persisted subscription lifecycle without relabeling membership grants as purchases", async () => {
+    mockCommerce({ subscriptions: [{ cancelAtPeriodEnd: true, canceledAt: null, createdAt: "2026-08-10T00:00:00.000Z", currentPeriodEndAt: null, currentPeriodStartAt: null, events: [{ eventType: "invoice.paid", occurredAt: "2026-08-10T00:01:00.000Z", providerStatus: "ACTIVE" }], membershipSubscriptionId: "MEMSUB-1", providerStatus: "ACTIVE", updatedAt: "2026-08-10T00:01:00.000Z", user: { email: "member@example.test", id: "USER-1" } }] });
     renderCommerce("ADM016");
-    expect(await screen.findByRole("heading", { name: "Subscription transactions unavailable" })).toBeInTheDocument();
-    expect(screen.getByText(/no authoritative subscription checkout/i)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Subscription transactions" })).toBeInTheDocument();
+    expect(screen.getByText("MEMSUB-1")).toBeInTheDocument();
+    expect(screen.getByText("Cancels at period end")).toBeInTheDocument();
   });
 
   it("fails closed for an unknown commerce screen without loading records", () => {

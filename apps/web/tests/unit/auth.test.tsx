@@ -42,7 +42,7 @@ describe("reviewed authentication states", () => {
     expect(screen.getByLabelText("Username")).not.toHaveAttribute("maxlength");
     expect(screen.getByLabelText("Password")).not.toHaveAttribute("minlength");
     expect(screen.getByRole("radio", { name: "18 or older" })).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: "14–17 with verified guardian consent" })).toBeDisabled();
+    expect(screen.getByRole("radio", { name: /14–17; guardian consent evidence required/ })).toBeEnabled();
     expect(screen.getByText(/No date of birth or exact age is collected/)).toBeInTheDocument();
     expect(screen.queryByText("Invitation required")).not.toBeInTheDocument();
   });

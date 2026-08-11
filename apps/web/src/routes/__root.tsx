@@ -5,7 +5,7 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import "../styles.css";
 
@@ -31,6 +31,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    document.documentElement.dataset.hydrated = "true";
+    return () => { delete document.documentElement.dataset.hydrated; };
+  }, []);
 
   return (
     <RootDocument>

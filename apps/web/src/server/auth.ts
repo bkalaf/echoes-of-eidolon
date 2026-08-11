@@ -29,15 +29,6 @@ function createAuth() {
     database: prismaAdapter(getDatabase(), { provider: "postgresql" }),
     databaseHooks: {
       user: {
-        create: {
-          before: async (user) => {
-            if (user.eligibilityStatus === "MINOR_14_17_GUARDIAN_CONSENTED") {
-              throw new APIError("BAD_REQUEST", {
-                message: "Guardian-consent verification is not yet available.",
-              });
-            }
-          },
-        },
         update: {
           before: async (user) => {
             if ("username" in user || "displayUsername" in user) {

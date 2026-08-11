@@ -3,7 +3,7 @@
 Date: 2026-08-11
 Repository: `/home/bobby/echoes-of-eidolon`  
 Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 273 mechanically derived active V3 states)
-Audited checkout: archival checkpoint `7bf9cc3` through remediation revision `028363e`
+Audited checkout: archival checkpoint `7bf9cc3` through the remediation worktree beginning at pushed revision `6626304`
 
 ## Standard used
 
@@ -18,21 +18,21 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 209 |
-| PARTIAL | 26 |
-| PLACEHOLDER | 38 |
+| IMPLEMENTED | 235 |
+| PARTIAL | 24 |
+| PLACEHOLDER | 14 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **64 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **38 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
 1. **Capability authoring is implemented.** CAP01-CAP05 and DATA030 use the versioned definition/address/event/projection authority; legacy history is migrated only when semantics are deterministically recoverable.
 2. **The normal Data admin surface is implemented for every active registered entity.** Its allowlist and field contracts are generated from the canonical entity registry and Prisma schema, with persisted list/search/create/edit/delete behavior.
 3. **Every active registered entity import has transaction-backed Apply.** JSON, YAML, Markdown, and HTML parsing feed exact-field validation; existing identities are idempotent only when canonical values match.
-4. **Player runtime pages remain incomplete.** Maps and globes now expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, achievements, and support still lack canonical player-facing owners.
-5. **Commerce is incomplete.** Catalog, administrator-authored product/variant configuration, cart, Stripe checkout initiation, and authenticated persisted-result resolution exist; return submission, subscriptions, guest lookup, and support are not complete.
+4. **Player runtime pages remain incomplete.** Maps and globes expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, and achievements still lack complete canonical player-facing owners. Player Support now has a first-party persisted Help Ticket owner.
+5. **Reviewed commerce/support workflows are implemented.** Catalog, cart, Stripe checkout, optional subscription lifecycle, eligible return intake, guest lookup/status, and order support use server-owned persisted truth. Unapproved refund/proration/dunning rules remain narrow fail-closed sub-operations rather than placeholder parent screens.
 6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
 7. **No exhaustive visual acceptance exists for all 273 active V3 states.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
 
@@ -59,28 +59,28 @@ Therefore **64 of 273 active V3** wireframe pages/states are not fully implement
 | 17 | `PUB015` | Contact Us | `/contact` | **IMPLEMENTED** | Contact form validates, persists, and attempts configured delivery through `/api/contact`. |
 | 18 | `PUB016` | Game & Server Status | `/status` | **PARTIAL** | Live health and the latest persisted player-visible release are rendered; maintenance and incident sources remain explicitly unconfigured. |
 | 19 | `PUB009` | Donation Checkout | `/donate/checkout` | **IMPLEMENTED** | Eligible donation amount starts server-owned Stripe Checkout; grant waits for signed webhook persistence. |
-| 20 | `PUB019` | Legal Index | `/legal` | **IMPLEMENTED** | Dedicated legal-document index and navigation. |
-| 21 | `LEGAL01` | Legal Document - Terms | `/legal/terms` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 22 | `LEGAL02` | Legal Document - Privacy | `/legal/privacy` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 23 | `LEGAL03` | Legal Document - Cookies | `/legal/cookies` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 24 | `LEGAL04` | Legal Document - Accessibility | `/legal/accessibility` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 25 | `LEGAL05` | Legal Document - Conduct | `/legal/conduct` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 26 | `LEGAL06` | Legal Document - Beta | `/legal/beta` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 27 | `LEGAL07` | Legal Document - Membership | `/legal/membership` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 28 | `LEGAL08` | Legal Document - Donations | `/legal/donations` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 29 | `LEGAL09` | Legal Document - Store | `/legal/store` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 30 | `LEGAL10` | Legal Document - Shipping | `/legal/shipping` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 31 | `LEGAL11` | Legal Document - Returns | `/legal/returns` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 32 | `LEGAL12` | Legal Document - Ip Fan Content | `/legal/ip-fan-content` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 33 | `LEGAL13` | Legal Document - Ai Player Content | `/legal/ai-player-content` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
-| 34 | `LEGAL14` | Legal Document - Cultural Use & Research Corrections | `/legal/cultural-use-research-corrections` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
+| 20 | `PUB019` | Legal Index | `/legal` | **IMPLEMENTED** | Lists the exact fourteen owner-approved 0.2.0 documents and distinguishes approval from publication/deployment status. |
+| 21 | `LEGAL01` | Legal Document - Terms | `/legal/terms` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 Terms at canonical `/legal/terms-of-service`; publication remains unauthorized. |
+| 22 | `LEGAL02` | Legal Document - Privacy | `/legal/privacy` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 Privacy Policy; publication remains unauthorized. |
+| 23 | `LEGAL03` | Legal Document - Cookies | `/legal/cookies` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 Cookie Policy; publication remains unauthorized. |
+| 24 | `LEGAL04` | Legal Document - Accessibility | `/legal/accessibility` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 Accessibility Statement; publication remains unauthorized. |
+| 25 | `LEGAL05` | Legal Document - Conduct | `/legal/conduct` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 conduct document at canonical `/legal/player-conduct`; publication remains unauthorized. |
+| 26 | `LEGAL06` | Legal Document - Beta | `/legal/beta` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 beta terms at canonical `/legal/beta-terms`; publication remains unauthorized. |
+| 27 | `LEGAL07` | Legal Document - Membership | `/legal/membership` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 membership terms; publication remains unauthorized. |
+| 28 | `LEGAL08` | Legal Document - Donations | `/legal/donations` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 donations/perks terms at canonical `/legal/support`; publication remains unauthorized. |
+| 29 | `LEGAL09` | Legal Document - Store | `/legal/store` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 store terms at canonical `/legal/store-terms`; publication remains unauthorized. |
+| 30 | `LEGAL10` | Legal Document - Shipping | `/legal/shipping` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 shipping policy; publication remains unauthorized. |
+| 31 | `LEGAL11` | Legal Document - Returns | `/legal/returns` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 returns policy at canonical `/legal/refunds`; publication remains unauthorized. |
+| 32 | `LEGAL12` | Legal Document - Ip Fan Content | `/legal/ip-fan-content` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 IP/fan-content policy at canonical `/legal/ip-and-fan-content`; publication remains unauthorized. |
+| 33 | `LEGAL13` | Legal Document - Ai Player Content | `/legal/ai-player-content` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 AI disclosure at canonical `/legal/ai-disclosure`; publication remains unauthorized. |
+| 34 | `LEGAL14` | Legal Document - Cultural Use & Research Corrections | `/legal/cultural-use-research-corrections` | **IMPLEMENTED** | Renders the substantive owner-approved 0.2.0 cultural/research policy at canonical `/legal/cultural-research`; publication remains unauthorized. |
 | 35 | `PUB020` | Donate - Guest / Information Only | `/donate` | **IMPLEMENTED** | Guest donation information state is role-aware and does not expose checkout. |
 | 36 | `PUB021` | Donate - Eligible Participant | `/donate` | **IMPLEMENTED** | Eligible participant state checks player access before exposing donation checkout. |
 | 37 | `AUT008` | Session Expired | `/auth/session-expired` | **IMPLEMENTED** | Session-expired state links back to sign-in without inventing session data. |
 | 38 | `PUB023` | Request an Invite - Public Entry | `/request-invite` | **IMPLEMENTED** | Public invitation request includes required consent and calls the persisted request endpoint. |
 | 39 | `AUTH01` | Sign In | `/auth/sign-in` | **IMPLEMENTED** | Email/password sign-in calls Better Auth and preserves a bounded return path. |
 | 40 | `AUTH02` | Sign Out | `/auth/sign-out` | **IMPLEMENTED** | Sign-out action calls Better Auth. |
-| 41 | `AUTH03` | Sign Up | `/auth/sign-up` | **PARTIAL** | Adult sign-up persists through Better Auth; the reviewed minor/guardian-consent path is disabled and owner-deferred. |
+| 41 | `AUTH03` | Sign Up | `/auth/sign-up` | **IMPLEMENTED** | Privacy-minimal adult/minor eligibility attestation persists without DOB/exact age; minor participation requires an active provenance-bearing guardian-consent record and revocation fails closed. The jurisdiction-specific verification method remains a launch sub-gate. |
 | 42 | `AUTH04` | Forgot Password | `/auth/forgot-password` | **IMPLEMENTED** | Password-reset OTP request is wired. |
 | 43 | `AUTH05` | Reset Password | `/auth/reset-password` | **IMPLEMENTED** | OTP plus new-password reset is wired. |
 | 44 | `AUTH06` | Verify Email - Modal | `Modal in /auth/sign-up` | **IMPLEMENTED** | Email-verification modal supports verify and resend. |
@@ -91,23 +91,23 @@ Therefore **64 of 273 active V3** wireframe pages/states are not fully implement
 | 49 | `ACC002` | Change Email - Modal | `Modal in /account/profile` | **IMPLEMENTED** | Profile/display-name and verified email-change workflow call Better Auth; username remains immutable. |
 | 50 | `ACC003` | Change Email - Verify Modal | `Modal in /account/profile` | **IMPLEMENTED** | Profile/display-name and verified email-change workflow call Better Auth; username remains immutable. |
 | 51 | `ACC004` | Authorized Sessions | `/account/profile` | **IMPLEMENTED** | Lists persisted sessions and supports revoking one or all other sessions. |
-| 52 | `ACC005` | Subscription - Not Subscribed | `/account/subscription` | **PARTIAL** | Persisted membership state is readable, but `Start membership` is disabled and no Stripe subscription operation exists. |
-| 53 | `ACC006` | Subscription - Payment Accepted | `/account/subscription` | **PLACEHOLDER** | Only the membership ledger renders; the requested provider result/cancel state is replaced by an owner-deferred card. |
-| 54 | `ACC007` | Subscription - Card Declined | `/account/subscription` | **PLACEHOLDER** | Only the membership ledger renders; the requested provider result/cancel state is replaced by an owner-deferred card. |
-| 55 | `ACC008` | Subscription - Active | `/account/subscription` | **IMPLEMENTED** | Renders active persisted membership entitlement and active perks. |
-| 56 | `ACC009` | Subscription - Cancel Confirmation | `/account/subscription` | **PLACEHOLDER** | Only the membership ledger renders; the requested provider result/cancel state is replaced by an owner-deferred card. |
-| 57 | `ACC010` | Subscription - History | `/account/subscription` | **IMPLEMENTED** | Renders persisted membership-grant history. |
+| 52 | `ACC005` | Subscription - Not Subscribed | `/account/subscription` | **IMPLEMENTED** | Starts server-owned Stripe Checkout for the optional $9.99 calendar-month subscription without changing role or participation eligibility. |
+| 53 | `ACC006` | Subscription - Payment Accepted | `/account/subscription` | **IMPLEMENTED** | Resolves persisted signed-webhook/provider truth and waits for invoice evidence before granting Member time. |
+| 54 | `ACC007` | Subscription - Card Declined | `/account/subscription` | **IMPLEMENTED** | Recoverable declined/canceled browser state explicitly grants no entitlement. |
+| 55 | `ACC008` | Subscription - Active | `/account/subscription` | **IMPLEMENTED** | Renders provider status, the exclusive Member-through boundary, active perks, renewal state, and Stripe payment-method management. |
+| 56 | `ACC009` | Subscription - Cancel Confirmation | `/account/subscription` | **IMPLEMENTED** | Idempotently cancels renewal at period end without revoking already-earned Member time. |
+| 57 | `ACC010` | Subscription - History | `/account/subscription` | **IMPLEMENTED** | Renders persisted append-only membership grants and subscription-provider event history. |
 | 58 | `ACC011` | Orders | `/account/orders` | **IMPLEMENTED** | Reads the signed-in account's persisted merchandise orders. |
 | 59 | `ACC012` | Order Detail | `/account/orders/:orderid` | **IMPLEMENTED** | Reads one owned order, line items, payment, fulfillment, refunds, and return eligibility. |
-| 60 | `ACC013` | Return Request | `/account/orders/:orderid/return` | **PLACEHOLDER** | Eligibility can be displayed, but return submission is disabled; no return/refund mutation exists. |
+| 60 | `ACC013` | Return Request | `/account/orders/:orderid/return` | **IMPLEMENTED** | An owned order with persisted eligibility can submit a first-party return Help Ticket; intake does not issue a refund or alter Printful fulfillment. |
 | 61 | `ACC014` | Settings - Standalone | `/settings` | **IMPLEMENTED** | Shared settings panel reads and writes the same persisted account settings owner. |
 | 62 | `ACC015` | Settings - Account Tab Mirror | `/account/settings` | **IMPLEMENTED** | Shared settings panel reads and writes the same persisted account settings owner. |
 | 63 | `ACC016` | Progress | `/account/progress` | **PLACEHOLDER** | Owner-deferred card only; campaign progress and countdown projection are absent. |
 | 64 | `ACC017` | Progress - No Current Countdown | `/account/progress` | **PLACEHOLDER** | Owner-deferred card only; campaign progress and countdown projection are absent. |
 | 65 | `ACC018` | Achievements | `/account/achievements` | **PLACEHOLDER** | Definitions exist, but player award state, thresholds, and disclosure are absent. |
-| 66 | `ACC019` | Help Tickets | `/account/support` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
-| 67 | `ACC020` | Create Help Ticket | `/account/support/new` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
-| 68 | `ACC021` | Help Ticket Detail | `/account/support/:ticketid` | **PLACEHOLDER** | Owner-deferred card only; support ticket storage, status, replies, and delivery are absent. |
+| 66 | `ACC019` | Help Tickets | `/account/support` | **IMPLEMENTED** | Lists owned Open/Resolved Help Tickets from the first-party ticket owner and preserves the support return target through sign-in. |
+| 67 | `ACC020` | Create Help Ticket | `/account/support/new` | **IMPLEMENTED** | Persists Category, Subject, Message, and bounded optional attachments using the approved category allowlist. |
+| 68 | `ACC021` | Help Ticket Detail | `/account/support/:ticketid` | **IMPLEMENTED** | Ownership-checked detail renders status, ordered thread, attachments, and persisted replies with loading/error/permission states. |
 | 69 | `ACC022` | Request Invite | `/account/invitations/request` | **IMPLEMENTED** | Requires the exact approved contact consent and submits the strict persisted invitation request contract. |
 | 70 | `ACC023` | Invite Request - Pending | `/account/invitations/request` | **IMPLEMENTED** | Transitions to the received state only after a successful server response; direct entry remains fail-closed and does not infer moderation status. |
 | 71 | `ACC030` | Authenticated Beta Landing | `state-only` | **IMPLEMENTED** | Reads player access and renders the authenticated beta landing with bounded game entry. |
@@ -121,9 +121,9 @@ Therefore **64 of 273 active V3** wireframe pages/states are not fully implement
 | 79 | `ADM002` | Server Operations | `/admin/server` | **PARTIAL** | Routes to bounded health/build/release/document operations; the reviewed server-operations controls are not implemented. |
 | 80 | `STORE09` | Checkout - Card Declined | `/store/checkout/declined` | **IMPLEMENTED** | Resolves the session reference only to an order owned by the authenticated account and reports the verified absence or presence of signed payment confirmation without inferring a decline reason. |
 | 81 | `STORE10` | Checkout - Approved | `/store/checkout/approved` | **IMPLEMENTED** | Resolves the owned persisted order and claims approval only when the signed Stripe webhook confirmation exists; otherwise it explicitly reports confirmation pending. |
-| 82 | `STORE11` | Guest Order Status | `/store/orders/:token` | **PLACEHOLDER** | Explicit unavailable card; guest order tokens/status are not implemented. |
-| 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **IMPLEMENTED** | Accepts an order identifier and delegates to the existing authenticated, ownership-checked Account order detail without exposing guest order data. |
-| 84 | `STORE13` | Store Order Support | `/store/support` | **PLACEHOLDER** | Correctly dispatches the dedicated Store Support boundary, but submission remains unavailable because no authenticated order-support ticket owner exists. |
+| 82 | `STORE11` | Guest Order Status | `/store/orders/:token` | **IMPLEMENTED** | A private expiring token authorizes a privacy-safe order, item, shipping-summary, payment, refund, and real fulfillment-stage projection without sensitive payment/customer data. |
+| 83 | `STORE12` | Guest Order Lookup | `/store/order-lookup` | **IMPLEMENTED** | Rate-limited order-number/email verification always returns a privacy-safe response and sends a new private status link only for a match. |
+| 84 | `STORE13` | Store Order Support | `/store/support` | **IMPLEMENTED** | Account ownership or a valid private order token authorizes order-linked categories, photo evidence, requested-resolution intake, confirmation, and communication history; no automatic refund occurs. |
 | 85 | `ADM001` | Admin Dashboard | `/admin` | **IMPLEMENTED** | Reads exact persisted invitation, prompt, release, bulk-audit, temporary API, and Atlas counts without inventing revenue, support, or store-exception metrics. |
 | 86 | `ADM002` | Accounts | `/admin/access` | **IMPLEMENTED** | Server-backed account search/list with links to account detail. |
 | 87 | `ADM003` | Roles | `/admin/access/roles` | **IMPLEMENTED** | Displays the finite authorization-role and administrative-capability policy and links to the OWNER-only account-assignment workflow instead of inventing mutable role-definition records. |
@@ -288,7 +288,7 @@ Therefore **64 of 273 active V3** wireframe pages/states are not fully implement
 | 246 | `ATLAS_POI_2D` | Points of Interest — 2D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable canonical R08 POI visualization with table and detail. |
 | 247 | `ATLAS_POI_3D` | Points of Interest — 3D View | `/admin/atlas/pois` | **IMPLEMENTED** | Selectable canonical R08 POI visualization with table and detail. |
 | 248 | `ADM033` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Sites. |
-| 249 | `AT004_FOUND_CITY` | Found City — SITE-0081 | `/admin/atlas/sites/SITE-0081` | **PLACEHOLDER** | Explicitly unavailable; server services exist, but the exact server-owned naming prompt/response contract is absent. |
+| 249 | `AT004_FOUND_CITY` | Found City — SITE-0081 | `/admin/atlas/sites/SITE-0081` | **IMPLEMENTED** | Inherits the selected current World, uses projected Breed departures and atomic 90% arrival/loss founding, then persists an immutable server-owned naming PromptVersion for explicit copy, validation, provenance, and atomic application to the Settlement and allowed unnamed features. |
 | 250 | `ADM034` | Settlements | `/admin/atlas/settlements` | **IMPLEMENTED** | Reads persisted Settlements by selected world. |
 | 251 | `AT005_SETTLEMENT_DETAIL` | Migrate — SET-0001 | `/admin/atlas/settlements/SET-0001/migrate` | **IMPLEMENTED** | Reads origin/destination populations and atomically persists same-world Breed migration. |
 | 252 | `ADM035` | Campaign Manager | `/admin/campaign` | **IMPLEMENTED** | Dedicated Campaign Manager landing with explicit Concord/Ruin/Schism selection. |

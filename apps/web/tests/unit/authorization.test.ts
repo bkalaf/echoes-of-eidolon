@@ -42,18 +42,15 @@ describe("authorization roles", () => {
   });
 
   it.each([
-    ["guest", false, false],
-    ["guest", true, false],
-    ["user", false, false],
-    ["user", true, true],
-    ["member", false, false],
-    ["member", true, true],
-    ["admin", false, false],
-    ["admin", true, true],
-    ["owner", false, true],
-    ["owner", true, true],
-  ] as const)("resolves game access for %s with betaEligible=%s", (role, betaEligible, expected) => {
-    expect(canAccessGame(role, betaEligible)).toBe(expected);
+    ["guest", true, true, false],
+    ["user", false, true, false],
+    ["user", true, true, true],
+    ["member", true, false, false],
+    ["admin", true, false, false],
+    ["owner", true, false, false],
+    ["owner", false, true, false],
+  ] as const)("resolves game access for %s with beta=%s and participation=%s", (role, betaEligible, participationEligible, expected) => {
+    expect(canAccessGame(role, betaEligible, participationEligible)).toBe(expected);
   });
 
   it("keeps membership benefits separate from authorization and beta eligibility", () => {

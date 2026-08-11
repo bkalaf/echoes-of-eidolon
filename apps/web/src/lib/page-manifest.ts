@@ -73,6 +73,23 @@ function normalizedPattern(path: string) {
   return path.split("?")[0]?.replace(/^Modal in /, "") ?? path;
 }
 
+const legalPathAliases = new Map<string, string>([
+  ["/legal/terms-of-service", "LEGAL01"],
+  ["/legal/privacy", "LEGAL02"],
+  ["/legal/cookies", "LEGAL03"],
+  ["/legal/accessibility", "LEGAL04"],
+  ["/legal/player-conduct", "LEGAL05"],
+  ["/legal/beta-terms", "LEGAL06"],
+  ["/legal/membership", "LEGAL07"],
+  ["/legal/support", "LEGAL08"],
+  ["/legal/store-terms", "LEGAL09"],
+  ["/legal/shipping", "LEGAL10"],
+  ["/legal/refunds", "LEGAL11"],
+  ["/legal/ip-and-fan-content", "LEGAL12"],
+  ["/legal/ai-disclosure", "LEGAL13"],
+  ["/legal/cultural-research", "LEGAL14"],
+]);
+
 export function pathMatches(pattern: string, pathname: string) {
   const patternParts = normalizedPattern(pattern).split("/").filter(Boolean);
   const pathParts = pathname.split("/").filter(Boolean);
@@ -81,6 +98,9 @@ export function pathMatches(pattern: string, pathname: string) {
 }
 
 export function screensForPath(pathname: string) {
+  const aliasScreenId = legalPathAliases.get(pathname);
+  if (aliasScreenId) return pageManifest.filter((entry) => entry.screenId === aliasScreenId);
+  if (/^\/admin\/atlas\/sites\/[^/]+$/.test(pathname)) return pageManifest.filter((entry) => entry.screenId === "AT004_FOUND_CITY");
   return pageManifest.filter((entry) => entry.path !== null && pathMatches(entry.path, pathname));
 }
 

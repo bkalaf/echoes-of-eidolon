@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
+import { MarkdownDocument } from "../../components/MarkdownDocument";
+import { legalDocumentForScreen, legalDocuments, legalDocumentStatus, legalPublicationStatus } from "../../content/legal-documents";
 import { managedAssetUrl } from "../../content/managed-assets";
 import { publicFeatures, inviteConsent } from "../../content/public";
 import { canAccessAdministration, resolveAuthorizationRole } from "../../domain/authorization";
@@ -123,8 +125,10 @@ function ContactPage() {
 }
 
 function LegalPage({ screen }: { screen: PageManifestEntry }) {
-  if (screen.screenId === "PUB019") return <><PageHead eyebrow="Legal" title="Legal" description="Policies and terms for the public site, membership, donations and store." /><div className="legal-grid">{["Terms", "Privacy", "Cookies", "Accessibility", "Conduct", "Beta", "Membership", "Donations", "Store", "Shipping", "Returns", "IP & Fan Content", "AI Player Content", "Cultural Use & Research Corrections"].map((name) => <a className="card" href={`/legal/${name.toLowerCase().replaceAll(" & ", "-").replaceAll(" ", "-")}`} key={name}><h2>{name}</h2><span>Open document →</span></a>)}</div></>;
-  return <><a className="back-link" href="/legal">← Legal</a><PageHead eyebrow="Legal document" title={screen.title.replace("Legal Document - ", "")} description="Current player-facing policy document." /><article className="paper"><h2>{screen.title.replace("Legal Document - ", "")}</h2><p>This implementation preserves the reviewed document task and navigation. Final legal prose requires owner-supplied approved copy.</p></article></>;
+  if (screen.screenId === "PUB019") return <><PageHead eyebrow="Legal" title="Legal" description="The complete owner-approved 0.2.0 legal-content register. Approval does not authorize publication or deployment." /><p className="notice notice--good"><strong>{legalDocumentStatus}</strong></p><p className="notice notice--warn"><strong>{legalPublicationStatus}</strong></p><div className="legal-grid">{legalDocuments.map((document) => <a className="card" href={`/legal/${document.slug}`} key={document.screenId}><p className="kicker">{document.screenId} · OWNER APPROVED</p><h2>{document.title}</h2><span>Open document →</span></a>)}</div></>;
+  const document = legalDocumentForScreen(screen.screenId);
+  if (!document) return <p className="notice notice--bad" role="alert">The requested legal document is not registered.</p>;
+  return <><a className="back-link" href="/legal">← Legal</a><PageHead eyebrow="Legal document · OWNER APPROVED" title={document.title} description="Owner-approved 0.2.0 text. This page is not published, legally effective, or authorized for production deployment." /><p className="notice notice--good"><strong>{legalDocumentStatus}</strong></p><p className="notice notice--warn"><strong>{legalPublicationStatus}</strong></p><article className="paper legal-document"><MarkdownDocument source={document.content} /></article></>;
 }
 
 function DonationLanding() {

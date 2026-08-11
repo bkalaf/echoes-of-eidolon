@@ -4,7 +4,7 @@ import Ajv from "ajv";
 import { z } from "zod";
 
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
-import type { PromptStatus, SettlementPopulationEventType, WorldKey } from "../generated/prisma/enums";
+import type { SettlementPopulationEventType, WorldKey } from "../generated/prisma/enums";
 import {
   apportionFoundingArrival,
   replaySettlementPopulation,
@@ -87,13 +87,65 @@ export async function listSettlementWorlds(worldKey: WorldKey, database: Databas
 }
 
 const settlementNamingResponseSchema = z.object({
-  name: z.string().trim().min(1),
-  nearby: z.array(z.never()).length(0),
-  promptVersionId: z.string().min(1),
-  settlementId: z.string().min(1),
-  settlementWorldId: z.string().min(1),
-  siteId: z.string().min(1),
+  settlement: z.object({ settlementId: z.string().min(1), name: z.string().trim().min(1).max(200) }).strict(),
+  features: z.array(z.object({ featureId: z.string().min(1), name: z.string().trim().min(1).max(200) }).strict()),
 }).strict();
+
+const namingValidationInputSchema = z.object({ promptVersionId: z.string().min(1), rawResponse: z.string().min(1).max(100_000) }).strict();
+
+function namingPrompt(input: {
+  breedPopulations: Array<{ breedId: string; breedName: string; population: number }>;
+  culture: { cultureId: string; name: string } | null;
+  dominantBreed: { breedId: string; name: string } | null;
+  features: Array<{ context: unknown; featureId: string; name: string | null; type: string }>;
+  foundingYear: number;
+  regionId: string;
+  settlementId: string;
+  siteContext: unknown;
+  siteId: string;
+  worldKey: WorldKey;
+}) {
+  const named = input.features.filter((feature) => feature.name != null);
+  const unnamed = input.features.filter((feature) => feature.name == null);
+  const context = {
+    settlementId: input.settlementId,
+    siteId: input.siteId,
+    currentWorldContext: input.worldKey,
+    foundingYear: input.foundingYear,
+    breedPopulations: input.breedPopulations,
+    dominantBreed: input.dominantBreed,
+    culture: input.culture,
+    region: { regionId: input.regionId },
+    surroundingTerrain: input.siteContext,
+    siteTerrainAndFeatures: input.siteContext,
+    eligibleNearbyCanonicalNamedFeatures: named,
+    eligibleNearbyCanonicalUnnamedFeatures: unnamed,
+  };
+  const responseContract = {
+    additionalProperties: false,
+    properties: {
+      settlement: { additionalProperties: false, properties: { settlementId: { const: input.settlementId }, name: { minLength: 1, maxLength: 200, type: "string" } }, required: ["settlementId", "name"], type: "object" },
+      features: { items: { additionalProperties: false, properties: { featureId: { enum: unnamed.map((feature) => feature.featureId) }, name: { minLength: 1, maxLength: 200, type: "string" } }, required: ["featureId", "name"], type: "object" }, maxItems: unnamed.length, minItems: unnamed.length, type: "array" },
+    },
+    required: ["settlement", "features"],
+    type: "object",
+  };
+  const promptText = [
+    "Name the newly founded Echoes of Eidolon Settlement and every supplied unnamed eligible nearby feature.",
+    "Use only the authoritative context below. Do not infer geographic relationships from display names.",
+    "Already-named canonical features are context only and cannot be renamed.",
+    "Return exactly one name for the supplied Settlement ID and one name for every supplied unnamed feature ID.",
+    "Use exact supplied IDs. Do not invent IDs, omit IDs, duplicate feature IDs, or include named or out-of-set features.",
+    "Return only the required JSON object with no prose or Markdown.",
+    "",
+    "AUTHORITATIVE CONTEXT",
+    JSON.stringify(context, null, 2),
+    "",
+    "REQUIRED RESPONSE CONTRACT",
+    JSON.stringify({ settlement: { settlementId: input.settlementId, name: "Proposed City Name" }, features: unnamed.map((feature) => ({ featureId: feature.featureId, name: "Proposed Feature Name" })) }, null, 2),
+  ].join("\n");
+  return { promptText, responseContract };
+}
 
 function eventProjection(world: PopulationWorld, events = world.populationEvents): SettlementPopulationEvent[] {
   return events.map((event) => ({ ...event, settlementWorldId: world.settlementWorldId }));
@@ -174,16 +226,11 @@ async function projectAndPersistWorld(
       totalPopulation: projection.totalPopulation,
     },
   });
+  return projection;
 }
 
 export async function foundCity(input: {
   departures: readonly FoundCityDeparture[];
-  prompt: {
-    promptText: string;
-    purpose: string;
-    responseContract: Prisma.InputJsonValue;
-    status: PromptStatus;
-  };
   siteId: string;
   worldKey: WorldKey;
   year: number;
@@ -191,14 +238,14 @@ export async function foundCity(input: {
   requireYear(input.year);
   requireDepartures(input.departures);
   if (!input.siteId) throw new Error("Found City requires a Site identity.");
-  if (!input.prompt.promptText.trim() || !input.prompt.purpose.trim()) throw new Error("Found City requires supplied naming prompt text and purpose.");
 
   return database.$transaction(async (transaction) => {
     const site = await transaction.site.findUnique({
       where: { siteId: input.siteId },
-      include: { settlement: true },
+      include: { settlement: true, namingEligibility: { orderBy: { rank: "asc" }, include: { feature: true } } },
     });
     if (!site) throw new Error("Found City requires an existing Site.");
+    if (!site.namingContext) throw new Error("Found City requires imported authoritative Site naming context.");
 
     const existingDestinationWorld = site.settlement
       ? await transaction.settlementWorld.findUnique({
@@ -265,7 +312,21 @@ export async function foundCity(input: {
       populationEvents: [], settlementId, settlementWorldId, worldKey: input.worldKey,
     };
     await appendEvents(transaction, destination, input.year, "FOUNDING", transfer.arrivals);
-    await projectAndPersistWorld(transaction, destination, breeds);
+    const projection = await projectAndPersistWorld(transaction, destination, breeds);
+    const culture = projection.cultureId ? await transaction.culture.findUnique({ where: { cultureId: projection.cultureId }, select: { cultureId: true, name: true } }) : null;
+    const dominantBreed = breeds.find((breed) => breed.breedId === projection.dominantBreedId) ?? null;
+    const prompt = namingPrompt({
+      breedPopulations: transfer.arrivals.map((arrival) => ({ breedId: arrival.breedId, breedName: breeds.find((breed) => breed.breedId === arrival.breedId)!.name, population: arrival.amount })),
+      culture,
+      dominantBreed: dominantBreed ? { breedId: dominantBreed.breedId, name: dominantBreed.name } : null,
+      features: site.namingEligibility.map((entry) => ({ context: entry.feature.context, featureId: entry.feature.featureId, name: entry.feature.name, type: entry.feature.featureType })),
+      foundingYear: input.year,
+      regionId: site.regionId,
+      settlementId,
+      siteContext: site.namingContext,
+      siteId: site.siteId,
+      worldKey: input.worldKey,
+    });
 
     const promptRecordId = randomUUID();
     const promptVersionId = randomUUID();
@@ -273,22 +334,22 @@ export async function foundCity(input: {
       data: {
         family: "NAMING",
         promptRecordId,
-        purpose: input.prompt.purpose,
-        status: input.prompt.status,
+        purpose: "FOUND_CITY_SETTLEMENT_AND_ELIGIBLE_FEATURE_NAMING",
+        status: "READY",
         targetId: settlementWorldId,
         targetType: "SettlementWorld",
         versions: {
           create: {
-            promptText: input.prompt.promptText,
+            promptText: prompt.promptText,
             promptVersionId,
-            responseContract: input.prompt.responseContract,
+            responseContract: prompt.responseContract,
             version: 1,
           },
         },
       },
     });
     return {
-      promptText: input.prompt.promptText,
+      promptText: prompt.promptText,
       promptVersionId,
       settlementId,
       settlementWorldId,
@@ -346,47 +407,69 @@ export async function migratePopulation(input: {
   }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
 }
 
-export async function completeSettlementNaming(
+export async function validateSettlementNaming(
   input: unknown,
   database: Database = getDatabase(),
-): Promise<{ name: string; settlementId: string }> {
-  const response = settlementNamingResponseSchema.parse(input);
+) {
+  const request = namingValidationInputSchema.parse(input);
+  let parsed: z.infer<typeof settlementNamingResponseSchema>;
+  try { parsed = settlementNamingResponseSchema.parse(JSON.parse(request.rawResponse)); }
+  catch { throw new Error("Naming response is not the required JSON structure."); }
   return database.$transaction(async (transaction) => {
     const promptVersion = await transaction.promptVersion.findUnique({
-      where: { promptVersionId: response.promptVersionId },
+      where: { promptVersionId: request.promptVersionId },
       include: { promptRecord: true },
     });
-    if (
-      !promptVersion ||
-      promptVersion.promptRecord.family !== "NAMING" ||
-      promptVersion.promptRecord.targetType !== "SettlementWorld" ||
-      promptVersion.promptRecord.targetId !== response.settlementWorldId
-    ) {
-      throw new Error("Naming response does not match an existing SettlementWorld prompt version.");
-    }
+    if (!promptVersion || promptVersion.promptRecord.family !== "NAMING" || promptVersion.promptRecord.targetType !== "SettlementWorld") throw new Error("Naming response does not match an existing SettlementWorld prompt version.");
     const contract = promptVersion.responseContract;
-    if (typeof contract !== "boolean" && (contract == null || Array.isArray(contract) || typeof contract !== "object")) {
-      throw new Error("Stored naming response contract is not a JSON Schema.");
-    }
+    if (typeof contract !== "boolean" && (contract == null || Array.isArray(contract) || typeof contract !== "object")) throw new Error("Stored naming response contract is not a JSON Schema.");
     const validate = new Ajv({ allErrors: true }).compile(contract);
-    if (!validate(response)) throw new Error("Naming response does not satisfy the stored response contract.");
-
+    if (!validate(parsed)) throw new Error("Naming response does not satisfy the stored response contract or allowed IDs.");
+    const featureIds = parsed.features.map((feature) => feature.featureId);
+    if (new Set(featureIds).size !== featureIds.length) throw new Error("Naming response contains duplicate feature IDs.");
     const settlementWorld = await transaction.settlementWorld.findUnique({
-      where: { settlementWorldId: response.settlementWorldId },
-      include: { settlement: true },
+      where: { settlementWorldId: promptVersion.promptRecord.targetId },
+      include: { settlement: { include: { site: { include: { namingEligibility: { include: { feature: true } } } } } } },
     });
-    if (
-      !settlementWorld ||
-      settlementWorld.settlementId !== response.settlementId ||
-      settlementWorld.settlement.siteId !== response.siteId
-    ) {
-      throw new Error("Naming response identities do not match the target SettlementWorld.");
+    if (!settlementWorld || settlementWorld.settlementId !== parsed.settlement.settlementId) throw new Error("Naming response Settlement ID does not match the persisted prompt target.");
+    const allowed = settlementWorld.settlement.site.namingEligibility.filter((entry) => entry.feature.name == null).map((entry) => entry.featureId).sort();
+    if (featureIds.slice().sort().join("\n") !== allowed.join("\n")) throw new Error("Naming response must name every and only the persisted allowed unnamed feature IDs.");
+    const promptTextResultId = randomUUID();
+    await transaction.promptTextResult.create({ data: { parsedResponse: parsed, promptTextResultId, promptVersionId: promptVersion.promptVersionId, rawResponse: request.rawResponse } });
+    return { parsedResponse: parsed, promptTextResultId };
+  }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
+}
+
+export async function applySettlementNames(
+  promptTextResultId: string,
+  database: Database = getDatabase(),
+) {
+  if (!promptTextResultId) throw new Error("A validated naming result is required.");
+  return database.$transaction(async (transaction) => {
+    const result = await transaction.promptTextResult.findUnique({
+      where: { promptTextResultId },
+      include: { promptVersion: { include: { promptRecord: true } } },
+    });
+    if (!result || result.promptVersion.promptRecord.family !== "NAMING" || result.promptVersion.promptRecord.targetType !== "SettlementWorld") throw new Error("Validated naming result was not found.");
+    const parsed = settlementNamingResponseSchema.parse(result.parsedResponse);
+    if (result.appliedAt) return { appliedAt: result.appliedAt, settlementId: parsed.settlement.settlementId };
+    const settlementWorld = await transaction.settlementWorld.findUnique({
+      where: { settlementWorldId: result.promptVersion.promptRecord.targetId },
+      include: { settlement: { include: { site: { include: { namingEligibility: { include: { feature: true } } } } } } },
+    });
+    if (!settlementWorld || settlementWorld.settlementId !== parsed.settlement.settlementId) throw new Error("Validated naming result no longer matches its Settlement.");
+    if (settlementWorld.settlement.name != null) throw new Error("Settlement already has a canonical name.");
+    const allowed = new Map(settlementWorld.settlement.site.namingEligibility.filter((entry) => entry.feature.name == null).map((entry) => [entry.featureId, entry.feature]));
+    if (parsed.features.length !== allowed.size || parsed.features.some((feature) => !allowed.has(feature.featureId))) throw new Error("Allowed unnamed feature set changed after validation.");
+    await transaction.settlement.update({ where: { settlementId: parsed.settlement.settlementId }, data: { name: parsed.settlement.name } });
+    for (const feature of parsed.features) {
+      const current = allowed.get(feature.featureId)!;
+      if (current.name != null) throw new Error(`Feature ${feature.featureId} was named after validation.`);
+      await transaction.atlasNameableFeature.update({ where: { featureId: feature.featureId }, data: { name: feature.name } });
     }
-    if (settlementWorld.settlement.name != null) throw new Error("Settlement already has a name.");
-    await transaction.settlement.update({
-      where: { settlementId: response.settlementId },
-      data: { name: response.name },
-    });
-    return { name: response.name, settlementId: response.settlementId };
+    const appliedAt = new Date();
+    await transaction.promptTextResult.update({ where: { promptTextResultId }, data: { appliedAt } });
+    await transaction.promptRecord.update({ where: { promptRecordId: result.promptVersion.promptRecord.promptRecordId }, data: { status: "COMPLETED" } });
+    return { appliedAt, settlementId: parsed.settlement.settlementId };
   }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
 }
