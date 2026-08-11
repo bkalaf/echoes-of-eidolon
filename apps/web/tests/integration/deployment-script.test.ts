@@ -8,6 +8,7 @@ import { describe, expect, it } from "vitest";
 const script = resolve(import.meta.dirname, "../../../../infra/scripts/deploy-production.sh");
 const serviceUnit = resolve(import.meta.dirname, "../../../../infra/systemd/eidolon-web.service");
 const playwrightConfig = resolve(import.meta.dirname, "../../playwright.config.ts");
+const viteConfig = resolve(import.meta.dirname, "../../vite.config.ts");
 const localSecretsRunner = resolve(import.meta.dirname, "../../scripts/run-with-local-secrets.mjs");
 
 function fixture() {
@@ -77,6 +78,11 @@ describe("production deployment entry point", () => {
     const source = readFileSync(localSecretsRunner, "utf8");
     expect(source).toContain('["SIGINT", "SIGTERM", "SIGHUP"]');
     expect(source).toContain("child.kill(signal)");
+  });
+
+  it("bundles Prisma Client runtime through Nitro instead of emitting a broken traced ESM subpath", () => {
+    const source = readFileSync(viteConfig, "utf8");
+    expect(source).toContain('nitro({ noExternals: ["@prisma/client"] })');
   });
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {

@@ -7,5 +7,5 @@ import { defineConfig } from "vite";
 export default defineConfig({
   server: { port: 3000 },
   resolve: { tsconfigPaths: true },
-  plugins: [tanstackStart(), nitro(), tailwindcss(), viteReact()],
+  plugins: [tanstackStart(), nitro({ noExternals: ["@prisma/client"] }), tailwindcss(), viteReact()],
 });
