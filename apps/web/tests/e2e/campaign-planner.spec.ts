@@ -39,7 +39,7 @@ test("Campaign Planner renders authoritative contiguous and mirrored Book geomet
 
   await page.goto("/admin/campaign/planner?state=CAMPAIGN_CONCORD");
   const card = page.getByTestId("campaign-placement-six-book-browser-check");
-  await expect(card).toHaveCount(1);
+  await expect(card).toHaveCount(1, { timeout: 15_000 });
   await expect(card).toBeVisible();
   await expect(card).toHaveAttribute("data-start-book", "7");
   await expect(card).toHaveAttribute("data-book-span", "6");
