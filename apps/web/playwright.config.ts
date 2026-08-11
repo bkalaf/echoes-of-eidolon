@@ -1,19 +1,25 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const port = Number(process.env.EIDOLON_E2E_PORT ?? "3000");
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  throw new Error("EIDOLON_E2E_PORT must be a valid TCP port.");
+}
+const baseURL = `http://127.0.0.1:${port}`;
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "pnpm dev --host 127.0.0.1",
+    command: `pnpm dev --host 127.0.0.1 --port ${port}`,
     env: {
       EIDOLON_ATLAS_RELEASE_ROOT:
         "../../EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",
     },
-    url: "http://127.0.0.1:3000",
+    url: baseURL,
     reuseExistingServer: false,
   },
   projects: [

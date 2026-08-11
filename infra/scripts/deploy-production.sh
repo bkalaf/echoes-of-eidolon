@@ -178,7 +178,7 @@ run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" lint
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" typecheck
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration
-run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
+run_unlocked env EIDOLON_E2E_PORT=3100 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
 
 run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" up -d --wait postgres

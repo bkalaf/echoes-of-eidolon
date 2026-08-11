@@ -68,10 +68,11 @@ describe("production deployment entry point", () => {
 
   it("binds the E2E readiness server to the same IPv4 loopback address Playwright probes", () => {
     const source = readFileSync(playwrightConfig, "utf8");
-    expect(source).toContain('command: "pnpm dev --host 127.0.0.1"');
-    expect(source).toContain('baseURL: "http://127.0.0.1:3000"');
-    expect(source).toContain('url: "http://127.0.0.1:3000"');
+    expect(source).toContain('process.env.EIDOLON_E2E_PORT ?? "3000"');
+    expect(source).toContain("`http://127.0.0.1:${port}`");
+    expect(source).toContain("`pnpm dev --host 127.0.0.1 --port ${port}`");
     expect(source).toContain("reuseExistingServer: false");
+    expect(readFileSync(script, "utf8")).toContain("run_unlocked env EIDOLON_E2E_PORT=3100");
   });
 
   it("forwards termination signals so deployment test servers cannot survive their wrapper", () => {
