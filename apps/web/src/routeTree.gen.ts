@@ -72,6 +72,8 @@ import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/ap
 import { Route as ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport } from './routes/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
 import { Route as ApiAdminDataEntityKeyRecordIdRouteImport } from './routes/api/admin/data/$entityKey/$recordId'
 import { Route as ApiAdminDataEntityKeyImportRouteImport } from './routes/api/admin/data/$entityKey/import'
+import { Route as ApiAdminPromptsPromptRecordIdResultRouteImport } from './routes/api/admin/prompts/$promptRecordId/result'
+import { Route as ApiAdminPromptsPromptRecordIdVersionsRouteImport } from './routes/api/admin/prompts/$promptRecordId/versions'
 import { Route as ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRouteImport } from './routes/api/admin/puzzles/blueprints/$puzzleBlueprintId'
 import { Route as ApiAdminReleasesIdPublishRouteImport } from './routes/api/admin/releases/$id/publish'
 import { Route as ApiExternalDataEntityKeyRecordIdRouteImport } from './routes/api/external/data/$entityKey/$recordId'
@@ -414,6 +416,18 @@ const ApiAdminDataEntityKeyImportRoute =
     path: '/import',
     getParentRoute: () => ApiAdminDataEntityKeyRoute,
   } as any)
+const ApiAdminPromptsPromptRecordIdResultRoute =
+  ApiAdminPromptsPromptRecordIdResultRouteImport.update({
+    id: '/api/admin/prompts/$promptRecordId/result',
+    path: '/api/admin/prompts/$promptRecordId/result',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminPromptsPromptRecordIdVersionsRoute =
+  ApiAdminPromptsPromptRecordIdVersionsRouteImport.update({
+    id: '/api/admin/prompts/$promptRecordId/versions',
+    path: '/api/admin/prompts/$promptRecordId/versions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute =
   ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRouteImport.update({
     id: '/$puzzleBlueprintId',
@@ -509,6 +523,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
+  '/api/admin/prompts/$promptRecordId/versions': typeof ApiAdminPromptsPromptRecordIdVersionsRoute
   '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
@@ -579,6 +595,8 @@ export interface FileRoutesByTo {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
+  '/api/admin/prompts/$promptRecordId/versions': typeof ApiAdminPromptsPromptRecordIdVersionsRoute
   '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
@@ -650,6 +668,8 @@ export interface FileRoutesById {
   '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/$recordId': typeof ApiAdminDataEntityKeyRecordIdRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
+  '/api/admin/prompts/$promptRecordId/result': typeof ApiAdminPromptsPromptRecordIdResultRoute
+  '/api/admin/prompts/$promptRecordId/versions': typeof ApiAdminPromptsPromptRecordIdVersionsRoute
   '/api/admin/puzzles/blueprints/$puzzleBlueprintId': typeof ApiAdminPuzzlesBlueprintsPuzzleBlueprintIdRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
   '/api/external/data/$entityKey/$recordId': typeof ApiExternalDataEntityKeyRecordIdRoute
@@ -722,6 +742,8 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/prompts/$promptRecordId/result'
+    | '/api/admin/prompts/$promptRecordId/versions'
     | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
@@ -792,6 +814,8 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/prompts/$promptRecordId/result'
+    | '/api/admin/prompts/$promptRecordId/versions'
     | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
@@ -862,6 +886,8 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/$recordId'
     | '/api/admin/data/$entityKey/import'
+    | '/api/admin/prompts/$promptRecordId/result'
+    | '/api/admin/prompts/$promptRecordId/versions'
     | '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
     | '/api/admin/releases/$id/publish'
     | '/api/external/data/$entityKey/$recordId'
@@ -925,6 +951,8 @@ export interface RootRouteChildren {
   ApiAdminSettlementsIndexRoute: typeof ApiAdminSettlementsIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
+  ApiAdminPromptsPromptRecordIdResultRoute: typeof ApiAdminPromptsPromptRecordIdResultRoute
+  ApiAdminPromptsPromptRecordIdVersionsRoute: typeof ApiAdminPromptsPromptRecordIdVersionsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1370,6 +1398,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminDataEntityKeyImportRouteImport
       parentRoute: typeof ApiAdminDataEntityKeyRoute
     }
+    '/api/admin/prompts/$promptRecordId/result': {
+      id: '/api/admin/prompts/$promptRecordId/result'
+      path: '/api/admin/prompts/$promptRecordId/result'
+      fullPath: '/api/admin/prompts/$promptRecordId/result'
+      preLoaderRoute: typeof ApiAdminPromptsPromptRecordIdResultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/prompts/$promptRecordId/versions': {
+      id: '/api/admin/prompts/$promptRecordId/versions'
+      path: '/api/admin/prompts/$promptRecordId/versions'
+      fullPath: '/api/admin/prompts/$promptRecordId/versions'
+      preLoaderRoute: typeof ApiAdminPromptsPromptRecordIdVersionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/puzzles/blueprints/$puzzleBlueprintId': {
       id: '/api/admin/puzzles/blueprints/$puzzleBlueprintId'
       path: '/$puzzleBlueprintId'
@@ -1582,6 +1624,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementsIndexRoute: ApiAdminSettlementsIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
+  ApiAdminPromptsPromptRecordIdResultRoute:
+    ApiAdminPromptsPromptRecordIdResultRoute,
+  ApiAdminPromptsPromptRecordIdVersionsRoute:
+    ApiAdminPromptsPromptRecordIdVersionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

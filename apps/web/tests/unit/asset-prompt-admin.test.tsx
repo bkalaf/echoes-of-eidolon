@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
@@ -52,7 +52,7 @@ describe("managed asset and prompt administration", () => {
           status: "OUTSTANDING",
           targetId: "SW-1",
           targetType: "SettlementWorld",
-          versions: [{ generatedManagedAssetId: null, promptText: "SUPPLIED", promptVersionId: "PV-1", version: 1 }],
+          versions: [{ generatedManagedAssetId: null, promptText: "SUPPLIED", promptVersionId: "PV-1", responseContract: { type: "object" }, version: 1 }],
         }],
         total: 1,
       }),
@@ -63,6 +63,25 @@ describe("managed asset and prompt administration", () => {
     expect(screen.getByText("SUPPLIED_PURPOSE")).toBeInTheDocument();
     expect(screen.getByText("SettlementWorld · SW-1")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith("/api/admin/prompts/?status=OUTSTANDING");
+  });
+
+  it("creates a prompt only from explicit authored fields and JSON contract", async () => {
+    const fetchMock = vi.fn().mockImplementation(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
+      ? { json: async () => ({ prompt: { promptRecordId: "PROMPT-NEW" } }), ok: true }
+      : { json: async () => ({ prompts: [], total: 0 }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderAdminState("ADM033");
+    fireEvent.click(await screen.findByRole("button", { name: "New prompt" }));
+    fireEvent.change(screen.getByLabelText("Purpose"), { target: { value: "Owner purpose" } });
+    fireEvent.change(screen.getByLabelText("Target type"), { target: { value: "Feature" } });
+    fireEvent.change(screen.getByLabelText("Target identifier"), { target: { value: "FEATURE-1" } });
+    fireEvent.change(screen.getByLabelText("Prompt text"), { target: { value: "Owner authored text" } });
+    fireEvent.change(screen.getByLabelText("Response contract JSON"), { target: { value: '{"type":"object"}' } });
+    fireEvent.click(screen.getByRole("button", { name: "Create version 1" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/prompts/", expect.objectContaining({
+      body: JSON.stringify({ family: "IMAGE", promptText: "Owner authored text", purpose: "Owner purpose", responseContract: { type: "object" }, status: "OUTSTANDING", targetId: "FEATURE-1", targetType: "Feature" }),
+      method: "POST",
+    })));
   });
 
   it("renders honest empty stores without inventing assets or prompts", async () => {

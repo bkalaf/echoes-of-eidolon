@@ -4,6 +4,7 @@ import { z } from "zod";
 import { PromptStatus } from "../../../../generated/prisma/enums";
 import { requireAdministration } from "../../../../server/access";
 import { getDatabase } from "../../../../server/database";
+import { createPromptRecord, PromptAuthoringConflictError, promptRecordCreateSchema } from "../../../../server/prompt-authoring";
 
 const promptStatusSchema = z.enum(PromptStatus);
 
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/api/admin/prompts/")({
                   generatedManagedAssetId: true,
                   promptText: true,
                   promptVersionId: true,
+                  responseContract: true,
                   version: true,
                 },
               },
@@ -42,6 +44,18 @@ export const Route = createFileRoute("/api/admin/prompts/")({
           if (error instanceof Response) return error;
           if (error instanceof z.ZodError) return Response.json({ error: "Unknown prompt status." }, { status: 400 });
           throw error;
+        }
+      },
+      POST: async ({ request }) => {
+        try {
+          await requireAdministration(request);
+          const prompt = await createPromptRecord(promptRecordCreateSchema.parse(await request.json()));
+          return Response.json({ prompt }, { status: 201 });
+        } catch (error) {
+          if (error instanceof Response) return error;
+          if (error instanceof z.ZodError) return Response.json({ error: error.issues[0]?.message ?? "Prompt input is invalid." }, { status: 400 });
+          if (error instanceof PromptAuthoringConflictError) return Response.json({ error: error.message }, { status: 409 });
+          return Response.json({ error: "Prompt record could not be created." }, { status: 500 });
         }
       },
     },

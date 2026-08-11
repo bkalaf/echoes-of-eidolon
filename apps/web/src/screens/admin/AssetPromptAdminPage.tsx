@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
-import type { ManagedAssetMediaKind } from "../../generated/prisma/enums";
+import type { ManagedAssetMediaKind, PromptFamily, PromptStatus } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface AssetRow {
@@ -25,9 +26,13 @@ interface PromptRow {
     generatedManagedAssetId: string | null;
     promptText: string;
     promptVersionId: string;
+    responseContract: unknown;
     version: number;
   }>;
 }
+
+const promptFamilies = ["IMAGE", "MUSIC", "PUZZLE", "NAMING"] as const satisfies readonly PromptFamily[];
+const promptStatuses = ["OUTSTANDING", "READY", "COMPLETED"] as const satisfies readonly PromptStatus[];
 
 const assetColumns: DataTableColumnDef<AssetRow>[] = [
   { accessorKey: "managedAssetId", header: "Managed Asset" },
@@ -66,6 +71,23 @@ function AssetManager({ mediaKind }: { mediaKind: Extract<ManagedAssetMediaKind,
 }
 
 function PromptManager({ outstandingOnly }: { outstandingOnly: boolean }) {
+  const queryClient = useQueryClient();
+  const [selectedId, setSelectedId] = useState<string>();
+  const [creating, setCreating] = useState(false);
+  const [family, setFamily] = useState<PromptFamily>("IMAGE");
+  const [status, setStatus] = useState<PromptStatus>("OUTSTANDING");
+  const [purpose, setPurpose] = useState("");
+  const [targetType, setTargetType] = useState("");
+  const [targetId, setTargetId] = useState("");
+  const [promptText, setPromptText] = useState("");
+  const [responseContract, setResponseContract] = useState("");
+  const [versionText, setVersionText] = useState("");
+  const [versionContract, setVersionContract] = useState("");
+  const [resultAssetId, setResultAssetId] = useState("");
+  const [resultVersionId, setResultVersionId] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string>();
+  const [error, setError] = useState<string>();
   const prompts = useQuery({
     queryKey: ["admin", "prompts", outstandingOnly ? "OUTSTANDING" : "ALL"],
     queryFn: async () => readJson<{ prompts: PromptRow[]; total: number }>(await fetch(`/api/admin/prompts/${outstandingOnly ? "?status=OUTSTANDING" : ""}`)),
@@ -73,7 +95,42 @@ function PromptManager({ outstandingOnly }: { outstandingOnly: boolean }) {
   });
   if (prompts.isPending) return <p className="notice">Loading prompts…</p>;
   if (prompts.isError) return <p className="notice notice--bad" role="alert">{prompts.error.message}</p>;
-  return <section className="card"><div className="action-row action-row--between"><div><h2>{outstandingOnly ? "Outstanding prompts" : "Prompt Manager"}</h2><p>Prompt versions are append-only; generated results associate to an existing version.</p></div><span className="tag">{prompts.data.total} records</span></div>{prompts.data.prompts.length === 0 ? <p>No matching Prompt records are stored.</p> : <DataTable columns={promptColumns} data={prompts.data.prompts} getRowId={(prompt) => prompt.promptRecordId} preferenceKey={`admin.prompts.${outstandingOnly ? "outstanding" : "all"}`} />}</section>;
+  const selected = prompts.data.prompts.find((prompt) => prompt.promptRecordId === selectedId);
+  const parseContract = (value: string) => {
+    if (!value.trim()) throw new Error("Response contract JSON is required.");
+    return JSON.parse(value) as unknown;
+  };
+  const refresh = async () => queryClient.invalidateQueries({ queryKey: ["admin", "prompts"] });
+  const perform = async (request: () => Promise<Response>, success: string) => {
+    setBusy(true);
+    setError(undefined);
+    setMessage(undefined);
+    try {
+      await readJson(await request());
+      await refresh();
+      setMessage(success);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Prompt operation failed.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const create = () => perform(() => fetch("/api/admin/prompts/", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ family, promptText, purpose, responseContract: parseContract(responseContract), status, targetId, targetType }),
+  }), "Prompt record created with version 1.");
+  const append = (prompt: PromptRow) => perform(() => fetch(`/api/admin/prompts/${encodeURIComponent(prompt.promptRecordId)}/versions`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ promptText: versionText, responseContract: parseContract(versionContract) }),
+  }), "Append-only prompt version created.");
+  const associate = (prompt: PromptRow) => perform(() => fetch(`/api/admin/prompts/${encodeURIComponent(prompt.promptRecordId)}/result`, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ generatedManagedAssetId: resultAssetId, promptVersionId: resultVersionId }),
+  }), "Managed result associated and prompt completed.");
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{outstandingOnly ? "Outstanding prompts" : "Prompt Manager"}</h2><p>Prompt versions are append-only; managed results associate to one explicit existing version.</p></div><div className="action-row"><span className="tag">{prompts.data.total} records</span><button className="button button--gold" onClick={() => setCreating((value) => !value)} type="button">{creating ? "Close new prompt" : "New prompt"}</button></div></div>{prompts.data.prompts.length === 0 ? <p>No matching Prompt records are stored.</p> : <DataTable columns={promptColumns} data={prompts.data.prompts} getRowId={(prompt) => prompt.promptRecordId} onRowActivate={(prompt) => { setSelectedId(prompt.promptRecordId); setResultVersionId(prompt.versions[0]?.promptVersionId ?? ""); }} preferenceKey={`admin.prompts.${outstandingOnly ? "outstanding" : "all"}`} />}</section>{creating && <section className="card"><h2>Create prompt record</h2><form className="form-grid" onSubmit={(event) => { event.preventDefault(); try { void create(); } catch (caught) { setError(caught instanceof Error ? caught.message : "Response contract JSON is invalid."); } }}><label className="field">Family<select className="select" value={family} onChange={(event) => setFamily(event.target.value as PromptFamily)}>{promptFamilies.map((value) => <option key={value}>{value}</option>)}</select></label><label className="field">Status<select className="select" value={status} onChange={(event) => setStatus(event.target.value as PromptStatus)}>{promptStatuses.map((value) => <option key={value}>{value}</option>)}</select></label><label className="field span-2">Purpose<input className="input" value={purpose} onChange={(event) => setPurpose(event.target.value)} /></label><label className="field">Target type<input className="input" value={targetType} onChange={(event) => setTargetType(event.target.value)} /></label><label className="field">Target identifier<input className="input" value={targetId} onChange={(event) => setTargetId(event.target.value)} /></label><label className="field span-2">Prompt text<textarea className="textarea" value={promptText} onChange={(event) => setPromptText(event.target.value)} /></label><label className="field span-2">Response contract JSON<textarea className="textarea" placeholder='{"type":"object"}' value={responseContract} onChange={(event) => setResponseContract(event.target.value)} /></label><button className="button button--gold" disabled={busy || !purpose.trim() || !targetType.trim() || !targetId.trim() || !promptText.trim() || !responseContract.trim()} type="submit">{busy ? "Creating…" : "Create version 1"}</button></form></section>}{selected && <section className="card"><div className="action-row action-row--between"><div><h2>{selected.promptRecordId}</h2><p>{selected.family} · {selected.targetType} · {selected.targetId}</p></div><span className="tag">{selected.status}</span></div><div className="grid-2"><form className="stack" onSubmit={(event) => { event.preventDefault(); try { void append(selected); } catch (caught) { setError(caught instanceof Error ? caught.message : "Response contract JSON is invalid."); } }}><h3>Append version</h3><label className="field">Prompt text<textarea className="textarea" value={versionText} onChange={(event) => setVersionText(event.target.value)} /></label><label className="field">Response contract JSON<textarea className="textarea" value={versionContract} onChange={(event) => setVersionContract(event.target.value)} /></label><button className="button" disabled={busy || !versionText.trim() || !versionContract.trim()} type="submit">Append immutable version</button></form><form className="stack" onSubmit={(event) => { event.preventDefault(); void associate(selected); }}><h3>Associate managed result</h3>{selected.family === "IMAGE" || selected.family === "MUSIC" ? <><label className="field">Prompt version<select className="select" value={resultVersionId} onChange={(event) => setResultVersionId(event.target.value)}><option value="">Select version</option>{selected.versions.map((version) => <option key={version.promptVersionId} value={version.promptVersionId}>Version {version.version} · {version.promptVersionId}</option>)}</select></label><label className="field">Managed asset identifier<input className="input" value={resultAssetId} onChange={(event) => setResultAssetId(event.target.value)} /></label><button className="button" disabled={busy || !resultVersionId || !resultAssetId.trim()} type="submit">Associate result</button></> : <p className="notice notice--warn">{selected.family} has no persisted managed-asset result contract. Completion is not inferred.</p>}</form></div></section>}{message && <p className="notice notice--good" role="status">{message}</p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</div>;
 }
 
 export function AssetPromptAdminPage({ screen }: { screen: PageManifestEntry }) {

@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 199 |
-| PARTIAL | 32 |
+| IMPLEMENTED | 201 |
+| PARTIAL | 30 |
 | PLACEHOLDER | 42 |
 | MISSING | 0 |
 | **Total active V3 states** | **273** |
 
-Therefore **74 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **72 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -147,8 +147,8 @@ Therefore **74 of 273 active V3** wireframe pages/states are not fully implement
 | 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 106 | `ADM031` | Asset Manager - Audio | `/admin/assets/audio` | **PARTIAL** | Reads persisted audio asset metadata; upload, replace, purpose-link, and edit actions are absent. |
 | 107 | `ADM032` | Asset Manager - Video | `/admin/assets/video` | **PARTIAL** | Reads persisted video asset metadata; upload, replace, purpose-link, and edit actions are absent. |
-| 108 | `ADM033` | Prompt Manager | `/admin/prompts` | **PARTIAL** | Reads prompt/version/result records, but cannot create prompts, append versions, or associate results. |
-| 109 | `ADM034` | Prompt Manager - Outstanding Only | `/admin/prompts` | **PARTIAL** | Filters outstanding prompts, but provides no completion or result-association action. |
+| 108 | `ADM033` | Prompt Manager | `/admin/prompts` | **IMPLEMENTED** | Creates strict prompt roots with version 1, appends immutable versions, and associates media-compatible managed results to an explicit version; unsupported result contracts fail closed. |
+| 109 | `ADM034` | Prompt Manager - Outstanding Only | `/admin/prompts` | **IMPLEMENTED** | Applies the persisted OUTSTANDING filter while retaining strict creation, append-only versioning, and compatible managed-result association actions. |
 | 110 | `DATA000` | Data - Object Types | `/admin/data` | **IMPLEMENTED** | Registry-derived object-type index links every active canonical entity to persisted records and its validated import workflow. |
 | 111 | `DATA001` | Data - Protagonist | `/admin/data/protagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 112 | `DATA002` | Data - Culture | `/admin/data/culture` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
