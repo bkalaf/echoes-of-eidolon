@@ -1,15 +1,17 @@
 %% Knowledge disclosure
 flowchart LR
   Baseblocks0["Base blocks"]
-  Playercapabilityst1["Player capability state"]
-  Evaluaterequiremen2["Evaluate requirement"]
-  Revealappendorrepl3["Reveal append or replace"]
-  Collectvisiblecita4["Collect visible citations"]
-  Deduplicatefirstus5["Deduplicate first use"]
-  Playersaferesponse6["Player-safe response"]
-  Baseblocks0 --> Playercapabilityst1
-  Playercapabilityst1 --> Evaluaterequiremen2
-  Evaluaterequiremen2 --> Revealappendorrepl3
-  Revealappendorrepl3 --> Collectvisiblecita4
-  Collectvisiblecita4 --> Deduplicatefirstus5
-  Deduplicatefirstus5 --> Playersaferesponse6
+  Scopedcapabilitypr1["Scoped capability projection"]
+  ValidaterecursiveA2["Validate recursive ALL ANY NOT tree"]
+  Evaluatefullybound3["Evaluate fully bound addresses"]
+  Revealappendorrepl4["Reveal append or replace"]
+  Collectvisiblecita5["Collect visible citations"]
+  Deduplicatefirstus6["Deduplicate first use"]
+  Playersaferesponse7["Player-safe response"]
+  Baseblocks0 --> Scopedcapabilitypr1
+  Scopedcapabilitypr1 --> ValidaterecursiveA2
+  ValidaterecursiveA2 --> Evaluatefullybound3
+  Evaluatefullybound3 --> Revealappendorrepl4
+  Revealappendorrepl4 --> Collectvisiblecita5
+  Collectvisiblecita5 --> Deduplicatefirstus6
+  Deduplicatefirstus6 --> Playersaferesponse7

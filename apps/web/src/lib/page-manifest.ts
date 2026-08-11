@@ -1,4 +1,5 @@
-import manifest from "../data/page-manifest.json";
+import amendments from "../data/page-manifest-v3-amendments.json";
+import baseManifest from "../data/page-manifest.json";
 
 export interface PageManifestEntry {
   page: number;
@@ -20,7 +21,14 @@ export type ShellKind =
   | "tools-review"
   | "state-only";
 
-export const pageManifest = Object.freeze(manifest as PageManifestEntry[]);
+export const basePageManifest = Object.freeze(baseManifest as PageManifestEntry[]);
+export const excludedV3ScreenIds = Object.freeze(amendments.excludedScreenIds as string[]);
+export const v3PageManifestAdditions = Object.freeze(amendments.additions as PageManifestEntry[]);
+const excluded = new Set(excludedV3ScreenIds);
+export const pageManifest = Object.freeze([
+  ...basePageManifest.filter((entry) => !excluded.has(entry.screenId)),
+  ...v3PageManifestAdditions,
+]);
 
 export function shellFor(entry: PageManifestEntry): ShellKind {
   if (entry.path === null) return "state-only";
@@ -79,5 +87,6 @@ export function screensForPath(pathname: string) {
 export function screenForPath(pathname: string, requestedState?: string) {
   const matches = screensForPath(pathname);
   const requested = requestedState ? pageManifest.find((entry) => entry.screenId === requestedState) : undefined;
-  return matches.find((entry) => entry.screenId === requestedState) ?? (requested?.path === null ? requested : undefined) ?? matches[0];
+  const staticMatch = matches.find((entry) => !entry.path?.includes(":"));
+  return matches.find((entry) => entry.screenId === requestedState) ?? (requested?.path === null ? requested : undefined) ?? staticMatch ?? matches[0];
 }

@@ -45,8 +45,8 @@ const processDiagrams = [
   ["P29", "Campaign planner persistence", ["World context", "Eighteen books", "Drag governed object", "Validate span", "Validate linked group", "Persist assignment", "Return planner projection"], "Campaign, CampaignPlacement", "Admin Campaign states"],
   ["P30", "Puzzle blueprint versioning", ["Stable blueprint root", "Create immutable version", "Deterministic generator", "Two answer-free hints", "Validation preview", "Publish version"], "PuzzleBlueprint, PuzzleBlueprintVersion, PuzzleHintTemplate", "Admin Puzzle states"],
   ["P31", "Puzzle acceptance and countdown", ["Player challenge offer", "Explicit accept", "Persist acceptedAt", "Start 2160000 seconds", "Generate instance", "Directional hint", "Guided hint", "Submit answer"], "PuzzleChallengeAccepted, PuzzleBlueprintVersion", "Game Witness Trial"],
-  ["P32", "Capability event reduction", ["Validate User owner", "Validate definition kind", "Exactly one payload", "Append event", "Order occurredAt sequence ID", "Reduce SET or ADD", "Enforce authored range", "Project state"], "CapabilityDefinition, CapabilityEvent, User", "Knowledge and achievements"],
-  ["P33", "Knowledge disclosure", ["Base blocks", "Player capability state", "Evaluate requirement", "Reveal append or replace", "Collect visible citations", "Deduplicate first use", "Player-safe response"], "KnowledgeBaseItem, KnowledgeBaseDisclosure, Citation", "Game Knowledge"],
+  ["P32", "Capability event reduction", ["Resolve immutable definition version", "Resolve typed address and explicit scope", "Validate SET ADD or CLEAR", "Append with database sequence and idempotency", "Database trigger projects state", "CLEAR records absence", "Compare deterministic rebuild"], "CapabilityDefinitionVersion, CapabilityAddress, CapabilityEvent, CapabilityState", "CAP01, CAP02, CAP05, Knowledge and achievements"],
+  ["P33", "Knowledge disclosure", ["Base blocks", "Scoped capability projection", "Validate recursive ALL ANY NOT tree", "Evaluate fully bound addresses", "Reveal append or replace", "Collect visible citations", "Deduplicate first use", "Player-safe response"], "KnowledgeBaseItem, KnowledgeBaseDisclosure, CapabilityState, Citation", "CAP03 and Game Knowledge"],
   ["P34", "Typed Breed research authoring", ["Select Breed and dimension", "Controlled value", "Legitimate Source", "Citation", "Begin transaction", "Research assertion", "BreedResearchEvidence", "Commit typed owner"], "BreedResearchValue, BreedResearchEvidence, Research", "Admin Breed Research"],
   ["P35", "Atomic typed entity import", ["Upload JSON YAML or CSV", "Parse", "Map fields", "Validate exact schema", "Preview errors", "Begin transaction", "Create missing", "Reject canonical drift"], "Repository typed-import request and result contracts", "Admin Data import states"],
   ["P36", "Canonical document builder", ["Ordered source bullets", "Amendments", "Document bucket", "Generate draft", "Persist version", "Review", "Publish export", "Keep bullets authoritative"], "DocumentBucket, DocumentSourcePoint, DocumentDraft", "Admin Document Builder"],
@@ -76,7 +76,7 @@ const entityDiagrams = [
   ["E17", "Population event authority", ["SettlementWorld", "SettlementPopulationEvent", "Breed"], "SettlementPopulationEvent", "Found City, Migrate, history"],
   ["E18", "City geometry", ["SettlementWorld", "City", "Parcel", "Street", "Building"], "City domain", "Admin City Builder"],
   ["E19", "Knowledge graph", ["KnowledgeBaseItem", "KnowledgeBaseBlock", "KnowledgeBaseItemCitation", "Citation", "KnowledgeBaseDisclosure", "KnowledgeBaseDisclosureBlock"], "Knowledge models", "Admin Knowledge and Game Knowledge"],
-  ["E20", "Capabilities", ["User", "CapabilityDefinition", "CapabilityEvent", "KnowledgeBaseDisclosure"], "CapabilityDefinition, CapabilityEvent", "Knowledge and achievements"],
+  ["E20", "Capabilities", ["CapabilityDefinition", "CapabilityDefinitionVersion", "CapabilityParameterDefinition", "CapabilityAddress", "CapabilityEvent", "CapabilityState", "RewardScoringPolicy", "RewardScoringWeight", "RewardEvidenceEvent", "FactionStandingScoringPolicy", "FactionStandingScoringWeight", "FactionStandingEvidenceEvent", "KnowledgeBaseDisclosure"], "Versioned definitions, typed addresses, append-only evidence and projections", "CAP01 through CAP05, Knowledge and achievements"],
   ["E21", "Achievement chain", ["AchievementDefinition", "ManagedAsset", "CapabilityDefinition"], "AchievementDefinition", "Admin achievements and Game"],
   ["E22", "Puzzle versions and acceptance", ["PuzzleBlueprint", "PuzzleBlueprintVersion", "PuzzleHintTemplate", "PuzzleChallengeAccepted", "User"], "Puzzle models", "Admin Puzzle and Game trial"],
   ["E23", "Calendar projection", ["CalendarOrdinal"], "CalendarOrdinal", "Game Calendar"],
@@ -141,7 +141,7 @@ for (const [category, entries, sourceFactory] of [["process", processDiagrams, p
     const sourcePath = resolve(sourceRoot, category, `${fileName}.mmd`);
     const svgPath = resolve(svgRoot, category, `${fileName}.svg`);
     const source = sourceFactory(entry);
-    if (/ActualWitness|WitnessRepresentation|Candidate|Simulator|CultureGroup|AtlasPOI|MinorArc|Campaign Action/.test(source)) throw new Error(`Rejected invention in ${id}`);
+    if (/ActualWitness|WitnessRepresentation|Simulator|CultureGroup|AtlasPOI|MinorArc|Campaign Action/.test(source)) throw new Error(`Rejected invention in ${id}`);
     await writeFile(sourcePath, source, "utf8");
     await run("pnpm", ["exec", "mmdc", "-p", resolve(import.meta.dirname, "puppeteer-mermaid.json"), "-i", sourcePath, "-o", svgPath, "-b", "transparent"]);
     if (!(await readFile(svgPath, "utf8")).includes("<svg")) throw new Error(`Mermaid did not render ${id}`);

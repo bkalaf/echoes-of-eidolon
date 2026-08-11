@@ -15,6 +15,7 @@ import {
   applySoulImport,
 } from "../../../../../server/soul-import";
 import { applyConstellationImport } from "../../../../../server/constellation-import";
+import { applyCapabilityDefinitionImport } from "../../../../../server/capability-definition-import";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "../../../../../server/import-errors";
 import { applyPillarImport } from "../../../../../server/pillar-import";
 import { applyPersonalityExpressionImport } from "../../../../../server/personality-expression-import";
@@ -73,6 +74,8 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             result = await applyConstellationImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),
             });
+          } else if (params.entityKey === "capabilitydefinition") {
+            result = await applyCapabilityDefinitionImport(input.rows, database);
           } else if (params.entityKey === "pillar") {
             result = await applyPillarImport(input.rows, {
               transaction: (work) => database.$transaction((transaction) => work(transaction)),

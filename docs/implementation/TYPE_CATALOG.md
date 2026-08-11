@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and 269-row v11.3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 274-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 94
-- Controlled enums: 100
-- HTTP method/path contracts: 52
-- Wireframe view-model rows: 269
-- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 18, store 12, admin 151, tools-review 5
+- Persisted entity types: 105
+- Controlled enums: 106
+- HTTP method/path contracts: 59
+- Wireframe view-model rows: 274
+- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 18, store 12, admin 156, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -16,7 +16,7 @@ Generated from the current Prisma schema, API route tree, and 269-row v11.3 regi
 
 | Type | Kind | Owner | Table/service | Consuming screens | Field count |
 |---|---|---|---|---|---:|
-| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 32 |
+| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 31 |
 | UserSettings | Persisted entity | Shared settings | `UserSettings` via server/user-settings.ts | Account Settings and Game Settings modal | 12 |
 | Session | Persisted entity | Identity | `Session` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 11 |
 | Organization | Persisted entity | Authorization | `Organization` via domain/organization-access.ts | Admin access | 8 |
@@ -42,7 +42,7 @@ Generated from the current Prisma schema, API route tree, and 269-row v11.3 regi
 | Interlude | Persisted entity | Narrative data | `Interlude` via typed import services | Admin Data, Campaign, Game | 6 |
 | InterludeSubstitution | Persisted entity | Narrative data | `InterludeSubstitution` via typed import services | Admin Data, Campaign, Game | 6 |
 | Pillar | Persisted entity | Narrative data | `Pillar` via typed import services | Admin Data, Campaign, Game | 4 |
-| LegendaryReward | Persisted entity | Narrative data | `LegendaryReward` via typed import services | Admin Data, Campaign, Game | 4 |
+| LegendaryReward | Persisted entity | Narrative data | `LegendaryReward` via typed import services | Admin Data, Campaign, Game | 5 |
 | Lesson | Persisted entity | Narrative data | `Lesson` via typed import services | Admin Data, Campaign, Game | 3 |
 | Tome | Persisted entity | Narrative data | `Tome` via typed import services | Admin Data, Campaign, Game | 3 |
 | Transition | Persisted entity | Narrative data | `Transition` via typed import services | Admin Data, Campaign, Game | 5 |
@@ -60,7 +60,7 @@ Generated from the current Prisma schema, API route tree, and 269-row v11.3 regi
 | BreedResearchEvidence | Persisted entity | Canonical data | `BreedResearchEvidence` via typed imports and server/breed-research.ts | Admin Data and Game | 5 |
 | KnowledgeBaseItem | Persisted entity | Knowledge | `KnowledgeBaseItem` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 8 |
 | KnowledgeBaseBlock | Persisted entity | Knowledge | `KnowledgeBaseBlock` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 7 |
-| KnowledgeBaseDisclosure | Persisted entity | Knowledge | `KnowledgeBaseDisclosure` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 15 |
+| KnowledgeBaseDisclosure | Persisted entity | Knowledge | `KnowledgeBaseDisclosure` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 10 |
 | KnowledgeBaseDisclosureBlock | Persisted entity | Knowledge | `KnowledgeBaseDisclosureBlock` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 6 |
 | KnowledgeBaseDisclosureCitation | Persisted entity | Knowledge | `KnowledgeBaseDisclosureCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | KnowledgeBaseItemCitation | Persisted entity | Knowledge | `KnowledgeBaseItemCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
@@ -68,8 +68,19 @@ Generated from the current Prisma schema, API route tree, and 269-row v11.3 regi
 | Matrix | Persisted entity | Narrative data | `Matrix` via typed import services | Admin Data, Campaign, Game | 4 |
 | Layette | Persisted entity | Narrative data | `Layette` via typed import services | Admin Data, Campaign, Game | 3 |
 | PersonalityExpression | Persisted entity | Canonical data | `PersonalityExpression` via typed imports and server/breed-research.ts | Admin Data and Game | 2 |
-| CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 10 |
-| CapabilityEvent | Persisted entity | Capabilities | `CapabilityEvent` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 16 |
+| CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 5 |
+| CapabilityDefinitionVersion | Persisted entity | Capabilities | `CapabilityDefinitionVersion` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 24 |
+| CapabilityParameterDefinition | Persisted entity | Capabilities | `CapabilityParameterDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
+| CapabilityAddress | Persisted entity | Capabilities | `CapabilityAddress` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
+| CapabilityEvent | Persisted entity | Capabilities | `CapabilityEvent` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 22 |
+| CapabilityState | Persisted entity | Capabilities | `CapabilityState` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 15 |
+| RewardScoringPolicy | Persisted entity | Repository core | `RewardScoringPolicy` via Prisma and owning route service | Registry-linked screens | 8 |
+| RewardScoringWeight | Persisted entity | Repository core | `RewardScoringWeight` via Prisma and owning route service | Registry-linked screens | 4 |
+| RewardCandidate | Persisted entity | Repository core | `RewardCandidate` via Prisma and owning route service | Registry-linked screens | 6 |
+| RewardEvidenceEvent | Persisted entity | Repository core | `RewardEvidenceEvent` via Prisma and owning route service | Registry-linked screens | 14 |
+| FactionStandingScoringPolicy | Persisted entity | Repository core | `FactionStandingScoringPolicy` via Prisma and owning route service | Registry-linked screens | 8 |
+| FactionStandingScoringWeight | Persisted entity | Repository core | `FactionStandingScoringWeight` via Prisma and owning route service | Registry-linked screens | 4 |
+| FactionStandingEvidenceEvent | Persisted entity | Repository core | `FactionStandingEvidenceEvent` via Prisma and owning route service | Registry-linked screens | 12 |
 | AchievementDefinition | Persisted entity | Capabilities | `AchievementDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 7 |
 | ManagedAsset | Persisted entity | Asset and Prompt Manager | `ManagedAsset` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 11 |
 | AssetPurposeLink | Persisted entity | Asset and Prompt Manager | `AssetPurposeLink` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 4 |
@@ -134,6 +145,13 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | GET | `/api/admin/beta-invitations` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/capabilities` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/capabilities` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/capabilities/:capabilityDefinitionVersionId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/capabilities/inspector` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/capabilities/scoring/:rewardScoringPolicyId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/commerce` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/data/:entityKey/import` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/documents` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -229,9 +247,15 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | CharacterType | 3 | `MAJOR`, `SUPPORTING`, `EXTRA` |
 | LatticeId | 25 | `L01`, `L02`, `L03`, `L04`, `L05`, `L06`, `L07`, `L08`, `L09`, `L10`, `L11`, `L12`, `L13`, `L14`, `L15`, `L16`, `L17`, `L18`, `L19`, `L20`, `L21`, `L22`, `L23`, `L24`, `L25` |
 | SettlementPopulationEventType | 4 | `FOUNDING`, `GROWTH`, `MIGRATION_IN`, `MIGRATION_OUT` |
-| CapabilityOperation | 2 | `SET`, `ADD` |
-| CapabilityRequirementOperator | 7 | `EXISTS`, `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE` |
+| CapabilityOperation | 3 | `SET`, `ADD`, `CLEAR` |
+| CapabilityRequirementOperator | 10 | `EXISTS`, `NOT_EXISTS`, `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`, `IN`, `NOT_IN` |
+| CapabilityParameterKind | 2 | `ENTITY`, `STRING` |
+| CapabilityMonotonicPolicy | 4 | `NONE`, `TRUE_ONLY`, `NONDECREASING`, `NONINCREASING` |
+| CapabilityDefinitionVersionStatus | 3 | `DRAFT`, `ACTIVE`, `RETIRED` |
+| CapabilityScopeType | 5 | `ACCOUNT`, `PLAYTHROUGH`, `WORLD`, `PARTY`, `CHARACTER` |
+| ScoringPolicyStatus | 3 | `DRAFT`, `ACTIVE`, `RETIRED` |
 | RewardEvidenceKind | 6 | `RUMOR`, `EVIDENCE`, `PROOF`, `DOUBT`, `CONTRADICTION`, `REFUTATION` |
+| FactionStandingEvidenceKind | 8 | `MINOR_HARM`, `MAJOR_HARM`, `MINOR_AID`, `MAJOR_AID`, `PUBLIC_CENSURE`, `PRIVATE_CENSURE`, `PUBLIC_SUPPORT`, `PRIVATE_SUPPORT` |
 | KnowledgeBaseBlockKind | 4 | `HEADING`, `PARAGRAPH`, `QUOTE`, `LIST` |
 | CalendarTrigger | 4 | `CONJUNCTION_BEGINS`, `CONJUNCTION_DEADLINE`, `BEACON_PREPARE`, `BEACON_WARNING` |
 | ArkStatus | 4 | `OPERATIONAL`, `CANNIBALIZED`, `DAMAGED`, `DESTROYED` |
@@ -277,7 +301,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 269 registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 274 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

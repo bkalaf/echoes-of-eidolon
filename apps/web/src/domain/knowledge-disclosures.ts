@@ -1,5 +1,10 @@
-import type { CapabilityStateEntry, CapabilityValue } from "./capabilities";
-import type { CapabilityRequirementOperator, KnowledgeBaseBlockKind, KnowledgeBaseDisclosureMode } from "../generated/prisma/enums";
+import {
+  evaluateCapabilityCondition,
+  type CapabilityCondition,
+  type CapabilityDefinitionVersionContract,
+  type CapabilityStateEntry,
+} from "./capabilities";
+import type { KnowledgeBaseBlockKind, KnowledgeBaseDisclosureMode } from "../generated/prisma/enums";
 import { resolveVisibleKnowledge, type CitationEvidence, type SourceEvidence, type VisibleFootnote } from "./knowledge-evidence";
 
 export interface KnowledgeBlock {
@@ -11,27 +16,10 @@ export interface KnowledgeBlock {
 
 export interface KnowledgeDisclosure {
   knowledgeBaseDisclosureId: string;
-  capabilityDefinitionId: string;
-  operator: CapabilityRequirementOperator;
-  requiredValue?: CapabilityValue;
+  condition: CapabilityCondition;
   mode: KnowledgeBaseDisclosureMode;
   anchorBlockId?: string | null;
   blocks: KnowledgeBlock[];
-}
-
-function requirementMet(disclosure: KnowledgeDisclosure, state: ReadonlyMap<string, CapabilityStateEntry>): boolean {
-  const actual = state.get(disclosure.capabilityDefinitionId)?.value;
-  if (disclosure.operator === "EXISTS") return actual !== undefined;
-  if (disclosure.requiredValue === undefined) throw new Error(`${disclosure.operator} requires an authored comparison value.`);
-  if (disclosure.operator === "EQ") return actual === disclosure.requiredValue;
-  if (disclosure.operator === "NEQ") return actual !== undefined && actual !== disclosure.requiredValue;
-  if (typeof actual !== "number" || typeof disclosure.requiredValue !== "number") {
-    throw new Error(`${disclosure.operator} requires numeric capability values.`);
-  }
-  if (disclosure.operator === "GT") return actual > disclosure.requiredValue;
-  if (disclosure.operator === "GTE") return actual >= disclosure.requiredValue;
-  if (disclosure.operator === "LT") return actual < disclosure.requiredValue;
-  return actual <= disclosure.requiredValue;
 }
 
 function applyDisclosure(blocks: KnowledgeBlock[], disclosure: KnowledgeDisclosure): KnowledgeBlock[] {
@@ -50,12 +38,15 @@ export function projectKnowledgeDisclosures(
   baseBlocks: readonly KnowledgeBlock[],
   disclosures: readonly KnowledgeDisclosure[],
   capabilityState: ReadonlyMap<string, CapabilityStateEntry>,
+  capabilityDefinitions: ReadonlyMap<string, CapabilityDefinitionVersionContract>,
   citations: CitationEvidence[],
   sources: SourceEvidence[],
 ): { blocks: KnowledgeBlock[]; footnotes: VisibleFootnote[] } {
   let blocks = [...baseBlocks];
   for (const disclosure of disclosures) {
-    if (requirementMet(disclosure, capabilityState)) blocks = applyDisclosure(blocks, disclosure);
+    if (evaluateCapabilityCondition(disclosure.condition, capabilityState, capabilityDefinitions)) {
+      blocks = applyDisclosure(blocks, disclosure);
+    }
   }
   const projection = resolveVisibleKnowledge(
     blocks.map((block) => ({ citationIds: block.citationIds, content: block.content, visible: true })),

@@ -2,7 +2,8 @@
  * Only owner-approved/current relationships are represented here.
  */
 import type {
-  AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityValueKind,
+  AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityMonotonicPolicy,
+  CapabilityOperation, CapabilityParameterKind, CapabilityValueKind,
   CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId, EconomicForm,
   EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity,
   Motivation, OperatingStyle, OutlookOrientation, OwnershipMode, PoliticalForm,
@@ -135,7 +136,23 @@ export interface Definition { definitionId: string; term: string; definition: st
 export interface Matrix { matrixId: string; regionId: string; latticeId: string; culturePoolIds: string[]; }
 export interface Layette { layetteId: string; name: string; description: string; }
 export interface PersonalityExpression { personalityExpressionId: string; name: string; }
-export interface CapabilityDefinition { capabilityDefinitionId: string; key: string; valueKind: CapabilityValueKind; minValue?: number; maxValue?: number; description: string; }
+export interface CapabilityDefinition { capabilityDefinitionId: string; code: string; createdAt?: Date; }
+export interface CapabilityParameterDefinition { name: string; kind: CapabilityParameterKind; entityType?: EntityType | null; allowedValues: string[]; ordinal: number; }
+export interface CapabilityDefinitionVersion {
+  capabilityDefinitionVersionId: string;
+  capabilityDefinitionId: CapabilityDefinition['capabilityDefinitionId'];
+  version: number;
+  pathPattern: string;
+  parameters: CapabilityParameterDefinition[];
+  valueKind: CapabilityValueKind;
+  minValue?: number | null;
+  maxValue?: number | null;
+  enumValues: string[];
+  allowedReferenceEntityTypes: EntityType[];
+  allowedOperations: CapabilityOperation[];
+  monotonicPolicy: CapabilityMonotonicPolicy;
+  description: string;
+}
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
 export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }
 export interface PuzzleBlueprint { puzzleBlueprintId: string; family: PuzzleFamily; difficultyTier: PuzzleDifficultyTier; }

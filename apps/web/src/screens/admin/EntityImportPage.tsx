@@ -21,6 +21,7 @@ type ImportFormat = keyof typeof importFormats;
 
 const typedImportKeys = {
   Ark: "ark",
+  CapabilityDefinition: "capabilitydefinition",
   Constellation: "constellation",
   Definition: "definition",
   Interlude: "interlude",

@@ -829,16 +829,52 @@ enum SettlementPopulationEventType {
 enum CapabilityOperation {
   SET
   ADD
+  CLEAR
 }
 
 enum CapabilityRequirementOperator {
   EXISTS
+  NOT_EXISTS
   EQ
   NEQ
   GT
   GTE
   LT
   LTE
+  IN
+  NOT_IN
+}
+
+enum CapabilityParameterKind {
+  ENTITY
+  STRING
+}
+
+enum CapabilityMonotonicPolicy {
+  NONE
+  TRUE_ONLY
+  NONDECREASING
+  NONINCREASING
+}
+
+enum CapabilityDefinitionVersionStatus {
+  DRAFT
+  ACTIVE
+  RETIRED
+}
+
+enum CapabilityScopeType {
+  ACCOUNT
+  PLAYTHROUGH
+  WORLD
+  PARTY
+  CHARACTER
+}
+
+enum ScoringPolicyStatus {
+  DRAFT
+  ACTIVE
+  RETIRED
 }
 
 enum RewardEvidenceKind {
@@ -848,6 +884,17 @@ enum RewardEvidenceKind {
   DOUBT
   CONTRADICTION
   REFUTATION
+}
+
+enum FactionStandingEvidenceKind {
+  MINOR_HARM
+  MAJOR_HARM
+  MINOR_AID
+  MAJOR_AID
+  PUBLIC_CENSURE
+  PRIVATE_CENSURE
+  PUBLIC_SUPPORT
+  PRIVATE_SUPPORT
 }
 
 enum KnowledgeBaseBlockKind {
@@ -1234,7 +1281,6 @@ model User {
   betaInviteRequests  BetaInviteRequest[]       @relation("BetaInviteRequester")
   consumedBetaInvites BetaInvitationCode[]      @relation("BetaInviteConsumer")
   twoFactors          TwoFactor[]
-  capabilityEvents    CapabilityEvent[]
   puzzleAcceptances   PuzzleChallengeAccepted[]
   membershipGrants    MembershipGrant[]
   orders              Order[]
@@ -1610,10 +1656,11 @@ model Pillar {
 }
 
 model LegendaryReward {
-  legendaryRewardId String       @id
+  legendaryRewardId String            @id
   name              String
   description       String
   antagonists       Antagonist[]
+  rewardCandidates  RewardCandidate[]
 }
 
 model Lesson {
@@ -1804,22 +1851,16 @@ model KnowledgeBaseBlock {
 model KnowledgeBaseDisclosure {
   knowledgeBaseDisclosureId String                            @id
   knowledgeBaseItemId       String
-  capabilityDefinitionId    String
   ordinal                   Int
-  operator                  CapabilityRequirementOperator
-  requiredBoolean           Boolean?
-  requiredNumber            Float?
-  requiredToken             String?
+  condition                 Json
   mode                      KnowledgeBaseDisclosureMode
   anchorBlockId             String?
   knowledgeBaseItem         KnowledgeBaseItem                 @relation(fields: [knowledgeBaseItemId], references: [knowledgeBaseItemId], onDelete: Cascade)
-  capabilityDefinition      CapabilityDefinition              @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
   anchorBlock               KnowledgeBaseBlock?               @relation(fields: [anchorBlockId], references: [knowledgeBaseBlockId], onDelete: Restrict)
   blocks                    KnowledgeBaseDisclosureBlock[]
   citations                 KnowledgeBaseDisclosureCitation[]
 
   @@unique([knowledgeBaseItemId, ordinal])
-  @@index([capabilityDefinitionId])
   @@index([anchorBlockId])
 }
 
@@ -1883,38 +1924,213 @@ model PersonalityExpression {
 }
 
 model CapabilityDefinition {
-  capabilityDefinitionId      String                    @id
-  key                         String                    @unique
-  valueKind                   CapabilityValueKind
-  minValue                    Int?
-  maxValue                    Int?
-  enumValues                  String[]                  @default([])
-  allowedReferenceEntityTypes EntityType[]              @default([])
-  description                 String
-  events                      CapabilityEvent[]
-  knowledgeDisclosures        KnowledgeBaseDisclosure[]
+  capabilityDefinitionId String                        @id
+  code                   String                        @unique
+  createdAt              DateTime                      @default(now())
+  versions               CapabilityDefinitionVersion[]
+  addresses              CapabilityAddress[]
+}
+
+model CapabilityDefinitionVersion {
+  capabilityDefinitionVersionId String                            @id
+  capabilityDefinitionId        String
+  version                       Int
+  pathPattern                   String
+  valueKind                     CapabilityValueKind
+  minValue                      Float?
+  maxValue                      Float?
+  enumValues                    String[]                          @default([])
+  allowedReferenceEntityTypes   EntityType[]                      @default([])
+  allowedOperations             CapabilityOperation[]             @default([])
+  monotonicPolicy               CapabilityMonotonicPolicy         @default(NONE)
+  initialBoolean                Boolean?
+  initialScore                  Float?
+  initialCounter                BigInt?
+  initialEnum                   String?
+  initialReferenceEntityType    EntityType?
+  initialReferenceEntityId      String?
+  description                   String
+  status                        CapabilityDefinitionVersionStatus @default(DRAFT)
+  createdAt                     DateTime                          @default(now())
+  capabilityDefinition          CapabilityDefinition              @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+  parameters                    CapabilityParameterDefinition[]
+  events                        CapabilityEvent[]
+  states                        CapabilityState[]
+
+  @@unique([capabilityDefinitionId, version])
+  @@index([capabilityDefinitionId, status])
+}
+
+model CapabilityParameterDefinition {
+  capabilityParameterDefinitionId String                      @id
+  capabilityDefinitionVersionId   String
+  name                            String
+  kind                            CapabilityParameterKind
+  entityType                      EntityType?
+  allowedValues                   String[]                    @default([])
+  ordinal                         Int
+  capabilityDefinitionVersion     CapabilityDefinitionVersion @relation(fields: [capabilityDefinitionVersionId], references: [capabilityDefinitionVersionId], onDelete: Cascade, map: "CapabilityParameter_version_fkey")
+
+  @@unique([capabilityDefinitionVersionId, name], map: "CapabilityParameter_version_name_key")
+  @@unique([capabilityDefinitionVersionId, ordinal], map: "CapabilityParameter_version_ordinal_key")
+}
+
+model CapabilityAddress {
+  capabilityAddressId    String               @id
+  capabilityDefinitionId String
+  bindings               Json
+  bindingsHash           String
+  createdAt              DateTime             @default(now())
+  capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+  events                 CapabilityEvent[]
+  states                 CapabilityState[]
+
+  @@unique([capabilityDefinitionId, bindingsHash])
+  @@index([capabilityDefinitionId])
 }
 
 model CapabilityEvent {
-  capabilityEventId      String               @id
-  userId                 String
-  capabilityDefinitionId String
-  sequence               BigInt
-  operation              CapabilityOperation
-  booleanValue           Boolean?
-  scoreValue             Float?
-  counterValue           BigInt?
-  enumValue              String?
-  referenceEntityType    EntityType?
-  referenceEntityId      String?
-  occurredAt             DateTime             @default(now())
-  sourceEntityType       EntityType?
-  sourceEntityId         String?
-  user                   User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+  capabilityEventId             String                      @id
+  sequence                      BigInt                      @unique @default(autoincrement())
+  scopeType                     CapabilityScopeType
+  scopeId                       String
+  capabilityAddressId           String
+  capabilityDefinitionVersionId String
+  operation                     CapabilityOperation
+  booleanValue                  Boolean?
+  scoreValue                    Float?
+  counterValue                  BigInt?
+  enumValue                     String?
+  referenceEntityType           EntityType?
+  referenceEntityId             String?
+  sourceEntityType              EntityType?
+  sourceEntityId                String?
+  idempotencyKey                String?
+  correlationId                 String?
+  causationId                   String?
+  occurredAt                    DateTime
+  recordedAt                    DateTime                    @default(now())
+  capabilityAddress             CapabilityAddress           @relation(fields: [capabilityAddressId], references: [capabilityAddressId], onDelete: Restrict)
+  capabilityDefinitionVersion   CapabilityDefinitionVersion @relation(fields: [capabilityDefinitionVersionId], references: [capabilityDefinitionVersionId], onDelete: Restrict)
 
-  @@index([userId, occurredAt, sequence, capabilityEventId])
-  @@index([capabilityDefinitionId])
+  @@unique([scopeType, scopeId, capabilityAddressId, idempotencyKey], map: "CapabilityEvent_scope_address_idempotency_key")
+  @@index([scopeType, scopeId, sequence])
+  @@index([capabilityAddressId, sequence])
+  @@index([capabilityDefinitionVersionId])
+}
+
+model CapabilityState {
+  scopeType                     CapabilityScopeType
+  scopeId                       String
+  capabilityAddressId           String
+  capabilityDefinitionVersionId String
+  isPresent                     Boolean                     @default(false)
+  booleanValue                  Boolean?
+  scoreValue                    Float?
+  counterValue                  BigInt?
+  enumValue                     String?
+  referenceEntityType           EntityType?
+  referenceEntityId             String?
+  lastSequence                  BigInt
+  updatedAt                     DateTime                    @updatedAt
+  capabilityAddress             CapabilityAddress           @relation(fields: [capabilityAddressId], references: [capabilityAddressId], onDelete: Restrict)
+  capabilityDefinitionVersion   CapabilityDefinitionVersion @relation(fields: [capabilityDefinitionVersionId], references: [capabilityDefinitionVersionId], onDelete: Restrict)
+
+  @@id([scopeType, scopeId, capabilityAddressId])
+  @@index([capabilityAddressId])
+  @@index([lastSequence])
+}
+
+model RewardScoringPolicy {
+  rewardScoringPolicyId String                @id
+  version               Int                   @unique
+  status                ScoringPolicyStatus   @default(DRAFT)
+  minimumScore          Float
+  maximumScore          Float
+  createdAt             DateTime              @default(now())
+  weights               RewardScoringWeight[]
+  evidenceEvents        RewardEvidenceEvent[]
+}
+
+model RewardScoringWeight {
+  rewardScoringPolicyId String
+  kind                  RewardEvidenceKind
+  weight                Float
+  rewardScoringPolicy   RewardScoringPolicy @relation(fields: [rewardScoringPolicyId], references: [rewardScoringPolicyId], onDelete: Cascade)
+
+  @@id([rewardScoringPolicyId, kind])
+}
+
+model RewardCandidate {
+  rewardCandidateId String                @id
+  legendaryRewardId String
+  candidateKey      String
+  scoreCeiling      Float
+  legendaryReward   LegendaryReward       @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
+  evidenceEvents    RewardEvidenceEvent[]
+
+  @@unique([legendaryRewardId, candidateKey])
+  @@index([legendaryRewardId])
+}
+
+model RewardEvidenceEvent {
+  rewardEvidenceEventId String              @id
+  scopeType             CapabilityScopeType
+  scopeId               String
+  legendaryRewardId     String
+  rewardCandidateId     String
+  kind                  RewardEvidenceKind
+  sourceEntityType      EntityType?
+  sourceEntityId        String?
+  evidenceId            String
+  scoringPolicyVersion  Int
+  occurredAt            DateTime
+  recordedAt            DateTime            @default(now())
+  rewardCandidate       RewardCandidate     @relation(fields: [rewardCandidateId], references: [rewardCandidateId], onDelete: Restrict)
+  rewardScoringPolicy   RewardScoringPolicy @relation(fields: [scoringPolicyVersion], references: [version], onDelete: Restrict)
+
+  @@unique([scopeType, scopeId, rewardCandidateId, evidenceId], map: "RewardEvidence_scope_candidate_evidence_key")
+  @@index([legendaryRewardId, rewardCandidateId])
+  @@index([scoringPolicyVersion])
+}
+
+model FactionStandingScoringPolicy {
+  factionStandingScoringPolicyId String                         @id
+  version                        Int                            @unique
+  status                         ScoringPolicyStatus            @default(DRAFT)
+  minimumScore                   Float
+  maximumScore                   Float
+  createdAt                      DateTime                       @default(now())
+  weights                        FactionStandingScoringWeight[]
+  evidenceEvents                 FactionStandingEvidenceEvent[]
+}
+
+model FactionStandingScoringWeight {
+  factionStandingScoringPolicyId String
+  kind                           FactionStandingEvidenceKind
+  weight                         Float
+  factionStandingScoringPolicy   FactionStandingScoringPolicy @relation(fields: [factionStandingScoringPolicyId], references: [factionStandingScoringPolicyId], onDelete: Cascade, map: "FactionWeight_policy_fkey")
+
+  @@id([factionStandingScoringPolicyId, kind])
+}
+
+model FactionStandingEvidenceEvent {
+  factionStandingEvidenceEventId String                       @id
+  scopeType                      CapabilityScopeType
+  scopeId                        String
+  factionId                      String
+  kind                           FactionStandingEvidenceKind
+  sourceEntityType               EntityType?
+  sourceEntityId                 String?
+  evidenceId                     String
+  scoringPolicyVersion           Int
+  occurredAt                     DateTime
+  recordedAt                     DateTime                     @default(now())
+  factionStandingScoringPolicy   FactionStandingScoringPolicy @relation(fields: [scoringPolicyVersion], references: [version], onDelete: Restrict)
+
+  @@unique([scopeType, scopeId, factionId, evidenceId], map: "FactionEvidence_scope_faction_evidence_key")
+  @@index([factionId])
+  @@index([scoringPolicyVersion])
 }
 
 model AchievementDefinition {

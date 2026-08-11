@@ -1,17 +1,15 @@
 %% Capability event reduction
 flowchart LR
-  ValidateUserowner0["Validate User owner"]
-  Validatedefinition1["Validate definition kind"]
-  Exactlyonepayload2["Exactly one payload"]
-  Appendevent3["Append event"]
-  OrderoccurredAtseq4["Order occurredAt sequence ID"]
-  ReduceSETorADD5["Reduce SET or ADD"]
-  Enforceauthoredran6["Enforce authored range"]
-  Projectstate7["Project state"]
-  ValidateUserowner0 --> Validatedefinition1
-  Validatedefinition1 --> Exactlyonepayload2
-  Exactlyonepayload2 --> Appendevent3
-  Appendevent3 --> OrderoccurredAtseq4
-  OrderoccurredAtseq4 --> ReduceSETorADD5
-  ReduceSETorADD5 --> Enforceauthoredran6
-  Enforceauthoredran6 --> Projectstate7
+  Resolveimmutablede0["Resolve immutable definition version"]
+  Resolvetypedaddres1["Resolve typed address and explicit scope"]
+  ValidateSETADDorCL2["Validate SET ADD or CLEAR"]
+  Appendwithdatabase3["Append with database sequence and idempotency"]
+  Databasetriggerpro4["Database trigger projects state"]
+  CLEARrecordsabsenc5["CLEAR records absence"]
+  Comparedeterminist6["Compare deterministic rebuild"]
+  Resolveimmutablede0 --> Resolvetypedaddres1
+  Resolvetypedaddres1 --> ValidateSETADDorCL2
+  ValidateSETADDorCL2 --> Appendwithdatabase3
+  Appendwithdatabase3 --> Databasetriggerpro4
+  Databasetriggerpro4 --> CLEARrecordsabsenc5
+  CLEARrecordsabsenc5 --> Comparedeterminist6

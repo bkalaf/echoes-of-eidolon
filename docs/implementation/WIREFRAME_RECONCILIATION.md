@@ -1,10 +1,13 @@
-# v11.3 Wireframe and Registry Reconciliation
+# Base v11.3 and V3 Wireframe Registry Reconciliation
 
 ## Result
 
 - Status: PASS
 - Active v11.3 source rows: 269
 - Application registry rows: 269
+- V3 excluded base rows: 0
+- V3 amendment rows: 5
+- Active mechanically derived rows: 274
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -15,6 +18,7 @@
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
+- V3 amendment manifest SHA-256: `9305b1c48a817caa53f1dc743e727acf47f59d0c9ab8ac8a0f512a055a439c57`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -294,6 +298,11 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 267 | 270 | GAM005 | Player Globe | /game/maps/globe | REBUILT_V11 |
 | 268 | 271 | GAME_GLOBE_PRESENT | Player Globe — Present | /game/maps/globe | REBUILT_V11_2_OWNER_REVIEW |
 | 269 | 272 | GAME_GLOBE_TIMELINE | Player Globe — Timeline | /game/maps/globe | REBUILT_V11_2_OWNER_REVIEW |
+| 270 | 273 | CAP01 | Capability Registry | /admin/capabilities | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
+| 271 | 274 | CAP02 | Capability Definition Editor | /admin/capabilities/:capabilityDefinitionId | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
+| 272 | 275 | CAP03 | Address and Condition Builder | /admin/capabilities/condition-builder | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
+| 273 | 276 | CAP04 | Evidence Scoring Policies | /admin/capabilities/scoring | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
+| 274 | 277 | CAP05 | Event and Projection Inspector | /admin/capabilities/inspector | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
 
 ## Supplemental source PNGs
 

@@ -5,6 +5,7 @@ const repositoryRoot = resolve(import.meta.dirname, "../../..");
 const schemaPath = resolve(repositoryRoot, "apps/web/prisma/schema.prisma");
 const routeRoot = resolve(repositoryRoot, "apps/web/src/routes/api");
 const manifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest.json");
+const amendmentPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest-v3-amendments.json");
 const outputPath = resolve(repositoryRoot, "docs/implementation/TYPE_CATALOG.md");
 
 async function filesRecursively(root) {
@@ -56,7 +57,10 @@ function ownerFor(name) {
 const schema = await readFile(schemaPath, "utf8");
 const models = blocks(schema, "model");
 const enums = blocks(schema, "enum");
-const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+const baseManifest = JSON.parse(await readFile(manifestPath, "utf8"));
+const amendments = JSON.parse(await readFile(amendmentPath, "utf8"));
+const excludedScreenIds = new Set(amendments.excludedScreenIds);
+const manifest = [...baseManifest.filter((row) => !excludedScreenIds.has(row.screenId)), ...amendments.additions];
 const routeFiles = (await filesRecursively(routeRoot)).filter((path) => path.endsWith(".ts")).sort();
 const apiRows = [];
 for (const path of routeFiles) {
@@ -84,7 +88,7 @@ const shellCounts = manifest.reduce((counts, row) => {
 const lines = [
   "# Echoes of Eidolon Complete Type Catalog",
   "",
-  "Generated from the current Prisma schema, API route tree, and 269-row v11.3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.",
+  `Generated from the current Prisma schema, API route tree, and mechanically reconciled ${manifest.length}-row base-plus-V3 registry. The compile-time forward map is \`apps/web/src/domain/implementation-types.ts\`.`,
   "",
   "## Inventory",
   "",
@@ -118,7 +122,7 @@ const lines = [
   "",
   "## Wireframe view models",
   "",
-  "All 269 registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.",
+  `All ${manifest.length} active registry rows use \`WireframeViewModel\`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.`,
   "",
   "## Rejected-invention scan",
   "",

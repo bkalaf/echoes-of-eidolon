@@ -6,10 +6,14 @@ const repositoryRoot = resolve(import.meta.dirname, "../../..");
 const handoffRoot = resolve(repositoryRoot, "Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD");
 const sourceManifestPath = resolve(handoffRoot, "data/page_manifest_v11_2.json");
 const applicationManifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest.json");
+const amendmentManifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest-v3-amendments.json");
 const pngRoot = resolve(handoffRoot, "wireframes/png");
 const outputPath = resolve(repositoryRoot, "docs/implementation/WIREFRAME_RECONCILIATION.md");
 const source = JSON.parse(await readFile(sourceManifestPath, "utf8"));
 const application = JSON.parse(await readFile(applicationManifestPath, "utf8"));
+const amendments = JSON.parse(await readFile(amendmentManifestPath, "utf8"));
+const excludedScreenIds = new Set(amendments.excludedScreenIds);
+const active = [...application.filter((row) => !excludedScreenIds.has(row.screenId)), ...amendments.additions];
 const canonical = (row) => JSON.stringify({
   page: row.page, screenId: row.screenId, title: row.title, path: row.path,
   source: row.source, originalPage: row.originalPage, reviewOrder: row.reviewOrder,
@@ -29,14 +33,21 @@ const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 if (source.length !== 269 || application.length !== 269 || missing.length || extra.length || mismatched.length || missingPngs.length) {
   throw new Error(`Wireframe reconciliation failed: source=${source.length} app=${application.length} missing=${missing.length} extra=${extra.length} mismatched=${mismatched.length} missingPng=${missingPngs.length}`);
 }
+const expectedActiveCount = application.length - amendments.excludedScreenIds.length + amendments.additions.length;
+if (active.length !== expectedActiveCount || new Set(active.map((row) => row.reviewOrder)).size !== active.length) {
+  throw new Error(`V3 registry reconciliation failed: active=${active.length} expected=${expectedActiveCount}`);
+}
 const lines = [
-  "# v11.3 Wireframe and Registry Reconciliation",
+  "# Base v11.3 and V3 Wireframe Registry Reconciliation",
   "",
   "## Result",
   "",
   "- Status: PASS",
   `- Active v11.3 source rows: ${source.length}`,
   `- Application registry rows: ${application.length}`,
+  `- V3 excluded base rows: ${amendments.excludedScreenIds.length}`,
+  `- V3 amendment rows: ${amendments.additions.length}`,
+  `- Active mechanically derived rows: ${active.length}`,
   `- Exact canonical row matches: ${source.length - mismatched.length}`,
   `- Missing application rows: ${missing.length}`,
   `- Extra application rows: ${extra.length}`,
@@ -47,6 +58,7 @@ const lines = [
   "- Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.",
   `- Source manifest SHA-256: \`${sha256(await readFile(sourceManifestPath))}\``,
   `- Application manifest SHA-256: \`${sha256(await readFile(applicationManifestPath))}\``,
+  `- V3 amendment manifest SHA-256: \`${sha256(await readFile(amendmentManifestPath))}\``,
   "",
   "Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.",
   "",
@@ -57,7 +69,7 @@ const lines = [
   "",
   "| Review | Page | Screen/state ID | Title | Route or modal owner | Source |",
   "|---:|---:|---|---|---|---|",
-  ...source.map((row) => `| ${row.reviewOrder} | ${row.page} | ${row.screenId} | ${row.title.replaceAll("|", "\\|")} | ${(row.path ?? "state-only").replaceAll("|", "\\|")} | ${row.source} |`),
+  ...active.map((row) => `| ${row.reviewOrder} | ${row.page} | ${row.screenId} | ${row.title.replaceAll("|", "\\|")} | ${(row.path ?? "state-only").replaceAll("|", "\\|")} | ${row.source} |`),
   "",
   "## Supplemental source PNGs",
   "",
@@ -66,5 +78,5 @@ const lines = [
 ];
 await mkdir(resolve(repositoryRoot, "docs/implementation"), { recursive: true });
 await writeFile(outputPath, lines.join("\n"), "utf8");
-console.log(`wireframes ${source.length} exact rows ${expectedPngs.size} governed PNGs ${supplementalPngs.length} supplemental PNGs`);
+console.log(`wireframes ${source.length} exact base rows ${active.length} derived active rows ${expectedPngs.size} governed base PNGs ${supplementalPngs.length} supplemental PNGs`);
 /* global console */

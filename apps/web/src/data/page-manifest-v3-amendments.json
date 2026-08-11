@@ -1,0 +1,50 @@
+{
+  "excludedScreenIds": [],
+  "additions": [
+    {
+      "page": 273,
+      "screenId": "CAP01",
+      "title": "Capability Registry",
+      "path": "/admin/capabilities",
+      "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
+      "originalPage": 273,
+      "reviewOrder": 270
+    },
+    {
+      "page": 274,
+      "screenId": "CAP02",
+      "title": "Capability Definition Editor",
+      "path": "/admin/capabilities/:capabilityDefinitionId",
+      "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
+      "originalPage": 274,
+      "reviewOrder": 271
+    },
+    {
+      "page": 275,
+      "screenId": "CAP03",
+      "title": "Address and Condition Builder",
+      "path": "/admin/capabilities/condition-builder",
+      "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
+      "originalPage": 275,
+      "reviewOrder": 272
+    },
+    {
+      "page": 276,
+      "screenId": "CAP04",
+      "title": "Evidence Scoring Policies",
+      "path": "/admin/capabilities/scoring",
+      "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
+      "originalPage": 276,
+      "reviewOrder": 273
+    },
+    {
+      "page": 277,
+      "screenId": "CAP05",
+      "title": "Event and Projection Inspector",
+      "path": "/admin/capabilities/inspector",
+      "source": "V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1",
+      "originalPage": 277,
+      "reviewOrder": 274
+    }
+  ]
+}

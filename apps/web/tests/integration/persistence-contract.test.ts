@@ -176,6 +176,36 @@ describe("persistence contract", () => {
     expect(migration).toContain('Reduced COUNTER is outside its authored range');
   });
 
+  it("replaces flat capability persistence with a scoped versioned ledger and rebuildable projection", () => {
+    const enumMigration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810255000_capability_enum_extensions/migration.sql"),
+      "utf8",
+    );
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810260000_capability_ledger_projection/migration.sql"),
+      "utf8",
+    );
+    expect(enumMigration).toContain("ADD VALUE IF NOT EXISTS 'CLEAR'");
+    expect(enumMigration).toContain("ADD VALUE IF NOT EXISTS 'NOT_EXISTS'");
+    expect(enumMigration).toContain("ADD VALUE IF NOT EXISTS 'IN'");
+    expect(enumMigration).toContain("ADD VALUE IF NOT EXISTS 'NOT_IN'");
+    expect(migration).toContain("CapabilityEvent rows require authoritative scope/address/version reconstruction");
+    expect(migration).toContain("KnowledgeBaseDisclosure rows require authoritative bound condition reconstruction");
+    expect(migration).toContain('CREATE TABLE "CapabilityDefinitionVersion"');
+    expect(migration).toContain('CREATE TABLE "CapabilityParameterDefinition"');
+    expect(migration).toContain('CREATE TABLE "CapabilityAddress"');
+    expect(migration).toContain('CREATE TABLE "CapabilityState"');
+    expect(migration).toContain('"sequence" BIGSERIAL NOT NULL');
+    expect(migration).toContain('CapabilityEvent_scope_address_idempotency_key');
+    expect(migration).toContain('CapabilityEvent_reject_update');
+    expect(migration).toContain('CapabilityEvent_reject_delete');
+    expect(migration).toContain('CapabilityDefinitionVersion_protect');
+    expect(migration).toContain('CapabilityEvent_project');
+    expect(migration).toContain('CREATE TABLE "RewardEvidenceEvent"');
+    expect(migration).toContain('CREATE TABLE "FactionStandingEvidenceEvent"');
+    expect(migration).toContain("No faction standing weights are owner-authorized");
+  });
+
   it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),

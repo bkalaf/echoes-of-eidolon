@@ -23,7 +23,9 @@ const suppliedEnumNames = [
   "FoodBroadCategory", "FoodSpecific", "TerrainBroad", "TerrainSpecific", "Motivation", "OperatingStyle",
   "StructureOrientation", "WorldKey", "CompanionKey", "RegionId", "NameStatus", "SettlementClassification",
   "SettlementSurfaceType", "CharacterType", "LatticeId", "SettlementPopulationEventType", "CapabilityValueKind",
-  "CapabilityOperation", "CapabilityRequirementOperator", "RewardEvidenceKind", "KnowledgeBaseBlockKind",
+  "CapabilityOperation", "CapabilityRequirementOperator", "CapabilityParameterKind", "CapabilityMonotonicPolicy",
+  "CapabilityDefinitionVersionStatus", "CapabilityScopeType", "ScoringPolicyStatus", "RewardEvidenceKind",
+  "FactionStandingEvidenceKind", "KnowledgeBaseBlockKind",
   "CalendarTrigger", "SpeciesKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
   "EntityType", "Heirloom", "CitationQuality", "SourceType", "ContributorType", "ResearchCategory",
   "DepartmentWitnessPathStatus", "PuzzleSharedComponentId", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
@@ -38,11 +40,11 @@ const suppliedEnumNames = [
 ] as const;
 
 describe("Prisma finite enum authority", () => {
-  it("preserves the 92 supplied enums and the eight application runtime enums", () => {
+  it("preserves the supplied enums and the authorized application runtime enums", () => {
     const actualNames = [...schema.matchAll(/^enum (\w+) \{/gm)].map((match) => match[1]);
     expect(new Set(actualNames)).toEqual(new Set(suppliedEnumNames));
-    expect(suppliedEnumNames).toHaveLength(100);
-    expect(actualNames).toHaveLength(100);
+    expect(actualNames).toHaveLength(suppliedEnumNames.length);
+    expect(new Set(actualNames).size).toBe(suppliedEnumNames.length);
     expect(schema).toContain('role                String                    @default("user")');
   });
 

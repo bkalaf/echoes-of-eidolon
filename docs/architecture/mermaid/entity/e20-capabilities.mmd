@@ -1,17 +1,52 @@
 %% Capabilities
 erDiagram
-  User {
+  CapabilityDefinition {
     string id PK
   }
-  CapabilityDefinition {
+  CapabilityDefinitionVersion {
+    string id PK
+  }
+  CapabilityParameterDefinition {
+    string id PK
+  }
+  CapabilityAddress {
     string id PK
   }
   CapabilityEvent {
     string id PK
   }
+  CapabilityState {
+    string id PK
+  }
+  RewardScoringPolicy {
+    string id PK
+  }
+  RewardScoringWeight {
+    string id PK
+  }
+  RewardEvidenceEvent {
+    string id PK
+  }
+  FactionStandingScoringPolicy {
+    string id PK
+  }
+  FactionStandingScoringWeight {
+    string id PK
+  }
+  FactionStandingEvidenceEvent {
+    string id PK
+  }
   KnowledgeBaseDisclosure {
     string id PK
   }
-  User ||--o{ CapabilityEvent : "relates to"
-  KnowledgeBaseDisclosure ||--|| CapabilityDefinition : "relates to"
-  CapabilityDefinition ||--o{ CapabilityEvent : "relates to"
+  CapabilityDefinition ||--o{ CapabilityDefinitionVersion : "relates to"
+  CapabilityDefinition ||--o{ CapabilityAddress : "relates to"
+  CapabilityDefinitionVersion ||--o{ CapabilityParameterDefinition : "relates to"
+  CapabilityDefinitionVersion ||--o{ CapabilityEvent : "relates to"
+  CapabilityDefinitionVersion ||--o{ CapabilityState : "relates to"
+  CapabilityAddress ||--o{ CapabilityEvent : "relates to"
+  CapabilityAddress ||--o{ CapabilityState : "relates to"
+  RewardScoringPolicy ||--o{ RewardScoringWeight : "relates to"
+  RewardScoringPolicy ||--o{ RewardEvidenceEvent : "relates to"
+  FactionStandingScoringPolicy ||--o{ FactionStandingScoringWeight : "relates to"
+  FactionStandingScoringPolicy ||--o{ FactionStandingEvidenceEvent : "relates to"

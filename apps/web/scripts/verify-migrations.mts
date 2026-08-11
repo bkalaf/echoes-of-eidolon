@@ -109,20 +109,63 @@ try {
        VALUES ('capability-user', 'Capability User', 'capability@example.test', 'ADULT_18_PLUS', CURRENT_TIMESTAMP)`,
     );
     await verification.query(
-      `INSERT INTO "CapabilityDefinition" ("capabilityDefinitionId", "key", "valueKind", "description")
-       VALUES ('capability-definition', 'verified-key', 'BOOLEAN', 'verification definition')`,
+      `INSERT INTO "CapabilityDefinition" ("capabilityDefinitionId", "code")
+       VALUES ('capability-definition', 'VERIFIED_BOOLEAN')`,
     );
     await verification.query(
-      `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "booleanValue")
-       VALUES ('capability-event', 'capability-user', 'capability-definition', 0, 'SET', true)`,
+      `INSERT INTO "CapabilityDefinitionVersion" (
+         "capabilityDefinitionVersionId", "capabilityDefinitionId", "version", "pathPattern", "valueKind",
+         "allowedOperations", "monotonicPolicy", "description", "status"
+       ) VALUES (
+         'capability-definition:v1', 'capability-definition', 1, 'verified.boolean', 'BOOLEAN',
+         ARRAY['SET', 'CLEAR']::"CapabilityOperation"[], 'TRUE_ONLY', 'verification definition', 'ACTIVE'
+       )`,
+    );
+    await verification.query(
+      `INSERT INTO "CapabilityAddress" ("capabilityAddressId", "capabilityDefinitionId", "bindings", "bindingsHash")
+       VALUES ('capability-address', 'capability-definition', '{}'::jsonb, 'empty-bindings')`,
+    );
+    await verification.query(
+      `INSERT INTO "CapabilityEvent" (
+         "capabilityEventId", "scopeType", "scopeId", "capabilityAddressId",
+         "capabilityDefinitionVersionId", "operation", "booleanValue", "idempotencyKey", "occurredAt"
+       ) VALUES (
+         'capability-event', 'ACCOUNT', 'capability-user', 'capability-address',
+         'capability-definition:v1', 'SET', true, 'verified-set', CURRENT_TIMESTAMP
+       )`,
     );
     await expectDatabaseRejection(
       () => verification.query(
-        `INSERT INTO "CapabilityEvent" ("capabilityEventId", "userId", "capabilityDefinitionId", "sequence", "operation", "booleanValue")
-         VALUES ('bad-capability-event', 'capability-user', 'capability-definition', 1, 'ADD', true)`,
+        `INSERT INTO "CapabilityEvent" (
+           "capabilityEventId", "scopeType", "scopeId", "capabilityAddressId",
+           "capabilityDefinitionVersionId", "operation", "booleanValue", "occurredAt"
+         ) VALUES (
+           'bad-capability-event', 'ACCOUNT', 'capability-user', 'capability-address',
+           'capability-definition:v1', 'ADD', true, CURRENT_TIMESTAMP
+         )`,
       ),
       "Invalid BOOLEAN capability operation was not rejected",
     );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "CapabilityEvent" (
+           "capabilityEventId", "scopeType", "scopeId", "capabilityAddressId",
+           "capabilityDefinitionVersionId", "operation", "booleanValue", "idempotencyKey", "occurredAt"
+         ) VALUES (
+           'duplicate-capability-event', 'ACCOUNT', 'capability-user', 'capability-address',
+           'capability-definition:v1', 'SET', true, 'verified-set', CURRENT_TIMESTAMP
+         )`,
+      ),
+      "CapabilityEvent idempotency duplicate was not rejected",
+    );
+    const projectedCapability = await verification.query(
+      `SELECT "isPresent", "booleanValue", "lastSequence" FROM "CapabilityState"
+       WHERE "scopeType" = 'ACCOUNT' AND "scopeId" = 'capability-user' AND "capabilityAddressId" = 'capability-address'`,
+    );
+    if (projectedCapability.rows.length !== 1 || projectedCapability.rows[0]?.isPresent !== true
+      || projectedCapability.rows[0]?.booleanValue !== true || projectedCapability.rows[0]?.lastSequence == null) {
+      throw new Error(`Capability projection was not transactionally materialized: ${JSON.stringify(projectedCapability.rows)}`);
+    }
     await expectDatabaseRejection(
       () => verification.query(`UPDATE "CapabilityEvent" SET "booleanValue" = false WHERE "capabilityEventId" = 'capability-event'`),
       "CapabilityEvent update was not rejected",
@@ -130,6 +173,13 @@ try {
     await expectDatabaseRejection(
       () => verification.query(`DELETE FROM "CapabilityEvent" WHERE "capabilityEventId" = 'capability-event'`),
       "CapabilityEvent delete was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `UPDATE "CapabilityDefinitionVersion" SET "pathPattern" = 'changed'
+         WHERE "capabilityDefinitionVersionId" = 'capability-definition:v1'`,
+      ),
+      "Published CapabilityDefinitionVersion mutation was not rejected",
     );
 
     await verification.query(
@@ -189,16 +239,21 @@ try {
     );
     await verification.query(
       `INSERT INTO "KnowledgeBaseDisclosure" (
-         "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "capabilityDefinitionId", "ordinal", "operator",
-         "requiredBoolean", "mode", "anchorBlockId"
-       ) VALUES ('disclosure', 'knowledge-one', 'capability-definition', 0, 'EQ', true, 'REPLACE_BLOCK', 'block-one')`,
+         "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "ordinal", "condition", "mode", "anchorBlockId"
+       ) VALUES (
+         'disclosure', 'knowledge-one', 0,
+         '{"operator":"EQ","scope":{"scopeType":"ACCOUNT","scopeId":"capability-user"},"address":{"capabilityDefinitionId":"capability-definition","bindings":{}},"value":true}'::jsonb,
+         'REPLACE_BLOCK', 'block-one'
+       )`,
     );
     await expectDatabaseRejection(
       () => verification.query(
         `INSERT INTO "KnowledgeBaseDisclosure" (
-           "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "capabilityDefinitionId", "ordinal", "operator",
-           "requiredBoolean", "mode", "anchorBlockId"
-         ) VALUES ('bad-disclosure', 'knowledge-one', 'capability-definition', 1, 'EQ', true, 'REPLACE_BLOCK', 'block-two')`,
+           "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "ordinal", "condition", "mode", "anchorBlockId"
+         ) VALUES (
+           'bad-disclosure', 'knowledge-one', 1, '{"operator":"EXISTS"}'::jsonb,
+           'REPLACE_BLOCK', 'block-two'
+         )`,
       ),
       "Cross-entry knowledge disclosure anchor was not rejected",
     );
@@ -395,7 +450,7 @@ try {
       );
     }
 
-    await applyThrough(migrations.at(-1) ?? "");
+    await applyThrough("20260810250000_puzzle_acceptance_index_name");
     const legacyCapability = await preCorrection.query(
       `SELECT "counterValue", "scoreValue", "occurredAt"::text AS "occurredAtText" FROM "CapabilityEvent" WHERE "capabilityEventId" = 'legacy-counter-event'`,
     );
@@ -415,6 +470,61 @@ try {
     ) {
       throw new Error("Representative legacy duology rows were not translated to the canonical mirrored pairing");
     }
+
+    await preCorrection.query(
+      `INSERT INTO "KnowledgeBaseItem" ("knowledgeBaseItemId", "entityType", "entityId", "title", "baseContent")
+       VALUES ('legacy-knowledge', 'CULTURE', 'legacy-culture', 'Legacy knowledge', 'Base')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "KnowledgeBaseDisclosure" (
+         "knowledgeBaseDisclosureId", "knowledgeBaseItemId", "capabilityDefinitionId", "ordinal", "operator", "mode"
+       ) VALUES (
+         'legacy-disclosure', 'legacy-knowledge', 'legacy-counter-definition', 0, 'EXISTS', 'APPEND_BLOCKS'
+       )`,
+    );
+
+    await applyThrough("20260810255000_capability_enum_extensions");
+    const capabilityMigration = await readFile(resolve(
+      migrationsRoot,
+      "20260810260000_capability_ledger_projection",
+      "migration.sql",
+    ), "utf8");
+    let unsafeEventError = "";
+    try {
+      await preCorrection.query(capabilityMigration);
+    } catch (error) {
+      unsafeEventError = error instanceof Error ? error.message : String(error);
+    }
+    if (!unsafeEventError.includes("legacy-counter-event")) {
+      throw new Error(`Capability migration did not fail closed with the legacy event identity: ${unsafeEventError}`);
+    }
+
+    await preCorrection.query(`TRUNCATE "CapabilityEvent"`);
+    let unsafeDisclosureError = "";
+    try {
+      await preCorrection.query(capabilityMigration);
+    } catch (error) {
+      unsafeDisclosureError = error instanceof Error ? error.message : String(error);
+    }
+    if (!unsafeDisclosureError.includes("legacy-disclosure")) {
+      throw new Error(`Capability migration did not fail closed with the legacy disclosure identity: ${unsafeDisclosureError}`);
+    }
+
+    await preCorrection.query(`TRUNCATE "KnowledgeBaseDisclosure" CASCADE`);
+    await preCorrection.query(capabilityMigration);
+    appliedMigrations.add("20260810260000_capability_ledger_projection");
+    const preservedDefinition = await preCorrection.query(
+      `SELECT definition."code", version."version", version."pathPattern", version."valueKind"
+       FROM "CapabilityDefinition" definition
+       JOIN "CapabilityDefinitionVersion" version USING ("capabilityDefinitionId")
+       WHERE definition."capabilityDefinitionId" = 'legacy-counter-definition'`,
+    );
+    if (JSON.stringify(preservedDefinition.rows) !== JSON.stringify([
+      { code: "legacy-counter", version: 1, pathPattern: "legacy-counter", valueKind: "COUNTER" },
+    ])) {
+      throw new Error(`Legacy concrete CapabilityDefinition was not preserved losslessly: ${JSON.stringify(preservedDefinition.rows)}`);
+    }
+
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [
       "exec", "prisma", "migrate", "diff",

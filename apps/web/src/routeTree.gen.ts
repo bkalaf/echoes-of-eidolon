@@ -22,6 +22,7 @@ import { Route as FeaturesFreeToPlayRouteImport } from './routes/features.free-t
 import { Route as ApiAccountMembershipRouteImport } from './routes/api/account/membership'
 import { Route as ApiAccountSettingsRouteImport } from './routes/api/account/settings'
 import { Route as ApiAdminCampaignRouteImport } from './routes/api/admin/campaign'
+import { Route as ApiAdminCapabilitiesRouteImport } from './routes/api/admin/capabilities'
 import { Route as ApiAdminDocumentsRouteImport } from './routes/api/admin/documents'
 import { Route as ApiAdminReleasesRouteImport } from './routes/api/admin/releases'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
@@ -45,6 +46,8 @@ import { Route as ApiAdminAccountsIndexRouteImport } from './routes/api/admin/ac
 import { Route as ApiAdminAccountsUserIdRouteImport } from './routes/api/admin/accounts/$userId'
 import { Route as ApiAdminAssetsIndexRouteImport } from './routes/api/admin/assets/index'
 import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/admin/beta-invitations/index'
+import { Route as ApiAdminCapabilitiesInspectorRouteImport } from './routes/api/admin/capabilities/inspector'
+import { Route as ApiAdminCapabilitiesScoringRouteImport } from './routes/api/admin/capabilities/scoring'
 import { Route as ApiAdminCommerceIndexRouteImport } from './routes/api/admin/commerce/index'
 import { Route as ApiAdminPerksIndexRouteImport } from './routes/api/admin/perks/index'
 import { Route as ApiAdminPerksPerkIdRouteImport } from './routes/api/admin/perks/$perkId'
@@ -57,8 +60,10 @@ import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/adm
 import { Route as ApiAdminAccountsUserIdRoleRouteImport } from './routes/api/admin/accounts/$userId/role'
 import { Route as ApiAdminBetaInvitationsIdApproveRouteImport } from './routes/api/admin/beta-invitations/$id/approve'
 import { Route as ApiAdminBetaInvitationsIdRejectRouteImport } from './routes/api/admin/beta-invitations/$id/reject'
+import { Route as ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport } from './routes/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
 import { Route as ApiAdminDataEntityKeyImportRouteImport } from './routes/api/admin/data/$entityKey/import'
 import { Route as ApiAdminReleasesIdPublishRouteImport } from './routes/api/admin/releases/$id/publish'
+import { Route as ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRouteImport } from './routes/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -123,6 +128,11 @@ const ApiAccountSettingsRoute = ApiAccountSettingsRouteImport.update({
 const ApiAdminCampaignRoute = ApiAdminCampaignRouteImport.update({
   id: '/api/admin/campaign',
   path: '/api/admin/campaign',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminCapabilitiesRoute = ApiAdminCapabilitiesRouteImport.update({
+  id: '/api/admin/capabilities',
+  path: '/api/admin/capabilities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminDocumentsRoute = ApiAdminDocumentsRouteImport.update({
@@ -245,6 +255,18 @@ const ApiAdminBetaInvitationsIndexRoute =
     path: '/api/admin/beta-invitations/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminCapabilitiesInspectorRoute =
+  ApiAdminCapabilitiesInspectorRouteImport.update({
+    id: '/inspector',
+    path: '/inspector',
+    getParentRoute: () => ApiAdminCapabilitiesRoute,
+  } as any)
+const ApiAdminCapabilitiesScoringRoute =
+  ApiAdminCapabilitiesScoringRouteImport.update({
+    id: '/scoring',
+    path: '/scoring',
+    getParentRoute: () => ApiAdminCapabilitiesRoute,
+  } as any)
 const ApiAdminCommerceIndexRoute = ApiAdminCommerceIndexRouteImport.update({
   id: '/api/admin/commerce/',
   path: '/api/admin/commerce/',
@@ -313,6 +335,12 @@ const ApiAdminBetaInvitationsIdRejectRoute =
     path: '/api/admin/beta-invitations/$id/reject',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute =
+  ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport.update({
+    id: '/$capabilityDefinitionVersionId/activate',
+    path: '/$capabilityDefinitionVersionId/activate',
+    getParentRoute: () => ApiAdminCapabilitiesRoute,
+  } as any)
 const ApiAdminDataEntityKeyImportRoute =
   ApiAdminDataEntityKeyImportRouteImport.update({
     id: '/api/admin/data/$entityKey/import',
@@ -324,6 +352,12 @@ const ApiAdminReleasesIdPublishRoute =
     id: '/$id/publish',
     path: '/$id/publish',
     getParentRoute: () => ApiAdminReleasesRoute,
+  } as any)
+const ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute =
+  ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRouteImport.update({
+    id: '/$rewardScoringPolicyId/activate',
+    path: '/$rewardScoringPolicyId/activate',
+    getParentRoute: () => ApiAdminCapabilitiesScoringRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -340,6 +374,7 @@ export interface FileRoutesByFullPath {
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -358,6 +393,8 @@ export interface FileRoutesByFullPath {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
+  '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
@@ -375,8 +412,10 @@ export interface FileRoutesByFullPath {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
+  '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -392,6 +431,7 @@ export interface FileRoutesByTo {
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -410,6 +450,8 @@ export interface FileRoutesByTo {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
+  '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
@@ -427,8 +469,10 @@ export interface FileRoutesByTo {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
+  '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -445,6 +489,7 @@ export interface FileRoutesById {
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRoute
+  '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
@@ -463,6 +508,8 @@ export interface FileRoutesById {
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
   '/api/admin/accounts/$userId': typeof ApiAdminAccountsUserIdRouteWithChildren
+  '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
+  '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRouteWithChildren
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
@@ -480,8 +527,10 @@ export interface FileRoutesById {
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
   '/api/admin/beta-invitations/$id/reject': typeof ApiAdminBetaInvitationsIdRejectRoute
+  '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
   '/api/admin/data/$entityKey/import': typeof ApiAdminDataEntityKeyImportRoute
   '/api/admin/releases/$id/publish': typeof ApiAdminReleasesIdPublishRoute
+  '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -499,6 +548,7 @@ export interface FileRouteTypes {
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/campaign'
+    | '/api/admin/capabilities'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -517,6 +567,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/capabilities/inspector'
+    | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
@@ -534,8 +586,10 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/releases/$id/publish'
+    | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -551,6 +605,7 @@ export interface FileRouteTypes {
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/campaign'
+    | '/api/admin/capabilities'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -569,6 +624,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/capabilities/inspector'
+    | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
@@ -586,8 +643,10 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/releases/$id/publish'
+    | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
   id:
     | '__root__'
     | '/'
@@ -603,6 +662,7 @@ export interface FileRouteTypes {
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/campaign'
+    | '/api/admin/capabilities'
     | '/api/admin/documents'
     | '/api/admin/releases'
     | '/api/atlas/catalog'
@@ -621,6 +681,8 @@ export interface FileRouteTypes {
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
     | '/api/admin/accounts/$userId'
+    | '/api/admin/capabilities/inspector'
+    | '/api/admin/capabilities/scoring'
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/settlements/complete-naming'
@@ -638,8 +700,10 @@ export interface FileRouteTypes {
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
     | '/api/admin/beta-invitations/$id/reject'
+    | '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
     | '/api/admin/data/$entityKey/import'
     | '/api/admin/releases/$id/publish'
+    | '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -656,6 +720,7 @@ export interface RootRouteChildren {
   ApiAccountMembershipRoute: typeof ApiAccountMembershipRoute
   ApiAccountSettingsRoute: typeof ApiAccountSettingsRoute
   ApiAdminCampaignRoute: typeof ApiAdminCampaignRoute
+  ApiAdminCapabilitiesRoute: typeof ApiAdminCapabilitiesRouteWithChildren
   ApiAdminDocumentsRoute: typeof ApiAdminDocumentsRoute
   ApiAdminReleasesRoute: typeof ApiAdminReleasesRouteWithChildren
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
@@ -784,6 +849,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/campaign'
       fullPath: '/api/admin/campaign'
       preLoaderRoute: typeof ApiAdminCampaignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/capabilities': {
+      id: '/api/admin/capabilities'
+      path: '/api/admin/capabilities'
+      fullPath: '/api/admin/capabilities'
+      preLoaderRoute: typeof ApiAdminCapabilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/documents': {
@@ -947,6 +1019,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/capabilities/inspector': {
+      id: '/api/admin/capabilities/inspector'
+      path: '/inspector'
+      fullPath: '/api/admin/capabilities/inspector'
+      preLoaderRoute: typeof ApiAdminCapabilitiesInspectorRouteImport
+      parentRoute: typeof ApiAdminCapabilitiesRoute
+    }
+    '/api/admin/capabilities/scoring': {
+      id: '/api/admin/capabilities/scoring'
+      path: '/scoring'
+      fullPath: '/api/admin/capabilities/scoring'
+      preLoaderRoute: typeof ApiAdminCapabilitiesScoringRouteImport
+      parentRoute: typeof ApiAdminCapabilitiesRoute
+    }
     '/api/admin/commerce/': {
       id: '/api/admin/commerce/'
       path: '/api/admin/commerce'
@@ -1031,6 +1117,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBetaInvitationsIdRejectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/capabilities/$capabilityDefinitionVersionId/activate': {
+      id: '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+      path: '/$capabilityDefinitionVersionId/activate'
+      fullPath: '/api/admin/capabilities/$capabilityDefinitionVersionId/activate'
+      preLoaderRoute: typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRouteImport
+      parentRoute: typeof ApiAdminCapabilitiesRoute
+    }
     '/api/admin/data/$entityKey/import': {
       id: '/api/admin/data/$entityKey/import'
       path: '/api/admin/data/$entityKey/import'
@@ -1045,8 +1138,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminReleasesIdPublishRouteImport
       parentRoute: typeof ApiAdminReleasesRoute
     }
+    '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate': {
+      id: '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+      path: '/$rewardScoringPolicyId/activate'
+      fullPath: '/api/admin/capabilities/scoring/$rewardScoringPolicyId/activate'
+      preLoaderRoute: typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRouteImport
+      parentRoute: typeof ApiAdminCapabilitiesScoringRoute
+    }
   }
 }
+
+interface ApiAdminCapabilitiesScoringRouteChildren {
+  ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute: typeof ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute
+}
+
+const ApiAdminCapabilitiesScoringRouteChildren: ApiAdminCapabilitiesScoringRouteChildren =
+  {
+    ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute:
+      ApiAdminCapabilitiesScoringRewardScoringPolicyIdActivateRoute,
+  }
+
+const ApiAdminCapabilitiesScoringRouteWithChildren =
+  ApiAdminCapabilitiesScoringRoute._addFileChildren(
+    ApiAdminCapabilitiesScoringRouteChildren,
+  )
+
+interface ApiAdminCapabilitiesRouteChildren {
+  ApiAdminCapabilitiesInspectorRoute: typeof ApiAdminCapabilitiesInspectorRoute
+  ApiAdminCapabilitiesScoringRoute: typeof ApiAdminCapabilitiesScoringRouteWithChildren
+  ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute: typeof ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute
+}
+
+const ApiAdminCapabilitiesRouteChildren: ApiAdminCapabilitiesRouteChildren = {
+  ApiAdminCapabilitiesInspectorRoute: ApiAdminCapabilitiesInspectorRoute,
+  ApiAdminCapabilitiesScoringRoute:
+    ApiAdminCapabilitiesScoringRouteWithChildren,
+  ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute:
+    ApiAdminCapabilitiesCapabilityDefinitionVersionIdActivateRoute,
+}
+
+const ApiAdminCapabilitiesRouteWithChildren =
+  ApiAdminCapabilitiesRoute._addFileChildren(ApiAdminCapabilitiesRouteChildren)
 
 interface ApiAdminReleasesRouteChildren {
   ApiAdminReleasesIdPublishRoute: typeof ApiAdminReleasesIdPublishRoute
@@ -1087,6 +1219,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAccountMembershipRoute: ApiAccountMembershipRoute,
   ApiAccountSettingsRoute: ApiAccountSettingsRoute,
   ApiAdminCampaignRoute: ApiAdminCampaignRoute,
+  ApiAdminCapabilitiesRoute: ApiAdminCapabilitiesRouteWithChildren,
   ApiAdminDocumentsRoute: ApiAdminDocumentsRoute,
   ApiAdminReleasesRoute: ApiAdminReleasesRouteWithChildren,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
