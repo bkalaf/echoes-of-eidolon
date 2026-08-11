@@ -83,7 +83,7 @@ describe("production deployment entry point", () => {
 
   it("bundles Prisma Client runtime through Nitro instead of emitting a broken traced ESM subpath", () => {
     const source = readFileSync(viteConfig, "utf8");
-    expect(source).toContain('nitro({ noExternals: ["@prisma/client"] })');
+    expect(source).toContain('nitro({ noExternals: ["@prisma/client", "tslib"] })');
   });
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
