@@ -26,6 +26,9 @@ function fixture() {
   const revision = execFileSync("git", ["-C", repository, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   writeFileSync(envFile, [
     "DATABASE_URL=postgresql://unused:unused@127.0.0.1:5432/unused",
+    "POSTGRES_DB=unused",
+    "POSTGRES_PASSWORD=unused",
+    "POSTGRES_USER=unused",
     `EIDOLON_BACKUP_DIR=${backups}`,
     `EIDOLON_COMPOSE_FILE=${compose}`,
     `EIDOLON_DEPLOYMENT_LOCK_FILE=${resolve(root, "deployment.lock")}`,
@@ -45,7 +48,15 @@ describe("production deployment entry point", () => {
     expect(unit).toContain("User=eidolon");
     expect(unit).toContain("Group=eidolon");
     expect(unit).toContain("EnvironmentFile=/etc/eidolon/deployment.env");
+    expect(unit).toContain("ExecStart=/usr/bin/env pnpm --filter @echoes/web start");
     expect(unit).toContain("NoNewPrivileges=true");
+  });
+
+  it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
+    const source = readFileSync(script, "utf8");
+    expect(source).toContain('run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres');
+    expect(source).toContain('pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB"');
+    expect(source).not.toMatch(/run_unlocked pg_dump/);
   });
 
   it("closes the serialized deployment lock for every post-lock subprocess", () => {

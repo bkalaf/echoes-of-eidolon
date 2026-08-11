@@ -46,6 +46,9 @@ set +a
 
 required_names=(
   DATABASE_URL
+  POSTGRES_DB
+  POSTGRES_PASSWORD
+  POSTGRES_USER
   EIDOLON_BACKUP_DIR
   EIDOLON_COMPOSE_FILE
   EIDOLON_DEPLOYMENT_LOCK_FILE
@@ -173,7 +176,8 @@ run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" up -d --wait postgres
 
 TZ=UTC printf -v backup_timestamp '%(%Y%m%dT%H%M%SZ)T' -1
 backup_path="$EIDOLON_BACKUP_DIR/${backup_timestamp}_${target_revision}.dump"
-run_unlocked pg_dump --format=custom --file="$backup_path" --dbname="$DATABASE_URL"
+run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres \
+  pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB" >"$backup_path"
 if [[ ! -s "$backup_path" ]]; then
   echo "Pre-migration backup was not created." >&2
   exit 1
