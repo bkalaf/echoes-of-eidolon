@@ -12,11 +12,12 @@ test("packet routes expose public, auth, account, and store tasks", async ({ pag
     ["/features", "Nine ways Echoes plays differently."],
     ["/auth/sign-in", "Sign In"],
     ["/account/subscription?state=ACC008", "Subscription - Active"],
-    ["/store/checkout/declined", "Payment Declined"],
+    ["/store/checkout/declined", "Payment Not Completed"],
   ] as const) {
     await page.goto(path);
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
   }
+  await expect(page.getByText("A Stripe checkout session reference is required. No payment result is inferred from this route.")).toBeVisible();
 });
 
 test("administration routes expose canonical editor, import, atlas, and campaign tasks", async ({ page }) => {
