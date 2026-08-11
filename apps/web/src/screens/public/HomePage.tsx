@@ -75,7 +75,7 @@ export function HomePage() {
   return (
     <PublicShell>
       <section className="hero" aria-labelledby="home-heading">
-        <img src={managedAssetUrl("marketing.landing-hero")} alt="" />
+        <img src={managedAssetUrl("feature.unique-and-powerful-story")} alt="" />
         <div className="hero-shade" />
         <div className="hero-copy">
           <p className="kicker">Echoes of Eidolon</p>

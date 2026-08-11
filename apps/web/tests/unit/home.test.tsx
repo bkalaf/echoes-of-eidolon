@@ -6,6 +6,7 @@ const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
 
 vi.mock("../../src/lib/auth-client", () => ({ authClient: { useSession: authMocks.useSession } }));
 
+import { managedAssetUrl } from "../../src/content/managed-assets";
 import { HomePage } from "../../src/screens/public/HomePage";
 
 function renderHome() {
@@ -19,8 +20,9 @@ describe("public home", () => {
   });
 
   it("renders the approved hero and all nine carousel features", () => {
-    renderHome();
+    const { container } = renderHome();
     expect(screen.getByRole("heading", { name: /when the moons align/i })).toBeVisible();
+    expect(container.querySelector(".hero > img")).toHaveAttribute("src", managedAssetUrl("feature.unique-and-powerful-story"));
     expect(screen.getAllByRole("listitem")).toHaveLength(9);
     expect(screen.getByText("A subscription will never be required.")).toBeVisible();
     expect(screen.getAllByAltText("Echoes of Eidolon")).toHaveLength(1);

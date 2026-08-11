@@ -1,9 +1,13 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { describe, expect, it, vi } from "vitest";
 
-import { pageManifest } from "../../src/lib/page-manifest";
+import { managedAssetUrl } from "../../src/content/managed-assets";
 import { contactTopicSchema, contactTopicTokens } from "../../src/domain/contact";
+import { pageManifest } from "../../src/lib/page-manifest";
 import { PublicPage } from "../../src/screens/public/PublicPage";
 
 function publicScreen(screenId: string) {
@@ -16,6 +20,19 @@ function renderWithQuery(screenId: string, pathname?: string) {
 }
 
 describe("public mutation boundaries", () => {
+  it("uses the captioned Power of Three video in the responsive features panel", () => {
+    const { container } = renderWithQuery("PUB002");
+
+    expect(container.querySelector(".video-panel--features > video")).toHaveAttribute("src", managedAssetUrl("video.power-of-three"));
+  });
+
+  it("keeps the features video compact only on portrait displays", () => {
+    const styles = readFileSync(resolve(process.cwd(), "src/styles.css"), "utf8");
+
+    expect(styles).toContain("@media (max-width: 900px) and (orientation: portrait)");
+    expect(styles).toContain(".video-panel--features { min-height: 0; aspect-ratio: 16 / 9; }");
+  });
+
   it("preserves the approved gameplay loop and feature explanation copy", () => {
     const gameplay = render(<PublicPage screen={publicScreen("PUB003")} />);
     expect(screen.getByText("Your Knowledge Base grows as you discover people, places, books, history and connections.")).toBeInTheDocument();
