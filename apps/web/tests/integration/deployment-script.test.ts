@@ -59,7 +59,8 @@ describe("production deployment entry point", () => {
     expect(unit).toContain("Environment=NODE_ENV=production");
     expect(unit).toContain("Environment=HOST=127.0.0.1");
     expect(unit).toContain("Environment=PORT=3000");
-    expect(unit).toContain("ExecStart=/usr/bin/env pnpm --filter @echoes/web start");
+    expect(unit).toContain("WorkingDirectory=/srv/eidolon/current/apps/web");
+    expect(unit).toContain("ExecStart=/usr/bin/env node scripts/run-with-local-secrets.mjs node .output/server/index.mjs");
     expect(unit).toContain("NoNewPrivileges=true");
     expect(unit).toContain("ReadWritePaths=/srv/eidolon/current/apps/web/.output");
   });
