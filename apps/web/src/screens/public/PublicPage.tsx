@@ -67,12 +67,21 @@ const statusLabels: Record<ServiceHealthStatus, string> = {
 
 function StatusPage() {
   const health = useQuery({ queryKey: ["public-health"], queryFn: fetchHealth });
+  const releases = useQuery({
+    queryKey: ["public-releases"],
+    queryFn: async () => {
+      const response = await fetch("/api/releases");
+      if (!response.ok) throw new Error("Current release could not be loaded.");
+      return response.json() as Promise<{ releases: Array<{ version: string; summary: string; publishedAt: string }> }>;
+    },
+  });
+  const currentRelease = releases.data?.releases[0];
   const notice = health.isPending
     ? "Checking monitored public services…"
     : health.isError
       ? health.error.message
       : "Status checks loaded. Each service reports only what is currently verified.";
-  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2><p>No verified release source is configured.</p><a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
+  return <><PageHead eyebrow="Status" title="Game & Server Status" description="Current public service health, maintenance and release information." /><a className="button" href="/status/releases">Release Notes</a><p className={`notice ${health.isError ? "notice--bad" : ""}`} role="status">{notice}</p><div className="service-grid">{health.data?.services.map((service) => <article className="card service" key={service.name}><h2>{service.name}<span>{statusLabels[service.status]}</span></h2><p>{service.description}</p></article>)}</div><div className="grid-2"><article className="card"><h2>Planned maintenance</h2><p>No maintenance schedule source is configured.</p><span className="tag">Not monitored</span></article><article className="card"><h2>Current release</h2>{releases.isPending ? <p>Loading current release…</p> : releases.isError ? <p className="notice notice--bad">{releases.error.message}</p> : currentRelease ? <><p><strong>{currentRelease.version}</strong></p><p>{currentRelease.summary}</p><small>Published {new Date(currentRelease.publishedAt).toLocaleDateString()}</small></> : <p>No player-visible release has been published.</p>}<a className="button" href="/status/releases">View Release Notes</a></article></div><article className="card"><h2>Recent incidents</h2><p>No incident source is configured.</p></article></>;
 }
 
 function releaseVersionFromPath(pathname?: string): string | undefined {

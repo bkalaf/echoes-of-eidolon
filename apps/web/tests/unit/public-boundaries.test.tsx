@@ -98,6 +98,25 @@ describe("public mutation boundaries", () => {
     expect(screen.queryByText(/v0\.2\.0|v0\.1\.9|v0\.1\.8/)).not.toBeInTheDocument();
   });
 
+  it("shows the latest authoritative published release on the public status page", async () => {
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url === "/api/health") return { ok: true, json: async () => ({ checkedAt: "2026-08-11T00:00:00Z", services: [] }) } as Response;
+      if (url === "/api/releases") return { ok: true, json: async () => ({ releases: [
+        { version: "0.2.0", summary: "Published player release", publishedAt: "2026-08-10T00:00:00Z" },
+      ] }) } as Response;
+      throw new Error(`Unexpected request: ${url}`);
+    }));
+
+    renderWithQuery("PUB016");
+
+    expect(await screen.findByText("0.2.0")).toBeInTheDocument();
+    expect(screen.getByText("Published player release")).toBeInTheDocument();
+    expect(screen.queryByText("No verified release source is configured.")).not.toBeInTheDocument();
+    expect(screen.getByText("No maintenance schedule source is configured.")).toBeInTheDocument();
+    expect(screen.getByText("No incident source is configured.")).toBeInTheDocument();
+  });
+
   it("preserves corrected release-detail navigation without fake content", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ releases: [] }) }));
     renderWithQuery("PUB018");

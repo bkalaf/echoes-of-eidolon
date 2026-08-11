@@ -57,7 +57,7 @@ Therefore **66 of 273 active V3** wireframe pages/states are not fully implement
 | 15 | `PUB017` | Release Notes | `/status/releases` | **IMPLEMENTED** | Reads and renders published release records from `/api/releases`. |
 | 16 | `PUB018` | Release Note Detail | `/status/releases/:version` | **IMPLEMENTED** | Resolves the concrete version against published player-visible releases, links the archive, and navigates adjacent releases without exposing drafts. |
 | 17 | `PUB015` | Contact Us | `/contact` | **IMPLEMENTED** | Contact form validates, persists, and attempts configured delivery through `/api/contact`. |
-| 18 | `PUB016` | Game & Server Status | `/status` | **PARTIAL** | Live health endpoint is rendered; maintenance, incident, and current-release sources are explicitly unconfigured. |
+| 18 | `PUB016` | Game & Server Status | `/status` | **PARTIAL** | Live health and the latest persisted player-visible release are rendered; maintenance and incident sources remain explicitly unconfigured. |
 | 19 | `PUB009` | Donation Checkout | `/donate/checkout` | **IMPLEMENTED** | Eligible donation amount starts server-owned Stripe Checkout; grant waits for signed webhook persistence. |
 | 20 | `PUB019` | Legal Index | `/legal` | **IMPLEMENTED** | Dedicated legal-document index and navigation. |
 | 21 | `LEGAL01` | Legal Document - Terms | `/legal/terms` | **PLACEHOLDER** | Task shell and navigation exist, but the page contains only an owner-copy placeholder; approved legal prose is absent. |
