@@ -239,6 +239,20 @@ describe("persistence contract", () => {
     expect(migration).toContain('DROP TABLE "Matrix"');
   });
 
+  it("persists hashed short-lived bulk API sessions and append-only operation audits", () => {
+    const migration = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260810290000_external_bulk_api_audit/migration.sql"),
+      "utf8",
+    );
+    expect(migration).toContain('CREATE TABLE "ExternalBulkApiSession"');
+    expect(migration).toContain('length("keyHash") = 64');
+    expect(migration).toContain('"expiresAt" > "createdAt"');
+    expect(migration).toContain('CREATE TABLE "BulkOperationAudit"');
+    expect(migration).toContain('BulkOperationAudit_reject_update');
+    expect(migration).toContain('BulkOperationAudit_reject_delete');
+    expect(migration).not.toMatch(/"rawKey"|"plaintextKey"/);
+  });
+
   it("stores capability-gated knowledge disclosures without merging hidden citations into base citations", () => {
     const migration = readFileSync(
       resolve(import.meta.dirname, "../../prisma/migrations/20260810140000_knowledge_disclosures/migration.sql"),

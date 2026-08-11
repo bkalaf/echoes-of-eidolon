@@ -12,7 +12,16 @@ erDiagram
   User {
     string id PK
   }
+  ExternalBulkApiSession {
+    string id PK
+  }
+  BulkOperationAudit {
+    string id PK
+  }
   User ||--o{ Member : "relates to"
   User ||--o{ Invitation : "relates to"
   Organization ||--o{ Member : "relates to"
   Organization ||--o{ Invitation : "relates to"
+  User ||--o{ ExternalBulkApiSession : "creates"
+  User ||--o{ BulkOperationAudit : "acts in"
+  ExternalBulkApiSession ||--o{ BulkOperationAudit : "authenticates"

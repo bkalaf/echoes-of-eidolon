@@ -498,6 +498,40 @@ try {
       ),
       "Atlas connection accepted a reversed undirected pair",
     );
+    await verification.query(
+      `INSERT INTO "User" ("id", "name", "email", "eligibilityStatus", "updatedAt")
+       VALUES ('bulk-owner', 'Bulk Owner', 'bulk-owner@example.test', 'ADULT_18_PLUS', now())`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "ExternalBulkApiSession" (
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "expiresAt"
+         ) VALUES ('bad-key', 'bulk-owner', 'plaintext', now() + interval '30 minutes')`,
+      ),
+      "External bulk API session accepted a non-hash secret",
+    );
+    await verification.query(
+      `INSERT INTO "ExternalBulkApiSession" (
+         "externalBulkApiSessionId", "issuedByUserId", "keyHash", "expiresAt"
+       ) VALUES ('bulk-session', 'bulk-owner', repeat('a', 64), now() + interval '30 minutes')`,
+    );
+    await verification.query(
+      `INSERT INTO "BulkOperationAudit" (
+         "bulkOperationAuditId", "externalBulkApiSessionId", "operation", "entityName", "result", "recordCount"
+       ) VALUES ('bulk-audit', 'bulk-session', 'QUERY', 'Soul', 'UNCHANGED', 0)`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "BulkOperationAudit" SET "recordCount" = 1 WHERE "bulkOperationAuditId" = 'bulk-audit'`),
+      "Bulk operation audit accepted an update",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`DELETE FROM "BulkOperationAudit" WHERE "bulkOperationAuditId" = 'bulk-audit'`),
+      "Bulk operation audit accepted a delete",
+    );
+    await verification.query(
+      `UPDATE "ExternalBulkApiSession" SET "state" = 'OFF', "revokedAt" = now()
+       WHERE "externalBulkApiSessionId" = 'bulk-session'`,
+    );
   } finally {
     await verification.end();
   }
@@ -635,6 +669,7 @@ try {
     await applyThrough("20260810280000_atlas_region_lattice_topology");
     const removedMatrix = await preCorrection.query(`SELECT to_regclass('public."Matrix"') AS matrix`);
     if (removedMatrix.rows[0]?.matrix !== null) throw new Error("Forward Atlas migration did not remove the polluted Matrix table");
+    await applyThrough("20260810290000_external_bulk_api_audit");
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

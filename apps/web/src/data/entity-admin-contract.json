@@ -1,0 +1,2228 @@
+{
+  "entities": {
+    "AchievementDefinition": {
+      "delegate": "achievementDefinition",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "achievementDefinitionId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "chainKey",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "rank",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "imageAssetId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "status",
+          "type": "String"
+        }
+      ],
+      "idField": "achievementDefinitionId"
+    },
+    "Antagonist": {
+      "delegate": "antagonist",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "antagonistId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "characterId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "CONCORD",
+            "RUIN",
+            "SCHISM"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "family",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "trueFlawName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "witnessName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "presentsAs",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "inversionRule",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "apparentDomain",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "realDomain",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "json",
+          "name": "color",
+          "type": "Json"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "legendaryRewardId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "puzzleBlueprintId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "constellationBeforeId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "constellationAfterId",
+          "type": "String"
+        }
+      ],
+      "idField": "antagonistId"
+    },
+    "Architect": {
+      "delegate": "architect",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "departmentId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "profession",
+          "type": "String"
+        }
+      ],
+      "idField": "architectId"
+    },
+    "Ark": {
+      "delegate": "ark",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "arkId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "OPERATIONAL",
+            "CANNIBALIZED",
+            "DAMAGED",
+            "DESTROYED"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "status",
+          "type": "ArkStatus"
+        }
+      ],
+      "idField": "arkId"
+    },
+    "Breed": {
+      "delegate": "breed",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "breedId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "speciesId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "cultureId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "appearance",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "costume",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "structuralStability",
+          "type": "Float"
+        },
+        {
+          "enumValues": [
+            "ALTRUISTIC",
+            "RECIPROCAL",
+            "SELFISH"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "motivation",
+          "type": "Motivation"
+        },
+        {
+          "enumValues": [
+            "TEAMWORK",
+            "SITUATIONAL",
+            "SOLO"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "operatingStyle",
+          "type": "OperatingStyle"
+        },
+        {
+          "enumValues": [
+            "ORDERED",
+            "NEUTRAL",
+            "CHAOS"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "structureOrientation",
+          "type": "StructureOrientation"
+        },
+        {
+          "enumValues": [
+            "CENTRALIZED",
+            "DELEGATED",
+            "DISTRIBUTED"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "administrationMode",
+          "type": "AdministrationMode"
+        },
+        {
+          "enumValues": [
+            "COMMON_USE",
+            "SHARED_TITLE",
+            "SINGLE_ENTITY"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "ownershipMode",
+          "type": "OwnershipMode"
+        },
+        {
+          "enumValues": [
+            "CUSTOMARY",
+            "MARKET",
+            "PLANNED"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "allocationMode",
+          "type": "AllocationMode"
+        },
+        {
+          "enumValues": [
+            "ANCESTRAL",
+            "CHARTERED",
+            "MARTIAL"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "legitimacyBasis",
+          "type": "LegitimacyBasis"
+        },
+        {
+          "enumValues": [
+            "APPOINTMENT",
+            "DIVINE_MANDATE",
+            "ELECTION"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "authoritySource",
+          "type": "AuthoritySource"
+        },
+        {
+          "enumValues": [
+            "ACCLAIMED_IMPERATOR",
+            "APPOINTED_COMMISSION",
+            "APPOINTED_DIRECTORATE",
+            "CAPTAINS_COUNCIL",
+            "CHIEFTAIN_COUNCIL",
+            "CONSECRATED_REPUBLIC",
+            "COVENANT_ASSEMBLY",
+            "COVENANT_CROWN",
+            "DELEGATE_LEAGUE",
+            "DIVINE_THRONE",
+            "ELDER_MOOT",
+            "ELECTED_EXECUTIVE",
+            "ELECTIVE_CROWN",
+            "ESTATES_DIET",
+            "FEUDAL_ORDER",
+            "FREE_COMPANY",
+            "GARRISON_COMMAND",
+            "HALLOWED_CUSTOM",
+            "JUNTA",
+            "MILITANT_ORDER",
+            "MILITANT_THEOCRACY",
+            "POPULAR_FEDERATION",
+            "RAIDER_CONFEDERACY",
+            "REGENT_THRONE",
+            "REPUBLIC",
+            "TEMPLE_HIERARCHY",
+            "ZEALOT_BANDS"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "politicalForm",
+          "type": "PoliticalForm"
+        },
+        {
+          "enumValues": [
+            "COMMAND_DEMESNE",
+            "COMMUNE_PLAN",
+            "FOLK_COMMONS",
+            "GUILD_COMPACT",
+            "MONOPOLY_ESTATE",
+            "OPEN_BAZAAR",
+            "SHAREHOLDER_BOURSE",
+            "SYNDICATE_CARTEL",
+            "TRIBUTARY_DEMESNE"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "economicForm",
+          "type": "EconomicForm"
+        },
+        {
+          "enumValues": [
+            "LIGHT_BANTER",
+            "TALKATIVE",
+            "TO_THE_POINT"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "loquacity",
+          "type": "Loquacity"
+        },
+        {
+          "enumValues": [
+            "COMPOSED",
+            "IRRITABLE",
+            "JOYFUL"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "emotionalTemperature",
+          "type": "EmotionalTemperature"
+        },
+        {
+          "enumValues": [
+            "NEUTRAL",
+            "OPTIMISTIC",
+            "PESSIMISTIC"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "outlookOrientation",
+          "type": "OutlookOrientation"
+        },
+        {
+          "enumValues": [
+            "HELPFUL",
+            "JUST_ENOUGH",
+            "WITHHOLDING"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "collaborativePosture",
+          "type": "CollaborativePosture"
+        }
+      ],
+      "idField": "breedId"
+    },
+    "Character": {
+      "delegate": "character",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "characterId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "displayName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "breedId",
+          "type": "String"
+        }
+      ],
+      "idField": "characterId"
+    },
+    "Citation": {
+      "delegate": "citation",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "citationId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "sourceId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "locator",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "rendering",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "VERY_LOW",
+            "LOW",
+            "MODERATE",
+            "HIGH",
+            "VERY_HIGH"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "quality",
+          "type": "CitationQuality"
+        }
+      ],
+      "idField": "citationId"
+    },
+    "Companion": {
+      "delegate": "companion",
+      "fields": [
+        {
+          "enumValues": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "companionKey",
+          "type": "CompanionKey"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "concordProtagonistId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "ruinProtagonistId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "schismProtagonistId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "soulId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "NECKLACE",
+            "BRACELET",
+            "EARRINGS",
+            "CLOAK_CLASP",
+            "LIGHTER",
+            "POCKETWATCH",
+            "COIN_HEAD_BLACKENED",
+            "COIN_TAIL_BLACKENED",
+            "RING",
+            "TATTOO",
+            "BIRTHMARK",
+            "BROOCH",
+            "HAIR_BARRETTE",
+            "BELT_BUCKLE",
+            "BACKPACK_CLASP"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "heirloom",
+          "type": "Heirloom"
+        }
+      ],
+      "idField": "companionKey"
+    },
+    "Constellation": {
+      "delegate": "constellation",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "constellationId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "rightAscension",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "declination",
+          "type": "String"
+        }
+      ],
+      "idField": "constellationId"
+    },
+    "Culture": {
+      "delegate": "culture",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "cultureId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "CP01",
+            "CP02",
+            "CP03",
+            "CP04",
+            "CP05",
+            "CP06",
+            "CP07",
+            "CP08",
+            "CP09",
+            "CP10",
+            "CP11",
+            "CP12",
+            "CP13",
+            "CP14",
+            "CP15",
+            "CP16",
+            "CP17",
+            "CP18",
+            "CP19",
+            "CP20",
+            "CP21",
+            "CP22",
+            "CP23",
+            "CP24",
+            "CP25"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "culturePoolId",
+          "type": "CulturePoolId"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "cultureName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "hamletArchitecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "villageArchitecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "townArchitecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "cityArchitecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "metropolisArchitecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectureColorPalette",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "clothingPalette",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        }
+      ],
+      "idField": "cultureId"
+    },
+    "Definition": {
+      "delegate": "definition",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "definitionId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "term",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "definition",
+          "type": "String"
+        }
+      ],
+      "idField": "definitionId"
+    },
+    "Interlude": {
+      "delegate": "interlude",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "interludeId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "WWII",
+            "HISTORICAL",
+            "MYTH",
+            "SCIENCE",
+            "DEJA_VU",
+            "OTHER"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "interludeType",
+          "type": "InterludeType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "summary",
+          "type": "String"
+        }
+      ],
+      "idField": "interludeId"
+    },
+    "InterludeSubstitution": {
+      "delegate": "interludeSubstitution",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "interludeSubstitutionId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "interludeId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "replacementInterludeId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "reason",
+          "type": "String"
+        }
+      ],
+      "idField": "interludeSubstitutionId"
+    },
+    "KnowledgeBaseItem": {
+      "delegate": "knowledgeBaseItem",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "knowledgeBaseItemId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "CULTURE",
+            "CHARACTER",
+            "PROTAGONIST",
+            "ANTAGONIST",
+            "WITNESS",
+            "ARCHITECT",
+            "DEPARTMENT",
+            "SPECIES",
+            "SPECIES_GROUP",
+            "BREED",
+            "PERSONALITY_EXPRESSION",
+            "TIMELINE_EVENT",
+            "INTERLUDE",
+            "INTERLUDE_SUBSTITUTION",
+            "PILLAR",
+            "LESSON",
+            "TRANSITION",
+            "LAYETTE",
+            "ARK",
+            "CONSTELLATION",
+            "LEGENDARY_REWARD",
+            "SOUL",
+            "POINT_OF_INTEREST",
+            "SITE",
+            "SETTLEMENT",
+            "MATRIX",
+            "COMPANION",
+            "TOME",
+            "DEFINITION",
+            "KNOWLEDGE_BASE_ITEM",
+            "CAPABILITY_DEFINITION",
+            "ACHIEVEMENT_DEFINITION",
+            "SOURCE",
+            "CITATION",
+            "AUTHORED_NARRATIVE",
+            "NPC_CONVERSATION_GRAPH"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "entityType",
+          "type": "EntityType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "entityId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "title",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "baseContent",
+          "type": "String"
+        }
+      ],
+      "idField": "knowledgeBaseItemId"
+    },
+    "Layette": {
+      "delegate": "layette",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "layetteId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "description",
+          "type": "String"
+        }
+      ],
+      "idField": "layetteId"
+    },
+    "LegendaryReward": {
+      "delegate": "legendaryReward",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "legendaryRewardId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "description",
+          "type": "String"
+        }
+      ],
+      "idField": "legendaryRewardId"
+    },
+    "Lesson": {
+      "delegate": "lesson",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "lessonId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "description",
+          "type": "String"
+        }
+      ],
+      "idField": "lessonId"
+    },
+    "PersonalityExpression": {
+      "delegate": "personalityExpression",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "personalityExpressionId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        }
+      ],
+      "idField": "personalityExpressionId"
+    },
+    "Pillar": {
+      "delegate": "pillar",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "pillarId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "domain",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "seatNumber",
+          "type": "Int"
+        }
+      ],
+      "idField": "pillarId"
+    },
+    "PointOfInterest": {
+      "delegate": "pointOfInterest",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "pointOfInterestId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "kind",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "R01",
+            "R02",
+            "R03",
+            "R04",
+            "R05",
+            "R06",
+            "R07",
+            "R08",
+            "R09",
+            "R10",
+            "R11",
+            "R12",
+            "R13",
+            "R14",
+            "R15",
+            "R16",
+            "R17",
+            "R18",
+            "R19",
+            "R20",
+            "R21",
+            "R22",
+            "R23",
+            "R24",
+            "R25"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "regionId",
+          "type": "RegionId"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "longitude",
+          "type": "Float"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "latitude",
+          "type": "Float"
+        }
+      ],
+      "idField": "pointOfInterestId"
+    },
+    "Protagonist": {
+      "delegate": "protagonist",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "protagonistId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "characterId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "MINOR",
+            "MAJOR"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "importance",
+          "type": "ProtagonistImportance"
+        },
+        {
+          "enumValues": [
+            "CONCORD",
+            "RUIN",
+            "SCHISM"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        }
+      ],
+      "idField": "protagonistId"
+    },
+    "PuzzleBlueprint": {
+      "delegate": "puzzleBlueprint",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "puzzleBlueprintId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "TEXT_LANGUAGE_LITERARY",
+            "CRYPTO_NUMERIC_DATA",
+            "VISUAL_COLOR_OPTICAL",
+            "SPATIAL_FOLDING_GEOMETRY",
+            "AUDIO_MUSIC_SPECTRAL",
+            "LOGIC_CONSTRAINT",
+            "HISTORICAL_RESEARCH",
+            "CONSTRUCTION_SIMULATION",
+            "CROSS_MODAL"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "family",
+          "type": "PuzzleFamily"
+        },
+        {
+          "enumValues": [
+            "TIER_1_INITIATE",
+            "TIER_2_ADEPT",
+            "TIER_3_EXPERT",
+            "TIER_4_MASTER",
+            "TIER_5_ORDEAL"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "difficultyTier",
+          "type": "PuzzleDifficultyTier"
+        }
+      ],
+      "idField": "puzzleBlueprintId"
+    },
+    "Research": {
+      "delegate": "research",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "researchId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "notes",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "citationId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "EXODUS_PROGRAM",
+            "REWARD",
+            "SPECIES",
+            "HISTORICAL_EVENT",
+            "CULTURAL_WOUND",
+            "PERSON",
+            "PLACE",
+            "INSTITUTION",
+            "ORGANIZATION",
+            "SYMBOL",
+            "TOME",
+            "TECHNOLOGY_OR_SYSTEM",
+            "OTHER"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "enum",
+          "name": "category",
+          "type": "ResearchCategory"
+        }
+      ],
+      "idField": "researchId"
+    },
+    "Settlement": {
+      "delegate": "settlement",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "settlementId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "siteId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "HAMLET",
+            "VILLAGE",
+            "TOWN",
+            "CITY",
+            "METROPOLIS"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "classification",
+          "type": "SettlementClassification"
+        }
+      ],
+      "idField": "settlementId"
+    },
+    "SettlementPopulationEvent": {
+      "delegate": "settlementPopulationEvent",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "settlementPopulationEventId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "settlementWorldId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "year",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "sequence",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "breedId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "FOUNDING",
+            "GROWTH",
+            "MIGRATION_IN",
+            "MIGRATION_OUT"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "eventType",
+          "type": "SettlementPopulationEventType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "populationDelta",
+          "type": "Int"
+        }
+      ],
+      "idField": "settlementPopulationEventId"
+    },
+    "SettlementWorld": {
+      "delegate": "settlementWorld",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "settlementWorldId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "settlementId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "CONCORD",
+            "RUIN",
+            "SCHISM"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": true,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "totalPopulation",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "dominantBreedId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "cultureId",
+          "type": "String"
+        }
+      ],
+      "idField": "settlementWorldId"
+    },
+    "Site": {
+      "delegate": "site",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "siteId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "R01",
+            "R02",
+            "R03",
+            "R04",
+            "R05",
+            "R06",
+            "R07",
+            "R08",
+            "R09",
+            "R10",
+            "R11",
+            "R12",
+            "R13",
+            "R14",
+            "R15",
+            "R16",
+            "R17",
+            "R18",
+            "R19",
+            "R20",
+            "R21",
+            "R22",
+            "R23",
+            "R24",
+            "R25"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "regionId",
+          "type": "RegionId"
+        },
+        {
+          "enumValues": [
+            "HAMLET",
+            "VILLAGE",
+            "TOWN",
+            "CITY",
+            "METROPOLIS"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "candidateType",
+          "type": "SettlementClassification"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "longitude",
+          "type": "Float"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "latitude",
+          "type": "Float"
+        }
+      ],
+      "idField": "siteId"
+    },
+    "Soul": {
+      "delegate": "soul",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "soulId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        }
+      ],
+      "idField": "soulId"
+    },
+    "Source": {
+      "delegate": "source",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "sourceId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "title",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "authors",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "publisher",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "publicationDate",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "BOOK",
+            "JOURNAL_ARTICLE",
+            "WEBPAGE",
+            "REPORT",
+            "THESIS",
+            "DATASET",
+            "ARCHIVE",
+            "INTERVIEW",
+            "AUDIOVISUAL",
+            "PRIMARY_DOCUMENT",
+            "OTHER"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "sourceType",
+          "type": "SourceType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "urlOrIdentifier",
+          "type": "String"
+        }
+      ],
+      "idField": "sourceId"
+    },
+    "Species": {
+      "delegate": "species",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "speciesId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "HUMAN",
+            "BEAST",
+            "MYTHOS",
+            "PET"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "speciesKind",
+          "type": "SpeciesKind"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "scientificName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "json",
+          "name": "taxonomy",
+          "type": "Json"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "appearance",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": true,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "anthropomorphization",
+          "type": "String"
+        }
+      ],
+      "idField": "speciesId"
+    },
+    "SpeciesGroup": {
+      "delegate": "speciesGroup",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "speciesGroupId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "HUMAN",
+            "BEAST",
+            "MYTHOS",
+            "PET"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "speciesKind",
+          "type": "SpeciesKind"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "description",
+          "type": "String"
+        }
+      ],
+      "idField": "speciesGroupId"
+    },
+    "TimelineEvent": {
+      "delegate": "timelineEvent",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "timelineEventId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "HISTORICAL",
+            "ATROCITY",
+            "EXODUS",
+            "IN_TRANSIT"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "timelineEventType",
+          "type": "TimelineEventType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "summary",
+          "type": "String"
+        }
+      ],
+      "idField": "timelineEventId"
+    },
+    "Tome": {
+      "delegate": "tome",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "tomeId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "title",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "author",
+          "type": "String"
+        }
+      ],
+      "idField": "tomeId"
+    },
+    "Transition": {
+      "delegate": "transition",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "transitionId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "bookA",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "bookB",
+          "type": "Int"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "summary",
+          "type": "String"
+        }
+      ],
+      "idField": "transitionId"
+    },
+    "Witness": {
+      "delegate": "witness",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "witnessId",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "antagonist1Id",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "antagonist2Id",
+          "type": "String"
+        }
+      ],
+      "idField": "witnessId"
+    }
+  },
+  "generatedFrom": [
+    "prisma/schema.prisma",
+    "src/content/entities.ts"
+  ]
+}

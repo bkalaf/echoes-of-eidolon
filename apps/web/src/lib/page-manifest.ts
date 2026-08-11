@@ -77,7 +77,7 @@ export function pathMatches(pattern: string, pathname: string) {
   const patternParts = normalizedPattern(pattern).split("/").filter(Boolean);
   const pathParts = pathname.split("/").filter(Boolean);
   if (patternParts.length !== pathParts.length) return false;
-  return patternParts.every((part, index) => part.startsWith(":") || part === pathParts[index]);
+  return patternParts.every((part, index) => part.startsWith(":") || (part === "sample-record" && index === patternParts.length - 1) || part === pathParts[index]);
 }
 
 export function screensForPath(pathname: string) {

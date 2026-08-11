@@ -1315,6 +1315,8 @@ model User {
   authoredDocuments   DocumentDraft[]
   donationCheckouts   DonationCheckout[]
   settings            UserSettings?
+  externalBulkApiSessions ExternalBulkApiSession[]
+  bulkOperationAudits BulkOperationAudit[]
 }
 
 model UserSettings {
@@ -1764,6 +1766,39 @@ model AtlasConnection {
   @@unique([fromLatticeId, toLatticeId])
   @@index([fromLatticeId])
   @@index([toLatticeId])
+}
+
+model ExternalBulkApiSession {
+  externalBulkApiSessionId String               @id
+  issuedByUserId           String
+  keyHash                  String               @unique
+  state                    ExternalBulkApiState @default(ON)
+  expiresAt                DateTime
+  revokedAt                DateTime?
+  createdAt                DateTime             @default(now())
+  issuedBy                 User                 @relation(fields: [issuedByUserId], references: [id], onDelete: Restrict)
+  audits                   BulkOperationAudit[]
+
+  @@index([state, expiresAt])
+  @@index([issuedByUserId])
+}
+
+model BulkOperationAudit {
+  bulkOperationAuditId     String                  @id
+  actorUserId              String?
+  externalBulkApiSessionId String?
+  operation                BulkOperation
+  entityName               String
+  result                   ImportResultState
+  recordCount              Int
+  detail                   String?
+  occurredAt               DateTime                @default(now())
+  actor                    User?                   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  externalSession          ExternalBulkApiSession? @relation(fields: [externalBulkApiSessionId], references: [externalBulkApiSessionId], onDelete: SetNull)
+
+  @@index([occurredAt])
+  @@index([actorUserId])
+  @@index([externalBulkApiSessionId])
 }
 
 model Settlement {

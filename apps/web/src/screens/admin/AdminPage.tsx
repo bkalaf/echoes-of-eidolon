@@ -13,6 +13,8 @@ import { CommerceAdminPage } from "./CommerceAdminPage";
 import { PerkAdminPage } from "./PerkAdminPage";
 import { OperationsAdminPage } from "./OperationsAdminPage";
 import { CapabilityAdminPage } from "./CapabilityAdminPage";
+import { EntityDataAdminPage } from "./EntityDataAdminPage";
+import { BulkOperationsAdminPage } from "./BulkOperationsAdminPage";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -59,7 +61,9 @@ function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; scr
   const isPerkTask = screen.path?.startsWith("/admin/perks");
   const isOperationsTask = pathname === "/admin/server" || screen.path?.startsWith("/admin/operations");
   const isCapabilityTask = screen.screenId.startsWith("CAP") || screen.screenId === "DATA030";
-  return <><AdminHead screen={screen} description="Account authorization was verified for this reviewed task." />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isOperationsTask ? <OperationsAdminPage screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isCapabilityTask ? <CapabilityAdminPage pathname={pathname} screen={screen} /> : isAtlasTask ? <AtlasAdminPage screen={screen} /> : isCampaignTask ? <CampaignAdminPage screen={screen} /> : isPuzzleTask ? <PuzzleAdminPage screen={screen} /> : isAssetPromptTask ? <AssetPromptAdminPage screen={screen} /> : isCommerceTask ? <CommerceAdminPage screen={screen} /> : isPerkTask ? <PerkAdminPage pathname={pathname} /> : <section className="card"><h2>{screen.title}</h2><p>Administrative authorization verified for {role}. This task has no writable adapter in the current repository authority.</p></section>}</>;
+  const isDataTask = screen.path?.startsWith("/admin/data");
+  const isBulkTask = screen.path?.includes("bulk-operations");
+  return <><AdminHead screen={screen} description={`Administrative authorization verified for ${role}.`} />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isOperationsTask ? <OperationsAdminPage screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isCapabilityTask ? <CapabilityAdminPage pathname={pathname} screen={screen} /> : isAtlasTask ? <AtlasAdminPage screen={screen} /> : isCampaignTask ? <CampaignAdminPage screen={screen} /> : isPuzzleTask ? <PuzzleAdminPage screen={screen} /> : isAssetPromptTask ? <AssetPromptAdminPage screen={screen} /> : isCommerceTask ? <CommerceAdminPage screen={screen} /> : isPerkTask ? <PerkAdminPage pathname={pathname} /> : isBulkTask ? <BulkOperationsAdminPage screen={screen} /> : isDataTask ? <EntityDataAdminPage pathname={pathname} screen={screen} /> : <section className="card"><h2>{screen.title}</h2><p>Administrative authorization verified for {role}. This task has no writable adapter in the current repository authority.</p></section>}</>;
 }
 
 export function AdminPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {

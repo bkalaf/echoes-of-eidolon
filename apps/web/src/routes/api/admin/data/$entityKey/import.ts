@@ -22,6 +22,8 @@ import { applyPersonalityExpressionImport } from "../../../../../server/personal
 import { applyPointOfInterestImport } from "../../../../../server/point-of-interest-import";
 import { applyTransitionImport } from "../../../../../server/transition-import";
 import { applySpeciesGroupImport } from "../../../../../server/species-group-import";
+import { applyGenericEntityImport, entityForAdminKey } from "../../../../../server/entity-admin";
+import { recordBulkOperation } from "../../../../../server/bulk-operations";
 
 const requestSchema = z.object({ rows: z.array(z.unknown()) }).strict();
 
@@ -30,7 +32,7 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
     handlers: {
       POST: async ({ params, request }) => {
         try {
-          await requireAdminCapability(request, "operateBulkApi");
+          const access = await requireAdminCapability(request, "operateBulkApi");
           const input = requestSchema.parse(await request.json());
           const database = getDatabase();
           let result: { changed: number; unchanged: number };
@@ -89,8 +91,16 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
           } else if (params.entityKey === "pointofinterest") {
             result = await applyPointOfInterestImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else {
-            throw new UnsupportedImportEntityError(`Typed import is unavailable for entity key ${params.entityKey}.`);
+            result = await applyGenericEntityImport(input.rows, entityForAdminKey(params.entityKey), database);
           }
+          await recordBulkOperation({
+            actorUserId: access.userId,
+            database,
+            entityName: entityForAdminKey(params.entityKey),
+            operation: "IMPORT",
+            recordCount: result.changed + result.unchanged,
+            result: result.changed ? "CHANGED" : "UNCHANGED",
+          });
           return Response.json(result);
         } catch (error) {
           if (error instanceof Response) return error;

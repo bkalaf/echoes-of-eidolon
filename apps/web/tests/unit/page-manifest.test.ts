@@ -5,6 +5,7 @@ import {
   excludedV3ScreenIds,
   manifestByShell,
   pageManifest,
+  pathMatches,
   screenForPath,
   v3PageManifestAdditions,
 } from "../../src/lib/page-manifest";
@@ -34,5 +35,10 @@ describe("active page manifest", () => {
   it("prefers a static V3 route over the dynamic capability editor", () => {
     expect(screenForPath("/admin/capabilities/scoring")?.screenId).toBe("CAP04");
     expect(screenForPath("/admin/capabilities/DEF-1")?.screenId).toBe("CAP02");
+  });
+
+  it("treats reviewed sample-record editor identities as actual record route parameters", () => {
+    expect(pathMatches("/admin/data/soul/sample-record", "/admin/data/soul/SOUL-001")).toBe(true);
+    expect(screenForPath("/admin/data/soul/SOUL-001")?.screenId).toBe("DATA_SOUL_EDIT");
   });
 });
