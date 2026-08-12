@@ -1,19 +1,22 @@
+/* global process */
 import { createHash } from "node:crypto";
 import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
-const handoffRoot = resolve(repositoryRoot, "Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD");
+const handoffRoot = resolve(process.env.EIDOLON_WIREFRAME_HANDOFF_ROOT ?? resolve(repositoryRoot, "Echoes_UI_Closed_World_Implementation_Handoff_v11_3/Echoes_UI_Wireframe_Rebuild_v11_3_CLOSED_WORLD"));
 const sourceManifestPath = resolve(handoffRoot, "data/page_manifest_v11_2.json");
 const applicationManifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest.json");
 const amendmentManifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest-v3-amendments.json");
+const v4AmendmentManifestPath = resolve(repositoryRoot, "apps/web/src/data/page-manifest-v4-amendments.json");
 const pngRoot = resolve(handoffRoot, "wireframes/png");
 const outputPath = resolve(repositoryRoot, "docs/implementation/WIREFRAME_RECONCILIATION.md");
 const source = JSON.parse(await readFile(sourceManifestPath, "utf8"));
 const application = JSON.parse(await readFile(applicationManifestPath, "utf8"));
 const amendments = JSON.parse(await readFile(amendmentManifestPath, "utf8"));
+const v4Amendments = JSON.parse(await readFile(v4AmendmentManifestPath, "utf8"));
 const excludedScreenIds = new Set(amendments.excludedScreenIds);
-const active = [...application.filter((row) => !excludedScreenIds.has(row.screenId)), ...amendments.additions];
+const active = [...application.filter((row) => !excludedScreenIds.has(row.screenId)), ...amendments.additions, ...v4Amendments.additions];
 const canonical = (row) => JSON.stringify({
   page: row.page, screenId: row.screenId, title: row.title, path: row.path,
   source: row.source, originalPage: row.originalPage, reviewOrder: row.reviewOrder,
@@ -33,12 +36,12 @@ const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 if (source.length !== 269 || application.length !== 269 || missing.length || extra.length || mismatched.length || missingPngs.length) {
   throw new Error(`Wireframe reconciliation failed: source=${source.length} app=${application.length} missing=${missing.length} extra=${extra.length} mismatched=${mismatched.length} missingPng=${missingPngs.length}`);
 }
-const expectedActiveCount = application.length - amendments.excludedScreenIds.length + amendments.additions.length;
+const expectedActiveCount = application.length - amendments.excludedScreenIds.length + amendments.additions.length + v4Amendments.additions.length;
 if (active.length !== expectedActiveCount || new Set(active.map((row) => row.reviewOrder)).size !== active.length) {
   throw new Error(`V3 registry reconciliation failed: active=${active.length} expected=${expectedActiveCount}`);
 }
 const lines = [
-  "# Base v11.3 and V3 Wireframe Registry Reconciliation",
+  "# Base v11.3, V3, and V4 Wireframe Registry Reconciliation",
   "",
   "## Result",
   "",
@@ -47,6 +50,7 @@ const lines = [
   `- Application registry rows: ${application.length}`,
   `- V3 excluded base rows: ${amendments.excludedScreenIds.length}`,
   `- V3 amendment rows: ${amendments.additions.length}`,
+  `- V4 amendment rows: ${v4Amendments.additions.length}`,
   `- Active mechanically derived rows: ${active.length}`,
   `- Exact canonical row matches: ${source.length - mismatched.length}`,
   `- Missing application rows: ${missing.length}`,
@@ -59,6 +63,7 @@ const lines = [
   `- Source manifest SHA-256: \`${sha256(await readFile(sourceManifestPath))}\``,
   `- Application manifest SHA-256: \`${sha256(await readFile(applicationManifestPath))}\``,
   `- V3 amendment manifest SHA-256: \`${sha256(await readFile(amendmentManifestPath))}\``,
+  `- V4 amendment manifest SHA-256: \`${sha256(await readFile(v4AmendmentManifestPath))}\``,
   "",
   "Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.",
   "",

@@ -1,4 +1,4 @@
-# Base v11.3 and V3 Wireframe Registry Reconciliation
+# Base v11.3, V3, and V4 Wireframe Registry Reconciliation
 
 ## Result
 
@@ -7,7 +7,8 @@
 - Application registry rows: 269
 - V3 excluded base rows: 3
 - V3 amendment rows: 8
-- Active mechanically derived rows: 274
+- V4 amendment rows: 24
+- Active mechanically derived rows: 298
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -19,6 +20,7 @@
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - V3 amendment manifest SHA-256: `d4c51d9f4d7dd6edee0305a85d7ebd541e464e26d3286e8b11725bcd80c62d39`
+- V4 amendment manifest SHA-256: `b585ae3e80d73a18e15cc01f8ebf6d78be6ac193ac4bd2097d25b87d3c864564`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -303,6 +305,30 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 275 | 278 | CAM006 | Book Grouping Membership Editor | state-only | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
 | 276 | 279 | CAM007 | Campaign Planner — Custom Column View | /admin/campaign/planner | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
 | 277 | 280 | ACC024 | Change Password | Modal in /account/profile | OWNER_AUTHORED_ACCOUNT_SECURITY_REMEDIATION_20260812 |
+| 278 | 281 | ACC_AUDIO01_PLAYER_SETTINGS | Player Audio Settings | /account/settings | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 279 | 282 | ADM_MONEY01_TRANSACTION_LEDGER | World Transaction Ledger | /admin/money | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 280 | 283 | ADM_TRANS01_TRANSFORMATION_AUTHORING | Transformation Authoring | /admin/campaign/planner | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 281 | 284 | BULK01_BULK_CHANGES_QUEUE_V2 | Bulk Changes Queue | /admin/bulk-changes | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 282 | 285 | CMP53_COMPANION_PLANNER_ATTRIBUTES_V2 | Companion Planner Attributes | /admin/campaign/planner | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 283 | 286 | DATA_OCC01_OCCUPATION_DETAIL_ATTRIBUTES | Occupation Detail Attributes | /admin/data/occupations/:occupationId | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 284 | 287 | GAME_AUDIO01_BOTTOM_BAR_MIXER_OWNER | Game Bottom Bar Mixer | state-only | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 285 | 288 | GAME_BANK01_CONCORD | Bank — Concord | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 286 | 289 | GAME_BANK01_RUIN | Bank — Ruin | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 287 | 290 | GAME_BANK01_SCHISM | Bank — Schism | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 288 | 291 | GAME_HEALTH01_PARTY_HEALTH | Party Health | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 289 | 292 | GAME_INV01_CONCORD | Inventory — Concord | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 290 | 293 | GAME_INV01_RUIN | Inventory — Ruin | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 291 | 294 | GAME_INV01_SCHISM | Inventory — Schism | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 292 | 295 | GAME_LED01_CONCORD | Withdrawal Ledger — Concord | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 293 | 296 | GAME_LED01_RUIN | Withdrawal Ledger — Ruin | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 294 | 297 | GAME_LED01_SCHISM | Withdrawal Ledger — Schism | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 295 | 298 | GAME_MTG01_MORNING_MEETING_V2 | Morning Meeting | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 296 | 299 | GAME_MTG02_EVENING_MEETING_V2 | Evening Meeting | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 297 | 300 | PUB_GAME01_GAMEPLAY_LANDING | Gameplay | /gameplay | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 298 | 301 | PUB_GAME02_WORLD_ATLAS | World Atlas | /gameplay/world-atlas | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 299 | 302 | GAME_INN01_INN | Inn | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 300 | 303 | BULK02_BULK_CHANGE_DETAIL_V2 | Bulk Change Detail | /admin/bulk-changes/:envelopeId | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 301 | 304 | ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS | Settlement Soundtracks | /admin/atlas/settlements/:settlementId/soundtracks | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
 
 ## Supplemental source PNGs
 

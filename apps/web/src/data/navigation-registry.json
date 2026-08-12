@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "description": "Navigation conventions and explicit exceptions joined by immutable wireframe review order. The generated registry expands these conventions to one row per active screen.",
+  "conventions": {
+    "public": { "authorization": "public", "entryPoint": "/", "parentAction": "Public page directory or contextual public link", "exitDestination": "/" },
+    "auth": { "authorization": "public", "entryPoint": "/", "parentAction": "Public authentication controls or Public page directory", "exitDestination": "/" },
+    "store": { "authorization": "public", "entryPoint": "/store", "parentAction": "Store navigation, list/detail action, or Public page directory", "exitDestination": "/store" },
+    "account": { "authorization": "authenticated", "entryPoint": "/account/profile", "parentAction": "Account shell navigation, owning list action, or Account page directory", "exitDestination": "/" },
+    "admin": { "authorization": "administration", "entryPoint": "/admin", "parentAction": "Administration shell section, owning list action, or Administration page directory", "exitDestination": "/" },
+    "game": { "authorization": "game", "entryPoint": "/game", "parentAction": "Existing game bottom bar, contextual interaction, or Game screen directory", "exitDestination": "/" },
+    "tools-review": { "authorization": "administration", "entryPoint": "/admin", "parentAction": "Administration page directory", "exitDestination": "/admin" },
+    "state-only": { "authorization": "administration", "entryPoint": "/admin", "parentAction": "Owning shell state trigger", "exitDestination": "/" }
+  },
+  "automatedCoverage": ["tests/e2e/navigation-reachability.spec.ts"],
+  "entries": []
+}

@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
 import { loginSoundtrackKeys } from "../../src/content/managed-assets";
 import { PublicShell } from "../../src/components/shells/Shells";
@@ -31,18 +31,11 @@ describe("login soundtrack selection", () => {
     expect(consumeQueuedLoginSoundtrack(storage)).toBeUndefined();
   });
 
-  it("loads the queued soundtrack after sign-in returns to a public route", async () => {
+  it("does not play a legacy random soundtrack on a public route", () => {
     window.sessionStorage.setItem("echoes.login-soundtrack", loginSoundtrackKeys[0]);
-    const load = vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => undefined);
 
     render(<PublicShell><p>Signed-in destination</p></PublicShell>);
 
-    const player = screen.getByLabelText("Login soundtrack");
-    await waitFor(() => expect(load).toHaveBeenCalledOnce());
-    expect(player).not.toHaveAttribute("hidden");
-    expect(player).toHaveAttribute("src", expect.stringMatching(/^https:\/\/[^/]+\.digitaloceanspaces\.com\/assets\/[a-f0-9]{64}\.mp3$/));
-    expect(window.sessionStorage.getItem("echoes.login-soundtrack")).toBeNull();
-
-    load.mockRestore();
+    expect(screen.queryByLabelText("Login soundtrack")).not.toBeInTheDocument();
   });
 });

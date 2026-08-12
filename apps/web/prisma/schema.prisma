@@ -729,6 +729,54 @@ enum CompanionKey {
   I
   J
   K
+  L
+}
+
+enum AbilityType {
+  CHARISMA
+  DEXTERITY
+  INTELLIGENCE
+  STAMINA
+  STRENGTH
+  WISDOM
+}
+
+enum KnowledgeSkill {
+  EIDETIC_MEMORY
+  PHOTOGRAPHIC_MEMORY
+  RECOGNITION
+  ORIENTATION
+  RESEARCH
+  ORIGINS
+  LORE
+  GOSSIP
+  PERFECT_PITCH
+  CONNECTIONS
+  TRACE
+}
+
+enum AwarenessSkill {
+  DANGER_SENSE
+  TRAP_SENSE
+  POISON_SENSE
+  DIPLOMACY
+  DECEPTION_SENSE
+  READ_BETWEEN_THE_LINES
+  EMPATHY
+  STREETWISE
+  GUARDIAN
+  FIRST_AID
+  RESOLVE
+}
+
+enum PointOfInterestService {
+  BANK
+  INN
+}
+
+enum SoundtrackCategory {
+  CITY
+  TAVERN
 }
 
 enum RegionId {
@@ -978,6 +1026,11 @@ enum EntityType {
   CITATION
   AUTHORED_NARRATIVE
   NPC_CONVERSATION_GRAPH
+  ITEM
+  OCCUPATION
+  PARTY
+  SOUNDTRACK
+  WORLD_INSTANCE
 }
 
 enum Heirloom {
@@ -1012,7 +1065,19 @@ enum FriendInvitationRequestStatus {
 
 enum ExternalBulkApiState {
   OFF
-  ON
+  KEYED
+  KEYLESS
+}
+
+enum BulkMutationStatus {
+  RECEIVED
+  DRY_RUN_RUNNING
+  DRY_RUN_FAILED
+  PENDING_REVIEW
+  APPLYING
+  REVALIDATION_FAILED
+  APPLIED
+  DELETED
 }
 
 enum MembershipGrantSource {
@@ -1338,6 +1403,8 @@ model User {
   settings                UserSettings?
   externalBulkApiSessions ExternalBulkApiSession[]
   bulkOperationAudits     BulkOperationAudit[]
+  parties                 Party[]
+  bulkEnvelopeDecisions   BulkMutationEnvelope[]    @relation("BulkEnvelopeDecider")
 }
 
 model GuardianConsentRecord {
@@ -1352,18 +1419,22 @@ model GuardianConsentRecord {
 }
 
 model UserSettings {
-  userId        String   @id
-  theme         String   @default("DARK")
-  textSize      String   @default("DEFAULT")
-  reducedMotion Boolean  @default(false)
-  highContrast  Boolean  @default(false)
-  captions      Boolean  @default(true)
-  musicEnabled  Boolean  @default(true)
-  musicVolume   Int      @default(70)
-  soundEnabled  Boolean  @default(true)
-  soundVolume   Int      @default(80)
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                String   @id
+  theme                 String   @default("DARK")
+  textSize              String   @default("DEFAULT")
+  reducedMotion         Boolean  @default(false)
+  highContrast          Boolean  @default(false)
+  captions              Boolean  @default(true)
+  musicEnabled          Boolean  @default(true)
+  musicVolume           Int      @default(70)
+  soundEnabled          Boolean  @default(true)
+  soundVolume           Int      @default(80)
+  audioMasterVolume     Int      @default(100)
+  audioSoundtrackVolume Int      @default(70)
+  audioNarrativeVolume  Int      @default(80)
+  audioMuted            Boolean  @default(false)
+  updatedAt             DateTime @updatedAt
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -1594,16 +1665,27 @@ model Character {
 }
 
 model Protagonist {
-  protagonistId String                @id
-  characterId   String                @unique
-  importance    ProtagonistImportance
-  worldKey      WorldKey?
-  character     Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
-  concordFor    Companion[]           @relation("CompanionConcordProtagonist")
-  ruinFor       Companion[]           @relation("CompanionRuinProtagonist")
-  schismFor     Companion[]           @relation("CompanionSchismProtagonist")
+  protagonistId      String                @id
+  characterId        String                @unique
+  importance         ProtagonistImportance
+  worldKey           WorldKey?
+  gender             String?
+  age                Int?
+  occupationId       String?
+  knowledgeSkill     KnowledgeSkill?
+  awarenessSkill     AwarenessSkill?
+  faction            Faction?
+  primaryAttribute   AbilityType?
+  secondaryAttribute AbilityType?
+  worldHeirloom      Heirloom?
+  character          Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  occupation         Occupation?           @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
+  concordFor         Companion[]           @relation("CompanionConcordProtagonist")
+  ruinFor            Companion[]           @relation("CompanionRuinProtagonist")
+  schismFor          Companion[]           @relation("CompanionSchismProtagonist")
 
   @@index([characterId])
+  @@index([occupationId])
 }
 
 model Architect {
@@ -1658,27 +1740,61 @@ model Witness {
 }
 
 model Soul {
-  soulId     String      @id
-  name       String
-  companions Companion[]
+  soulId       String        @id
+  name         String
+  companionKey CompanionKey?
+  companions   Companion[]
 }
 
 model Companion {
-  companionKey         CompanionKey @id
-  concordProtagonistId String
-  ruinProtagonistId    String
-  schismProtagonistId  String
-  soulId               String
-  heirloom             Heirloom
-  concordProtagonist   Protagonist  @relation("CompanionConcordProtagonist", fields: [concordProtagonistId], references: [protagonistId], onDelete: Restrict)
-  ruinProtagonist      Protagonist  @relation("CompanionRuinProtagonist", fields: [ruinProtagonistId], references: [protagonistId], onDelete: Restrict)
-  schismProtagonist    Protagonist  @relation("CompanionSchismProtagonist", fields: [schismProtagonistId], references: [protagonistId], onDelete: Restrict)
-  soul                 Soul         @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
+  companionKey          CompanionKey                    @id
+  concordProtagonistId  String
+  ruinProtagonistId     String
+  schismProtagonistId   String
+  soulId                String
+  heirloom              Heirloom
+  concordProtagonist    Protagonist                     @relation("CompanionConcordProtagonist", fields: [concordProtagonistId], references: [protagonistId], onDelete: Restrict)
+  ruinProtagonist       Protagonist                     @relation("CompanionRuinProtagonist", fields: [ruinProtagonistId], references: [protagonistId], onDelete: Restrict)
+  schismProtagonist     Protagonist                     @relation("CompanionSchismProtagonist", fields: [schismProtagonistId], references: [protagonistId], onDelete: Restrict)
+  soul                  Soul                            @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
+  partyMemberships      PartyMember[]
+  transformationBinding CompanionTransformationBinding?
 
   @@index([concordProtagonistId])
   @@index([ruinProtagonistId])
   @@index([schismProtagonistId])
   @@index([soulId])
+}
+
+model CompanionTransformationBinding {
+  companionKey           CompanionKey         @id
+  layetteId              String
+  capabilityDefinitionId String
+  companion              Companion            @relation(fields: [companionKey], references: [companionKey], onDelete: Cascade)
+  layette                Layette              @relation(fields: [layetteId], references: [layetteId], onDelete: Restrict)
+  capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
+
+  @@index([layetteId])
+  @@index([capabilityDefinitionId])
+}
+
+model Occupation {
+  occupationId String                        @id
+  name         String                        @unique
+  description  String?
+  active       Boolean                       @default(true)
+  affinities   OccupationAttributeAffinity[]
+  protagonists Protagonist[]
+}
+
+model OccupationAttributeAffinity {
+  occupationId String
+  abilityType  AbilityType
+  ordinal      Int
+  occupation   Occupation  @relation(fields: [occupationId], references: [occupationId], onDelete: Cascade)
+
+  @@id([occupationId, abilityType])
+  @@unique([occupationId, ordinal])
 }
 
 model TimelineEvent {
@@ -1760,14 +1876,26 @@ model Ark {
 }
 
 model PointOfInterest {
-  pointOfInterestId String   @id
+  pointOfInterestId String                             @id
   name              String
   kind              String
   regionId          RegionId
   longitude         Float
   latitude          Float
+  services          PointOfInterestServiceAssignment[]
+  gameSessions      GameSession[]
 
   @@index([regionId])
+}
+
+model PointOfInterestServiceAssignment {
+  pointOfInterestId String
+  service           PointOfInterestService
+  active            Boolean                @default(true)
+  configuration     Json?
+  pointOfInterest   PointOfInterest        @relation(fields: [pointOfInterestId], references: [pointOfInterestId], onDelete: Cascade)
+
+  @@id([pointOfInterestId, service])
 }
 
 model AtlasNameableFeature {
@@ -1824,17 +1952,19 @@ model AtlasConnection {
 }
 
 model ExternalBulkApiSession {
-  externalBulkApiSessionId String               @id
+  externalBulkApiSessionId String                 @id
   issuedByUserId           String
-  keyHash                  String               @unique
-  state                    ExternalBulkApiState @default(ON)
+  keyHash                  String?                @unique
+  state                    ExternalBulkApiState   @default(OFF)
   expiresAt                DateTime
+  lastActivityAt           DateTime
   revokedAt                DateTime?
-  createdAt                DateTime             @default(now())
-  issuedBy                 User                 @relation(fields: [issuedByUserId], references: [id], onDelete: Restrict)
+  createdAt                DateTime               @default(now())
+  issuedBy                 User                   @relation(fields: [issuedByUserId], references: [id], onDelete: Restrict)
   audits                   BulkOperationAudit[]
+  envelopes                BulkMutationEnvelope[]
 
-  @@index([state, expiresAt])
+  @@index([state, lastActivityAt])
   @@index([issuedByUserId])
 }
 
@@ -1842,6 +1972,7 @@ model BulkOperationAudit {
   bulkOperationAuditId     String                  @id
   actorUserId              String?
   externalBulkApiSessionId String?
+  bulkMutationEnvelopeId   String?
   operation                BulkOperation
   entityName               String
   result                   ImportResultState
@@ -1850,21 +1981,76 @@ model BulkOperationAudit {
   occurredAt               DateTime                @default(now())
   actor                    User?                   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
   externalSession          ExternalBulkApiSession? @relation(fields: [externalBulkApiSessionId], references: [externalBulkApiSessionId], onDelete: SetNull)
+  envelope                 BulkMutationEnvelope?   @relation(fields: [bulkMutationEnvelopeId], references: [bulkMutationEnvelopeId], onDelete: SetNull)
 
   @@index([occurredAt])
   @@index([actorUserId])
   @@index([externalBulkApiSessionId])
+  @@index([bulkMutationEnvelopeId])
+}
+
+model BulkMutationEnvelope {
+  bulkMutationEnvelopeId   String                 @id
+  sequence                 BigInt                 @unique @default(autoincrement())
+  externalBulkApiSessionId String
+  entityCode               String
+  operation                BulkOperation
+  notes                    String
+  recordCount              Int
+  payload                  Json
+  status                   BulkMutationStatus     @default(RECEIVED)
+  dryRunResult             Json
+  revalidationResult       Json?
+  sourceMetadata           Json
+  receivedAt               DateTime               @default(now())
+  decidedByUserId          String?
+  decidedAt                DateTime?
+  externalSession          ExternalBulkApiSession @relation(fields: [externalBulkApiSessionId], references: [externalBulkApiSessionId], onDelete: Restrict)
+  decidedBy                User?                  @relation("BulkEnvelopeDecider", fields: [decidedByUserId], references: [id], onDelete: SetNull)
+  audits                   BulkOperationAudit[]
+
+  @@index([status, sequence])
+  @@index([externalBulkApiSessionId, receivedAt])
+  @@index([decidedByUserId])
 }
 
 model Settlement {
-  settlementId   String                   @id
-  siteId         String                   @unique
-  name           String?
-  classification SettlementClassification
-  site           Site                     @relation(fields: [siteId], references: [siteId], onDelete: Restrict)
-  worlds         SettlementWorld[]
+  settlementId          String                           @id
+  siteId                String                           @unique
+  name                  String?
+  classification        SettlementClassification
+  site                  Site                             @relation(fields: [siteId], references: [siteId], onDelete: Restrict)
+  worlds                SettlementWorld[]
+  soundtrackAssignments SettlementSoundtrackAssignment[]
 
   @@index([siteId])
+}
+
+model Soundtrack {
+  soundtrackId     String                           @id
+  displayName      String
+  sourceFilename   String
+  cultureSourceKey String?
+  managedAssetId   String                           @unique
+  managedAsset     ManagedAsset                     @relation(fields: [managedAssetId], references: [managedAssetId], onDelete: Restrict)
+  assignments      SettlementSoundtrackAssignment[]
+
+  @@index([cultureSourceKey])
+}
+
+model SettlementSoundtrackAssignment {
+  settlementSoundtrackAssignmentId String             @id
+  settlementId                     String
+  soundtrackId                     String
+  category                         SoundtrackCategory
+  active                           Boolean            @default(true)
+  ordinal                          Int
+  settlement                       Settlement         @relation(fields: [settlementId], references: [settlementId], onDelete: Cascade)
+  soundtrack                       Soundtrack         @relation(fields: [soundtrackId], references: [soundtrackId], onDelete: Restrict)
+
+  @@unique([settlementId, category, ordinal], map: "SettlementSoundtrackAssignment_settlementId_category_ordinal_ke")
+  @@unique([settlementId, soundtrackId, category], map: "SettlementSoundtrackAssignment_settlementId_soundtrackId_catego")
+  @@index([soundtrackId])
 }
 
 model SettlementWorld {
@@ -2042,9 +2228,10 @@ model Definition {
 }
 
 model Layette {
-  layetteId   String @id
-  name        String
-  description String
+  layetteId              String                           @id
+  name                   String
+  description            String
+  transformationBindings CompanionTransformationBinding[]
 }
 
 model PersonalityExpression {
@@ -2053,11 +2240,12 @@ model PersonalityExpression {
 }
 
 model CapabilityDefinition {
-  capabilityDefinitionId String                        @id
-  code                   String                        @unique
-  createdAt              DateTime                      @default(now())
+  capabilityDefinitionId String                           @id
+  code                   String                           @unique
+  createdAt              DateTime                         @default(now())
   versions               CapabilityDefinitionVersion[]
   addresses              CapabilityAddress[]
+  transformationBindings CompanionTransformationBinding[]
 }
 
 model CapabilityDefinitionVersion {
@@ -2287,6 +2475,7 @@ model ManagedAsset {
   generatedFromPrompts PromptVersion[]         @relation("PromptGeneratedAsset")
   achievementImages    AchievementDefinition[] @relation("AchievementImageAsset")
   storeProductArtwork  StoreProduct[]          @relation("StoreProductArtwork")
+  soundtrack           Soundtrack?
 }
 
 model AssetPurposeLink {
@@ -2762,17 +2951,90 @@ model DocumentDraft {
 }
 
 model GameSession {
-  gameSessionId     String           @id
-  userId            String
-  settlementWorldId String?
-  startedAt         DateTime         @default(now())
-  lastActiveAt      DateTime         @updatedAt
-  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  settlementWorld   SettlementWorld? @relation(fields: [settlementWorldId], references: [settlementWorldId], onDelete: Cascade)
-  turns             GameTurn[]
+  gameSessionId            String           @id
+  userId                   String
+  settlementWorldId        String?
+  worldInstanceId          String?
+  partyId                  String?
+  currentPointOfInterestId String?
+  startedAt                DateTime         @default(now())
+  lastActiveAt             DateTime         @updatedAt
+  user                     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settlementWorld          SettlementWorld? @relation(fields: [settlementWorldId], references: [settlementWorldId], onDelete: Cascade)
+  worldInstance            WorldInstance?   @relation(fields: [worldInstanceId], references: [worldInstanceId], onDelete: SetNull)
+  party                    Party?           @relation(fields: [partyId], references: [partyId], onDelete: SetNull)
+  currentPointOfInterest   PointOfInterest? @relation(fields: [currentPointOfInterestId], references: [pointOfInterestId], onDelete: SetNull)
+  turns                    GameTurn[]
 
   @@index([userId, lastActiveAt])
   @@index([settlementWorldId])
+  @@index([worldInstanceId])
+  @@index([partyId])
+  @@index([currentPointOfInterestId])
+}
+
+model WorldInstance {
+  worldInstanceId   String             @id
+  worldKey          WorldKey
+  currentGameMinute BigInt             @default(0)
+  createdAt         DateTime           @default(now())
+  parties           Party[]
+  moneyTransactions MoneyTransaction[]
+  gameSessions      GameSession[]
+}
+
+model Party {
+  partyId           String             @id
+  userId            String
+  worldInstanceId   String
+  withdrawalLimit   Int?
+  createdAt         DateTime           @default(now())
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  worldInstance     WorldInstance      @relation(fields: [worldInstanceId], references: [worldInstanceId], onDelete: Restrict)
+  members           PartyMember[]
+  moneyTransactions MoneyTransaction[]
+  gameSessions      GameSession[]
+
+  @@index([userId])
+  @@index([worldInstanceId])
+}
+
+model PartyMember {
+  partyId           String
+  companionKey      CompanionKey
+  rest              Float?
+  morale            Float?
+  comfort           Float?
+  conditionSentence String?
+  party             Party        @relation(fields: [partyId], references: [partyId], onDelete: Cascade)
+  companion         Companion    @relation(fields: [companionKey], references: [companionKey], onDelete: Restrict)
+
+  @@id([partyId, companionKey])
+}
+
+model RecoveryPolicy {
+  recoveryPolicyId String   @id
+  name             String
+  configuration    Json
+  active           Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model MoneyTransaction {
+  moneyTransactionId   String        @id
+  partyId              String
+  worldInstanceId      String
+  delta                Int
+  withdrawalAmount     Int?
+  occurredAtGameMinute BigInt
+  context              Json
+  recordedAt           DateTime      @default(now())
+  party                Party         @relation(fields: [partyId], references: [partyId], onDelete: Restrict)
+  worldInstance        WorldInstance @relation(fields: [worldInstanceId], references: [worldInstanceId], onDelete: Restrict)
+
+  @@index([partyId, worldInstanceId, occurredAtGameMinute], map: "MoneyTransaction_partyId_worldInstanceId_occurredAtGameMinute_i")
+  @@index([recordedAt])
 }
 
 model GameTurn {

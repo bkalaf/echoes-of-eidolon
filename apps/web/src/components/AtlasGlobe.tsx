@@ -1,7 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 
 import { managedAssetUrl } from "../content/managed-assets";
-import type { CanonicalPointOfInterest } from "../server/atlas";
+
+interface AtlasGlobePoint {
+  category: string;
+  displayName: string | null;
+  latticeId?: string;
+  latitude: number;
+  longitude: number;
+  poiId: string;
+  regionId: string;
+  workingLabel: string;
+}
 
 const vertexShaderSource = `#version 300 es
 precision highp float;
@@ -92,17 +102,22 @@ const clamp = (value: number, minimum: number, maximum: number) => Math.max(mini
 const fieldOfView = 41 * Math.PI / 180;
 
 export function AtlasGlobe({
+  connections = [],
   onSelect,
   points,
+  regionMappings = [],
   selectedId,
   unavailableMessage,
 }: {
+  connections?: ReadonlyArray<{ atlasConnectionId: string; fromLatticeId: string; toLatticeId: string }>;
   onSelect: (poiId: string) => void;
-  points: CanonicalPointOfInterest[];
+  points: AtlasGlobePoint[];
+  regionMappings?: ReadonlyArray<{ latticeId: string; regionId: string }>;
   selectedId?: string;
   unavailableMessage?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const connectionLayerRef = useRef<SVGSVGElement>(null);
   const markerLayerRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLSpanElement>(null);
   const controls = useRef({ yaw: -0.45, pitch: -0.12, distance: 2.7, light: 1.03, velocityX: 0, velocityY: 0 });
@@ -121,7 +136,8 @@ export function AtlasGlobe({
   useEffect(() => {
     const canvas = canvasRef.current;
     const markerLayer = markerLayerRef.current;
-    if (!canvas || !markerLayer) return;
+    const connectionLayer = connectionLayerRef.current;
+    if (!canvas || !markerLayer || !connectionLayer) return;
     const gl = canvas.getContext("webgl2", { alpha: true, antialias: true });
     if (!gl) {
       setLoading(false);
@@ -216,6 +232,7 @@ export function AtlasGlobe({
           gl.uniform1f(uniforms.light, state.light); gl.uniform1i(uniforms.texture, 0); gl.activeTexture(gl.TEXTURE0);
           gl.bindTexture(gl.TEXTURE_2D, texture!); gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_INT, 0);
         }
+        const projected = new Map<string, { visible: boolean; x: number; y: number }>();
         const markerElements = markerLayer.querySelectorAll<HTMLElement>("[data-globe-marker]");
         markerElements.forEach((marker) => {
           const latitude = Number(marker.dataset.latitude) * Math.PI / 180;
@@ -226,10 +243,29 @@ export function AtlasGlobe({
           const yawCosine = Math.cos(state.yaw); const yawSine = Math.sin(state.yaw);
           const worldX = yawCosine * sourceX + yawSine * pitchedZ; const worldZ = -yawSine * sourceX + yawCosine * pitchedZ;
           const denominator = state.distance - worldZ; const visible = worldZ > 0;
+          const x = 50 + ((1 / Math.tan(fieldOfView / 2)) / aspect * worldX / denominator) * 50;
+          const y = 50 - ((1 / Math.tan(fieldOfView / 2)) * pitchedY / denominator) * 50;
+          if (marker.dataset.poiId) projected.set(marker.dataset.poiId, { visible, x, y });
           marker.hidden = !visible;
           if (visible) {
-            marker.style.left = `${50 + ((1 / Math.tan(fieldOfView / 2)) / aspect * worldX / denominator) * 50}%`;
-            marker.style.top = `${50 - ((1 / Math.tan(fieldOfView / 2)) * pitchedY / denominator) * 50}%`;
+            marker.style.left = `${x}%`;
+            marker.style.top = `${y}%`;
+          }
+        });
+        const latticeByRegion = new Map(regionMappings.map((mapping) => [mapping.regionId, mapping.latticeId]));
+        const pointByLattice = new Map<string, string>();
+        for (const point of points) {
+          const latticeId = point.latticeId ?? latticeByRegion.get(point.regionId);
+          if (latticeId && !pointByLattice.has(latticeId)) pointByLattice.set(latticeId, point.poiId);
+        }
+        connectionLayer.querySelectorAll<SVGLineElement>("[data-atlas-connection]").forEach((line) => {
+          const from = projected.get(pointByLattice.get(line.dataset.fromLattice ?? "") ?? "");
+          const to = projected.get(pointByLattice.get(line.dataset.toLattice ?? "") ?? "");
+          const visible = Boolean(from?.visible && to?.visible);
+          line.style.display = visible ? "" : "none";
+          if (from && to && visible) {
+            line.setAttribute("x1", `${from.x}%`); line.setAttribute("y1", `${from.y}%`);
+            line.setAttribute("x2", `${to.x}%`); line.setAttribute("y2", `${to.y}%`);
           }
         });
         updateStatus();
@@ -244,7 +280,7 @@ export function AtlasGlobe({
       allocatedBuffers.forEach((buffer) => gl.deleteBuffer(buffer));
       if (texture) gl.deleteTexture(texture); if (program) gl.deleteProgram(program);
     };
-  }, [points]);
+  }, [connections, points, regionMappings]);
 
   const activePointers = useRef(new Map<number, { x: number; y: number }>());
   const dragState = useRef<{ distance?: number; separation?: number; x: number; y: number } | undefined>(undefined);
@@ -294,6 +330,9 @@ export function AtlasGlobe({
       tabIndex={0}
     >
       <canvas aria-hidden="true" ref={canvasRef} />
+      <svg aria-label={`${connections.length} visible Atlas connections`} className="atlas-globe-connections" ref={connectionLayerRef}>
+        {connections.map((connection) => <line data-atlas-connection data-from-lattice={connection.fromLatticeId} data-to-lattice={connection.toLatticeId} key={connection.atlasConnectionId} />)}
+      </svg>
       <div className="atlas-globe-markers" ref={markerLayerRef}>
         {points.map((point) => <button
           aria-label={`Select ${point.displayName ?? point.workingLabel}`}
@@ -301,6 +340,7 @@ export function AtlasGlobe({
           data-globe-marker
           data-latitude={point.latitude}
           data-longitude={point.longitude}
+          data-poi-id={point.poiId}
           key={point.poiId}
           onClick={() => onSelect(point.poiId)}
         />)}

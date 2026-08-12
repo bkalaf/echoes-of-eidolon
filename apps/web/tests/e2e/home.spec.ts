@@ -322,7 +322,7 @@ test("crawlability allowlists public pages and excludes protected surfaces", asy
   const sitemapBody = await sitemap.text();
   expect(sitemap.status()).toBe(200);
   expect(sitemapBody).toContain("/features/free-to-play</loc>");
-  expect(sitemapBody).not.toMatch(/\/auth|\/account|\/admin|\/game|\/review|\/store\/orders/);
+  expect(sitemapBody).not.toMatch(/\/auth|\/account|\/admin|\/game(?:\/|<)|\/review|\/store\/orders/);
 
   await page.goto("/features/free-to-play");
   await expect(page.getByRole("heading", { name: "Free to Play. Open to Everyone." })).toBeVisible();

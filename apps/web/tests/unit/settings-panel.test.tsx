@@ -17,8 +17,11 @@ describe("shared settings panel", () => {
     expect(await screen.findByRole("checkbox", { name: /Show captions/ })).toBeChecked();
     expect(screen.getByRole("combobox", { name: "Theme" })).toHaveValue("DARK");
     expect(screen.getByRole("combobox", { name: "Text size" })).toHaveValue("DEFAULT");
-    expect(screen.getByRole("slider", { name: "Music volume" })).toHaveValue("70");
-    expect(screen.getByRole("slider", { name: "Sound volume" })).toHaveValue("80");
+    expect(screen.getByRole("slider", { name: "Master volume" })).toHaveValue("100");
+    expect(screen.getByRole("slider", { name: "Soundtrack volume" })).toHaveValue("70");
+    expect(screen.getByRole("slider", { name: "NPC and Narrative volume" })).toHaveValue("80");
+    expect(screen.queryByRole("slider", { name: "Music volume" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("slider", { name: "Sound volume" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("checkbox", { name: /Reduce animation/ }));
     fireEvent.click(screen.getByRole("button", { name: "Save settings" }));
     await vi.waitFor(() => expect(fetch).toHaveBeenLastCalledWith("/api/account/settings", expect.objectContaining({ method: "PUT" })));

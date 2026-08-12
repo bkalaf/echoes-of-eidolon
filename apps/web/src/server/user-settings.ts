@@ -5,6 +5,10 @@ import { getDatabase } from "./database";
 type Database = PrismaClient;
 
 const userSettingsSelect = {
+  audioMasterVolume: true,
+  audioMuted: true,
+  audioNarrativeVolume: true,
+  audioSoundtrackVolume: true,
   captions: true,
   highContrast: true,
   musicEnabled: true,

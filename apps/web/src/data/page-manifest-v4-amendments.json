@@ -1,0 +1,29 @@
+{
+  "version": "v4+codex-package-v1-additions",
+  "additions": [
+    { "page": 281, "screenId": "ACC_AUDIO01_PLAYER_SETTINGS", "title": "Player Audio Settings", "path": "/account/settings", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 281, "reviewOrder": 278 },
+    { "page": 282, "screenId": "ADM_MONEY01_TRANSACTION_LEDGER", "title": "World Transaction Ledger", "path": "/admin/money", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 282, "reviewOrder": 279 },
+    { "page": 283, "screenId": "ADM_TRANS01_TRANSFORMATION_AUTHORING", "title": "Transformation Authoring", "path": "/admin/campaign/planner", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 283, "reviewOrder": 280 },
+    { "page": 284, "screenId": "BULK01_BULK_CHANGES_QUEUE_V2", "title": "Bulk Changes Queue", "path": "/admin/bulk-changes", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 284, "reviewOrder": 281 },
+    { "page": 285, "screenId": "CMP53_COMPANION_PLANNER_ATTRIBUTES_V2", "title": "Companion Planner Attributes", "path": "/admin/campaign/planner", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 285, "reviewOrder": 282 },
+    { "page": 286, "screenId": "DATA_OCC01_OCCUPATION_DETAIL_ATTRIBUTES", "title": "Occupation Detail Attributes", "path": "/admin/data/occupations/:occupationId", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 286, "reviewOrder": 283 },
+    { "page": 287, "screenId": "GAME_AUDIO01_BOTTOM_BAR_MIXER_OWNER", "title": "Game Bottom Bar Mixer", "path": null, "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 287, "reviewOrder": 284 },
+    { "page": 288, "screenId": "GAME_BANK01_CONCORD", "title": "Bank — Concord", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 288, "reviewOrder": 285 },
+    { "page": 289, "screenId": "GAME_BANK01_RUIN", "title": "Bank — Ruin", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 289, "reviewOrder": 286 },
+    { "page": 290, "screenId": "GAME_BANK01_SCHISM", "title": "Bank — Schism", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 290, "reviewOrder": 287 },
+    { "page": 291, "screenId": "GAME_HEALTH01_PARTY_HEALTH", "title": "Party Health", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 291, "reviewOrder": 288 },
+    { "page": 292, "screenId": "GAME_INV01_CONCORD", "title": "Inventory — Concord", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 292, "reviewOrder": 289 },
+    { "page": 293, "screenId": "GAME_INV01_RUIN", "title": "Inventory — Ruin", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 293, "reviewOrder": 290 },
+    { "page": 294, "screenId": "GAME_INV01_SCHISM", "title": "Inventory — Schism", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 294, "reviewOrder": 291 },
+    { "page": 295, "screenId": "GAME_LED01_CONCORD", "title": "Withdrawal Ledger — Concord", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 295, "reviewOrder": 292 },
+    { "page": 296, "screenId": "GAME_LED01_RUIN", "title": "Withdrawal Ledger — Ruin", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 296, "reviewOrder": 293 },
+    { "page": 297, "screenId": "GAME_LED01_SCHISM", "title": "Withdrawal Ledger — Schism", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 297, "reviewOrder": 294 },
+    { "page": 298, "screenId": "GAME_MTG01_MORNING_MEETING_V2", "title": "Morning Meeting", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 298, "reviewOrder": 295 },
+    { "page": 299, "screenId": "GAME_MTG02_EVENING_MEETING_V2", "title": "Evening Meeting", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 299, "reviewOrder": 296 },
+    { "page": 300, "screenId": "PUB_GAME01_GAMEPLAY_LANDING", "title": "Gameplay", "path": "/gameplay", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 300, "reviewOrder": 297 },
+    { "page": 301, "screenId": "PUB_GAME02_WORLD_ATLAS", "title": "World Atlas", "path": "/gameplay/world-atlas", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 301, "reviewOrder": 298 },
+    { "page": 302, "screenId": "GAME_INN01_INN", "title": "Inn", "path": "Modal in /game", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 302, "reviewOrder": 299 },
+    { "page": 303, "screenId": "BULK02_BULK_CHANGE_DETAIL_V2", "title": "Bulk Change Detail", "path": "/admin/bulk-changes/:envelopeId", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 303, "reviewOrder": 300 },
+    { "page": 304, "screenId": "ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS", "title": "Settlement Soundtracks", "path": "/admin/atlas/settlements/:settlementId/soundtracks", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 304, "reviewOrder": 301 }
+  ]
+}

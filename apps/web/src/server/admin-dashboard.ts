@@ -20,7 +20,7 @@ export async function getAdminDashboard(database: PrismaClient = getDatabase()):
     database.promptRecord.count({ where: { status: "OUTSTANDING" } }),
     listAdministrativeReleases().then((releases) => releases.filter((release) => release.status === "DRAFT").length),
     database.bulkOperationAudit.count({ where: { result: "FAILED" } }),
-    database.externalBulkApiSession.count({ where: { expiresAt: { gt: now }, revokedAt: null, state: "ON" } }),
+    database.externalBulkApiSession.count({ where: { lastActivityAt: { gt: new Date(now.valueOf() - 60 * 60 * 1_000) }, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } } }),
     database.regionLatticeMapping.count(),
     database.atlasConnection.count(),
   ]);

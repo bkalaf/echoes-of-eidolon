@@ -1,0 +1,67 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { CompanionPlannerAttributesPage } from "../../src/screens/admin/AdminV4Pages";
+
+const protagonist = (worldKey: string, faction: string, primaryAttribute: string, secondaryAttribute: string, companionKey = "A") => ({
+  age: 28,
+  awarenessSkill: null,
+  character: { breedId: `BREED_${worldKey}_${companionKey}`, displayName: `${worldKey} Hero ${companionKey}` },
+  faction,
+  gender: "Woman",
+  knowledgeSkill: null,
+  occupationId: "SCHOLAR",
+  primaryAttribute,
+  secondaryAttribute,
+  worldHeirloom: "NECKLACE",
+});
+
+const planner = {
+  companions: [{
+    companionKey: "A",
+    concordProtagonist: protagonist("CONCORD", "CONCORD", "INTELLIGENCE", "INTELLIGENCE"),
+    ruinProtagonist: protagonist("RUIN", "RUIN", "WISDOM", "INTELLIGENCE"),
+    schismProtagonist: protagonist("SCHISM", "SCHISM", "INTELLIGENCE", "WISDOM"),
+    soul: { name: "Aster" },
+    transformationBinding: null,
+  }, {
+    companionKey: "B",
+    concordProtagonist: protagonist("CONCORD", "CONCORD", "CHARISMA", "CHARISMA", "B"),
+    ruinProtagonist: protagonist("RUIN", "RUIN", "CHARISMA", "WISDOM", "B"),
+    schismProtagonist: protagonist("SCHISM", "SCHISM", "WISDOM", "CHARISMA", "B"),
+    soul: { name: "Bran" },
+    transformationBinding: null,
+  }],
+  layettes: [],
+  occupations: [{ active: true, affinities: [{ abilityType: "INTELLIGENCE", ordinal: 0 }, { abilityType: "WISDOM", ordinal: 1 }], description: null, name: "Scholar", occupationId: "SCHOLAR" }],
+};
+
+function renderPlanner() {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => planner }));
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><CompanionPlannerAttributesPage /></QueryClientProvider>);
+}
+
+afterEach(() => vi.unstubAllGlobals());
+
+describe("Companion Planner V4 controls", () => {
+  it("shows actual values, removable filter chips, world tint groups, and a working pivot", async () => {
+    const { container } = renderPlanner();
+    expect(await screen.findByText("CONCORD Hero A")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Remove SCHISM from World" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Remove SCHISM from World" }));
+    expect(screen.queryByRole("heading", { name: "SCHISM" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Pivot: Properties on rows" }));
+    expect(screen.getByRole("button", { name: "Pivot: Companions on rows" })).toBeInTheDocument();
+    expect(container.querySelectorAll(".planner-world-concord")).not.toHaveLength(0);
+  });
+
+  it("runs non-mutating validation and reports exact authored cells", async () => {
+    renderPlanner();
+    await screen.findByText("CONCORD Hero A");
+    fireEvent.click(screen.getByRole("button", { name: "Validate" }));
+    const alert = screen.getByRole("alert");
+    expect(within(alert).getByText("RUIN.A.occupationId", { exact: false })).toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+});

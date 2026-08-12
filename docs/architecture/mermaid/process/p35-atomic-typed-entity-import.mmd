@@ -3,17 +3,17 @@ flowchart LR
   UploadJSONYAMLMark0["Upload JSON YAML Markdown or HTML"]
   Parse1["Parse"]
   Mapfields2["Map fields"]
-  Validateschemader3["Validate schema-derived contract"]
+  Validateschemaderi3["Validate schema-derived contract"]
   Previewerrors4["Preview errors"]
   Begintransaction5["Begin transaction"]
   Createmissing6["Create missing"]
   Rejectcanonicaldri7["Reject canonical drift"]
-  Appendbulkoperati8["Append bulk operation audit"]
+  Appendbulkoperatio8["Append bulk operation audit"]
   UploadJSONYAMLMark0 --> Parse1
   Parse1 --> Mapfields2
-  Mapfields2 --> Validateschemader3
-  Validateschemader3 --> Previewerrors4
+  Mapfields2 --> Validateschemaderi3
+  Validateschemaderi3 --> Previewerrors4
   Previewerrors4 --> Begintransaction5
   Begintransaction5 --> Createmissing6
   Createmissing6 --> Rejectcanonicaldri7
-  Rejectcanonicaldri7 --> Appendbulkoperati8
+  Rejectcanonicaldri7 --> Appendbulkoperatio8

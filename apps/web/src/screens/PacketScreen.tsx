@@ -28,6 +28,9 @@ export function PacketScreen({ pathname, screen }: { pathname?: string; screen?:
   if (screen.screenId.startsWith("TOOL") || screen.screenId.startsWith("TOO")) {
     return <ToolsPage screen={screen} />;
   }
+  if (screen.screenId === "CAM006") {
+    return <AdminPage pathname={pathname} screen={screen} />;
+  }
 
   switch (shellFor(screen)) {
     case "auth": return <AuthPage screen={screen} />;

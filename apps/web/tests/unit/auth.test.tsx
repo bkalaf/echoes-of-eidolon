@@ -16,7 +16,6 @@ vi.mock("../../src/lib/auth-client", () => ({
 }));
 
 import { pageManifest } from "../../src/lib/page-manifest";
-import { loginSoundtrackKeys } from "../../src/content/managed-assets";
 import { AuthPage } from "../../src/screens/auth/AuthPage";
 
 function authScreen(screenId: string) {
@@ -68,7 +67,7 @@ describe("reviewed authentication states", () => {
       email: "player@example.com",
       password: "long-password",
     }));
-    expect(loginSoundtrackKeys).toContain(window.sessionStorage.getItem("echoes.login-soundtrack"));
+    expect(window.sessionStorage.getItem("echoes.login-soundtrack")).toBeNull();
   });
 
   it("does not leave a soundtrack queued after a failed sign-in", async () => {

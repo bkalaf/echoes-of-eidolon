@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export const userSettingsInputSchema = z.object({
+  audioMasterVolume: z.number().int().min(0).max(100),
+  audioMuted: z.boolean(),
+  audioNarrativeVolume: z.number().int().min(0).max(100),
+  audioSoundtrackVolume: z.number().int().min(0).max(100),
   captions: z.boolean(),
   highContrast: z.boolean(),
   musicEnabled: z.boolean(),
@@ -15,6 +19,10 @@ export const userSettingsInputSchema = z.object({
 export type UserSettingsInput = z.infer<typeof userSettingsInputSchema>;
 
 export const defaultUserSettings: UserSettingsInput = Object.freeze({
+  audioMasterVolume: 100,
+  audioMuted: false,
+  audioNarrativeVolume: 80,
+  audioSoundtrackVolume: 70,
   captions: true,
   highContrast: false,
   musicEnabled: true,

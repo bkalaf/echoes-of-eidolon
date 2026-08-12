@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { managedAssetUrl } from "../../content/managed-assets";
 import { useNavigationAccess, type NavigationAccessState } from "../../lib/navigation-access";
-import { LoginSoundtrackPlayer } from "../LoginSoundtrackPlayer";
+import { pageManifest, shellFor, type ShellKind } from "../../lib/page-manifest";
+import { GameAudioMixer } from "../GameAudioMixer";
+import { GameAudioEngine } from "../GameAudioEngine";
 
 const publicNav = [
   ["Features", "/features"],
@@ -11,6 +13,25 @@ const publicNav = [
   ["Game & Server Status", "/status"],
   ["Request an Invite", "/request-invite"],
 ] as const;
+
+function directoryHref(screenId: string, path: string | null, fallback: string) {
+  if (path === null) return `${fallback}?state=${encodeURIComponent(screenId)}`;
+  const owner = path.replace(/^Modal in /, "");
+  if (path.startsWith("Modal in ")) return `${owner}?state=${encodeURIComponent(screenId)}`;
+  if (owner.includes(":")) return null;
+  const duplicates = pageManifest.filter((entry) => entry.path === path);
+  return duplicates.length > 1 ? `${owner}${owner.includes("?") ? "&" : "?"}state=${encodeURIComponent(screenId)}` : owner;
+}
+
+function ManifestNavigationDirectory({ shells, fallback, label }: { shells: ShellKind[]; fallback: string; label: string }) {
+  const [open, setOpen] = useState(false);
+  const links = pageManifest.flatMap((entry) => {
+    if (!shells.includes(shellFor(entry))) return [];
+    const href = directoryHref(entry.screenId, entry.path, fallback);
+    return href ? [{ href, screenId: entry.screenId, title: entry.title }] : [];
+  });
+  return <details className="manifest-navigation-directory" onToggle={(event) => setOpen(event.currentTarget.open)}><summary>{label}</summary>{open && <nav aria-label={label}>{links.map((entry) => <a href={entry.href} key={`${entry.screenId}:${entry.href}`}>{entry.title} <small>({entry.screenId})</small></a>)}</nav>}</details>;
+}
 
 export function BrandLogo() {
   return <img className="brand-logo" src={managedAssetUrl("brand.logo-alpha")} alt="Echoes of Eidolon" />;
@@ -36,7 +57,7 @@ function PublicAuthControls({ state }: { state: NavigationAccessState }) {
   return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;
 }
 
-function ShellFooter({ canPlay = false, className = "" }: { canPlay?: boolean; className?: string }) {
+function ShellFooter({ canPlay = false, children, className = "" }: { canPlay?: boolean; children?: ReactNode; className?: string }) {
   return <footer className={["public-footer", className].filter(Boolean).join(" ")}>
     <nav aria-label="Footer navigation">
       <a href="/about">About Us</a>
@@ -44,6 +65,7 @@ function ShellFooter({ canPlay = false, className = "" }: { canPlay?: boolean; c
       <a href="/legal">Legal</a>
       {canPlay && <a href="/donate">Donate</a>}
     </nav>
+    {children}
     <span>© Echoes of Eidolon</span>
   </footer>;
 }
@@ -62,10 +84,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <PublicAuthControls state={navigationState} />
-        <LoginSoundtrackPlayer />
       </header>
       <main className="site-main">{children}</main>
-      <ShellFooter canPlay={navigationState.navigation.game} />
+      <ShellFooter canPlay={navigationState.navigation.game}><ManifestNavigationDirectory fallback="/" label="Public page directory" shells={["public", "store", "auth"]} /></ShellFooter>
     </div>
   );
 }
@@ -84,7 +105,6 @@ function SideShell({ children, label, navigation }: SideShellProps) {
       <header className="workspace-header">
         <BrandHomeLink />
         <span>{label}</span>
-        <LoginSoundtrackPlayer />
       </header>
       <aside className="workspace-sidebar">
         <strong>{label}</strong>
@@ -96,6 +116,7 @@ function SideShell({ children, label, navigation }: SideShellProps) {
           <a href={href} key={href}>{item}</a>
         ))}
         {authorized.signOut && <a href="/auth/sign-out">Sign Out</a>}
+        <ManifestNavigationDirectory fallback={label === "Administration" ? "/admin" : "/account/profile"} label={`${label} page directory`} shells={label === "Administration" ? ["admin", "tools-review"] : ["account"]} />
       </aside>
       <main className="workspace-main">{children}</main>
       <ShellFooter canPlay={authorized.game} className="workspace-footer" />
@@ -131,8 +152,7 @@ export function GameShell({ children }: { children: ReactNode }) {
   const navigationState = useNavigationAccess();
   const navigation = navigationState.navigation;
   return (
-    <div className="game-shell">
-      <LoginSoundtrackPlayer />
+    <GameAudioEngine><div className="game-shell">
       <main>{children}</main>
       <footer className="game-bottom-bar">
         <span>Location unavailable</span>
@@ -141,6 +161,9 @@ export function GameShell({ children }: { children: ReactNode }) {
           <a href="/game/knowledge">Knowledge</a>
           <a href="/game/bookshelf">Bookshelf</a>
           <a href="/game/maps">Maps</a>
+          <a href="/game?state=GAME_HEALTH01_PARTY_HEALTH">Party Health</a>
+          <a href="/game?state=GAME_INV01_CONCORD">Inventory</a>
+          <a href="/game?state=GAME_LED01_CONCORD">Withdrawals</a>
         </nav>
         <nav aria-label="Site navigation">
           <a href="/">Home</a>
@@ -148,7 +171,9 @@ export function GameShell({ children }: { children: ReactNode }) {
           {navigation.administration && <a href="/admin">Administration</a>}
           {navigation.signOut && <a href="/auth/sign-out">Sign Out</a>}
         </nav>
+        <GameAudioMixer />
+        <ManifestNavigationDirectory fallback="/game" label="Game screen directory" shells={["game"]} />
       </footer>
-    </div>
+    </div></GameAudioEngine>
   );
 }

@@ -10,8 +10,14 @@ export function LoginSoundtrackPlayer() {
     if (!source || !audio.current) return;
     audio.current.src = source;
     audio.current.hidden = false;
-    audio.current.load();
+    void fetch("/api/account/settings").then(async (response) => {
+      if (!response.ok || !audio.current) return;
+      const settings = await response.json() as { audioMasterVolume: number; audioMuted: boolean; audioSoundtrackVolume: number };
+      audio.current.muted = settings.audioMuted;
+      audio.current.volume = (settings.audioMasterVolume / 100) * (settings.audioSoundtrackVolume / 100);
+      audio.current.load();
+    }).catch(() => undefined);
   }, []);
 
-  return <audio className="login-soundtrack" controls hidden preload="metadata" ref={audio} aria-label="Login soundtrack" />;
+  return <audio className="login-soundtrack" hidden preload="metadata" ref={audio} aria-label="Login soundtrack" />;
 }

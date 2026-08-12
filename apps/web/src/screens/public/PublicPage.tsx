@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
+import { AtlasGlobe } from "../../components/AtlasGlobe";
 import { MarkdownDocument } from "../../components/MarkdownDocument";
 import { RegionCrest } from "../../components/RegionCrest";
 import { featureCrestPresentation } from "../../content/feature-crests";
@@ -12,6 +13,7 @@ import publicReleaseNotes from "../../data/public-release-notes.generated.json";
 import { canAccessAdministration, resolveAuthorizationRole } from "../../domain/authorization";
 import { contactTopicDetails, contactTopicTokens, type ContactTopic } from "../../domain/contact";
 import { donationMonths } from "../../domain/membership";
+import type { PublicAtlasProjection } from "../../domain/public-atlas";
 import type { ReleaseNotes } from "../../domain/release-notes";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
@@ -55,7 +57,18 @@ function FeaturePage({ screen }: { screen: PageManifestEntry }) {
 }
 
 function GameplayPage() {
-  return <><PageHead eyebrow="Gameplay" title="Explore. Ask. Learn. Decide." description="The core loop is investigation inside a persistent world, not a chain of dialogue menus." /><div className="gameplay-layout"><section className="video-panel"><video controls preload="metadata" src={managedAssetUrl("video.year-zero-law")}>Your browser does not support the captioned gameplay video.</video><div><strong>How Echoes plays</strong><small>Captioned video: how the Year Zero law unites Eidolon.</small></div></section><section className="step-list">{gameplaySteps.map(([title, body], index) => <article className="step" key={title}><span>{index + 1}</span><div><h2>{title}</h2><p>{body}</p></div></article>)}</section></div></>;
+  return <><PageHead eyebrow="Gameplay" title="Explore. Ask. Learn. Decide." description="The core loop is investigation inside a persistent world, not a chain of dialogue menus." /><p className="notice">Gameplay content will be placed here as the game matures.</p><div className="gameplay-layout"><section className="video-panel"><video controls preload="metadata" src={managedAssetUrl("video.year-zero-law")}>Your browser does not support the captioned gameplay video.</video><div><strong>How Echoes plays</strong><small>Captioned video: how the Year Zero law unites Eidolon.</small></div></section><section className="step-list">{gameplaySteps.map(([title, body], index) => <article className="step" key={title}><span>{index + 1}</span><div><h2>{title}</h2><p>{body}</p></div></article>)}</section></div><div className="action-row"><a className="button button--gold" href="/gameplay/world-atlas">Explore the World Atlas</a><a className="button" href="/features">Browse Features</a></div></>;
+}
+
+function PublicWorldAtlasPage() {
+  const [selectedId, setSelectedId] = useState<string>();
+  const atlas = useQuery({ queryKey: ["public-world-atlas"], queryFn: async () => {
+    const response = await fetch("/api/atlas/public");
+    if (!response.ok) throw new Error("The public World Atlas could not be loaded.");
+    return response.json() as Promise<PublicAtlasProjection>;
+  } });
+  const selected = atlas.data?.pointsOfInterest.find((point) => point.poiId === selectedId);
+  return <><a className="back-link" href="/gameplay">← Gameplay</a><PageHead eyebrow="Gameplay" title="World Atlas" description="Explore public geography, settlements, and connections without revealing player state." />{atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}<section className="atlas-layout"><AtlasGlobe connections={atlas.data?.connections ?? []} onSelect={setSelectedId} points={atlas.data?.pointsOfInterest ?? []} regionMappings={atlas.data?.regionMappings ?? []} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} /><aside className="card"><h2>{selected?.displayName ?? selected?.workingLabel ?? "Select a location"}</h2>{selected ? <><p>{selected.category}</p><p>{selected.regionId}</p></> : <p>Rotate the globe or use its accessible location controls.</p>}<p>{atlas.data?.connections.length ?? 0} public map connections</p></aside></section></>;
 }
 
 async function fetchHealth(): Promise<PublicHealthReport> {
@@ -199,6 +212,8 @@ export function PublicPage({ pathname, screen }: { pathname?: string; screen: Pa
     if (screen.screenId === "PUB002") return <FeaturesPage />;
     if (screen.screenId.startsWith("FEATURE_")) return <FeaturePage screen={screen} />;
     if (screen.screenId === "PUB003") return <GameplayPage />;
+    if (screen.screenId === "PUB_GAME01_GAMEPLAY_LANDING") return <GameplayPage />;
+    if (screen.screenId === "PUB_GAME02_WORLD_ATLAS") return <PublicWorldAtlasPage />;
     if (screen.screenId === "PUB016") return <StatusPage />;
     if (screen.screenId === "PUB017" || screen.screenId === "PUB018") return <ReleasesPage detail={screen.screenId === "PUB018"} pathname={pathname} />;
     if (screen.screenId === "PUB015") return <ContactPage />;

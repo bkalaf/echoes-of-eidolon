@@ -14,6 +14,6 @@ describe("release-note release gate", () => {
   });
 
   it("RN-011 verifies the prepared current repository state", async () => {
-    await expect(runReleaseCheck(resolve(process.cwd(), "../.."))).resolves.toMatchObject({ currentVersion: "0.2.1", releaseDate: "2026-08-12", status: "PUBLISHED" });
+    await expect(runReleaseCheck(resolve(process.cwd(), "../.."))).resolves.toMatchObject({ currentVersion: "0.3.0", releaseDate: null, status: "DRAFT" });
   });
 });

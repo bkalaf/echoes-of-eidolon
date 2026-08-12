@@ -698,7 +698,8 @@
             "H",
             "I",
             "J",
-            "K"
+            "K",
+            "L"
           ],
           "hasDefault": false,
           "isList": false,
@@ -1117,7 +1118,12 @@
             "SOURCE",
             "CITATION",
             "AUTHORED_NARRATIVE",
-            "NPC_CONVERSATION_GRAPH"
+            "NPC_CONVERSATION_GRAPH",
+            "ITEM",
+            "OCCUPATION",
+            "PARTY",
+            "SOUNDTRACK",
+            "WORLD_INSTANCE"
           ],
           "hasDefault": false,
           "isList": false,

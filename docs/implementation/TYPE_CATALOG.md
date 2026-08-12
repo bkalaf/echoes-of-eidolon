@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and mechanically reconciled 273-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 274-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 108
-- Controlled enums: 110
-- HTTP method/path contracts: 61
-- Wireframe view-model rows: 273
-- Wireframe shell distribution: public 36, game 14, auth 10, account 23, state-only 19, store 12, admin 154, tools-review 5
+- Persisted entity types: 133
+- Controlled enums: 119
+- HTTP method/path contracts: 118
+- Wireframe view-model rows: 274
+- Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 154, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -16,8 +16,9 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 
 | Type | Kind | Owner | Table/service | Consuming screens | Field count |
 |---|---|---|---|---|---:|
-| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 31 |
-| UserSettings | Persisted entity | Shared settings | `UserSettings` via server/user-settings.ts | Account Settings and Game Settings modal | 12 |
+| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 39 |
+| GuardianConsentRecord | Persisted entity | Repository core | `GuardianConsentRecord` via Prisma and owning route service | Registry-linked screens | 6 |
+| UserSettings | Persisted entity | Shared settings | `UserSettings` via server/user-settings.ts | Account Settings and Game Settings modal | 16 |
 | Session | Persisted entity | Identity | `Session` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 11 |
 | Organization | Persisted entity | Authorization | `Organization` via domain/organization-access.ts | Admin access | 8 |
 | Member | Persisted entity | Authorization | `Member` via domain/organization-access.ts | Admin access | 7 |
@@ -32,12 +33,15 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 29 |
 | Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 13 |
 | Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 6 |
-| Protagonist | Persisted entity | Narrative data | `Protagonist` via typed import services | Admin Data, Campaign, Game | 8 |
+| Protagonist | Persisted entity | Narrative data | `Protagonist` via typed import services | Admin Data, Campaign, Game | 18 |
 | Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 5 |
 | Antagonist | Persisted entity | Narrative data | `Antagonist` via typed import services | Admin Data, Campaign, Game | 24 |
 | Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 5 |
-| Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 3 |
-| Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 10 |
+| Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 4 |
+| Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 12 |
+| CompanionTransformationBinding | Persisted entity | Narrative data | `CompanionTransformationBinding` via typed import services | Admin Data, Campaign, Game | 6 |
+| Occupation | Persisted entity | Repository core | `Occupation` via Prisma and owning route service | Registry-linked screens | 6 |
+| OccupationAttributeAffinity | Persisted entity | Repository core | `OccupationAttributeAffinity` via Prisma and owning route service | Registry-linked screens | 4 |
 | TimelineEvent | Persisted entity | Narrative data | `TimelineEvent` via typed import services | Admin Data, Campaign, Game | 4 |
 | Interlude | Persisted entity | Narrative data | `Interlude` via typed import services | Admin Data, Campaign, Game | 6 |
 | InterludeSubstitution | Persisted entity | Narrative data | `InterludeSubstitution` via typed import services | Admin Data, Campaign, Game | 6 |
@@ -48,11 +52,19 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Transition | Persisted entity | Narrative data | `Transition` via typed import services | Admin Data, Campaign, Game | 5 |
 | Constellation | Persisted entity | Narrative data | `Constellation` via typed import services | Admin Data, Campaign, Game | 6 |
 | Ark | Persisted entity | Narrative data | `Ark` via typed import services | Admin Data, Campaign, Game | 3 |
-| PointOfInterest | Persisted entity | Atlas | `PointOfInterest` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 6 |
-| Site | Persisted entity | Atlas | `Site` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 6 |
+| PointOfInterest | Persisted entity | Atlas | `PointOfInterest` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 8 |
+| PointOfInterestServiceAssignment | Persisted entity | Repository core | `PointOfInterestServiceAssignment` via Prisma and owning route service | Registry-linked screens | 5 |
+| AtlasNameableFeature | Persisted entity | Repository core | `AtlasNameableFeature` via Prisma and owning route service | Registry-linked screens | 5 |
+| AtlasNamingEligibility | Persisted entity | Repository core | `AtlasNamingEligibility` via Prisma and owning route service | Registry-linked screens | 6 |
+| Site | Persisted entity | Atlas | `Site` via server/atlas.ts and server/atlas-sites.ts | Atlas Admin and Game maps | 8 |
 | RegionLatticeMapping | Persisted entity | Repository core | `RegionLatticeMapping` via Prisma and owning route service | Registry-linked screens | 3 |
 | AtlasConnection | Persisted entity | Repository core | `AtlasConnection` via Prisma and owning route service | Registry-linked screens | 6 |
-| Settlement | Persisted entity | Settlement simulation | `Settlement` via server/settlements.ts | Atlas Admin, Found City, Migrate | 6 |
+| ExternalBulkApiSession | Persisted entity | Repository core | `ExternalBulkApiSession` via Prisma and owning route service | Registry-linked screens | 11 |
+| BulkOperationAudit | Persisted entity | Repository core | `BulkOperationAudit` via Prisma and owning route service | Registry-linked screens | 13 |
+| BulkMutationEnvelope | Persisted entity | Repository core | `BulkMutationEnvelope` via Prisma and owning route service | Registry-linked screens | 18 |
+| Settlement | Persisted entity | Settlement simulation | `Settlement` via server/settlements.ts | Atlas Admin, Found City, Migrate | 7 |
+| Soundtrack | Persisted entity | Repository core | `Soundtrack` via Prisma and owning route service | Registry-linked screens | 7 |
+| SettlementSoundtrackAssignment | Persisted entity | Settlement simulation | `SettlementSoundtrackAssignment` via server/settlements.ts | Atlas Admin, Found City, Migrate | 8 |
 | SettlementWorld | Persisted entity | Settlement simulation | `SettlementWorld` via server/settlements.ts | Atlas Admin, Found City, Migrate | 12 |
 | SettlementPopulationEvent | Persisted entity | Settlement simulation | `SettlementPopulationEvent` via server/settlements.ts | Atlas Admin, Found City, Migrate | 9 |
 | Source | Persisted entity | Evidence | `Source` via domain/knowledge-evidence.ts and typed research services | Admin Data and Game Knowledge | 8 |
@@ -67,9 +79,9 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | KnowledgeBaseDisclosureCitation | Persisted entity | Knowledge | `KnowledgeBaseDisclosureCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | KnowledgeBaseItemCitation | Persisted entity | Knowledge | `KnowledgeBaseItemCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | Definition | Persisted entity | Narrative data | `Definition` via typed import services | Admin Data, Campaign, Game | 3 |
-| Layette | Persisted entity | Narrative data | `Layette` via typed import services | Admin Data, Campaign, Game | 3 |
+| Layette | Persisted entity | Narrative data | `Layette` via typed import services | Admin Data, Campaign, Game | 4 |
 | PersonalityExpression | Persisted entity | Canonical data | `PersonalityExpression` via typed imports and server/breed-research.ts | Admin Data and Game | 2 |
-| CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 5 |
+| CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 6 |
 | CapabilityDefinitionVersion | Persisted entity | Capabilities | `CapabilityDefinitionVersion` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 24 |
 | CapabilityParameterDefinition | Persisted entity | Capabilities | `CapabilityParameterDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
 | CapabilityAddress | Persisted entity | Capabilities | `CapabilityAddress` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
@@ -83,16 +95,24 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | FactionStandingScoringWeight | Persisted entity | Repository core | `FactionStandingScoringWeight` via Prisma and owning route service | Registry-linked screens | 4 |
 | FactionStandingEvidenceEvent | Persisted entity | Repository core | `FactionStandingEvidenceEvent` via Prisma and owning route service | Registry-linked screens | 12 |
 | AchievementDefinition | Persisted entity | Capabilities | `AchievementDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 7 |
-| ManagedAsset | Persisted entity | Asset and Prompt Manager | `ManagedAsset` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 11 |
+| ManagedAsset | Persisted entity | Asset and Prompt Manager | `ManagedAsset` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 12 |
 | AssetPurposeLink | Persisted entity | Asset and Prompt Manager | `AssetPurposeLink` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 4 |
 | PromptRecord | Persisted entity | Asset and Prompt Manager | `PromptRecord` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 7 |
-| PromptVersion | Persisted entity | Asset and Prompt Manager | `PromptVersion` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 9 |
+| PromptVersion | Persisted entity | Asset and Prompt Manager | `PromptVersion` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 10 |
+| PromptTextResult | Persisted entity | Asset and Prompt Manager | `PromptTextResult` via scripts/import-managed-assets.mjs | Admin Assets and all media screens | 7 |
 | MembershipGrant | Persisted entity | Membership | `MembershipGrant` via domain/membership.ts | Donation, Account, Admin Perks | 12 |
+| MembershipSubscription | Persisted entity | Membership | `MembershipSubscription` via domain/membership.ts | Donation, Account, Admin Perks | 14 |
+| MembershipSubscriptionEvent | Persisted entity | Membership | `MembershipSubscriptionEvent` via domain/membership.ts | Donation, Account, Admin Perks | 10 |
 | MembershipRevocation | Persisted entity | Membership | `MembershipRevocation` via domain/membership.ts | Donation, Account, Admin Perks | 11 |
 | Perk | Persisted entity | Membership | `Perk` via domain/membership.ts | Donation, Account, Admin Perks | 4 |
 | StoreProduct | Persisted entity | Commerce | `StoreProduct` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 7 |
 | StoreVariant | Persisted entity | Commerce | `StoreVariant` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 10 |
-| Order | Persisted entity | Commerce | `Order` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 9 |
+| Order | Persisted entity | Commerce | `Order` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 14 |
+| OrderPublicAccessToken | Persisted entity | Commerce | `OrderPublicAccessToken` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 8 |
+| HelpTicket | Persisted entity | Repository core | `HelpTicket` via Prisma and owning route service | Registry-linked screens | 14 |
+| HelpTicketMessage | Persisted entity | Repository core | `HelpTicketMessage` via Prisma and owning route service | Registry-linked screens | 9 |
+| HelpTicketAttachment | Persisted entity | Repository core | `HelpTicketAttachment` via Prisma and owning route service | Registry-linked screens | 9 |
+| OrderReturnRequest | Persisted entity | Commerce | `OrderReturnRequest` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 6 |
 | OrderLine | Persisted entity | Commerce | `OrderLine` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 7 |
 | StripeWebhookEvent | Persisted entity | Commerce | `StripeWebhookEvent` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 7 |
 | OrderPaymentConfirmation | Persisted entity | Commerce | `OrderPaymentConfirmation` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 9 |
@@ -113,7 +133,12 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | DocumentSourcePoint | Persisted entity | Document Builder | `DocumentSourcePoint` via server/documents.ts | Admin Document Builder | 6 |
 | DocumentAmendment | Persisted entity | Document Builder | `DocumentAmendment` via server/documents.ts | Admin Document Builder | 5 |
 | DocumentDraft | Persisted entity | Document Builder | `DocumentDraft` via server/documents.ts | Admin Document Builder | 11 |
-| GameSession | Persisted entity | Player runtime | `GameSession` via server/game-runtime.ts | Game viewport | 8 |
+| GameSession | Persisted entity | Player runtime | `GameSession` via server/game-runtime.ts | Game viewport | 14 |
+| WorldInstance | Persisted entity | Repository core | `WorldInstance` via Prisma and owning route service | Registry-linked screens | 7 |
+| Party | Persisted entity | Repository core | `Party` via Prisma and owning route service | Registry-linked screens | 10 |
+| PartyMember | Persisted entity | Repository core | `PartyMember` via Prisma and owning route service | Registry-linked screens | 8 |
+| RecoveryPolicy | Persisted entity | Repository core | `RecoveryPolicy` via Prisma and owning route service | Registry-linked screens | 6 |
+| MoneyTransaction | Persisted entity | Repository core | `MoneyTransaction` via Prisma and owning route service | Registry-linked screens | 10 |
 | GameTurn | Persisted entity | Player runtime | `GameTurn` via server/game-runtime.ts | Game viewport | 11 |
 | City | Persisted entity | City geometry | `City` via settlement and City services | Admin City Builder | 8 |
 | Parcel | Persisted entity | City geometry | `Parcel` via settlement and City services | Admin City Builder | 4 |
@@ -133,12 +158,20 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 |---|---|---|---|
 | GET | `/api/account/membership` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/account/orders/:orderId` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/orders/:orderId/return` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/account/orders` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/account/sessions` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/account/sessions/revoke-all-other` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/account/sessions/revoke-other` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/account/settings` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/account/settings` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/subscription/cancel` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/subscription/checkout` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/subscription/portal` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/account/support/:ticketId` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/support/:ticketId` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/account/support` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/account/support` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/accounts/:userId` | Route Zod schema or empty request | Route server projection or bounded error |
 | PATCH | `/api/admin/accounts/:userId/role` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/accounts` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -146,6 +179,8 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | POST | `/api/admin/beta-invitations/:id/approve` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/beta-invitations/:id/reject` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/beta-invitations` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/bulk-operations` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/bulk-operations` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/admin/campaign/groupings` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -157,39 +192,86 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | GET | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/capabilities/scoring/:rewardScoringPolicyId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/cities/:cityId` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/cities/:cityId` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/cities` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/cities` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/commerce` | Route Zod schema or empty request | Route server projection or bounded error |
+| PATCH | `/api/admin/commerce/products/:productId` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/commerce/products/:productId/variants` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/commerce/products` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/companion-planner` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/companion-planner` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/dashboard` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
+| PATCH | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
+| DELETE | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/data/:entityKey/import` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/documents` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/documents` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/money` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/occupations` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/occupations` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/perks/:perkId` | Route Zod schema or empty request | Route server projection or bounded error |
 | PATCH | `/api/admin/perks/:perkId` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/perks` | Route Zod schema or empty request | Route server projection or bounded error |
+| PATCH | `/api/admin/prompts/:promptRecordId/result` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/prompts/:promptRecordId/versions` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/prompts` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/prompts` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/puzzles/blueprints` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/puzzles/blueprints` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/puzzles/blueprints/:puzzleBlueprintId` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/puzzles/blueprints/:puzzleBlueprintId` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/puzzles/preview` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/releases` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/releases` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/releases/:id/publish` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/settlement-soundtracks` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/admin/settlement-soundtracks` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/settlements/apply-naming` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/settlements/complete-naming` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/settlements/found-city` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/settlements` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/settlements/migrate` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/atlas/catalog` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/atlas/public` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/auth/:` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/auth/:` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/beta-invitations/redeem` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/beta-invitations/request` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/contact` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/donations/checkout` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/external/bulk` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/external/bulk` | Route Zod schema or empty request | Route server projection or bounded error |
+| PUT | `/api/external/bulk` | Route Zod schema or empty request | Route server projection or bounded error |
+| DELETE | `/api/external/bulk` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/external/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/external/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/external/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
+| PATCH | `/api/external/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
+| DELETE | `/api/external/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/external/data/:entityKey/import` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/health` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/player/access` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/player/bank-withdraw` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/player/calendar` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/player/gameplay` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/player/inn` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/player/puzzles` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/player/puzzles` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/player/runtime` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/player/runtime` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/releases` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/releases/:version` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/store/catalog` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/store/checkout` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/store/checkout/status` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/store/order-lookup` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/store/orders/:publicOrderToken` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/store/support` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/stripe/webhook` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/version` | Route Zod schema or empty request | Route server projection or bounded error |
 
@@ -244,7 +326,12 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | PuzzleFamily | 9 | `TEXT_LANGUAGE_LITERARY`, `CRYPTO_NUMERIC_DATA`, `VISUAL_COLOR_OPTICAL`, `SPATIAL_FOLDING_GEOMETRY`, `AUDIO_MUSIC_SPECTRAL`, `LOGIC_CONSTRAINT`, `HISTORICAL_RESEARCH`, `CONSTRUCTION_SIMULATION`, `CROSS_MODAL` |
 | PuzzleDifficultyTier | 5 | `TIER_1_INITIATE`, `TIER_2_ADEPT`, `TIER_3_EXPERT`, `TIER_4_MASTER`, `TIER_5_ORDEAL` |
 | CapabilityValueKind | 5 | `BOOLEAN`, `SCORE`, `COUNTER`, `ENUM`, `REFERENCE` |
-| CompanionKey | 11 | `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K` |
+| CompanionKey | 12 | `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L` |
+| AbilityType | 6 | `CHARISMA`, `DEXTERITY`, `INTELLIGENCE`, `STAMINA`, `STRENGTH`, `WISDOM` |
+| KnowledgeSkill | 11 | `EIDETIC_MEMORY`, `PHOTOGRAPHIC_MEMORY`, `RECOGNITION`, `ORIENTATION`, `RESEARCH`, `ORIGINS`, `LORE`, `GOSSIP`, `PERFECT_PITCH`, `CONNECTIONS`, `TRACE` |
+| AwarenessSkill | 11 | `DANGER_SENSE`, `TRAP_SENSE`, `POISON_SENSE`, `DIPLOMACY`, `DECEPTION_SENSE`, `READ_BETWEEN_THE_LINES`, `EMPATHY`, `STREETWISE`, `GUARDIAN`, `FIRST_AID`, `RESOLVE` |
+| PointOfInterestService | 2 | `BANK`, `INN` |
+| SoundtrackCategory | 2 | `CITY`, `TAVERN` |
 | RegionId | 25 | `R01`, `R02`, `R03`, `R04`, `R05`, `R06`, `R07`, `R08`, `R09`, `R10`, `R11`, `R12`, `R13`, `R14`, `R15`, `R16`, `R17`, `R18`, `R19`, `R20`, `R21`, `R22`, `R23`, `R24`, `R25` |
 | NameStatus | 2 | `WORKING`, `CANONICAL` |
 | SettlementClassification | 5 | `HAMLET`, `VILLAGE`, `TOWN`, `CITY`, `METROPOLIS` |
@@ -268,11 +355,12 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | ArkStatus | 4 | `OPERATIONAL`, `CANNIBALIZED`, `DAMAGED`, `DESTROYED` |
 | DefinitionType | 2 | `INTERNAL`, `EXTERNAL` |
 | Holiday | 4 | `DEEPWATCH`, `THAWMARCH`, `GOLDTIDE`, `VEILFALL` |
-| EntityType | 36 | `CULTURE`, `CHARACTER`, `PROTAGONIST`, `ANTAGONIST`, `WITNESS`, `ARCHITECT`, `DEPARTMENT`, `SPECIES`, `SPECIES_GROUP`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `MATRIX`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH` |
+| EntityType | 41 | `CULTURE`, `CHARACTER`, `PROTAGONIST`, `ANTAGONIST`, `WITNESS`, `ARCHITECT`, `DEPARTMENT`, `SPECIES`, `SPECIES_GROUP`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `MATRIX`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH`, `ITEM`, `OCCUPATION`, `PARTY`, `SOUNDTRACK`, `WORLD_INSTANCE` |
 | Heirloom | 15 | `NECKLACE`, `BRACELET`, `EARRINGS`, `CLOAK_CLASP`, `LIGHTER`, `POCKETWATCH`, `COIN_HEAD_BLACKENED`, `COIN_TAIL_BLACKENED`, `RING`, `TATTOO`, `BIRTHMARK`, `BROOCH`, `HAIR_BARRETTE`, `BELT_BUCKLE`, `BACKPACK_CLASP` |
 | AgeEligibility | 2 | `ADULT_18_PLUS`, `MINOR_14_17_GUARDIAN_CONSENTED` |
 | FriendInvitationRequestStatus | 4 | `PENDING`, `APPROVED`, `REJECTED`, `INVITED` |
-| ExternalBulkApiState | 2 | `OFF`, `ON` |
+| ExternalBulkApiState | 3 | `OFF`, `KEYED`, `KEYLESS` |
+| BulkMutationStatus | 8 | `RECEIVED`, `DRY_RUN_RUNNING`, `DRY_RUN_FAILED`, `PENDING_REVIEW`, `APPLYING`, `REVALIDATION_FAILED`, `APPLIED`, `DELETED` |
 | MembershipGrantSource | 2 | `SUBSCRIPTION`, `DONATION` |
 | PerkStatus | 2 | `ACTIVE`, `INACTIVE` |
 | PaymentProvider | 1 | `STRIPE` |
@@ -299,6 +387,9 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | ManagedAssetMediaKind | 3 | `IMAGE`, `AUDIO`, `VIDEO` |
 | PromptFamily | 4 | `IMAGE`, `MUSIC`, `PUZZLE`, `NAMING` |
 | PromptStatus | 3 | `OUTSTANDING`, `READY`, `COMPLETED` |
+| HelpTicketStatus | 2 | `OPEN`, `RESOLVED` |
+| HelpTicketChannel | 3 | `PLAYER`, `STORE`, `RETURN` |
+| HelpTicketAuthorKind | 3 | `ACCOUNT`, `GUEST`, `SUPPORT` |
 | Loquacity | 3 | `LIGHT_BANTER`, `TALKATIVE`, `TO_THE_POINT` |
 | EmotionalTemperature | 3 | `COMPOSED`, `IRRITABLE`, `JOYFUL` |
 | OutlookOrientation | 3 | `NEUTRAL`, `OPTIMISTIC`, `PESSIMISTIC` |
@@ -310,7 +401,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 273 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 274 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

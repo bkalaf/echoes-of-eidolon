@@ -4,6 +4,8 @@ import { resolve } from "node:path";
 
 import { expect, test, type Page } from "@playwright/test";
 
+import { runAuthFixtureCleanup } from "./support/auth-fixture-cleanup";
+
 const captureDirectory = "/tmp/echoes-e2e-auth-codes";
 let databasePromise: Promise<Awaited<ReturnType<typeof import("../../src/server/database")["getDatabase"]>>> | undefined;
 const fixtureEmails = new Set<string>();
@@ -97,25 +99,32 @@ async function expectAuthenticated(page: Page) {
 }
 
 test.describe("real Better Auth browser workflows", () => {
-  test.afterEach(async () => {
+  test.afterEach(async ({ context }) => {
     const emails = [...fixtureEmails];
     const usernames = [...fixtureUsernames];
-    fixtureEmails.clear();
-    fixtureUsernames.clear();
-    if (emails.length === 0 && usernames.length === 0) return;
-    const database = await testDatabase();
-    const users = await database.user.findMany({
-      select: { email: true, id: true },
-      where: { username: { in: usernames } },
+    await runAuthFixtureCleanup({
+      hasFixtures: emails.length > 0 || usernames.length > 0,
+      closeBrowserContext: () => context.close(),
+      deleteDatabaseRecords: async () => {
+        const database = await testDatabase();
+        const users = await database.user.findMany({
+          select: { email: true, id: true },
+          where: { username: { in: usernames } },
+        });
+        const identifiers = [...new Set([...emails, ...users.map(({ email }) => email)])];
+        await database.$transaction([
+          database.verification.deleteMany({ where: { OR: identifiers.map((identifier) => ({ identifier: { contains: identifier } })) } }),
+          database.user.deleteMany({ where: { id: { in: users.map(({ id }) => id) } } }),
+        ]);
+        for (const email of identifiers) {
+          for (const purpose of ["change-email", "email-verification", "forget-password", "two-factor"]) clearCode(email, purpose);
+        }
+      },
+      clearTrackedFixtures: () => {
+        for (const email of emails) fixtureEmails.delete(email);
+        for (const username of usernames) fixtureUsernames.delete(username);
+      },
     });
-    const identifiers = [...new Set([...emails, ...users.map(({ email }) => email)])];
-    await database.$transaction([
-      database.user.deleteMany({ where: { id: { in: users.map(({ id }) => id) } } }),
-      database.verification.deleteMany({ where: { OR: identifiers.map((identifier) => ({ identifier: { contains: identifier } })) } }),
-    ]);
-    for (const email of identifiers) {
-      for (const purpose of ["change-email", "email-verification", "forget-password", "two-factor"]) clearCode(email, purpose);
-    }
   });
 
   test("sign up, invalid and resent verification OTP, verify, and sign in", async ({ page }) => {

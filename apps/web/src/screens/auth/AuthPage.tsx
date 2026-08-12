@@ -5,7 +5,6 @@ import { PasswordResetFields } from "../../components/auth/PasswordResetFields";
 import { AuthShell } from "../../components/shells/Shells";
 import { OtpInput, PasswordInput } from "../../components/ui/controls";
 import { safeSignedInReturnPath } from "../../domain/auth-navigation";
-import { clearQueuedLoginSoundtrack, queueRandomLoginSoundtrack } from "../../domain/login-soundtrack";
 import { passwordsMatch, pendingResetEmailKey, preserveResetIdentity } from "../../domain/password-workflows";
 import type { AgeEligibility } from "../../generated/prisma/enums";
 import { authClient } from "../../lib/auth-client";
@@ -120,7 +119,6 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setMessage(undefined);
     try {
       if (activeScreenId === "AUTH01") {
-        queueRandomLoginSoundtrack();
         const result = await authClient.signIn.email({
           callbackURL: signedInReturnPath,
           email: values.email,
@@ -128,7 +126,6 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
         });
         const nextError = resultError(result);
         if (nextError) {
-          clearQueuedLoginSoundtrack();
           setError(nextError);
         }
         else setMessage("Signed in.");
@@ -230,7 +227,6 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     setBusy(true);
     setError(undefined);
     try {
-      queueRandomLoginSoundtrack();
       const result = await authClient.signIn.passkey({
         fetchOptions: {
           onSuccess: () => window.location.assign(signedInReturnPath),
@@ -238,12 +234,10 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
       });
       const nextError = resultError(result);
       if (nextError) {
-        clearQueuedLoginSoundtrack();
         setError(nextError);
       }
       else setMessage("Passkey accepted.");
     } catch (caught) {
-      clearQueuedLoginSoundtrack();
       setError(caught instanceof Error ? caught.message : "Passkey authentication failed.");
     } finally {
       setBusy(false);

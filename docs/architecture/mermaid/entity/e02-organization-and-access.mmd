@@ -20,8 +20,8 @@ erDiagram
   }
   User ||--o{ Member : "relates to"
   User ||--o{ Invitation : "relates to"
+  User ||--o{ ExternalBulkApiSession : "relates to"
+  User ||--o{ BulkOperationAudit : "relates to"
   Organization ||--o{ Member : "relates to"
   Organization ||--o{ Invitation : "relates to"
-  User ||--o{ ExternalBulkApiSession : "creates"
-  User ||--o{ BulkOperationAudit : "acts in"
-  ExternalBulkApiSession ||--o{ BulkOperationAudit : "authenticates"
+  ExternalBulkApiSession ||--o{ BulkOperationAudit : "relates to"

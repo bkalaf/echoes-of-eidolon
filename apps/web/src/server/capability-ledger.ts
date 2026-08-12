@@ -230,7 +230,7 @@ function valuesEqual(left: CapabilityValue | undefined, right: CapabilityValue |
   return left === right;
 }
 
-async function appendCapabilityEventInTransaction(
+export async function appendCapabilityEventInTransaction(
   input: CapabilityMutationInput,
   transaction: Transaction,
   entityResolver?: CapabilityEntityResolver,

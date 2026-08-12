@@ -535,15 +535,15 @@ try {
     await expectDatabaseRejection(
       () => verification.query(
         `INSERT INTO "ExternalBulkApiSession" (
-           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "expiresAt"
-         ) VALUES ('bad-key', 'bulk-owner', 'plaintext', now() + interval '30 minutes')`,
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "expiresAt", "lastActivityAt"
+         ) VALUES ('bad-key', 'bulk-owner', 'plaintext', now() + interval '30 minutes', now())`,
       ),
       "External bulk API session accepted a non-hash secret",
     );
     await verification.query(
       `INSERT INTO "ExternalBulkApiSession" (
-         "externalBulkApiSessionId", "issuedByUserId", "keyHash", "expiresAt"
-       ) VALUES ('bulk-session', 'bulk-owner', repeat('a', 64), now() + interval '30 minutes')`,
+         "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt"
+       ) VALUES ('bulk-session', 'bulk-owner', repeat('a', 64), 'KEYED', now() + interval '30 minutes', now())`,
     );
     await verification.query(
       `INSERT INTO "BulkOperationAudit" (
@@ -701,6 +701,7 @@ try {
     if (removedMatrix.rows[0]?.matrix !== null) throw new Error("Forward Atlas migration did not remove the polluted Matrix table");
     await applyThrough("20260810290000_external_bulk_api_audit");
     await applyThrough("20260811010000_resolved_blockers_application_contracts");
+    await applyThrough(migrations.at(-1)!);
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

@@ -1,4 +1,5 @@
 import amendments from "../data/page-manifest-v3-amendments.json";
+import v4Amendments from "../data/page-manifest-v4-amendments.json";
 import baseManifest from "../data/page-manifest.json";
 
 export interface PageManifestEntry {
@@ -24,14 +25,22 @@ export type ShellKind =
 export const basePageManifest = Object.freeze(baseManifest as PageManifestEntry[]);
 export const excludedV3ScreenIds = Object.freeze(amendments.excludedScreenIds as string[]);
 export const v3PageManifestAdditions = Object.freeze(amendments.additions as PageManifestEntry[]);
+export const v4PageManifestAdditions = Object.freeze(v4Amendments.additions as PageManifestEntry[]);
 const excluded = new Set(excludedV3ScreenIds);
 export const pageManifest = Object.freeze([
   ...basePageManifest.filter((entry) => !excluded.has(entry.screenId)),
   ...v3PageManifestAdditions,
+  ...v4PageManifestAdditions,
 ]);
 
 export function shellFor(entry: PageManifestEntry): ShellKind {
-  if (entry.path === null) return "state-only";
+  if (entry.path === null) {
+    if (/^(GAME|GAM)/.test(entry.screenId)) return "game";
+    if (/^(TOOL|TOO)/.test(entry.screenId)) return "tools-review";
+    if (entry.screenId.startsWith("ACC")) return "account";
+    if (entry.screenId === "CAM006") return "admin";
+    return "state-only";
+  }
   const path = entry.path.replace(/^Modal in /, "");
   if (path.startsWith("/admin")) return "admin";
   if (path.startsWith("/account") || path.startsWith("/settings")) {
@@ -41,7 +50,7 @@ export function shellFor(entry: PageManifestEntry): ShellKind {
     return "auth";
   }
   if (path.startsWith("/store")) return "store";
-  if (path.startsWith("/game")) {
+  if (path === "/game" || path.startsWith("/game/")) {
     return "game";
   }
   if (path.startsWith("/tools") || path.startsWith("/review")) {

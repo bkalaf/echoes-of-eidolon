@@ -57,7 +57,9 @@ export function buildReleaseCatalog(repositoryRoot: string): CanonicalReleaseCat
 
 export function publicReleaseArtifact(repositoryRoot: string): PublicReleaseArtifact {
   const catalog = buildReleaseCatalog(repositoryRoot);
-  return { currentVersion: catalog.current.version, releases: catalog.publicReleases };
+  const latestPublished = catalog.publicReleases[0];
+  if (!latestPublished) throw new Error("At least one published release is required for the public release artifact.");
+  return { currentVersion: latestPublished.version, releases: catalog.publicReleases };
 }
 
 export function generateReleaseArtifact(repositoryRoot: string): string {
@@ -78,7 +80,7 @@ export async function runReleaseCheck(repositoryRoot: string) {
     const [, subject, body] = record.trim().split("\x1f");
     if (subject && body !== undefined) validateProspectiveCommit({ subject, body });
   }
-  const expected = `${JSON.stringify({ currentVersion: catalog.current.version, releases: catalog.publicReleases }, null, 2)}\n`;
+  const expected = `${JSON.stringify(publicReleaseArtifact(repositoryRoot), null, 2)}\n`;
   const artifactPath = resolve(repositoryRoot, "apps/web/src/data/public-release-notes.generated.json");
   if (!existsSync(artifactPath) || readFileSync(artifactPath, "utf8") !== expected) {
     throw new Error("Generated public release artifact has drifted from canonical Markdown.");

@@ -11,6 +11,7 @@ import { calendarContract } from "../../domain/invariants";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 import type { AtlasCatalogProjection } from "../../server/atlas";
+import { GameplayOverlayForScreen } from "./GameplayOverlays";
 
 interface PlayerPuzzle {
   acceptance: null | { acceptedAt: string; endsAt: string; puzzleChallengeAcceptedId: string; remainingSeconds: number };
@@ -115,6 +116,7 @@ function SettingsOverlay({ screen }: { screen: PageManifestEntry }) {
 }
 
 function SignedInGamePage({ screen }: { screen: PageManifestEntry }) {
+  if (["GAME_HEALTH01_PARTY_HEALTH", "GAME_INN01_INN", "GAME_MTG01_MORNING_MEETING_V2", "GAME_MTG02_EVENING_MEETING_V2"].includes(screen.screenId) || screen.screenId.startsWith("GAME_INV01_") || screen.screenId.startsWith("GAME_LED01_") || screen.screenId.startsWith("GAME_BANK01_")) return <><RuntimeViewport screen={{ ...screen, screenId: "GAME001", title: "Game" }} /><GameplayOverlayForScreen screen={screen} /></>;
   if (["GAME001", "GAME008", "GAME009", "GAME010", "GAM001", "GAME_VIEW_FULL", "GAME_VIEW_NO_COUNTDOWN", "GAME_VIEW_SINGLE_EXIT"].includes(screen.screenId)) return <RuntimeViewport screen={screen} />;
   if (["GAME002", "GAME003", "GAME016", "GAM002"].includes(screen.screenId)) return <Knowledge screen={screen} />;
   if (["GAME004", "GAM003"].includes(screen.screenId)) return <Bookshelf screen={screen} />;

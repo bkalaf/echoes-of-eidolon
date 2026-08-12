@@ -31,9 +31,11 @@ describe("closed-world crawlability", () => {
   it("publishes only concrete allowlisted paths in the sitemap", () => {
     const sitemap = sitemapDocument("https://example.test");
     expect(sitemapPaths).toContain("/features/free-to-play");
+    expect(sitemapPaths).toContain("/gameplay");
+    expect(sitemapPaths).toContain("/gameplay/world-atlas");
     expect(sitemap).toContain("<loc>https://example.test/features</loc>");
     expect(sitemap).toContain("<loc>https://example.test/status/releases/0.2.0</loc>");
-    expect(sitemap).not.toMatch(/:version|:slug|store\/orders|\/auth|\/admin|\/game|\/review/);
+    expect(sitemap).not.toMatch(/:version|:slug|store\/orders|\/auth|\/admin|\/game(?:\/|<)|\/review/);
   });
 
   it("uses the exact required robots disallow boundaries", () => {

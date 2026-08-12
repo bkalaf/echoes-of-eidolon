@@ -17,6 +17,7 @@ import { EntityDataAdminPage } from "./EntityDataAdminPage";
 import { BulkOperationsAdminPage } from "./BulkOperationsAdminPage";
 import { CityBuilderAdminPage } from "./CityBuilderAdminPage";
 import { AdminDashboardPage } from "./AdminDashboardPage";
+import { CompanionPlannerAttributesPage, MoneyAuditPage, OccupationAdminPage, SettlementSoundtracksPage, TransformationAuthoringPage } from "./AdminV4Pages";
 
 function AdminHead({ screen, description }: { screen: PageManifestEntry; description: string }) {
   return <header className="workspace-page-head"><p className="kicker">ADMIN · {screen.screenId}</p><h1>{screen.title}</h1><p>{description}</p></header>;
@@ -55,7 +56,12 @@ function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; scr
   const isImport = screen.screenId.endsWith("_IMPORT");
   const isInvitationTask = ["ADM003", "ADM004", "ADM006"].includes(screen.screenId);
   const isAccountTask = ["ADM002", "ADM005"].includes(screen.screenId);
-  const isAtlasTask = screen.path?.startsWith("/admin/atlas");
+  const isOccupationTask = screen.screenId === "DATA_OCC01_OCCUPATION_DETAIL_ATTRIBUTES";
+  const isCompanionPlannerTask = screen.screenId === "CMP53_COMPANION_PLANNER_ATTRIBUTES_V2";
+  const isTransformationTask = screen.screenId === "ADM_TRANS01_TRANSFORMATION_AUTHORING";
+  const isMoneyTask = screen.screenId === "ADM_MONEY01_TRANSACTION_LEDGER";
+  const isSoundtrackTask = screen.screenId === "ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS";
+  const isAtlasTask = screen.path?.startsWith("/admin/atlas") && !isSoundtrackTask;
   const isCampaignTask = screen.path?.startsWith("/admin/campaign") || screen.screenId === "CAM006";
   const isPuzzleTask = screen.path?.startsWith("/admin/puzzles");
   const isAssetPromptTask = screen.path?.startsWith("/admin/assets") || screen.path?.startsWith("/admin/prompts");
@@ -64,10 +70,10 @@ function AuthorizedAdminTask({ pathname, screen, role }: { pathname: string; scr
   const isOperationsTask = pathname === "/admin/server" || screen.path?.startsWith("/admin/operations");
   const isCapabilityTask = screen.screenId.startsWith("CAP") || screen.screenId === "DATA030";
   const isDataTask = screen.path?.startsWith("/admin/data");
-  const isBulkTask = screen.path?.includes("bulk-operations");
+  const isBulkTask = screen.path?.includes("bulk-operations") || screen.path?.includes("bulk-changes");
   const isCityBuilderTask = screen.path?.startsWith("/admin/cities") || screen.screenId === "ADM037";
   const isDashboardTask = screen.screenId === "ADM001";
-  return <><AdminHead screen={screen} description={`Administrative authorization verified for ${role}.`} />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isOperationsTask ? <OperationsAdminPage screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isCapabilityTask ? <CapabilityAdminPage pathname={pathname} screen={screen} /> : isAtlasTask ? <AtlasAdminPage pathname={pathname} screen={screen} /> : isCampaignTask ? <CampaignAdminPage screen={screen} /> : isPuzzleTask ? <PuzzleAdminPage pathname={pathname} screen={screen} /> : isAssetPromptTask ? <AssetPromptAdminPage screen={screen} /> : isCommerceTask ? <CommerceAdminPage pathname={pathname} screen={screen} /> : isPerkTask ? <PerkAdminPage pathname={pathname} /> : isBulkTask ? <BulkOperationsAdminPage screen={screen} /> : isDataTask ? <EntityDataAdminPage pathname={pathname} screen={screen} /> : isCityBuilderTask ? <CityBuilderAdminPage pathname={pathname} screen={screen} /> : isDashboardTask ? <AdminDashboardPage /> : <section className="card"><h2>{screen.title}</h2><p>Administrative authorization verified for {role}. This task has no writable adapter in the current repository authority.</p></section>}</>;
+  return <><AdminHead screen={screen} description={`Administrative authorization verified for ${role}.`} />{isImport ? <EntityImportPage screen={screen} /> : isInvitationTask ? <BetaInvitationAdminPage role={role} screen={screen} /> : isOperationsTask ? <OperationsAdminPage screen={screen} /> : isAccountTask ? <AccountAdminPage pathname={pathname} role={role} /> : isOccupationTask ? <OccupationAdminPage /> : isCompanionPlannerTask ? <CompanionPlannerAttributesPage /> : isTransformationTask ? <TransformationAuthoringPage /> : isMoneyTask ? <MoneyAuditPage /> : isSoundtrackTask ? <SettlementSoundtracksPage pathname={pathname} /> : isCapabilityTask ? <CapabilityAdminPage pathname={pathname} screen={screen} /> : isAtlasTask ? <AtlasAdminPage pathname={pathname} screen={screen} /> : isCampaignTask ? <CampaignAdminPage screen={screen} /> : isPuzzleTask ? <PuzzleAdminPage pathname={pathname} screen={screen} /> : isAssetPromptTask ? <AssetPromptAdminPage screen={screen} /> : isCommerceTask ? <CommerceAdminPage pathname={pathname} screen={screen} /> : isPerkTask ? <PerkAdminPage pathname={pathname} /> : isBulkTask ? <BulkOperationsAdminPage pathname={pathname} screen={screen} /> : isDataTask ? <EntityDataAdminPage pathname={pathname} screen={screen} /> : isCityBuilderTask ? <CityBuilderAdminPage pathname={pathname} screen={screen} /> : isDashboardTask ? <AdminDashboardPage /> : <section className="card"><h2>{screen.title}</h2><p>Administrative authorization verified for {role}. This task has no writable adapter in the current repository authority.</p></section>}</>;
 }
 
 export function AdminPage({ pathname, screen }: { pathname?: string; screen: PageManifestEntry }) {

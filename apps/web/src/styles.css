@@ -141,6 +141,20 @@ button, input, select, textarea { font: inherit; }
 .finite-chip--tone-5 { color: #f7a8d7; }
 .finite-chip--tone-6 { color: #9bb8ff; }
 .finite-chip--tone-7 { color: #d0df78; }
+.planner-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+.planner-multiselect { border: 1px solid #31536a; border-radius: 8px; background: #071522; }
+.planner-multiselect summary { display: flex; min-height: 48px; align-items: center; gap: 10px; padding: 8px 10px; cursor: pointer; }
+.planner-multiselect summary:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.planner-multiselect fieldset { display: grid; max-height: 230px; overflow: auto; gap: 6px; margin: 0; padding: 10px; border: 0; border-top: 1px solid #31536a; }
+.planner-chips { display: flex; flex: 1; flex-wrap: wrap; gap: 5px; }
+.planner-chips .finite-chip { padding: 3px 7px; font-size: 11px; }
+.planner-matrix-group { padding: 12px; border-radius: 10px; }
+.planner-world-concord { background: rgb(53 137 219 / 12%); }
+.planner-world-ruin { background: rgb(220 73 73 / 12%); }
+.planner-world-schism { background: rgb(224 184 58 / 12%); }
+.planner-matrix { min-width: 900px; }
+.planner-matrix th:first-child { position: sticky; left: 0; z-index: 1; background: #0a1c2a; }
+.planner-cell-error { box-shadow: inset 0 0 0 2px #ff6b6b; background: rgb(255 65 65 / 12%); }
 .topic--tone-0 { --topic-accent: #6fd3ff; }
 .topic--tone-1 { --topic-accent: #efb83a; }
 .topic--tone-2 { --topic-accent: #51d29a; }
@@ -344,9 +358,11 @@ button, input, select, textarea { font: inherit; }
 .atlas-globe { width: min(620px, 100%); aspect-ratio: 1; position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 50%; background: #020b14; box-shadow: 0 0 35px rgb(78 180 255 / 24%); touch-action: none; cursor: grab; }
 .atlas-globe:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .atlas-globe:active { cursor: grabbing; }
-.atlas-globe > canvas, .atlas-globe-markers { width: 100%; height: 100%; position: absolute; inset: 0; }
+.atlas-globe > canvas, .atlas-globe-connections, .atlas-globe-markers { width: 100%; height: 100%; position: absolute; inset: 0; }
 .atlas-globe > canvas { display: block; }
-.atlas-globe-markers { pointer-events: none; }
+.atlas-globe-connections { z-index: 1; pointer-events: none; }
+.atlas-globe-connections line { stroke: rgb(111 211 255 / 55%); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.atlas-globe-markers { z-index: 2; pointer-events: none; }
 .atlas-globe-markers .map-data-pin { pointer-events: auto; }
 .atlas-globe-message { position: absolute; z-index: 3; inset: 0; display: grid; place-items: center; margin: 0; padding: 20%; background: rgb(2 11 20 / 72%); color: #b9d6ed; text-align: center; }
 .atlas-globe-message--error { color: #ffb9b2; }
@@ -642,4 +658,41 @@ html[data-high-contrast="true"] {
   .player-map aside { border-left: 0; border-top: 1px solid var(--line); }
   .form-grid { grid-template-columns: 1fr; }
   .form-grid h2, .span-2 { grid-column: auto; }
+}
+
+.gameplay-overlay { width: min(1120px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow: auto; }
+.party-health-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.party-health-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.party-health-card.condition-green { background: rgb(35 110 70 / 22%); }
+.party-health-card.condition-yellow { background: rgb(200 170 45 / 22%); }
+.party-health-card.condition-orange { background: rgb(205 105 35 / 24%); }
+.party-health-card.condition-red { background: rgb(170 45 45 / 26%); }
+.party-health-card.condition-unavailable { background: rgb(120 120 120 / 15%); }
+.companion-portrait { position: relative; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--panel-strong); font-size: 28px; }
+.transformed-crown { position: absolute; top: -12px; right: -4px; color: var(--gold); }
+.inventory-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr); gap: 20px; }
+.inventory-grid { display: grid; grid-template-columns: repeat(5, minmax(84px, 1fr)); grid-auto-rows: 94px; gap: 10px; max-height: 510px; overflow-y: auto; padding-right: 8px; }
+.inventory-tile { position: relative; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: inherit; }
+.inventory-quantity { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); min-width: 28px; padding: 2px 7px; border-radius: 999px; background: rgb(0 0 0 / 55%); }
+.game-audio-mixer { position: relative; }
+.audio-mixer-popover { position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 20; display: grid; gap: 10px; width: 260px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-strong); }
+.audio-mixer-popover label { display: grid; gap: 4px; }
+.manifest-navigation-directory { padding: .35rem .75rem; }
+.manifest-navigation-directory > summary { cursor: pointer; font-size: .78rem; letter-spacing: .04em; }
+.manifest-navigation-directory nav { display: grid; gap: .35rem; max-height: 18rem; overflow: auto; padding: .75rem 0; }
+.manifest-navigation-directory nav a { font-size: .82rem; }
+.meeting-history { min-height: 180px; max-height: 320px; overflow-y: auto; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+.meeting-roster { display: grid; grid-template-columns: repeat(12, minmax(54px, 1fr)); gap: 8px; overflow-x: auto; }
+.meeting-roster > div { display: grid; justify-items: center; gap: 4px; min-width: 54px; text-align: center; }
+.meeting-roster .companion-portrait { width: 44px; height: 44px; font-size: 18px; }
+.inventory-detail-art { display: grid; place-items: center; min-height: 180px; border-radius: 10px; background: var(--panel-strong); font-size: 68px; color: var(--gold); }
+
+@media (max-width: 900px) {
+  .party-health-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inventory-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .party-health-grid { grid-template-columns: 1fr; }
+  .inventory-grid { grid-template-columns: repeat(5, minmax(64px, 1fr)); }
 }

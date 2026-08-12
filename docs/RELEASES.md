@@ -2,11 +2,11 @@
 
 ## Current state
 
-- Target application release: `0.2.1`.
-- Canonical note: `docs/release-notes/0_2_1.md`.
-- Status: `PUBLISHED`.
-- Release date: `2026-08-12` by owner-authorized P0 hotfix publication action.
-- Authoritative previous release: `0.2.0`. The repository still has no release tag.
+- Target application release: `0.3.0`.
+- Canonical note: `docs/release-notes/0_3_0.md`.
+- Status: `DRAFT`.
+- Release date: null. Draft releases are not public.
+- Authoritative previous release: `0.2.1`. The repository still has no release tag.
 
 ## Canonical files
 

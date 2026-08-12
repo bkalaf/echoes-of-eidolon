@@ -1,9 +1,9 @@
 # Wireframe Implementation Status Audit
 
-Date: 2026-08-11
-Repository: `/home/bobby/echoes-of-eidolon`  
-Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 274 mechanically derived active V3 states)
-Audited checkout: archival checkpoint `7bf9cc3` through the remediation worktree beginning at pushed revision `6626304`
+Date: 2026-08-12
+Repository: `/home/bobby/echoes-of-eidolon-0.3.0`
+Controlling registry: `apps/web/src/data/page-manifest.json` plus the V3 and V4 amendment manifests (269 base states; 298 mechanically derived active states)
+Audited checkout: `codex/0.3.0`, based on deployed navigation hotfix `742d8ffb7d20c24d3308acd2ecae93de091d8c53`
 
 ## Standard used
 
@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 236 |
+| IMPLEMENTED | 260 |
 | PARTIAL | 24 |
 | PLACEHOLDER | 14 |
 | MISSING | 0 |
-| **Total active V3 states** | **274** |
+| **Total active V3/V4 states** | **298** |
 
-Therefore **38 of 274 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -34,7 +34,7 @@ Therefore **38 of 274 active V3** wireframe pages/states are not fully implement
 4. **Player runtime pages remain incomplete.** Maps and globes expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, and achievements still lack complete canonical player-facing owners. Player Support now has a first-party persisted Help Ticket owner.
 5. **Reviewed commerce/support workflows are implemented.** Catalog, cart, Stripe checkout, optional subscription lifecycle, eligible return intake, guest lookup/status, and order support use server-owned persisted truth. Unapproved refund/proration/dunning rules remain narrow fail-closed sub-operations rather than placeholder parent screens.
 6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
-7. **No exhaustive visual acceptance exists for all 273 active V3 states.** Existing E2E coverage is representative, so IMPLEMENTED means the task code path and primary behavior are present—not that every page has passed a one-to-one rendered comparison against its wireframe.
+7. **Implementation and navigation are separate gates.** The companion navigation audit covers all 298 active states and reports zero orphaned, dead-end, or broken-link states; browser coverage remains representative rather than a one-to-one pixel comparison for every wireframe.
 
 ## Explicit page-by-page inventory
 
@@ -141,8 +141,8 @@ Therefore **38 of 274 active V3** wireframe pages/states are not fully implement
 | 99 | `ADM016` | Order Management - Subscriptions | `/admin/orders?tab=subscriptions` | **PLACEHOLDER** | Explicit unavailable card; the requested order subtype/detail workflow is absent. |
 | 100 | `ADM017` | Order Management - Donations | `/admin/orders?tab=donations` | **IMPLEMENTED** | Projects persisted `DonationCheckout` amount, status, confirmation, account, and membership-month values without inferring provider outcomes. |
 | 101 | `ADM018` | Order Detail/Admin Actions | `/admin/orders/:id` | **PARTIAL** | Resolves a concrete merchandise order with lines, server total, payment, fulfillment, return, refund, and timeline detail; receipt and refund mutations remain disabled because no safe operation owner exists. |
-| 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
-| 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can generate one 30-minute hash-stored key, copy it once, inspect expiry, and revoke it. |
+| 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can explicitly enable KEYED or KEYLESS mode, with hash-only key storage and 60-minute endpoint-inactivity shutoff. |
+| 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **IMPLEMENTED** | A temporary KEYED session shows plaintext once, retains only its hash, refreshes activity only on authenticated endpoint use, and can be revoked immediately. |
 | 104 | `ADM022` | Bulk Operations - Audit / Recent Activity | `/admin/data/bulk-operations` | **IMPLEMENTED** | Reads append-only BulkOperationAudit records with actor/session attribution, result, count, time, and bounded detail. |
 | 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 106 | `ADM031` | Asset Manager - Audio | `/admin/assets/audio` | **PARTIAL** | Searches persisted audio assets and opens complete final-byte, purpose-link, and technical-probe detail; new/replacement intake remains in the required sanitizing CLI pipeline rather than an unsafe browser uploader. |
@@ -317,6 +317,30 @@ Therefore **38 of 274 active V3** wireframe pages/states are not fully implement
 | 275 | `CAM006` | Book Grouping Membership Editor | `state-only under /admin/campaign/planner` | **IMPLEMENTED** | Edits explicit disjoint Book membership as one logical grouping value while keeping the locked Opposing Faction overlay derived and read-only. |
 | 276 | `CAM007` | Campaign Planner — Custom Column View | `/admin/campaign/planner` | **IMPLEMENTED** | Persists local column order and visibility preferences without mutating CampaignPlacement or Book Grouping data. |
 | 277 | `ACC024` | Change Password | `Modal in /account/profile` | **IMPLEMENTED** | Uses Better Auth current-password verification, shared Password controls, a distinct completed state, and the canonical OTP reset workflow when the current password is unknown. |
+| 278 | `ACC_AUDIO01_PLAYER_SETTINGS` | Player Audio Settings | `/account/settings` | **IMPLEMENTED** | Shared Account settings persist Master, Soundtrack, NPC/Narrative, and Mute without duplicating legacy audio controls. |
+| 279 | `ADM_MONEY01_TRANSACTION_LEDGER` | World Transaction Ledger | `/admin/money` | **IMPLEMENTED** | Authorized administrators read append-only world, account, game-time, delta, withdrawal, and context records. |
+| 280 | `ADM_TRANS01_TRANSFORMATION_AUTHORING` | Transformation Authoring | `/admin/campaign/planner` | **IMPLEMENTED** | Binds a companion's first-Book completion trigger to the canonical Transformation capability and authored Layette grant. |
+| 281 | `BULK01_BULK_CHANGES_QUEUE_V2` | Bulk Changes Queue | `/admin/bulk-changes` | **IMPLEMENTED** | Shows automatic dry-run state and strict receive-order Apply/Delete/Rerun actions over typed mutation envelopes. |
+| 282 | `CMP53_COMPANION_PLANNER_ATTRIBUTES_V2` | Companion Planner Attributes | `/admin/campaign/planner` | **IMPLEMENTED** | Renders actual world assignments in a pivotable matrix with removable-chip filters, world tinting, exact-cell validation, and persisted editing. |
+| 283 | `DATA_OCC01_OCCUPATION_DETAIL_ATTRIBUTES` | Occupation Detail Attributes | `/admin/data/occupations/:occupationId` | **IMPLEMENTED** | Authors first-class Occupations and persists an explicitly ordered affinity over the six canonical AbilityType values. |
+| 284 | `GAME_AUDIO01_BOTTOM_BAR_MIXER_OWNER` | Game Bottom Bar Mixer | `state-only in /game` | **IMPLEMENTED** | The existing game bar owns Master, Soundtrack, NPC/Narrative, and Mute; it has no transport or duplicate bar. |
+| 285 | `GAME_BANK01_CONCORD` | Bank — Concord | `Modal in /game` | **IMPLEMENTED** | Current-POI Bank interaction enforces the Concord rolling allowance and appends a Mane transaction atomically. |
+| 286 | `GAME_BANK01_RUIN` | Bank — Ruin | `Modal in /game` | **IMPLEMENTED** | Current-POI Bank interaction enforces the Ruin rolling allowance and appends a Fan transaction atomically. |
+| 287 | `GAME_BANK01_SCHISM` | Bank — Schism | `Modal in /game` | **IMPLEMENTED** | Current-POI Bank interaction enforces the Schism rolling allowance and appends a Mantle transaction atomically. |
+| 288 | `GAME_HEALTH01_PARTY_HEALTH` | Party Health | `Modal in /game` | **IMPLEMENTED** | Shows twelve companion cards with right-side portraits, neutral borders, authored condition sentences, recovery-color backgrounds, and Transformation crowns. |
+| 289 | `GAME_INV01_CONCORD` | Inventory — Concord | `Modal in /game` | **IMPLEMENTED** | Shows unbounded capability-projected inventory stacks in a five-column viewport with Mane context and no generic MMO actions. |
+| 290 | `GAME_INV01_RUIN` | Inventory — Ruin | `Modal in /game` | **IMPLEMENTED** | Shows unbounded capability-projected inventory stacks in a five-column viewport with Fan context and no generic MMO actions. |
+| 291 | `GAME_INV01_SCHISM` | Inventory — Schism | `Modal in /game` | **IMPLEMENTED** | Shows unbounded capability-projected inventory stacks in a five-column viewport with Mantle context and no generic MMO actions. |
+| 292 | `GAME_LED01_CONCORD` | Withdrawal Ledger — Concord | `Modal in /game` | **IMPLEMENTED** | Shows Concord withdrawals, configured rolling limit, remaining Mane, and the next expiry only when applicable. |
+| 293 | `GAME_LED01_RUIN` | Withdrawal Ledger — Ruin | `Modal in /game` | **IMPLEMENTED** | Shows Ruin withdrawals, configured rolling limit, remaining Fan, and the next expiry only when applicable. |
+| 294 | `GAME_LED01_SCHISM` | Withdrawal Ledger — Schism | `Modal in /game` | **IMPLEMENTED** | Shows Schism withdrawals, configured rolling limit, remaining Mantle, and the next expiry only when applicable. |
+| 295 | `GAME_MTG01_MORNING_MEETING_V2` | Morning Meeting | `Modal in /game` | **IMPLEMENTED** | Opens over gameplay with twelve companions, history, text submission through the runtime port, microphone recording state, and truthful voice fallback. |
+| 296 | `GAME_MTG02_EVENING_MEETING_V2` | Evening Meeting | `Modal in /game` | **IMPLEMENTED** | Reuses the governed meeting modal and Tavern soundtrack context for evening discussion. |
+| 297 | `PUB_GAME01_GAMEPLAY_LANDING` | Gameplay | `/gameplay` | **IMPLEMENTED** | Public marketing page contains the exact governed placeholder and links to World Atlas without entering the authenticated game shell. |
+| 298 | `PUB_GAME02_WORLD_ATLAS` | World Atlas | `/gameplay/world-atlas` | **IMPLEMENTED** | Reuses the interactive globe with an allowlisted Ruin settlement projection and visible public topology, without a world selector or spoiler fields. |
+| 299 | `GAME_INN01_INN` | Inn | `Modal in /game` | **IMPLEMENTED** | Current-POI Inn configuration previews and transactionally applies authored Rest/Morale/Comfort and currency costs, with meeting entry actions. |
+| 300 | `BULK02_BULK_CHANGE_DETAIL_V2` | Bulk Change Detail | `/admin/bulk-changes/:envelopeId` | **IMPLEMENTED** | Displays envelope payload, automatic dry-run and revalidation results, sequence state, and head-only review actions. |
+| 301 | `ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS` | Settlement Soundtracks | `/admin/atlas/settlements/:settlementId/soundtracks` | **IMPLEMENTED** | Assigns multiple ordered CITY/TAVERN managed Soundtracks to a Settlement without fabricating culture mappings. |
 
 ## Principal implementation evidence
 

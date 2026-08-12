@@ -1,18 +1,25 @@
-import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 
-import type { BulkOperation, ImportResultState } from "../generated/prisma/enums";
+import type { BulkOperation, ExternalBulkApiState, ImportResultState } from "../generated/prisma/enums";
 import type { PrismaClient } from "../generated/prisma/client";
 import { getDatabase } from "./database";
 
-const lifetimeMilliseconds = 30 * 60 * 1000;
+const lifetimeMilliseconds = 60 * 60 * 1000;
 
 export interface BulkApiAccess {
   externalBulkApiSessionId: string;
   issuedByUserId: string;
+  mode: "KEYED" | "KEYLESS";
 }
 
 function hashKey(key: string): string {
   return createHash("sha256").update(key, "utf8").digest("hex");
+}
+
+function keyMatches(supplied: string, expectedHash: string): boolean {
+  const actual = Buffer.from(hashKey(supplied), "hex");
+  const expected = Buffer.from(expectedHash, "hex");
+  return actual.length === expected.length && timingSafeEqual(actual, expected);
 }
 
 export async function generateExternalBulkApiKey(issuedByUserId: string, database: PrismaClient = getDatabase(), now = new Date()): Promise<{ expiresAt: Date; key: string; sessionId: string }> {
@@ -22,10 +29,10 @@ export async function generateExternalBulkApiKey(issuedByUserId: string, databas
   await database.$transaction(async (transaction) => {
     await transaction.externalBulkApiSession.updateMany({
       data: { revokedAt: now, state: "OFF" },
-      where: { revokedAt: null, state: "ON" },
+      where: { revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
     });
     await transaction.externalBulkApiSession.create({
-      data: { createdAt: now, expiresAt, externalBulkApiSessionId: sessionId, issuedByUserId, keyHash: hashKey(key), state: "ON" },
+      data: { createdAt: now, expiresAt, externalBulkApiSessionId: sessionId, issuedByUserId, keyHash: hashKey(key), lastActivityAt: now, state: "KEYED" },
     });
   });
   return { expiresAt, key, sessionId };
@@ -34,34 +41,73 @@ export async function generateExternalBulkApiKey(issuedByUserId: string, databas
 export async function revokeExternalBulkApiKey(sessionId: string, database: PrismaClient = getDatabase(), now = new Date()): Promise<void> {
   const result = await database.externalBulkApiSession.updateMany({
     data: { revokedAt: now, state: "OFF" },
-    where: { externalBulkApiSessionId: sessionId, revokedAt: null, state: "ON" },
+    where: { externalBulkApiSessionId: sessionId, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
   });
   if (result.count !== 1) throw new Error("Active external bulk API session not found.");
 }
 
 export async function externalBulkApiOverview(database: PrismaClient = getDatabase(), now = new Date()) {
-  const [activeSession, audits] = await Promise.all([
+  const inactivityCutoff = new Date(now.valueOf() - lifetimeMilliseconds);
+  await database.externalBulkApiSession.updateMany({
+    data: { revokedAt: now, state: "OFF" },
+    where: { lastActivityAt: { lte: inactivityCutoff }, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
+  });
+  const [activeSession, audits, envelopeRows] = await Promise.all([
     database.externalBulkApiSession.findFirst({
       orderBy: { createdAt: "desc" },
-      select: { createdAt: true, expiresAt: true, externalBulkApiSessionId: true, issuedBy: { select: { email: true, name: true } } },
-      where: { expiresAt: { gt: now }, revokedAt: null, state: "ON" },
+      select: { createdAt: true, externalBulkApiSessionId: true, issuedBy: { select: { email: true, name: true } }, lastActivityAt: true, state: true },
+      where: { lastActivityAt: { gt: inactivityCutoff }, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
     }),
     database.bulkOperationAudit.findMany({
       orderBy: { occurredAt: "desc" },
       select: { actor: { select: { email: true, name: true } }, bulkOperationAuditId: true, detail: true, entityName: true, occurredAt: true, operation: true, recordCount: true, result: true },
       take: 100,
     }),
+    database.bulkMutationEnvelope.findMany({
+      orderBy: { sequence: "asc" },
+      select: { bulkMutationEnvelopeId: true, decidedAt: true, dryRunResult: true, entityCode: true, notes: true, operation: true, receivedAt: true, recordCount: true, revalidationResult: true, sequence: true, status: true },
+      take: 250,
+    }),
   ]);
-  return { activeSession, audits, maximumLifetimeMinutes: 30, state: activeSession ? "ON" as const : "OFF" as const };
+  const envelopes = envelopeRows.map((entry) => ({ ...entry, sequence: entry.sequence.toString() }));
+  return { activeSession, audits, envelopes, maximumLifetimeMinutes: 60, state: activeSession?.state ?? "OFF" as const };
 }
 
 export async function authenticateExternalBulkApi(request: Request, database: PrismaClient = getDatabase(), now = new Date()): Promise<BulkApiAccess> {
-  const authorization = request.headers.get("authorization") ?? "";
-  const match = /^Bearer\s+(eid_tmp_[A-Za-z0-9_-]+)$/.exec(authorization);
-  if (!match) throw new Response("A valid temporary bulk API bearer key is required.", { status: 401 });
-  const session = await database.externalBulkApiSession.findUnique({ where: { keyHash: hashKey(match[1]) } });
-  if (!session || session.state !== "ON" || session.revokedAt || session.expiresAt <= now) throw new Response("The temporary bulk API key is invalid, expired, or revoked.", { status: 401 });
-  return { externalBulkApiSessionId: session.externalBulkApiSessionId, issuedByUserId: session.issuedByUserId };
+  const inactivityCutoff = new Date(now.valueOf() - lifetimeMilliseconds);
+  await database.externalBulkApiSession.updateMany({
+    data: { revokedAt: now, state: "OFF" },
+    where: { lastActivityAt: { lte: inactivityCutoff }, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
+  });
+  const active = await database.externalBulkApiSession.findFirst({
+    orderBy: { createdAt: "desc" },
+    where: { lastActivityAt: { gt: inactivityCutoff }, revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
+  });
+  if (!active) throw new Response("The external bulk gateway is off or inactive.", { status: 503 });
+  const mode = active.state as Extract<ExternalBulkApiState, "KEYED" | "KEYLESS">;
+  if (mode === "KEYED") {
+    const legacy = /^Bearer\s+(eid_tmp_[A-Za-z0-9_-]+)$/.exec(request.headers.get("authorization") ?? "")?.[1];
+    const supplied = request.headers.get("x-eidolon-bulk-key") ?? legacy;
+    if (!supplied || !active.keyHash || !keyMatches(supplied, active.keyHash)) {
+      throw new Response("A valid temporary bulk API key is required.", { status: 401 });
+    }
+  }
+  await database.externalBulkApiSession.update({ where: { externalBulkApiSessionId: active.externalBulkApiSessionId }, data: { lastActivityAt: now } });
+  return { externalBulkApiSessionId: active.externalBulkApiSessionId, issuedByUserId: active.issuedByUserId, mode };
+}
+
+export async function enableKeylessExternalBulkApi(issuedByUserId: string, database: PrismaClient = getDatabase(), now = new Date()) {
+  const sessionId = randomUUID();
+  await database.$transaction(async (transaction) => {
+    await transaction.externalBulkApiSession.updateMany({
+      data: { revokedAt: now, state: "OFF" },
+      where: { revokedAt: null, state: { in: ["KEYED", "KEYLESS"] } },
+    });
+    await transaction.externalBulkApiSession.create({
+      data: { createdAt: now, expiresAt: new Date(now.valueOf() + lifetimeMilliseconds), externalBulkApiSessionId: sessionId, issuedByUserId, keyHash: null, lastActivityAt: now, state: "KEYLESS" },
+    });
+  });
+  return { expiresAfterInactivityMinutes: 60, sessionId, state: "KEYLESS" as const };
 }
 
 export async function recordBulkOperation(input: {
@@ -70,6 +116,7 @@ export async function recordBulkOperation(input: {
   detail?: string;
   entityName: string;
   externalBulkApiSessionId?: string;
+  bulkMutationEnvelopeId?: string;
   operation: BulkOperation;
   recordCount: number;
   result: ImportResultState;
@@ -79,6 +126,7 @@ export async function recordBulkOperation(input: {
   await database.bulkOperationAudit.create({
     data: {
       actorUserId: input.actorUserId,
+      bulkMutationEnvelopeId: input.bulkMutationEnvelopeId,
       bulkOperationAuditId: randomUUID(),
       detail: input.detail?.slice(0, 500),
       entityName: input.entityName,

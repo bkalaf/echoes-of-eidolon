@@ -24,16 +24,25 @@ import { Route as ApiAccountSettingsRouteImport } from './routes/api/account/set
 import { Route as ApiAdminBulkOperationsRouteImport } from './routes/api/admin/bulk-operations'
 import { Route as ApiAdminCampaignRouteImport } from './routes/api/admin/campaign'
 import { Route as ApiAdminCapabilitiesRouteImport } from './routes/api/admin/capabilities'
+import { Route as ApiAdminCompanionPlannerRouteImport } from './routes/api/admin/companion-planner'
 import { Route as ApiAdminDashboardRouteImport } from './routes/api/admin/dashboard'
 import { Route as ApiAdminDocumentsRouteImport } from './routes/api/admin/documents'
+import { Route as ApiAdminMoneyRouteImport } from './routes/api/admin/money'
+import { Route as ApiAdminOccupationsRouteImport } from './routes/api/admin/occupations'
 import { Route as ApiAdminReleasesRouteImport } from './routes/api/admin/releases'
+import { Route as ApiAdminSettlementSoundtracksRouteImport } from './routes/api/admin/settlement-soundtracks'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
+import { Route as ApiAtlasPublicRouteImport } from './routes/api/atlas/public'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
 import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
 import { Route as ApiDonationsCheckoutRouteImport } from './routes/api/donations/checkout'
+import { Route as ApiExternalBulkRouteImport } from './routes/api/external/bulk'
 import { Route as ApiPlayerAccessRouteImport } from './routes/api/player/access'
+import { Route as ApiPlayerBankWithdrawRouteImport } from './routes/api/player/bank-withdraw'
 import { Route as ApiPlayerCalendarRouteImport } from './routes/api/player/calendar'
+import { Route as ApiPlayerGameplayRouteImport } from './routes/api/player/gameplay'
+import { Route as ApiPlayerInnRouteImport } from './routes/api/player/inn'
 import { Route as ApiPlayerPuzzlesRouteImport } from './routes/api/player/puzzles'
 import { Route as ApiPlayerRuntimeRouteImport } from './routes/api/player/runtime'
 import { Route as ApiReleasesVersionRouteImport } from './routes/api/releases/$version'
@@ -170,6 +179,12 @@ const ApiAdminCapabilitiesRoute = ApiAdminCapabilitiesRouteImport.update({
   path: '/api/admin/capabilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminCompanionPlannerRoute =
+  ApiAdminCompanionPlannerRouteImport.update({
+    id: '/api/admin/companion-planner',
+    path: '/api/admin/companion-planner',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminDashboardRoute = ApiAdminDashboardRouteImport.update({
   id: '/api/admin/dashboard',
   path: '/api/admin/dashboard',
@@ -180,14 +195,35 @@ const ApiAdminDocumentsRoute = ApiAdminDocumentsRouteImport.update({
   path: '/api/admin/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminMoneyRoute = ApiAdminMoneyRouteImport.update({
+  id: '/api/admin/money',
+  path: '/api/admin/money',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminOccupationsRoute = ApiAdminOccupationsRouteImport.update({
+  id: '/api/admin/occupations',
+  path: '/api/admin/occupations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminReleasesRoute = ApiAdminReleasesRouteImport.update({
   id: '/api/admin/releases',
   path: '/api/admin/releases',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminSettlementSoundtracksRoute =
+  ApiAdminSettlementSoundtracksRouteImport.update({
+    id: '/api/admin/settlement-soundtracks',
+    path: '/api/admin/settlement-soundtracks',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAtlasCatalogRoute = ApiAtlasCatalogRouteImport.update({
   id: '/api/atlas/catalog',
   path: '/api/atlas/catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAtlasPublicRoute = ApiAtlasPublicRouteImport.update({
+  id: '/api/atlas/public',
+  path: '/api/atlas/public',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -212,14 +248,34 @@ const ApiDonationsCheckoutRoute = ApiDonationsCheckoutRouteImport.update({
   path: '/api/donations/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExternalBulkRoute = ApiExternalBulkRouteImport.update({
+  id: '/api/external/bulk',
+  path: '/api/external/bulk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPlayerAccessRoute = ApiPlayerAccessRouteImport.update({
   id: '/api/player/access',
   path: '/api/player/access',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPlayerBankWithdrawRoute = ApiPlayerBankWithdrawRouteImport.update({
+  id: '/api/player/bank-withdraw',
+  path: '/api/player/bank-withdraw',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPlayerCalendarRoute = ApiPlayerCalendarRouteImport.update({
   id: '/api/player/calendar',
   path: '/api/player/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPlayerGameplayRoute = ApiPlayerGameplayRouteImport.update({
+  id: '/api/player/gameplay',
+  path: '/api/player/gameplay',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPlayerInnRoute = ApiPlayerInnRouteImport.update({
+  id: '/api/player/inn',
+  path: '/api/player/inn',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPlayerPuzzlesRoute = ApiPlayerPuzzlesRouteImport.update({
@@ -575,16 +631,25 @@ export interface FileRoutesByFullPath {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
+  '/api/admin/money': typeof ApiAdminMoneyRoute
+  '/api/admin/occupations': typeof ApiAdminOccupationsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
+  '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
+  '/api/atlas/public': typeof ApiAtlasPublicRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/donations/checkout': typeof ApiDonationsCheckoutRoute
+  '/api/external/bulk': typeof ApiExternalBulkRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/player/bank-withdraw': typeof ApiPlayerBankWithdrawRoute
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
+  '/api/player/gameplay': typeof ApiPlayerGameplayRoute
+  '/api/player/inn': typeof ApiPlayerInnRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/releases/$version': typeof ApiReleasesVersionRoute
@@ -662,16 +727,25 @@ export interface FileRoutesByTo {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
+  '/api/admin/money': typeof ApiAdminMoneyRoute
+  '/api/admin/occupations': typeof ApiAdminOccupationsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
+  '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
+  '/api/atlas/public': typeof ApiAtlasPublicRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/donations/checkout': typeof ApiDonationsCheckoutRoute
+  '/api/external/bulk': typeof ApiExternalBulkRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/player/bank-withdraw': typeof ApiPlayerBankWithdrawRoute
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
+  '/api/player/gameplay': typeof ApiPlayerGameplayRoute
+  '/api/player/inn': typeof ApiPlayerInnRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/releases/$version': typeof ApiReleasesVersionRoute
@@ -750,16 +824,25 @@ export interface FileRoutesById {
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
   '/api/admin/campaign': typeof ApiAdminCampaignRouteWithChildren
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
+  '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
+  '/api/admin/money': typeof ApiAdminMoneyRoute
+  '/api/admin/occupations': typeof ApiAdminOccupationsRoute
   '/api/admin/releases': typeof ApiAdminReleasesRouteWithChildren
+  '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
+  '/api/atlas/public': typeof ApiAtlasPublicRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
   '/api/donations/checkout': typeof ApiDonationsCheckoutRoute
+  '/api/external/bulk': typeof ApiExternalBulkRoute
   '/api/player/access': typeof ApiPlayerAccessRoute
+  '/api/player/bank-withdraw': typeof ApiPlayerBankWithdrawRoute
   '/api/player/calendar': typeof ApiPlayerCalendarRoute
+  '/api/player/gameplay': typeof ApiPlayerGameplayRoute
+  '/api/player/inn': typeof ApiPlayerInnRoute
   '/api/player/puzzles': typeof ApiPlayerPuzzlesRoute
   '/api/player/runtime': typeof ApiPlayerRuntimeRoute
   '/api/releases/$version': typeof ApiReleasesVersionRoute
@@ -839,16 +922,25 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
     | '/api/admin/documents'
+    | '/api/admin/money'
+    | '/api/admin/occupations'
     | '/api/admin/releases'
+    | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
+    | '/api/atlas/public'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/donations/checkout'
+    | '/api/external/bulk'
     | '/api/player/access'
+    | '/api/player/bank-withdraw'
     | '/api/player/calendar'
+    | '/api/player/gameplay'
+    | '/api/player/inn'
     | '/api/player/puzzles'
     | '/api/player/runtime'
     | '/api/releases/$version'
@@ -926,16 +1018,25 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
     | '/api/admin/documents'
+    | '/api/admin/money'
+    | '/api/admin/occupations'
     | '/api/admin/releases'
+    | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
+    | '/api/atlas/public'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/donations/checkout'
+    | '/api/external/bulk'
     | '/api/player/access'
+    | '/api/player/bank-withdraw'
     | '/api/player/calendar'
+    | '/api/player/gameplay'
+    | '/api/player/inn'
     | '/api/player/puzzles'
     | '/api/player/runtime'
     | '/api/releases/$version'
@@ -1013,16 +1114,25 @@ export interface FileRouteTypes {
     | '/api/admin/bulk-operations'
     | '/api/admin/campaign'
     | '/api/admin/capabilities'
+    | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
     | '/api/admin/documents'
+    | '/api/admin/money'
+    | '/api/admin/occupations'
     | '/api/admin/releases'
+    | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
+    | '/api/atlas/public'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
     | '/api/donations/checkout'
+    | '/api/external/bulk'
     | '/api/player/access'
+    | '/api/player/bank-withdraw'
     | '/api/player/calendar'
+    | '/api/player/gameplay'
+    | '/api/player/inn'
     | '/api/player/puzzles'
     | '/api/player/runtime'
     | '/api/releases/$version'
@@ -1101,16 +1211,25 @@ export interface RootRouteChildren {
   ApiAdminBulkOperationsRoute: typeof ApiAdminBulkOperationsRoute
   ApiAdminCampaignRoute: typeof ApiAdminCampaignRouteWithChildren
   ApiAdminCapabilitiesRoute: typeof ApiAdminCapabilitiesRouteWithChildren
+  ApiAdminCompanionPlannerRoute: typeof ApiAdminCompanionPlannerRoute
   ApiAdminDashboardRoute: typeof ApiAdminDashboardRoute
   ApiAdminDocumentsRoute: typeof ApiAdminDocumentsRoute
+  ApiAdminMoneyRoute: typeof ApiAdminMoneyRoute
+  ApiAdminOccupationsRoute: typeof ApiAdminOccupationsRoute
   ApiAdminReleasesRoute: typeof ApiAdminReleasesRouteWithChildren
+  ApiAdminSettlementSoundtracksRoute: typeof ApiAdminSettlementSoundtracksRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
+  ApiAtlasPublicRoute: typeof ApiAtlasPublicRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
   ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
   ApiDonationsCheckoutRoute: typeof ApiDonationsCheckoutRoute
+  ApiExternalBulkRoute: typeof ApiExternalBulkRoute
   ApiPlayerAccessRoute: typeof ApiPlayerAccessRoute
+  ApiPlayerBankWithdrawRoute: typeof ApiPlayerBankWithdrawRoute
   ApiPlayerCalendarRoute: typeof ApiPlayerCalendarRoute
+  ApiPlayerGameplayRoute: typeof ApiPlayerGameplayRoute
+  ApiPlayerInnRoute: typeof ApiPlayerInnRoute
   ApiPlayerPuzzlesRoute: typeof ApiPlayerPuzzlesRoute
   ApiPlayerRuntimeRoute: typeof ApiPlayerRuntimeRoute
   ApiStoreCatalogRoute: typeof ApiStoreCatalogRoute
@@ -1263,6 +1382,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminCapabilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/companion-planner': {
+      id: '/api/admin/companion-planner'
+      path: '/api/admin/companion-planner'
+      fullPath: '/api/admin/companion-planner'
+      preLoaderRoute: typeof ApiAdminCompanionPlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/dashboard': {
       id: '/api/admin/dashboard'
       path: '/api/admin/dashboard'
@@ -1277,6 +1403,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminDocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/money': {
+      id: '/api/admin/money'
+      path: '/api/admin/money'
+      fullPath: '/api/admin/money'
+      preLoaderRoute: typeof ApiAdminMoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/occupations': {
+      id: '/api/admin/occupations'
+      path: '/api/admin/occupations'
+      fullPath: '/api/admin/occupations'
+      preLoaderRoute: typeof ApiAdminOccupationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/releases': {
       id: '/api/admin/releases'
       path: '/api/admin/releases'
@@ -1284,11 +1424,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminReleasesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/settlement-soundtracks': {
+      id: '/api/admin/settlement-soundtracks'
+      path: '/api/admin/settlement-soundtracks'
+      fullPath: '/api/admin/settlement-soundtracks'
+      preLoaderRoute: typeof ApiAdminSettlementSoundtracksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/atlas/catalog': {
       id: '/api/atlas/catalog'
       path: '/api/atlas/catalog'
       fullPath: '/api/atlas/catalog'
       preLoaderRoute: typeof ApiAtlasCatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/atlas/public': {
+      id: '/api/atlas/public'
+      path: '/api/atlas/public'
+      fullPath: '/api/atlas/public'
+      preLoaderRoute: typeof ApiAtlasPublicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -1319,6 +1473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDonationsCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/external/bulk': {
+      id: '/api/external/bulk'
+      path: '/api/external/bulk'
+      fullPath: '/api/external/bulk'
+      preLoaderRoute: typeof ApiExternalBulkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/player/access': {
       id: '/api/player/access'
       path: '/api/player/access'
@@ -1326,11 +1487,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPlayerAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/player/bank-withdraw': {
+      id: '/api/player/bank-withdraw'
+      path: '/api/player/bank-withdraw'
+      fullPath: '/api/player/bank-withdraw'
+      preLoaderRoute: typeof ApiPlayerBankWithdrawRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/player/calendar': {
       id: '/api/player/calendar'
       path: '/api/player/calendar'
       fullPath: '/api/player/calendar'
       preLoaderRoute: typeof ApiPlayerCalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/player/gameplay': {
+      id: '/api/player/gameplay'
+      path: '/api/player/gameplay'
+      fullPath: '/api/player/gameplay'
+      preLoaderRoute: typeof ApiPlayerGameplayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/player/inn': {
+      id: '/api/player/inn'
+      path: '/api/player/inn'
+      fullPath: '/api/player/inn'
+      preLoaderRoute: typeof ApiPlayerInnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/player/puzzles': {
@@ -1941,16 +2123,25 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminBulkOperationsRoute: ApiAdminBulkOperationsRoute,
   ApiAdminCampaignRoute: ApiAdminCampaignRouteWithChildren,
   ApiAdminCapabilitiesRoute: ApiAdminCapabilitiesRouteWithChildren,
+  ApiAdminCompanionPlannerRoute: ApiAdminCompanionPlannerRoute,
   ApiAdminDashboardRoute: ApiAdminDashboardRoute,
   ApiAdminDocumentsRoute: ApiAdminDocumentsRoute,
+  ApiAdminMoneyRoute: ApiAdminMoneyRoute,
+  ApiAdminOccupationsRoute: ApiAdminOccupationsRoute,
   ApiAdminReleasesRoute: ApiAdminReleasesRouteWithChildren,
+  ApiAdminSettlementSoundtracksRoute: ApiAdminSettlementSoundtracksRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
+  ApiAtlasPublicRoute: ApiAtlasPublicRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
   ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,
   ApiDonationsCheckoutRoute: ApiDonationsCheckoutRoute,
+  ApiExternalBulkRoute: ApiExternalBulkRoute,
   ApiPlayerAccessRoute: ApiPlayerAccessRoute,
+  ApiPlayerBankWithdrawRoute: ApiPlayerBankWithdrawRoute,
   ApiPlayerCalendarRoute: ApiPlayerCalendarRoute,
+  ApiPlayerGameplayRoute: ApiPlayerGameplayRoute,
+  ApiPlayerInnRoute: ApiPlayerInnRoute,
   ApiPlayerPuzzlesRoute: ApiPlayerPuzzlesRoute,
   ApiPlayerRuntimeRoute: ApiPlayerRuntimeRoute,
   ApiStoreCatalogRoute: ApiStoreCatalogRoute,

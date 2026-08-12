@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { loadAtlasReleaseBundle } from "../../src/server/atlas";
 import { importCanonicalSites } from "../../src/server/atlas-sites";
 
-const releaseRoot = resolve(
+const releaseRoot = process.env.EIDOLON_ATLAS_RELEASE_ROOT ?? resolve(
   import.meta.dirname,
   "../../../../EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",
 );
