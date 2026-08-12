@@ -41,13 +41,15 @@ describe("regional crest assets", () => {
     expect(resolveRegionCrestAsset("R10")).toBe("/crests/R10-C.svg");
   });
 
-  it("renders one consistently sized, color-controlled, decorative vector mask", () => {
+  it("renders one consistently sized inline vector reference without a recoloring mask", () => {
     const { container } = render(<RegionCrest color="blue" region="r6" world="Concord" />);
     const crest = container.querySelector(".region-crest");
     expect(crest).not.toBeNull();
     expect(crest).toHaveClass("region-crest", "region-crest--blue");
     expect(crest).toHaveAttribute("aria-hidden", "true");
     expect(crest).toHaveAttribute("data-crest-asset", "R06-C.svg");
-    expect(crest).toHaveStyle({ "--region-crest-image": "url('/crests/R06-C.svg')" });
+    expect(crest?.tagName).toBe("svg");
+    expect(crest?.querySelector("use")).toHaveAttribute("href", "/crests/region-crests.svg#crest-R06-C");
+    expect(crest).not.toHaveAttribute("style");
   });
 });

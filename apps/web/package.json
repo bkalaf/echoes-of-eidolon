@@ -18,7 +18,7 @@
     "release:draft": "tsx scripts/draft-release-notes.mts",
     "release:check": "tsx scripts/check-release.mts",
     "release:generate": "tsx scripts/generate-release-notes.mts",
-    "generate": "prisma generate && node scripts/generate-entity-admin-contract.mjs && pnpm release:generate",
+    "generate": "prisma generate && node scripts/generate-region-crest-sprite.mjs && node scripts/generate-entity-admin-contract.mjs && pnpm release:generate",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",

@@ -1,8 +1,5 @@
-import type { CSSProperties } from "react";
-
 import type { RegionId } from "../generated/prisma/enums";
 import {
-  resolveRegionCrestAsset,
   resolveRegionCrestFileName,
   type CrestColor,
   type CrestWorld,
@@ -16,17 +13,18 @@ interface RegionCrestProperties {
   world?: CrestWorld;
 }
 
-type CrestStyle = CSSProperties & { "--region-crest-image": string };
-
 export function RegionCrest({ className, color, label, region, world }: RegionCrestProperties) {
   const fileName = resolveRegionCrestFileName(region, world);
-  const asset = resolveRegionCrestAsset(region, world);
-  const style: CrestStyle = { "--region-crest-image": `url('${asset}')` };
-  return <span
+  const symbolId = `crest-${fileName.replace(/\.svg$/, "")}`;
+  return <svg
     {...(label ? { "aria-label": label, role: "img" } : { "aria-hidden": true })}
     className={["region-crest", `region-crest--${color}`, className].filter(Boolean).join(" ")}
     data-crest-asset={fileName}
     data-crest-color={color}
-    style={style}
-  />;
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 512 512"
+  >
+    <use href={`/crests/region-crests.svg#${symbolId}`} />
+  </svg>;
 }

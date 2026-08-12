@@ -17,7 +17,7 @@ test("public navigation remains readable at the supported mobile width", async (
   }
 });
 
-test("feature carousel replaces circular medallions with stable colored regional crests", async ({ page }) => {
+test("feature carousel renders stable two-tone vector crests without masks", async ({ page }) => {
   const failedCrests: string[] = [];
   page.on("response", (response) => {
     if (response.url().includes("/crests/") && response.status() >= 400) failedCrests.push(`${response.status()} ${response.url()}`);
@@ -32,9 +32,9 @@ test("feature carousel replaces circular medallions with stable colored regional
       asset: crest.getAttribute("data-crest-asset"),
       color: crest.getAttribute("data-crest-color"),
       height: rect.height,
-      maskMode: style.maskMode,
-      maskRepeat: style.maskRepeat,
-      maskSize: style.maskSize,
+      href: crest.querySelector("use")?.getAttribute("href"),
+      maskImage: style.maskImage,
+      tagName: crest.tagName.toLowerCase(),
       width: rect.width,
     };
   }));
@@ -44,12 +44,80 @@ test("feature carousel replaces circular medallions with stable colored regional
   expect(new Set(before.map(({ asset }) => asset)).size).toBe(9);
   expect(new Set(before.map(({ color }) => color))).toEqual(new Set(["blue", "yellow", "red"]));
   expect(before.every(({ asset }) => asset?.endsWith(".svg"))).toBe(true);
-  expect(before.every(({ height, maskMode, maskRepeat, maskSize, width }) => height === 58 && width === 58 && maskMode === "luminance" && maskRepeat === "no-repeat" && maskSize === "contain")).toBe(true);
+  expect(before.every(({ height, href, maskImage, tagName, width }) => height === 58 && width === 58 && href?.startsWith("/crests/region-crests.svg#crest-") && maskImage === "none" && tagName === "svg")).toBe(true);
   await expect(page.locator(".feature-card img")).toHaveCount(0);
 
   await page.getByRole("button", { name: "Next feature" }).click();
   expect(await readCrests()).toEqual(before);
   expect(failedCrests).toEqual([]);
+});
+
+test("application shells own the viewport while long pages scroll only inside their content region", async ({ page }) => {
+  for (const [path, width, height] of [
+    ["/", 1_600, 900],
+    ["/features", 1_600, 900],
+    ["/gameplay", 1_366, 768],
+    ["/store", 1_366, 768],
+    ["/status", 1_366, 768],
+    ["/account/profile", 1_366, 768],
+    ["/admin", 1_366, 768],
+    ["/game", 1_366, 768],
+    ["/auth/sign-in", 390, 844],
+    ["/features", 390, 844],
+  ] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto(path);
+    const layout = await page.evaluate(() => {
+      const shell = document.querySelector(".site-shell, .workspace-shell, .game-shell");
+      const main = document.querySelector(".site-main, .workspace-main, .game-shell > main");
+      const header = document.querySelector(".public-header, .workspace-header");
+      const footer = document.querySelector(".public-footer, .workspace-footer, .game-bottom-bar");
+      if (!shell || !main || !footer) throw new Error("Application shell structure is incomplete.");
+      const shellRect = shell.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const footerRect = footer.getBoundingClientRect();
+      const headerRect = header?.getBoundingClientRect();
+      return {
+        bodyClientHeight: document.body.clientHeight,
+        bodyScrollHeight: document.body.scrollHeight,
+        documentClientHeight: document.documentElement.clientHeight,
+        documentScrollHeight: document.documentElement.scrollHeight,
+        footerBottom: footerRect.bottom,
+        footerOverlap: mainRect.bottom - footerRect.top,
+        headerTop: headerRect?.top,
+        mainOverflowY: getComputedStyle(main).overflowY,
+        shellBottom: shellRect.bottom,
+        shellTop: shellRect.top,
+      };
+    });
+
+    expect(layout.documentScrollHeight).toBe(layout.documentClientHeight);
+    expect(layout.bodyScrollHeight).toBe(layout.bodyClientHeight);
+    expect(layout.shellTop).toBe(0);
+    expect(layout.shellBottom).toBe(height);
+    expect(layout.headerTop ?? 0).toBe(0);
+    expect(layout.footerBottom).toBe(height);
+    expect(layout.footerOverlap).toBe(0);
+    expect(layout.mainOverflowY).toBe("auto");
+  }
+});
+
+test("Features uses the shared crests and keeps native video controls unobstructed", async ({ page }) => {
+  await page.setViewportSize({ width: 1_600, height: 900 });
+  await page.goto("/features");
+  await expect(page.locator(".feature-tile .region-crest")).toHaveCount(9);
+  await expect(page.locator(".feature-tile img")).toHaveCount(0);
+  const panel = page.locator(".video-panel--features");
+  const caption = panel.locator(".video-caption");
+  await expect(panel.locator("video[controls]")).toBeVisible();
+  await expect(caption).toHaveCSS("opacity", "1");
+  await expect(caption).toHaveCSS("pointer-events", "none");
+  await panel.hover();
+  await expect(caption).toHaveCSS("opacity", "0");
+  await page.locator(".page-head").hover();
+  await expect(caption).toHaveCSS("opacity", "1");
+  await panel.locator("video").focus();
+  await expect(caption).toHaveCSS("opacity", "0");
 });
 
 test("homepage hero crops only its lower foreground and keeps the carousel in normal flow", async ({ page }) => {

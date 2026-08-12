@@ -49,6 +49,18 @@ function EligibleDonateLink() {
   return access && access.userId === userId && access.canPlay ? <a href="/donate">Donate</a> : null;
 }
 
+function ShellFooter({ className = "" }: { className?: string }) {
+  return <footer className={["public-footer", className].filter(Boolean).join(" ")}>
+    <nav aria-label="Footer navigation">
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+      <a href="/legal">Legal</a>
+      <EligibleDonateLink />
+    </nav>
+    <span>© Echoes of Eidolon</span>
+  </footer>;
+}
+
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
     <div className="site-shell">
@@ -67,15 +79,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
         <LoginSoundtrackPlayer />
       </header>
       <main className="site-main">{children}</main>
-      <footer className="public-footer">
-        <nav aria-label="Footer navigation">
-          <a href="/about">About Us</a>
-          <a href="/contact">Contact Us</a>
-          <a href="/legal">Legal</a>
-          <EligibleDonateLink />
-        </nav>
-        <span>© Echoes of Eidolon</span>
-      </footer>
+      <ShellFooter />
     </div>
   );
 }
@@ -101,6 +105,7 @@ function SideShell({ children, label, navigation }: SideShellProps) {
         ))}
       </aside>
       <main className="workspace-main">{children}</main>
+      <ShellFooter className="workspace-footer" />
     </div>
   );
 }

@@ -34,6 +34,9 @@ describe("public mutation boundaries", () => {
     const { container } = renderWithQuery("PUB002");
 
     expect(container.querySelector(".video-panel--features > video")).toHaveAttribute("src", managedAssetUrl("video.power-of-three"));
+    expect(container.querySelectorAll(".feature-tile .region-crest")).toHaveLength(9);
+    expect(container.querySelectorAll(".feature-tile img")).toHaveLength(0);
+    expect(container.querySelector(".video-caption")).toHaveTextContent("What makes Echoes of Eidolon different?");
   });
 
   it("keeps the features video compact only on portrait displays", () => {
@@ -56,9 +59,11 @@ describe("public mutation boundaries", () => {
   });
 
   it("selects feature content by explicit screen identity rather than mutable title", () => {
-    render(<PublicPage screen={{ ...publicScreen("FEATURE_01"), title: "Changed review title" }} />);
+    const { container } = render(<PublicPage screen={{ ...publicScreen("FEATURE_01"), title: "Changed review title" }} />);
 
     expect(screen.getByRole("heading", { name: "A Living World", level: 1 })).toBeInTheDocument();
+    expect(container.querySelector(".feature-scene__icon.region-crest")).toHaveAttribute("data-crest-asset", "R03.svg");
+    expect(container.querySelector(".feature-scene__icon.region-crest")).toHaveAttribute("data-crest-color", "blue");
   });
 
   it("does not turn an unknown feature screen into the first feature", () => {
