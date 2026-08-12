@@ -52,10 +52,11 @@ test("feature carousel replaces circular medallions with stable colored regional
   expect(failedCrests).toEqual([]);
 });
 
-test("homepage hero preserves the source composition across supported viewports", async ({ page }) => {
+test("homepage hero crops only its lower foreground and keeps the carousel in normal flow", async ({ page }) => {
   for (const [width, height] of [
     [2_560, 1_440],
     [1_920, 1_080],
+    [1_600, 900],
     [1_440, 900],
     [1_366, 768],
     [1_024, 768],
@@ -68,15 +69,23 @@ test("homepage hero preserves the source composition across supported viewports"
       const image = hero.querySelector("img");
       if (!image) throw new Error("Hero image is missing.");
       const style = getComputedStyle(image);
-      const sourceAspectRatio = image.naturalWidth / image.naturalHeight;
-      const renderedImageHeight = Math.max(hero.clientHeight, hero.clientWidth / sourceAspectRatio);
+      const heroRect = hero.getBoundingClientRect();
+      const imageRect = image.getBoundingClientRect();
+      const featureBand = hero.nextElementSibling?.getBoundingClientRect();
       return {
+        carouselFlowGap: featureBand ? featureBand.top - heroRect.bottom : null,
+        carouselTop: featureBand?.top,
+        heroHeight: heroRect.height,
         heroWidth: hero.clientWidth,
+        imageAspectRatio: imageRect.width / imageRect.height,
+        imageTopGap: imageRect.top - heroRect.top,
         naturalHeight: image.naturalHeight,
         naturalWidth: image.naturalWidth,
         objectFit: style.objectFit,
         objectPosition: style.objectPosition.split(" ").map((value) => Number.parseFloat(value)),
-        verticalVisibleFraction: hero.clientHeight / renderedImageHeight,
+        renderedImageHeight: imageRect.height,
+        renderedImageWidth: imageRect.width,
+        verticalVisibleFraction: heroRect.height / imageRect.height,
       };
     });
 
@@ -84,11 +93,25 @@ test("homepage hero preserves the source composition across supported viewports"
     expect(framing.naturalHeight).toBe(941);
     expect(framing.heroWidth).toBeGreaterThanOrEqual(width - 1);
     expect(framing.heroWidth).toBeLessThanOrEqual(width);
-    expect(framing.objectFit).toBe("cover");
+    expect(framing.carouselFlowGap).toBe(0);
+    expect(framing.imageTopGap).toBe(0);
     expect(framing.objectPosition[0]).toBeGreaterThanOrEqual(35);
     expect(framing.objectPosition[0]).toBeLessThanOrEqual(45);
-    expect(framing.objectPosition[1]).toBeLessThanOrEqual(25);
-    expect(framing.verticalVisibleFraction).toBeGreaterThanOrEqual(0.9);
+    expect(framing.objectPosition[1]).toBe(0);
+    if (width > 600) {
+      expect(framing.objectFit).toBe("contain");
+      expect(framing.renderedImageWidth).toBeGreaterThanOrEqual(width - 1);
+      expect(framing.imageAspectRatio).toBeCloseTo(1_672 / 941, 2);
+      expect(framing.verticalVisibleFraction).toBeGreaterThanOrEqual(0.7);
+      expect(framing.verticalVisibleFraction).toBeLessThanOrEqual(0.78);
+    } else {
+      expect(framing.objectFit).toBe("cover");
+      expect(framing.heroHeight).toBeLessThanOrEqual(315);
+    }
+    if (width === 1_600) {
+      expect(framing.heroHeight).toBeLessThanOrEqual(680);
+      expect(framing.carouselTop).toBeLessThan(750);
+    }
   }
 });
 
