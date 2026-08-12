@@ -195,10 +195,7 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
   const sendChangeEmailCode = async () => {
     setBusy(true);
     setError(undefined);
-    const result = await authClient.emailOtp.sendVerificationOtp({
-      email: newEmail,
-      type: "change-email",
-    });
+    const result = await authClient.emailOtp.requestEmailChange({ newEmail });
     setBusy(false);
     const nextError = resultError(result);
     if (nextError) setError(nextError);

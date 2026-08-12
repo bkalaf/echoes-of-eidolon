@@ -9,6 +9,8 @@ const baseURL = `http://127.0.0.1:${port}`;
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
+  timeout: 60_000,
+  workers: 1,
   use: {
     baseURL,
     trace: "retain-on-failure",
@@ -16,6 +18,8 @@ export default defineConfig({
   webServer: {
     command: `pnpm dev --host 127.0.0.1 --port ${port}`,
     env: {
+      BETTER_AUTH_URL: baseURL,
+      EIDOLON_E2E_AUTH_CODE_DIR: "/tmp/echoes-e2e-auth-codes",
       EIDOLON_ATLAS_RELEASE_ROOT:
         "../../EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2",
     },

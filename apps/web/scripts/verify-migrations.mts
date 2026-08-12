@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
-import { readFile, readdir } from "node:fs/promises";
+import { mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import process from "node:process";
 
@@ -61,12 +62,25 @@ try {
   await admin.query(`CREATE DATABASE "${databaseName}"`);
   const environment = { ...process.env, DATABASE_URL: verificationUrl.toString() };
   await run("pnpm", ["exec", "prisma", "migrate", "deploy"], environment);
-  await run("pnpm", ["exec", "tsx", "scripts/bootstrap-owner.mts"], {
-    ...environment,
-    OWNER_BOOTSTRAP_EMAIL: "owner-bootstrap-verification@example.test",
-    OWNER_BOOTSTRAP_SECRET: "migration-verification-owner-secret",
-    OWNER_BOOTSTRAP_USERNAME: "owner_verification",
-  });
+  const ownerVerificationDirectory = await mkdtemp(resolve(tmpdir(), "eidolon-owner-verify-"));
+  try {
+    const ownerVerificationSecrets: Record<string, string> = {
+      database_url: verificationUrl.toString(),
+      better_auth_secret: environment.BETTER_AUTH_SECRET ?? "migration-verification-auth-secret",
+      better_auth_url: environment.BETTER_AUTH_URL ?? "http://127.0.0.1:3000",
+      resend_api_key: environment.RESEND_API_KEY ?? "migration-verification-resend-key",
+      resend_sender_address: environment.RESEND_FROM_EMAIL ?? "verification@example.test",
+      owner_bootstrap_secret: "migration-verification-owner-secret",
+    };
+    await Promise.all(Object.entries(ownerVerificationSecrets).map(([name, value]) =>
+      writeFile(resolve(ownerVerificationDirectory, name), `${value}\n`, { mode: 0o600 })));
+    const ownerVerificationConfig = resolve(ownerVerificationDirectory, "config.json");
+    await writeFile(ownerVerificationConfig, JSON.stringify({ credentialDirectory: ownerVerificationDirectory }), { mode: 0o600 });
+    await run("node", ["scripts/run-owner-bootstrap.mjs", "--config", ownerVerificationConfig,
+      "--email", "owner-bootstrap-verification@example.test", "--username", "owner_verification"], environment);
+  } finally {
+    await rm(ownerVerificationDirectory, { force: true, recursive: true });
+  }
   await run("pnpm", [
     "exec", "prisma", "migrate", "diff",
     "--from-config-datasource", "--to-schema", "prisma/schema.prisma", "--exit-code",

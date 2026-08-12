@@ -2,6 +2,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
+
+vi.mock("../../src/lib/auth-client", () => ({ authClient: { useSession: authMocks.useSession } }));
+
 import { pageManifest } from "../../src/lib/page-manifest";
 import { StorePage } from "../../src/screens/store/StorePage";
 
@@ -16,6 +20,7 @@ function renderStore(screenId: string, overrides = {}, pathname?: string) {
 
 describe("store interaction boundaries", () => {
   beforeEach(() => {
+    authMocks.useSession.mockReturnValue({ data: null, isPending: false });
     window.history.replaceState({}, "", "/");
     window.localStorage.clear();
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ products: [] }) }));

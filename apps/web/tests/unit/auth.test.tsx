@@ -1,11 +1,15 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const authMocks = vi.hoisted(() => ({ passkey: vi.fn(), sendOtp: vi.fn(), signInEmail: vi.fn(), useSession: vi.fn(), verifyOtp: vi.fn() }));
+const authMocks = vi.hoisted(() => ({
+  passkey: vi.fn(), requestPasswordReset: vi.fn(), resetPassword: vi.fn(), sendOtp: vi.fn(),
+  signInEmail: vi.fn(), useSession: vi.fn(), verifyOtp: vi.fn(),
+}));
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
     signIn: { email: authMocks.signInEmail, passkey: authMocks.passkey },
+    emailOtp: { requestPasswordReset: authMocks.requestPasswordReset, resetPassword: authMocks.resetPassword },
     twoFactor: { sendOtp: authMocks.sendOtp, verifyOtp: authMocks.verifyOtp },
     useSession: authMocks.useSession,
   },
@@ -24,6 +28,8 @@ describe("reviewed authentication states", () => {
     vi.clearAllMocks();
     authMocks.sendOtp.mockResolvedValue({ data: { status: true }, error: null });
     authMocks.passkey.mockResolvedValue({ data: {}, error: null });
+    authMocks.requestPasswordReset.mockResolvedValue({ data: { status: true }, error: null });
+    authMocks.resetPassword.mockResolvedValue({ data: { status: true }, error: null });
     authMocks.signInEmail.mockResolvedValue({ data: {}, error: null });
     authMocks.verifyOtp.mockResolvedValue({ data: {}, error: null });
     authMocks.useSession.mockReturnValue({ data: null, isPending: false });
@@ -85,6 +91,33 @@ describe("reviewed authentication states", () => {
     await waitFor(() => expect(authMocks.passkey).toHaveBeenCalledWith({
       fetchOptions: { onSuccess: expect.any(Function) },
     }));
+  });
+
+  it("moves forgot password into a complete reset form and validates both passwords", async () => {
+    render(<AuthPage screen={authScreen("AUTH04")} />);
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "player@example.com" } });
+    const request = screen.getByRole("button", { name: "Send Reset Code" });
+    await waitFor(() => expect(request).toBeEnabled());
+    fireEvent.click(request);
+    expect(await screen.findByRole("heading", { name: "Reset Password" })).toBeInTheDocument();
+    expect(window.location.pathname).toBe("/auth/reset-password");
+    expect(screen.getByLabelText("Email")).toHaveValue("player@example.com");
+    const otp = screen.getByLabelText("Reset code");
+    expect(otp).toHaveAttribute("autocomplete", "one-time-code");
+    expect(otp).toHaveAttribute("inputmode", "numeric");
+    fireEvent.input(otp, { target: { value: "12x3456" } });
+    expect(otp).toHaveValue("123456");
+    fireEvent.change(screen.getByLabelText("New password", { exact: true }), { target: { value: "replacement-password" } });
+    fireEvent.change(screen.getByLabelText("Confirm new password"), { target: { value: "mismatch" } });
+    const submit = screen.getByRole("button", { name: "Reset Password" });
+    await waitFor(() => expect(submit).toBeDisabled());
+    fireEvent.change(screen.getByLabelText("Confirm new password"), { target: { value: "replacement-password" } });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.click(submit);
+    await waitFor(() => expect(authMocks.resetPassword).toHaveBeenCalledWith({
+      email: "player@example.com", otp: "123456", password: "replacement-password",
+    }));
+    expect(await screen.findByText(/Password reset completed/)).toBeInTheDocument();
   });
 
   it("redeems a bearer beta invitation without changing an organization role", async () => {

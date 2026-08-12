@@ -11,6 +11,9 @@ function requiredEnvironment(name: "OWNER_BOOTSTRAP_EMAIL" | "OWNER_BOOTSTRAP_US
 }
 
 async function main(): Promise<void> {
+  if (!process.env.EIDOLON_OWNER_BOOTSTRAP_SECRET_SOURCE) {
+    throw new Error("Owner bootstrap must be launched by the canonical secret loader.");
+  }
   const email = requiredEnvironment("OWNER_BOOTSTRAP_EMAIL").trim().toLowerCase();
   const username = requiredEnvironment("OWNER_BOOTSTRAP_USERNAME").trim().toLowerCase();
   const password = requiredEnvironment("OWNER_BOOTSTRAP_SECRET");
@@ -28,6 +31,8 @@ async function main(): Promise<void> {
     throw new Error("Owner bootstrap identity conflicts with an existing account.");
   }
 
+  const rotateExistingCredential = process.argv.includes("--rotate-existing-credential");
+  let credentialResult: "created" | "rotated" | "verified" = "verified";
   let user = matches[0];
   if (!user) {
     const result = await getAuth().api.createUser({
@@ -49,6 +54,7 @@ async function main(): Promise<void> {
       where: { id: result.user.id },
       include: { accounts: { where: { providerId: "credential" } } },
     });
+    credentialResult = "created";
   }
 
   if (user.role !== "owner" || !user.emailVerified) {
@@ -59,12 +65,25 @@ async function main(): Promise<void> {
     });
   }
 
-  const credential = user.accounts[0]?.password;
+  let credential = user.accounts[0]?.password;
   if (!credential) throw new Error("Owner credential account was not created.");
-  const passwordMatches = await (await getAuth().$context).password.verify({ hash: credential, password });
-  if (!passwordMatches) throw new Error("Existing Owner credential does not match OWNER_BOOTSTRAP_SECRET.");
+  const passwordService = (await getAuth().$context).password;
+  let passwordMatches = await passwordService.verify({ hash: credential, password });
+  if (!passwordMatches && !rotateExistingCredential) {
+    throw new Error("Existing Owner credential does not match the canonical Owner bootstrap secret. Re-run with explicit credential rotation authorization.");
+  }
+  if (!passwordMatches) {
+    credential = await passwordService.hash(password);
+    await database.account.update({
+      where: { providerId_accountId: { providerId: "credential", accountId: user.id } },
+      data: { password: credential },
+    });
+    passwordMatches = await passwordService.verify({ hash: credential, password });
+    if (!passwordMatches) throw new Error("Rotated Owner credential did not verify.");
+    credentialResult = "rotated";
+  }
 
-  process.stdout.write(`Owner account verified: ${user.email} (${user.username}, ${user.role})\n`);
+  process.stdout.write(`Owner account verified: ${user.email} (${user.username}, ${user.role}, credential=${credentialResult})\n`);
 }
 
 try {

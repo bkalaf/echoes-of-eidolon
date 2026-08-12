@@ -81,8 +81,8 @@ Therefore **38 of 273 active V3** wireframe pages/states are not fully implement
 | 39 | `AUTH01` | Sign In | `/auth/sign-in` | **IMPLEMENTED** | Email/password sign-in calls Better Auth and preserves a bounded return path. |
 | 40 | `AUTH02` | Sign Out | `/auth/sign-out` | **IMPLEMENTED** | Sign-out action calls Better Auth. |
 | 41 | `AUTH03` | Sign Up | `/auth/sign-up` | **IMPLEMENTED** | Privacy-minimal adult/minor eligibility attestation persists without DOB/exact age; minor participation requires an active provenance-bearing guardian-consent record and revocation fails closed. The jurisdiction-specific verification method remains a launch sub-gate. |
-| 42 | `AUTH04` | Forgot Password | `/auth/forgot-password` | **IMPLEMENTED** | Password-reset OTP request is wired. |
-| 43 | `AUTH05` | Reset Password | `/auth/reset-password` | **IMPLEMENTED** | OTP plus new-password reset is wired. |
+| 42 | `AUTH04` | Forgot Password | `/auth/forgot-password` | **IMPLEMENTED** | Password-reset OTP request transitions directly to AUTH05 while preserving the email outside the URL. |
+| 43 | `AUTH05` | Reset Password | `/auth/reset-password` | **IMPLEMENTED** | Dedicated six-digit OTP, new-password confirmation, resend, refresh fallback, and completed-reset sign-in action are wired. |
 | 44 | `AUTH06` | Verify Email - Modal | `Modal in /auth/sign-up` | **IMPLEMENTED** | Email-verification modal supports verify and resend. |
 | 45 | `AUTH07` | Redeem Invitation | `/auth/redeem-invitation` | **IMPLEMENTED** | Invitation redemption calls the persisted invitation endpoint. |
 | 46 | `AUTH08` | Two-Factor Challenge | `/auth/two-factor` | **IMPLEMENTED** | Two-factor OTP send and verify are wired. |
