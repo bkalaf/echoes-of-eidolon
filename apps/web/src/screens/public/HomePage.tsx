@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
+import { RegionCrest } from "../../components/RegionCrest";
 import { PublicShell } from "../../components/shells/Shells";
+import { featureCrestPresentation } from "../../content/feature-crests";
 import { managedAssetUrl } from "../../content/managed-assets";
 import { publicFeatures } from "../../content/public";
 import type { AuthorizationRole } from "../../domain/authorization";
@@ -110,7 +112,7 @@ export function HomePage() {
         }} role="list" tabIndex={0}>
           {publicFeatures.map((feature, index) => (
             <a aria-current={index === activeFeature ? "true" : undefined} className={`feature-card ${index === activeFeature ? "active" : ""}`} href={`/features/${feature.slug}`} key={feature.slug} onFocus={() => setActiveFeature(index)} ref={(node) => { cards.current[index] = node; }} role="listitem">
-              <img src={feature.icon} alt="" />
+              <RegionCrest {...featureCrestPresentation(feature.slug)} />
               <span>
                 <strong>{feature.title}</strong>
                 <small>{feature.summary}</small>

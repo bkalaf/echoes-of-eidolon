@@ -39,6 +39,26 @@ describe("public home", () => {
     expect(screen.getByText("Feature 1 of 9")).toBeVisible();
   });
 
+  it("uses stable distinct faction-colored crests without the circular feature artwork", () => {
+    Element.prototype.scrollIntoView = () => undefined;
+    const { container } = renderHome();
+    const assignments = [...container.querySelectorAll<HTMLElement>(".feature-card .region-crest")].map((crest) => ({
+      asset: crest.dataset.crestAsset,
+      color: crest.dataset.crestColor,
+    }));
+
+    expect(assignments).toHaveLength(9);
+    expect(new Set(assignments.map(({ asset }) => asset)).size).toBe(9);
+    expect(new Set(assignments.map(({ color }) => color))).toEqual(new Set(["blue", "yellow", "red"]));
+    expect(container.querySelectorAll(".feature-card img")).toHaveLength(0);
+
+    fireEvent.click(screen.getByRole("button", { name: "Next feature" }));
+    expect([...container.querySelectorAll<HTMLElement>(".feature-card .region-crest")].map((crest) => ({
+      asset: crest.dataset.crestAsset,
+      color: crest.dataset.crestColor,
+    }))).toEqual(assignments);
+  });
+
   it("shows only signed-out authentication controls on the public landing page", () => {
     renderHome();
     expect(screen.getByRole("link", { name: "Sign In" })).toHaveAttribute("href", "/auth/sign-in");

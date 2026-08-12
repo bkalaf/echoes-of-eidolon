@@ -92,7 +92,19 @@ button, input, select, textarea { font: inherit; }
 }
 .feature-card:hover { border-color: var(--gold); transform: translateY(-2px); }
 .feature-card.active { border-color: var(--gold); box-shadow: 0 0 0 1px rgb(239 195 89 / 22%); }
-.feature-card img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 1px solid #a97a17; }
+.region-crest {
+  width: 58px;
+  height: 58px;
+  display: block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask: var(--region-crest-image) center / contain no-repeat;
+  mask: var(--region-crest-image) center / contain no-repeat;
+  mask-mode: luminance;
+}
+.region-crest--blue { color: var(--cyan); }
+.region-crest--yellow { color: var(--gold); }
+.region-crest--red { color: var(--bad); }
 .feature-card strong { display: block; color: #efc359; font: 500 14px Georgia, serif; margin: 3px 0 7px; }
 .feature-card small { color: #b8c8d4; line-height: 1.32; font-size: 11px; }
 .free-band { margin: 12px 38px 28px; border: 1px solid var(--line); border-radius: 8px; padding: 13px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #061b2a; }

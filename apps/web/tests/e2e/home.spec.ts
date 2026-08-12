@@ -17,6 +17,41 @@ test("public navigation remains readable at the supported mobile width", async (
   }
 });
 
+test("feature carousel replaces circular medallions with stable colored regional crests", async ({ page }) => {
+  const failedCrests: string[] = [];
+  page.on("response", (response) => {
+    if (response.url().includes("/crests/") && response.status() >= 400) failedCrests.push(`${response.status()} ${response.url()}`);
+  });
+  await page.setViewportSize({ width: 1_920, height: 1_080 });
+  await page.goto("/");
+
+  const readCrests = () => page.locator(".feature-card .region-crest").evaluateAll((crests) => crests.map((crest) => {
+    const style = getComputedStyle(crest);
+    const rect = crest.getBoundingClientRect();
+    return {
+      asset: crest.getAttribute("data-crest-asset"),
+      color: crest.getAttribute("data-crest-color"),
+      height: rect.height,
+      maskMode: style.maskMode,
+      maskRepeat: style.maskRepeat,
+      maskSize: style.maskSize,
+      width: rect.width,
+    };
+  }));
+
+  const before = await readCrests();
+  expect(before).toHaveLength(9);
+  expect(new Set(before.map(({ asset }) => asset)).size).toBe(9);
+  expect(new Set(before.map(({ color }) => color))).toEqual(new Set(["blue", "yellow", "red"]));
+  expect(before.every(({ asset }) => asset?.endsWith(".svg"))).toBe(true);
+  expect(before.every(({ height, maskMode, maskRepeat, maskSize, width }) => height === 58 && width === 58 && maskMode === "luminance" && maskRepeat === "no-repeat" && maskSize === "contain")).toBe(true);
+  await expect(page.locator(".feature-card img")).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Next feature" }).click();
+  expect(await readCrests()).toEqual(before);
+  expect(failedCrests).toEqual([]);
+});
+
 test("homepage hero preserves the source composition across supported viewports", async ({ page }) => {
   for (const [width, height] of [
     [2_560, 1_440],
