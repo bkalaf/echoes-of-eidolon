@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { BoundedNumberField, FiniteChipSelection, OtpInput } from "../../src/components/ui/controls";
+import { BoundedNumberField, FiniteChipSelection, OtpInput, PasswordInput } from "../../src/components/ui/controls";
 import { numericControlContracts } from "../../src/domain/numeric-controls";
 
 describe("hardened numeric controls", () => {
@@ -20,15 +20,51 @@ describe("hardened numeric controls", () => {
     expect(screen.getByRole("spinbutton", { name: "Game ordinal day" })).toHaveAttribute("max", "489");
   });
 
-  it("uses a dedicated six-digit text OTP control and strips non-digits", () => {
+  it("renders one logical OTP input as six visible digit positions and strips non-digits", () => {
     render(<label>Verification code<OtpInput /></label>);
     const input = screen.getByRole("textbox", { name: "Verification code" });
+    expect(document.querySelectorAll("[data-otp-slot]")).toHaveLength(6);
     expect(input).toHaveAttribute("inputmode", "numeric");
+    expect(input).toHaveAttribute("autocomplete", "one-time-code");
     expect(input).toHaveAttribute("maxlength", "6");
+    expect(input).toHaveAttribute("minlength", "6");
     expect(input).toHaveAttribute("pattern", "[0-9]{6}");
     expect(input).toHaveAttribute("type", "text");
     fireEvent.input(input, { target: { value: "12a34-567" } });
     expect(input).toHaveValue("123456");
+    expect([...document.querySelectorAll("[data-otp-slot]")].map((slot) => slot.textContent)).toEqual(["1", "2", "3", "4", "5", "6"]);
+    fireEvent.input(input, { target: { value: "12345" } });
+    expect(input).toHaveValue("12345");
+    expect(document.querySelectorAll("[data-otp-slot]")[5]).toHaveTextContent("");
+  });
+});
+
+describe("canonical password control", () => {
+  it("preserves values, toggles independently, and never submits from its visibility action", () => {
+    const submitted = vi.fn((event: React.FormEvent) => event.preventDefault());
+    render(<form onSubmit={submitted}>
+      <PasswordInput autoComplete="new-password" label="New password" />
+      <PasswordInput autoComplete="new-password" label="Confirm new password" />
+    </form>);
+
+    const password = screen.getByLabelText("New password", { exact: true });
+    const confirmation = screen.getByLabelText("Confirm new password", { exact: true });
+    fireEvent.change(password, { target: { value: "Replacement-Password!" } });
+    fireEvent.change(confirmation, { target: { value: "Replacement-Password!" } });
+    expect(password).toHaveAttribute("type", "password");
+    expect(password).toHaveAttribute("autocomplete", "new-password");
+    expect(screen.getAllByRole("button", { name: "Show password" })).toHaveLength(2);
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Show password" })[0]!);
+    expect(password).toHaveAttribute("type", "text");
+    expect(password).toHaveValue("Replacement-Password!");
+    expect(confirmation).toHaveAttribute("type", "password");
+    expect(screen.getByRole("button", { name: "Hide password" })).toHaveAttribute("type", "button");
+    expect(submitted).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole("button", { name: "Hide password" }));
+    expect(password).toHaveAttribute("type", "password");
+    expect(password).toHaveValue("Replacement-Password!");
   });
 });
 

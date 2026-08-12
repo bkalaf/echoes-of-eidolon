@@ -67,6 +67,15 @@
       "source": "V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2",
       "originalPage": 279,
       "reviewOrder": 276
+    },
+    {
+      "page": 280,
+      "screenId": "ACC024",
+      "title": "Change Password",
+      "path": "Modal in /account/profile",
+      "source": "OWNER_AUTHORED_ACCOUNT_SECURITY_REMEDIATION_20260812",
+      "originalPage": 280,
+      "reviewOrder": 277
     }
   ]
 }

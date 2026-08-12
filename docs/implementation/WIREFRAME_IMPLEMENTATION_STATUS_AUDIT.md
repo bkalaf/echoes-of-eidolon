@@ -2,7 +2,7 @@
 
 Date: 2026-08-11
 Repository: `/home/bobby/echoes-of-eidolon`  
-Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 273 mechanically derived active V3 states)
+Controlling registry: `apps/web/src/data/page-manifest.json` plus `apps/web/src/data/page-manifest-v3-amendments.json` (269 base states; 274 mechanically derived active V3 states)
 Audited checkout: archival checkpoint `7bf9cc3` through the remediation worktree beginning at pushed revision `6626304`
 
 ## Standard used
@@ -18,13 +18,13 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 235 |
+| IMPLEMENTED | 236 |
 | PARTIAL | 24 |
 | PLACEHOLDER | 14 |
 | MISSING | 0 |
-| **Total active V3 states** | **273** |
+| **Total active V3 states** | **274** |
 
-Therefore **38 of 273 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **38 of 274 active V3** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
@@ -316,6 +316,7 @@ Therefore **38 of 273 active V3** wireframe pages/states are not fully implement
 | 274 | `CAP05` | Event and Projection Inspector | `/admin/capabilities/inspector` | **IMPLEMENTED** | Inspects append-only events and reduced current state and compares deterministic projection rebuilds. |
 | 275 | `CAM006` | Book Grouping Membership Editor | `state-only under /admin/campaign/planner` | **IMPLEMENTED** | Edits explicit disjoint Book membership as one logical grouping value while keeping the locked Opposing Faction overlay derived and read-only. |
 | 276 | `CAM007` | Campaign Planner — Custom Column View | `/admin/campaign/planner` | **IMPLEMENTED** | Persists local column order and visibility preferences without mutating CampaignPlacement or Book Grouping data. |
+| 277 | `ACC024` | Change Password | `Modal in /account/profile` | **IMPLEMENTED** | Uses Better Auth current-password verification, shared Password controls, a distinct completed state, and the canonical OTP reset workflow when the current password is unknown. |
 
 ## Principal implementation evidence
 

@@ -58,6 +58,7 @@ describe("reviewed authentication states", () => {
     render(<AuthPage screen={authScreen("AUTH01")} />);
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "player@example.com" } });
     fireEvent.change(screen.getByLabelText("Password"), { target: { value: "long-password" } });
+    expect(screen.getByRole("button", { name: "Show password" })).toBeVisible();
     const submit = screen.getByRole("button", { name: "Sign In" });
     await waitFor(() => expect(submit).toBeEnabled());
     fireEvent.click(submit);
@@ -95,19 +96,26 @@ describe("reviewed authentication states", () => {
 
   it("moves forgot password into a complete reset form and validates both passwords", async () => {
     render(<AuthPage screen={authScreen("AUTH04")} />);
+    expect(screen.getByText("Enter your email address and we'll send you a password reset code.")).toBeVisible();
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "player@example.com" } });
     const request = screen.getByRole("button", { name: "Send Reset Code" });
     await waitFor(() => expect(request).toBeEnabled());
     fireEvent.click(request);
     expect(await screen.findByRole("heading", { name: "Reset Password" })).toBeInTheDocument();
+    expect(screen.getByText("Enter the 6-digit code sent to your email, then choose a new password.")).toBeVisible();
     expect(window.location.pathname).toBe("/auth/reset-password");
-    expect(screen.getByLabelText("Email")).toHaveValue("player@example.com");
+    expect(screen.queryByRole("textbox", { name: "Account/email" })).not.toBeInTheDocument();
+    expect(screen.getByText("player@example.com")).toBeVisible();
     const otp = screen.getByLabelText("Reset code");
+    expect(document.querySelectorAll("[data-otp-slot]")).toHaveLength(6);
     expect(otp).toHaveAttribute("autocomplete", "one-time-code");
     expect(otp).toHaveAttribute("inputmode", "numeric");
+    const newPassword = screen.getByLabelText("New password", { exact: true });
+    expect(otp.compareDocumentPosition(newPassword) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: "Show password" })).toHaveLength(2);
     fireEvent.input(otp, { target: { value: "12x3456" } });
     expect(otp).toHaveValue("123456");
-    fireEvent.change(screen.getByLabelText("New password", { exact: true }), { target: { value: "replacement-password" } });
+    fireEvent.change(newPassword, { target: { value: "replacement-password" } });
     fireEvent.change(screen.getByLabelText("Confirm new password"), { target: { value: "mismatch" } });
     const submit = screen.getByRole("button", { name: "Reset Password" });
     await waitFor(() => expect(submit).toBeDisabled());
@@ -117,7 +125,12 @@ describe("reviewed authentication states", () => {
     await waitFor(() => expect(authMocks.resetPassword).toHaveBeenCalledWith({
       email: "player@example.com", otp: "123456", password: "replacement-password",
     }));
-    expect(await screen.findByText(/Password reset completed/)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Password Reset" })).toBeVisible();
+    expect(screen.getByText("Your password has been changed successfully.")).toBeVisible();
+    expect(screen.getByText("Sign in with your new password.")).toBeVisible();
+    expect(screen.queryByText("Enter the 6-digit code sent to your email, then choose a new password.")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Reset code")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Resend code" })).not.toBeInTheDocument();
   });
 
   it("redeems a bearer beta invitation without changing an organization role", async () => {
@@ -156,6 +169,7 @@ describe("reviewed authentication states", () => {
 
   it("sends and verifies a six-digit email two-factor OTP", async () => {
     render(<AuthPage screen={authScreen("AUTH08")} />);
+    expect(document.querySelectorAll("[data-otp-slot]")).toHaveLength(6);
     expect(screen.getByLabelText("6-digit code")).toHaveAttribute("type", "text");
     expect(screen.getByLabelText("6-digit code")).toHaveAttribute("maxlength", "6");
     expect(screen.getByLabelText("6-digit code")).toHaveAttribute("pattern", "[0-9]{6}");

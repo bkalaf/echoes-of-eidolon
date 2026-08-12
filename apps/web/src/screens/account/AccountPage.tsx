@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type { ReactNode } from "react";
 
 import { AccountShell } from "../../components/shells/Shells";
 import { SettingsPanel } from "../../components/SettingsPanel";
-import { OtpInput } from "../../components/ui/controls";
+import { OtpInput, PasswordInput } from "../../components/ui/controls";
 import { inviteConsent } from "../../content/public";
 import { subscriptionPriceCents } from "../../domain/membership";
+import { passwordsMatch, preserveResetIdentity } from "../../domain/password-workflows";
 import type { MembershipGrantSource } from "../../generated/prisma/enums";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
@@ -121,6 +122,44 @@ function resultError(result: { error: { message?: string } | null }): string | u
   return result.error?.message ?? (result.error ? "The account request failed." : undefined);
 }
 
+function AccountValue({ label, value }: { label: string; value: string }) {
+  const labelId = useId();
+  return <div aria-labelledby={labelId} className="account-value" role="group"><span className="account-value__label" id={labelId}>{label}</span><span className="account-value__text">{value}</span></div>;
+}
+
+function ChangePassword({ email }: { email: string }) {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmation, setConfirmation] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const changePassword = async () => {
+    if (!passwordsMatch(newPassword, confirmation) || !currentPassword) return;
+    setBusy(true); setError(undefined);
+    const result = await authClient.changePassword({ currentPassword, newPassword });
+    setBusy(false);
+    const nextError = resultError(result);
+    if (nextError) setError(nextError);
+    else setCompleted(true);
+  };
+
+  const recover = async () => {
+    setBusy(true); setError(undefined);
+    const result = await authClient.emailOtp.requestPasswordReset({ email });
+    setBusy(false);
+    const nextError = resultError(result);
+    if (nextError) setError(nextError);
+    else {
+      preserveResetIdentity(email);
+      window.location.assign("/auth/reset-password");
+    }
+  };
+
+  return <div className="modal-backdrop"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="change-password-title"><p className="kicker">ACCOUNT SECURITY</p>{completed ? <><h2 id="change-password-title">Password Changed</h2><p>Your password has been changed successfully.</p><a className="button button--gold" href="/account/profile">Return to Account</a></> : <><h2 id="change-password-title">Change Password</h2><p>Confirm your current password, then choose a new password.</p><form className="stack" onSubmit={(event) => { event.preventDefault(); void changePassword(); }}><PasswordInput autoComplete="current-password" label="Current password" onChange={(event) => setCurrentPassword(event.target.value)} value={currentPassword} /><PasswordInput autoComplete="new-password" label="New password" onChange={(event) => setNewPassword(event.target.value)} value={newPassword} /><PasswordInput autoComplete="new-password" label="Confirm new password" onChange={(event) => setConfirmation(event.target.value)} value={confirmation} /><div className="action-row"><a className="button" href="/account/profile">Back</a><button className="button button--gold" disabled={busy || !currentPassword || !passwordsMatch(newPassword, confirmation)} type="submit">{busy ? "Working…" : "Change Password"}</button></div><button className="button" disabled={busy} onClick={() => void recover()} type="button">Forgot your current password?</button></form></>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section></div>;
+}
+
 function AuthorizedSessions({ currentToken }: { currentToken?: string }) {
   void currentToken;
   const [sessions, setSessions] = useState<AccountSession[]>([]);
@@ -181,6 +220,7 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
   const [message, setMessage] = useState<string>();
   const [error, setError] = useState<string>();
   const modal = screen.screenId === "ACC002" || screen.screenId === "ACC003";
+  const passwordModal = screen.screenId === "ACC024";
 
   const saveName = async () => {
     setBusy(true);
@@ -215,7 +255,7 @@ function Profile({ currentSessionToken, screen, user }: { currentSessionToken?: 
     else setMessage("Email address changed.");
   };
 
-  return <><AccountHead screen={screen} description={screen.screenId === "ACC004" ? "Current and other authorized account sessions." : "Account identity and profile details."} /><div className="split"><section className="card form-grid"><label className="field">Username<input className="input" value={user.displayUsername ?? user.username ?? ""} readOnly /></label><label className="field">Email<input className="input" value={user.email} readOnly /></label><label className="field span-2">Display name<input className="input" value={displayName} onChange={(event) => setDisplayName(event.target.value)} /></label><button className="button button--gold" disabled={busy || !displayName.trim()} onClick={saveName}>Save changes</button></section><aside className="card"><h2>Account</h2><p>Email changes require verification.</p><p>Username cannot be changed.</p><a className="button" href="/account/profile?state=ACC002">Change email</a>{screen.screenId !== "ACC004" && <><h3>Authorized sessions</h3><a href="/account/profile?state=ACC004">Manage sessions</a></>}</aside>{screen.screenId === "ACC004" && <AuthorizedSessions currentToken={currentSessionToken} />}</div>{error && <p className="notice notice--bad" role="alert">{error}</p>}{message && <p className="notice notice--good" role="status">{message}</p>}{modal && <div className="modal-backdrop"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="change-email-title"><p className="kicker">CHANGE EMAIL</p><h2 id="change-email-title">{emailStep === "verify" ? "Verify the new email address." : "Change account email."}</h2>{emailStep === "verify" ? <><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label><label className="field">Verification code<OtpInput value={code} onChange={(event) => setCode(event.target.value)} /></label><p>The current account email is unchanged until verification succeeds.</p></> : <><label className="field">Current email<input className="input" type="email" value={user.email} readOnly /></label><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label></>}<div className="action-row"><a className="button" href="/account/profile">Back</a>{emailStep === "verify" && <button className="button" disabled={busy || !newEmail} onClick={sendChangeEmailCode}>Resend</button>}<button className="button button--gold" disabled={busy || !newEmail || (emailStep === "verify" && code.length !== 6)} onClick={emailStep === "verify" ? changeEmail : sendChangeEmailCode}>{emailStep === "verify" ? "Verify & Change Email" : "Send Verification"}</button></div></section></div>}</>;
+  return <><AccountHead screen={screen} description={screen.screenId === "ACC004" ? "Current and other authorized account sessions." : "Account identity and profile details."} /><div className="split"><section className="card form-grid"><AccountValue label="Username" value={user.displayUsername ?? user.username ?? ""} /><AccountValue label="Email" value={user.email} /><label className="field span-2">Display name<input className="input" value={displayName} onChange={(event) => setDisplayName(event.target.value)} /></label><button className="button button--gold" disabled={busy || !displayName.trim()} onClick={saveName}>Save changes</button></section><aside className="card"><h2>Account</h2><p>Email changes require verification.</p><p>Username cannot be changed.</p><div className="action-row"><a className="button" href="/account/profile?state=ACC002">Change email</a><a className="button" href="/account/profile?state=ACC024">Change password</a></div>{screen.screenId !== "ACC004" && <><h3>Authorized sessions</h3><a href="/account/profile?state=ACC004">Manage sessions</a></>}</aside>{screen.screenId === "ACC004" && <AuthorizedSessions currentToken={currentSessionToken} />}</div>{error && <p className="notice notice--bad" role="alert">{error}</p>}{message && <p className="notice notice--good" role="status">{message}</p>}{modal && <div className="modal-backdrop"><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="change-email-title"><p className="kicker">CHANGE EMAIL</p><h2 id="change-email-title">{emailStep === "verify" ? "Verify the new email address." : "Change account email."}</h2>{emailStep === "verify" ? <><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label><label className="field">Verification code<OtpInput value={code} onChange={(event) => setCode(event.target.value)} /></label><p>The current account email is unchanged until verification succeeds.</p></> : <><AccountValue label="Current email" value={user.email} /><label className="field">New email<input className="input" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></label></>}<div className="action-row"><a className="button" href="/account/profile">Back</a>{emailStep === "verify" && <button className="button" disabled={busy || !newEmail} onClick={sendChangeEmailCode}>Resend</button>}<button className="button button--gold" disabled={busy || !newEmail || (emailStep === "verify" && code.length !== 6)} onClick={emailStep === "verify" ? changeEmail : sendChangeEmailCode}>{emailStep === "verify" ? "Verify & Change Email" : "Send Verification"}</button></div></section></div>}{passwordModal && <ChangePassword email={user.email} />}</>;
 }
 
 function Subscription({ screen }: { screen: PageManifestEntry }) {
@@ -447,7 +487,7 @@ function BetaLanding({ screen }: { screen: PageManifestEntry }) {
 
 function SignedInAccountPage({ currentSessionToken, pathname, screen, user }: { currentSessionToken?: string; pathname?: string; screen: PageManifestEntry; user: AccountUser }) {
   if (screen.screenId === "ACC030") return <BetaLanding screen={screen} />;
-  if (["ACC001", "ACC002", "ACC003", "ACC004"].includes(screen.screenId)) return <Profile currentSessionToken={currentSessionToken} screen={screen} user={user} />;
+  if (["ACC001", "ACC002", "ACC003", "ACC004", "ACC024"].includes(screen.screenId)) return <Profile currentSessionToken={currentSessionToken} screen={screen} user={user} />;
   if (screen.screenId >= "ACC005" && screen.screenId <= "ACC010") return <Subscription screen={screen} />;
   if (["ACC011", "ACC012", "ACC013"].includes(screen.screenId)) return <Orders pathname={pathname} screen={screen} />;
   if (["ACC014", "ACC015"].includes(screen.screenId)) return <Settings screen={screen} />;

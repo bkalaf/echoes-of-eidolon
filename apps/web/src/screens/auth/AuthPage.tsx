@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
+import { PasswordResetFields } from "../../components/auth/PasswordResetFields";
 import { AuthShell } from "../../components/shells/Shells";
-import { OtpInput } from "../../components/ui/controls";
+import { OtpInput, PasswordInput } from "../../components/ui/controls";
 import { safeSignedInReturnPath } from "../../domain/auth-navigation";
 import { clearQueuedLoginSoundtrack, queueRandomLoginSoundtrack } from "../../domain/login-soundtrack";
+import { passwordsMatch, pendingResetEmailKey, preserveResetIdentity } from "../../domain/password-workflows";
 import type { AgeEligibility } from "../../generated/prisma/enums";
 import { authClient } from "../../lib/auth-client";
 import type { PageManifestEntry } from "../../lib/page-manifest";
@@ -18,16 +20,24 @@ type AuthFields = {
   eligibilityStatus: AgeEligibility;
 };
 
-const pendingResetEmailKey = "eidolon.auth.pending-reset-email";
 const pendingVerificationEmailKey = "eidolon.auth.pending-verification-email";
+const noSessionStorageSubscription = () => () => undefined;
+
+function useSessionStorageValue(key: string): string {
+  return useSyncExternalStore(
+    noSessionStorageSubscription,
+    () => window.sessionStorage.getItem(key) ?? "",
+    () => "",
+  );
+}
 
 const authCopy: Record<string, { title: string; description: string; submit: string }> = {
   AUT008: { title: "Session Expired", description: "Your session has expired.", submit: "Sign in again" },
   AUTH01: { title: "Sign In", description: "Sign in to your Echoes of Eidolon account.", submit: "Sign In" },
   AUTH02: { title: "Sign Out", description: "End this session on this device.", submit: "Sign Out" },
   AUTH03: { title: "Sign Up", description: "Create your Echoes of Eidolon account.", submit: "Create Account" },
-  AUTH04: { title: "Forgot Password", description: "Request a password reset code.", submit: "Send Reset Code" },
-  AUTH05: { title: "Reset Password", description: "Use the emailed code and choose a new password.", submit: "Reset Password" },
+  AUTH04: { title: "Forgot Password", description: "Enter your email address and we'll send you a password reset code.", submit: "Send Reset Code" },
+  AUTH05: { title: "Reset Password", description: "Enter the 6-digit code sent to your email, then choose a new password.", submit: "Reset Password" },
   AUTH06: { title: "Verify Email", description: "Verify your email address to activate the account.", submit: "Verify Email" },
   AUTH07: { title: "Redeem Invitation", description: "Use an invitation code to continue.", submit: "Redeem Invitation" },
   AUTH08: { title: "Two-Factor Challenge", description: "Enter the 6-digit code.", submit: "Verify" },
@@ -84,24 +94,25 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
   const signedInReturnPath = typeof window === "undefined"
     ? "/account/profile"
     : safeSignedInReturnPath(new URLSearchParams(window.location.search).get("returnTo"), window.location.origin);
-  const pendingEmail = typeof window === "undefined"
-    ? ""
-    : window.sessionStorage.getItem(activeScreenId === "AUTH06" ? pendingVerificationEmailKey : pendingResetEmailKey) ?? "";
-  const { control, register, handleSubmit, getValues, formState: { isValid } } = useForm<AuthFields>({
+  const pendingEmail = useSessionStorageValue(activeScreenId === "AUTH06" ? pendingVerificationEmailKey : pendingResetEmailKey);
+  const { control, register, handleSubmit, getValues, setValue, formState: { isValid } } = useForm<AuthFields>({
     defaultValues: { code: "", confirmPassword: "", email: pendingEmail },
     mode: "onChange",
   });
-  const usesEmail = ["AUTH01", "AUTH03", "AUTH04", "AUTH05"].includes(activeScreenId);
-  const usesPassword = ["AUTH01", "AUTH03", "AUTH05"].includes(activeScreenId);
+  useEffect(() => {
+    if (["AUTH05", "AUTH06"].includes(activeScreenId)) setValue("email", pendingEmail, { shouldValidate: true });
+  }, [activeScreenId, pendingEmail, setValue]);
+  const usesEmail = ["AUTH01", "AUTH03", "AUTH04"].includes(activeScreenId);
+  const usesPassword = ["AUTH01", "AUTH03"].includes(activeScreenId);
   const usesUsername = activeScreenId === "AUTH03";
-  const usesCode = ["AUTH05", "AUTH07", "AUTH08"].includes(activeScreenId);
+  const usesCode = ["AUTH07", "AUTH08"].includes(activeScreenId);
   const unsupported = false;
   const [watchedPassword, watchedConfirmation, watchedCode] = useWatch({
     control,
     name: ["password", "confirmPassword", "code"],
   });
   const resetFormInvalid = activeScreenId === "AUTH05"
-    && (watchedPassword !== watchedConfirmation || !/^\d{6}$/.test(watchedCode ?? ""));
+    && (!passwordsMatch(watchedPassword, watchedConfirmation) || !/^\d{6}$/.test(watchedCode ?? ""));
 
   const submit = async (values: AuthFields) => {
     setBusy(true);
@@ -143,13 +154,13 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
         const nextError = resultError(result);
         if (nextError) setError(nextError);
         else {
-          window.sessionStorage.setItem(pendingResetEmailKey, values.email);
+          preserveResetIdentity(values.email);
           window.history.replaceState({}, "", "/auth/reset-password");
           setActiveScreenId("AUTH05");
           setMessage("If the account exists, a reset code was sent.");
         }
       } else if (activeScreenId === "AUTH05") {
-        if (values.password !== values.confirmPassword || !/^\d{6}$/.test(values.code)) {
+        if (!passwordsMatch(values.password, values.confirmPassword) || !/^\d{6}$/.test(values.code)) {
           setError("The reset code must contain six digits and both passwords must match.");
           return;
         }
@@ -163,7 +174,7 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
         else {
           window.sessionStorage.removeItem(pendingResetEmailKey);
           setResetCompleted(true);
-          setMessage("Password reset completed. Sign in with your new password.");
+          setMessage(undefined);
         }
       } else if (activeScreenId === "AUTH07") {
         const response = await fetch("/api/beta-invitations/redeem", {
@@ -249,5 +260,7 @@ export function AuthPage({ screen }: { screen: PageManifestEntry }) {
     else setMessage("A two-factor code was sent to the account email.");
   };
 
-  return <AuthShell><main className="auth-page"><section className="auth-card"><p className="kicker">Account access</p><h1>{copy.title}</h1><p>{copy.description}</p>{!supported ? <p className="notice notice--warn">No authentication operation is available for an unregistered screen.</p> : activeScreenId === "AUT008" ? <a className="button button--gold" href="/auth/sign-in">Sign in again</a> : activeScreenId === "AUTH02" ? <div className="action-row"><a className="button" href="/">Cancel</a><button className="button button--gold" disabled={busy} onClick={signOut}>Sign Out</button></div> : activeScreenId === "AUTH09" ? <button className="button button--gold auth-submit" disabled={busy} onClick={signInWithPasskey}>{copy.submit}</button> : activeScreenId === "AUTH06" ? null : resetCompleted ? <a className="button button--gold auth-submit" href="/auth/sign-in">Sign In</a> : <form onSubmit={handleSubmit(submit)}>{usesUsername && <label className="field">Username<input className="input" autoComplete="username" {...register("username", { required: true })} /></label>}{usesEmail && <label className="field">Email<input className="input" type="email" autoComplete="email" {...register("email", { required: true })} /></label>}{usesPassword && <label className="field">{activeScreenId === "AUTH05" ? "New password" : "Password"}<input className="input" type="password" autoComplete={["AUTH03", "AUTH05"].includes(activeScreenId) ? "new-password" : "current-password"} {...register("password", { required: true })} /></label>}{activeScreenId === "AUTH05" && <label className="field">Confirm new password<input className="input" type="password" autoComplete="new-password" {...register("confirmPassword", { required: true, validate: (value) => value === getValues("password") })} /></label>}{activeScreenId === "AUTH03" && <fieldset className="field"><legend>Age eligibility</legend><label><input type="radio" value="ADULT_18_PLUS" {...register("eligibilityStatus", { required: true })} /> 18 or older</label><label><input type="radio" value="MINOR_14_17_GUARDIAN_CONSENTED" {...register("eligibilityStatus", { required: true })} /> 14–17; guardian consent evidence required before participation</label><p className="muted">No date of birth or exact age is collected. A minor may create an account, but cannot participate until an active guardian-consent record from an approved verification method exists.</p></fieldset>}{activeScreenId === "AUTH08" && <button className="button" type="button" disabled={busy} onClick={sendTwoFactorCode}>Send code</button>}{usesCode && <label className="field">{activeScreenId === "AUTH07" ? "Invitation code" : activeScreenId === "AUTH08" ? "6-digit code" : "Reset code"}{activeScreenId === "AUTH07" ? <input className="input" {...register("code", { required: true })} /> : <OtpInput {...register("code", { required: true, pattern: /^[0-9]{6}$/ })} />}</label>}{activeScreenId === "AUTH01" && <div className="auth-links"><a href="/auth/forgot-password">Forgot password?</a><a href="/auth/passkeys">Use a passkey</a></div>}{activeScreenId === "AUTH05" && <button className="button" disabled={busy || !getValues("email")} onClick={resendResetCode} type="button">Resend code</button>}<button className="button button--gold auth-submit" disabled={!isValid || busy || unsupported || resetFormInvalid}>{busy ? "Working…" : copy.submit}</button></form>}{error && <p className="notice notice--bad" role="alert">{error}</p>}{message && <p className="notice notice--good" role="status">{message}</p>}</section>{activeScreenId === "AUTH03" && <aside className="auth-aside"><h2>Privacy-minimal signup</h2><p>Adults store only ADULT_18_PLUS. The application does not collect date of birth or exact age.</p><p className="notice">Under 14 is ineligible.</p></aside>}</main>{activeScreenId === "AUTH06" && <VerifyEmailModal initialEmail={pendingEmail} />}</AuthShell>;
+  const title = resetCompleted ? "Password Reset" : copy.title;
+  const description = resetCompleted ? undefined : copy.description;
+  return <AuthShell><main className="auth-page"><section className="auth-card"><p className="kicker">Account access</p><h1>{title}</h1>{description && <p>{description}</p>}{resetCompleted ? <><p>Your password has been changed successfully.</p><p>Sign in with your new password.</p><a className="button button--gold auth-submit" href="/auth/sign-in">Sign In</a></> : !supported ? <p className="notice notice--warn">No authentication operation is available for an unregistered screen.</p> : activeScreenId === "AUT008" ? <a className="button button--gold" href="/auth/sign-in">Sign in again</a> : activeScreenId === "AUTH02" ? <div className="action-row"><a className="button" href="/">Cancel</a><button className="button button--gold" disabled={busy} onClick={signOut}>Sign Out</button></div> : activeScreenId === "AUTH09" ? <button className="button button--gold auth-submit" disabled={busy} onClick={signInWithPasskey}>{copy.submit}</button> : activeScreenId === "AUTH06" ? null : <form onSubmit={handleSubmit(submit)}>{usesUsername && <label className="field">Username<input className="input" autoComplete="username" {...register("username", { required: true })} /></label>}{usesEmail && <label className="field">Email<input className="input" type="email" autoComplete="email" {...register("email", { required: true })} /></label>}{usesPassword && <PasswordInput autoComplete={activeScreenId === "AUTH03" ? "new-password" : "current-password"} label="Password" {...register("password", { required: true })} />}{activeScreenId === "AUTH05" && <PasswordResetFields busy={busy} preservedEmail={pendingEmail} register={register} resend={resendResetCode} />}{activeScreenId === "AUTH03" && <fieldset className="field"><legend>Age eligibility</legend><label><input type="radio" value="ADULT_18_PLUS" {...register("eligibilityStatus", { required: true })} /> 18 or older</label><label><input type="radio" value="MINOR_14_17_GUARDIAN_CONSENTED" {...register("eligibilityStatus", { required: true })} /> 14–17; guardian consent evidence required before participation</label><p className="muted">No date of birth or exact age is collected. A minor may create an account, but cannot participate until an active guardian-consent record from an approved verification method exists.</p></fieldset>}{activeScreenId === "AUTH08" && <button className="button" type="button" disabled={busy} onClick={sendTwoFactorCode}>Send code</button>}{usesCode && <label className="field">{activeScreenId === "AUTH07" ? "Invitation code" : "6-digit code"}{activeScreenId === "AUTH07" ? <input className="input" {...register("code", { required: true })} /> : <OtpInput {...register("code", { required: true, pattern: /^[0-9]{6}$/ })} />}</label>}{activeScreenId === "AUTH01" && <div className="auth-links"><a href="/auth/forgot-password">Forgot password?</a><a href="/auth/passkeys">Use a passkey</a></div>}<button className="button button--gold auth-submit" disabled={!isValid || busy || unsupported || resetFormInvalid}>{busy ? "Working…" : copy.submit}</button></form>}{error && <p className="notice notice--bad" role="alert">{error}</p>}{message && <p className="notice notice--good" role="status">{message}</p>}</section>{activeScreenId === "AUTH03" && <aside className="auth-aside"><h2>Privacy-minimal signup</h2><p>Adults store only ADULT_18_PLUS. The application does not collect date of birth or exact age.</p><p className="notice">Under 14 is ineligible.</p></aside>}</main>{activeScreenId === "AUTH06" && <VerifyEmailModal key={pendingEmail || "pending-verification"} initialEmail={pendingEmail} />}</AuthShell>;
 }

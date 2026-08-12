@@ -121,6 +121,17 @@
           ]
         },
         {
+          "itemId": "0.2.0:fixed:3",
+          "category": "FIXED",
+          "title": "Complete password security controls",
+          "body": "Six-digit email codes now use a clear six-position control, password fields include accessible independent Show and Hide actions, completed resets present the correct next step, immutable account identities no longer behave like editable fields, and signed-in players can change or recover their password from Account.",
+          "audience": "PLAYERS",
+          "routes": [
+            "/auth",
+            "/account/profile"
+          ]
+        },
+        {
           "itemId": "0.2.0:security:1",
           "category": "SECURITY",
           "title": "Hardened account and operations boundaries",

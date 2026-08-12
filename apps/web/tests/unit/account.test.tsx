@@ -2,8 +2,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const authMocks = vi.hoisted(() => ({
+  changePassword: vi.fn(),
   changeEmail: vi.fn(),
   listSessions: vi.fn(),
+  requestPasswordReset: vi.fn(),
   sendVerificationOtp: vi.fn(),
   updateUser: vi.fn(),
   useSession: vi.fn(),
@@ -11,8 +13,10 @@ const authMocks = vi.hoisted(() => ({
 
 vi.mock("../../src/lib/auth-client", () => ({
   authClient: {
+    changePassword: authMocks.changePassword,
     emailOtp: {
       changeEmail: authMocks.changeEmail,
+      requestPasswordReset: authMocks.requestPasswordReset,
       sendVerificationOtp: authMocks.sendVerificationOtp,
     },
     listSessions: authMocks.listSessions,
@@ -31,6 +35,8 @@ function accountScreen(screenId: string) {
 describe("account session boundary", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    authMocks.changePassword.mockResolvedValue({ data: { status: true }, error: null });
+    authMocks.requestPasswordReset.mockResolvedValue({ data: { status: true }, error: null });
     authMocks.updateUser.mockResolvedValue({ error: null });
     authMocks.listSessions.mockResolvedValue({ data: [], error: null });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
@@ -111,7 +117,7 @@ describe("account session boundary", () => {
     expect(screen.queryByRole("heading", { name: "Request a friend invitation" })).not.toBeInTheDocument();
   });
 
-  it("renders the authenticated Better Auth identity and saves only the display name", async () => {
+  it("renders immutable identity as static values and saves only the focusable display name", async () => {
     authMocks.useSession.mockReturnValue({
       data: {
         user: {
@@ -125,9 +131,14 @@ describe("account session boundary", () => {
     });
     render(<AccountPage screen={accountScreen("ACC001")} />);
 
-    expect(screen.getByDisplayValue("Owner_Name")).toHaveAttribute("readonly");
-    expect(screen.getByDisplayValue("owner@example.test")).toHaveAttribute("readonly");
-    fireEvent.change(screen.getByDisplayValue("Owner Name"), {
+    expect(screen.queryByRole("textbox", { name: "Username" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("textbox", { name: "Email" })).not.toBeInTheDocument();
+    expect(screen.getByText("Owner_Name")).toBeVisible();
+    expect(screen.getByText("owner@example.test")).toBeVisible();
+    const displayName = screen.getByRole("textbox", { name: "Display name" });
+    displayName.focus();
+    expect(displayName).toHaveFocus();
+    fireEvent.change(displayName, {
       target: { value: "Updated Name" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
@@ -182,9 +193,43 @@ describe("account session boundary", () => {
     });
     render(<AccountPage screen={accountScreen("ACC002")} />);
 
-    expect(screen.getByLabelText("Current email")).toHaveAttribute("readonly");
+    expect(screen.queryByRole("textbox", { name: "Current email" })).not.toBeInTheDocument();
+    expect(screen.getAllByText("owner@example.test")).toHaveLength(2);
     expect(screen.queryByLabelText("Current password")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Send Verification" })).toBeDisabled();
+  });
+
+  it("exposes authenticated password management through Better Auth with canonical password controls", async () => {
+    authMocks.useSession.mockReturnValue({
+      data: { user: { email: "owner@example.test", name: "Owner", username: "owner" } },
+      isPending: false,
+    });
+    render(<AccountPage screen={accountScreen("ACC024")} />);
+
+    const current = screen.getByLabelText("Current password");
+    const replacement = screen.getByLabelText("New password", { exact: true });
+    const confirmation = screen.getByLabelText("Confirm new password");
+    expect(current).toHaveAttribute("autocomplete", "current-password");
+    expect(replacement).toHaveAttribute("autocomplete", "new-password");
+    expect(confirmation).toHaveAttribute("autocomplete", "new-password");
+    expect(screen.getAllByRole("button", { name: "Show password" })).toHaveLength(3);
+    const submit = screen.getByRole("button", { name: "Change Password" });
+    expect(submit).toBeDisabled();
+
+    fireEvent.change(current, { target: { value: "Old-Password!" } });
+    fireEvent.change(replacement, { target: { value: "New-Password!" } });
+    fireEvent.change(confirmation, { target: { value: "mismatch" } });
+    expect(submit).toBeDisabled();
+    fireEvent.change(confirmation, { target: { value: "New-Password!" } });
+    expect(submit).toBeEnabled();
+    fireEvent.click(submit);
+
+    await waitFor(() => expect(authMocks.changePassword).toHaveBeenCalledWith({
+      currentPassword: "Old-Password!",
+      newPassword: "New-Password!",
+    }));
+    expect(await screen.findByRole("heading", { name: "Password Changed" })).toBeVisible();
+    expect(screen.getByText("Your password has been changed successfully.")).toBeVisible();
   });
 
   it("renders only server-projected membership state and keeps it separate from role and beta eligibility", async () => {

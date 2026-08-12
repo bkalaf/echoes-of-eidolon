@@ -6,8 +6,8 @@
 - Active v11.3 source rows: 269
 - Application registry rows: 269
 - V3 excluded base rows: 3
-- V3 amendment rows: 7
-- Active mechanically derived rows: 273
+- V3 amendment rows: 8
+- Active mechanically derived rows: 274
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -18,7 +18,7 @@
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- V3 amendment manifest SHA-256: `4dbf9bda3bbffba2d2c7ced4d02497a10473f28736982bb9c7db03a7a7dcbd56`
+- V3 amendment manifest SHA-256: `d4c51d9f4d7dd6edee0305a85d7ebd541e464e26d3286e8b11725bcd80c62d39`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -302,6 +302,7 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 274 | 277 | CAP05 | Event and Projection Inspector | /admin/capabilities/inspector | V3_REMEDIATION_CAPABILITY_WIREFRAMES_V1 |
 | 275 | 278 | CAM006 | Book Grouping Membership Editor | state-only | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
 | 276 | 279 | CAM007 | Campaign Planner — Custom Column View | /admin/campaign/planner | V3_REMEDIATION_CAMPAIGN_WIREFRAMES_V2 |
+| 277 | 280 | ACC024 | Change Password | Modal in /account/profile | OWNER_AUTHORED_ACCOUNT_SECURITY_REMEDIATION_20260812 |
 
 ## Supplemental source PNGs
 

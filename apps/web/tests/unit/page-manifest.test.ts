@@ -15,16 +15,16 @@ describe("active page manifest", () => {
     const expected = basePageManifest.length - excludedV3ScreenIds.length + v3PageManifestAdditions.length;
     expect(pageManifest).toHaveLength(expected);
     expect(new Set(pageManifest.map((entry) => entry.reviewOrder)).size).toBe(expected);
-    expect(v3PageManifestAdditions.map((entry) => entry.screenId)).toEqual(["CAP01", "CAP02", "CAP03", "CAP04", "CAP05", "CAM006", "CAM007"]);
+    expect(v3PageManifestAdditions.map((entry) => entry.screenId)).toEqual(["CAP01", "CAP02", "CAP03", "CAP04", "CAP05", "CAM006", "CAM007", "ACC024"]);
     expect([...excludedV3ScreenIds]).toEqual(["DATA027", "DATA_MATRIX_EDIT", "DATA_MATRIX_IMPORT"]);
-    expect(pageManifest).toHaveLength(basePageManifest.length - 3 + 7);
+    expect(pageManifest).toHaveLength(basePageManifest.length - 3 + 8);
   });
 
   it("preserves the approved shell ownership counts", () => {
     const groups = manifestByShell();
     expect(groups.public).toHaveLength(36);
     expect(groups.auth).toHaveLength(10);
-    expect(groups.account).toHaveLength(23);
+    expect(groups.account).toHaveLength(24);
     expect(groups.store).toHaveLength(12);
     expect(groups.admin).toHaveLength(154);
     expect(groups.game).toHaveLength(14);

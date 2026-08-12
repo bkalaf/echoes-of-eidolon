@@ -109,7 +109,7 @@ function VersionEditor({ definition, reload }: { definition?: CapabilityDefiniti
     setMessage("Definition version activated."); reload();
   };
   return <div className="split"><form className="card" onSubmit={(event) => { event.preventDefault(); void submit(event.currentTarget); }}><h2>{definition ? `Create version for ${definition.code}` : "Create capability definition"}</h2>
-    <label>Stable code<input name="code" required pattern="[A-Z][A-Z0-9_]*" defaultValue={definition?.code ?? ""} readOnly={Boolean(definition)} /></label>
+    {definition ? <><div className="account-value"><span className="account-value__label">Stable code</span><span className="account-value__text">{definition.code}</span></div><input name="code" type="hidden" value={definition.code} /></> : <label>Stable code<input name="code" required pattern="[A-Z][A-Z0-9_]*" /></label>}
     <label>Path pattern<input name="pathPattern" required defaultValue={latest?.pathPattern ?? ""} placeholder="location.{SETTLEMENT}.{POINT_OF_INTEREST}.discovered" /></label>
     <label>Description<textarea name="description" required defaultValue={latest?.description ?? ""} /></label>
     <div className="form-grid"><label>Value kind<select name="valueKind" defaultValue={latest?.valueKind ?? "BOOLEAN"}>{["BOOLEAN", "SCORE", "COUNTER", "ENUM", "REFERENCE"].map((value) => <option key={value}>{value}</option>)}</select></label>
