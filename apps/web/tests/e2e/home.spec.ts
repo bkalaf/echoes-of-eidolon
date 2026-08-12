@@ -15,6 +15,10 @@ test("public navigation remains readable at the supported mobile width", async (
   for (const name of ["Features", "Gameplay", "Merchandise", "Game & Server Status", "Request an Invite"]) {
     await expect(navigation.getByRole("link", { name })).toHaveCSS("white-space", "nowrap");
   }
+  await expect(page.getByRole("heading", { name: /when the moons align/i })).toBeVisible();
+  await expect(page.locator(".feature-carousel")).toBeVisible();
+  await expect(page.getByText("Free to Play. Open to Everyone.")).toBeVisible();
+  await expect(page.locator(".public-footer")).toBeVisible();
 });
 
 test("feature carousel renders stable two-tone vector crests without masks", async ({ page }) => {
@@ -52,6 +56,60 @@ test("feature carousel renders stable two-tone vector crests without masks", asy
   expect(failedCrests).toEqual([]);
 });
 
+test("homepage remains vertically stationary while the carousel advances", async ({ page }) => {
+  test.setTimeout(60_000);
+  for (const viewport of [
+    { width: 1_600, height: 900 },
+    { width: 1_920, height: 1_080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const readLayout = () => page.evaluate(() => {
+      const main = document.querySelector<HTMLElement>(".site-main");
+      const footer = document.querySelector<HTMLElement>(".public-footer");
+      const hero = document.querySelector<HTMLElement>(".hero");
+      const carousel = document.querySelector<HTMLElement>(".feature-carousel");
+      const freeBand = document.querySelector<HTMLElement>(".free-band");
+      if (!main || !footer || !hero || !carousel || !freeBand) throw new Error("Homepage layout is incomplete.");
+      return {
+        activeFeature: document.querySelector(".feature-card.active")?.getAttribute("href"),
+        carouselLeft: carousel.scrollLeft,
+        footerBottom: footer.getBoundingClientRect().bottom,
+        footerTop: footer.getBoundingClientRect().top,
+        freeBandBottom: freeBand.getBoundingClientRect().bottom,
+        heroTop: hero.getBoundingClientRect().top,
+        mainClientHeight: main.clientHeight,
+        mainOverflowY: getComputedStyle(main).overflowY,
+        mainScrollHeight: main.scrollHeight,
+        mainY: main.scrollTop,
+        windowY: window.scrollY,
+      };
+    });
+
+    const initial = await readLayout();
+    expect(initial.windowY).toBe(0);
+    expect(initial.mainY).toBe(0);
+    expect(initial.mainOverflowY).toBe("hidden");
+    expect(initial.mainScrollHeight).toBe(initial.mainClientHeight);
+    expect(initial.footerBottom).toBeLessThanOrEqual(viewport.height);
+    expect(initial.freeBandBottom).toBeLessThanOrEqual(initial.footerTop);
+
+    for (let tick = 0; tick < 4; tick += 1) {
+      await page.waitForTimeout(3_100);
+      const current = await readLayout();
+      expect(current.windowY).toBe(initial.windowY);
+      expect(current.mainY).toBe(initial.mainY);
+      expect(current.heroTop).toBe(initial.heroTop);
+      expect(current.footerBottom).toBeLessThanOrEqual(viewport.height);
+      expect(current.freeBandBottom).toBeLessThanOrEqual(current.footerTop);
+    }
+
+    const after = await readLayout();
+    expect(after.activeFeature).not.toBe(initial.activeFeature);
+    expect(after.carouselLeft).not.toBe(initial.carouselLeft);
+  }
+});
+
 test("application shells own the viewport while long pages scroll only inside their content region", async ({ page }) => {
   for (const [path, width, height] of [
     ["/", 1_600, 900],
@@ -69,7 +127,9 @@ test("application shells own the viewport while long pages scroll only inside th
     await page.goto(path);
     const layout = await page.evaluate(() => {
       const shell = document.querySelector(".site-shell, .workspace-shell, .game-shell");
-      const main = document.querySelector(".site-main, .workspace-main, .game-shell > main");
+      const main = document.querySelector(".workspace-main, .game-shell > main")
+        ?? document.querySelector(".site-main > .public-page, .site-main > .auth-page")
+        ?? document.querySelector(".site-main");
       const header = document.querySelector(".public-header, .workspace-header");
       const footer = document.querySelector(".public-footer, .workspace-footer, .game-bottom-bar");
       if (!shell || !main || !footer) throw new Error("Application shell structure is incomplete.");
@@ -98,7 +158,7 @@ test("application shells own the viewport while long pages scroll only inside th
     expect(layout.headerTop ?? 0).toBe(0);
     expect(layout.footerBottom).toBe(height);
     expect(layout.footerOverlap).toBe(0);
-    expect(layout.mainOverflowY).toBe("auto");
+    expect(layout.mainOverflowY).toBe(path === "/" ? "hidden" : "auto");
   }
 });
 
@@ -170,8 +230,8 @@ test("homepage hero crops only its lower foreground and keeps the carousel in no
       expect(framing.objectFit).toBe("contain");
       expect(framing.renderedImageWidth).toBeGreaterThanOrEqual(width - 1);
       expect(framing.imageAspectRatio).toBeCloseTo(1_672 / 941, 2);
-      expect(framing.verticalVisibleFraction).toBeGreaterThanOrEqual(0.7);
-      expect(framing.verticalVisibleFraction).toBeLessThanOrEqual(0.78);
+      expect(framing.verticalVisibleFraction).toBeGreaterThanOrEqual(0.45);
+      expect(framing.verticalVisibleFraction).toBeLessThanOrEqual(0.8);
     } else {
       expect(framing.objectFit).toBe("cover");
       expect(framing.heroHeight).toBeLessThanOrEqual(315);

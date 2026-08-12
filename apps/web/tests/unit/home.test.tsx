@@ -30,11 +30,16 @@ describe("public home", () => {
   });
 
   it("moves through all nine features with controlled carousel navigation", () => {
-    Element.prototype.scrollIntoView = () => undefined;
+    const scrollIntoView = vi.fn();
+    const scrollTo = vi.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    HTMLElement.prototype.scrollTo = scrollTo;
     renderHome();
     expect(screen.getByText("Feature 1 of 9")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Next feature" }));
     expect(screen.getByText("Feature 2 of 9")).toBeVisible();
+    expect(scrollTo).toHaveBeenCalledWith({ behavior: "smooth", left: 0 });
+    expect(scrollIntoView).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button", { name: "Previous feature" }));
     expect(screen.getByText("Feature 1 of 9")).toBeVisible();
   });
