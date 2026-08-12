@@ -6,6 +6,12 @@ import { describe, expect, it } from "vitest";
 import { projectPublicAtlas } from "../../src/domain/public-atlas";
 
 describe("public Atlas projection", () => {
+  it("does not let the root Atlas dataset ignore rule hide application source routes", () => {
+    const gitignore = readFileSync(resolve(import.meta.dirname, "../../../../.gitignore"), "utf8");
+    expect(gitignore).toContain("/atlas/");
+    expect(gitignore).not.toMatch(/^atlas\/$/m);
+  });
+
   it("allowlists public-safe fields while preserving renderable topology", () => {
     const result = projectPublicAtlas({
       connections: [{ atlasConnectionId: "C1", connectionType: "BASE", fromLatticeId: "L01", locked: true, toLatticeId: "L02", wrapMode: "NONE" }],
