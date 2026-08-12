@@ -73,11 +73,11 @@ describe("public home", () => {
     expect(screen.queryByRole("link", { name: "Sign Out" })).not.toBeInTheDocument();
   });
 
-  it("renders the invite-only beta landing only after player access is verified", async () => {
+  it("keeps the normal Home content and adds game navigation after player access is verified", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "player-1" } }, isPending: false });
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: true, canPlay: true, role: "member" }) }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: true, canPlay: true, membershipEntitled: false, participationEligible: true, role: "member", voiceWindowSeconds: 60 }) }));
     renderHome();
-    expect(await screen.findByRole("heading", { name: "Echoes of Eidolon Beta" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /when the moons align/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Enter Game" })).toHaveAttribute("href", "/game");
     expect(screen.getByRole("link", { name: "Account" })).toHaveClass("avatar-link");
     expect(screen.getByRole("link", { name: "Sign Out" })).toHaveAttribute("href", "/auth/sign-out");
@@ -93,12 +93,23 @@ describe("public home", () => {
     expect(await screen.findByRole("link", { name: "Account" })).not.toHaveTextContent("A");
   });
 
-  it("does not infer beta admission from a signed-in account", async () => {
+  it("keeps Home and Administration available to a non-player admin", async () => {
     authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: false, canPlay: false, role: "admin" }) }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ betaEligible: false, canPlay: false, membershipEntitled: false, participationEligible: true, role: "admin", voiceWindowSeconds: 60 }) }));
     renderHome();
-    expect(await screen.findByRole("heading", { name: "Player eligibility required" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /when the moons align/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Administration" })).toHaveAttribute("href", "/admin");
     expect(screen.queryByRole("link", { name: "Enter Game" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Donate" })).not.toBeInTheDocument();
+  });
+
+  it("does not collapse Home when player access verification fails", async () => {
+    authMocks.useSession.mockReturnValue({ data: { user: { id: "user-1" } }, isPending: false });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
+    renderHome();
+
+    expect(await screen.findByRole("heading", { name: /when the moons align/i })).toBeInTheDocument();
+    expect(screen.getByText("Player access is temporarily unavailable.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Account" })).toBeVisible();
   });
 });

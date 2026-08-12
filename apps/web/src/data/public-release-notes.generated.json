@@ -1,6 +1,39 @@
 {
-  "currentVersion": "0.2.0",
+  "currentVersion": "0.2.1",
   "releases": [
+    {
+      "version": "0.2.1",
+      "status": "PUBLISHED",
+      "title": "Echoes of Eidolon 0.2.1",
+      "summary": "A production navigation hotfix that keeps Home available and exposes every authorized workspace without conflating account roles with player eligibility.",
+      "releaseDate": "2026-08-12",
+      "previousVersion": "0.2.0",
+      "items": [
+        {
+          "itemId": "0.2.1:fixed:1",
+          "category": "FIXED",
+          "title": "Reachable authenticated workspaces",
+          "body": "Signed-in Home retains its normal public content while exposing Account, Administration, and Enter Game only when each destination is authorized. Account, Administration, and Game now provide intentional exits, and every displayed Echoes of Eidolon logo links accessibly to Home.",
+          "audience": "BOTH",
+          "routes": [
+            "/",
+            "/account",
+            "/admin",
+            "/game"
+          ]
+        },
+        {
+          "itemId": "0.2.1:fixed:2",
+          "category": "FIXED",
+          "title": "Verifiable production revision",
+          "body": "Production builds embed the exact authorized source revision so deployment verification can confirm the running application SHA.",
+          "audience": "OPERATORS",
+          "routes": [
+            "/api/version"
+          ]
+        }
+      ]
+    },
     {
       "version": "0.2.0",
       "status": "PUBLISHED",

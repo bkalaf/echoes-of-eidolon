@@ -5,6 +5,9 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  define: {
+    __EIDOLON_BUILD_GIT_SHA__: JSON.stringify(process.env.EIDOLON_BUILD_GIT_SHA ?? null),
+  },
   server: { port: 3000 },
   resolve: { tsconfigPaths: true },
   plugins: [tanstackStart(), nitro({ noExternals: ["@prisma/client", "tslib"] }), tailwindcss(), viteReact()],

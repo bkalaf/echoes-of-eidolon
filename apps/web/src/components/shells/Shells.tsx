@@ -1,7 +1,7 @@
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { managedAssetUrl } from "../../content/managed-assets";
-import { authClient } from "../../lib/auth-client";
+import { useNavigationAccess, type NavigationAccessState } from "../../lib/navigation-access";
 import { LoginSoundtrackPlayer } from "../LoginSoundtrackPlayer";
 
 const publicNav = [
@@ -16,58 +16,44 @@ export function BrandLogo() {
   return <img className="brand-logo" src={managedAssetUrl("brand.logo-alpha")} alt="Echoes of Eidolon" />;
 }
 
-function PublicAuthControls() {
-  const session = authClient.useSession();
+export function BrandHomeLink() {
+  return <a className="brand-link" href="/" aria-label="Echoes of Eidolon home"><BrandLogo /></a>;
+}
+
+function PublicAuthControls({ state }: { state: NavigationAccessState }) {
+  const { accessStatus, navigation, session } = state;
   if (session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
   if (session.data) {
     const initial = session.data.user.name?.trim().charAt(0).toUpperCase() ?? "";
-    return <div className="auth-actions"><a aria-label="Account" className="avatar-link" href="/account/profile"><span aria-hidden="true">{initial}</span></a><a className="button button--gold" href="/auth/sign-out">Sign Out</a></div>;
+    return <div className="auth-actions">
+      {accessStatus === "error" && <span className="navigation-status" role="status">Player access is temporarily unavailable.</span>}
+      {navigation.administration && <a className="button" href="/admin">Administration</a>}
+      {navigation.game && <a className="button button--gold" href="/game">Enter Game</a>}
+      <a aria-label="Account" className="avatar-link" href="/account/profile"><span aria-hidden="true">{initial}</span></a>
+      <a className="button" href="/auth/sign-out">Sign Out</a>
+    </div>;
   }
   return <div className="auth-actions"><a className="button button--default" href="/auth/sign-in">Sign In</a><a className="button button--gold" href="/auth/sign-up">Sign Up</a></div>;
 }
 
-function EligibleDonateLink() {
-  const session = authClient.useSession();
-  const userId = session.data?.user.id;
-  const [access, setAccess] = useState<{ canPlay: boolean; userId: string }>();
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-    if (!userId) return () => controller.abort();
-
-    void fetch("/api/player/access", { signal: controller.signal })
-      .then(async (response) => response.ok ? response.json() as Promise<{ canPlay?: unknown }> : undefined)
-      .then((result) => { if (active) setAccess({ canPlay: result?.canPlay === true, userId }); })
-      .catch(() => { if (active) setAccess({ canPlay: false, userId }); });
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, [userId]);
-
-  return access && access.userId === userId && access.canPlay ? <a href="/donate">Donate</a> : null;
-}
-
-function ShellFooter({ className = "" }: { className?: string }) {
+function ShellFooter({ canPlay = false, className = "" }: { canPlay?: boolean; className?: string }) {
   return <footer className={["public-footer", className].filter(Boolean).join(" ")}>
     <nav aria-label="Footer navigation">
       <a href="/about">About Us</a>
       <a href="/contact">Contact Us</a>
       <a href="/legal">Legal</a>
-      <EligibleDonateLink />
+      {canPlay && <a href="/donate">Donate</a>}
     </nav>
     <span>© Echoes of Eidolon</span>
   </footer>;
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
+  const navigationState = useNavigationAccess();
   return (
     <div className="site-shell">
       <header className="public-header">
-        <a className="brand-link" href="/" aria-label="Echoes of Eidolon home">
-          <BrandLogo />
-        </a>
+        <BrandHomeLink />
         <nav aria-label="Primary navigation">
           {publicNav.map(([label, href]) => (
             <a href={href} key={href}>
@@ -75,11 +61,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </a>
           ))}
         </nav>
-        <PublicAuthControls />
+        <PublicAuthControls state={navigationState} />
         <LoginSoundtrackPlayer />
       </header>
       <main className="site-main">{children}</main>
-      <ShellFooter />
+      <ShellFooter canPlay={navigationState.navigation.game} />
     </div>
   );
 }
@@ -91,21 +77,28 @@ interface SideShellProps {
 }
 
 function SideShell({ children, label, navigation }: SideShellProps) {
+  const navigationState = useNavigationAccess();
+  const authorized = navigationState.navigation;
   return (
     <div className="workspace-shell">
       <header className="workspace-header">
-        <BrandLogo />
+        <BrandHomeLink />
         <span>{label}</span>
         <LoginSoundtrackPlayer />
       </header>
       <aside className="workspace-sidebar">
         <strong>{label}</strong>
+        <a href="/">Home</a>
+        {label === "Administration" && authorized.account && <a href="/account/profile">Account</a>}
+        {authorized.administration && <a href="/admin">Administration</a>}
+        {authorized.game && <a href="/game">Enter Game</a>}
         {navigation.map(([item, href]) => (
           <a href={href} key={href}>{item}</a>
         ))}
+        {authorized.signOut && <a href="/auth/sign-out">Sign Out</a>}
       </aside>
       <main className="workspace-main">{children}</main>
-      <ShellFooter className="workspace-footer" />
+      <ShellFooter canPlay={authorized.game} className="workspace-footer" />
     </div>
   );
 }
@@ -135,6 +128,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
 }
 
 export function GameShell({ children }: { children: ReactNode }) {
+  const navigationState = useNavigationAccess();
+  const navigation = navigationState.navigation;
   return (
     <div className="game-shell">
       <LoginSoundtrackPlayer />
@@ -146,6 +141,12 @@ export function GameShell({ children }: { children: ReactNode }) {
           <a href="/game/knowledge">Knowledge</a>
           <a href="/game/bookshelf">Bookshelf</a>
           <a href="/game/maps">Maps</a>
+        </nav>
+        <nav aria-label="Site navigation">
+          <a href="/">Home</a>
+          {navigation.account && <a href="/account/profile">Account</a>}
+          {navigation.administration && <a href="/admin">Administration</a>}
+          {navigation.signOut && <a href="/auth/sign-out">Sign Out</a>}
         </nav>
       </footer>
     </div>

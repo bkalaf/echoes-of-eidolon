@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("RN-023 RN-027 Status links the public archive for guests", async ({ page }) => {
   await page.goto("/status");
-  await expect(page.getByText("Application version 0.2.0")).toBeVisible();
+  await expect(page.getByText("Application version 0.2.1")).toBeVisible();
   await expect(page.getByRole("link", { name: "View Release Notes" })).toHaveAttribute("href", "/status/releases");
 });
 

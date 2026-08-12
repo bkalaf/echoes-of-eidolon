@@ -84,6 +84,13 @@ describe("production deployment entry point", () => {
   it("bundles Prisma Client runtime through Nitro instead of emitting a broken traced ESM subpath", () => {
     const source = readFileSync(viteConfig, "utf8");
     expect(source).toContain('nitro({ noExternals: ["@prisma/client", "tslib"] })');
+    expect(source).toContain("__EIDOLON_BUILD_GIT_SHA__");
+  });
+
+  it("embeds the exact authorized revision into the production build", () => {
+    const source = readFileSync(script, "utf8");
+    expect(source).toContain('EIDOLON_BUILD_GIT_SHA="$target_revision"');
+    expect(source).toContain('EIDOLON_BUILD_GIT_SHA="$previous_revision"');
   });
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {

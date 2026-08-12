@@ -130,7 +130,7 @@ plan: pnpm typecheck
 plan: pnpm test
 plan: pnpm test:integration
 plan: pnpm test:e2e
-plan: pnpm build
+plan: pnpm build with exact revision identity
 plan: docker compose up PostgreSQL
 plan: pg_dump before migration
 plan: prisma migrate deploy
@@ -164,7 +164,7 @@ rollback_application() {
   echo "Deployment failed; attempting application revision rollback." >&2
   run_unlocked git -C "$EIDOLON_REPOSITORY_DIR" checkout --detach "$previous_revision" || return
   run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" install --frozen-lockfile || return
-  run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" build || return
+  run_unlocked env EIDOLON_BUILD_GIT_SHA="$previous_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build || return
   if $promotion_started; then
     run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE" || true
   fi
@@ -179,7 +179,7 @@ run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" typecheck
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration
 run_unlocked env EIDOLON_E2E_PORT=3100 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
-run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
+run_unlocked env EIDOLON_BUILD_GIT_SHA="$target_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
 
 run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" up -d --wait postgres
 

@@ -34,9 +34,12 @@ export interface AccountSessionProjection {
   userAgent: string | null;
 }
 export interface PlayerAccessResponse {
-  role: AuthorizationRole;
   betaEligible: boolean;
   canPlay: boolean;
+  membershipEntitled: boolean;
+  participationEligible: boolean;
+  role: AuthorizationRole;
+  voiceWindowSeconds: number;
 }
 export interface ImportResponse { changed: number; unchanged: number; }
 

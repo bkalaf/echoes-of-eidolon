@@ -6,6 +6,8 @@ import releaseArtifact from "../data/public-release-notes.generated.json";
 import { releaseNotesSchema, semanticVersionSchema, type ReleaseNotes } from "../domain/release-notes";
 import { buildReleaseCatalog } from "./release-gate";
 
+declare const __EIDOLON_BUILD_GIT_SHA__: string | null;
+
 const publicReleaseArtifactSchema = z.object({
   currentVersion: semanticVersionSchema,
   releases: z.array(releaseNotesSchema),
@@ -24,10 +26,17 @@ export async function findPublicRelease(version: string): Promise<PublicRelease 
   return publicReleaseArtifact.releases.find((release) => release.version === version);
 }
 
+export function resolveBuildGitSha(embeddedGitSha?: string | null, runtimeGitSha?: string | null) {
+  for (const gitSha of [embeddedGitSha, runtimeGitSha]) {
+    if (gitSha && /^[0-9a-f]{40}$/.test(gitSha)) return gitSha;
+  }
+  return null;
+}
+
 export function getBuildIdentity() {
-  const gitSha = process.env.EIDOLON_GIT_SHA;
+  const embeddedGitSha = typeof __EIDOLON_BUILD_GIT_SHA__ === "undefined" ? null : __EIDOLON_BUILD_GIT_SHA__;
   return {
-    gitSha: gitSha && /^[0-9a-f]{40}$/.test(gitSha) ? gitSha : null,
+    gitSha: resolveBuildGitSha(embeddedGitSha, process.env.EIDOLON_GIT_SHA),
     version: publicReleaseArtifact.currentVersion,
   };
 }

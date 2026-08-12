@@ -134,15 +134,15 @@ describe("public mutation boundaries", () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
       if (url === "/api/health") return { ok: true, json: async () => ({ checkedAt: "2026-08-11T00:00:00Z", services: [] }) } as Response;
-      if (url === "/api/releases") return { ok: true, json: async () => ({ currentVersion: "0.2.0", releases: [
-        { version: "0.2.0", status: "PUBLISHED", title: "Current published release", summary: "Published player release", releaseDate: "2026-08-10", previousVersion: null, items: [] },
+      if (url === "/api/releases") return { ok: true, json: async () => ({ currentVersion: "0.2.1", releases: [
+        { version: "0.2.1", status: "PUBLISHED", title: "Current published release", summary: "Published player release", releaseDate: "2026-08-12", previousVersion: "0.2.0", items: [] },
       ] }) } as Response;
       throw new Error(`Unexpected request: ${url}`);
     }));
 
     renderWithQuery("PUB016");
 
-    expect(screen.getByText("Application version 0.2.0")).toBeInTheDocument();
+    expect(screen.getByText("Application version 0.2.1")).toBeInTheDocument();
     expect(await screen.findByText("Current published release")).toBeInTheDocument();
     expect(screen.getByText("Published player release")).toBeInTheDocument();
     expect(screen.queryByText("No verified release source is configured.")).not.toBeInTheDocument();

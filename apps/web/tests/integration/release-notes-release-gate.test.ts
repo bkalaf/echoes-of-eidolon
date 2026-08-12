@@ -13,7 +13,7 @@ describe("release-note release gate", () => {
     expect(() => validateReleaseState({ rootVersion: "0.2.0", webVersion: "0.2.0", releases: [] })).toThrow(/canonical/i);
   });
 
-  it("RN-011 verifies the prepared 0.2.0 repository state", async () => {
-    await expect(runReleaseCheck(resolve(process.cwd(), "../.."))).resolves.toMatchObject({ currentVersion: "0.2.0", releaseDate: "2026-08-11", status: "PUBLISHED" });
+  it("RN-011 verifies the prepared current repository state", async () => {
+    await expect(runReleaseCheck(resolve(process.cwd(), "../.."))).resolves.toMatchObject({ currentVersion: "0.2.1", releaseDate: "2026-08-12", status: "PUBLISHED" });
   });
 });
