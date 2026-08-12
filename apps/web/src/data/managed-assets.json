@@ -839,5 +839,1925 @@
       "bitDepth": 8,
       "colorProfile": null
     }
+  },
+  "soundtrack.culture_homo_sapien_african_american.city": {
+    "byteSize": 8555136,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/44acc602daaa33312bec4f7bf8b4a508c0a7a0a35a6301bc91ddb718f8fa6a1f.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/44acc602daaa33312bec4f7bf8b4a508c0a7a0a35a6301bc91ddb718f8fa6a1f.mp3",
+    "sha256": "44acc602daaa33312bec4f7bf8b4a508c0a7a0a35a6301bc91ddb718f8fa6a1f",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 289.68,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_african_american.tavern": {
+    "byteSize": 9189840,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/aa028745fc639e3b1213bd7b69cfa6c5fb237cc5dbe061dc48ceda52e18261be.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/aa028745fc639e3b1213bd7b69cfa6c5fb237cc5dbe061dc48ceda52e18261be.mp3",
+    "sha256": "aa028745fc639e3b1213bd7b69cfa6c5fb237cc5dbe061dc48ceda52e18261be",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 339.96,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.7,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_albanian.city": {
+    "byteSize": 7889376,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/f4544abfb79129d5f25cc8022430ba3d9a2cb9f723e2e49dc20e9ed74499a5fb.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f4544abfb79129d5f25cc8022430ba3d9a2cb9f723e2e49dc20e9ed74499a5fb.mp3",
+    "sha256": "f4544abfb79129d5f25cc8022430ba3d9a2cb9f723e2e49dc20e9ed74499a5fb",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 258.816,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.1,
+      "peakVolumeDb": -0.9
+    }
+  },
+  "soundtrack.culture_homo_sapien_albanian.tavern": {
+    "byteSize": 6326112,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/d02b7692a13c50e48f1bf5cff7ae5c752d19a113e395d5c02ba6ed8bc8fcf358.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d02b7692a13c50e48f1bf5cff7ae5c752d19a113e395d5c02ba6ed8bc8fcf358.mp3",
+    "sha256": "d02b7692a13c50e48f1bf5cff7ae5c752d19a113e395d5c02ba6ed8bc8fcf358",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 215.016,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_amazigh_berber.city": {
+    "byteSize": 10830768,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/0b79962f655ba694a8bb5852a6bab7f104f48cb94cc15f6a0b2f73581d07d0f6.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/0b79962f655ba694a8bb5852a6bab7f104f48cb94cc15f6a0b2f73581d07d0f6.mp3",
+    "sha256": "0b79962f655ba694a8bb5852a6bab7f104f48cb94cc15f6a0b2f73581d07d0f6",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 360,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.5,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_amazigh_berber.tavern": {
+    "byteSize": 8501088,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/6d90e9ee22e666ebfbe82583fc7e2b098bd3c99d7c6a0c4f04c93ba4106edaba.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/6d90e9ee22e666ebfbe82583fc7e2b098bd3c99d7c6a0c4f04c93ba4106edaba.mp3",
+    "sha256": "6d90e9ee22e666ebfbe82583fc7e2b098bd3c99d7c6a0c4f04c93ba4106edaba",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 285.288,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.3,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_anglophone_atlantic_creole_maroon.city": {
+    "byteSize": 6453072,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/8bfb9084b16b1fd9451f922eac00b57c70d8a71c003a985321cac40ee82c4481.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/8bfb9084b16b1fd9451f922eac00b57c70d8a71c003a985321cac40ee82c4481.mp3",
+    "sha256": "8bfb9084b16b1fd9451f922eac00b57c70d8a71c003a985321cac40ee82c4481",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 209.64,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.5,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_anglophone_atlantic_creole_maroon.tavern": {
+    "byteSize": 4944624,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/43ed5043c8a4ecce2d991a9ff039c0ab185da97c5356bafd370e203323d5deb5.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/43ed5043c8a4ecce2d991a9ff039c0ab185da97c5356bafd370e203323d5deb5.mp3",
+    "sha256": "43ed5043c8a4ecce2d991a9ff039c0ab185da97c5356bafd370e203323d5deb5",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 182.328,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.6,
+      "peakVolumeDb": -0.6
+    }
+  },
+  "soundtrack.culture_homo_sapien_anishinaabe.city": {
+    "byteSize": 11201040,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/3049e9bf2b2d45e8a0878ff2c0d042d811be6114fa47dd7cfa75d77449594e46.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3049e9bf2b2d45e8a0878ff2c0d042d811be6114fa47dd7cfa75d77449594e46.mp3",
+    "sha256": "3049e9bf2b2d45e8a0878ff2c0d042d811be6114fa47dd7cfa75d77449594e46",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 360.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.5,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_anishinaabe.tavern": {
+    "byteSize": 11073360,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/2b7bd11a482f6788ee994e0eec9eb723f2bb57f942071bbe3c94540b460338c8.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/2b7bd11a482f6788ee994e0eec9eb723f2bb57f942071bbe3c94540b460338c8.mp3",
+    "sha256": "2b7bd11a482f6788ee994e0eec9eb723f2bb57f942071bbe3c94540b460338c8",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 373.44,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_arabian_peninsula_arab.city": {
+    "byteSize": 6152400,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/2364373e7e8bc698786cedc623e651bc1feb73c96ebaac50d8fc10e4713d78ba.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/2364373e7e8bc698786cedc623e651bc1feb73c96ebaac50d8fc10e4713d78ba.mp3",
+    "sha256": "2364373e7e8bc698786cedc623e651bc1feb73c96ebaac50d8fc10e4713d78ba",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 211.896,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.9,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_arabian_peninsula_arab.tavern": {
+    "byteSize": 9033312,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/f8af1e4737a12780b2e4a9b726c53be280416a053e5545c6609744e215afd681.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f8af1e4737a12780b2e4a9b726c53be280416a053e5545c6609744e215afd681.mp3",
+    "sha256": "f8af1e4737a12780b2e4a9b726c53be280416a053e5545c6609744e215afd681",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 299.568,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.8,
+      "peakVolumeDb": -0.3
+    }
+  },
+  "soundtrack.culture_homo_sapien_balinese.city": {
+    "byteSize": 10175184,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/dc10bd3fe3a8a5df7d2ec2b1757d51bfd721c27b17be099ca47a9098266fceb7.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/dc10bd3fe3a8a5df7d2ec2b1757d51bfd721c27b17be099ca47a9098266fceb7.mp3",
+    "sha256": "dc10bd3fe3a8a5df7d2ec2b1757d51bfd721c27b17be099ca47a9098266fceb7",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 325.68,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_balinese.tavern": {
+    "byteSize": 6498552,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/0f3c42fc3381d0f9a94c863715403868c8972c9ead3eb5867c4d176a93032aef.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/0f3c42fc3381d0f9a94c863715403868c8972c9ead3eb5867c4d176a93032aef.mp3",
+    "sha256": "0f3c42fc3381d0f9a94c863715403868c8972c9ead3eb5867c4d176a93032aef",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 249.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_caribbean_indigenous_taino.city": {
+    "byteSize": 8431584,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8.mp3",
+    "sha256": "4fd1f080c63c65d3a2c4e635146fb9b353b9bf6f73d4c941bb05f7a1610a4aa8",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 292.68,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_caribbean_indigenous_taino.tavern": {
+    "byteSize": 8539152,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef.mp3",
+    "sha256": "c639cf1a4930c36f249bedff698c3437848256f6ce6b2afd8515a31eaf59dfef",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 281.568,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_catalan.city": {
+    "byteSize": 6178224,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/04b8cebd61997c2dce75ab26aedbbfdbbe74e72103229629028490248e0012b6.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/04b8cebd61997c2dce75ab26aedbbfdbbe74e72103229629028490248e0012b6.mp3",
+    "sha256": "04b8cebd61997c2dce75ab26aedbbfdbbe74e72103229629028490248e0012b6",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 238.68,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.9,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_catalan.tavern": {
+    "byteSize": 6925920,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/83bc941da87968a09ac73c4243ae037aabf364a48019053b6d550ddbd9169b1f.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/83bc941da87968a09ac73c4243ae037aabf364a48019053b6d550ddbd9169b1f.mp3",
+    "sha256": "83bc941da87968a09ac73c4243ae037aabf364a48019053b6d550ddbd9169b1f",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 240,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.9,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_east_african_bantu_swahili_comorian.city": {
+    "byteSize": 6808320,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/bb4063d7f76e1728f8c7e339e12feb4d8a40211631ed9055a92e660de5700785.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/bb4063d7f76e1728f8c7e339e12feb4d8a40211631ed9055a92e660de5700785.mp3",
+    "sha256": "bb4063d7f76e1728f8c7e339e12feb4d8a40211631ed9055a92e660de5700785",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 220.248,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.1,
+      "peakVolumeDb": -0.2
+    }
+  },
+  "soundtrack.culture_homo_sapien_east_african_bantu_swahili_comorian.tavern": {
+    "byteSize": 6769848,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/8e5cb7cca9ad570017c9c9a4b74c3d40472e25ca731d5fa3b7b74a50e71b91ac.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/8e5cb7cca9ad570017c9c9a4b74c3d40472e25ca731d5fa3b7b74a50e71b91ac.mp3",
+    "sha256": "8e5cb7cca9ad570017c9c9a4b74c3d40472e25ca731d5fa3b7b74a50e71b91ac",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 218.976,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.7,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_egyptian_coptic.city": {
+    "byteSize": 11055576,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/30e86b7c900fd3657585fd41bfa410019b271aa6d535b89ec300d34bafc6b511.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/30e86b7c900fd3657585fd41bfa410019b271aa6d535b89ec300d34bafc6b511.mp3",
+    "sha256": "30e86b7c900fd3657585fd41bfa410019b271aa6d535b89ec300d34bafc6b511",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 355.056,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.9,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_egyptian_coptic.tavern": {
+    "byteSize": 6585888,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/3b41ee8b89a3c93661a91e5f23e2098a1783c67f4b26986887a8b3e951587ff5.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3b41ee8b89a3c93661a91e5f23e2098a1783c67f4b26986887a8b3e951587ff5.mp3",
+    "sha256": "3b41ee8b89a3c93661a91e5f23e2098a1783c67f4b26986887a8b3e951587ff5",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 222.888,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.2,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_english_anglo.city": {
+    "byteSize": 7083072,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d.mp3",
+    "sha256": "7d991062eb93b4ac7960445091b808dd35e22bbc48ec4c3b2351afb9dca9d11d",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 240.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_english_anglo.tavern": {
+    "byteSize": 8127264,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d.mp3",
+    "sha256": "aa913487ff3a3612357c3096877e62679419e395ec1842cb4f873c26f800654d",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 277.368,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.3,
+      "peakVolumeDb": -0.9
+    }
+  },
+  "soundtrack.culture_homo_sapien_francophone_caribbean_creole.city": {
+    "byteSize": 12709728,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/d55d37d78eacfc29ac20a1b20f2741452640084894121bde4d0e6f32e8c31ce7.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d55d37d78eacfc29ac20a1b20f2741452640084894121bde4d0e6f32e8c31ce7.mp3",
+    "sha256": "d55d37d78eacfc29ac20a1b20f2741452640084894121bde4d0e6f32e8c31ce7",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 409.536,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.2,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_francophone_caribbean_creole.tavern": {
+    "byteSize": 9955368,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/551890d29726ea5bcb9ab0e6e5a7a71d3607ba77c3cefd99c23516155270dc6e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/551890d29726ea5bcb9ab0e6e5a7a71d3607ba77c3cefd99c23516155270dc6e.mp3",
+    "sha256": "551890d29726ea5bcb9ab0e6e5a7a71d3607ba77c3cefd99c23516155270dc6e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 322.656,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -19.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_guarani_chaco.city": {
+    "byteSize": 6693888,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e.mp3",
+    "sha256": "62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 229.776,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_guarani_chaco.tavern": {
+    "byteSize": 6693888,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e.mp3",
+    "sha256": "62ad6035fbb3d6b775dd52f32de9801b5935bb392ce6500a07e08acb09791e3e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 229.776,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_gullah_geechee.city": {
+    "byteSize": 7116672,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/755310ac55c1fbfb7e1863b2677df9fd4ec4826f20983bb9fe146797a69882d7.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/755310ac55c1fbfb7e1863b2677df9fd4ec4826f20983bb9fe146797a69882d7.mp3",
+    "sha256": "755310ac55c1fbfb7e1863b2677df9fd4ec4826f20983bb9fe146797a69882d7",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 235.608,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_gullah_geechee.tavern": {
+    "byteSize": 7894008,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/3eecf870be973c73d105fb347363ed283ec8458efadda5c76b8b577c23fcd56f.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3eecf870be973c73d105fb347363ed283ec8458efadda5c76b8b577c23fcd56f.mp3",
+    "sha256": "3eecf870be973c73d105fb347363ed283ec8458efadda5c76b8b577c23fcd56f",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 256.968,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.5,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_haudenosaunee.city": {
+    "byteSize": 9483600,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/4899e232ae6fd63cd700ffc93263d5ee0c485271fd45928b779ecf118ec0cb2d.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4899e232ae6fd63cd700ffc93263d5ee0c485271fd45928b779ecf118ec0cb2d.mp3",
+    "sha256": "4899e232ae6fd63cd700ffc93263d5ee0c485271fd45928b779ecf118ec0cb2d",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 330.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.4,
+      "peakVolumeDb": -1.7
+    }
+  },
+  "soundtrack.culture_homo_sapien_haudenosaunee.tavern": {
+    "byteSize": 7664712,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/bb0f99f0f26890c677b41df40cd0fb0d816984c148361202db3b049c73eca145.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/bb0f99f0f26890c677b41df40cd0fb0d816984c148361202db3b049c73eca145.mp3",
+    "sha256": "bb0f99f0f26890c677b41df40cd0fb0d816984c148361202db3b049c73eca145",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 260.016,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.5,
+      "peakVolumeDb": -0.2
+    }
+  },
+  "soundtrack.culture_homo_sapien_indian_ocean_muslim_cape_malay_maldivian.city": {
+    "byteSize": 7581120,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/d1149c9c80e036fc7f22a44b0847cc3f20c5e258f3b9596f288c4d0b3266b086.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d1149c9c80e036fc7f22a44b0847cc3f20c5e258f3b9596f288c4d0b3266b086.mp3",
+    "sha256": "d1149c9c80e036fc7f22a44b0847cc3f20c5e258f3b9596f288c4d0b3266b086",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 255,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_indian_ocean_muslim_cape_malay_maldivian.tavern": {
+    "byteSize": 9111696,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/6b4fb82de0c13965e79f5f8b601da7a9feea89722ae232def2346561b7bcc171.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/6b4fb82de0c13965e79f5f8b601da7a9feea89722ae232def2346561b7bcc171.mp3",
+    "sha256": "6b4fb82de0c13965e79f5f8b601da7a9feea89722ae232def2346561b7bcc171",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 296.448,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.2,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_italian_central_mediterranean.city": {
+    "byteSize": 7781376,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/64c17d06269ff038aea0ad063f6038382e7dd5701bace6fda218aa2eac7863fd.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/64c17d06269ff038aea0ad063f6038382e7dd5701bace6fda218aa2eac7863fd.mp3",
+    "sha256": "64c17d06269ff038aea0ad063f6038382e7dd5701bace6fda218aa2eac7863fd",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 260.04,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.5,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_italian_central_mediterranean.tavern": {
+    "byteSize": 6740952,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/d3f232386fbd001bc5052b8f867156978ca8285f11fc104826b178f6cbd5b0ed.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d3f232386fbd001bc5052b8f867156978ca8285f11fc104826b178f6cbd5b0ed.mp3",
+    "sha256": "d3f232386fbd001bc5052b8f867156978ca8285f11fc104826b178f6cbd5b0ed",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 222.168,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_japanese.city": {
+    "byteSize": 8425488,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/5dbc73f376c25f13d1f776b9864d203a6b0dc258b89799bc3028c6f12a8147ad.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/5dbc73f376c25f13d1f776b9864d203a6b0dc258b89799bc3028c6f12a8147ad.mp3",
+    "sha256": "5dbc73f376c25f13d1f776b9864d203a6b0dc258b89799bc3028c6f12a8147ad",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 288.048,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.5,
+      "peakVolumeDb": -0.3
+    }
+  },
+  "soundtrack.culture_homo_sapien_japanese.tavern": {
+    "byteSize": 7106160,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/332bab8020332a73ed90eceef7c1ea73808fd2be991b0eafda6fb2f31bc716b8.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/332bab8020332a73ed90eceef7c1ea73808fd2be991b0eafda6fb2f31bc716b8.mp3",
+    "sha256": "332bab8020332a73ed90eceef7c1ea73808fd2be991b0eafda6fb2f31bc716b8",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 229.32,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_korean.city": {
+    "byteSize": 4835472,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/696a7cf611bbf087de0c0fb0fbd2a416794ca11ba078f155277eb8471b1cd732.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/696a7cf611bbf087de0c0fb0fbd2a416794ca11ba078f155277eb8471b1cd732.mp3",
+    "sha256": "696a7cf611bbf087de0c0fb0fbd2a416794ca11ba078f155277eb8471b1cd732",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 160.008,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_korean.tavern": {
+    "byteSize": 6177648,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/3a5da50b9464e1f6910c04de715a751080e3f5c88be661854613ce9605fc1e4a.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3a5da50b9464e1f6910c04de715a751080e3f5c88be661854613ce9605fc1e4a.mp3",
+    "sha256": "3a5da50b9464e1f6910c04de715a751080e3f5c88be661854613ce9605fc1e4a",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 207.72,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_maasai_nilotic_east_africa.city": {
+    "byteSize": 5496624,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/b93e99dc955f63dafd1f7271a0f7952b6e1b502c8bb5add4ff7f2e4ddaf06bf8.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/b93e99dc955f63dafd1f7271a0f7952b6e1b502c8bb5add4ff7f2e4ddaf06bf8.mp3",
+    "sha256": "b93e99dc955f63dafd1f7271a0f7952b6e1b502c8bb5add4ff7f2e4ddaf06bf8",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 184.968,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.6,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_maasai_nilotic_east_africa.tavern": {
+    "byteSize": 6463680,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/ff50e2724b183fbad26db3c938eb98c957fec7cd08f32008bfd574dcfdc5248c.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ff50e2724b183fbad26db3c938eb98c957fec7cd08f32008bfd574dcfdc5248c.mp3",
+    "sha256": "ff50e2724b183fbad26db3c938eb98c957fec7cd08f32008bfd574dcfdc5248c",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 207.36,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_maritime_austronesian_malayic_bornean_timorese.city": {
+    "byteSize": 10401888,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/95eb3719fdbe9eed581bd71b685333487ccce7a06df1159754dde09068b740f1.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/95eb3719fdbe9eed581bd71b685333487ccce7a06df1159754dde09068b740f1.mp3",
+    "sha256": "95eb3719fdbe9eed581bd71b685333487ccce7a06df1159754dde09068b740f1",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 357.768,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.9,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_maritime_austronesian_malayic_bornean_timorese.tavern": {
+    "byteSize": 7520880,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/6bd3460d83565afee5f0399f60c4cdde0f15f8ed7bfcc18a2ff24e28cbd7ae1e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/6bd3460d83565afee5f0399f60c4cdde0f15f8ed7bfcc18a2ff24e28cbd7ae1e.mp3",
+    "sha256": "6bd3460d83565afee5f0399f60c4cdde0f15f8ed7bfcc18a2ff24e28cbd7ae1e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 253.656,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_maya_cultural_continuum.city": {
+    "byteSize": 8064024,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/74b59104fd86c2e830237c5887480ed406f5b71d9546ff0b3de3cfecbe0fccea.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/74b59104fd86c2e830237c5887480ed406f5b71d9546ff0b3de3cfecbe0fccea.mp3",
+    "sha256": "74b59104fd86c2e830237c5887480ed406f5b71d9546ff0b3de3cfecbe0fccea",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 268.896,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_maya_cultural_continuum.tavern": {
+    "byteSize": 11235456,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/02159977ea9cd2bc9ba967f5df35d83ec64a72992fca13cb91e2fdbdb452a76b.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/02159977ea9cd2bc9ba967f5df35d83ec64a72992fca13cb91e2fdbdb452a76b.mp3",
+    "sha256": "02159977ea9cd2bc9ba967f5df35d83ec64a72992fca13cb91e2fdbdb452a76b",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 359.64,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_mesopotamian_sumerian_babylonian.city": {
+    "byteSize": 6959184,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/c0eadd481bcee402212b81554dd55604c9d4b9b866fcdd4abc2f622c9b193f69.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c0eadd481bcee402212b81554dd55604c9d4b9b866fcdd4abc2f622c9b193f69.mp3",
+    "sha256": "c0eadd481bcee402212b81554dd55604c9d4b9b866fcdd4abc2f622c9b193f69",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 234.648,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.8,
+      "peakVolumeDb": -0.3
+    }
+  },
+  "soundtrack.culture_homo_sapien_mesopotamian_sumerian_babylonian.tavern": {
+    "byteSize": 6729024,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/e56b46e2204274c933b84e4dcd0b6ea44dd8675cea45f0385b3fae8267659ff0.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/e56b46e2204274c933b84e4dcd0b6ea44dd8675cea45f0385b3fae8267659ff0.mp3",
+    "sha256": "e56b46e2204274c933b84e4dcd0b6ea44dd8675cea45f0385b3fae8267659ff0",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 237.576,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.5,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_metis.city": {
+    "byteSize": 6760896,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/4b74ad83705716e588a5cd5e15b9afb015bef75929f02ecafd5bf66ea19d079e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4b74ad83705716e588a5cd5e15b9afb015bef75929f02ecafd5bf66ea19d079e.mp3",
+    "sha256": "4b74ad83705716e588a5cd5e15b9afb015bef75929f02ecafd5bf66ea19d079e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 223.32,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.6,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_metis.tavern": {
+    "byteSize": 7384800,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/62233ee35b7c6f5a1712b3e06a8ce58c0c7427be10587b0e5c85b7b7325e3fb3.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/62233ee35b7c6f5a1712b3e06a8ce58c0c7427be10587b0e5c85b7b7325e3fb3.mp3",
+    "sha256": "62233ee35b7c6f5a1712b3e06a8ce58c0c7427be10587b0e5c85b7b7325e3fb3",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 245.4,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.5,
+      "peakVolumeDb": -0.5
+    }
+  },
+  "soundtrack.culture_homo_sapien_mississippian_eastern_woodlands.city": {
+    "byteSize": 10305696,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e.mp3",
+    "sha256": "692ec0157591b8e9a1ea56febd5fe67f0ee42ddc2839a122d683afde563be68e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 368.88,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_mississippian_eastern_woodlands.tavern": {
+    "byteSize": 13717632,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245.mp3",
+    "sha256": "dabb695b71105a2c339411fda5af97693a5c11d811d93be4869fdffab3bfe245",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 480,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_mongol.city": {
+    "byteSize": 10013760,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/9d22b22e704f29a494914a3bb7991de17167f6ac9cb2a2f255a5426360025a90.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/9d22b22e704f29a494914a3bb7991de17167f6ac9cb2a2f255a5426360025a90.mp3",
+    "sha256": "9d22b22e704f29a494914a3bb7991de17167f6ac9cb2a2f255a5426360025a90",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 335.04,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_mongol.tavern": {
+    "byteSize": 18346680,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/b3acd9b8bf9a89ccf2a4e29167c64b774f089579da673b37eb9d86755f4f4b11.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/b3acd9b8bf9a89ccf2a4e29167c64b774f089579da673b37eb9d86755f4f4b11.mp3",
+    "sha256": "b3acd9b8bf9a89ccf2a4e29167c64b774f089579da673b37eb9d86755f4f4b11",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 610.08,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.5,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_myanmar_mainland_southeast_asian_highland.city": {
+    "byteSize": 11743512,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/ccc8add2ad24a27282263bbc1b3a2689f4bfef662e46c5a6136c00b0e406272c.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ccc8add2ad24a27282263bbc1b3a2689f4bfef662e46c5a6136c00b0e406272c.mp3",
+    "sha256": "ccc8add2ad24a27282263bbc1b3a2689f4bfef662e46c5a6136c00b0e406272c",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 398.16,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_myanmar_mainland_southeast_asian_highland.tavern": {
+    "byteSize": 11100888,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/aa6b21da73490266c0aec1ca9b11d23dd36ded73b8d890781df47890ffcb9d54.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/aa6b21da73490266c0aec1ca9b11d23dd36ded73b8d890781df47890ffcb9d54.mp3",
+    "sha256": "aa6b21da73490266c0aec1ca9b11d23dd36ded73b8d890781df47890ffcb9d54",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 370.056,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.9,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_olmec.city": {
+    "byteSize": 6187152,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/f1c620332bf6a5aaf1c74b640a191f1d1fc4be6a6ee44a4fb7c540ab71538e1a.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f1c620332bf6a5aaf1c74b640a191f1d1fc4be6a6ee44a4fb7c540ab71538e1a.mp3",
+    "sha256": "f1c620332bf6a5aaf1c74b640a191f1d1fc4be6a6ee44a4fb7c540ab71538e1a",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 226.776,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -13.7,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_olmec.tavern": {
+    "byteSize": 6160560,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/3ec0d57863272c4ce2112c18201183c93b4551b03fecd4ecc80c96fcaed65384.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/3ec0d57863272c4ce2112c18201183c93b4551b03fecd4ecc80c96fcaed65384.mp3",
+    "sha256": "3ec0d57863272c4ce2112c18201183c93b4551b03fecd4ecc80c96fcaed65384",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 206.976,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.2,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_pashtun.city": {
+    "byteSize": 11473344,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/1155d438e73fd5cd9562516331a8b4b6025802925be39b1b5b2ac292a7db1114.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/1155d438e73fd5cd9562516331a8b4b6025802925be39b1b5b2ac292a7db1114.mp3",
+    "sha256": "1155d438e73fd5cd9562516331a8b4b6025802925be39b1b5b2ac292a7db1114",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 382.44,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15,
+      "peakVolumeDb": -0.9
+    }
+  },
+  "soundtrack.culture_homo_sapien_pashtun.tavern": {
+    "byteSize": 7838688,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/ec9a1f8b2fa823c0810f30c73b177dcb2057faba7907153e6ffbb92ad79034dc.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ec9a1f8b2fa823c0810f30c73b177dcb2057faba7907153e6ffbb92ad79034dc.mp3",
+    "sha256": "ec9a1f8b2fa823c0810f30c73b177dcb2057faba7907153e6ffbb92ad79034dc",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 259.968,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_punjabi_sikh.city": {
+    "byteSize": 9038184,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/889baed0f1e9aa268260e376eeb9aae0442217f3a421ebb6e97e924fd9865669.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/889baed0f1e9aa268260e376eeb9aae0442217f3a421ebb6e97e924fd9865669.mp3",
+    "sha256": "889baed0f1e9aa268260e376eeb9aae0442217f3a421ebb6e97e924fd9865669",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 296.928,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.6,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_punjabi_sikh.tavern": {
+    "byteSize": 11192568,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/b924a1b5a06c7626fc21a274eb9595be999aaa50d155d2d23da4ae2d1140b386.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/b924a1b5a06c7626fc21a274eb9595be999aaa50d155d2d23da4ae2d1140b386.mp3",
+    "sha256": "b924a1b5a06c7626fc21a274eb9595be999aaa50d155d2d23da4ae2d1140b386",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 360.6,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_purepecha.city": {
+    "byteSize": 5594304,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/4b4924242c370456d330821350a7b01c0300f03412da682e5036ddd8e054c71c.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4b4924242c370456d330821350a7b01c0300f03412da682e5036ddd8e054c71c.mp3",
+    "sha256": "4b4924242c370456d330821350a7b01c0300f03412da682e5036ddd8e054c71c",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 190.008,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.7,
+      "peakVolumeDb": -0.2
+    }
+  },
+  "soundtrack.culture_homo_sapien_purepecha.tavern": {
+    "byteSize": 7539264,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/1c1fdc1d181e4474a3fb6b3e2e5f2f5320ed672d34c00ab00ea2f25cdc90cd46.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/1c1fdc1d181e4474a3fb6b3e2e5f2f5320ed672d34c00ab00ea2f25cdc90cd46.mp3",
+    "sha256": "1c1fdc1d181e4474a3fb6b3e2e5f2f5320ed672d34c00ab00ea2f25cdc90cd46",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 250.008,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_quechua_inca_continuum.city": {
+    "byteSize": 7219008,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/c55c650f2250b6151a57e0f2b6b7346ede1f082a6eec17709bef44d734cfe0cd.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/c55c650f2250b6151a57e0f2b6b7346ede1f082a6eec17709bef44d734cfe0cd.mp3",
+    "sha256": "c55c650f2250b6151a57e0f2b6b7346ede1f082a6eec17709bef44d734cfe0cd",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 247.536,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.7,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_quechua_inca_continuum.tavern": {
+    "byteSize": 11393112,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/23f63f57e71484454d7467dd2e7a346e37407cebc23bbcf360773dd00a730c5e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/23f63f57e71484454d7467dd2e7a346e37407cebc23bbcf360773dd00a730c5e.mp3",
+    "sha256": "23f63f57e71484454d7467dd2e7a346e37407cebc23bbcf360773dd00a730c5e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 380.04,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_rajasthani.city": {
+    "byteSize": 14603520,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/bdf2cce10410523c9d8b63c3fc0d952808dca0669b00d11fb48b6e0073e98fad.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/bdf2cce10410523c9d8b63c3fc0d952808dca0669b00d11fb48b6e0073e98fad.mp3",
+    "sha256": "bdf2cce10410523c9d8b63c3fc0d952808dca0669b00d11fb48b6e0073e98fad",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 480,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.6,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_rajasthani.tavern": {
+    "byteSize": 14672160,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/aea8456d46dd0d5338405efbdaae50d37b162b96868f02fb51344290fa5a26e3.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/aea8456d46dd0d5338405efbdaae50d37b162b96868f02fb51344290fa5a26e3.mp3",
+    "sha256": "aea8456d46dd0d5338405efbdaae50d37b162b96868f02fb51344290fa5a26e3",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 480,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_south_indian_dravidian.city": {
+    "byteSize": 7992936,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/5062f74dd49c41f6a39739d97d510503e5838dd27ba12d1066f4a359d676fcaa.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/5062f74dd49c41f6a39739d97d510503e5838dd27ba12d1066f4a359d676fcaa.mp3",
+    "sha256": "5062f74dd49c41f6a39739d97d510503e5838dd27ba12d1066f4a359d676fcaa",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 279.576,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.6,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_south_indian_dravidian.tavern": {
+    "byteSize": 9928080,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/88b736d57a6d3ef52c664a08d1f0bb8c4577dd7d57ab2d30356417c3e478ed38.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/88b736d57a6d3ef52c664a08d1f0bb8c4577dd7d57ab2d30356417c3e478ed38.mp3",
+    "sha256": "88b736d57a6d3ef52c664a08d1f0bb8c4577dd7d57ab2d30356417c3e478ed38",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 329.856,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.9,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_south_slavic.city": {
+    "byteSize": 10770720,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/ac86026b1b11cfd2c7538f6686166af31d412e9a889edb444962ca662e56439e.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/ac86026b1b11cfd2c7538f6686166af31d412e9a889edb444962ca662e56439e.mp3",
+    "sha256": "ac86026b1b11cfd2c7538f6686166af31d412e9a889edb444962ca662e56439e",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 376.08,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_south_slavic.tavern": {
+    "byteSize": 8674656,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/d597eb175b63c5c5cbd1f1b944b071fa060dc7908f725e02ab713f6eb03c565b.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/d597eb175b63c5c5cbd1f1b944b071fa060dc7908f725e02ab713f6eb03c565b.mp3",
+    "sha256": "d597eb175b63c5c5cbd1f1b944b071fa060dc7908f725e02ab713f6eb03c565b",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 287.256,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -18.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_tai_thai_lao_lanna.city": {
+    "byteSize": 6001824,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/99c211d17c823d11bd8cd8a578f28e7fc4fffdf1c3e7941f8069a8cc5612d129.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/99c211d17c823d11bd8cd8a578f28e7fc4fffdf1c3e7941f8069a8cc5612d129.mp3",
+    "sha256": "99c211d17c823d11bd8cd8a578f28e7fc4fffdf1c3e7941f8069a8cc5612d129",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 204.288,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.9,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_tai_thai_lao_lanna.tavern": {
+    "byteSize": 4637328,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/870f2e537890df65b8c607761b800b33fa9e0d1d3efc6f27a4fd528233b804f7.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/870f2e537890df65b8c607761b800b33fa9e0d1d3efc6f27a4fd528233b804f7.mp3",
+    "sha256": "870f2e537890df65b8c607761b800b33fa9e0d1d3efc6f27a4fd528233b804f7",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 167.688,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.8,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_tajik_sogdian.city": {
+    "byteSize": 8835048,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/0c13338b8ca8e0f54975fcf8ac536f6509380a13c0dfb3fc9c3276ec25723d91.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/0c13338b8ca8e0f54975fcf8ac536f6509380a13c0dfb3fc9c3276ec25723d91.mp3",
+    "sha256": "0c13338b8ca8e0f54975fcf8ac536f6509380a13c0dfb3fc9c3276ec25723d91",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 302.256,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -17.1,
+      "peakVolumeDb": -0.1
+    }
+  },
+  "soundtrack.culture_homo_sapien_tajik_sogdian.tavern": {
+    "byteSize": 14936928,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/f6c05166103fb53a7ddeeaa5ec354df9080918a77532328ca6c531fe1573a544.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/f6c05166103fb53a7ddeeaa5ec354df9080918a77532328ca6c531fe1573a544.mp3",
+    "sha256": "f6c05166103fb53a7ddeeaa5ec354df9080918a77532328ca6c531fe1573a544",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 480,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.3,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_tibetan.city": {
+    "byteSize": 11092104,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/23124f0af1ca0a68b2419fd5c5a9e07567f5cc1ffa1952435f28b3d47eb8a18a.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/23124f0af1ca0a68b2419fd5c5a9e07567f5cc1ffa1952435f28b3d47eb8a18a.mp3",
+    "sha256": "23124f0af1ca0a68b2419fd5c5a9e07567f5cc1ffa1952435f28b3d47eb8a18a",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 384.888,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -16.4,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_tibetan.tavern": {
+    "byteSize": 10332288,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/2bcb26689b830bd70aa42c2c730fd7818ba2b7e2705652876334434092eb56d6.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/2bcb26689b830bd70aa42c2c730fd7818ba2b7e2705652876334434092eb56d6.mp3",
+    "sha256": "2bcb26689b830bd70aa42c2c730fd7818ba2b7e2705652876334434092eb56d6",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 345.216,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -14.1,
+      "peakVolumeDb": -1.2
+    }
+  },
+  "soundtrack.culture_homo_sapien_uzbek_timurid.city": {
+    "byteSize": 7349280,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/a9011a52584e04736d33b0a46c8aba600fb52d23a94bc4e04d8c32b5ee50e289.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/a9011a52584e04736d33b0a46c8aba600fb52d23a94bc4e04d8c32b5ee50e289.mp3",
+    "sha256": "a9011a52584e04736d33b0a46c8aba600fb52d23a94bc4e04d8c32b5ee50e289",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 240.216,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.1,
+      "peakVolumeDb": 0
+    }
+  },
+  "soundtrack.culture_homo_sapien_uzbek_timurid.tavern": {
+    "byteSize": 7403304,
+    "mimeType": "audio/mpeg",
+    "objectKey": "assets/4705271327748124469fae2583b2e283dc060e4d3edcf127663fd09c01b93df0.mp3",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/4705271327748124469fae2583b2e283dc060e4d3edcf127663fd09c01b93df0.mp3",
+    "sha256": "4705271327748124469fae2583b2e283dc060e4d3edcf127663fd09c01b93df0",
+    "technicalMetadata": {
+      "kind": "audio",
+      "durationSeconds": 239.496,
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "tags": {}
+        }
+      ],
+      "meanVolumeDb": -15.4,
+      "peakVolumeDb": 0
+    }
   }
 }

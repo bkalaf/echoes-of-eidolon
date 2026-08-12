@@ -2031,11 +2031,12 @@ model Soundtrack {
   displayName      String
   sourceFilename   String
   cultureSourceKey String?
-  managedAssetId   String                           @unique
+  managedAssetId   String
   managedAsset     ManagedAsset                     @relation(fields: [managedAssetId], references: [managedAssetId], onDelete: Restrict)
   assignments      SettlementSoundtrackAssignment[]
 
   @@index([cultureSourceKey])
+  @@index([managedAssetId])
 }
 
 model SettlementSoundtrackAssignment {
@@ -2475,7 +2476,7 @@ model ManagedAsset {
   generatedFromPrompts PromptVersion[]         @relation("PromptGeneratedAsset")
   achievementImages    AchievementDefinition[] @relation("AchievementImageAsset")
   storeProductArtwork  StoreProduct[]          @relation("StoreProductArtwork")
-  soundtrack           Soundtrack?
+  soundtracks          Soundtrack[]
 }
 
 model AssetPurposeLink {

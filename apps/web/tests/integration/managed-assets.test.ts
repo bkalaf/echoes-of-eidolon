@@ -29,9 +29,11 @@ describe("managed asset manifest", () => {
     }
   });
 
-  it("keeps the six login soundtracks distinct from feature, video, and Atlas media", () => {
+  it("tracks the complete 80-file soundtrack source set plus the six stable login aliases", () => {
     const soundtrackKeys = Object.keys(manifest).filter((key) => key.startsWith("soundtrack."));
-    expect(soundtrackKeys).toHaveLength(6);
+    const importedKeys = soundtrackKeys.filter((key) => key.startsWith("soundtrack.culture_"));
+    expect(importedKeys).toHaveLength(80);
+    expect(soundtrackKeys).toHaveLength(86);
     expect(soundtrackKeys.every((key) => manifest[key]?.mimeType === "audio/mpeg")).toBe(true);
   });
 });
