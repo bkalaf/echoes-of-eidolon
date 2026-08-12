@@ -69,15 +69,23 @@ test("homepage remains vertically stationary while the carousel advances", async
       const footer = document.querySelector<HTMLElement>(".public-footer");
       const hero = document.querySelector<HTMLElement>(".hero");
       const carousel = document.querySelector<HTMLElement>(".feature-carousel");
-      const freeBand = document.querySelector<HTMLElement>(".free-band");
-      if (!main || !footer || !hero || !carousel || !freeBand) throw new Error("Homepage layout is incomplete.");
+      const cta = document.querySelector<HTMLElement>(".hero-free-cta");
+      const heroCopy = document.querySelector<HTMLElement>(".hero-copy");
+      if (!main || !footer || !hero || !carousel || !cta || !heroCopy) throw new Error("Homepage layout is incomplete.");
+      const ctaRect = cta.getBoundingClientRect();
+      const heroCopyRect = heroCopy.getBoundingClientRect();
+      const heroRect = hero.getBoundingClientRect();
       return {
         activeFeature: document.querySelector(".feature-card.active")?.getAttribute("href"),
         carouselLeft: carousel.scrollLeft,
         footerBottom: footer.getBoundingClientRect().bottom,
+        ctaBottomGap: heroRect.bottom - ctaRect.bottom,
+        ctaInsideHero: ctaRect.left >= heroRect.left && ctaRect.right <= heroRect.right && ctaRect.top >= heroRect.top && ctaRect.bottom <= heroRect.bottom,
+        ctaIsLowerRight: ctaRect.left > heroRect.left + heroRect.width / 2 && ctaRect.top > heroRect.top + heroRect.height / 2,
+        ctaOverlapsHeroCopy: !(ctaRect.right <= heroCopyRect.left || ctaRect.left >= heroCopyRect.right || ctaRect.bottom <= heroCopyRect.top || ctaRect.top >= heroCopyRect.bottom),
         footerTop: footer.getBoundingClientRect().top,
-        freeBandBottom: freeBand.getBoundingClientRect().bottom,
-        heroTop: hero.getBoundingClientRect().top,
+        heroHeight: heroRect.height,
+        heroTop: heroRect.top,
         mainClientHeight: main.clientHeight,
         mainOverflowY: getComputedStyle(main).overflowY,
         mainScrollHeight: main.scrollHeight,
@@ -92,21 +100,29 @@ test("homepage remains vertically stationary while the carousel advances", async
     expect(initial.mainOverflowY).toBe("hidden");
     expect(initial.mainScrollHeight).toBe(initial.mainClientHeight);
     expect(initial.footerBottom).toBeLessThanOrEqual(viewport.height);
-    expect(initial.freeBandBottom).toBeLessThanOrEqual(initial.footerTop);
+    expect(initial.ctaInsideHero).toBe(true);
+    expect(initial.ctaIsLowerRight).toBe(true);
+    expect(initial.ctaOverlapsHeroCopy).toBe(false);
+    expect(initial.ctaBottomGap).toBeGreaterThanOrEqual(10);
+    expect(initial.heroHeight).toBeGreaterThan(viewport.width === 1_600 ? 540 : 720);
+    await expect(page.locator(".home-screen > .free-band")).toHaveCount(0);
 
+    const carouselPositions = [initial.carouselLeft];
     for (let tick = 0; tick < 4; tick += 1) {
       await page.waitForTimeout(3_100);
       const current = await readLayout();
+      carouselPositions.push(current.carouselLeft);
       expect(current.windowY).toBe(initial.windowY);
       expect(current.mainY).toBe(initial.mainY);
       expect(current.heroTop).toBe(initial.heroTop);
+      expect(current.heroHeight).toBe(initial.heroHeight);
       expect(current.footerBottom).toBeLessThanOrEqual(viewport.height);
-      expect(current.freeBandBottom).toBeLessThanOrEqual(current.footerTop);
+      expect(current.ctaInsideHero).toBe(true);
     }
 
     const after = await readLayout();
     expect(after.activeFeature).not.toBe(initial.activeFeature);
-    expect(after.carouselLeft).not.toBe(initial.carouselLeft);
+    expect(new Set(carouselPositions).size).toBeGreaterThan(1);
   }
 });
 

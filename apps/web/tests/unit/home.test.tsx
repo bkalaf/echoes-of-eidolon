@@ -25,6 +25,8 @@ describe("public home", () => {
     expect(container.querySelector(".hero > img")).toHaveAttribute("src", managedAssetUrl("feature.unique-and-powerful-story"));
     expect(screen.getAllByRole("listitem")).toHaveLength(9);
     expect(screen.getByText("A subscription will never be required.")).toBeVisible();
+    expect(container.querySelector(".hero > .hero-free-cta")).toBeInTheDocument();
+    expect(container.querySelector(".home-screen > .free-band")).not.toBeInTheDocument();
     expect(screen.getAllByAltText("Echoes of Eidolon")).toHaveLength(1);
     expect(within(screen.getByRole("contentinfo")).queryByRole("link", { name: "Status" })).not.toBeInTheDocument();
   });

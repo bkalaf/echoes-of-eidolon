@@ -73,12 +73,15 @@ button, input, select, textarea { font: inherit; }
 .hero-copy h1 em { color: var(--gold); font-style: normal; }
 .hero-copy > p:last-child { max-width: 470px; color: #c3d1db; font-size: 13px; line-height: 1.45; }
 
-.home-screen { width: 100%; height: 100%; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; overflow: hidden; }
+.home-screen { width: 100%; height: 100%; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
 .home-screen > .hero { height: 100%; min-height: 0; }
 .home-screen > .feature-band { min-width: 0; min-height: 0; padding: 10px 38px 2px; }
 .home-screen .carousel-head { margin-bottom: 5px; }
 .home-screen .feature-card { min-height: 138px; padding: 12px; }
-.home-screen > .free-band { margin: 8px 38px 10px; padding: 9px 12px; gap: 12px; }
+.hero-free-cta { width: min(440px, calc(100% - 36px)); min-height: 72px; position: absolute; z-index: 2; right: clamp(18px, 3.8vw, 60px); bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px; background: rgb(3 21 34 / 88%); box-shadow: 0 8px 24px rgb(0 0 0 / 28%); }
+.hero-free-cta h2 { margin: 0; color: #f2cc6b; font: 500 16px Georgia, serif; }
+.hero-free-cta p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+.hero-free-cta .button { flex: none; }
 
 .feature-band { padding: 14px 38px 4px; }
 .carousel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -113,9 +116,6 @@ button, input, select, textarea { font: inherit; }
 .region-crest--red { color: var(--bad); }
 .feature-card strong { display: block; color: #efc359; font: 500 14px Georgia, serif; margin: 3px 0 7px; }
 .feature-card small { color: #b8c8d4; line-height: 1.32; font-size: 11px; }
-.free-band { margin: 12px 38px 28px; border: 1px solid var(--line); border-radius: 8px; padding: 13px; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #061b2a; }
-.free-band h2 { font: 500 17px Georgia, serif; margin: 0; color: #f2cc6b; }
-.free-band p { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
 .public-footer { min-height: 52px; border-top: 1px solid var(--line); display: flex; align-items: center; padding: 0 22px; background: #010812; color: #a8c3d4; font-size: 12px; }
 .public-footer nav { display: flex; gap: 18px; }
 .public-footer > span { margin-left: auto; color: #9bb6c8; }
@@ -586,9 +586,10 @@ html[data-high-contrast="true"] {
   .public-header nav a { flex: 0 0 auto; white-space: nowrap; }
   .auth-actions { margin-left: auto; }
   .hero-copy { top: 54px; }
-  .home-screen { grid-template-rows: auto auto auto; align-content: start; }
+  .home-screen { grid-template-rows: auto auto; align-content: start; }
   .home-screen > .hero { height: min(42vw, 315px); }
-  .feature-band, .free-band { margin-left: 18px; margin-right: 18px; }
+  .hero-free-cta { right: 18px; bottom: 14px; }
+  .feature-band { margin-left: 18px; margin-right: 18px; }
   .feature-band { padding-left: 0; padding-right: 0; }
   .features-overview, .feature-detail, .gameplay-layout, .contact-layout, .checkout-layout, .product-detail, .split, .campaign-grouping-editor { grid-template-columns: 1fr; }
   .feature-grid, .product-grid, .legal-grid, .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -614,8 +615,10 @@ html[data-high-contrast="true"] {
 @media (max-width: 600px) {
   .public-header nav { gap: 16px; }
   .hero-copy h1 { font-size: 40px; }
-  .free-band { align-items: flex-start; flex-direction: column; }
-  .home-screen > .free-band { align-items: center; flex-direction: row; }
+  .hero-free-cta { width: 205px; min-height: 0; right: 10px; bottom: 50px; display: grid; gap: 3px; padding: 5px; }
+  .hero-free-cta h2 { font-size: 10px; }
+  .hero-free-cta p { margin-top: 0; font-size: 8px; }
+  .hero-free-cta .button { padding: 4px 6px; font-size: 9px; }
   .workspace-shell { grid-template: auto auto minmax(0, 1fr) auto / 1fr; }
   .workspace-sidebar { border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; overflow-x: auto; }
   .game-bottom-bar { overflow-x: auto; white-space: nowrap; }

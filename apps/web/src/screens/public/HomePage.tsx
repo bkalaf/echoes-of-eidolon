@@ -100,6 +100,15 @@ export function HomePage() {
               For a thousand years the beacons were silent. Now a distant signal answers the sky.
             </p>
           </div>
+          <div className="hero-free-cta">
+            <div>
+              <h2>Free to Play. Open to Everyone.</h2>
+              <p>A subscription will never be required.</p>
+            </div>
+            <a className="button button--gold" href="/auth/sign-up">
+              Create your account
+            </a>
+          </div>
         </section>
 
         <section className="feature-band" aria-label="Features">
@@ -130,15 +139,6 @@ export function HomePage() {
           </div>
         </section>
 
-        <section className="free-band">
-          <div>
-            <h2>Free to Play. Open to Everyone.</h2>
-            <p>A subscription will never be required.</p>
-          </div>
-          <a className="button button--gold" href="/auth/sign-up">
-            Create your account
-          </a>
-        </section>
       </div>
     </PublicShell>
   );
