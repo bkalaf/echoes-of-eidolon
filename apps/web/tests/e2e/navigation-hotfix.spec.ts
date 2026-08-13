@@ -70,7 +70,7 @@ async function createSignedInPrincipal(page: Page, role: "user" | "member" | "ad
   await expect(page.getByLabel("Password")).toHaveValue(account.password);
   await page.getByRole("button", { name: "Sign In", exact: true }).click();
   await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(200);
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.locator("html[data-hydrated=true]").waitFor();
   return { ...account, userId: user.id };
 }
@@ -87,6 +87,13 @@ async function deletePrincipal(input: { email: string; userId: string }) {
 async function expectHome(page: Page) {
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole("heading", { name: /when the moons align/i })).toBeVisible();
+}
+
+async function signOut(page: Page) {
+  await page.getByRole("link", { name: "Sign Out" }).click();
+  await page.locator("html[data-hydrated=true]").waitFor();
+  await page.getByRole("button", { name: "Sign Out", exact: true }).click();
+  await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
 }
 
 test.describe("P0 role-aware navigation", () => {
@@ -168,9 +175,7 @@ test.describe("P0 role-aware navigation", () => {
         }
 
         if (fixture.role === "owner" && fixture.betaEligible) {
-          await page.getByRole("link", { name: "Sign Out" }).click();
-          await page.getByRole("button", { name: "Sign Out", exact: true }).click();
-          await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
+          await signOut(page);
           await page.getByRole("link", { name: "Echoes of Eidolon home" }).click();
           await expectHome(page);
           await expect(page.getByRole("link", { name: "Sign In" })).toBeVisible();
