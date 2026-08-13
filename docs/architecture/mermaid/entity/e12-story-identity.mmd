@@ -3,10 +3,7 @@ erDiagram
   Character {
     string id PK
   }
-  Protagonist {
-    string id PK
-  }
-  Antagonist {
+  WitnessDef {
     string id PK
   }
   Witness {
@@ -21,9 +18,8 @@ erDiagram
   PuzzleBlueprint {
     string id PK
   }
-  Character ||--o| Protagonist : "relates to"
-  Character ||--o| Antagonist : "relates to"
-  Architect ||--o{ Antagonist : "relates to"
-  Antagonist ||--|| LegendaryReward : "relates to"
-  Antagonist ||--|| PuzzleBlueprint : "relates to"
-  Antagonist ||--o{ Witness : "relates to"
+  Character ||--o| Architect : "relates to"
+  Character ||--o| Witness : "relates to"
+  Architect ||--o{ Witness : "relates to"
+  WitnessDef ||--o{ Witness : "relates to"
+  Witness ||--|| LegendaryReward : "relates to"

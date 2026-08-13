@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { PrismaClient } from "../../src/generated/prisma/client";
 import { defaultDisjointTrilogy } from "../../src/domain/campaign-planner";
-import { saveDisjointTrilogy, saveLinkedCampaignPlacements } from "../../src/server/campaigns";
+import { createCampaignCatalogItem, saveDisjointTrilogy, saveLinkedCampaignPlacements } from "../../src/server/campaigns";
 
 const linkedPlacements = [
   { bookNumbers: [1, 18], name: "CONCORD Campaign", objectId: "A", objectType: "COMPANION" as const, worldKey: "CONCORD" as const },
@@ -21,7 +21,7 @@ function linkedDatabase(options: { missingDeja?: boolean } = {}) {
         findUnique: vi.fn().mockResolvedValue(null),
         upsert: vi.fn(async (input) => { staged.push(input); return input; }),
       },
-      companion: { findUnique: vi.fn().mockResolvedValue({ companionKey: "A" }) },
+      companionDef: { findUnique: vi.fn().mockResolvedValue({ companionKey: "A" }) },
       interlude: { findFirst: vi.fn().mockResolvedValue(options.missingDeja ? null : { interludeId: "deja-1" }) },
       transition: { findUnique: vi.fn().mockResolvedValue({ transitionId: "transition-1" }) },
     };
@@ -33,6 +33,45 @@ function linkedDatabase(options: { missingDeja?: boolean } = {}) {
 }
 
 describe("campaign transaction service", () => {
+  it("creates only the minimal canonical LegendaryReward record", async () => {
+    const create = vi.fn(async ({ data }) => data);
+    const transaction = { legendaryReward: { create } };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+
+    await expect(createCampaignCatalogItem({
+      objectType: "LEGENDARY_REWARD",
+      payload: { objectId: "LR-1", name: "The Lantern", description: "A canonical reward." },
+    }, database)).resolves.toEqual({ legendaryRewardId: "LR-1", name: "The Lantern", description: "A canonical reward." });
+    expect(create).toHaveBeenCalledWith({ data: { legendaryRewardId: "LR-1", name: "The Lantern", description: "A canonical reward." } });
+  });
+
+  it("creates Architect through Character and rejects unresolved profession authoring", async () => {
+    const create = vi.fn(async ({ data }) => data);
+    const transaction = { character: { create } };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+    const canonical = {
+      objectType: "ARCHITECT" as const,
+      payload: {
+        architectId: "ARCH-1",
+        character: { characterId: "CHAR-1", displayName: "Ada", breedId: "BREED-1", worldKey: null },
+        department: "COMPUTING",
+      },
+    };
+
+    await createCampaignCatalogItem(canonical, database);
+    expect(create).toHaveBeenCalledWith({
+      data: {
+        ...canonical.payload.character,
+        architect: { create: { architectId: "ARCH-1", department: "COMPUTING" } },
+      },
+      include: { architect: true },
+    });
+    await expect(createCampaignCatalogItem({
+      ...canonical,
+      payload: { ...canonical.payload, profession: "Navigator" },
+    }, database)).rejects.toThrow(/unrecognized key/i);
+  });
+
   it("commits one complete linked group as one serializable transaction", async () => {
     const { committed, database, transaction } = linkedDatabase();
     await saveLinkedCampaignPlacements({ placements: linkedPlacements }, database);

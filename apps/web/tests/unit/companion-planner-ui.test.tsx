@@ -4,32 +4,37 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { CompanionPlannerAttributesPage } from "../../src/screens/admin/AdminV4Pages";
 
-const protagonist = (worldKey: string, faction: string, primaryAttribute: string, secondaryAttribute: string, companionKey = "A") => ({
+const character = (worldKey: string, faction: string, primaryAttribute: string, secondaryAttribute: string, companionKey = "A") => ({
   age: 28,
-  awarenessSkill: null,
-  character: { breedId: `BREED_${worldKey}_${companionKey}`, displayName: `${worldKey} Hero ${companionKey}` },
+  breedId: `BREED_${worldKey}_${companionKey}`,
+  displayName: `${worldKey} Hero ${companionKey}`,
   faction,
   gender: "Woman",
-  knowledgeSkill: null,
   occupationId: "SCHOLAR",
   primaryAttribute,
   secondaryAttribute,
-  worldHeirloom: "NECKLACE",
+  worldKey,
 });
 
 const planner = {
   companions: [{
     companionKey: "A",
-    concordProtagonist: protagonist("CONCORD", "CONCORD", "INTELLIGENCE", "INTELLIGENCE"),
-    ruinProtagonist: protagonist("RUIN", "RUIN", "WISDOM", "INTELLIGENCE"),
-    schismProtagonist: protagonist("SCHISM", "SCHISM", "INTELLIGENCE", "WISDOM"),
+    awarenessSkill: "EMPATHY",
+    concordCharacter: character("CONCORD", "CONCORD", "INTELLIGENCE", "INTELLIGENCE"),
+    heirloom: "NECKLACE",
+    knowledgeSkill: "LORE",
+    ruinCharacter: character("RUIN", "RUIN", "WISDOM", "INTELLIGENCE"),
+    schismCharacter: character("SCHISM", "SCHISM", "INTELLIGENCE", "WISDOM"),
     soul: { name: "Aster" },
     transformationBinding: null,
   }, {
     companionKey: "B",
-    concordProtagonist: protagonist("CONCORD", "CONCORD", "CHARISMA", "CHARISMA", "B"),
-    ruinProtagonist: protagonist("RUIN", "RUIN", "CHARISMA", "WISDOM", "B"),
-    schismProtagonist: protagonist("SCHISM", "SCHISM", "WISDOM", "CHARISMA", "B"),
+    awarenessSkill: "PERCEPTION",
+    concordCharacter: character("CONCORD", "CONCORD", "CHARISMA", "CHARISMA", "B"),
+    heirloom: "RING",
+    knowledgeSkill: "HISTORY",
+    ruinCharacter: character("RUIN", "RUIN", "CHARISMA", "WISDOM", "B"),
+    schismCharacter: character("SCHISM", "SCHISM", "WISDOM", "CHARISMA", "B"),
     soul: { name: "Bran" },
     transformationBinding: null,
   }],

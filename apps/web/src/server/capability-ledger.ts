@@ -13,7 +13,6 @@ import {
   capabilityStateKey,
   projectCapabilityEvents,
   projectFactionStanding,
-  projectRewardEvidenceScore,
   resolveCapability,
   validateCapabilityDefinitionVersion,
   type CapabilityDefinitionVersionContract,
@@ -22,9 +21,8 @@ import {
   type CapabilityValue,
   type FactionScoringPolicyContract,
   type ResolvedCapabilityAddress,
-  type RewardScoringPolicyContract,
 } from "../domain/capabilities";
-import type { FactionStandingEvidenceKind, RewardEvidenceKind } from "../generated/prisma/enums";
+import type { FactionStandingEvidenceKind } from "../generated/prisma/enums";
 import { getDatabase } from "./database";
 
 type Transaction = Prisma.TransactionClient;
@@ -299,107 +297,6 @@ export async function appendCapabilityEvent(
   );
 }
 
-export interface RewardEvidenceMutationInput {
-  scopeType: CapabilityScopeType;
-  scopeId: string;
-  legendaryRewardId: string;
-  rewardCandidateId: string;
-  kind: RewardEvidenceKind;
-  evidenceId: string;
-  scoringPolicyVersion: number;
-  scoreCapability: Omit<CapabilityMutationInput, "scopeType" | "scopeId" | "operation" | "value" | "idempotencyKey" | "occurredAt">;
-  sourceEntityType?: EntityType;
-  sourceEntityId?: string;
-  occurredAt: Date;
-}
-
-export async function appendRewardEvidence(
-  input: RewardEvidenceMutationInput,
-  database: PrismaClient = getDatabase(),
-  entityResolver?: CapabilityEntityResolver,
-) {
-  return database.$transaction(async (transaction) => {
-    const candidate = await transaction.rewardCandidate.findUniqueOrThrow({
-      where: { rewardCandidateId: input.rewardCandidateId },
-    });
-    if (candidate.legendaryRewardId !== input.legendaryRewardId) {
-      throw new Error("Reward evidence candidate belongs to another LegendaryReward.");
-    }
-    const duplicate = await transaction.rewardEvidenceEvent.findUnique({
-      where: {
-        scopeType_scopeId_rewardCandidateId_evidenceId: {
-          scopeType: input.scopeType,
-          scopeId: input.scopeId,
-          rewardCandidateId: input.rewardCandidateId,
-          evidenceId: input.evidenceId,
-        },
-      },
-    });
-    if (duplicate) return { duplicate: true as const, evidence: duplicate };
-
-    const evidence = await transaction.rewardEvidenceEvent.create({
-      data: {
-        rewardEvidenceEventId: randomUUID(),
-        scopeType: input.scopeType,
-        scopeId: input.scopeId,
-        legendaryRewardId: input.legendaryRewardId,
-        rewardCandidateId: input.rewardCandidateId,
-        kind: input.kind,
-        evidenceId: input.evidenceId,
-        scoringPolicyVersion: input.scoringPolicyVersion,
-        sourceEntityType: input.sourceEntityType ?? null,
-        sourceEntityId: input.sourceEntityId ?? null,
-        occurredAt: input.occurredAt,
-      },
-    });
-    const ledger = await transaction.rewardEvidenceEvent.findMany({
-      where: {
-        scopeType: input.scopeType,
-        scopeId: input.scopeId,
-        rewardCandidateId: input.rewardCandidateId,
-      },
-      orderBy: [{ recordedAt: "asc" }, { rewardEvidenceEventId: "asc" }],
-    });
-    const policyVersions = [...new Set(ledger.map((row) => row.scoringPolicyVersion))];
-    const persistedPolicies = await transaction.rewardScoringPolicy.findMany({
-      where: { version: { in: policyVersions } },
-      include: { weights: true },
-    });
-    const policies = new Map<number, RewardScoringPolicyContract>(persistedPolicies.map((policy) => [policy.version, {
-      version: policy.version,
-      minimumScore: policy.minimumScore,
-      maximumScore: policy.maximumScore,
-      weights: Object.fromEntries(policy.weights.map((weight) => [weight.kind, weight.weight])) as Record<RewardEvidenceKind, number>,
-    }]));
-    const targetScore = projectRewardEvidenceScore(
-      ledger.map((row) => ({
-        rewardEvidenceEventId: row.rewardEvidenceEventId,
-        scope: { scopeType: row.scopeType, scopeId: row.scopeId },
-        rewardId: row.legendaryRewardId,
-        candidateId: row.rewardCandidateId,
-        kind: row.kind,
-        evidenceId: row.evidenceId,
-        scoringPolicyVersion: row.scoringPolicyVersion,
-        recordedAt: row.recordedAt,
-      })),
-      policies,
-      { rewardCandidateId: candidate.rewardCandidateId, rewardId: candidate.legendaryRewardId, scoreCeiling: candidate.scoreCeiling },
-    );
-    const capability = await appendCapabilityEventInTransaction({
-      ...input.scoreCapability,
-      scopeType: input.scopeType,
-      scopeId: input.scopeId,
-      operation: "SET",
-      value: targetScore,
-      idempotencyKey: `reward-evidence:${input.rewardCandidateId}:${input.evidenceId}`,
-      sourceEntityType: input.sourceEntityType,
-      sourceEntityId: input.sourceEntityId,
-      occurredAt: input.occurredAt,
-    }, transaction, entityResolver);
-    return { duplicate: false as const, evidence, capability };
-  }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
-}
-
 export interface FactionEvidenceMutationInput {
   scopeType: CapabilityScopeType;
   scopeId: string;
@@ -622,54 +519,8 @@ export async function listCapabilityDefinitions(database: PrismaClient = getData
 }
 
 export async function listCapabilityScoringPolicies(database: PrismaClient = getDatabase()) {
-  const [rewardPolicies, factionPolicies, candidates] = await Promise.all([
-    database.rewardScoringPolicy.findMany({ include: { weights: { orderBy: { kind: "asc" } } }, orderBy: { version: "desc" } }),
-    database.factionStandingScoringPolicy.findMany({ include: { weights: { orderBy: { kind: "asc" } } }, orderBy: { version: "desc" } }),
-    database.rewardCandidate.findMany({ orderBy: [{ legendaryRewardId: "asc" }, { candidateKey: "asc" }] }),
-  ]);
-  return { rewardPolicies, factionPolicies, candidates };
-}
-
-export async function createRewardScoringPolicyVersion(input: {
-  minimumScore: number;
-  maximumScore: number;
-  weights: Record<RewardEvidenceKind, number>;
-}, database: PrismaClient = getDatabase()) {
-  if (!Number.isFinite(input.minimumScore) || !Number.isFinite(input.maximumScore)
-    || input.minimumScore > input.maximumScore) {
-    throw new Error("Reward scoring policy requires finite ordered bounds.");
-  }
-  const kinds: RewardEvidenceKind[] = ["RUMOR", "EVIDENCE", "PROOF", "DOUBT", "CONTRADICTION", "REFUTATION"];
-  for (const kind of kinds) {
-    if (!Number.isFinite(input.weights[kind])) throw new Error(`Reward scoring policy requires a finite ${kind} weight.`);
-  }
-  return database.$transaction(async (transaction) => {
-    const latest = await transaction.rewardScoringPolicy.findFirst({ orderBy: { version: "desc" } });
-    const version = (latest?.version ?? 0) + 1;
-    return transaction.rewardScoringPolicy.create({
-      data: {
-        rewardScoringPolicyId: `REWARD-POLICY-V${version}`,
-        version,
-        status: "DRAFT",
-        minimumScore: input.minimumScore,
-        maximumScore: input.maximumScore,
-        weights: { create: kinds.map((kind) => ({ kind, weight: input.weights[kind] })) },
-      },
-      include: { weights: { orderBy: { kind: "asc" } } },
-    });
-  }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
-}
-
-export async function activateRewardScoringPolicyVersion(
-  rewardScoringPolicyId: string,
-  database: PrismaClient = getDatabase(),
-) {
-  return database.$transaction(async (transaction) => {
-    const selected = await transaction.rewardScoringPolicy.findUniqueOrThrow({ where: { rewardScoringPolicyId } });
-    if (selected.status !== "DRAFT") throw new Error("Only a draft reward scoring policy can be activated.");
-    await transaction.rewardScoringPolicy.updateMany({ where: { status: "ACTIVE" }, data: { status: "RETIRED" } });
-    return transaction.rewardScoringPolicy.update({ where: { rewardScoringPolicyId }, data: { status: "ACTIVE" } });
-  }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
+  const factionPolicies = await database.factionStandingScoringPolicy.findMany({ include: { weights: { orderBy: { kind: "asc" } } }, orderBy: { version: "desc" } });
+  return { factionPolicies };
 }
 
 export async function compareCapabilityProjection(database: PrismaClient = getDatabase()) {

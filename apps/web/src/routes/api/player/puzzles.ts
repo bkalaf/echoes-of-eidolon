@@ -5,7 +5,7 @@ import { requirePlayerAccess } from "../../../server/access";
 import { acceptPlayerPuzzleChallenge, getPlayerPuzzleChallenges } from "../../../server/player-puzzles";
 
 export const playerPuzzleAcceptanceSchema = z.object({
-  generatorVersion: z.number().int().min(0),
+  generatorVersion: z.string().regex(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/),
   puzzleBlueprintId: z.string().trim().min(1),
 }).strict();
 

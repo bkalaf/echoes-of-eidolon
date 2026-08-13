@@ -31,7 +31,7 @@ const ownership = [
   [/^(Organization|Member|Invitation)$/, ["Authorization", "domain/organization-access.ts", "Admin access"]],
   [/^Beta/, ["Invitations", "server/beta-invitations.ts", "Public Invite and Admin Invitations"]],
   [/^(Species|Breed|Culture|Character|SpeciesGroup|PersonalityExpression|BreedResearch)/, ["Canonical data", "typed imports and server/breed-research.ts", "Admin Data and Game"]],
-  [/^(Protagonist|Architect|Antagonist|Witness|Soul|Companion|TimelineEvent|Interlude|Pillar|LegendaryReward|Lesson|Tome|Transition|Constellation|Ark|Layette|Definition)/, ["Narrative data", "typed import services", "Admin Data, Campaign, Game"]],
+  [/^(Character|Architect|WitnessDef|Witness|Soul|CompanionDef|Companion|TimelineEvent|Interlude|Pillar|LegendaryReward|Lesson|Tome|Transition|Constellation|Ark|Layette|Definition)/, ["Narrative data", "typed import services", "Admin Data, Campaign, Game"]],
   [/^(PointOfInterest|Site)$/, ["Atlas", "server/atlas.ts and server/atlas-sites.ts", "Atlas Admin and Game maps"]],
   [/^Settlement/, ["Settlement simulation", "server/settlements.ts", "Atlas Admin, Found City, Migrate"]],
   [/^(Source|Citation|Research)$/, ["Evidence", "domain/knowledge-evidence.ts and typed research services", "Admin Data and Game Knowledge"]],

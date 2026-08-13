@@ -1,0 +1,42 @@
+{
+  "artifactVersion": 1,
+  "action": "ACTION_B_INPUT_CONTRACT_ONLY",
+  "importsRows": false,
+  "designSchema": "puzzle-blueprint-design-v1",
+  "fields": {
+    "puzzleBlueprintId": { "destination": "PuzzleBlueprint.puzzleBlueprintId", "status": "PERSISTED_FIRST_CLASS" },
+    "title": { "destination": "PuzzleBlueprint.title", "status": "PERSISTED_FIRST_CLASS" },
+    "primaryFamily": { "destination": "PuzzleBlueprint.primaryFamily", "status": "PERSISTED_FIRST_CLASS" },
+    "difficultyTier": { "destination": "PuzzleBlueprint.difficultyTier", "status": "PERSISTED_FIRST_CLASS" },
+    "generatorVersion": { "destination": "PuzzleBlueprintVersion.generatorVersion", "status": "PERSISTED_FIRST_CLASS", "format": "semantic-version-text" },
+    "hintLevel1": { "destination": "PuzzleHintTemplate(level=1).template", "status": "PERSISTED_FIRST_CLASS" },
+    "hintLevel2": { "destination": "PuzzleHintTemplate(level=2).template", "status": "PERSISTED_FIRST_CLASS" },
+    "reusableComponentRequirementIds": { "destination": null, "status": "PROVENANCE_ONLY", "reason": "PUZCMP proposal handles are not an authorized reusable-component registry." },
+    "concept": { "destination": "PuzzleBlueprintVersion.design.concept", "status": "PERSISTED_VERSIONED_JSON" },
+    "secondaryFamilies": { "destination": "PuzzleBlueprintVersion.design.secondaryFamilies", "status": "PERSISTED_VERSIONED_JSON" },
+    "intendedProgressionRange": { "destination": "PuzzleBlueprintVersion.design.intendedProgressionRange", "status": "PERSISTED_VERSIONED_JSON" },
+    "playerFacingModality": { "destination": "PuzzleBlueprintVersion.design.playerFacingModalities", "status": "PERSISTED_VERSIONED_JSON" },
+    "accessibilityModalities": { "destination": "PuzzleBlueprintVersion.design.accessibilityModalities", "status": "PERSISTED_VERSIONED_JSON" },
+    "collaborationProfile": { "destination": "PuzzleBlueprintVersion.design.collaborationProfile", "status": "PERSISTED_VERSIONED_JSON" },
+    "requiredTools": { "destination": "PuzzleBlueprintVersion.design.requiredTools", "status": "PERSISTED_VERSIONED_JSON" },
+    "outsideResearchExpectation": { "destination": "PuzzleBlueprintVersion.design.outsideResearchExpectation", "status": "PERSISTED_VERSIONED_JSON" },
+    "answerFormat": { "destination": "PuzzleBlueprintVersion.design.answerFormat", "status": "PERSISTED_VERSIONED_JSON" },
+    "serverValidationMethod": { "destination": "PuzzleBlueprintVersion.design.serverValidationMethod", "status": "PERSISTED_VERSIONED_JSON" },
+    "uniquenessProofMethod": { "destination": "PuzzleBlueprintVersion.design.uniquenessProofMethod", "status": "PERSISTED_VERSIONED_JSON" },
+    "estimatedSolveTime": { "destination": "PuzzleBlueprintVersion.design.estimatedSolveTime", "status": "PERSISTED_VERSIONED_JSON" },
+    "implementationComplexity": { "destination": "PuzzleBlueprintVersion.design.implementationComplexity", "status": "PERSISTED_VERSIONED_JSON" },
+    "mobileFeasibility": { "destination": "PuzzleBlueprintVersion.design.mobileFeasibility", "status": "PERSISTED_VERSIONED_JSON" },
+    "qualityScore": { "destination": "PuzzleBlueprintVersion.design.qualityScore", "status": "PERSISTED_VERSIONED_JSON" },
+    "recommendationStatus": { "destination": "PuzzleBlueprintVersion.design.recommendationStatus", "status": "PERSISTED_VERSIONED_JSON" },
+    "prototypeRequired": { "destination": "PuzzleBlueprintVersion.design.prototypeRequired", "status": "PERSISTED_VERSIONED_JSON" },
+    "prototypeDelivered": { "destination": "PuzzleBlueprintVersion.design.prototypeDelivered", "status": "PERSISTED_VERSIONED_JSON" },
+    "tutorialConsideration": { "destination": "PuzzleBlueprintVersion.design.tutorialConsideration", "status": "PERSISTED_VERSIONED_JSON" },
+    "highComplexityShowpiece": { "destination": "PuzzleBlueprintVersion.design.highComplexityShowpiece", "status": "PERSISTED_VERSIONED_JSON" }
+  },
+  "packageOnlyValidation": {
+    "rootCount": 70,
+    "ids": "PZB-001..PZB-070",
+    "perDifficultyTier": 14,
+    "runtimeGlobalInvariant": false
+  }
+}

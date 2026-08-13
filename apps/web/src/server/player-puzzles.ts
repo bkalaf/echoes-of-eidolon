@@ -28,23 +28,9 @@ async function assignedPuzzleIds(userId: string, database: Database) {
     where: { worldKey },
     select: { placements: { where: { objectType: CampaignObjectType.WITNESS }, orderBy: { ordinal: "asc" }, select: { objectId: true } } },
   });
-  const witnessIds = campaign?.placements.map((placement) => placement.objectId) ?? [];
-  if (witnessIds.length === 0) return [];
-  const witnesses = await database.witness.findMany({
-    where: { witnessId: { in: witnessIds } },
-    select: {
-      antagonist1: { select: { puzzleBlueprintId: true, witnessName: true } },
-      antagonist2: { select: { puzzleBlueprintId: true, witnessName: true } },
-      witnessId: true,
-    },
-  });
-  const byId = new Map(witnesses.map((witness) => [witness.witnessId, witness]));
-  const assigned = campaign!.placements.flatMap((placement) => {
-    const witness = byId.get(placement.objectId);
-    return witness ? [witness.antagonist1, ...(witness.antagonist2 ? [witness.antagonist2] : [])] : [];
-  });
-  return assigned.filter((assignment, index) => assigned.findIndex((candidate) => candidate.puzzleBlueprintId === assignment.puzzleBlueprintId) === index)
-    .map((assignment) => ({ name: assignment.witnessName, objectId: assignment.puzzleBlueprintId }));
+  void campaign;
+  // Witness no longer owns PuzzleBlueprint. No replacement assignment owner is authorized in Action A.
+  return [] as Array<{ name: string; objectId: string }>;
 }
 
 export async function getPlayerPuzzleChallenges(userId: string, now = new Date(), database: Database = getDatabase()) {
@@ -55,7 +41,7 @@ export async function getPlayerPuzzleChallenges(userId: string, now = new Date()
     where: { puzzleBlueprintId: { in: assignments.map((assignment) => assignment.objectId) } },
     select: {
       difficultyTier: true,
-      family: true,
+      primaryFamily: true,
       puzzleBlueprintId: true,
       versions: {
         orderBy: { generatorVersion: "desc" },
@@ -78,7 +64,7 @@ export async function getPlayerPuzzleChallenges(userId: string, now = new Date()
       return [{
         acceptance: acceptance ? { puzzleChallengeAcceptedId: acceptance.puzzleChallengeAcceptedId, ...acceptanceProjection(acceptance.acceptedAt, now) } : null,
         difficultyTier: blueprint.difficultyTier,
-        family: blueprint.family,
+        family: blueprint.primaryFamily,
         generatorVersion: version.generatorVersion,
         hints: acceptance ? version.hints : [],
         name: names.get(blueprint.puzzleBlueprintId) ?? blueprint.puzzleBlueprintId,
@@ -89,7 +75,7 @@ export async function getPlayerPuzzleChallenges(userId: string, now = new Date()
 }
 
 export async function acceptPlayerPuzzleChallenge(
-  input: { generatorVersion: number; puzzleBlueprintId: string; userId: string },
+  input: { generatorVersion: string; puzzleBlueprintId: string; userId: string },
   now = new Date(),
   database: Database = getDatabase(),
 ) {

@@ -36,7 +36,7 @@ describe("Capability administration", () => {
   beforeEach(() => {
     vi.stubGlobal("fetch", vi.fn(async (input: string | URL | Request) => {
       const url = String(input);
-      if (url.includes("/scoring")) return response({ rewardPolicies: [], factionPolicies: [], candidates: [] });
+      if (url.includes("/scoring")) return response({ factionPolicies: [] });
       if (url.includes("/inspector")) return response({ comparison: { eventCount: 0, persistedStateCount: 0, rebuiltStateCount: 0, mismatches: [] }, events: [] });
       return response({ definitions: [definition] });
     }));

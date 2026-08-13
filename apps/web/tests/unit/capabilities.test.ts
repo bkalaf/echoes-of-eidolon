@@ -7,7 +7,6 @@ import {
   highestEarnedRanks,
   projectCapabilityEvents,
   projectFactionStanding,
-  projectRewardEvidenceScore,
   rebuildCapabilityProjection,
   resolveCapability,
   validateCapabilityCondition,
@@ -17,7 +16,6 @@ import {
   type CapabilityScope,
   type CapabilityStateEntry,
   type FactionScoringPolicyContract,
-  type RewardScoringPolicyContract,
 } from "../../src/domain/capabilities";
 
 const account: CapabilityScope = { scopeType: "ACCOUNT", scopeId: "ACCOUNT-1" };
@@ -182,67 +180,6 @@ describe("Capability Ledger architecture", () => {
 
   it("17 serializes capability bindings deterministically", () => {
     expect(canonicalizeCapabilityBindings({ Z: "last", A: "first" })).toBe('{"A":"first","Z":"last"}');
-  });
-
-  it("18 preserves reward evidence as semantic kinds", () => {
-    const evidence = { kind: "PROOF" as const, evidenceId: "EVIDENCE-1", scoringPolicyVersion: 1 };
-    expect(evidence).toEqual({ kind: "PROOF", evidenceId: "EVIDENCE-1", scoringPolicyVersion: 1 });
-  });
-
-  const rewardV1: RewardScoringPolicyContract = {
-    version: 1,
-    minimumScore: 0,
-    maximumScore: 1000,
-    weights: { RUMOR: 50, EVIDENCE: 100, PROOF: 200, DOUBT: -50, CONTRADICTION: -100, REFUTATION: -200 },
-  };
-  const rewardCandidate = { rewardCandidateId: "CANDIDATE", rewardId: "REWARD", scoreCeiling: 1000 };
-  const rewardEvent = {
-    rewardEvidenceEventId: "REWARD-EVENT",
-    scope: account,
-    rewardId: "REWARD",
-    candidateId: "CANDIDATE",
-    kind: "PROOF" as const,
-    evidenceId: "EVIDENCE-1",
-    scoringPolicyVersion: 1,
-    recordedAt: new Date(0),
-  };
-
-  it("19 rejects duplicate evidence for one scoped candidate", () => {
-    expect(() => projectRewardEvidenceScore(
-      [rewardEvent, { ...rewardEvent, rewardEvidenceEventId: "RETRY" }],
-      new Map([[1, rewardV1]]),
-      rewardCandidate,
-    )).toThrow(/Duplicate reward evidence/);
-  });
-
-  it("20 uses the scoring policy version recorded by the evidence", () => {
-    const v2 = { ...rewardV1, version: 2, weights: { ...rewardV1.weights, PROOF: 1 } };
-    expect(projectRewardEvidenceScore([{ ...rewardEvent, scoringPolicyVersion: 2 }], new Map([[1, rewardV1], [2, v2]]), rewardCandidate)).toBe(1);
-  });
-
-  it("21 does not reinterpret old evidence when a new policy appears", () => {
-    const policies = new Map<number, RewardScoringPolicyContract>([
-      [1, rewardV1],
-      [2, { ...rewardV1, version: 2, weights: { ...rewardV1.weights, PROOF: 999 } }],
-    ]);
-    expect(projectRewardEvidenceScore([rewardEvent], policies, rewardCandidate)).toBe(200);
-  });
-
-  it("22 clamps candidate scores to authored ceilings", () => {
-    expect(projectRewardEvidenceScore(
-      [rewardEvent, { ...rewardEvent, rewardEvidenceEventId: "TWO", evidenceId: "EVIDENCE-2" }],
-      new Map([[1, rewardV1]]),
-      { ...rewardCandidate, scoreCeiling: 300 },
-    )).toBe(300);
-  });
-
-  it("23 keeps greater-than-900 unreachable at a 900 ceiling", () => {
-    const events = Array.from({ length: 6 }, (_, index) => ({
-      ...rewardEvent,
-      rewardEvidenceEventId: `PROOF-${index}`,
-      evidenceId: `EVIDENCE-${index}`,
-    }));
-    expect(projectRewardEvidenceScore(events, new Map([[1, rewardV1]]), { ...rewardCandidate, scoreCeiling: 900 })).toBe(900);
   });
 
   it("24 derives faction standing only through supplied configuration", () => {

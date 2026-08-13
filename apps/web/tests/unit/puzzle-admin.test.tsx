@@ -23,11 +23,12 @@ describe("Puzzle Designer persistence projection", () => {
       json: async () => ({
         blueprints: [{
           difficultyTier: "TIER_1_INITIATE",
-          family: "LOGIC_CONSTRAINT",
+          primaryFamily: "LOGIC_CONSTRAINT",
+          title: "Supplied Puzzle",
           puzzleBlueprintId: "PUZZLE-SUPPLIED",
           versions: [{
             createdAt: "2026-08-10T00:00:00.000Z",
-            generatorVersion: 4,
+            generatorVersion: "4.0.0",
             hints: [
               { kind: "DIRECTIONAL", level: 1, template: "Supplied direction" },
               { kind: "GUIDED", level: 2, template: "Supplied guide" },
@@ -41,8 +42,8 @@ describe("Puzzle Designer persistence projection", () => {
     renderPuzzle("PZ001");
     expect(await screen.findByText("PUZZLE-SUPPLIED")).toBeInTheDocument();
     expect(screen.getByText("DIRECTIONAL → GUIDED")).toBeInTheDocument();
-    expect(screen.getByText("1 / 70 roots")).toBeInTheDocument();
-    expect(screen.getByText(/Missing roots are not generated/)).toBeInTheDocument();
+    expect(screen.getByText("1 root")).toBeInTheDocument();
+    expect(screen.queryByText(/70-root|exactly 70/)).not.toBeInTheDocument();
   });
 
   it("shows an honest empty bank without generating sample blueprints", async () => {
@@ -55,11 +56,11 @@ describe("Puzzle Designer persistence projection", () => {
   it("validates deterministic preview identity without starting a timer or fabricating puzzle content", async () => {
     const fetchMock = vi.fn().mockImplementation(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
       ? { json: async () => ({ key: "deterministic-key", timerStarted: false }), ok: true }
-      : { json: async () => ({ blueprints: [{ difficultyTier: "TIER_1_INITIATE", family: "LOGIC_CONSTRAINT", puzzleBlueprintId: "PUZZLE-SUPPLIED", versions: [{ createdAt: "2026-08-10T00:00:00.000Z", generatorVersion: 4, hints: [] }] }], total: 1 }), ok: true });
+      : { json: async () => ({ blueprints: [{ difficultyTier: "TIER_1_INITIATE", primaryFamily: "LOGIC_CONSTRAINT", title: "Supplied Puzzle", puzzleBlueprintId: "PUZZLE-SUPPLIED", versions: [{ createdAt: "2026-08-10T00:00:00.000Z", generatorVersion: "4.0.0", hints: [] }] }], total: 1 }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
     renderPuzzle("PZ003", "/admin/puzzles/PUZZLE-SUPPLIED/test");
     expect(await screen.findByText(/does not generate a puzzle instance or start/)).toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText("Generator version"), { target: { value: "4" } });
+    fireEvent.change(screen.getByLabelText("Generator version"), { target: { value: "4.0.0" } });
     fireEvent.change(screen.getByLabelText("Campaign ID"), { target: { value: "CAM-1" } });
     fireEvent.change(screen.getByLabelText("Player ID"), { target: { value: "PLAYER-1" } });
     fireEvent.change(screen.getByLabelText("Seed"), { target: { value: "seed" } });
@@ -68,11 +69,11 @@ describe("Puzzle Designer persistence projection", () => {
     expect(screen.queryByText(/accepted|ends at|answer:/i)).not.toBeInTheDocument();
   });
 
-  it("lists only the canonical shared component identifiers without inventing configurations", () => {
+  it("keeps proposal component identifiers as provenance rather than a second registry", () => {
     vi.stubGlobal("fetch", vi.fn());
     renderPuzzle("ADM029");
-    expect(screen.getByText("PUZCMP_MATRIX_LAB")).toBeInTheDocument();
-    expect(screen.getByText(/No persisted component configuration/)).toBeInTheDocument();
+    expect(screen.getByText(/retained only as Action-B source provenance/)).toBeInTheDocument();
+    expect(screen.queryByText("PUZCMP_MATRIX_LAB")).not.toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
   });
 

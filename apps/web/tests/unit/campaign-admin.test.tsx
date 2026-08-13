@@ -76,7 +76,7 @@ describe("Campaign Manager structure", () => {
     const planner = await screen.findByRole("table", { name: "RUIN 18-Book campaign planner" });
     expect(within(planner).getAllByRole("row")).toHaveLength(19);
     for (const column of campaignPlannerColumns) {
-      expect(within(planner).getByRole("columnheader", { name: column.label })).toBeInTheDocument();
+      expect(within(planner).getByRole("columnheader", { name: (name) => name === column.label || name === `${column.label} +` })).toBeInTheDocument();
       expect(within(planner).getByRole("listbox", { name: `${column.label} Unassigned` })).toBeInTheDocument();
     }
     expect(screen.getByRole("listbox", { name: "Opposing Unassigned" })).toHaveAttribute("aria-disabled", "true");
@@ -85,7 +85,24 @@ describe("Campaign Manager structure", () => {
     expect(screen.getByLabelText("Linked-type filter: All linked types")).toBeInTheDocument();
     const assignableColumns = campaignPlannerColumns.filter((column) => !["DISJOINT_TRILOGY", "OPPOSING_FACTION"].includes(column.id));
     expect(screen.getAllByRole("button", { name: /empty assignment cell/ })).toHaveLength(18 * assignableColumns.length);
+    for (const column of campaignPlannerColumns.filter((column) => column.objectTypes.some((type) => type !== "HOLIDAY"))) expect(within(planner).getByRole("button", { name: `Create ${column.label}` })).toBeInTheDocument();
+    expect(within(planner).queryByRole("button", { name: "Create Disjoint 3+3" })).not.toBeInTheDocument();
+    expect(within(planner).queryByRole("button", { name: "Create Opposing" })).not.toBeInTheDocument();
   }, 10_000);
+
+  it("creates through the owning Campaign adapter and refreshes the Unassigned catalog", async () => {
+    const fetchMock = vi.fn(async (input: string | URL | Request) => String(input) === "/api/admin/campaign/catalog"
+      ? { ok: true, json: async () => ({ record: { pillarId: "PIL-NEW" } }) }
+      : { ok: true, json: async () => workspace([], "CONCORD") });
+    vi.stubGlobal("fetch", fetchMock);
+    renderCampaign("CAMPAIGN_CONCORD");
+    fireEvent.click(await screen.findByRole("button", { name: "Create Pillar" }));
+    expect(screen.getByRole("region", { name: "Create campaign object" })).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Canonical create payload JSON"), { target: { value: '{"objectId":"PIL-NEW","name":"New Pillar"}' } });
+    fireEvent.click(screen.getByRole("button", { name: "Create PILLAR" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign/catalog", expect.objectContaining({ method: "POST" })));
+    await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => String(url).includes("/api/admin/campaign?world=CONCORD"))).toHaveLength(2));
+  });
 
   it("does not copy sample assignment IDs into an empty canonical planner", async () => {
     renderCampaign("CAMPAIGN_CONCORD");
@@ -187,7 +204,7 @@ describe("Campaign Manager structure", () => {
     renderCampaign("CAM007");
     await screen.findByRole("table", { name: "CONCORD 18-Book campaign planner" });
     fireEvent.click(screen.getByLabelText("Pillar"));
-    await waitFor(() => expect(screen.queryByRole("columnheader", { name: "Pillar" })).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole("columnheader", { name: /^Pillar(?: \+)?$/ })).not.toBeInTheDocument());
     expect(window.localStorage.getItem("echoes.campaign-planner.CONCORD.columns.v2")).toContain('"PILLAR":false');
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign?world=CONCORD");
@@ -198,7 +215,7 @@ describe("Campaign Manager structure", () => {
     const planner = await screen.findByRole("table", { name: "CONCORD 18-Book campaign planner" });
     fireEvent.click(screen.getByRole("button", { name: "Move Lesson left" }));
     const headers = within(planner).getAllByRole("columnheader");
-    expect(headers.slice(0, 3).map((header) => header.getAttribute("aria-label") ?? header.textContent?.split("Unassigned")[0])).toEqual(["Book", "Lesson", "Pillar"]);
+    expect(headers.slice(0, 3).map((header) => (header.getAttribute("aria-label") ?? header.textContent?.split("Unassigned")[0])?.replace(/\s*\+$/, ""))).toEqual(["Book", "Lesson", "Pillar"]);
     expect(within(headers[1]!).getByRole("listbox", { name: "Lesson Unassigned" })).toBeInTheDocument();
     expect(screen.queryByLabelText("Book", { selector: "input[type=checkbox]" })).not.toBeInTheDocument();
     expect(window.localStorage.getItem("echoes.campaign-planner.CONCORD.columns.v2")).toContain('"LESSON","PILLAR"');
@@ -212,7 +229,7 @@ describe("Campaign Manager structure", () => {
     mockCampaign([placement("invalid-hidden-pillar", "PILLAR", [2, 3, 4, 5, 6, 7, 8, 9, 10])]);
     renderCampaign("CAMPAIGN_RUIN");
     expect(await screen.findByRole("alert")).toHaveTextContent(/invalid-hidden-pillar/);
-    expect(screen.queryByRole("columnheader", { name: "Pillar" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("columnheader", { name: /^Pillar(?: \+)?$/ })).not.toBeInTheDocument();
     const lockedPool = screen.getByRole("listbox", { name: "Opposing Unassigned" });
     expect(lockedPool).toHaveAttribute("aria-disabled", "true");
     expect(within(lockedPool).queryByRole("option")).not.toBeInTheDocument();

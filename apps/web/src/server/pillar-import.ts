@@ -6,7 +6,6 @@ const pillarImportRowSchema = z.object({
   domain: z.string().refine((value) => value.trim().length > 0, "domain cannot be blank").optional(),
   name: z.string().refine((value) => value.trim().length > 0, "name cannot be blank"),
   pillarId: z.string().refine((value) => value.trim().length > 0, "pillarId cannot be blank"),
-  seatNumber: z.number().int().optional(),
 }).strict();
 
 export type PillarImportRow = z.infer<typeof pillarImportRowSchema>;
@@ -15,9 +14,9 @@ interface PillarImportTransaction {
   pillar: {
     createMany(input: { data: PillarImportRow[] }): Promise<{ count: number }>;
     findMany(input: {
-      select: { domain: true; name: true; pillarId: true; seatNumber: true };
+      select: { domain: true; name: true; pillarId: true };
       where: { pillarId: { in: string[] } };
-    }): Promise<Array<Omit<PillarImportRow, "domain" | "seatNumber"> & { domain: string | null; seatNumber: number | null }>>;
+    }): Promise<Array<Omit<PillarImportRow, "domain"> & { domain: string | null }>>;
   };
 }
 
@@ -42,7 +41,7 @@ export async function applyPillarImport(
   const rows = parsePillarImportRows(value);
   return database.transaction(async (transaction) => {
     const existing = await transaction.pillar.findMany({
-      select: { domain: true, name: true, pillarId: true, seatNumber: true },
+      select: { domain: true, name: true, pillarId: true },
       where: { pillarId: { in: rows.map((row) => row.pillarId) } },
     });
     const existingById = new Map(existing.map((row) => [row.pillarId, row]));
@@ -50,8 +49,7 @@ export async function applyPillarImport(
       const persisted = existingById.get(row.pillarId);
       if (persisted && (
         persisted.name !== row.name ||
-        (persisted.domain ?? null) !== (row.domain ?? null) ||
-        (persisted.seatNumber ?? null) !== (row.seatNumber ?? null)
+        (persisted.domain ?? null) !== (row.domain ?? null)
       )) {
         throw new CanonicalImportDriftError(`Canonical drift refused for Pillar ${row.pillarId}.`);
       }

@@ -87,7 +87,7 @@ describe("game runtime boundary", () => {
       const url = String(request);
       if (url.includes("/api/player/access")) return { json: async () => ({ betaEligible: true, canPlay: true, role: "member" }), ok: true };
       if (url.includes("/api/player/puzzles") && init?.method === "POST") { accepted = true; return { json: async () => ({}), ok: true }; }
-      if (url.includes("/api/player/puzzles")) return { json: async () => ({ puzzles: [{ acceptance: accepted ? { acceptedAt: "2026-08-10T00:00:00.000Z", endsAt: "2099-08-10T00:00:00.000Z", puzzleChallengeAcceptedId: "ACCEPT-1", remainingSeconds: 2_160_000 } : null, difficultyTier: "TIER_1_INITIATE", family: "MUSIC", generatorVersion: 3, hints: accepted ? [{ kind: "DIRECTIONAL", level: 1, template: "Listen east." }, { kind: "GUIDED", level: 2, template: "Compare the second phrase." }] : [], name: "Assigned Trial", puzzleBlueprintId: "PUZZLE-1" }] }), ok: true };
+      if (url.includes("/api/player/puzzles")) return { json: async () => ({ puzzles: [{ acceptance: accepted ? { acceptedAt: "2026-08-10T00:00:00.000Z", endsAt: "2099-08-10T00:00:00.000Z", puzzleChallengeAcceptedId: "ACCEPT-1", remainingSeconds: 2_160_000 } : null, difficultyTier: "TIER_1_INITIATE", family: "MUSIC", generatorVersion: "3.0.0", hints: accepted ? [{ kind: "DIRECTIONAL", level: 1, template: "Listen east." }, { kind: "GUIDED", level: 2, template: "Compare the second phrase." }] : [], name: "Assigned Trial", puzzleBlueprintId: "PUZZLE-1" }] }), ok: true };
       return { json: async () => ({ exits: [], location: null, nearby: [], sessionId: null, turns: [] }), ok: true };
     }));
     renderGame("GAME011");
@@ -135,7 +135,7 @@ describe("game runtime boundary", () => {
     renderGame("GAME012");
 
     expect(await screen.findByRole("heading", { name: "Companions" })).toBeInTheDocument();
-    for (const internalLabel of ["Concord Protagonist", "Ruin Protagonist", "Schism Protagonist", "three distinct world-matching Protagonists"]) {
+    for (const internalLabel of ["Concord Character", "Ruin Character", "Schism Character", "three distinct world-matching Characters"]) {
       expect(screen.queryByText(internalLabel, { exact: true })).not.toBeInTheDocument();
     }
   });

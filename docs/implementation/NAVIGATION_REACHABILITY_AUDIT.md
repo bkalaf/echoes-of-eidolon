@@ -4,9 +4,9 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 
 ## Result
 
-- Active screens/states: 298
+- Active screens/states: 293
 - REACHABLE: 60
-- ROLE_GATED_REACHABLE: 200
+- ROLE_GATED_REACHABLE: 195
 - STATE_TRIGGERED: 38
 - ORPHANED: 0
 - DEAD_END: 0
@@ -120,18 +120,15 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 102 | ADM020 | /admin/data/bulk-operations | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 103 | ADM021 | /admin/data/bulk-operations | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 104 | ADM022 | /admin/data/bulk-operations | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 105 | DATA_ANTAGONIST_TABLE | /admin/data/antagonist | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 106 | ADM031 | /admin/assets/audio | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 107 | ADM032 | /admin/assets/video | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 108 | ADM033 | /admin/prompts | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 109 | ADM034 | /admin/prompts | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 110 | DATA000 | /admin/data | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 111 | DATA001 | /admin/data/protagonist | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 112 | DATA002 | /admin/data/culture | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 113 | DATA003 | /admin/data/character | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 114 | DATA004 | /admin/data/witness | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 115 | DATA005 | /admin/data/architect | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 116 | DATA006 | /admin/data/antagonist | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 117 | DATA007 | /admin/data/species | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 118 | DATA008 | /admin/data/personality-expression | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 119 | DATA009 | /admin/data/timeline-event | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
@@ -154,7 +151,6 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 136 | PZ001 | /admin/puzzles | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 137 | PZ002 | /admin/puzzles/:id | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 138 | PZ003 | /admin/puzzles/:id/test | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 139 | DATA_ANTAGONIST_NEW | /admin/data/antagonist/new | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 140 | AT002 | /admin/atlas/poi | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 141 | AT003 | /admin/atlas/poi | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 142 | AT004 | /admin/atlas/sites | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
@@ -207,7 +203,6 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 191 | DATA_PERSONALITYEXPRESSION_EDIT | /admin/data/personalityexpression/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 192 | DATA_PILLAR_EDIT | /admin/data/pillar/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 193 | DATA_POINTOFINTEREST_EDIT | /admin/data/pointofinterest/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 194 | DATA_PROTAGONIST_EDIT | /admin/data/protagonist/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 195 | DATA_RESEARCH_EDIT | /admin/data/research/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 196 | DATA_SETTLEMENT_EDIT | /admin/data/settlement/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 197 | DATA_SITE_EDIT | /admin/data/site/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
@@ -220,7 +215,6 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 204 | DATA_TRANSITION_EDIT | /admin/data/transition/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 205 | DATA_WITNESS_EDIT | /admin/data/witness/sample-record | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 206 | DATA_ACHIEVEMENTDEFINITION_IMPORT | /admin/data/achievementdefinition/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 207 | DATA_ANTAGONIST_IMPORT | /admin/data/antagonist/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 208 | DATA_ARCHITECT_IMPORT | /admin/data/architect/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 209 | DATA_ARK_IMPORT | /admin/data/ark/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 210 | DATA_BREED_IMPORT | /admin/data/breed/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
@@ -240,7 +234,6 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 225 | DATA_PERSONALITYEXPRESSION_IMPORT | /admin/data/personalityexpression/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 226 | DATA_PILLAR_IMPORT | /admin/data/pillar/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 227 | DATA_POINTOFINTEREST_IMPORT | /admin/data/pointofinterest/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
-| 228 | DATA_PROTAGONIST_IMPORT | /admin/data/protagonist/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 229 | DATA_RESEARCH_IMPORT | /admin/data/research/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 230 | DATA_SETTLEMENT_IMPORT | /admin/data/settlement/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 231 | DATA_SITE_IMPORT | /admin/data/site/import | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
@@ -314,3 +307,5 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 299 | GAME_INN01_INN | Modal in /game | game | game | /game | Existing game bottom bar, contextual interaction, or Game screen directory | / | tests/e2e/navigation-reachability.spec.ts | **STATE_TRIGGERED** |
 | 300 | BULK02_BULK_CHANGE_DETAIL_V2 | /admin/bulk-changes/:envelopeId | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 301 | ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS | /admin/atlas/settlements/:settlementId/soundtracks | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
+| 302 | DATA_WITNESS_DEF | /admin/data/witness-def | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
+| 303 | DATA_COMPANION_DEF | /admin/data/companion-def | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |

@@ -1,0 +1,44 @@
+{
+  "artifactVersion": 1,
+  "capturedDate": "2026-08-13",
+  "baselineGitSha": "64881efb67067dfb40427d1575671e35b31e70ec",
+  "mode": "read-only-production-preflight-evidence",
+  "counts": {
+    "Character": 0,
+    "Protagonist": 0,
+    "Architect": 0,
+    "Architect.profession.populated": 0,
+    "Antagonist": 0,
+    "Antagonist.inversionRule.populated": 0,
+    "Witness": 0,
+    "Soul": 0,
+    "Companion": 0,
+    "Pillar": 0,
+    "Pillar.seatNumber.populated": 0,
+    "LegendaryReward": 0,
+    "RewardCandidate": 0,
+    "RewardEvidenceEvent": 0,
+    "RewardScoringPolicy": 1,
+    "RewardScoringWeight": 6,
+    "CompanionTransformationBinding": 0,
+    "PartyMember": 0,
+    "PuzzleBlueprint": 0,
+    "PuzzleBlueprintVersion": 0,
+    "PuzzleHintTemplate": 0,
+    "PuzzleChallengeAccepted": 0,
+    "obsoleteEntityTypeReferences": 0,
+    "genericCompanionReferences": 2,
+    "genericCompanionCapabilityEvents": 0,
+    "genericCompanionCapabilityStates": 0
+  },
+  "genericCompanionReferences": [
+    { "capabilityCode": "COMPANION_LAYETTE_GRANTED", "pathTemplate": "companion/{COMPANION}/layette", "meaning": "concrete Character state" },
+    { "capabilityCode": "COMPANION_TRANSFORMATION_COMPLETE", "pathTemplate": "companion/{COMPANION}/transformed", "meaning": "concrete Character state" }
+  ],
+  "blockedTransformations": [],
+  "notes": [
+    "The corrective migration independently repeats destructive-data assertions and fails closed if data has changed.",
+    "Reward scoring policy and weight rows are reported and intentionally removed; their numeric values are not transformed.",
+    "No production data was mutated while collecting this artifact."
+  ]
+}

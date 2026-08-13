@@ -47,11 +47,11 @@ describe("player economy services", () => {
     const session = {
       currentPointOfInterest: { services: [{ active: true, configuration: { actions: { EAT: { comfort: 3, cost: 4, morale: 2, rest: 1 }, STAY: { comfort: 8, cost: 10, morale: 6, rest: 20 } }, maximum: 100 }, service: "INN" }] },
       currentPointOfInterestId: "POI-INN",
-      party: { members: [{ comfort: 60, companionKey: "A", morale: 50, partyId: "PARTY", rest: 90 }], moneyTransactions: [{ delta: 25 }], partyId: "PARTY", worldInstance: { currentGameMinute: 42n, worldKey: "RUIN" }, worldInstanceId: "WORLD-R" },
+      party: { members: [{ characterId: "CHAR-RUIN-A", comfort: 60, morale: 50, partyId: "PARTY", rest: 90 }], moneyTransactions: [{ delta: 25 }], partyId: "PARTY", worldInstance: { currentGameMinute: 42n, worldKey: "RUIN" }, worldInstanceId: "WORLD-R" },
     };
     const { database, memberUpdate, moneyCreate } = transactionalDatabase(session);
     await expect(applyCurrentInnService("user", "STAY", database)).resolves.toEqual({ action: "STAY", cost: 10 });
     expect(moneyCreate).toHaveBeenCalledWith({ data: expect.objectContaining({ delta: -10, partyId: "PARTY", worldInstanceId: "WORLD-R" }) });
-    expect(memberUpdate).toHaveBeenCalledWith({ where: { partyId_companionKey: { companionKey: "A", partyId: "PARTY" } }, data: { comfort: 68, morale: 56, rest: 100 } });
+    expect(memberUpdate).toHaveBeenCalledWith({ where: { partyId_characterId: { characterId: "CHAR-RUIN-A", partyId: "PARTY" } }, data: { comfort: 68, morale: 56, rest: 100 } });
   });
 });

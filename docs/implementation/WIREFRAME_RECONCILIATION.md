@@ -5,10 +5,10 @@
 - Status: PASS
 - Active v11.3 source rows: 269
 - Application registry rows: 269
-- V3 excluded base rows: 3
+- V3 excluded base rows: 10
 - V3 amendment rows: 8
-- V4 amendment rows: 24
-- Active mechanically derived rows: 298
+- V4 amendment rows: 26
+- Active mechanically derived rows: 293
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -19,8 +19,8 @@
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
 - Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- V3 amendment manifest SHA-256: `d4c51d9f4d7dd6edee0305a85d7ebd541e464e26d3286e8b11725bcd80c62d39`
-- V4 amendment manifest SHA-256: `b585ae3e80d73a18e15cc01f8ebf6d78be6ac193ac4bd2097d25b87d3c864564`
+- V3 amendment manifest SHA-256: `0968d75ba4ecb8122e1d6b242761e1808d6bc24a3c837f7bf764bef5ef88961b`
+- V4 amendment manifest SHA-256: `22d6c74788e1744a47f3dc83002872a055397d99190b682e9a636d9ded083972`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
 
@@ -135,18 +135,15 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 102 | 104 | ADM020 | Bulk Operations & External API | /admin/data/bulk-operations | OWNER_SUPPLIED_LOCKED_PNG |
 | 103 | 105 | ADM021 | Bulk API - Enabled Key | /admin/data/bulk-operations | OWNER_SUPPLIED_LOCKED_PNG |
 | 104 | 106 | ADM022 | Bulk Operations - Audit / Recent Activity | /admin/data/bulk-operations | OWNER_SUPPLIED_LOCKED_PNG |
-| 105 | 107 | DATA_ANTAGONIST_TABLE | Antagonist Records | /admin/data/antagonist | REBUILT_V11 |
 | 106 | 108 | ADM031 | Asset Manager - Audio | /admin/assets/audio | OWNER_SUPPLIED_LOCKED_PNG |
 | 107 | 109 | ADM032 | Asset Manager - Video | /admin/assets/video | OWNER_SUPPLIED_LOCKED_PNG |
 | 108 | 110 | ADM033 | Prompt Manager | /admin/prompts | OWNER_SUPPLIED_LOCKED_PNG |
 | 109 | 111 | ADM034 | Prompt Manager - Outstanding Only | /admin/prompts | OWNER_SUPPLIED_LOCKED_PNG |
 | 110 | 112 | DATA000 | Data - Object Types | /admin/data | OWNER_SUPPLIED_LOCKED_PNG |
-| 111 | 113 | DATA001 | Data - Protagonist | /admin/data/protagonist | REBUILT_V11_2_OWNER_REVIEW |
 | 112 | 114 | DATA002 | Data - Culture | /admin/data/culture | OWNER_SUPPLIED_LOCKED_PNG |
 | 113 | 115 | DATA003 | Data - Character | /admin/data/character | OWNER_SUPPLIED_LOCKED_PNG |
 | 114 | 116 | DATA004 | Data - Witness | /admin/data/witness | OWNER_SUPPLIED_LOCKED_PNG |
 | 115 | 117 | DATA005 | Data - Architect | /admin/data/architect | OWNER_SUPPLIED_LOCKED_PNG |
-| 116 | 118 | DATA006 | Data - Antagonist | /admin/data/antagonist | OWNER_SUPPLIED_LOCKED_PNG |
 | 117 | 119 | DATA007 | Data - Species | /admin/data/species | OWNER_SUPPLIED_LOCKED_PNG |
 | 118 | 120 | DATA008 | Data - PersonalityExpression | /admin/data/personality-expression | OWNER_SUPPLIED_LOCKED_PNG |
 | 119 | 121 | DATA009 | Data - TimelineEvent | /admin/data/timeline-event | OWNER_SUPPLIED_LOCKED_PNG |
@@ -169,7 +166,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 136 | 138 | PZ001 | Puzzle Designer - Blueprints | /admin/puzzles | OWNER_SUPPLIED_LOCKED_PNG |
 | 137 | 139 | PZ002 | Puzzle Blueprint Editor | /admin/puzzles/:id | OWNER_SUPPLIED_LOCKED_PNG |
 | 138 | 140 | PZ003 | Puzzle Test/Preview | /admin/puzzles/:id/test | OWNER_SUPPLIED_LOCKED_PNG |
-| 139 | 141 | DATA_ANTAGONIST_NEW | Create Antagonist | /admin/data/antagonist/new | REBUILT_V11_2_OWNER_REVIEW |
 | 140 | 142 | AT002 | Points of Interest - 2D Map | /admin/atlas/poi | OWNER_SUPPLIED_LOCKED_PNG |
 | 141 | 143 | AT003 | Points of Interest - 3D Globe | /admin/atlas/poi | OWNER_SUPPLIED_LOCKED_PNG |
 | 142 | 144 | AT004 | Sites | /admin/atlas/sites | OWNER_SUPPLIED_LOCKED_PNG |
@@ -222,7 +218,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 191 | 193 | DATA_PERSONALITYEXPRESSION_EDIT | Edit PersonalityExpression | /admin/data/personalityexpression/sample-record | REBUILT_V11 |
 | 192 | 194 | DATA_PILLAR_EDIT | Edit Pillar | /admin/data/pillar/sample-record | REBUILT_V11 |
 | 193 | 195 | DATA_POINTOFINTEREST_EDIT | Edit PointOfInterest | /admin/data/pointofinterest/sample-record | REBUILT_V11 |
-| 194 | 196 | DATA_PROTAGONIST_EDIT | Edit Protagonist | /admin/data/protagonist/sample-record | REBUILT_V11 |
 | 195 | 197 | DATA_RESEARCH_EDIT | Edit Research | /admin/data/research/sample-record | REBUILT_V11 |
 | 196 | 198 | DATA_SETTLEMENT_EDIT | Edit Settlement | /admin/data/settlement/sample-record | REBUILT_V11 |
 | 197 | 199 | DATA_SITE_EDIT | Edit Site | /admin/data/site/sample-record | REBUILT_V11 |
@@ -235,7 +230,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 204 | 206 | DATA_TRANSITION_EDIT | Edit Transition | /admin/data/transition/sample-record | REBUILT_V11 |
 | 205 | 207 | DATA_WITNESS_EDIT | Edit Witness | /admin/data/witness/sample-record | REBUILT_V11 |
 | 206 | 208 | DATA_ACHIEVEMENTDEFINITION_IMPORT | Bulk Import AchievementDefinition | /admin/data/achievementdefinition/import | REBUILT_V11 |
-| 207 | 209 | DATA_ANTAGONIST_IMPORT | Bulk Import Antagonist | /admin/data/antagonist/import | REBUILT_V11 |
 | 208 | 210 | DATA_ARCHITECT_IMPORT | Bulk Import Architect | /admin/data/architect/import | REBUILT_V11 |
 | 209 | 211 | DATA_ARK_IMPORT | Bulk Import Ark | /admin/data/ark/import | REBUILT_V11 |
 | 210 | 212 | DATA_BREED_IMPORT | Bulk Import Breed | /admin/data/breed/import | REBUILT_V11 |
@@ -255,7 +249,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 225 | 227 | DATA_PERSONALITYEXPRESSION_IMPORT | Bulk Import PersonalityExpression | /admin/data/personalityexpression/import | REBUILT_V11 |
 | 226 | 228 | DATA_PILLAR_IMPORT | Bulk Import Pillar | /admin/data/pillar/import | REBUILT_V11 |
 | 227 | 229 | DATA_POINTOFINTEREST_IMPORT | Bulk Import PointOfInterest | /admin/data/pointofinterest/import | REBUILT_V11 |
-| 228 | 230 | DATA_PROTAGONIST_IMPORT | Bulk Import Protagonist | /admin/data/protagonist/import | REBUILT_V11 |
 | 229 | 231 | DATA_RESEARCH_IMPORT | Bulk Import Research | /admin/data/research/import | REBUILT_V11 |
 | 230 | 232 | DATA_SETTLEMENT_IMPORT | Bulk Import Settlement | /admin/data/settlement/import | REBUILT_V11 |
 | 231 | 233 | DATA_SITE_IMPORT | Bulk Import Site | /admin/data/site/import | REBUILT_V11 |
@@ -329,6 +322,8 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 299 | 302 | GAME_INN01_INN | Inn | Modal in /game | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
 | 300 | 303 | BULK02_BULK_CHANGE_DETAIL_V2 | Bulk Change Detail | /admin/bulk-changes/:envelopeId | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
 | 301 | 304 | ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS | Settlement Soundtracks | /admin/atlas/settlements/:settlementId/soundtracks | NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4 |
+| 302 | 305 | DATA_WITNESS_DEF | Data - WitnessDef | /admin/data/witness-def | ACTION_A_CANONICAL_TYPE_UNIFICATION |
+| 303 | 306 | DATA_COMPANION_DEF | Data - CompanionDef | /admin/data/companion-def | ACTION_A_CANONICAL_TYPE_UNIFICATION |
 
 ## Supplemental source PNGs
 

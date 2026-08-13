@@ -21,19 +21,23 @@ function authoringDatabase(options: { existingRoot?: boolean; existingVersion?: 
 }
 
 describe("Puzzle Blueprint authoring", () => {
+  const manualDesign = { schemaVersion: "manual-authoring-v1" as const };
+
   it("creates one stable root and its two ordered hints in one serializable transaction", async () => {
     const { client, database } = authoringDatabase();
     await createPuzzleBlueprint({
       difficultyTier: "TIER_1_INITIATE",
       directionalHint: "Look at the left edge.",
-      family: "LOGIC_CONSTRAINT",
-      generatorVersion: 1,
+      primaryFamily: "LOGIC_CONSTRAINT",
+      title: "Puzzle One",
+      generatorVersion: "1.0.0",
       guidedHint: "Compare the first and third rows.",
       puzzleBlueprintId: "PZ-1",
     }, database);
-    expect(client.puzzleBlueprint.create).toHaveBeenCalledWith({ data: { difficultyTier: "TIER_1_INITIATE", family: "LOGIC_CONSTRAINT", puzzleBlueprintId: "PZ-1" } });
+    expect(client.puzzleBlueprint.create).toHaveBeenCalledWith({ data: { difficultyTier: "TIER_1_INITIATE", primaryFamily: "LOGIC_CONSTRAINT", title: "Puzzle One", puzzleBlueprintId: "PZ-1" } });
     expect(client.puzzleBlueprintVersion.create).toHaveBeenCalledWith({ data: {
-      generatorVersion: 1,
+      generatorVersion: "1.0.0",
+      design: manualDesign,
       hints: { create: [
         { kind: "DIRECTIONAL", level: 1, template: "Look at the left edge." },
         { kind: "GUIDED", level: 2, template: "Compare the first and third rows." },
@@ -45,7 +49,7 @@ describe("Puzzle Blueprint authoring", () => {
 
   it("rejects replacement of an existing immutable generator version", async () => {
     const { client, database } = authoringDatabase({ existingRoot: true, existingVersion: true });
-    await expect(appendPuzzleVersion("PZ-1", { directionalHint: "Direction", generatorVersion: 2, guidedHint: "Guide" }, database)).rejects.toThrow(PuzzleAuthoringConflictError);
+    await expect(appendPuzzleVersion("PZ-1", { directionalHint: "Direction", generatorVersion: "2.0.0", design: manualDesign, guidedHint: "Guide" }, database)).rejects.toThrow(PuzzleAuthoringConflictError);
     expect(client.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
   });
 
@@ -54,8 +58,9 @@ describe("Puzzle Blueprint authoring", () => {
     await expect(createPuzzleBlueprint({
       difficultyTier: "TIER_1_INITIATE",
       directionalHint: "",
-      family: "LOGIC_CONSTRAINT",
-      generatorVersion: 1,
+      primaryFamily: "LOGIC_CONSTRAINT",
+      title: "Puzzle One",
+      generatorVersion: "1.0.0",
       guidedHint: "Guide",
       puzzleBlueprintId: "PZ-1",
     }, database)).rejects.toThrow();
@@ -63,9 +68,9 @@ describe("Puzzle Blueprint authoring", () => {
   });
 
   it("validates preview identity against a persisted version without starting a timer", async () => {
-    const database = { puzzleBlueprintVersion: { findUnique: vi.fn().mockResolvedValue({ generatorVersion: 4 }) } } as unknown as PrismaClient;
-    const result = await validatePuzzlePreviewIdentity({ attempt: 0, campaignId: "CAM-1", generatorVersion: 4, playerId: "PLAYER-1", puzzleBlueprintId: "PZ-1", seed: "seed" }, database);
+    const database = { puzzleBlueprintVersion: { findUnique: vi.fn().mockResolvedValue({ generatorVersion: "4.0.0" }) } } as unknown as PrismaClient;
+    const result = await validatePuzzlePreviewIdentity({ attempt: 0, campaignId: "CAM-1", generatorVersion: "4.0.0", playerId: "PLAYER-1", puzzleBlueprintId: "PZ-1", seed: "seed" }, database);
     expect(result.timerStarted).toBe(false);
-    expect(result.key).toBe(JSON.stringify(["PZ-1", 4, "CAM-1", "PLAYER-1", 0, "seed"]));
+    expect(result.key).toBe(JSON.stringify(["PZ-1", "4.0.0", "CAM-1", "PLAYER-1", 0, "seed"]));
   });
 });

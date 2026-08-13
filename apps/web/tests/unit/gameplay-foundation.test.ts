@@ -12,12 +12,12 @@ const schema = readFileSync(resolve(import.meta.dirname, "../../prisma/schema.pr
 describe("0.3.0 gameplay foundation", () => {
   it("extends the existing owners instead of creating planner-only duplicates", () => {
     expect(schema).toMatch(/enum CompanionKey \{[\s\S]*\n {2}L\n\}/);
-    expect(schema).toMatch(/model Soul \{[\s\S]*companionKey\s+CompanionKey\?/);
+    expect(schema).toMatch(/model CompanionDef \{[\s\S]*companionKey\s+CompanionKey\s+@id/);
     expect(schema).toContain("model Occupation {");
     expect(schema).toContain("model OccupationAttributeAffinity {");
     expect(schema).toMatch(/enum AbilityType \{\s+CHARISMA\s+DEXTERITY\s+INTELLIGENCE\s+STAMINA\s+STRENGTH\s+WISDOM\s+\}/);
-    expect(schema).toContain("knowledgeSkill");
-    expect(schema).toContain("awarenessSkill");
+    expect(schema).toMatch(/model CompanionDef \{[\s\S]*knowledgeSkill/);
+    expect(schema).toMatch(/model CompanionDef \{[\s\S]*awarenessSkill/);
     expect(schema).toContain("primaryAttribute");
     expect(schema).toContain("secondaryAttribute");
   });

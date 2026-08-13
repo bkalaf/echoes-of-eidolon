@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 
 import { entityFields, entityForPath, type EntityName } from "../../content/entities";
+import contractData from "../../data/entity-admin-contract.json";
 import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
 
 interface AdminField {
@@ -15,6 +16,7 @@ interface AdminField {
 }
 
 interface AdminContract {
+  auditFields: Array<{ editability: "EDITABLE" | "EXCLUDED"; exclusionReason: string | null; enumName: string | null; isList: boolean; isRequired: boolean; kind: "enum" | "json" | "relation" | "scalar"; name: string; type: string }>;
   delegate: string;
   fields: AdminField[];
   idField: string;
@@ -95,17 +97,13 @@ function EntityForm({ contract, entity, initial, mode, onComplete }: {
 }
 
 function ObjectTypeIndex() {
-  const entries = useMemo(() => {
-    const seen = new Set<EntityName>();
-    return pageManifest.flatMap((entry) => {
-      if (!entry.path?.startsWith("/admin/data/") || entry.path.split("/").filter(Boolean).length !== 3 || entry.screenId.endsWith("_IMPORT")) return [];
-      const entity = entityForPath(entry.path);
-      if (!entity || seen.has(entity)) return [];
-      seen.add(entity);
-      return [{ entity, entry }];
-    });
-  }, []);
-  return <section className="card"><div className="action-row action-row--between"><div><p className="kicker">CANONICAL OBJECT TYPES</p><h2>Data Registry</h2></div><span className="tag">{entries.length} active types</span></div><p>Open a persisted record table, search its canonical fields, create records, or enter the validated import workflow.</p><div className="card-grid">{entries.map(({ entity, entry }) => <article className="mini-card" key={entity}><h3>{entity}</h3><p>{entityFields[entity].length} canonical fields</p><a className="button" href={entry.path ?? "/admin/data"}>Open Records</a></article>)}</div></section>;
+  const entries = useMemo(() => Object.keys(contractData.entities).sort().map((entity) => { const typed = entity as EntityName; const manifestEntry = pageManifest.find((entry) => entityForPath(entry.path) === typed && entry.path?.split("/").filter(Boolean).length === 3); return { entity: typed, path: manifestEntry?.path ?? `/admin/data/${entity.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}` }; }), []);
+  const contracts = contractData.entities as unknown as Record<EntityName, AdminContract>;
+  const auditModels = contractData.auditModels as Record<string, { fields: Array<{ enumName: string | null; isList: boolean; isRequired: boolean; kind: "enum" | "json" | "relation" | "scalar"; name: string; type: string }> }>;
+  const domainFor = (entity: string) => ["User", "Session", "Account", "Verification", "BetaInvitation", "FriendInvitationRequest"].includes(entity) ? "Authentication" : ["Character", "Architect", "Witness", "WitnessDef", "Companion", "CompanionDef", "Pillar", "Lesson", "TimelineEvent", "Interlude", "InterludeSubstitution", "LegendaryReward", "Soul", "Tome", "Transition", "Campaign", "CampaignPlacement"].includes(entity) ? "CampaignDefinitions" : ["Order", "Payment", "Product", "ProductVariant", "DonationCheckout", "MembershipGrant"].includes(entity) ? "Commerce" : ["Species", "SpeciesGroup", "Breed", "Culture", "Settlement", "SettlementWorld", "SettlementPopulationEvent", "Site", "PointOfInterest", "WorldInstance"].includes(entity) ? "WorldBuilding" : "GameState";
+  const domains = ["Authentication", "CampaignDefinitions", "GameState", "WorldBuilding", "Commerce"];
+  const auditEntries = Object.entries(auditModels);
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><p className="kicker">CANONICAL OBJECT TYPES</p><h2>Data Registry</h2></div><span className="tag">{entries.length} active types</span></div><p>Open a persisted record table, search canonical fields, create records, or enter the validated import workflow.</p><div className="data-registry-grid">{entries.map(({ entity, path }) => <article className="mini-card" key={entity}><h3>{entity}</h3><p>{contracts[entity].auditFields.length} persisted fields · {entityFields[entity].length} generic-form fields</p><a className="button" href={path}>Open Records</a></article>)}</div></section><section className="card"><div className="action-row action-row--between"><div><p className="kicker">SCHEMA COMPLETENESS</p><h2>Data Integrity Field Audit</h2></div><span className="tag">{auditEntries.reduce((sum, [, contract]) => sum + contract.fields.length, 0)} fields</span></div><p>Every canonical persisted Prisma field appears here. Generic-form editability is shown separately and relations remain workflow-owned.</p>{domains.map((domain) => <section className="integrity-domain" key={domain}><h3>{domain}</h3><div className="table-scroll"><table className="simple-table"><thead><tr><th>Entity</th><th>Field</th><th>Kind</th><th>Nullable</th><th>Enum</th><th>Editability</th></tr></thead><tbody>{auditEntries.filter(([entity]) => domainFor(entity) === domain).flatMap(([entity, model]) => model.fields.map((field) => { const policy = (contracts as Record<string, AdminContract>)[entity]?.auditFields.find((candidate) => candidate.name === field.name); return <tr key={`${entity}.${field.name}`}><td>{entity}</td><td>{field.name}</td><td>{field.kind}</td><td>{field.isRequired ? "no" : "yes"}</td><td>{field.enumName ?? "—"}</td><td title={policy?.exclusionReason ?? undefined}>{policy?.editability ?? "EXCLUDED"}</td></tr>; }))}</tbody></table></div></section>)}</section></div>;
 }
 
 function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityName; pathname: string; screen: PageManifestEntry }) {

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { applyPillarImport, parsePillarImportRows } from "../../src/server/pillar-import";
 
-interface Row { domain?: string; name: string; pillarId: string; seatNumber?: number }
+interface Row { domain?: string; name: string; pillarId: string }
 
 function database(initial: Row[] = []) {
   const stored = new Map(initial.map((row) => [row.pillarId, { ...row }]));
@@ -10,7 +10,7 @@ function database(initial: Row[] = []) {
     pillar: {
       createMany(input: { data: Row[] }): Promise<{ count: number }>;
       findMany(input: {
-        select: { domain: true; name: true; pillarId: true; seatNumber: true };
+        select: { domain: true; name: true; pillarId: true };
         where: { pillarId: { in: string[] } };
       }): Promise<Row[]>;
     };
@@ -26,9 +26,9 @@ describe("typed Pillar import", () => {
 
   it("accepts omitted optional fields without inventing a seat range", () => {
     expect(parsePillarImportRows([row])).toEqual([row]);
-    expect(parsePillarImportRows([{ ...row, domain: "Supplied domain", seatNumber: 0 }]))
-      .toEqual([{ ...row, domain: "Supplied domain", seatNumber: 0 }]);
-    expect(() => parsePillarImportRows([{ ...row, seatNumber: 1.5 }])).toThrow();
+    expect(parsePillarImportRows([{ ...row, domain: "Supplied domain" }]))
+      .toEqual([{ ...row, domain: "Supplied domain" }]);
+    expect(() => parsePillarImportRows([{ ...row, seatNumber: 1 }])).toThrow();
     expect(() => parsePillarImportRows([{ ...row, book: 1 }])).toThrow();
   });
 
@@ -37,7 +37,7 @@ describe("typed Pillar import", () => {
     const db = database();
     await expect(applyPillarImport([row], db)).resolves.toEqual({ changed: 1, unchanged: 0 });
     await expect(applyPillarImport([row], db)).resolves.toEqual({ changed: 0, unchanged: 1 });
-    await expect(applyPillarImport([{ ...row, seatNumber: 1 }], db))
+    await expect(applyPillarImport([{ ...row, domain: "Changed" }], db))
       .rejects.toThrow("Canonical drift refused for Pillar PILLAR-1");
   });
 });

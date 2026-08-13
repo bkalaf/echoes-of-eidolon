@@ -14,6 +14,7 @@ export interface EntityAdminField {
 }
 
 export interface EntityAdminContract {
+  auditFields: Array<{ editability: "EDITABLE" | "EXCLUDED"; exclusionReason: string | null; enumName: string | null; isList: boolean; isRequired: boolean; kind: "enum" | "json" | "relation" | "scalar"; name: string; type: string }>;
   delegate: string;
   fields: EntityAdminField[];
   idField: string;

@@ -1,4 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+import contractData from "../../src/data/entity-admin-contract.json";
 
 import { entityFields } from "../../src/content/entities";
 import { applyGenericEntityImport, createEntityRecord, entityAdminContract, EntityAdminValidationError, getEntityRecord, listEntityRecords, normalizeEntityData, updateEntityRecord } from "../../src/server/entity-admin";
@@ -16,6 +20,19 @@ function soulDatabase(existing: Record<string, unknown> | null = null) {
 }
 
 describe("closed-world generic entity administration", () => {
+  it("audits every persisted Prisma field independently of the generic-form whitelist", () => {
+    const schema = readFileSync(resolve(import.meta.dirname, "../../prisma/schema.prisma"), "utf8");
+    const auditModels = contractData.auditModels as Record<string, { fields: Array<{ name: string }> }>;
+    for (const match of schema.matchAll(/^model\s+(\w+)\s*\{([\s\S]*?)^\}/gm)) {
+      const expected = [...match[2].matchAll(/^\s{2}(\w+)\s+[A-Za-z]/gm)].map((field) => field[1]);
+      expect(auditModels[match[1]!]?.fields.map((field) => field.name), match[1]).toEqual(expected);
+    }
+    expect(auditModels.Character.fields.map((field) => field.name)).toEqual(expect.arrayContaining(["displayName", "breedId", "occupationId", "worldKey", "soulId", "gender", "age", "faction", "primaryAttribute", "secondaryAttribute"]));
+    expect(auditModels).toHaveProperty("WitnessDef");
+    expect(auditModels).toHaveProperty("CompanionDef");
+    expect(auditModels).not.toHaveProperty("Protagonist");
+    expect(auditModels).not.toHaveProperty("Antagonist");
+  });
   it("generates contracts for every registered authorable entity except the specialized Capability root", () => {
     for (const entity of Object.keys(entityFields)) {
       if (entity === "CapabilityDefinition") continue;

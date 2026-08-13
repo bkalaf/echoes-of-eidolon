@@ -7,7 +7,6 @@ import type {
   CapabilityValueKind,
   EntityType,
   FactionStandingEvidenceKind,
-  RewardEvidenceKind,
 } from "../generated/prisma/enums";
 
 export type {
@@ -18,7 +17,6 @@ export type {
   CapabilityScopeType,
   CapabilityValueKind,
   FactionStandingEvidenceKind,
-  RewardEvidenceKind,
 } from "../generated/prisma/enums";
 
 export interface CapabilityReferenceValue {
@@ -520,54 +518,6 @@ export function evaluateCapabilityCondition(
   if ("all" in condition) return condition.all.every((child) => evaluateCapabilityCondition(child, state, definitions));
   if ("any" in condition) return condition.any.some((child) => evaluateCapabilityCondition(child, state, definitions));
   return !evaluateCapabilityCondition(condition.not, state, definitions);
-}
-
-export interface RewardScoringPolicyContract {
-  version: number;
-  minimumScore: number;
-  maximumScore: number;
-  weights: Readonly<Record<RewardEvidenceKind, number>>;
-}
-
-export interface RewardCandidateContract {
-  rewardCandidateId: string;
-  rewardId: string;
-  scoreCeiling: number;
-}
-
-export interface RewardEvidenceEventContract {
-  rewardEvidenceEventId: string;
-  scope: CapabilityScope;
-  rewardId: string;
-  candidateId: string;
-  kind: RewardEvidenceKind;
-  evidenceId: string;
-  scoringPolicyVersion: number;
-  recordedAt: Date;
-}
-
-export function projectRewardEvidenceScore(
-  events: readonly RewardEvidenceEventContract[],
-  policies: ReadonlyMap<number, RewardScoringPolicyContract>,
-  candidate: RewardCandidateContract,
-): number {
-  if (!Number.isFinite(candidate.scoreCeiling)) throw new Error("Reward candidate ceiling must be finite.");
-  const duplicateEvidence = new Set<string>();
-  let score = 0;
-  for (const event of [...events].sort((left, right) =>
-    left.recordedAt.getTime() - right.recordedAt.getTime()
-      || left.rewardEvidenceEventId.localeCompare(right.rewardEvidenceEventId))) {
-    if (event.rewardId !== candidate.rewardId || event.candidateId !== candidate.rewardCandidateId) continue;
-    const evidenceIdentity = `${event.scope.scopeType}:${event.scope.scopeId}:${event.candidateId}:${event.evidenceId}`;
-    if (duplicateEvidence.has(evidenceIdentity)) throw new Error(`Duplicate reward evidence ${event.evidenceId}.`);
-    duplicateEvidence.add(evidenceIdentity);
-    const policy = policies.get(event.scoringPolicyVersion);
-    if (!policy) throw new Error(`Reward scoring policy version ${event.scoringPolicyVersion} is unavailable.`);
-    const weight = policy.weights[event.kind];
-    if (!Number.isFinite(weight)) throw new Error(`Reward scoring policy ${policy.version} is missing ${event.kind}.`);
-    score = Math.min(Math.max(score + weight, policy.minimumScore), policy.maximumScore, candidate.scoreCeiling);
-  }
-  return score;
 }
 
 export interface FactionScoringPolicyContract {

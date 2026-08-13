@@ -17,7 +17,7 @@ interface PlayerPuzzle {
   acceptance: null | { acceptedAt: string; endsAt: string; puzzleChallengeAcceptedId: string; remainingSeconds: number };
   difficultyTier: string;
   family: string;
-  generatorVersion: number;
+  generatorVersion: string;
   hints: Array<{ kind: string; level: number; template: string }>;
   name: string;
   puzzleBlueprintId: string;

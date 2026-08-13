@@ -202,6 +202,12 @@ describe("persistence contract", () => {
     expect(migration).toContain('CapabilityDefinitionVersion_protect');
     expect(migration).toContain('CapabilityEvent_project');
     expect(migration).toContain('CREATE TABLE "RewardEvidenceEvent"');
+    const correction = readFileSync(
+      resolve(import.meta.dirname, "../../prisma/migrations/20260813160000_canonical_type_unification/migration.sql"),
+      "utf8",
+    );
+    expect(correction).toContain('DROP TABLE "RewardEvidenceEvent"');
+    expect(correction).toContain('DROP TABLE "RewardCandidate"');
     expect(migration).toContain('CREATE TABLE "FactionStandingEvidenceEvent"');
     expect(migration).toContain("No faction standing weights are owner-authorized");
   });

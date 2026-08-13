@@ -25,14 +25,14 @@ const suppliedEnumNames = [
   "SettlementSurfaceType", "CharacterType", "LatticeId", "AtlasConnectionType", "AtlasWrapMode", "SettlementPopulationEventType", "CapabilityValueKind",
   "AbilityType", "KnowledgeSkill", "AwarenessSkill", "PointOfInterestService", "SoundtrackCategory",
   "CapabilityOperation", "CapabilityRequirementOperator", "CapabilityParameterKind", "CapabilityMonotonicPolicy",
-  "CapabilityDefinitionVersionStatus", "CapabilityScopeType", "ScoringPolicyStatus", "RewardEvidenceKind",
+  "CapabilityDefinitionVersionStatus", "CapabilityScopeType", "ScoringPolicyStatus",
   "FactionStandingEvidenceKind", "KnowledgeBaseBlockKind",
   "CalendarTrigger", "SpeciesKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
   "EntityType", "Heirloom", "CitationQuality", "SourceType", "ContributorType", "ResearchCategory",
-  "DepartmentWitnessPathStatus", "PuzzleSharedComponentId", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
+  "ArchitectDepartment", "WitnessColor", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
   "BookGroupingType", "BookGroupingEditability",
   "FriendInvitationRequestStatus", "ExternalBulkApiState", "BulkMutationStatus", "MembershipGrantSource", "PerkStatus", "PaymentProvider",
-  "FulfillmentProvider", "ProtagonistImportance", "ReleaseNotesStatus", "ReleaseAudience", "ReleaseNoteCategory",
+  "FulfillmentProvider", "ReleaseNotesStatus", "ReleaseAudience", "ReleaseNoteCategory",
   "KnowledgeBaseDisclosureMode", "PuzzleHintKind", "BulkOperation", "ImportAliasDisposition", "ImportResultState",
   "MembershipRevocationReason", "ManagedAssetMediaKind", "PromptFamily", "PromptStatus", "Loquacity",
   "EmotionalTemperature", "OutlookOrientation", "CollaborativePosture", "BreedResearchDimension",
@@ -50,13 +50,10 @@ describe("Prisma finite enum authority", () => {
     expect(schema).toMatch(/^\s*role\s+String\s+@default\("user"\)$/m);
   });
 
-  it("preserves all 31 externally governed hyphenated puzzle component values", () => {
+  it("does not canonize proposal-only Puzzle component handles as a Prisma enum", () => {
     const mappedValues = [...schema.matchAll(/@map\("(PUZCMP-[A-Z0-9-]+)"\)/g)].map((match) => match[1]);
-    expect(mappedValues).toHaveLength(31);
-    expect(new Set(mappedValues).size).toBe(31);
-    expect(mappedValues).toContain("PUZCMP-AUDIO-TRANSPORT");
-    expect(mappedValues).toContain("PUZCMP-ACCESSIBILITY-MODE-SWITCHER");
-    expect(mappedValues).toContain("PUZCMP-COLLABORATION-PACKET");
+    expect(mappedValues).toHaveLength(0);
+    expect(new Set(mappedValues).size).toBe(0);
   });
 
   it("casts existing finite values instead of dropping and recreating populated columns", () => {

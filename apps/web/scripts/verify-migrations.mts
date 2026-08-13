@@ -289,39 +289,39 @@ try {
     );
 
     await verification.query(
-      `INSERT INTO "PuzzleBlueprint" ("puzzleBlueprintId", "family", "difficultyTier")
-       VALUES ('puzzle', 'LOGIC_CONSTRAINT', 'TIER_1_INITIATE')`,
+      `INSERT INTO "PuzzleBlueprint" ("puzzleBlueprintId", "title", "primaryFamily", "difficultyTier")
+       VALUES ('puzzle', 'Puzzle', 'LOGIC_CONSTRAINT', 'TIER_1_INITIATE')`,
     );
     await verification.query("BEGIN");
     await verification.query(
-      `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion") VALUES ('puzzle', 0)`,
+      `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion", "design") VALUES ('puzzle', '0.0.0', '{"schemaVersion":"manual-authoring-v1"}'::jsonb)`,
     );
     await verification.query(
       `INSERT INTO "PuzzleHintTemplate" ("puzzleBlueprintId", "generatorVersion", "level", "kind", "template") VALUES
-       ('puzzle', 0, 1, 'DIRECTIONAL', 'Direction'),
-       ('puzzle', 0, 2, 'GUIDED', 'Guide')`,
+       ('puzzle', '0.0.0', 1, 'DIRECTIONAL', 'Direction'),
+       ('puzzle', '0.0.0', 2, 'GUIDED', 'Guide')`,
     );
     await verification.query("COMMIT");
     await expectTransactionRejection(
       verification,
       async () => {
         await verification.query(
-          `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion") VALUES ('puzzle', 1)`,
+          `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion", "design") VALUES ('puzzle', '1.0.0', '{"schemaVersion":"manual-authoring-v1"}'::jsonb)`,
         );
         await verification.query(
           `INSERT INTO "PuzzleHintTemplate" ("puzzleBlueprintId", "generatorVersion", "level", "kind", "template")
-           VALUES ('puzzle', 1, 1, 'DIRECTIONAL', 'Only one')`,
+           VALUES ('puzzle', '1.0.0', 1, 'DIRECTIONAL', 'Only one')`,
         );
       },
       "PuzzleBlueprintVersion with one hint was not rejected",
     );
     await expectDatabaseRejection(
-      () => verification.query(`UPDATE "PuzzleHintTemplate" SET "template" = 'Changed' WHERE "puzzleBlueprintId" = 'puzzle' AND "generatorVersion" = 0 AND "level" = 1`),
+      () => verification.query(`UPDATE "PuzzleHintTemplate" SET "template" = 'Changed' WHERE "puzzleBlueprintId" = 'puzzle' AND "generatorVersion" = '0.0.0' AND "level" = 1`),
       "PuzzleHintTemplate update was not rejected",
     );
     await verification.query(
       `INSERT INTO "PuzzleChallengeAccepted" ("puzzleChallengeAcceptedId", "userId", "puzzleBlueprintId", "generatorVersion")
-       VALUES ('acceptance', 'capability-user', 'puzzle', 0)`,
+       VALUES ('acceptance', 'capability-user', 'puzzle', '0.0.0')`,
     );
     await expectDatabaseRejection(
       () => verification.query(`UPDATE "PuzzleChallengeAccepted" SET "acceptedAt" = CURRENT_TIMESTAMP WHERE "puzzleChallengeAcceptedId" = 'acceptance'`),
@@ -701,7 +701,60 @@ try {
     if (removedMatrix.rows[0]?.matrix !== null) throw new Error("Forward Atlas migration did not remove the polluted Matrix table");
     await applyThrough("20260810290000_external_bulk_api_audit");
     await applyThrough("20260811010000_resolved_blockers_application_contracts");
+    await applyThrough("20260812023000_soundtrack_asset_reuse");
+
+    await preCorrection.query(`INSERT INTO "Species" ("speciesId", "name", "speciesKind") VALUES ('legacy-species', 'Legacy Species', 'HUMAN')`);
+    await preCorrection.query(`INSERT INTO "Breed" ("breedId", "name", "speciesId") VALUES ('legacy-breed', 'Legacy Breed', 'legacy-species')`);
+    await preCorrection.query(`INSERT INTO "Soul" ("soulId", "name") VALUES ('legacy-soul', 'Legacy Soul')`);
+    await preCorrection.query(`INSERT INTO "Occupation" ("occupationId", "name") VALUES ('legacy-occupation', 'Legacy Occupation')`);
+    await preCorrection.query(
+      `INSERT INTO "Character" ("characterId", "displayName", "breedId") VALUES
+       ('legacy-character-concord', 'Legacy Concord', 'legacy-breed'),
+       ('legacy-character-ruin', 'Legacy Ruin', 'legacy-breed'),
+       ('legacy-character-schism', 'Legacy Schism', 'legacy-breed')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Protagonist" (
+         "protagonistId", "characterId", "importance", "worldKey", "gender", "age", "occupationId",
+         "knowledgeSkill", "awarenessSkill", "faction", "primaryAttribute", "secondaryAttribute", "worldHeirloom"
+       ) VALUES
+       ('legacy-protagonist-concord', 'legacy-character-concord', 'MAJOR', 'CONCORD', 'Woman', 30, 'legacy-occupation', 'LORE', 'EMPATHY', 'CONCORD', 'INTELLIGENCE', 'WISDOM', 'NECKLACE'),
+       ('legacy-protagonist-ruin', 'legacy-character-ruin', 'MAJOR', 'RUIN', 'Woman', 30, 'legacy-occupation', 'LORE', 'EMPATHY', 'RUIN', 'INTELLIGENCE', 'WISDOM', 'NECKLACE'),
+       ('legacy-protagonist-schism', 'legacy-character-schism', 'MAJOR', 'SCHISM', 'Woman', 30, 'legacy-occupation', 'LORE', 'EMPATHY', 'SCHISM', 'INTELLIGENCE', 'WISDOM', 'NECKLACE')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Companion" ("companionKey", "concordProtagonistId", "ruinProtagonistId", "schismProtagonistId", "soulId", "heirloom")
+       VALUES ('A', 'legacy-protagonist-concord', 'legacy-protagonist-ruin', 'legacy-protagonist-schism', 'legacy-soul', 'NECKLACE')`,
+    );
+
+    const correctiveMigration = await readFile(resolve(migrationsRoot, "20260813160000_canonical_type_unification", "migration.sql"), "utf8");
+    await preCorrection.query(`INSERT INTO "Architect" ("architectId", "departmentId", "name") VALUES ('ambiguous-architect', 'UNKNOWN', 'Ambiguous')`);
+    let ambiguousTypeError = "";
+    try {
+      await preCorrection.query(correctiveMigration);
+    } catch (error) {
+      ambiguousTypeError = error instanceof Error ? error.message : String(error);
+    }
+    if (!ambiguousTypeError.includes("architectRowsWithoutCharacterAuthority")) {
+      throw new Error(`Canonical type migration did not fail closed with a machine-readable Architect blocker: ${ambiguousTypeError}`);
+    }
+    await preCorrection.query(`DELETE FROM "Architect" WHERE "architectId" = 'ambiguous-architect'`);
     await applyThrough(migrations.at(-1)!);
+
+    const migratedCompanion = await preCorrection.query(
+      `SELECT definition."companionKey", definition."soulId", count(companion."characterId")::int AS "concreteCount"
+       FROM "CompanionDef" definition JOIN "Companion" companion USING ("companionKey")
+       WHERE definition."companionKey" = 'A' GROUP BY definition."companionKey", definition."soulId"`,
+    );
+    const migratedCharacters = await preCorrection.query(
+      `SELECT "characterId", "worldKey", "soulId", "occupationId", "gender", "age", "faction", "primaryAttribute", "secondaryAttribute"
+       FROM "Character" WHERE "characterId" LIKE 'legacy-character-%' ORDER BY "worldKey"`,
+    );
+    if (JSON.stringify(migratedCompanion.rows) !== JSON.stringify([{ companionKey: "A", soulId: "legacy-soul", concreteCount: 3 }])
+      || migratedCharacters.rows.length !== 3
+      || migratedCharacters.rows.some((row) => row.soulId !== "legacy-soul" || row.occupationId !== "legacy-occupation" || row.gender !== "Woman" || row.age !== 30)) {
+      throw new Error(`Representative Protagonist/Companion rows were not migrated losslessly: ${JSON.stringify({ migratedCompanion: migratedCompanion.rows, migratedCharacters: migratedCharacters.rows })}`);
+    }
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

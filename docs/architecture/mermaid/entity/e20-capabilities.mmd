@@ -18,15 +18,6 @@ erDiagram
   CapabilityState {
     string id PK
   }
-  RewardScoringPolicy {
-    string id PK
-  }
-  RewardScoringWeight {
-    string id PK
-  }
-  RewardEvidenceEvent {
-    string id PK
-  }
   FactionStandingScoringPolicy {
     string id PK
   }
@@ -46,7 +37,5 @@ erDiagram
   CapabilityDefinitionVersion ||--o{ CapabilityState : "relates to"
   CapabilityAddress ||--o{ CapabilityEvent : "relates to"
   CapabilityAddress ||--o{ CapabilityState : "relates to"
-  RewardScoringPolicy ||--o{ RewardScoringWeight : "relates to"
-  RewardScoringPolicy ||--o{ RewardEvidenceEvent : "relates to"
   FactionStandingScoringPolicy ||--o{ FactionStandingScoringWeight : "relates to"
   FactionStandingScoringPolicy ||--o{ FactionStandingEvidenceEvent : "relates to"

@@ -1,13 +1,19 @@
 %% Companion identity
 erDiagram
+  CompanionDef {
+    string id PK
+  }
   Companion {
     string id PK
   }
-  Protagonist {
+  Character {
     string id PK
   }
   Soul {
     string id PK
   }
-  Protagonist ||--o{ Companion : "relates to"
-  Soul ||--o{ Companion : "relates to"
+  Character ||--o| Soul : "relates to"
+  Character ||--o| Companion : "relates to"
+  Character ||--o{ CompanionDef : "relates to"
+  Soul ||--o{ CompanionDef : "relates to"
+  CompanionDef ||--o{ Companion : "relates to"

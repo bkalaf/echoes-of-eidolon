@@ -159,11 +159,6 @@ enum SpeciesKind {
   PET
 }
 
-enum ProtagonistImportance {
-  MINOR
-  MAJOR
-}
-
 enum TimelineEventType {
   HISTORICAL
   ATROCITY
@@ -649,44 +644,71 @@ enum ResearchCategory {
   OTHER
 }
 
-enum DepartmentWitnessPathStatus {
-  NORMAL
-  EXEMPT
-  EXCLUDED
+enum ArchitectDepartment {
+  ASTRONOMY
+  NAVIGATION
+  PROPULSION
+  HABITABILITY
+  PLANETOLOGY
+  PHYSICS
+  CHEMISTRY
+  COMPUTING
+  MATERIALS
+  ENERGY
+  NANOTECHNOLOGY
+  BIOLOGY
+  GENETICS
+  CRYOBIOLOGY
+  NEUROSCIENCE
+  MEDICINE
+  EPIDEMIOLOGY
+  ECOLOGY
+  TERRAFORMING
+  AGRICULTURE
+  BOTANY
+  ZOOLOGY
+  MICROBIOLOGY
+  INTELLIGENCE
+  ALIGNMENT
+  SOFTWARE
+  CYBERSECURITY
+  CONTINUITY
+  ARCHIVES
+  SYSTEMS
+  ARCHITECTURE
+  ROBOTICS
+  ELECTRICAL
+  MANUFACTURING
+  LOGISTICS
+  RESOURCES
+  RECYCLING
+  SAFETY
+  RELIABILITY
+  COMMAND
+  GOVERNANCE
+  JUSTICE
+  ECONOMICS
+  ADMINISTRATION
+  SOCIOLOGY
+  PSYCHOLOGY
+  ANTHROPOLOGY
+  HISTORY
+  EDUCATION
+  LINGUISTICS
+  HUMANITIES
+  OUTREACH
+  PATRON
+  TECHNOCRAT
 }
 
-enum PuzzleSharedComponentId {
-  PUZCMP_AUDIO_TRANSPORT             @map("PUZCMP-AUDIO-TRANSPORT")
-  PUZCMP_MUSIC_NOTATION_RAIL         @map("PUZCMP-MUSIC-NOTATION-RAIL")
-  PUZCMP_RHYTHM_HAPTIC_TRACK         @map("PUZCMP-RHYTHM-HAPTIC-TRACK")
-  PUZCMP_TILE_SIGNAL                 @map("PUZCMP-TILE-SIGNAL")
-  PUZCMP_LANTERN_LAYER_CONTROL       @map("PUZCMP-LANTERN-LAYER-CONTROL")
-  PUZCMP_GRID_VIEWPORT               @map("PUZCMP-GRID-VIEWPORT")
-  PUZCMP_EIGHT_NEIGHBOR_NAV          @map("PUZCMP-EIGHT-NEIGHBOR-NAV")
-  PUZCMP_DIRECTIONAL_AUDIO_HAPTIC    @map("PUZCMP-DIRECTIONAL-AUDIO-HAPTIC")
-  PUZCMP_LOGIC_GRID                  @map("PUZCMP-LOGIC-GRID")
-  PUZCMP_SET_WORKBENCH               @map("PUZCMP-SET-WORKBENCH")
-  PUZCMP_DOCUMENT_COMPARE            @map("PUZCMP-DOCUMENT-COMPARE")
-  PUZCMP_MATRIX_LAB                  @map("PUZCMP-MATRIX-LAB")
-  PUZCMP_IMAGE_TRANSFORM             @map("PUZCMP-IMAGE-TRANSFORM")
-  PUZCMP_QR_BOUND_ROUTE              @map("PUZCMP-QR-BOUND-ROUTE")
-  PUZCMP_COLOR_CHANNEL_LAB           @map("PUZCMP-COLOR-CHANNEL-LAB")
-  PUZCMP_SHAPE_LAYER                 @map("PUZCMP-SHAPE-LAYER")
-  PUZCMP_SLIDING_BLOCK_BOARD         @map("PUZCMP-SLIDING-BLOCK-BOARD")
-  PUZCMP_DRAG_CONNECTOR_BOARD        @map("PUZCMP-DRAG-CONNECTOR-BOARD")
-  PUZCMP_MECHANISM_SIM               @map("PUZCMP-MECHANISM-SIM")
-  PUZCMP_POLYHEDRON_VIEWER           @map("PUZCMP-POLYHEDRON-VIEWER")
-  PUZCMP_NON3D_EQUIVALENT            @map("PUZCMP-NON3D-EQUIVALENT")
-  PUZCMP_CHESS_REPLAY                @map("PUZCMP-CHESS-REPLAY")
-  PUZCMP_SPECTROGRAM                 @map("PUZCMP-SPECTROGRAM")
-  PUZCMP_TIMELINE_RESEARCH           @map("PUZCMP-TIMELINE-RESEARCH")
-  PUZCMP_HINT_PANEL                  @map("PUZCMP-HINT-PANEL")
-  PUZCMP_TIMER_BANNER                @map("PUZCMP-TIMER-BANNER")
-  PUZCMP_ANSWER_SUBMISSION           @map("PUZCMP-ANSWER-SUBMISSION")
-  PUZCMP_UNDO_RESET_HISTORY          @map("PUZCMP-UNDO-RESET-HISTORY")
-  PUZCMP_ACCESSIBILITY_MODE_SWITCHER @map("PUZCMP-ACCESSIBILITY-MODE-SWITCHER")
-  PUZCMP_PRINTABLE_WORKSHEET         @map("PUZCMP-PRINTABLE-WORKSHEET")
-  PUZCMP_COLLABORATION_PACKET        @map("PUZCMP-COLLABORATION-PACKET")
+enum WitnessColor {
+  BLACK
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  BLUE
+  WHITE
 }
 
 enum PuzzleFamily {
@@ -936,15 +958,6 @@ enum ScoringPolicyStatus {
   RETIRED
 }
 
-enum RewardEvidenceKind {
-  RUMOR
-  EVIDENCE
-  PROOF
-  DOUBT
-  CONTRADICTION
-  REFUTATION
-}
-
 enum FactionStandingEvidenceKind {
   MINOR_HARM
   MAJOR_HARM
@@ -992,11 +1005,8 @@ enum Holiday {
 enum EntityType {
   CULTURE
   CHARACTER
-  PROTAGONIST
-  ANTAGONIST
   WITNESS
   ARCHITECT
-  DEPARTMENT
   SPECIES
   SPECIES_GROUP
   BREED
@@ -1015,7 +1025,6 @@ enum EntityType {
   POINT_OF_INTEREST
   SITE
   SETTLEMENT
-  MATRIX
   COMPANION
   TOME
   DEFINITION
@@ -1654,123 +1663,116 @@ model Culture {
 }
 
 model Character {
-  characterId String       @id
-  displayName String
-  breedId     String
-  breed       Breed        @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
-  protagonist Protagonist?
-  antagonist  Antagonist?
+  characterId       String       @id
+  displayName       String
+  breedId           String
+  occupationId      String?
+  worldKey          WorldKey?
+  soulId            String?
+  gender            String?
+  age               Int?
+  faction           Faction?
+  primaryAttribute  AbilityType?
+  secondaryAttribute AbilityType?
+  breed             Breed        @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
+  occupation        Occupation?   @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
+  soul              Soul?         @relation(fields: [soulId], references: [soulId], onDelete: SetNull)
+  architect         Architect?
+  witness           Witness?
+  companion         Companion?
+  concordFor        CompanionDef[] @relation("CompanionDefConcordCharacter")
+  ruinFor           CompanionDef[] @relation("CompanionDefRuinCharacter")
+  schismFor         CompanionDef[] @relation("CompanionDefSchismCharacter")
 
   @@index([breedId])
-}
-
-model Protagonist {
-  protagonistId      String                @id
-  characterId        String                @unique
-  importance         ProtagonistImportance
-  worldKey           WorldKey?
-  gender             String?
-  age                Int?
-  occupationId       String?
-  knowledgeSkill     KnowledgeSkill?
-  awarenessSkill     AwarenessSkill?
-  faction            Faction?
-  primaryAttribute   AbilityType?
-  secondaryAttribute AbilityType?
-  worldHeirloom      Heirloom?
-  character          Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
-  occupation         Occupation?           @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
-  concordFor         Companion[]           @relation("CompanionConcordProtagonist")
-  ruinFor            Companion[]           @relation("CompanionRuinProtagonist")
-  schismFor          Companion[]           @relation("CompanionSchismProtagonist")
-
-  @@index([characterId])
   @@index([occupationId])
+  @@index([soulId])
 }
 
 model Architect {
-  architectId  String       @id
-  departmentId String
-  name         String
-  profession   String?
-  antagonists  Antagonist[]
+  architectId String                @id
+  characterId String                @unique
+  department  ArchitectDepartment
+  profession  String?
+  character   Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  witnesses   Witness[]
 }
 
-model Antagonist {
-  antagonistId          String          @id
-  characterId           String          @unique
-  worldKey              WorldKey?
-  family                String
-  trueFlawName          String
-  witnessName           String
-  presentsAs            String
-  inversionRule         String
-  architectId           String
-  apparentDomain        String
-  realDomain            String
-  color                 Json
-  legendaryRewardId     String
-  puzzleBlueprintId     String
-  constellationBeforeId String?
-  constellationAfterId  String?
-  character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
-  architect             Architect       @relation(fields: [architectId], references: [architectId], onDelete: Restrict)
-  legendaryReward       LegendaryReward @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
-  puzzleBlueprint       PuzzleBlueprint @relation(fields: [puzzleBlueprintId], references: [puzzleBlueprintId], onDelete: Restrict)
-  constellationBefore   Constellation?  @relation("AntagonistConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
-  constellationAfter    Constellation?  @relation("AntagonistConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
-  primaryForWitnesses   Witness[]       @relation("WitnessAntagonist1")
-  secondaryForWitnesses Witness[]       @relation("WitnessAntagonist2")
-
-  @@index([characterId])
-  @@index([architectId])
-  @@index([legendaryRewardId])
-  @@index([puzzleBlueprintId])
+model WitnessDef {
+  witnessDefId   String                @id
+  name           String
+  department     ArchitectDepartment
+  apparentDomain String
+  realDomain     String
+  color          WitnessColor
+  witnesses      Witness[]
 }
 
 model Witness {
-  witnessId     String      @id
-  antagonist1Id String
-  antagonist2Id String?
-  antagonist1   Antagonist  @relation("WitnessAntagonist1", fields: [antagonist1Id], references: [antagonistId], onDelete: Restrict)
-  antagonist2   Antagonist? @relation("WitnessAntagonist2", fields: [antagonist2Id], references: [antagonistId], onDelete: Restrict)
+  witnessId             String          @id
+  characterId           String          @unique
+  witnessDefId          String
+  trueFlawName          String
+  architectId           String
+  legendaryRewardId     String
+  constellationBeforeId String?
+  constellationAfterId  String?
+  character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  witnessDef            WitnessDef      @relation(fields: [witnessDefId], references: [witnessDefId], onDelete: Restrict)
+  architect             Architect       @relation(fields: [architectId], references: [architectId], onDelete: Restrict)
+  legendaryReward       LegendaryReward @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
+  constellationBefore   Constellation?  @relation("WitnessConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
+  constellationAfter    Constellation?  @relation("WitnessConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
 
-  @@index([antagonist1Id])
-  @@index([antagonist2Id])
+  @@index([witnessDefId])
+  @@index([architectId])
+  @@index([legendaryRewardId])
 }
 
 model Soul {
-  soulId       String        @id
-  name         String
-  companionKey CompanionKey?
-  companions   Companion[]
+  soulId        String         @id
+  name          String
+  characters    Character[]
+  companionDefs CompanionDef[]
+}
+
+model CompanionDef {
+  companionKey       CompanionKey @id
+  concordCharacterId String       @unique
+  ruinCharacterId    String       @unique
+  schismCharacterId  String       @unique
+  soulId             String
+  heirloom           Heirloom
+  knowledgeSkill     KnowledgeSkill
+  awarenessSkill     AwarenessSkill
+  concordCharacter   Character    @relation("CompanionDefConcordCharacter", fields: [concordCharacterId], references: [characterId], onDelete: Restrict)
+  ruinCharacter      Character    @relation("CompanionDefRuinCharacter", fields: [ruinCharacterId], references: [characterId], onDelete: Restrict)
+  schismCharacter    Character    @relation("CompanionDefSchismCharacter", fields: [schismCharacterId], references: [characterId], onDelete: Restrict)
+  soul               Soul         @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
+  companions         Companion[]
+  transformationBinding CompanionTransformationBinding?
+
+  @@index([concordCharacterId])
+  @@index([ruinCharacterId])
+  @@index([schismCharacterId])
+  @@index([soulId])
 }
 
 model Companion {
-  companionKey          CompanionKey                    @id
-  concordProtagonistId  String
-  ruinProtagonistId     String
-  schismProtagonistId   String
-  soulId                String
-  heirloom              Heirloom
-  concordProtagonist    Protagonist                     @relation("CompanionConcordProtagonist", fields: [concordProtagonistId], references: [protagonistId], onDelete: Restrict)
-  ruinProtagonist       Protagonist                     @relation("CompanionRuinProtagonist", fields: [ruinProtagonistId], references: [protagonistId], onDelete: Restrict)
-  schismProtagonist     Protagonist                     @relation("CompanionSchismProtagonist", fields: [schismProtagonistId], references: [protagonistId], onDelete: Restrict)
-  soul                  Soul                            @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
-  partyMemberships      PartyMember[]
-  transformationBinding CompanionTransformationBinding?
+  characterId      String       @id
+  companionKey     CompanionKey
+  character        Character    @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  companionDef     CompanionDef @relation(fields: [companionKey], references: [companionKey], onDelete: Restrict)
+  partyMemberships PartyMember[]
 
-  @@index([concordProtagonistId])
-  @@index([ruinProtagonistId])
-  @@index([schismProtagonistId])
-  @@index([soulId])
+  @@index([companionKey])
 }
 
 model CompanionTransformationBinding {
   companionKey           CompanionKey         @id
   layetteId              String
   capabilityDefinitionId String
-  companion              Companion            @relation(fields: [companionKey], references: [companionKey], onDelete: Cascade)
+  companionDef           CompanionDef         @relation(fields: [companionKey], references: [companionKey], onDelete: Cascade)
   layette                Layette              @relation(fields: [layetteId], references: [layetteId], onDelete: Restrict)
   capabilityDefinition   CapabilityDefinition @relation(fields: [capabilityDefinitionId], references: [capabilityDefinitionId], onDelete: Restrict)
 
@@ -1784,7 +1786,7 @@ model Occupation {
   description  String?
   active       Boolean                       @default(true)
   affinities   OccupationAttributeAffinity[]
-  protagonists Protagonist[]
+  characters   Character[]
 }
 
 model OccupationAttributeAffinity {
@@ -1829,15 +1831,13 @@ model Pillar {
   pillarId   String  @id
   name       String
   domain     String?
-  seatNumber Int?
 }
 
 model LegendaryReward {
   legendaryRewardId String            @id
   name              String
   description       String
-  antagonists       Antagonist[]
-  rewardCandidates  RewardCandidate[]
+  witnesses         Witness[]
 }
 
 model Lesson {
@@ -1865,8 +1865,8 @@ model Constellation {
   name              String
   rightAscension    String?
   declination       String?
-  beforeAntagonists Antagonist[] @relation("AntagonistConstellationBefore")
-  afterAntagonists  Antagonist[] @relation("AntagonistConstellationAfter")
+  beforeWitnesses   Witness[] @relation("WitnessConstellationBefore")
+  afterWitnesses    Witness[] @relation("WitnessConstellationAfter")
 }
 
 model Ark {
@@ -2359,59 +2359,6 @@ model CapabilityState {
   @@index([lastSequence])
 }
 
-model RewardScoringPolicy {
-  rewardScoringPolicyId String                @id
-  version               Int                   @unique
-  status                ScoringPolicyStatus   @default(DRAFT)
-  minimumScore          Float
-  maximumScore          Float
-  createdAt             DateTime              @default(now())
-  weights               RewardScoringWeight[]
-  evidenceEvents        RewardEvidenceEvent[]
-}
-
-model RewardScoringWeight {
-  rewardScoringPolicyId String
-  kind                  RewardEvidenceKind
-  weight                Float
-  rewardScoringPolicy   RewardScoringPolicy @relation(fields: [rewardScoringPolicyId], references: [rewardScoringPolicyId], onDelete: Cascade)
-
-  @@id([rewardScoringPolicyId, kind])
-}
-
-model RewardCandidate {
-  rewardCandidateId String                @id
-  legendaryRewardId String
-  candidateKey      String
-  scoreCeiling      Float
-  legendaryReward   LegendaryReward       @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
-  evidenceEvents    RewardEvidenceEvent[]
-
-  @@unique([legendaryRewardId, candidateKey])
-  @@index([legendaryRewardId])
-}
-
-model RewardEvidenceEvent {
-  rewardEvidenceEventId String              @id
-  scopeType             CapabilityScopeType
-  scopeId               String
-  legendaryRewardId     String
-  rewardCandidateId     String
-  kind                  RewardEvidenceKind
-  sourceEntityType      EntityType?
-  sourceEntityId        String?
-  evidenceId            String
-  scoringPolicyVersion  Int
-  occurredAt            DateTime
-  recordedAt            DateTime            @default(now())
-  rewardCandidate       RewardCandidate     @relation(fields: [rewardCandidateId], references: [rewardCandidateId], onDelete: Restrict)
-  rewardScoringPolicy   RewardScoringPolicy @relation(fields: [scoringPolicyVersion], references: [version], onDelete: Restrict)
-
-  @@unique([scopeType, scopeId, rewardCandidateId, evidenceId], map: "RewardEvidence_scope_candidate_evidence_key")
-  @@index([legendaryRewardId, rewardCandidateId])
-  @@index([scoringPolicyVersion])
-}
-
 model FactionStandingScoringPolicy {
   factionStandingScoringPolicyId String                         @id
   version                        Int                            @unique
@@ -2793,15 +2740,16 @@ model SpeciesGroup {
 
 model PuzzleBlueprint {
   puzzleBlueprintId String                   @id
-  family            PuzzleFamily
+  title             String
+  primaryFamily     PuzzleFamily
   difficultyTier    PuzzleDifficultyTier
   versions          PuzzleBlueprintVersion[]
-  antagonists       Antagonist[]
 }
 
 model PuzzleBlueprintVersion {
   puzzleBlueprintId String
-  generatorVersion  Int
+  generatorVersion  String
+  design            Json
   createdAt         DateTime                  @default(now())
   puzzleBlueprint   PuzzleBlueprint           @relation(fields: [puzzleBlueprintId], references: [puzzleBlueprintId], onDelete: Cascade)
   hints             PuzzleHintTemplate[]
@@ -2812,7 +2760,7 @@ model PuzzleBlueprintVersion {
 
 model PuzzleHintTemplate {
   puzzleBlueprintId String
-  generatorVersion  Int
+  generatorVersion  String
   level             Int
   kind              PuzzleHintKind
   template          String
@@ -2825,7 +2773,7 @@ model PuzzleChallengeAccepted {
   puzzleChallengeAcceptedId String                 @id
   userId                    String
   puzzleBlueprintId         String
-  generatorVersion          Int
+  generatorVersion          String
   acceptedAt                DateTime               @default(now())
   user                      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   puzzleVersion             PuzzleBlueprintVersion @relation(fields: [puzzleBlueprintId, generatorVersion], references: [puzzleBlueprintId, generatorVersion], onDelete: Restrict, map: "PuzzleChallengeAccepted_version_fkey")
@@ -3002,15 +2950,15 @@ model Party {
 
 model PartyMember {
   partyId           String
-  companionKey      CompanionKey
+  characterId       String
   rest              Float?
   morale            Float?
   comfort           Float?
   conditionSentence String?
   party             Party        @relation(fields: [partyId], references: [partyId], onDelete: Cascade)
-  companion         Companion    @relation(fields: [companionKey], references: [companionKey], onDelete: Restrict)
+  companion         Companion    @relation(fields: [characterId], references: [characterId], onDelete: Restrict)
 
-  @@id([partyId, companionKey])
+  @@id([partyId, characterId])
 }
 
 model RecoveryPolicy {

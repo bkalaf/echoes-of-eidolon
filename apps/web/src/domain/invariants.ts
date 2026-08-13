@@ -1,57 +1,71 @@
 import { z } from "zod";
 
-import { CompanionKey, Heirloom, PuzzleDifficultyTier, PuzzleFamily, WorldKey as PrismaWorldKey } from "../generated/prisma/enums";
-import type { Companion, Protagonist, PuzzleBlueprint, Witness, WorldKey } from "./types";
+import { ArchitectDepartment, AwarenessSkill, CompanionKey, Heirloom, KnowledgeSkill, PuzzleDifficultyTier, PuzzleFamily, WitnessColor, WorldKey as PrismaWorldKey } from "../generated/prisma/enums";
+import type { Character, Companion, CompanionDef, PuzzleBlueprint, Witness, WorldKey } from "./types";
 
 export const witnessSchema = z
   .object({
     witnessId: z.string().min(1),
-    antagonist1Id: z.string().min(1),
-    antagonist2Id: z.string().min(1).nullish(),
-  }).strict()
-  .refine(
-    (witness) =>
-      !witness.antagonist2Id || witness.antagonist1Id !== witness.antagonist2Id,
-    { message: "A Witness must reference one or two distinct Antagonists" },
-  ) satisfies z.ZodType<Witness>;
+    characterId: z.string().min(1),
+    witnessDefId: z.string().min(1),
+    trueFlawName: z.string().min(1),
+    architectId: z.string().min(1),
+    legendaryRewardId: z.string().min(1),
+    constellationBeforeId: z.string().min(1).nullish(),
+    constellationAfterId: z.string().min(1).nullish(),
+  }).strict() satisfies z.ZodType<Witness>;
+
+export const witnessDefSchema = z.object({
+  witnessDefId: z.string().min(1), name: z.string().min(1), department: z.enum(ArchitectDepartment), apparentDomain: z.string().min(1), realDomain: z.string().min(1), color: z.enum(WitnessColor),
+}).strict();
 
 export const companionSchema = z.object({
+  characterId: z.string().min(1),
   companionKey: z.enum(CompanionKey),
-  concordProtagonistId: z.string().min(1),
-  ruinProtagonistId: z.string().min(1),
-  schismProtagonistId: z.string().min(1),
+}).strict() satisfies z.ZodType<Companion>;
+
+export const companionDefSchema = z.object({
+  companionKey: z.enum(CompanionKey),
+  concordCharacterId: z.string().min(1),
+  ruinCharacterId: z.string().min(1),
+  schismCharacterId: z.string().min(1),
   soulId: z.string().min(1),
   heirloom: z.enum(Heirloom),
-}).strict().refine((companion) => new Set([
-  companion.concordProtagonistId,
-  companion.ruinProtagonistId,
-  companion.schismProtagonistId,
+  knowledgeSkill: z.enum(KnowledgeSkill),
+  awarenessSkill: z.enum(AwarenessSkill),
+}).strict().refine((companionDef) => new Set([
+  companionDef.concordCharacterId,
+  companionDef.ruinCharacterId,
+  companionDef.schismCharacterId,
 ]).size === 3, {
-  message: "A Companion requires three distinct Protagonists",
-}) satisfies z.ZodType<Companion>;
+  message: "A CompanionDef requires three distinct Characters",
+}) satisfies z.ZodType<CompanionDef>;
 
 export function validateCompanionWorldSlots(
-  companionInput: Companion,
-  protagonists: readonly Protagonist[],
-): Companion {
-  const companion = companionSchema.parse(companionInput);
-  const protagonistsById = new Map(protagonists.map((protagonist) => [protagonist.protagonistId, protagonist]));
+  companionDefInput: CompanionDef,
+  characters: readonly Character[],
+): CompanionDef {
+  const companionDef = companionDefSchema.parse(companionDefInput);
+  const charactersById = new Map(characters.map((character) => [character.characterId, character]));
   const slots = [
-    ["CONCORD", companion.concordProtagonistId],
-    ["RUIN", companion.ruinProtagonistId],
-    ["SCHISM", companion.schismProtagonistId],
+    ["CONCORD", companionDef.concordCharacterId],
+    ["RUIN", companionDef.ruinCharacterId],
+    ["SCHISM", companionDef.schismCharacterId],
   ] as const;
-  for (const [worldKey, protagonistId] of slots) {
-    if (protagonistsById.get(protagonistId)?.worldKey !== worldKey) {
-      throw new Error(`${worldKey} Companion slot requires a ${worldKey} Protagonist`);
+  for (const [worldKey, characterId] of slots) {
+    const character = charactersById.get(characterId);
+    if (character?.worldKey !== worldKey) {
+      throw new Error(`${worldKey} CompanionDef slot requires a ${worldKey} Character`);
     }
+    if (character.soulId !== companionDef.soulId) throw new Error(`${worldKey} CompanionDef Character must share Soul ${companionDef.soulId}`);
   }
-  return companion;
+  return companionDef;
 }
 
 export const puzzleBlueprintSchema = z.object({
   puzzleBlueprintId: z.string().min(1),
-  family: z.enum(PuzzleFamily),
+  title: z.string().min(1),
+  primaryFamily: z.enum(PuzzleFamily),
   difficultyTier: z.enum(PuzzleDifficultyTier),
 }).strict() satisfies z.ZodType<PuzzleBlueprint>;
 

@@ -4,18 +4,18 @@
 import type {
   AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityMonotonicPolicy,
   CapabilityOperation, CapabilityParameterKind, CapabilityValueKind,
-  CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId, EconomicForm,
+  AbilityType, ArchitectDepartment, AwarenessSkill, CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId, EconomicForm,
   EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity,
-  Motivation, OperatingStyle, OutlookOrientation, OwnershipMode, PoliticalForm,
-  ProtagonistImportance, PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
+  KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode, PoliticalForm,
+  PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
   SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind,
-  StructureOrientation, TimelineEventType, WorldKey,
+  StructureOrientation, TimelineEventType, WitnessColor, WorldKey, Faction,
 } from "../generated/prisma/enums";
 
 export type {
   AdministrationMode, AllocationMode, AuthoritySource, CitationQuality, CompanionKey,
   CulturePoolId, EconomicForm, Heirloom, InterludeType, LegitimacyBasis, Motivation,
-  OperatingStyle, OwnershipMode, PoliticalForm, ProtagonistImportance, RegionId,
+  OperatingStyle, OwnershipMode, PoliticalForm, RegionId,
   ResearchCategory, SettlementClassification, SpeciesKind, StructureOrientation,
   TimelineEventType, WorldKey,
 } from "../generated/prisma/enums";
@@ -67,41 +67,50 @@ export interface Culture {
   clothingPalette: string[];
   clothing: string;
 }
-export interface Character { characterId: string; displayName: string; breedId: Breed['breedId']; }
-export interface Protagonist { protagonistId: string; characterId: Character['characterId']; importance: ProtagonistImportance; worldKey: WorldKey | null; }
-export interface Architect { architectId: string; departmentId: string; name: string; profession?: string | null; }
-export interface Antagonist {
-  antagonistId: string;
+export interface Character {
+  characterId: string;
+  displayName: string;
+  breedId: Breed['breedId'];
+  occupationId?: string | null;
+  worldKey?: WorldKey | null;
+  soulId?: Soul['soulId'] | null;
+  gender?: string | null;
+  age?: number | null;
+  faction?: Faction | null;
+  primaryAttribute?: AbilityType | null;
+  secondaryAttribute?: AbilityType | null;
+}
+export interface Architect { architectId: string; characterId: Character['characterId']; department: ArchitectDepartment; profession?: string | null; }
+export interface WitnessDef { witnessDefId: string; name: string; department: ArchitectDepartment; apparentDomain: string; realDomain: string; color: WitnessColor; }
+export interface Witness {
+  witnessId: string;
   characterId: Character['characterId'];
-  worldKey: WorldKey | null;
-  family: string;
+  witnessDefId: WitnessDef['witnessDefId'];
   trueFlawName: string;
-  witnessName: string;
-  presentsAs: string;
-  inversionRule: string;
   architectId: Architect['architectId'];
-  apparentDomain: string;
-  realDomain: string;
-  color: string[] | string;
   legendaryRewardId: string;
-  puzzleBlueprintId: string;
   constellationBeforeId?: string | null;
   constellationAfterId?: string | null;
 }
-export interface Witness { witnessId: string; antagonist1Id: Antagonist['antagonistId']; antagonist2Id?: Antagonist['antagonistId'] | null; }
 export interface Soul { soulId: string; name: string; }
-export interface Companion {
+export interface CompanionDef {
   companionKey: CompanionKey;
-  concordProtagonistId: Protagonist['protagonistId'];
-  ruinProtagonistId: Protagonist['protagonistId'];
-  schismProtagonistId: Protagonist['protagonistId'];
+  concordCharacterId: Character['characterId'];
+  ruinCharacterId: Character['characterId'];
+  schismCharacterId: Character['characterId'];
   soulId: Soul['soulId'];
   heirloom: Heirloom;
+  knowledgeSkill: KnowledgeSkill;
+  awarenessSkill: AwarenessSkill;
+}
+export interface Companion {
+  characterId: Character['characterId'];
+  companionKey: CompanionKey;
 }
 export interface TimelineEvent { timelineEventId: string; name: string; timelineEventType: TimelineEventType; summary: string; }
 export interface Interlude { interludeId: string; name: string; interludeType: InterludeType; summary: string; }
 export interface InterludeSubstitution { interludeSubstitutionId: string; interludeId: string; replacementInterludeId: string; reason: string; }
-export interface Pillar { pillarId: string; name: string; domain?: string; seatNumber?: number; }
+export interface Pillar { pillarId: string; name: string; domain?: string; }
 export interface LegendaryReward { legendaryRewardId: string; name: string; description: string; }
 export interface Lesson { lessonId: string; name: string; description: string; }
 export interface Tome { tomeId: string; title: string; author?: string; }
@@ -154,4 +163,4 @@ export interface CapabilityDefinitionVersion {
 }
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
 export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }
-export interface PuzzleBlueprint { puzzleBlueprintId: string; family: PuzzleFamily; difficultyTier: PuzzleDifficultyTier; }
+export interface PuzzleBlueprint { puzzleBlueprintId: string; title: string; primaryFamily: PuzzleFamily; difficultyTier: PuzzleDifficultyTier; }

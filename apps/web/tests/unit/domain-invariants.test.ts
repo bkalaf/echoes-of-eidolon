@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   calendarContract,
-  companionSchema,
+  companionDefSchema,
   migrationConservesBreedPopulation,
   planMigration,
   puzzleBlueprintSchema,
@@ -11,42 +11,36 @@ import {
 } from "../../src/domain/invariants";
 
 describe("canonical domain invariants", () => {
-  it("requires one or two distinct Antagonists on a Witness", () => {
-    expect(
-      witnessSchema.parse({ witnessId: "WIT-1", antagonist1Id: "ANT-1" }),
-    ).toMatchObject({ antagonist1Id: "ANT-1" });
-    expect(() =>
-      witnessSchema.parse({
-        witnessId: "WIT-1",
-        antagonist1Id: "ANT-1",
-        antagonist2Id: "ANT-1",
-      }),
-    ).toThrow("distinct Antagonists");
+  it("requires canonical direct Witness subtype bindings", () => {
+    expect(witnessSchema.parse({ witnessId: "WIT-1", characterId: "CHAR-1", witnessDefId: "WDEF-1", trueFlawName: "Pride", architectId: "ARCH-1", legendaryRewardId: "REWARD-1" })).toMatchObject({ characterId: "CHAR-1", witnessDefId: "WDEF-1" });
   });
 
-  it("requires three distinct Protagonists in their matching Companion world slots", () => {
-    const companion = companionSchema.parse({
+  it("requires three distinct Characters in matching CompanionDef world and Soul slots", () => {
+    const companion = companionDefSchema.parse({
       companionKey: "A",
-      concordProtagonistId: "PRO-CONCORD",
-      ruinProtagonistId: "PRO-RUIN",
-      schismProtagonistId: "PRO-SCHISM",
+      concordCharacterId: "CHAR-1",
+      ruinCharacterId: "CHAR-2",
+      schismCharacterId: "CHAR-3",
       soulId: "SOUL-1",
       heirloom: "NECKLACE",
+      knowledgeSkill: "LORE",
+      awarenessSkill: "EMPATHY",
     });
     expect(validateCompanionWorldSlots(companion, [
-      { protagonistId: "PRO-CONCORD", characterId: "CHAR-1", importance: "MAJOR", worldKey: "CONCORD" },
-      { protagonistId: "PRO-RUIN", characterId: "CHAR-2", importance: "MAJOR", worldKey: "RUIN" },
-      { protagonistId: "PRO-SCHISM", characterId: "CHAR-3", importance: "MAJOR", worldKey: "SCHISM" },
+      { characterId: "CHAR-1", displayName: "C", breedId: "B1", worldKey: "CONCORD", soulId: "SOUL-1" },
+      { characterId: "CHAR-2", displayName: "R", breedId: "B2", worldKey: "RUIN", soulId: "SOUL-1" },
+      { characterId: "CHAR-3", displayName: "S", breedId: "B3", worldKey: "SCHISM", soulId: "SOUL-1" },
     ])).toEqual(companion);
     expect(() => validateCompanionWorldSlots(companion, [
-      { protagonistId: "PRO-CONCORD", characterId: "CHAR-1", importance: "MAJOR", worldKey: "RUIN" },
-    ])).toThrow("CONCORD Companion slot requires a CONCORD Protagonist");
+      { characterId: "CHAR-1", displayName: "C", breedId: "B1", worldKey: "RUIN", soulId: "SOUL-1" },
+    ])).toThrow("CONCORD CompanionDef slot requires a CONCORD Character");
   });
 
   it("keeps mutable root fields separate from immutable Puzzle Blueprint versions", () => {
     const blueprint = puzzleBlueprintSchema.parse({
       puzzleBlueprintId: "PUZ-1",
-      family: "LOGIC_CONSTRAINT",
+      title: "Puzzle",
+      primaryFamily: "LOGIC_CONSTRAINT",
       difficultyTier: "TIER_3_EXPERT",
     });
     expect(blueprint).not.toHaveProperty("hint1");

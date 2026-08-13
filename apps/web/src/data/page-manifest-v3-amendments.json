@@ -2,7 +2,14 @@
   "excludedScreenIds": [
     "DATA027",
     "DATA_MATRIX_EDIT",
-    "DATA_MATRIX_IMPORT"
+    "DATA_MATRIX_IMPORT",
+    "DATA_ANTAGONIST_TABLE",
+    "DATA001",
+    "DATA006",
+    "DATA_ANTAGONIST_NEW",
+    "DATA_PROTAGONIST_EDIT",
+    "DATA_ANTAGONIST_IMPORT",
+    "DATA_PROTAGONIST_IMPORT"
   ],
   "additions": [
     {

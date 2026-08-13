@@ -41,18 +41,15 @@ export async function getPlayerGameplayProjection(userId: string, role: Authoriz
     database.recoveryPolicy.findFirst({ where: { active: true }, orderBy: { createdAt: "desc" } }),
   ]);
   if (!party) return { party: null };
-  const companions = await database.companion.findMany({
+  const companions = await database.companionDef.findMany({
     orderBy: { companionKey: "asc" },
     include: {
-      soul: true,
-      concordProtagonist: { include: { character: true } },
-      ruinProtagonist: { include: { character: true } },
-      schismProtagonist: { include: { character: true } },
+      soul: true, concordCharacter: true, ruinCharacter: true, schismCharacter: true,
     },
   });
-  const memberByKey = new Map(party.members.map((member) => [member.companionKey, member]));
+  const memberByCharacterId = new Map(party.members.map((member) => [member.characterId, member]));
   const thresholds = recoveryPolicy ? recoveryConfigurationSchema.safeParse(recoveryPolicy.configuration) : undefined;
-  const characterForWorld = (companion: typeof companions[number]) => party.worldInstance.worldKey === "CONCORD" ? companion.concordProtagonist.character : party.worldInstance.worldKey === "RUIN" ? companion.ruinProtagonist.character : companion.schismProtagonist.character;
+  const characterForWorld = (companion: typeof companions[number]) => party.worldInstance.worldKey === "CONCORD" ? companion.concordCharacter : party.worldInstance.worldKey === "RUIN" ? companion.ruinCharacter : companion.schismCharacter;
   const characterIds = companions.map(characterForWorld).map((character) => character.characterId);
   const transformed = await database.capabilityState.findMany({
     select: { scopeId: true },
@@ -83,8 +80,8 @@ export async function getPlayerGameplayProjection(userId: string, role: Authoriz
       companions: companionKeys.map((companionKey) => {
         const companion = companions.find((row) => row.companionKey === companionKey);
         if (!companion) return { companionKey, name: `Companion ${companionKey}`, condition: null, conditionSentence: "Authored companion data is unavailable.", transformed: false };
-        const member = memberByKey.get(companion.companionKey);
         const character = characterForWorld(companion);
+        const member = memberByCharacterId.get(character.characterId);
         const condition = member && thresholds?.success && member.rest !== null && member.morale !== null && member.comfort !== null
           ? projectRecoveryCondition({ rest: member.rest, morale: member.morale, comfort: member.comfort }, thresholds.data)
           : null;
@@ -110,7 +107,7 @@ export async function applyCurrentInnService(userId: string, action: "STAY" | "E
     for (const member of session.party.members) {
       if (member.rest === null || member.morale === null || member.comfort === null) continue;
       const next = applyRecovery({ rest: member.rest, morale: member.morale, comfort: member.comfort }, effect, configuration.data.maximum);
-      await transaction.partyMember.update({ where: { partyId_companionKey: { partyId: member.partyId, companionKey: member.companionKey } }, data: next });
+      await transaction.partyMember.update({ where: { partyId_characterId: { partyId: member.partyId, characterId: member.characterId } }, data: next });
     }
     return { action, cost: effect.cost };
   }, { isolationLevel: "Serializable" });

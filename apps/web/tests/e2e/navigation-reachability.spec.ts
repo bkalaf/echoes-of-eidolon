@@ -13,7 +13,14 @@ const captureDirectory = "/tmp/echoes-e2e-auth-codes";
 let databasePromise: Promise<Awaited<ReturnType<typeof import("../../src/server/database")["getDatabase"]>>> | undefined;
 
 async function testDatabase() {
-  databasePromise ??= import("../../src/server/database").then(({ getDatabase }) => getDatabase());
+  if (!databasePromise) {
+    if (!process.env.DATABASE_URL) {
+      const repositoryRoot = resolve(process.cwd(), "../..");
+      const config = JSON.parse(readFileSync(resolve(repositoryRoot, ".local/config.json"), "utf8")) as { credentialDirectory: string };
+      process.env.DATABASE_URL = readFileSync(resolve(repositoryRoot, config.credentialDirectory, "database_url"), "utf8").trim();
+    }
+    databasePromise = import("../../src/server/database").then(({ getDatabase }) => getDatabase());
+  }
   return databasePromise;
 }
 
@@ -47,7 +54,8 @@ async function crawlDirectory(page: Page, label: string) {
 }
 
 test("generated navigation registry has no active orphan, dead-end, or broken-link screens", () => {
-  expect(registry.activeScreenCount).toBe(298);
+  expect(registry.activeScreenCount).toBe(293);
+  expect(registry.rows).toHaveLength(registry.activeScreenCount);
   expect(registry.statusCounts.ORPHANED).toBe(0);
   expect(registry.statusCounts.DEAD_END).toBe(0);
   expect(registry.statusCounts.BROKEN_LINK).toBe(0);

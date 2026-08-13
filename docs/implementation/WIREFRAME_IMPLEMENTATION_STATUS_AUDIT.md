@@ -1,9 +1,9 @@
 # Wireframe Implementation Status Audit
 
-Date: 2026-08-12
+Date: 2026-08-13
 Repository: `/home/bobby/echoes-of-eidolon-0.3.0`
-Controlling registry: `apps/web/src/data/page-manifest.json` plus the V3 and V4 amendment manifests (269 base states; 298 mechanically derived active states)
-Audited checkout: `codex/0.3.0`, based on deployed navigation hotfix `742d8ffb7d20c24d3308acd2ecae93de091d8c53`
+Controlling registry: `apps/web/src/data/page-manifest.json` plus the V3 and V4 amendment manifests (269 base states; 293 mechanically derived active states)
+Audited checkout: `codex/type-unification-campaign-readiness`, based on validated 0.3.0 SHA `64881efb67067dfb40427d1575671e35b31e70ec`
 
 ## Standard used
 
@@ -13,28 +13,29 @@ A page is **IMPLEMENTED** only when a task-specific UI exists and its primary re
 - **PARTIAL** — task-specific UI exists, but a material state, action, parameter, or persistence path is missing or broken.
 - **PLACEHOLDER** — the registered task is deliberately represented by unavailable/deferred/static content.
 - **MISSING** — no task-specific page exists, or routing selects the wrong/generic fallback.
+- **EXCLUDED** — forensic base-manifest row superseded by an owner correction and absent from the active registry.
 
 ## Totals
 
 | Status | Count |
 | --- | ---: |
-| IMPLEMENTED | 260 |
+| IMPLEMENTED | 255 |
 | PARTIAL | 24 |
 | PLACEHOLDER | 14 |
 | MISSING | 0 |
-| **Total active V3/V4 states** | **298** |
+| **Total active V3/V4 states** | **293** |
 
-Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix entity states remain listed below for forensic traceability but are excluded from the active count.
+Therefore **38 of 293 active V3/V4** wireframe pages/states are not fully implemented under this standard. The three superseded Matrix rows and seven superseded Protagonist/Antagonist rows remain listed below for forensic traceability but are excluded from the active count.
 
 ## Critical findings
 
 1. **Capability authoring is implemented.** CAP01-CAP05 and DATA030 use the versioned definition/address/event/projection authority; legacy history is migrated only when semantics are deterministically recoverable.
-2. **The normal Data admin surface is implemented for every active registered entity.** Its allowlist and field contracts are generated from the canonical entity registry and Prisma schema, with persisted list/search/create/edit/delete behavior.
+2. **The normal Data admin surface is implemented for every active registered entity.** Prisma drives complete persisted-field discovery while the curated registry controls authoring behavior; explicit exclusions cannot silently hide fields.
 3. **Every active registered entity import has transaction-backed Apply.** JSON, YAML, Markdown, and HTML parsing feed exact-field validation; existing identities are idempotent only when canonical values match.
 4. **Player runtime pages remain incomplete.** Maps and globes expose the authorized physical Atlas catalog while keeping discovery/history fail-closed; Knowledge, Tomes, city/sky maps, Companions, progress, and achievements still lack complete canonical player-facing owners. Player Support now has a first-party persisted Help Ticket owner.
 5. **Reviewed commerce/support workflows are implemented.** Catalog, cart, Stripe checkout, optional subscription lifecycle, eligible return intake, guest lookup/status, and order support use server-owned persisted truth. Unapproved refund/proration/dunning rules remain narrow fail-closed sub-operations rather than placeholder parent screens.
 6. **Campaign world planners and V3 Book Groupings are implemented.** Campaign placements keep explicit Book membership; grouping values keep their separate explicit range-set authority; custom column preferences change presentation only.
-7. **Implementation and navigation are separate gates.** The companion navigation audit covers all 298 active states and reports zero orphaned, dead-end, or broken-link states; browser coverage remains representative rather than a one-to-one pixel comparison for every wireframe.
+7. **Implementation and navigation are separate gates.** The companion navigation audit covers all 293 active states and reports zero orphaned, dead-end, or broken-link states; browser coverage remains representative rather than a one-to-one pixel comparison for every wireframe.
 
 ## Explicit page-by-page inventory
 
@@ -144,18 +145,18 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 102 | `ADM020` | Bulk Operations & External API | `/admin/data/bulk-operations` | **IMPLEMENTED** | External data authority is OFF by default; an authorized administrator can explicitly enable KEYED or KEYLESS mode, with hash-only key storage and 60-minute endpoint-inactivity shutoff. |
 | 103 | `ADM021` | Bulk API - Enabled Key | `/admin/data/bulk-operations` | **IMPLEMENTED** | A temporary KEYED session shows plaintext once, retains only its hash, refreshes activity only on authenticated endpoint use, and can be revoked immediately. |
 | 104 | `ADM022` | Bulk Operations - Audit / Recent Activity | `/admin/data/bulk-operations` | **IMPLEMENTED** | Reads append-only BulkOperationAudit records with actor/session attribution, result, count, time, and bounded detail. |
-| 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 105 | `DATA_ANTAGONIST_TABLE` | Antagonist Records | `/admin/data/antagonist` | **EXCLUDED** | Antagonist is not canonical; the amendment registry removes this route from the active application. |
 | 106 | `ADM031` | Asset Manager - Audio | `/admin/assets/audio` | **PARTIAL** | Searches persisted audio assets and opens complete final-byte, purpose-link, and technical-probe detail; new/replacement intake remains in the required sanitizing CLI pipeline rather than an unsafe browser uploader. |
 | 107 | `ADM032` | Asset Manager - Video | `/admin/assets/video` | **PARTIAL** | Searches persisted video assets and opens complete final-byte, purpose-link, and technical-probe detail; new/replacement intake remains in the required sanitizing CLI pipeline rather than an unsafe browser uploader. |
 | 108 | `ADM033` | Prompt Manager | `/admin/prompts` | **IMPLEMENTED** | Creates strict prompt roots with version 1, appends immutable versions, and associates media-compatible managed results to an explicit version; unsupported result contracts fail closed. |
 | 109 | `ADM034` | Prompt Manager - Outstanding Only | `/admin/prompts` | **IMPLEMENTED** | Applies the persisted OUTSTANDING filter while retaining strict creation, append-only versioning, and compatible managed-result association actions. |
 | 110 | `DATA000` | Data - Object Types | `/admin/data` | **IMPLEMENTED** | Registry-derived object-type index links every active canonical entity to persisted records and its validated import workflow. |
-| 111 | `DATA001` | Data - Protagonist | `/admin/data/protagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 111 | `DATA001` | Data - Protagonist | `/admin/data/protagonist` | **EXCLUDED** | Protagonist is not canonical; the amendment registry removes this route from the active application. |
 | 112 | `DATA002` | Data - Culture | `/admin/data/culture` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 113 | `DATA003` | Data - Character | `/admin/data/character` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 114 | `DATA004` | Data - Witness | `/admin/data/witness` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 115 | `DATA005` | Data - Architect | `/admin/data/architect` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
-| 116 | `DATA006` | Data - Antagonist | `/admin/data/antagonist` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 116 | `DATA006` | Data - Antagonist | `/admin/data/antagonist` | **EXCLUDED** | Antagonist is not canonical; the amendment registry removes this route from the active application. |
 | 117 | `DATA007` | Data - Species | `/admin/data/species` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 118 | `DATA008` | Data - PersonalityExpression | `/admin/data/personality-expression` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
 | 119 | `DATA009` | Data - TimelineEvent | `/admin/data/timeline-event` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
@@ -178,7 +179,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 136 | `PZ001` | Puzzle Designer - Blueprints | `/admin/puzzles` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots, immutable versions, and governed hint metadata. |
 | 137 | `PZ002` | Puzzle Blueprint Editor | `/admin/puzzles/:id` | **PARTIAL** | Reads immutable history and appends a new generator version with exactly DIRECTIONAL then GUIDED hints; prompt, answer, status, assignment, and accessibility owners are absent. |
 | 138 | `PZ003` | Puzzle Test/Preview | `/admin/puzzles/:id/test` | **PARTIAL** | Validates deterministic identity against a persisted version without starting a timer; generator configuration, instance generation, and answer validation are absent. |
-| 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **IMPLEMENTED** | Schema-derived persisted record administration supports list, search, create, edit, delete, and validated import for this canonical entity. |
+| 139 | `DATA_ANTAGONIST_NEW` | Create Antagonist | `/admin/data/antagonist/new` | **EXCLUDED** | Antagonist creation is removed with the obsolete model. |
 | 140 | `AT002` | Points of Interest - 2D Map | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the authoritative R09 POI catalog with selectable 2D/3D visualization and record detail. |
 | 141 | `AT003` | Points of Interest - 3D Globe | `/admin/atlas/poi` | **IMPLEMENTED** | Reads the authoritative R09 POI catalog with selectable 2D/3D visualization and record detail. |
 | 142 | `AT004` | Sites | `/admin/atlas/sites` | **IMPLEMENTED** | Reads canonical settlement-candidate Site records. |
@@ -233,7 +234,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 191 | `DATA_PERSONALITYEXPRESSION_EDIT` | Edit PersonalityExpression | `/admin/data/personalityexpression/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 192 | `DATA_PILLAR_EDIT` | Edit Pillar | `/admin/data/pillar/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 193 | `DATA_POINTOFINTEREST_EDIT` | Edit PointOfInterest | `/admin/data/pointofinterest/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
-| 194 | `DATA_PROTAGONIST_EDIT` | Edit Protagonist | `/admin/data/protagonist/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
+| 194 | `DATA_PROTAGONIST_EDIT` | Edit Protagonist | `/admin/data/protagonist/sample-record` | **EXCLUDED** | Protagonist editing is removed with the obsolete model. |
 | 195 | `DATA_RESEARCH_EDIT` | Edit Research | `/admin/data/research/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 196 | `DATA_SETTLEMENT_EDIT` | Edit Settlement | `/admin/data/settlement/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 197 | `DATA_SITE_EDIT` | Edit Site | `/admin/data/site/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
@@ -246,7 +247,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 204 | `DATA_TRANSITION_EDIT` | Edit Transition | `/admin/data/transition/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 205 | `DATA_WITNESS_EDIT` | Edit Witness | `/admin/data/witness/sample-record` | **IMPLEMENTED** | Dynamic record identity routing loads persisted data and exposes schema-derived validation and save behavior; the reviewed sample identity resolves without becoming canonical data. |
 | 206 | `DATA_ACHIEVEMENTDEFINITION_IMPORT` | Bulk Import AchievementDefinition | `/admin/data/achievementdefinition/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
-| 207 | `DATA_ANTAGONIST_IMPORT` | Bulk Import Antagonist | `/admin/data/antagonist/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 207 | `DATA_ANTAGONIST_IMPORT` | Bulk Import Antagonist | `/admin/data/antagonist/import` | **EXCLUDED** | Antagonist import is removed with the obsolete model. |
 | 208 | `DATA_ARCHITECT_IMPORT` | Bulk Import Architect | `/admin/data/architect/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 209 | `DATA_ARK_IMPORT` | Bulk Import Ark | `/admin/data/ark/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 210 | `DATA_BREED_IMPORT` | Bulk Import Breed | `/admin/data/breed/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
@@ -267,7 +268,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 225 | `DATA_PERSONALITYEXPRESSION_IMPORT` | Bulk Import PersonalityExpression | `/admin/data/personalityexpression/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 226 | `DATA_PILLAR_IMPORT` | Bulk Import Pillar | `/admin/data/pillar/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 227 | `DATA_POINTOFINTEREST_IMPORT` | Bulk Import PointOfInterest | `/admin/data/pointofinterest/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
-| 228 | `DATA_PROTAGONIST_IMPORT` | Bulk Import Protagonist | `/admin/data/protagonist/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
+| 228 | `DATA_PROTAGONIST_IMPORT` | Bulk Import Protagonist | `/admin/data/protagonist/import` | **EXCLUDED** | Protagonist import is removed with the obsolete model. |
 | 229 | `DATA_RESEARCH_IMPORT` | Bulk Import Research | `/admin/data/research/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 230 | `DATA_SETTLEMENT_IMPORT` | Bulk Import Settlement | `/admin/data/settlement/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 231 | `DATA_SITE_IMPORT` | Bulk Import Site | `/admin/data/site/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
@@ -281,7 +282,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 239 | `DATA_WITNESS_IMPORT` | Bulk Import Witness | `/admin/data/witness/import` | **IMPLEMENTED** | Structured parse/map/validate/preview applies through a transaction-backed typed or schema-derived mutation with idempotency and canonical-drift refusal. |
 | 240 | `ADM027` | Puzzle Designer | `/admin/puzzles` | **IMPLEMENTED** | Lists canonical roots and creates a stable root plus its initial immutable version and exactly two ordered hint templates in one transaction. |
 | 241 | `ADM028` | Puzzle Blueprints | `/admin/puzzles/blueprints` | **IMPLEMENTED** | Reads canonical Puzzle Blueprint roots and immutable versions. |
-| 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PARTIAL** | Lists the finite canonical PuzzleSharedComponentId set without invented labels; persisted configurations and Blueprint relationships are absent. |
+| 242 | `ADM029` | Reusable Puzzle Components | `/admin/puzzles/components` | **PARTIAL** | Treats PUZCMP proposal handles as Action-B provenance only; no second reusable-component registry or persistence is invented. |
 | 243 | `ADM030` | Puzzle Test & Validation Lab | `/admin/puzzles/test-lab` | **PARTIAL** | Validates deterministic preview identities for stored versions and proves no timer starts; generation, answer checking, and accessibility evaluation remain unavailable. |
 | 244 | `ADM031` | Atlas Manager | `/admin/atlas` | **IMPLEMENTED** | Dedicated atlas landing with authoritative R09 counts and navigation. |
 | 245 | `ADM032` | Points of Interest — View Selector | `/admin/atlas/pois` | **IMPLEMENTED** | Dedicated 2D/3D POI selector backed by the authoritative R09 catalog. |
@@ -312,7 +313,7 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 270 | `CAP01` | Capability Registry | `/admin/capabilities` | **IMPLEMENTED** | Lists persisted versioned definitions and exposes creation without treating legacy concrete keys as precedent for new definitions. |
 | 271 | `CAP02` | Capability Definition Editor | `/admin/capabilities/:capabilityDefinitionId` | **IMPLEMENTED** | Edits definitions by appending immutable versions and typed parameter definitions. |
 | 272 | `CAP03` | Address and Condition Builder | `/admin/capabilities/condition-builder` | **IMPLEMENTED** | Builds and validates fully bound capability addresses and recursive ALL/ANY/NOT conditions from canonical definitions. |
-| 273 | `CAP04` | Evidence Scoring Policies | `/admin/capabilities/scoring` | **IMPLEMENTED** | Reads persisted reward and faction scoring policies, weights, and evidence ownership without inventing missing weights. |
+| 273 | `CAP04` | Evidence Scoring Policies | `/admin/capabilities/scoring` | **IMPLEMENTED** | Reads persisted faction scoring policies, weights, and evidence ownership; the superseded RewardCandidate scoring branch is absent. |
 | 274 | `CAP05` | Event and Projection Inspector | `/admin/capabilities/inspector` | **IMPLEMENTED** | Inspects append-only events and reduced current state and compares deterministic projection rebuilds. |
 | 275 | `CAM006` | Book Grouping Membership Editor | `state-only under /admin/campaign/planner` | **IMPLEMENTED** | Edits explicit disjoint Book membership as one logical grouping value while keeping the locked Opposing Faction overlay derived and read-only. |
 | 276 | `CAM007` | Campaign Planner — Custom Column View | `/admin/campaign/planner` | **IMPLEMENTED** | Persists local column order and visibility preferences without mutating CampaignPlacement or Book Grouping data. |
@@ -341,6 +342,8 @@ Therefore **38 of 298 active V3/V4** wireframe pages/states are not fully implem
 | 299 | `GAME_INN01_INN` | Inn | `Modal in /game` | **IMPLEMENTED** | Current-POI Inn configuration previews and transactionally applies authored Rest/Morale/Comfort and currency costs, with meeting entry actions. |
 | 300 | `BULK02_BULK_CHANGE_DETAIL_V2` | Bulk Change Detail | `/admin/bulk-changes/:envelopeId` | **IMPLEMENTED** | Displays envelope payload, automatic dry-run and revalidation results, sequence state, and head-only review actions. |
 | 301 | `ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS` | Settlement Soundtracks | `/admin/atlas/settlements/:settlementId/soundtracks` | **IMPLEMENTED** | Assigns multiple ordered CITY/TAVERN managed Soundtracks to a Settlement without fabricating culture mappings. |
+| 302 | `DATA_WITNESS_DEF` | Data - WitnessDef | `/admin/data/witness-def` | **IMPLEMENTED** | Canonical Witness definitions expose department, string domains, and seven-value color through the generated Data Admin contract. |
+| 303 | `DATA_COMPANION_DEF` | Data - CompanionDef | `/admin/data/companion-def` | **IMPLEMENTED** | Canonical A-L Companion definitions expose three world Character references, Soul, Heirloom, and reusable skills. |
 
 ## Principal implementation evidence
 

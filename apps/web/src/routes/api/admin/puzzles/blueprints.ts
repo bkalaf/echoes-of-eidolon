@@ -15,10 +15,11 @@ export const Route = createFileRoute("/api/admin/puzzles/blueprints")({
             orderBy: { puzzleBlueprintId: "asc" },
             select: {
               difficultyTier: true,
-              family: true,
+              primaryFamily: true,
+              title: true,
               puzzleBlueprintId: true,
               versions: {
-                orderBy: { generatorVersion: "desc" },
+                orderBy: { createdAt: "desc" },
                 select: {
                   createdAt: true,
                   generatorVersion: true,

@@ -7,10 +7,10 @@
     "routeTree.gen.ts",
     "navigation-registry.json"
   ],
-  "activeScreenCount": 298,
+  "activeScreenCount": 293,
   "statusCounts": {
     "REACHABLE": 60,
-    "ROLE_GATED_REACHABLE": 200,
+    "ROLE_GATED_REACHABLE": 195,
     "STATE_TRIGGERED": 38,
     "ORPHANED": 0,
     "DEAD_END": 0,
@@ -1786,23 +1786,6 @@
       "status": "ROLE_GATED_REACHABLE"
     },
     {
-      "reviewOrder": 105,
-      "screenId": "DATA_ANTAGONIST_TABLE",
-      "title": "Antagonist Records",
-      "routeOrState": "/admin/data/antagonist",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
       "reviewOrder": 106,
       "screenId": "ADM031",
       "title": "Asset Manager - Audio",
@@ -1888,23 +1871,6 @@
       "status": "ROLE_GATED_REACHABLE"
     },
     {
-      "reviewOrder": 111,
-      "screenId": "DATA001",
-      "title": "Data - Protagonist",
-      "routeOrState": "/admin/data/protagonist",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
       "reviewOrder": 112,
       "screenId": "DATA002",
       "title": "Data - Culture",
@@ -1960,23 +1926,6 @@
       "screenId": "DATA005",
       "title": "Data - Architect",
       "routeOrState": "/admin/data/architect",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
-      "reviewOrder": 116,
-      "screenId": "DATA006",
-      "title": "Data - Antagonist",
-      "routeOrState": "/admin/data/antagonist",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",
@@ -2351,23 +2300,6 @@
       "screenId": "PZ003",
       "title": "Puzzle Test/Preview",
       "routeOrState": "/admin/puzzles/:id/test",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
-      "reviewOrder": 139,
-      "screenId": "DATA_ANTAGONIST_NEW",
-      "title": "Create Antagonist",
-      "routeOrState": "/admin/data/antagonist/new",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",
@@ -3265,23 +3197,6 @@
       "status": "ROLE_GATED_REACHABLE"
     },
     {
-      "reviewOrder": 194,
-      "screenId": "DATA_PROTAGONIST_EDIT",
-      "title": "Edit Protagonist",
-      "routeOrState": "/admin/data/protagonist/sample-record",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
       "reviewOrder": 195,
       "screenId": "DATA_RESEARCH_EDIT",
       "title": "Edit Research",
@@ -3473,23 +3388,6 @@
       "screenId": "DATA_ACHIEVEMENTDEFINITION_IMPORT",
       "title": "Bulk Import AchievementDefinition",
       "routeOrState": "/admin/data/achievementdefinition/import",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
-      "reviewOrder": 207,
-      "screenId": "DATA_ANTAGONIST_IMPORT",
-      "title": "Bulk Import Antagonist",
-      "routeOrState": "/admin/data/antagonist/import",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",
@@ -3813,23 +3711,6 @@
       "screenId": "DATA_POINTOFINTEREST_IMPORT",
       "title": "Bulk Import PointOfInterest",
       "routeOrState": "/admin/data/pointofinterest/import",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
-      "reviewOrder": 228,
-      "screenId": "DATA_PROTAGONIST_IMPORT",
-      "title": "Bulk Import Protagonist",
-      "routeOrState": "/admin/data/protagonist/import",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",
@@ -5071,6 +4952,40 @@
       "screenId": "ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS",
       "title": "Settlement Soundtracks",
       "routeOrState": "/admin/atlas/settlements/:settlementId/soundtracks",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "entryPoint": "/admin",
+      "parentAction": "Administration shell section, owning list action, or Administration page directory",
+      "exitDestination": "/",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ],
+      "routeRegistered": true,
+      "status": "ROLE_GATED_REACHABLE"
+    },
+    {
+      "reviewOrder": 302,
+      "screenId": "DATA_WITNESS_DEF",
+      "title": "Data - WitnessDef",
+      "routeOrState": "/admin/data/witness-def",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "entryPoint": "/admin",
+      "parentAction": "Administration shell section, owning list action, or Administration page directory",
+      "exitDestination": "/",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ],
+      "routeRegistered": true,
+      "status": "ROLE_GATED_REACHABLE"
+    },
+    {
+      "reviewOrder": 303,
+      "screenId": "DATA_COMPANION_DEF",
+      "title": "Data - CompanionDef",
+      "routeOrState": "/admin/data/companion-def",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",

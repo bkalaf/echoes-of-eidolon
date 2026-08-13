@@ -1,4 +1,4 @@
-import { DepartmentWitnessPathStatus, type EntityType, type WorldKey } from "../generated/prisma/enums";
+import { type EntityType, type WorldKey } from "../generated/prisma/enums";
 
 export const campaignObjectTypes = [
   "PILLAR",
@@ -270,13 +270,4 @@ export function linkedCampaignGroup(objectType: CampaignObjectType): CampaignLin
   return campaignLinkedGroups.find((group) =>
     [...group.required, ...group.optional].some((member) => member.objectType === objectType),
   ) ?? null;
-}
-
-export function departmentCampaignDisposition(departmentId: string): DepartmentWitnessPathStatus {
-  const match = /^DEPT-(\d{3})$/.exec(departmentId);
-  const ordinal = match ? Number(match[1]) : 0;
-  if (ordinal < 1 || ordinal > 54) throw new Error("Department must be one of the controlled DEPT-001 through DEPT-054 rows.");
-  if (ordinal === 53) return DepartmentWitnessPathStatus.EXEMPT;
-  if (ordinal === 54) return DepartmentWitnessPathStatus.EXCLUDED;
-  return DepartmentWitnessPathStatus.NORMAL;
 }

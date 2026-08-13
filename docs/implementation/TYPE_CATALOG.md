@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and mechanically reconciled 274-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 267-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 133
-- Controlled enums: 119
-- HTTP method/path contracts: 118
-- Wireframe view-model rows: 274
-- Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 154, tools-review 5
+- Persisted entity types: 129
+- Controlled enums: 117
+- HTTP method/path contracts: 117
+- Wireframe view-model rows: 267
+- Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 147, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -32,21 +32,21 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Species | Persisted entity | Canonical data | `Species` via typed imports and server/breed-research.ts | Admin Data and Game | 8 |
 | Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 29 |
 | Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 13 |
-| Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 6 |
-| Protagonist | Persisted entity | Narrative data | `Protagonist` via typed import services | Admin Data, Campaign, Game | 18 |
-| Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 5 |
-| Antagonist | Persisted entity | Narrative data | `Antagonist` via typed import services | Admin Data, Campaign, Game | 24 |
-| Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 5 |
+| Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 20 |
+| Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 6 |
+| WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 7 |
+| Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 14 |
 | Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 4 |
-| Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 12 |
+| CompanionDef | Persisted entity | Narrative data | `CompanionDef` via typed import services | Admin Data, Campaign, Game | 14 |
+| Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 5 |
 | CompanionTransformationBinding | Persisted entity | Narrative data | `CompanionTransformationBinding` via typed import services | Admin Data, Campaign, Game | 6 |
 | Occupation | Persisted entity | Repository core | `Occupation` via Prisma and owning route service | Registry-linked screens | 6 |
 | OccupationAttributeAffinity | Persisted entity | Repository core | `OccupationAttributeAffinity` via Prisma and owning route service | Registry-linked screens | 4 |
 | TimelineEvent | Persisted entity | Narrative data | `TimelineEvent` via typed import services | Admin Data, Campaign, Game | 4 |
 | Interlude | Persisted entity | Narrative data | `Interlude` via typed import services | Admin Data, Campaign, Game | 6 |
 | InterludeSubstitution | Persisted entity | Narrative data | `InterludeSubstitution` via typed import services | Admin Data, Campaign, Game | 6 |
-| Pillar | Persisted entity | Narrative data | `Pillar` via typed import services | Admin Data, Campaign, Game | 4 |
-| LegendaryReward | Persisted entity | Narrative data | `LegendaryReward` via typed import services | Admin Data, Campaign, Game | 5 |
+| Pillar | Persisted entity | Narrative data | `Pillar` via typed import services | Admin Data, Campaign, Game | 3 |
+| LegendaryReward | Persisted entity | Narrative data | `LegendaryReward` via typed import services | Admin Data, Campaign, Game | 4 |
 | Lesson | Persisted entity | Narrative data | `Lesson` via typed import services | Admin Data, Campaign, Game | 3 |
 | Tome | Persisted entity | Narrative data | `Tome` via typed import services | Admin Data, Campaign, Game | 3 |
 | Transition | Persisted entity | Narrative data | `Transition` via typed import services | Admin Data, Campaign, Game | 5 |
@@ -87,10 +87,6 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | CapabilityAddress | Persisted entity | Capabilities | `CapabilityAddress` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
 | CapabilityEvent | Persisted entity | Capabilities | `CapabilityEvent` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 22 |
 | CapabilityState | Persisted entity | Capabilities | `CapabilityState` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 15 |
-| RewardScoringPolicy | Persisted entity | Repository core | `RewardScoringPolicy` via Prisma and owning route service | Registry-linked screens | 8 |
-| RewardScoringWeight | Persisted entity | Repository core | `RewardScoringWeight` via Prisma and owning route service | Registry-linked screens | 4 |
-| RewardCandidate | Persisted entity | Repository core | `RewardCandidate` via Prisma and owning route service | Registry-linked screens | 6 |
-| RewardEvidenceEvent | Persisted entity | Repository core | `RewardEvidenceEvent` via Prisma and owning route service | Registry-linked screens | 14 |
 | FactionStandingScoringPolicy | Persisted entity | Repository core | `FactionStandingScoringPolicy` via Prisma and owning route service | Registry-linked screens | 8 |
 | FactionStandingScoringWeight | Persisted entity | Repository core | `FactionStandingScoringWeight` via Prisma and owning route service | Registry-linked screens | 4 |
 | FactionStandingEvidenceEvent | Persisted entity | Repository core | `FactionStandingEvidenceEvent` via Prisma and owning route service | Registry-linked screens | 12 |
@@ -121,7 +117,7 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | OrderReturnEligibility | Persisted entity | Commerce | `OrderReturnEligibility` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 4 |
 | SpeciesGroup | Persisted entity | Canonical data | `SpeciesGroup` via typed imports and server/breed-research.ts | Admin Data and Game | 4 |
 | PuzzleBlueprint | Persisted entity | Puzzle | `PuzzleBlueprint` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 5 |
-| PuzzleBlueprintVersion | Persisted entity | Puzzle | `PuzzleBlueprintVersion` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 6 |
+| PuzzleBlueprintVersion | Persisted entity | Puzzle | `PuzzleBlueprintVersion` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 7 |
 | PuzzleHintTemplate | Persisted entity | Puzzle | `PuzzleHintTemplate` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 6 |
 | PuzzleChallengeAccepted | Persisted entity | Puzzle | `PuzzleChallengeAccepted` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 7 |
 | ContactRequest | Persisted entity | Contact | `ContactRequest` via server/contact.ts | Public Contact and Admin operations | 9 |
@@ -183,6 +179,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | POST | `/api/admin/bulk-operations` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/campaign` | Route Zod schema or empty request | Route server projection or bounded error |
+| POST | `/api/admin/campaign/catalog` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/admin/campaign/groupings` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/campaign/linked-move` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/capabilities` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -190,8 +187,6 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | POST | `/api/admin/capabilities/:capabilityDefinitionVersionId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/capabilities/inspector` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
-| POST | `/api/admin/capabilities/scoring` | Route Zod schema or empty request | Route server projection or bounded error |
-| POST | `/api/admin/capabilities/scoring/:rewardScoringPolicyId/activate` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/cities/:cityId` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/admin/cities/:cityId` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/cities` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -287,7 +282,6 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | CulturePoolId | 25 | `CP01`, `CP02`, `CP03`, `CP04`, `CP05`, `CP06`, `CP07`, `CP08`, `CP09`, `CP10`, `CP11`, `CP12`, `CP13`, `CP14`, `CP15`, `CP16`, `CP17`, `CP18`, `CP19`, `CP20`, `CP21`, `CP22`, `CP23`, `CP24`, `CP25` |
 | WorldKey | 3 | `CONCORD`, `RUIN`, `SCHISM` |
 | SpeciesKind | 4 | `HUMAN`, `BEAST`, `MYTHOS`, `PET` |
-| ProtagonistImportance | 2 | `MINOR`, `MAJOR` |
 | TimelineEventType | 4 | `HISTORICAL`, `ATROCITY`, `EXODUS`, `IN_TRANSIT` |
 | InterludeType | 6 | `WWII`, `HISTORICAL`, `MYTH`, `SCIENCE`, `DEJA_VU`, `OTHER` |
 | StructureOrientation | 3 | `ORDERED`, `NEUTRAL`, `CHAOS` |
@@ -321,8 +315,8 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | SourceType | 11 | `BOOK`, `JOURNAL_ARTICLE`, `WEBPAGE`, `REPORT`, `THESIS`, `DATASET`, `ARCHIVE`, `INTERVIEW`, `AUDIOVISUAL`, `PRIMARY_DOCUMENT`, `OTHER` |
 | ContributorType | 7 | `AUTHOR`, `EDITOR`, `TRANSLATOR`, `DIRECTOR`, `ORGANIZATION`, `INTERVIEWEE`, `OTHER` |
 | ResearchCategory | 13 | `EXODUS_PROGRAM`, `REWARD`, `SPECIES`, `HISTORICAL_EVENT`, `CULTURAL_WOUND`, `PERSON`, `PLACE`, `INSTITUTION`, `ORGANIZATION`, `SYMBOL`, `TOME`, `TECHNOLOGY_OR_SYSTEM`, `OTHER` |
-| DepartmentWitnessPathStatus | 3 | `NORMAL`, `EXEMPT`, `EXCLUDED` |
-| PuzzleSharedComponentId | 31 | `PUZCMP_AUDIO_TRANSPORT`, `PUZCMP_MUSIC_NOTATION_RAIL`, `PUZCMP_RHYTHM_HAPTIC_TRACK`, `PUZCMP_TILE_SIGNAL`, `PUZCMP_LANTERN_LAYER_CONTROL`, `PUZCMP_GRID_VIEWPORT`, `PUZCMP_EIGHT_NEIGHBOR_NAV`, `PUZCMP_DIRECTIONAL_AUDIO_HAPTIC`, `PUZCMP_LOGIC_GRID`, `PUZCMP_SET_WORKBENCH`, `PUZCMP_DOCUMENT_COMPARE`, `PUZCMP_MATRIX_LAB`, `PUZCMP_IMAGE_TRANSFORM`, `PUZCMP_QR_BOUND_ROUTE`, `PUZCMP_COLOR_CHANNEL_LAB`, `PUZCMP_SHAPE_LAYER`, `PUZCMP_SLIDING_BLOCK_BOARD`, `PUZCMP_DRAG_CONNECTOR_BOARD`, `PUZCMP_MECHANISM_SIM`, `PUZCMP_POLYHEDRON_VIEWER`, `PUZCMP_NON3D_EQUIVALENT`, `PUZCMP_CHESS_REPLAY`, `PUZCMP_SPECTROGRAM`, `PUZCMP_TIMELINE_RESEARCH`, `PUZCMP_HINT_PANEL`, `PUZCMP_TIMER_BANNER`, `PUZCMP_ANSWER_SUBMISSION`, `PUZCMP_UNDO_RESET_HISTORY`, `PUZCMP_ACCESSIBILITY_MODE_SWITCHER`, `PUZCMP_PRINTABLE_WORKSHEET`, `PUZCMP_COLLABORATION_PACKET` |
+| ArchitectDepartment | 54 | `ASTRONOMY`, `NAVIGATION`, `PROPULSION`, `HABITABILITY`, `PLANETOLOGY`, `PHYSICS`, `CHEMISTRY`, `COMPUTING`, `MATERIALS`, `ENERGY`, `NANOTECHNOLOGY`, `BIOLOGY`, `GENETICS`, `CRYOBIOLOGY`, `NEUROSCIENCE`, `MEDICINE`, `EPIDEMIOLOGY`, `ECOLOGY`, `TERRAFORMING`, `AGRICULTURE`, `BOTANY`, `ZOOLOGY`, `MICROBIOLOGY`, `INTELLIGENCE`, `ALIGNMENT`, `SOFTWARE`, `CYBERSECURITY`, `CONTINUITY`, `ARCHIVES`, `SYSTEMS`, `ARCHITECTURE`, `ROBOTICS`, `ELECTRICAL`, `MANUFACTURING`, `LOGISTICS`, `RESOURCES`, `RECYCLING`, `SAFETY`, `RELIABILITY`, `COMMAND`, `GOVERNANCE`, `JUSTICE`, `ECONOMICS`, `ADMINISTRATION`, `SOCIOLOGY`, `PSYCHOLOGY`, `ANTHROPOLOGY`, `HISTORY`, `EDUCATION`, `LINGUISTICS`, `HUMANITIES`, `OUTREACH`, `PATRON`, `TECHNOCRAT` |
+| WitnessColor | 7 | `BLACK`, `RED`, `ORANGE`, `YELLOW`, `GREEN`, `BLUE`, `WHITE` |
 | PuzzleFamily | 9 | `TEXT_LANGUAGE_LITERARY`, `CRYPTO_NUMERIC_DATA`, `VISUAL_COLOR_OPTICAL`, `SPATIAL_FOLDING_GEOMETRY`, `AUDIO_MUSIC_SPECTRAL`, `LOGIC_CONSTRAINT`, `HISTORICAL_RESEARCH`, `CONSTRUCTION_SIMULATION`, `CROSS_MODAL` |
 | PuzzleDifficultyTier | 5 | `TIER_1_INITIATE`, `TIER_2_ADEPT`, `TIER_3_EXPERT`, `TIER_4_MASTER`, `TIER_5_ORDEAL` |
 | CapabilityValueKind | 5 | `BOOLEAN`, `SCORE`, `COUNTER`, `ENUM`, `REFERENCE` |
@@ -348,14 +342,13 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | CapabilityDefinitionVersionStatus | 3 | `DRAFT`, `ACTIVE`, `RETIRED` |
 | CapabilityScopeType | 5 | `ACCOUNT`, `PLAYTHROUGH`, `WORLD`, `PARTY`, `CHARACTER` |
 | ScoringPolicyStatus | 3 | `DRAFT`, `ACTIVE`, `RETIRED` |
-| RewardEvidenceKind | 6 | `RUMOR`, `EVIDENCE`, `PROOF`, `DOUBT`, `CONTRADICTION`, `REFUTATION` |
 | FactionStandingEvidenceKind | 8 | `MINOR_HARM`, `MAJOR_HARM`, `MINOR_AID`, `MAJOR_AID`, `PUBLIC_CENSURE`, `PRIVATE_CENSURE`, `PUBLIC_SUPPORT`, `PRIVATE_SUPPORT` |
 | KnowledgeBaseBlockKind | 4 | `HEADING`, `PARAGRAPH`, `QUOTE`, `LIST` |
 | CalendarTrigger | 4 | `CONJUNCTION_BEGINS`, `CONJUNCTION_DEADLINE`, `BEACON_PREPARE`, `BEACON_WARNING` |
 | ArkStatus | 4 | `OPERATIONAL`, `CANNIBALIZED`, `DAMAGED`, `DESTROYED` |
 | DefinitionType | 2 | `INTERNAL`, `EXTERNAL` |
 | Holiday | 4 | `DEEPWATCH`, `THAWMARCH`, `GOLDTIDE`, `VEILFALL` |
-| EntityType | 41 | `CULTURE`, `CHARACTER`, `PROTAGONIST`, `ANTAGONIST`, `WITNESS`, `ARCHITECT`, `DEPARTMENT`, `SPECIES`, `SPECIES_GROUP`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `MATRIX`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH`, `ITEM`, `OCCUPATION`, `PARTY`, `SOUNDTRACK`, `WORLD_INSTANCE` |
+| EntityType | 37 | `CULTURE`, `CHARACTER`, `WITNESS`, `ARCHITECT`, `SPECIES`, `SPECIES_GROUP`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH`, `ITEM`, `OCCUPATION`, `PARTY`, `SOUNDTRACK`, `WORLD_INSTANCE` |
 | Heirloom | 15 | `NECKLACE`, `BRACELET`, `EARRINGS`, `CLOAK_CLASP`, `LIGHTER`, `POCKETWATCH`, `COIN_HEAD_BLACKENED`, `COIN_TAIL_BLACKENED`, `RING`, `TATTOO`, `BIRTHMARK`, `BROOCH`, `HAIR_BARRETTE`, `BELT_BUCKLE`, `BACKPACK_CLASP` |
 | AgeEligibility | 2 | `ADULT_18_PLUS`, `MINOR_14_17_GUARDIAN_CONSENTED` |
 | FriendInvitationRequestStatus | 4 | `PENDING`, `APPROVED`, `REJECTED`, `INVITED` |
@@ -401,7 +394,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 274 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 267 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

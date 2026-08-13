@@ -600,6 +600,9 @@ html[data-high-contrast="true"] {
 .game-modal .modal-card { display: grid; gap: 14px; }
 
 .builder-layout { display: grid; grid-template-columns: 220px 1fr 280px; gap: 12px; min-height: 650px; }
+.data-registry-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; width: 100%; }
+.data-registry-grid .mini-card { display: grid; align-content: start; gap: 8px; min-width: 0; }
+.integrity-domain { margin-top: 24px; }
 .builder-layout > aside { display: grid; align-content: start; gap: 7px; }
 .builder-layout > aside > button { padding: 9px; border: 1px solid var(--line); border-radius: 5px; background: #061725; color: var(--text); text-align: left; }
 .builder-canvas { padding: 30px; border: 1px dashed var(--line-2); border-radius: 8px; background: #03111d; }
@@ -623,6 +626,7 @@ html[data-high-contrast="true"] {
   .features-overview, .feature-detail, .gameplay-layout, .contact-layout, .checkout-layout, .product-detail, .split, .campaign-grouping-editor { grid-template-columns: 1fr; }
   .feature-grid, .product-grid, .legal-grid, .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .entity-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .data-registry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .atlas-layout { grid-template-columns: 1fr; }
   .game-hud aside { display: none; }
@@ -654,6 +658,7 @@ html[data-high-contrast="true"] {
   .public-page { padding: 20px 18px; }
   .feature-grid, .product-grid, .legal-grid, .service-grid, .grid-2, .grid-3, .metric-grid { grid-template-columns: 1fr; }
   .entity-grid { grid-template-columns: 1fr; }
+  .data-registry-grid { grid-template-columns: 1fr; }
   .reader, .player-map, .timeline-view, .builder-layout { grid-template-columns: 1fr; height: auto; }
   .player-map aside { border-left: 0; border-top: 1px solid var(--line); }
   .form-grid { grid-template-columns: 1fr; }

@@ -11,7 +11,6 @@ import {
   campaignPlacementBookRange,
   campaignPlacementBookSegments,
   defaultDisjointTrilogy,
-  departmentCampaignDisposition,
   duologyCounterpart,
   isCanonicalDuologyPair,
   isValidCampaignSpan,
@@ -133,11 +132,4 @@ describe("campaign planner contracts", () => {
     expect(linkedCampaignGroup("HOLIDAY")).toBeNull();
   });
 
-  it("classifies only the controlled 54 Department rows", () => {
-    expect(departmentCampaignDisposition("DEPT-001")).toBe("NORMAL");
-    expect(departmentCampaignDisposition("DEPT-052")).toBe("NORMAL");
-    expect(departmentCampaignDisposition("DEPT-053")).toBe("EXEMPT");
-    expect(departmentCampaignDisposition("DEPT-054")).toBe("EXCLUDED");
-    expect(() => departmentCampaignDisposition("DEPT-055")).toThrow(/controlled/);
-  });
 });
