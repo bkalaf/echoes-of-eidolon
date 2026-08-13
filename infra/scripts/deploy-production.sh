@@ -129,11 +129,13 @@ plan: pnpm lint
 plan: pnpm typecheck
 plan: pnpm test
 plan: pnpm test:integration
-plan: pnpm test:e2e
+plan: pnpm navigation:check
 plan: pnpm build with exact revision identity
+plan: pnpm release:check
 plan: docker compose up PostgreSQL
 plan: pg_dump before migration
 plan: prisma migrate deploy
+plan: pnpm test:e2e against the migrated schema
 plan: restart systemd web service
 plan: verify HTTP health
 plan: record redacted deployment result
@@ -178,8 +180,9 @@ run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" lint
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" typecheck
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration
-run_unlocked env EIDOLON_E2E_PORT=3100 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
+run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" navigation:check
 run_unlocked env EIDOLON_BUILD_GIT_SHA="$target_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
+run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" release:check
 
 run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" up -d --wait postgres
 
@@ -193,6 +196,7 @@ if [[ ! -s "$backup_path" ]]; then
 fi
 
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate
+run_unlocked env EIDOLON_E2E_PORT=3100 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
 promotion_started=true
 run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"
 health_ready=false

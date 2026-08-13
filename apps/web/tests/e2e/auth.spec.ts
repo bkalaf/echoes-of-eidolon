@@ -266,7 +266,7 @@ test.describe("real Better Auth browser workflows", () => {
     await expectAuthenticated(page);
     await page.goto("/auth/sign-out");
     await page.getByRole("button", { name: "Sign Out", exact: true }).click();
-    await expect(page.getByRole("status")).toContainText("Signed out");
+    await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
     const database = await testDatabase();
     await database.user.update({ where: { email: account.email }, data: { twoFactorEnabled: true } });
     const twoFactorUser = await database.user.findUniqueOrThrow({ where: { email: account.email } });
