@@ -7,6 +7,7 @@ import { releaseNotesSchema, semanticVersionSchema, type ReleaseNotes } from "..
 import { buildReleaseCatalog } from "./release-gate";
 
 declare const __EIDOLON_BUILD_GIT_SHA__: string | null;
+declare const __EIDOLON_BUILD_VERSION__: string | null;
 
 const publicReleaseArtifactSchema = z.object({
   currentVersion: semanticVersionSchema,
@@ -33,11 +34,16 @@ export function resolveBuildGitSha(embeddedGitSha?: string | null, runtimeGitSha
   return null;
 }
 
+export function resolveBuildVersion(embeddedVersion?: string | null, publicVersion = publicReleaseArtifact.currentVersion) {
+  return semanticVersionSchema.safeParse(embeddedVersion).success ? embeddedVersion! : publicVersion;
+}
+
 export function getBuildIdentity() {
   const embeddedGitSha = typeof __EIDOLON_BUILD_GIT_SHA__ === "undefined" ? null : __EIDOLON_BUILD_GIT_SHA__;
+  const embeddedVersion = typeof __EIDOLON_BUILD_VERSION__ === "undefined" ? null : __EIDOLON_BUILD_VERSION__;
   return {
     gitSha: resolveBuildGitSha(embeddedGitSha, process.env.EIDOLON_GIT_SHA),
-    version: publicReleaseArtifact.currentVersion,
+    version: resolveBuildVersion(embeddedVersion),
   };
 }
 

@@ -85,6 +85,7 @@ describe("production deployment entry point", () => {
     const source = readFileSync(viteConfig, "utf8");
     expect(source).toContain('nitro({ noExternals: ["@prisma/client", "tslib"] })');
     expect(source).toContain("__EIDOLON_BUILD_GIT_SHA__");
+    expect(source).toContain("__EIDOLON_BUILD_VERSION__");
   });
 
   it("embeds the exact authorized revision into the production build", () => {
