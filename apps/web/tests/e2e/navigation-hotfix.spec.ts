@@ -170,6 +170,7 @@ test.describe("P0 role-aware navigation", () => {
         if (fixture.role === "owner" && fixture.betaEligible) {
           await page.getByRole("link", { name: "Sign Out" }).click();
           await page.getByRole("button", { name: "Sign Out", exact: true }).click();
+          await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
           await page.getByRole("link", { name: "Echoes of Eidolon home" }).click();
           await expectHome(page);
           await expect(page.getByRole("link", { name: "Sign In" })).toBeVisible();
