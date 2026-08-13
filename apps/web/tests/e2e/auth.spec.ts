@@ -98,6 +98,13 @@ async function expectAuthenticated(page: Page) {
   await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(200);
 }
 
+async function signOut(page: Page) {
+  await page.goto("/auth/sign-out");
+  await page.locator("html[data-hydrated=true]").waitFor();
+  await page.getByRole("button", { name: "Sign Out", exact: true }).click();
+  await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
+}
+
 test.describe("real Better Auth browser workflows", () => {
   test.afterEach(async ({ context }) => {
     const emails = [...fixtureEmails];
@@ -232,9 +239,7 @@ test.describe("real Better Auth browser workflows", () => {
     await signIn(page, account.email, account.password);
     await expectAuthenticated(page);
     await expect(page.getByRole("heading", { name: "Account - Profile" })).toBeVisible();
-    await page.goto("/auth/sign-out");
-    await page.getByRole("button", { name: "Sign Out", exact: true }).click();
-    await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
+    await signOut(page);
     await page.goto("/account/profile");
     await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
   });
@@ -264,9 +269,7 @@ test.describe("real Better Auth browser workflows", () => {
     await signUpAndVerify(page, account);
     await signIn(page, account.email, account.password);
     await expectAuthenticated(page);
-    await page.goto("/auth/sign-out");
-    await page.getByRole("button", { name: "Sign Out", exact: true }).click();
-    await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(401);
+    await signOut(page);
     const database = await testDatabase();
     await database.user.update({ where: { email: account.email }, data: { twoFactorEnabled: true } });
     const twoFactorUser = await database.user.findUniqueOrThrow({ where: { email: account.email } });
@@ -441,8 +444,7 @@ test.describe("real Better Auth browser workflows", () => {
     await expect(page.getByRole("heading", { name: "Password Changed" })).toBeVisible();
     await expect(page.getByText("Your password has been changed successfully.")).toBeVisible();
 
-    await page.goto("/auth/sign-out");
-    await page.getByRole("button", { name: "Sign Out", exact: true }).click();
+    await signOut(page);
     await signIn(page, account.email, account.password);
     await expect(page.getByRole("alert")).toBeVisible();
     await signIn(page, account.email, newPassword);
