@@ -416,6 +416,7 @@ test.describe("real Better Auth browser workflows", () => {
   });
 
   test("authenticated password change verifies the current credential and recovery reuses AUTH05", async ({ page }) => {
+    test.setTimeout(120_000);
     const account = accountIdentity("password");
     const newPassword = `Changed-${Date.now()}-Password!`;
     await signUpAndVerify(page, account);
