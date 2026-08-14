@@ -69,8 +69,8 @@ async function createSignedInPrincipal(page: Page, role: "user" | "member" | "ad
   await expect(page.getByLabel("Email")).toHaveValue(account.email);
   await expect(page.getByLabel("Password")).toHaveValue(account.password);
   await page.getByRole("button", { name: "Sign In", exact: true }).click();
+  await page.waitForURL(/\/$/, { waitUntil: "domcontentloaded" });
   await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(200);
-  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.locator("html[data-hydrated=true]").waitFor();
   return { ...account, userId: user.id };
 }
