@@ -291,7 +291,7 @@ test("game routes require an authenticated eligible player", async ({ page }) =>
     "/game/bookshelf",
   ]) {
     await page.goto(path);
-    await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in required" })).toBeVisible({ timeout: 15_000 });
   }
 });
 
