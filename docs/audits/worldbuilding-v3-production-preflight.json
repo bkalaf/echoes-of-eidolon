@@ -1,0 +1,34 @@
+{
+  "artifactVersion": 1,
+  "capturedAt": "2026-08-14T21:07:15Z",
+  "baselineGitSha": "5a9aff085d2a4a0428ccde418c04904d4224e094",
+  "preflightTreeDigest": "0a894bcbaf3310cc10a86fec74c2bb05dee0a8f763088ce7c243091c501be923",
+  "mode": "read-only-production-preflight-evidence",
+  "productionCheckoutChanges": 0,
+  "counts": {
+    "Species": 0,
+    "Breed": 0,
+    "Culture": 0,
+    "Character": 0,
+    "PersonalityExpression": 0,
+    "SpeciesGroup": 0,
+    "Species.authoredPresentation": 0,
+    "Breed.authoredPresentation": 0,
+    "Culture.authoredPresentation": 0,
+    "Character.ageBackfills": 0,
+    "SpeciesGroup.KnowledgeBaseItem.references": 0,
+    "SpeciesGroup.CapabilityDefinitionVersion.allowedReferences": 0,
+    "SpeciesGroup.CapabilityDefinitionVersion.initialReferences": 0,
+    "SpeciesGroup.CapabilityParameterDefinition.references": 0,
+    "SpeciesGroup.CapabilityEvent.references": 0,
+    "SpeciesGroup.CapabilityState.references": 0,
+    "SpeciesGroup.FactionStandingEvidenceEvent.references": 0,
+    "SpeciesGroup.BookGroupingValue.references": 0
+  },
+  "blockedRowClasses": [],
+  "notes": [
+    "The preflight was executed immediately before the production backup rehearsal.",
+    "No production data was mutated while collecting this artifact.",
+    "The three research corpora were not imported."
+  ]
+}

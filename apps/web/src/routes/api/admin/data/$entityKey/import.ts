@@ -21,7 +21,6 @@ import { applyPillarImport } from "../../../../../server/pillar-import";
 import { applyPersonalityExpressionImport } from "../../../../../server/personality-expression-import";
 import { applyPointOfInterestImport } from "../../../../../server/point-of-interest-import";
 import { applyTransitionImport } from "../../../../../server/transition-import";
-import { applySpeciesGroupImport } from "../../../../../server/species-group-import";
 import { applyGenericEntityImport, entityForAdminKey } from "../../../../../server/entity-admin";
 import { recordBulkOperation } from "../../../../../server/bulk-operations";
 
@@ -86,8 +85,6 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/import")({
             result = await applyTransitionImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else if (params.entityKey === "personalityexpression") {
             result = await applyPersonalityExpressionImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
-          } else if (params.entityKey === "speciesgroup") {
-            result = await applySpeciesGroupImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else if (params.entityKey === "pointofinterest") {
             result = await applyPointOfInterestImport(input.rows, { transaction: (work) => database.$transaction((transaction) => work(transaction)) });
           } else {

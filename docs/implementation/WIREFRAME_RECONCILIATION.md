@@ -5,10 +5,10 @@
 - Status: PASS
 - Active v11.3 source rows: 269
 - Application registry rows: 269
-- V3 excluded base rows: 10
+- V3 excluded base rows: 13
 - V3 amendment rows: 8
 - V4 amendment rows: 26
-- Active mechanically derived rows: 293
+- Active mechanically derived rows: 290
 - Exact canonical row matches: 269
 - Missing application rows: 0
 - Extra application rows: 0
@@ -18,8 +18,8 @@
 - Supplemental correction/reference PNGs outside the active manifest: 3
 - Explicit mobile/responsive source variants: 0. Responsive layout remains a derived implementation requirement for every active row.
 - Source manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- Application manifest SHA-256: `0106a543a71946c44bf831f3be8fe8f20f15916ee99054d2f1b5964eb2ddd5d4`
-- V3 amendment manifest SHA-256: `0968d75ba4ecb8122e1d6b242761e1808d6bc24a3c837f7bf764bef5ef88961b`
+- Application manifest SHA-256: `4841d4021fd915785cf76d016708a2a78c87cea7b6f9c3a6566d8a58d9e39129`
+- V3 amendment manifest SHA-256: `12912791688d6fbe00b8404e360c67cf02c752190e362cd48bd977457ac93ce7`
 - V4 amendment manifest SHA-256: `22d6c74788e1744a47f3dc83002872a055397d99190b682e9a636d9ded083972`
 
 Duplicate screen IDs and paths below are governed state variants. Review order is the unique row identity.
@@ -183,7 +183,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 154 | 156 | CAM005 | Campaign Planner - Reward Binding | /admin/campaign/planner | OWNER_SUPPLIED_LOCKED_PNG |
 | 155 | 157 | OPS001 | Operations | /admin/operations | OWNER_SUPPLIED_LOCKED_PNG |
 | 156 | 158 | OPS002 | Release Management | /admin/operations/releases | OWNER_SUPPLIED_LOCKED_PNG |
-| 157 | 159 | DATA023 | Data - SpeciesGroup | /admin/data/species-group | OWNER_SUPPLIED_LOCKED_PNG |
 | 158 | 160 | DATA024 | Data - InterludeSubstitution | /admin/data/interlude-substitution | OWNER_SUPPLIED_LOCKED_PNG |
 | 159 | 161 | DATA025 | Data - Definition | /admin/data/definition | OWNER_SUPPLIED_LOCKED_PNG |
 | 160 | 162 | DATA026 | Data - KnowledgeBaseItem | /admin/data/knowledge-base-item | OWNER_SUPPLIED_LOCKED_PNG |
@@ -223,7 +222,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 197 | 199 | DATA_SITE_EDIT | Edit Site | /admin/data/site/sample-record | REBUILT_V11 |
 | 198 | 200 | DATA_SOUL_EDIT | Edit Soul | /admin/data/soul/sample-record | REBUILT_V11 |
 | 199 | 201 | DATA_SOURCE_EDIT | Edit Source | /admin/data/source/sample-record | REBUILT_V11 |
-| 200 | 202 | DATA_SPECIESGROUP_EDIT | Edit SpeciesGroup | /admin/data/speciesgroup/sample-record | REBUILT_V11 |
 | 201 | 203 | DATA_SPECIES_EDIT | Edit Species | /admin/data/species/sample-record | REBUILT_V11 |
 | 202 | 204 | DATA_TIMELINEEVENT_EDIT | Edit TimelineEvent | /admin/data/timelineevent/sample-record | REBUILT_V11 |
 | 203 | 205 | DATA_TOME_EDIT | Edit Tome | /admin/data/tome/sample-record | REBUILT_V11 |
@@ -254,7 +252,6 @@ Duplicate screen IDs and paths below are governed state variants. Review order i
 | 231 | 233 | DATA_SITE_IMPORT | Bulk Import Site | /admin/data/site/import | REBUILT_V11 |
 | 232 | 234 | DATA_SOUL_IMPORT | Bulk Import Soul | /admin/data/soul/import | REBUILT_V11 |
 | 233 | 235 | DATA_SOURCE_IMPORT | Bulk Import Source | /admin/data/source/import | REBUILT_V11 |
-| 234 | 236 | DATA_SPECIESGROUP_IMPORT | Bulk Import SpeciesGroup | /admin/data/speciesgroup/import | REBUILT_V11 |
 | 235 | 237 | DATA_SPECIES_IMPORT | Bulk Import Species | /admin/data/species/import | REBUILT_V11 |
 | 236 | 238 | DATA_TIMELINEEVENT_IMPORT | Bulk Import TimelineEvent | /admin/data/timelineevent/import | REBUILT_V11 |
 | 237 | 239 | DATA_TOME_IMPORT | Bulk Import Tome | /admin/data/tome/import | REBUILT_V11 |

@@ -5,7 +5,7 @@ import { AbilityType, AwarenessSkill, CompanionKey, Faction, Heirloom, Knowledge
 import { requireAdministration } from "../../../server/access";
 import { getDatabase } from "../../../server/database";
 
-const assignmentSchema = z.object({ action: z.literal("assignment"), companionKey: z.enum(CompanionKey), worldKey: z.enum(WorldKey), gender: z.string().trim().min(1).max(100), age: z.number().int().nonnegative(), occupationId: z.string().min(1), faction: z.enum(Faction), primaryAttribute: z.enum(AbilityType), secondaryAttribute: z.enum(AbilityType) }).strict();
+const assignmentSchema = z.object({ action: z.literal("assignment"), companionKey: z.enum(CompanionKey), worldKey: z.enum(WorldKey), gender: z.string().trim().min(1).max(100), age: z.union([z.string().trim().min(1).max(100), z.number().nonnegative().transform(String)]), occupationId: z.string().min(1), faction: z.enum(Faction), primaryAttribute: z.enum(AbilityType), secondaryAttribute: z.enum(AbilityType) }).strict();
 const definitionSchema = z.object({ action: z.literal("definition"), companionKey: z.enum(CompanionKey), heirloom: z.enum(Heirloom), knowledgeSkill: z.enum(KnowledgeSkill), awarenessSkill: z.enum(AwarenessSkill) }).strict();
 const bindingSchema = z.object({ action: z.literal("transformation"), companionKey: z.enum(CompanionKey), layetteId: z.string().min(1) }).strict();
 const inputSchema = z.discriminatedUnion("action", [assignmentSchema, definitionSchema, bindingSchema]);

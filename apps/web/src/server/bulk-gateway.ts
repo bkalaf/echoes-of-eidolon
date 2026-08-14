@@ -5,6 +5,14 @@ import type { BulkMutationEnvelope } from "../generated/prisma/client";
 import { parseBulkRequest, type ParsedBulkRequest } from "../domain/bulk-gateway";
 import { authenticateExternalBulkApi, recordBulkOperation } from "./bulk-operations";
 import { getDatabase } from "./database";
+import {
+  applyWorldbuildingResearchReview,
+  bindWorldbuildingResearchReview,
+  classifyWorldbuildingResearch,
+  parseWorldbuildingResearchEnvelope,
+  type WorldbuildingImportIdAllocator,
+  type WorldbuildingResearchDatabase,
+} from "./worldbuilding-research";
 
 export const bulkEntityAdapters = Object.freeze({
   occupation: {
@@ -14,6 +22,14 @@ export const bulkEntityAdapters = Object.freeze({
     allowFetch: true,
     allowKeylessFetch: true,
     fetchProjection: ["key", "name", "attributeAffinity", "active"],
+  },
+  "worldbuilding-research": {
+    allowInsert: true,
+    allowUpdate: false,
+    allowDelete: false,
+    allowFetch: false,
+    allowKeylessFetch: false,
+    fetchProjection: [],
   },
 });
 
@@ -40,15 +56,54 @@ async function occupationDryRun(request: Exclude<ParsedBulkRequest, { operation:
   return { valid: errors.length === 0, errors, warnings: [] as string[] };
 }
 
+async function worldbuildingDryRun(value: unknown, database: PrismaClient, reviewedIdMap: Readonly<Record<string, string>> = {}) {
+  const envelope = parseWorldbuildingResearchEnvelope(value);
+  const personalityIds = new Set((await database.personalityExpression.findMany({ select: { personalityId: true } })).map((row) => row.personalityId));
+  const classified = classifyWorldbuildingResearch(envelope, { existingRefs: new Set(), personalityIds });
+  const allocator: WorldbuildingImportIdAllocator = { allocate() { return randomUUID(); } };
+  const binding = bindWorldbuildingResearchReview(envelope, classified, allocator, reviewedIdMap);
+  return {
+    valid: classified.importableClosure.length > 0,
+    errors: classified.importableClosure.length ? [] : ["No dependency-closed RESEARCH_COMPLETE_IMPORTABLE rows are available."],
+    warnings: classified.rows.filter((row) => row.status !== "RESEARCH_COMPLETE_IMPORTABLE").map((row) => `${row.recordKey}: ${row.status}`),
+    rows: classified.rows,
+    importableClosure: classified.importableClosure,
+    idMap: binding.idMap,
+    digest: binding.digest,
+  };
+}
+
 export async function rerunBulkEnvelopeDryRun(envelopeId: string, database: PrismaClient = getDatabase()) {
   const envelope = await database.bulkMutationEnvelope.findUnique({ where: { bulkMutationEnvelopeId: envelopeId } });
   if (!envelope || ["APPLIED", "DELETED", "APPLYING"].includes(envelope.status)) throw new Error("The bulk envelope is not available for dry-run.");
-  const request = parseStoredEnvelope(envelope);
-  const dryRun = await occupationDryRun(request, database);
+  const dryRun = envelope.entityCode === "worldbuilding-research"
+    ? await worldbuildingDryRun(envelope.payload, database, (envelope.dryRunResult as { idMap?: Record<string, string> }).idMap ?? {})
+    : await occupationDryRun(parseStoredEnvelope(envelope), database);
   return database.bulkMutationEnvelope.update({
     where: { bulkMutationEnvelopeId: envelopeId },
     data: { dryRunResult: dryRun, status: dryRun.valid ? "PENDING_REVIEW" : "DRY_RUN_FAILED" },
   });
+}
+
+async function queueWorldbuildingMutation(value: unknown, access: { externalBulkApiSessionId: string }, database: PrismaClient) {
+  const envelope = parseWorldbuildingResearchEnvelope(value);
+  const envelopeId = randomUUID();
+  await database.bulkMutationEnvelope.create({ data: {
+    bulkMutationEnvelopeId: envelopeId,
+    dryRunResult: { valid: false, errors: [], status: "DRY_RUN_RUNNING", warnings: [] },
+    entityCode: envelope.entity,
+    externalBulkApiSessionId: access.externalBulkApiSessionId,
+    notes: "WorldBuilding v3 simple research staging",
+    operation: "CREATE",
+    payload: jsonValue(envelope),
+    recordCount: envelope.records.length,
+    sourceMetadata: { schemaVersion: envelope.schemaVersion },
+    status: "DRY_RUN_RUNNING",
+  } });
+  const dryRun = await worldbuildingDryRun(envelope, database);
+  const stored = await database.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { dryRunResult: jsonValue(dryRun), status: dryRun.valid ? "PENDING_REVIEW" : "DRY_RUN_FAILED" } });
+  await recordBulkOperation({ bulkMutationEnvelopeId: envelopeId, database, detail: `WorldBuilding research dry-run retained ${dryRun.warnings.length} blocked rows.`, entityName: envelope.entity, externalBulkApiSessionId: access.externalBulkApiSessionId, operation: "CREATE", recordCount: envelope.records.length, result: dryRun.valid ? "UNCHANGED" : "FAILED" });
+  return { envelopeId, sequence: Number(stored.sequence), status: stored.status, applied: false, summary: { entity: envelope.entity, operation: "INSERT", records: envelope.records.length }, dryRun };
 }
 
 export async function fetchBulkOccupations(request: Extract<ParsedBulkRequest, { operation: "FETCH" }>, database: PrismaClient = getDatabase()) {
@@ -165,6 +220,18 @@ export async function decideBulkEnvelope(
       return deleted;
     }
     await transaction.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { status: "APPLYING" } });
+    if (head.entityCode === "worldbuilding-research") {
+      const envelope = parseWorldbuildingResearchEnvelope(head.payload);
+      const prior = head.dryRunResult as { digest: string; idMap: Record<string, string> };
+      const fresh = await worldbuildingDryRun(envelope, transaction as unknown as PrismaClient, prior.idMap);
+      if (!fresh.valid || fresh.digest !== prior.digest || JSON.stringify(fresh.idMap) !== JSON.stringify(prior.idMap)) {
+        return transaction.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { revalidationResult: jsonValue(fresh), status: "REVALIDATION_FAILED" } });
+      }
+      const classified = classifyWorldbuildingResearch(envelope, { existingRefs: new Set(), personalityIds: new Set((await transaction.personalityExpression.findMany({ select: { personalityId: true } })).map((row) => row.personalityId)) });
+      const applied = await applyWorldbuildingResearchReview(envelope, classified, { digest: prior.digest, idMap: prior.idMap }, { $transaction: (work) => work(transaction as unknown as Parameters<typeof work>[0]) } as WorldbuildingResearchDatabase);
+      await transaction.bulkOperationAudit.create({ data: { actorUserId, bulkMutationEnvelopeId: envelopeId, bulkOperationAuditId: randomUUID(), detail: `Applied ${applied.applied}, unchanged ${applied.unchanged}, retained blocked ${applied.retainedBlocked}.`, entityName: head.entityCode, operation: head.operation, recordCount: head.recordCount, result: applied.applied ? "CHANGED" : "UNCHANGED" } });
+      return transaction.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { decidedAt: now, decidedByUserId: actorUserId, revalidationResult: jsonValue({ valid: true, ...applied }), status: "APPLIED" } });
+    }
     const request = parseStoredEnvelope(head);
     const existingKeys = request.operation === "INSERT"
       ? request.payload.records.map((record) => record.key)
@@ -190,7 +257,9 @@ export async function handleExternalBulkRequest(request: Request, method: "DELET
     const limit = Number(url.searchParams.get("limit") ?? "100");
     parsed = parseBulkRequest("POST", { version: "1", operation: "FETCH", entity, notes: "Connector GET fetch", select: ["key", "name", "attributeAffinity", "active"], limit });
   } else {
-    parsed = parseBulkRequest(method, await request.json());
+    const body = await request.json();
+    if (method === "POST" && typeof body === "object" && body !== null && "entity" in body && body.entity === "worldbuilding-research") return queueWorldbuildingMutation(body, access, database);
+    parsed = parseBulkRequest(method, body);
   }
   if (parsed.operation === "FETCH") {
     if (access.mode === "KEYLESS" && !bulkEntityAdapters.occupation.allowKeylessFetch) throw new Response("This projection is not available in KEYLESS mode.", { status: 403 });

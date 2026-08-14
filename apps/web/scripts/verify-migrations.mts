@@ -213,12 +213,14 @@ try {
     );
 
     await verification.query(
-      `INSERT INTO "Species" ("speciesId", "name", "speciesKind", "appearance", "anthropomorphization")
-       VALUES ('species-research', 'Research Species', 'HUMAN', ARRAY[]::TEXT[], ARRAY[]::TEXT[])`,
+      `INSERT INTO "Species" (
+         "speciesId", "name", "speciesKind", "originMode", "reproductiveMethod", "longevityClass",
+         "mortalityMode", "soulDisposition", "continuityGroup", "continuityPropagationMode"
+       ) VALUES ('species-research', 'Research Species', 'HUMAN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN')`,
     );
     await verification.query(
-      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "appearance", "accent", "costume", "architecture")
-       VALUES ('breed-research', 'Research Breed', 'species-research', ARRAY[]::TEXT[], ARRAY[]::TEXT[], ARRAY[]::TEXT[], ARRAY[]::TEXT[])`,
+      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "groupId", "personalityId")
+       VALUES ('breed-research', 'Research Breed', 'species-research', 'H01', 'ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT')`,
     );
     await verification.query(
       `INSERT INTO "Source" ("sourceId", "title", "authors", "sourceType")
@@ -703,8 +705,23 @@ try {
     await applyThrough("20260811010000_resolved_blockers_application_contracts");
     await applyThrough("20260812023000_soundtrack_asset_reuse");
 
-    await preCorrection.query(`INSERT INTO "Species" ("speciesId", "name", "speciesKind") VALUES ('legacy-species', 'Legacy Species', 'HUMAN')`);
-    await preCorrection.query(`INSERT INTO "Breed" ("breedId", "name", "speciesId") VALUES ('legacy-breed', 'Legacy Breed', 'legacy-species')`);
+    await preCorrection.query(
+      `INSERT INTO "Species" ("speciesId", "name", "speciesKind", "appearance", "anthropomorphization")
+       VALUES ('legacy-species', 'Legacy Species', 'HUMAN', ARRAY['first appearance', 'second appearance'], ARRAY['first form', 'second form'])`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Culture" (
+         "cultureId", "culturePoolId", "cultureName", "hamletArchitecture", "villageArchitecture",
+         "townArchitecture", "cityArchitecture", "metropolisArchitecture", "architectureColorPalette", "clothingPalette", "clothing"
+       ) VALUES (
+         'legacy-culture', 'CP01', 'Legacy Culture', 'hamlet text', 'village text', 'town text', 'city text', 'metropolis text',
+         ARRAY['ochre', 'slate'], ARRAY['indigo', 'gold'], 'woven layers'
+       )`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "cultureId", "appearance", "accent", "costume", "architecture")
+       VALUES ('legacy-breed', 'Legacy Breed', 'legacy-species', 'legacy-culture', ARRAY['fur', 'scales'], ARRAY['low', 'musical'], ARRAY['robe', 'sash'], ARRAY['arches', 'courts'])`,
+    );
     await preCorrection.query(`INSERT INTO "Soul" ("soulId", "name") VALUES ('legacy-soul', 'Legacy Soul')`);
     await preCorrection.query(`INSERT INTO "Occupation" ("occupationId", "name") VALUES ('legacy-occupation', 'Legacy Occupation')`);
     await preCorrection.query(
@@ -739,7 +756,26 @@ try {
       throw new Error(`Canonical type migration did not fail closed with a machine-readable Architect blocker: ${ambiguousTypeError}`);
     }
     await preCorrection.query(`DELETE FROM "Architect" WHERE "architectId" = 'ambiguous-architect'`);
-    await applyThrough(migrations.at(-1)!);
+    await applyThrough("20260813160000_canonical_type_unification");
+    await applyThrough("20260814190000_worldbuilding_v3_expand_backfill");
+
+    const contractMigration = await readFile(resolve(migrationsRoot, "20260814191000_worldbuilding_v3_contract_retire", "migration.sql"), "utf8");
+    let worldbuildingBlocker = "";
+    try {
+      await preCorrection.query(contractMigration);
+    } catch (error) {
+      worldbuildingBlocker = error instanceof Error ? error.message : String(error);
+    }
+    if (!worldbuildingBlocker.includes("breedMissingGroupId") || !worldbuildingBlocker.includes("characterMissingRequiredStrings")) {
+      throw new Error(`WorldBuilding v3 contract did not fail closed with required backfill classes: ${worldbuildingBlocker}`);
+    }
+    await preCorrection.query(
+      `UPDATE "Breed" SET "groupIdV3"='H01', "personalityIdV3"='ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT' WHERE "breedId"='legacy-breed'`,
+    );
+    await preCorrection.query(
+      `UPDATE "Character" SET "skinScaleColorV3"='umber', "hairFurColorV3"='black', "eyeColorV3"='brown', "clothingV3"='travel clothes' WHERE "characterId" LIKE 'legacy-character-%'`,
+    );
+    await applyThrough("20260814191000_worldbuilding_v3_contract_retire");
 
     const migratedCompanion = await preCorrection.query(
       `SELECT definition."companionKey", definition."soulId", count(companion."characterId")::int AS "concreteCount"
@@ -752,8 +788,35 @@ try {
     );
     if (JSON.stringify(migratedCompanion.rows) !== JSON.stringify([{ companionKey: "A", soulId: "legacy-soul", concreteCount: 3 }])
       || migratedCharacters.rows.length !== 3
-      || migratedCharacters.rows.some((row) => row.soulId !== "legacy-soul" || row.occupationId !== "legacy-occupation" || row.gender !== "Woman" || row.age !== 30)) {
+      || migratedCharacters.rows.some((row) => row.soulId !== "legacy-soul" || row.occupationId !== "legacy-occupation" || row.gender !== "Woman" || row.age !== "30")) {
       throw new Error(`Representative Protagonist/Companion rows were not migrated losslessly: ${JSON.stringify({ migratedCompanion: migratedCompanion.rows, migratedCharacters: migratedCharacters.rows })}`);
+    }
+
+    const presentation = await preCorrection.query(
+      `SELECT s."appearance" AS "speciesAppearance", s."anthropomorphization", b."appearance" AS "breedAppearance", b."accent", b."clothing", b."architecture",
+              c."name" AS "cultureName", c."architecture" AS "cultureArchitecture", c."clothing" AS "cultureClothing"
+       FROM "Breed" b JOIN "Species" s USING ("speciesId") JOIN "Culture" c USING ("cultureId") WHERE b."breedId"='legacy-breed'`,
+    );
+    const preserved = presentation.rows[0];
+    if (preserved?.speciesAppearance !== "first appearance; second appearance"
+      || preserved?.anthropomorphization !== "first form; second form"
+      || preserved?.breedAppearance !== "fur; scales" || preserved?.accent !== "low; musical"
+      || preserved?.clothing !== "robe; sash" || preserved?.architecture !== "arches; courts"
+      || preserved?.cultureName !== "Legacy Culture"
+      || !preserved?.cultureArchitecture.includes("Hamlet: hamlet text")
+      || !preserved?.cultureArchitecture.includes("Architecture palette: ochre, slate")
+      || !preserved?.cultureClothing.includes("Clothing: woven layers")
+      || !preserved?.cultureClothing.includes("Clothing palette: indigo, gold")) {
+      throw new Error(`WorldBuilding legacy presentation was not preserved exactly: ${JSON.stringify(presentation.rows)}`);
+    }
+    const worldbuildingCatalog = await preCorrection.query(
+      `SELECT (SELECT count(*)::int FROM "PersonalityExpression") AS personalities,
+              to_regclass('public."SpeciesGroup"') AS "speciesGroup",
+              EXISTS (SELECT 1 FROM pg_type WHERE typname='SpecificTerrain') AS "specificTerrain",
+              EXISTS (SELECT 1 FROM pg_enum e JOIN pg_type t ON t.oid=e.enumtypid WHERE t.typname='EntityType' AND e.enumlabel='SPECIES_GROUP') AS "speciesGroupEntityType"`,
+    );
+    if (JSON.stringify(worldbuildingCatalog.rows[0]) !== JSON.stringify({ personalities: 369, speciesGroup: null, specificTerrain: true, speciesGroupEntityType: false })) {
+      throw new Error(`WorldBuilding v3 retirement/catalog verification failed: ${JSON.stringify(worldbuildingCatalog.rows)}`);
     }
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };

@@ -16,6 +16,7 @@
     "soundtracks:reconcile": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-soundtracks.mts --verify-only",
     "atlas:import-sites": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-sites.mts",
     "atlas:import-naming": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-naming.mts",
+    "worldbuilding:research": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/worldbuilding-research.mts",
     "owner:bootstrap": "node scripts/run-owner-bootstrap.mjs",
     "release:draft": "tsx scripts/draft-release-notes.mts",
     "release:check": "tsx scripts/check-release.mts",

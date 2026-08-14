@@ -53,7 +53,7 @@ describe("campaign transaction service", () => {
       objectType: "ARCHITECT" as const,
       payload: {
         architectId: "ARCH-1",
-        character: { characterId: "CHAR-1", displayName: "Ada", breedId: "BREED-1", worldKey: null },
+        character: { characterId: "CHAR-1", displayName: "Ada", breedId: "BREED-1", worldKey: null, age: "37", skinScaleColor: "umber", hairFurColor: "black", eyeColor: "brown", clothing: "architect robes" },
         department: "COMPUTING",
       },
     };

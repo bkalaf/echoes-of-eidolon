@@ -1,0 +1,422 @@
+[
+  {
+    "groupId": "B01",
+    "speciesKind": "BEAST",
+    "label": "Amphibians"
+  },
+  {
+    "groupId": "B02",
+    "speciesKind": "BEAST",
+    "label": "Arthropods"
+  },
+  {
+    "groupId": "B03",
+    "speciesKind": "BEAST",
+    "label": "Bats"
+  },
+  {
+    "groupId": "B04",
+    "speciesKind": "BEAST",
+    "label": "Bony Fish"
+  },
+  {
+    "groupId": "B05",
+    "speciesKind": "BEAST",
+    "label": "Carnivorans"
+  },
+  {
+    "groupId": "B06",
+    "speciesKind": "BEAST",
+    "label": "Cetaceans"
+  },
+  {
+    "groupId": "B07",
+    "speciesKind": "BEAST",
+    "label": "Elephants, Hyraxes & Afrotherians"
+  },
+  {
+    "groupId": "B08",
+    "speciesKind": "BEAST",
+    "label": "Even-Toed Ungulates"
+  },
+  {
+    "groupId": "B09",
+    "speciesKind": "BEAST",
+    "label": "Lizards"
+  },
+  {
+    "groupId": "B10",
+    "speciesKind": "BEAST",
+    "label": "Marsupials & Monotremes"
+  },
+  {
+    "groupId": "B11",
+    "speciesKind": "BEAST",
+    "label": "Mollusks & Other Invertebrates"
+  },
+  {
+    "groupId": "B12",
+    "speciesKind": "BEAST",
+    "label": "Odd-Toed Ungulates"
+  },
+  {
+    "groupId": "B13",
+    "speciesKind": "BEAST",
+    "label": "Other Specialized Birds"
+  },
+  {
+    "groupId": "B14",
+    "speciesKind": "BEAST",
+    "label": "Parrots & Cockatoos"
+  },
+  {
+    "groupId": "B15",
+    "speciesKind": "BEAST",
+    "label": "Pigeons, Gamebirds & Groundbirds"
+  },
+  {
+    "groupId": "B16",
+    "speciesKind": "BEAST",
+    "label": "Primates"
+  },
+  {
+    "groupId": "B17",
+    "speciesKind": "BEAST",
+    "label": "Raptors & Owls"
+  },
+  {
+    "groupId": "B18",
+    "speciesKind": "BEAST",
+    "label": "Rodents & Lagomorphs"
+  },
+  {
+    "groupId": "B19",
+    "speciesKind": "BEAST",
+    "label": "Sharks, Rays & Jawless Fish"
+  },
+  {
+    "groupId": "B20",
+    "speciesKind": "BEAST",
+    "label": "Snakes"
+  },
+  {
+    "groupId": "B21",
+    "speciesKind": "BEAST",
+    "label": "Songbirds"
+  },
+  {
+    "groupId": "B22",
+    "speciesKind": "BEAST",
+    "label": "Turtles & Crocodilians"
+  },
+  {
+    "groupId": "B23",
+    "speciesKind": "BEAST",
+    "label": "Waterbirds & Seabirds"
+  },
+  {
+    "groupId": "B24",
+    "speciesKind": "BEAST",
+    "label": "Xenarthrans & Other Mammals"
+  },
+  {
+    "groupId": "H01",
+    "speciesKind": "HUMAN",
+    "label": "Arabian Peninsula"
+  },
+  {
+    "groupId": "H02",
+    "speciesKind": "HUMAN",
+    "label": "Arctic & North American Indigenous"
+  },
+  {
+    "groupId": "H03",
+    "speciesKind": "HUMAN",
+    "label": "Australian Indigenous"
+  },
+  {
+    "groupId": "H04",
+    "speciesKind": "HUMAN",
+    "label": "Caucasian & Anatolian"
+  },
+  {
+    "groupId": "H05",
+    "speciesKind": "HUMAN",
+    "label": "Central African & Great Lakes"
+  },
+  {
+    "groupId": "H06",
+    "speciesKind": "HUMAN",
+    "label": "Central Asian & Steppe"
+  },
+  {
+    "groupId": "H07",
+    "speciesKind": "HUMAN",
+    "label": "Diaspora, Creole & Legendary Human Civilizations"
+  },
+  {
+    "groupId": "H08",
+    "speciesKind": "HUMAN",
+    "label": "East African & Nilotic"
+  },
+  {
+    "groupId": "H09",
+    "speciesKind": "HUMAN",
+    "label": "East Asian"
+  },
+  {
+    "groupId": "H10",
+    "speciesKind": "HUMAN",
+    "label": "Himalayan & Tibetan"
+  },
+  {
+    "groupId": "H11",
+    "speciesKind": "HUMAN",
+    "label": "Horn of Africa & Red Sea"
+  },
+  {
+    "groupId": "H12",
+    "speciesKind": "HUMAN",
+    "label": "Iranian, Kurdish & Eastern West Asian"
+  },
+  {
+    "groupId": "H13",
+    "speciesKind": "HUMAN",
+    "label": "Levantine & Mesopotamian"
+  },
+  {
+    "groupId": "H14",
+    "speciesKind": "HUMAN",
+    "label": "Mainland Southeast Asian"
+  },
+  {
+    "groupId": "H15",
+    "speciesKind": "HUMAN",
+    "label": "Maritime Southeast Asian"
+  },
+  {
+    "groupId": "H16",
+    "speciesKind": "HUMAN",
+    "label": "Mesoamerican & Caribbean Indigenous"
+  },
+  {
+    "groupId": "H17",
+    "speciesKind": "HUMAN",
+    "label": "North African & Saharan"
+  },
+  {
+    "groupId": "H18",
+    "speciesKind": "HUMAN",
+    "label": "Pacific & Oceanian"
+  },
+  {
+    "groupId": "H19",
+    "speciesKind": "HUMAN",
+    "label": "South American Indigenous"
+  },
+  {
+    "groupId": "H20",
+    "speciesKind": "HUMAN",
+    "label": "South Asian"
+  },
+  {
+    "groupId": "H21",
+    "speciesKind": "HUMAN",
+    "label": "Southern & Eastern European"
+  },
+  {
+    "groupId": "H22",
+    "speciesKind": "HUMAN",
+    "label": "Southern African"
+  },
+  {
+    "groupId": "H23",
+    "speciesKind": "HUMAN",
+    "label": "West African"
+  },
+  {
+    "groupId": "H24",
+    "speciesKind": "HUMAN",
+    "label": "Western & Northern European"
+  },
+  {
+    "groupId": "M01",
+    "speciesKind": "MYTHOS",
+    "label": "Angels & Celestials"
+  },
+  {
+    "groupId": "M02",
+    "speciesKind": "MYTHOS",
+    "label": "Constructs & Animated Objects"
+  },
+  {
+    "groupId": "M03",
+    "speciesKind": "MYTHOS",
+    "label": "Demons & Fiends"
+  },
+  {
+    "groupId": "M04",
+    "speciesKind": "MYTHOS",
+    "label": "Divine & Heavenly Spirits"
+  },
+  {
+    "groupId": "M05",
+    "speciesKind": "MYTHOS",
+    "label": "Djinn & Genie-Kin"
+  },
+  {
+    "groupId": "M06",
+    "speciesKind": "MYTHOS",
+    "label": "Dragons & Dragonkin"
+  },
+  {
+    "groupId": "M07",
+    "speciesKind": "MYTHOS",
+    "label": "Dwarves, Halflings & Little Folk"
+  },
+  {
+    "groupId": "M08",
+    "speciesKind": "MYTHOS",
+    "label": "Elementals"
+  },
+  {
+    "groupId": "M09",
+    "speciesKind": "MYTHOS",
+    "label": "Elves"
+  },
+  {
+    "groupId": "M10",
+    "speciesKind": "MYTHOS",
+    "label": "Fae & Fairy Folk"
+  },
+  {
+    "groupId": "M11",
+    "speciesKind": "MYTHOS",
+    "label": "Ghosts, Wraiths & Specters"
+  },
+  {
+    "groupId": "M12",
+    "speciesKind": "MYTHOS",
+    "label": "Giants & Titans"
+  },
+  {
+    "groupId": "M13",
+    "speciesKind": "MYTHOS",
+    "label": "Goblinoids & Orc-Kin"
+  },
+  {
+    "groupId": "M14",
+    "speciesKind": "MYTHOS",
+    "label": "Golems"
+  },
+  {
+    "groupId": "M15",
+    "speciesKind": "MYTHOS",
+    "label": "Household, Land & Place Spirits"
+  },
+  {
+    "groupId": "M16",
+    "speciesKind": "MYTHOS",
+    "label": "Hybrid & Legendary Monsters"
+  },
+  {
+    "groupId": "M17",
+    "speciesKind": "MYTHOS",
+    "label": "Liches, Mummies & Greater Undead"
+  },
+  {
+    "groupId": "M18",
+    "speciesKind": "MYTHOS",
+    "label": "Merfolk & Aquatic Peoples"
+  },
+  {
+    "groupId": "M19",
+    "speciesKind": "MYTHOS",
+    "label": "Nature & Plant Spirits"
+  },
+  {
+    "groupId": "M20",
+    "speciesKind": "MYTHOS",
+    "label": "Ogres, Trolls & Oni"
+  },
+  {
+    "groupId": "M21",
+    "speciesKind": "MYTHOS",
+    "label": "Shapeshifters & Werebeings"
+  },
+  {
+    "groupId": "M22",
+    "speciesKind": "MYTHOS",
+    "label": "Skeletons & Zombies"
+  },
+  {
+    "groupId": "M23",
+    "speciesKind": "MYTHOS",
+    "label": "Vampires & Blood-Drinkers"
+  },
+  {
+    "groupId": "M24",
+    "speciesKind": "MYTHOS",
+    "label": "Water Spirits & Aquatic Monsters"
+  },
+  {
+    "groupId": "P01",
+    "speciesKind": "PET",
+    "label": "Dogs"
+  },
+  {
+    "groupId": "P02",
+    "speciesKind": "PET",
+    "label": "Cats"
+  },
+  {
+    "groupId": "P03",
+    "speciesKind": "PET",
+    "label": "Horses & Equid Hybrids"
+  },
+  {
+    "groupId": "P04",
+    "speciesKind": "PET",
+    "label": "Cattle, Yak & Buffalo"
+  },
+  {
+    "groupId": "P05",
+    "speciesKind": "PET",
+    "label": "Sheep & Goats"
+  },
+  {
+    "groupId": "P06",
+    "speciesKind": "PET",
+    "label": "Camels, Llamas & Alpacas"
+  },
+  {
+    "groupId": "P07",
+    "speciesKind": "PET",
+    "label": "Pigs"
+  },
+  {
+    "groupId": "P08",
+    "speciesKind": "PET",
+    "label": "Rabbits, Rodents & Ferrets"
+  },
+  {
+    "groupId": "P09",
+    "speciesKind": "PET",
+    "label": "Chickens, Ducks & Geese"
+  },
+  {
+    "groupId": "P10",
+    "speciesKind": "PET",
+    "label": "Pigeons & Companion Birds"
+  },
+  {
+    "groupId": "P11",
+    "speciesKind": "PET",
+    "label": "Aquarium Fish"
+  },
+  {
+    "groupId": "P12",
+    "speciesKind": "PET",
+    "label": "Reptiles & Amphibians"
+  }
+]

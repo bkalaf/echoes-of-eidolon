@@ -7,10 +7,10 @@
     "routeTree.gen.ts",
     "navigation-registry.json"
   ],
-  "activeScreenCount": 293,
+  "activeScreenCount": 290,
   "statusCounts": {
     "REACHABLE": 60,
-    "ROLE_GATED_REACHABLE": 195,
+    "ROLE_GATED_REACHABLE": 192,
     "STATE_TRIGGERED": 38,
     "ORPHANED": 0,
     "DEAD_END": 0,
@@ -2602,23 +2602,6 @@
       "status": "ROLE_GATED_REACHABLE"
     },
     {
-      "reviewOrder": 157,
-      "screenId": "DATA023",
-      "title": "Data - SpeciesGroup",
-      "routeOrState": "/admin/data/species-group",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
       "reviewOrder": 158,
       "screenId": "DATA024",
       "title": "Data - InterludeSubstitution",
@@ -3282,23 +3265,6 @@
       "status": "ROLE_GATED_REACHABLE"
     },
     {
-      "reviewOrder": 200,
-      "screenId": "DATA_SPECIESGROUP_EDIT",
-      "title": "Edit SpeciesGroup",
-      "routeOrState": "/admin/data/speciesgroup/sample-record",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
       "reviewOrder": 201,
       "screenId": "DATA_SPECIES_EDIT",
       "title": "Edit Species",
@@ -3796,23 +3762,6 @@
       "screenId": "DATA_SOURCE_IMPORT",
       "title": "Bulk Import Source",
       "routeOrState": "/admin/data/source/import",
-      "kind": "route",
-      "shell": "admin",
-      "authorization": "administration",
-      "entryPoint": "/admin",
-      "parentAction": "Administration shell section, owning list action, or Administration page directory",
-      "exitDestination": "/",
-      "automatedCoverage": [
-        "tests/e2e/navigation-reachability.spec.ts"
-      ],
-      "routeRegistered": true,
-      "status": "ROLE_GATED_REACHABLE"
-    },
-    {
-      "reviewOrder": 234,
-      "screenId": "DATA_SPECIESGROUP_IMPORT",
-      "title": "Bulk Import SpeciesGroup",
-      "routeOrState": "/admin/data/speciesgroup/import",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",

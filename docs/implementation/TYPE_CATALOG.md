@@ -1,14 +1,14 @@
 # Echoes of Eidolon Complete Type Catalog
 
-Generated from the current Prisma schema, API route tree, and mechanically reconciled 267-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
+Generated from the current Prisma schema, API route tree, and mechanically reconciled 264-row base-plus-V3 registry. The compile-time forward map is `apps/web/src/domain/implementation-types.ts`.
 
 ## Inventory
 
-- Persisted entity types: 129
-- Controlled enums: 117
-- HTTP method/path contracts: 117
-- Wireframe view-model rows: 267
-- Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 147, tools-review 5
+- Persisted entity types: 128
+- Controlled enums: 118
+- HTTP method/path contracts: 118
+- Wireframe view-model rows: 264
+- Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 144, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
 - State machines: invitation, payment, fulfillment, release, import, and Puzzle challenge.
 
@@ -29,10 +29,10 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Account | Persisted entity | Identity | `Account` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 14 |
 | Verification | Persisted entity | Identity | `Verification` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 6 |
 | Passkey | Persisted entity | Identity | `Passkey` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 12 |
-| Species | Persisted entity | Canonical data | `Species` via typed imports and server/breed-research.ts | Admin Data and Game | 8 |
-| Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 29 |
-| Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 13 |
-| Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 20 |
+| Species | Persisted entity | Canonical data | `Species` via typed imports and server/breed-research.ts | Admin Data and Game | 21 |
+| Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 34 |
+| Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 8 |
+| Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 24 |
 | Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 6 |
 | WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 7 |
 | Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 14 |
@@ -80,7 +80,7 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | KnowledgeBaseItemCitation | Persisted entity | Knowledge | `KnowledgeBaseItemCitation` via domain/knowledge-disclosures.ts | Admin Knowledge and Game Knowledge | 5 |
 | Definition | Persisted entity | Narrative data | `Definition` via typed import services | Admin Data, Campaign, Game | 3 |
 | Layette | Persisted entity | Narrative data | `Layette` via typed import services | Admin Data, Campaign, Game | 4 |
-| PersonalityExpression | Persisted entity | Canonical data | `PersonalityExpression` via typed imports and server/breed-research.ts | Admin Data and Game | 2 |
+| PersonalityExpression | Persisted entity | Canonical data | `PersonalityExpression` via typed imports and server/breed-research.ts | Admin Data and Game | 5 |
 | CapabilityDefinition | Persisted entity | Capabilities | `CapabilityDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 6 |
 | CapabilityDefinitionVersion | Persisted entity | Capabilities | `CapabilityDefinitionVersion` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 24 |
 | CapabilityParameterDefinition | Persisted entity | Capabilities | `CapabilityParameterDefinition` via domain/capabilities.ts | Admin capabilities and Game Knowledge | 8 |
@@ -115,7 +115,6 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | PrintfulFulfillmentSubmission | Persisted entity | Commerce | `PrintfulFulfillmentSubmission` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 6 |
 | OrderRefund | Persisted entity | Commerce | `OrderRefund` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 8 |
 | OrderReturnEligibility | Persisted entity | Commerce | `OrderReturnEligibility` via domain/commerce.ts and server/payments.ts | Store, Account Orders, Admin Commerce | 4 |
-| SpeciesGroup | Persisted entity | Canonical data | `SpeciesGroup` via typed imports and server/breed-research.ts | Admin Data and Game | 4 |
 | PuzzleBlueprint | Persisted entity | Puzzle | `PuzzleBlueprint` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 5 |
 | PuzzleBlueprintVersion | Persisted entity | Puzzle | `PuzzleBlueprintVersion` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 7 |
 | PuzzleHintTemplate | Persisted entity | Puzzle | `PuzzleHintTemplate` via domain/puzzle-blueprint.ts | Admin Puzzle and Game Witness Trial | 6 |
@@ -198,6 +197,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | GET | `/api/admin/companion-planner` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/admin/companion-planner` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/dashboard` | Route Zod schema or empty request | Route server projection or bounded error |
+| GET | `/api/admin/data-integrity` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/data/:entityKey` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -282,6 +282,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | CulturePoolId | 25 | `CP01`, `CP02`, `CP03`, `CP04`, `CP05`, `CP06`, `CP07`, `CP08`, `CP09`, `CP10`, `CP11`, `CP12`, `CP13`, `CP14`, `CP15`, `CP16`, `CP17`, `CP18`, `CP19`, `CP20`, `CP21`, `CP22`, `CP23`, `CP24`, `CP25` |
 | WorldKey | 3 | `CONCORD`, `RUIN`, `SCHISM` |
 | SpeciesKind | 4 | `HUMAN`, `BEAST`, `MYTHOS`, `PET` |
+| BreedGroupId | 84 | `B01`, `B02`, `B03`, `B04`, `B05`, `B06`, `B07`, `B08`, `B09`, `B10`, `B11`, `B12`, `B13`, `B14`, `B15`, `B16`, `B17`, `B18`, `B19`, `B20`, `B21`, `B22`, `B23`, `B24`, `H01`, `H02`, `H03`, `H04`, `H05`, `H06`, `H07`, `H08`, `H09`, `H10`, `H11`, `H12`, `H13`, `H14`, `H15`, `H16`, `H17`, `H18`, `H19`, `H20`, `H21`, `H22`, `H23`, `H24`, `M01`, `M02`, `M03`, `M04`, `M05`, `M06`, `M07`, `M08`, `M09`, `M10`, `M11`, `M12`, `M13`, `M14`, `M15`, `M16`, `M17`, `M18`, `M19`, `M20`, `M21`, `M22`, `M23`, `M24`, `P01`, `P02`, `P03`, `P04`, `P05`, `P06`, `P07`, `P08`, `P09`, `P10`, `P11`, `P12` |
 | TimelineEventType | 4 | `HISTORICAL`, `ATROCITY`, `EXODUS`, `IN_TRANSIT` |
 | InterludeType | 6 | `WWII`, `HISTORICAL`, `MYTH`, `SCIENCE`, `DEJA_VU`, `OTHER` |
 | StructureOrientation | 3 | `ORDERED`, `NEUTRAL`, `CHAOS` |
@@ -310,7 +311,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | FoodBroadCategory | 7 | `ANIMAL`, `ARCANE_ESSENCE`, `ELEMENTAL`, `FUNGUS_DETRITUS`, `MINERAL_MATERIAL`, `NO_FEEDING`, `PLANT` |
 | FoodSpecific | 64 | `AIR_WIND`, `ALGAE_SEAWEED`, `ANGER`, `AQUATIC_PLANTS`, `ARTHROPODS`, `BAMBOO`, `BERRIES`, `BIRDS`, `BLOOD`, `BONE_MARROW`, `BREAD_PORRIDGE`, `CARRION`, `COLD_ICE`, `DAIRY`, `DESIRE`, `DETRITUS_COMPOST`, `DREAMS`, `EGGS`, `ELECTRICITY_STORM`, `EMOTION`, `ESSENCE_OF_FAITH`, `FEAR`, `FERMENTED_DRINK`, `FIRE`, `FISH`, `FLOWERS_POLLEN`, `FRUIT`, `FUNGI`, `GLASS_SAND`, `GRASSES`, `GRIEF`, `HERBS_SPICES`, `HONEY`, `INSECTS`, `LEAVES`, `LIGHT`, `MAGIC`, `MEMORY`, `METAL_ORE`, `MIXED_DIET`, `MOLLUSKS`, `MOONLIGHT`, `MUSIC_ATTENTION`, `NECROMANTIC_ESSENCE`, `NECTAR`, `NO_FEEDING`, `NUTS`, `OATHS_HONOR`, `OIL_FUEL`, `PLANKTON_KRILL`, `PREPARED_MEALS`, `RED_MEAT`, `REPTILES_AMPHIBIANS`, `ROOTS_TUBERS`, `SALT`, `SAP_RESIN`, `SEEDS_GRAINS`, `SHELLFISH_CRUSTACEANS`, `SIN`, `SMALL_GAME`, `STONE_CLAY`, `WATER`, `WOODY_BIOMASS`, `WORMS_LARVAE` |
 | TerrainBroad | 12 | `BUILT_ENVIRONMENT`, `COASTAL`, `DESERT`, `FOREST`, `FRESHWATER`, `GENERALIST`, `GRASSLAND`, `MOUNTAIN`, `OCEAN`, `POLAR_ICE`, `SUBTERRANEAN`, `WETLAND` |
-| TerrainSpecific | 63 | `ALPINE`, `BOG`, `BOREAL_FOREST`, `BURROW`, `CANOPY`, `CANYON`, `CASTLE`, `CAVE`, `CITY`, `CLIFF`, `CLOUD_FOREST`, `COASTAL_CLIFF`, `COLD_DESERT`, `CORAL_REEF`, `DELTA`, `DUNES`, `ESTUARY`, `FARMLAND`, `FJORD`, `FLOODPLAIN`, `FLOWERING_HABITAT`, `FOREST_EDGE`, `FOREST_FLOOR`, `GENERALIST`, `GLACIER`, `HOT_DESERT`, `ISLAND`, `KARST`, `KELP_FOREST`, `LAKE`, `MANGROVE`, `MARSH`, `MEADOW`, `MINE`, `MONTANE_FOREST`, `MUDFLAT`, `OASIS`, `OLD_GROWTH_FOREST`, `PACK_ICE`, `PELAGIC`, `PLATEAU`, `POND`, `PRAIRIE`, `RAIN_FOREST`, `RIVER`, `ROAD`, `RUINS`, `SAVANNA`, `SCRUBLAND`, `SEAGRASS_BED`, `SEA_CAVE`, `SHADOW_FOREST`, `SOIL`, `STEPPE`, `SWAMP`, `TEMPLE`, `TUNDRA`, `TUNNEL`, `UNDERGROUND_RIVER`, `VILLAGE`, `VOLCANIC`, `WOODLAND`, `WORKSHOP` |
+| SpecificTerrain | 63 | `ALPINE`, `BOG`, `BOREAL_FOREST`, `BURROW`, `CANOPY`, `CANYON`, `CASTLE`, `CAVE`, `CITY`, `CLIFF`, `CLOUD_FOREST`, `COASTAL_CLIFF`, `COLD_DESERT`, `CORAL_REEF`, `DELTA`, `DUNES`, `ESTUARY`, `FARMLAND`, `FJORD`, `FLOODPLAIN`, `FLOWERING_HABITAT`, `FOREST_EDGE`, `FOREST_FLOOR`, `GENERALIST`, `GLACIER`, `HOT_DESERT`, `ISLAND`, `KARST`, `KELP_FOREST`, `LAKE`, `MANGROVE`, `MARSH`, `MEADOW`, `MINE`, `MONTANE_FOREST`, `MUDFLAT`, `OASIS`, `OLD_GROWTH_FOREST`, `PACK_ICE`, `PELAGIC`, `PLATEAU`, `POND`, `PRAIRIE`, `RAIN_FOREST`, `RIVER`, `ROAD`, `RUINS`, `SAVANNA`, `SCRUBLAND`, `SEAGRASS_BED`, `SEA_CAVE`, `SHADOW_FOREST`, `SOIL`, `STEPPE`, `SWAMP`, `TEMPLE`, `TUNDRA`, `TUNNEL`, `UNDERGROUND_RIVER`, `VILLAGE`, `VOLCANIC`, `WOODLAND`, `WORKSHOP` |
 | CitationQuality | 5 | `VERY_LOW`, `LOW`, `MODERATE`, `HIGH`, `VERY_HIGH` |
 | SourceType | 11 | `BOOK`, `JOURNAL_ARTICLE`, `WEBPAGE`, `REPORT`, `THESIS`, `DATASET`, `ARCHIVE`, `INTERVIEW`, `AUDIOVISUAL`, `PRIMARY_DOCUMENT`, `OTHER` |
 | ContributorType | 7 | `AUTHOR`, `EDITOR`, `TRANSLATOR`, `DIRECTOR`, `ORGANIZATION`, `INTERVIEWEE`, `OTHER` |
@@ -348,7 +349,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | ArkStatus | 4 | `OPERATIONAL`, `CANNIBALIZED`, `DAMAGED`, `DESTROYED` |
 | DefinitionType | 2 | `INTERNAL`, `EXTERNAL` |
 | Holiday | 4 | `DEEPWATCH`, `THAWMARCH`, `GOLDTIDE`, `VEILFALL` |
-| EntityType | 37 | `CULTURE`, `CHARACTER`, `WITNESS`, `ARCHITECT`, `SPECIES`, `SPECIES_GROUP`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH`, `ITEM`, `OCCUPATION`, `PARTY`, `SOUNDTRACK`, `WORLD_INSTANCE` |
+| EntityType | 36 | `CULTURE`, `CHARACTER`, `WITNESS`, `ARCHITECT`, `SPECIES`, `BREED`, `PERSONALITY_EXPRESSION`, `TIMELINE_EVENT`, `INTERLUDE`, `INTERLUDE_SUBSTITUTION`, `PILLAR`, `LESSON`, `TRANSITION`, `LAYETTE`, `ARK`, `CONSTELLATION`, `LEGENDARY_REWARD`, `SOUL`, `POINT_OF_INTEREST`, `SITE`, `SETTLEMENT`, `COMPANION`, `TOME`, `DEFINITION`, `KNOWLEDGE_BASE_ITEM`, `CAPABILITY_DEFINITION`, `ACHIEVEMENT_DEFINITION`, `SOURCE`, `CITATION`, `AUTHORED_NARRATIVE`, `NPC_CONVERSATION_GRAPH`, `ITEM`, `OCCUPATION`, `PARTY`, `SOUNDTRACK`, `WORLD_INSTANCE` |
 | Heirloom | 15 | `NECKLACE`, `BRACELET`, `EARRINGS`, `CLOAK_CLASP`, `LIGHTER`, `POCKETWATCH`, `COIN_HEAD_BLACKENED`, `COIN_TAIL_BLACKENED`, `RING`, `TATTOO`, `BIRTHMARK`, `BROOCH`, `HAIR_BARRETTE`, `BELT_BUCKLE`, `BACKPACK_CLASP` |
 | AgeEligibility | 2 | `ADULT_18_PLUS`, `MINOR_14_17_GUARDIAN_CONSENTED` |
 | FriendInvitationRequestStatus | 4 | `PENDING`, `APPROVED`, `REJECTED`, `INVITED` |
@@ -394,7 +395,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 
 ## Wireframe view models
 
-All 267 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
+All 264 active registry rows use `WireframeViewModel`: manifest identity, shell owner, governed revision, viewport, and explicit loading/empty/error/ready/success/denied state. Modal rows retain their parent owner and are not promoted to invented routes.
 
 ## Rejected-invention scan
 

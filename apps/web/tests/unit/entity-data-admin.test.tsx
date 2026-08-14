@@ -51,4 +51,20 @@ describe("persisted Data administration", () => {
     await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/soul/SOUL-2", expect.objectContaining({ method: "PATCH" })));
     expect(await screen.findByText("Soul saved.")).toBeInTheDocument();
   });
+
+  it("serializes controlled enum arrays from chip selections without JSON authoring", async () => {
+    const breedCollection = { entity: "Breed", records: [], contract: { delegate: "breed", idField: "breedId", fields: [
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "breedId", type: "String" },
+      { enumValues: ["ANIMAL", "PLANT"], hasDefault: true, isList: true, isRequired: true, kind: "enum", name: "foodBroad", type: "FoodBroadCategory" },
+    ] } };
+    const fetchMock = vi.fn().mockResolvedValueOnce({ json: async () => breedCollection, ok: true }).mockResolvedValueOnce({ json: async () => ({ record: { breedId: "BREED-1", foodBroad: ["ANIMAL"] } }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderPage("/admin/data/breed", "DATA019");
+    await screen.findByText("Breed");
+    fireEvent.click(screen.getByRole("button", { name: "New" }));
+    fireEvent.change(screen.getByLabelText("breedId *"), { target: { value: "BREED-1" } });
+    fireEvent.click(screen.getByRole("button", { name: "Select Animal" }));
+    fireEvent.click(screen.getByRole("button", { name: "Create Breed" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/breed", expect.objectContaining({ body: JSON.stringify({ record: { breedId: "BREED-1", foodBroad: ["ANIMAL"] } }) })));
+  });
 });

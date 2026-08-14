@@ -26,6 +26,7 @@ import { Route as ApiAdminCampaignRouteImport } from './routes/api/admin/campaig
 import { Route as ApiAdminCapabilitiesRouteImport } from './routes/api/admin/capabilities'
 import { Route as ApiAdminCompanionPlannerRouteImport } from './routes/api/admin/companion-planner'
 import { Route as ApiAdminDashboardRouteImport } from './routes/api/admin/dashboard'
+import { Route as ApiAdminDataIntegrityRouteImport } from './routes/api/admin/data-integrity'
 import { Route as ApiAdminDocumentsRouteImport } from './routes/api/admin/documents'
 import { Route as ApiAdminMoneyRouteImport } from './routes/api/admin/money'
 import { Route as ApiAdminOccupationsRouteImport } from './routes/api/admin/occupations'
@@ -188,6 +189,11 @@ const ApiAdminCompanionPlannerRoute =
 const ApiAdminDashboardRoute = ApiAdminDashboardRouteImport.update({
   id: '/api/admin/dashboard',
   path: '/api/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminDataIntegrityRoute = ApiAdminDataIntegrityRouteImport.update({
+  id: '/api/admin/data-integrity',
+  path: '/api/admin/data-integrity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminDocumentsRoute = ApiAdminDocumentsRouteImport.update({
@@ -632,6 +638,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
+  '/api/admin/data-integrity': typeof ApiAdminDataIntegrityRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/money': typeof ApiAdminMoneyRoute
   '/api/admin/occupations': typeof ApiAdminOccupationsRoute
@@ -728,6 +735,7 @@ export interface FileRoutesByTo {
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
+  '/api/admin/data-integrity': typeof ApiAdminDataIntegrityRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/money': typeof ApiAdminMoneyRoute
   '/api/admin/occupations': typeof ApiAdminOccupationsRoute
@@ -825,6 +833,7 @@ export interface FileRoutesById {
   '/api/admin/capabilities': typeof ApiAdminCapabilitiesRouteWithChildren
   '/api/admin/companion-planner': typeof ApiAdminCompanionPlannerRoute
   '/api/admin/dashboard': typeof ApiAdminDashboardRoute
+  '/api/admin/data-integrity': typeof ApiAdminDataIntegrityRoute
   '/api/admin/documents': typeof ApiAdminDocumentsRoute
   '/api/admin/money': typeof ApiAdminMoneyRoute
   '/api/admin/occupations': typeof ApiAdminOccupationsRoute
@@ -923,6 +932,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities'
     | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
+    | '/api/admin/data-integrity'
     | '/api/admin/documents'
     | '/api/admin/money'
     | '/api/admin/occupations'
@@ -1019,6 +1029,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities'
     | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
+    | '/api/admin/data-integrity'
     | '/api/admin/documents'
     | '/api/admin/money'
     | '/api/admin/occupations'
@@ -1115,6 +1126,7 @@ export interface FileRouteTypes {
     | '/api/admin/capabilities'
     | '/api/admin/companion-planner'
     | '/api/admin/dashboard'
+    | '/api/admin/data-integrity'
     | '/api/admin/documents'
     | '/api/admin/money'
     | '/api/admin/occupations'
@@ -1212,6 +1224,7 @@ export interface RootRouteChildren {
   ApiAdminCapabilitiesRoute: typeof ApiAdminCapabilitiesRouteWithChildren
   ApiAdminCompanionPlannerRoute: typeof ApiAdminCompanionPlannerRoute
   ApiAdminDashboardRoute: typeof ApiAdminDashboardRoute
+  ApiAdminDataIntegrityRoute: typeof ApiAdminDataIntegrityRoute
   ApiAdminDocumentsRoute: typeof ApiAdminDocumentsRoute
   ApiAdminMoneyRoute: typeof ApiAdminMoneyRoute
   ApiAdminOccupationsRoute: typeof ApiAdminOccupationsRoute
@@ -1393,6 +1406,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/dashboard'
       fullPath: '/api/admin/dashboard'
       preLoaderRoute: typeof ApiAdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/data-integrity': {
+      id: '/api/admin/data-integrity'
+      path: '/api/admin/data-integrity'
+      fullPath: '/api/admin/data-integrity'
+      preLoaderRoute: typeof ApiAdminDataIntegrityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/documents': {
@@ -2110,6 +2130,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminCapabilitiesRoute: ApiAdminCapabilitiesRouteWithChildren,
   ApiAdminCompanionPlannerRoute: ApiAdminCompanionPlannerRoute,
   ApiAdminDashboardRoute: ApiAdminDashboardRoute,
+  ApiAdminDataIntegrityRoute: ApiAdminDataIntegrityRoute,
   ApiAdminDocumentsRoute: ApiAdminDocumentsRoute,
   ApiAdminMoneyRoute: ApiAdminMoneyRoute,
   ApiAdminOccupationsRoute: ApiAdminOccupationsRoute,

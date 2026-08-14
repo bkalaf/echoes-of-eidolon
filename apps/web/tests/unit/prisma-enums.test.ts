@@ -20,7 +20,7 @@ const suppliedEnumNames = [
   "PoliticalForm", "EconomicForm", "LeadershipModel", "SelectionMethod", "SuccessionMode", "OriginMode",
   "ReproductionMethod", "JuvenileStage", "NurseryMode", "LongevityClass", "NaturalMortalityMode",
   "SoulDisposition", "ContinuityGroupType", "ContinuityPropagationMode", "NameGenderBucket",
-  "FoodBroadCategory", "FoodSpecific", "TerrainBroad", "TerrainSpecific", "Motivation", "OperatingStyle",
+  "FoodBroadCategory", "FoodSpecific", "TerrainBroad", "SpecificTerrain", "BreedGroupId", "Motivation", "OperatingStyle",
   "StructureOrientation", "WorldKey", "CompanionKey", "RegionId", "NameStatus", "SettlementClassification",
   "SettlementSurfaceType", "CharacterType", "LatticeId", "AtlasConnectionType", "AtlasWrapMode", "SettlementPopulationEventType", "CapabilityValueKind",
   "AbilityType", "KnowledgeSkill", "AwarenessSkill", "PointOfInterestService", "SoundtrackCategory",

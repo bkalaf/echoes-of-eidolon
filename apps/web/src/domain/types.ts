@@ -4,12 +4,14 @@
 import type {
   AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityMonotonicPolicy,
   CapabilityOperation, CapabilityParameterKind, CapabilityValueKind,
-  AbilityType, ArchitectDepartment, AwarenessSkill, CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId, EconomicForm,
-  EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity,
-  KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode, PoliticalForm,
+  AbilityType, ArchitectDepartment, AwarenessSkill, CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId,
+  EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity, BreedGroupId,
+  KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode,
   PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
   SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind,
-  StructureOrientation, TimelineEventType, WitnessColor, WorldKey, Faction,
+  StructureOrientation, TimelineEventType, WitnessColor, WorldKey, Faction, FoodBroadCategory, FoodSpecific,
+  TerrainBroad, SpecificTerrain, OriginMode, ReproductionMethod, JuvenileStage, NurseryMode,
+  LongevityClass, NaturalMortalityMode, SoulDisposition, ContinuityGroupType, ContinuityPropagationMode, PersonalityFamily,
 } from "../generated/prisma/enums";
 
 export type {
@@ -25,20 +27,41 @@ export interface Species {
   name: string;
   speciesKind: SpeciesKind;
   scientificName?: string | null;
-  taxonomy?: { kingdom?: string; phylum?: string; className?: string; order?: string; family?: string; genus?: string; species?: string };
-  appearance?: string[];
-  anthropomorphization?: string[];
+  taxonomy?: Taxonomy;
+  traits: string[];
+  accent?: string | null;
+  anthropomorphization?: string | null;
+  appearance?: string | null;
+  clothing?: string | null;
+  architecture?: string | null;
+  originMode: OriginMode;
+  reproductiveMethod: ReproductionMethod;
+  juvenileStages: JuvenileStage[];
+  nurseryMode: NurseryMode[];
+  longevityClass: LongevityClass;
+  mortalityMode: NaturalMortalityMode;
+  soulDisposition: SoulDisposition;
+  continuityGroup: ContinuityGroupType;
+  continuityPropagationMode: ContinuityPropagationMode;
 }
+export type TaxonomyType = "KINGDOM" | "PHYLUM" | "CLASS" | "ORDER" | "FAMILY" | "GENUS" | "SPECIES";
+export interface Taxonomy { taxonomyLevelId: string; type: TaxonomyType; name: string; text?: string; commonName?: string; parent?: Taxonomy; }
 export interface Breed {
   breedId: string;
   name: string;
   speciesId: Species['speciesId'];
   cultureId?: Culture['cultureId'] | null;
-  appearance?: string[];
-  accent?: string[];
-  costume?: string[];
-  architecture?: string[];
-  structuralStability?: number;
+  groupId: BreedGroupId;
+  personalityId?: string | null;
+  traits: string[];
+  accent?: string | null;
+  appearance?: string | null;
+  clothing?: string | null;
+  architecture?: string | null;
+  foodBroad: FoodBroadCategory[];
+  foodSpecific: FoodSpecific[];
+  terrainBroad: TerrainBroad[];
+  terrainSpecific: SpecificTerrain[];
   motivation?: Motivation | null;
   operatingStyle?: OperatingStyle | null;
   structureOrientation?: StructureOrientation | null;
@@ -47,8 +70,6 @@ export interface Breed {
   allocationMode?: AllocationMode | null;
   legitimacyBasis?: LegitimacyBasis | null;
   authoritySource?: AuthoritySource | null;
-  politicalForm?: PoliticalForm | null;
-  economicForm?: EconomicForm | null;
   loquacity?: Loquacity | null;
   emotionalTemperature?: EmotionalTemperature | null;
   outlookOrientation?: OutlookOrientation | null;
@@ -57,15 +78,10 @@ export interface Breed {
 export interface Culture {
   cultureId: string;
   culturePoolId: CulturePoolId;
-  cultureName: string;
-  hamletArchitecture: string;
-  villageArchitecture: string;
-  townArchitecture: string;
-  cityArchitecture: string;
-  metropolisArchitecture: string;
-  architectureColorPalette: string[];
-  clothingPalette: string[];
-  clothing: string;
+  name: string;
+  appearance?: string | null;
+  clothing?: string | null;
+  architecture?: string | null;
 }
 export interface Character {
   characterId: string;
@@ -75,7 +91,11 @@ export interface Character {
   worldKey?: WorldKey | null;
   soulId?: Soul['soulId'] | null;
   gender?: string | null;
-  age?: number | null;
+  age: string;
+  skinScaleColor: string;
+  hairFurColor: string;
+  eyeColor: string;
+  clothing: string;
   faction?: Faction | null;
   primaryAttribute?: AbilityType | null;
   secondaryAttribute?: AbilityType | null;
@@ -143,7 +163,7 @@ export interface Research { researchId: string; notes: string; citationId: Citat
 export interface KnowledgeBaseItem { knowledgeBaseItemId: string; entityType: EntityType; entityId: string; title: string; baseContent: string; }
 export interface Definition { definitionId: string; term: string; definition: string; }
 export interface Layette { layetteId: string; name: string; description: string; }
-export interface PersonalityExpression { personalityExpressionId: string; name: string; }
+export interface PersonalityExpression { personalityId: string; family: PersonalityFamily; expression: string; dominantFaction: Faction[]; }
 export interface CapabilityDefinition { capabilityDefinitionId: string; code: string; createdAt?: Date; }
 export interface CapabilityParameterDefinition { name: string; kind: CapabilityParameterKind; entityType?: EntityType | null; allowedValues: string[]; ordinal: number; }
 export interface CapabilityDefinitionVersion {
@@ -162,5 +182,4 @@ export interface CapabilityDefinitionVersion {
   description: string;
 }
 export interface AchievementDefinition { achievementDefinitionId: string; name: string; chainKey: string; rank: number; imageAssetId?: string | null; status: string; }
-export interface SpeciesGroup { speciesGroupId: string; name: string; speciesKind: SpeciesKind; description?: string; }
 export interface PuzzleBlueprint { puzzleBlueprintId: string; title: string; primaryFamily: PuzzleFamily; difficultyTier: PuzzleDifficultyTier; }

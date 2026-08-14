@@ -159,6 +159,93 @@ enum SpeciesKind {
   PET
 }
 
+enum BreedGroupId {
+  B01
+  B02
+  B03
+  B04
+  B05
+  B06
+  B07
+  B08
+  B09
+  B10
+  B11
+  B12
+  B13
+  B14
+  B15
+  B16
+  B17
+  B18
+  B19
+  B20
+  B21
+  B22
+  B23
+  B24
+  H01
+  H02
+  H03
+  H04
+  H05
+  H06
+  H07
+  H08
+  H09
+  H10
+  H11
+  H12
+  H13
+  H14
+  H15
+  H16
+  H17
+  H18
+  H19
+  H20
+  H21
+  H22
+  H23
+  H24
+  M01
+  M02
+  M03
+  M04
+  M05
+  M06
+  M07
+  M08
+  M09
+  M10
+  M11
+  M12
+  M13
+  M14
+  M15
+  M16
+  M17
+  M18
+  M19
+  M20
+  M21
+  M22
+  M23
+  M24
+  P01
+  P02
+  P03
+  P04
+  P05
+  P06
+  P07
+  P08
+  P09
+  P10
+  P11
+  P12
+}
+
 enum TimelineEventType {
   HISTORICAL
   ATROCITY
@@ -530,7 +617,7 @@ enum TerrainBroad {
   WETLAND
 }
 
-enum TerrainSpecific {
+enum SpecificTerrain {
   ALPINE
   BOG
   BOREAL_FOREST
@@ -1008,7 +1095,6 @@ enum EntityType {
   WITNESS
   ARCHITECT
   SPECIES
-  SPECIES_GROUP
   BREED
   PERSONALITY_EXPRESSION
   TIMELINE_EVENT
@@ -1601,14 +1687,27 @@ model Passkey {
 }
 
 model Species {
-  speciesId            String      @id
-  name                 String
-  speciesKind          SpeciesKind
-  scientificName       String?
-  taxonomy             Json?
-  appearance           String[]
-  anthropomorphization String[]
-  breeds               Breed[]
+  speciesId                 String                    @id
+  name                      String
+  speciesKind               SpeciesKind
+  scientificName            String?
+  taxonomy                  Json?
+  traits                    String[]                  @default([])
+  accent                    String?
+  anthropomorphization      String?
+  appearance                String?
+  clothing                  String?
+  architecture              String?
+  originMode                OriginMode
+  reproductiveMethod        ReproductionMethod
+  juvenileStages            JuvenileStage[]           @default([])
+  nurseryMode               NurseryMode[]             @default([])
+  longevityClass            LongevityClass
+  mortalityMode             NaturalMortalityMode
+  soulDisposition           SoulDisposition
+  continuityGroup           ContinuityGroupType
+  continuityPropagationMode ContinuityPropagationMode
+  breeds                    Breed[]
 }
 
 model Breed {
@@ -1616,11 +1715,17 @@ model Breed {
   name                 String
   speciesId            String
   cultureId            String?
-  appearance           String[]
-  accent               String[]
-  costume              String[]
-  architecture         String[]
-  structuralStability  Float?
+  groupId              BreedGroupId
+  personalityId        String?
+  traits               String[]                    @default([])
+  accent               String?
+  appearance           String?
+  clothing             String?
+  architecture         String?
+  foodBroad            FoodBroadCategory[]         @default([])
+  foodSpecific         FoodSpecific[]              @default([])
+  terrainBroad         TerrainBroad[]              @default([])
+  terrainSpecific      SpecificTerrain[]           @default([])
   motivation           Motivation?
   operatingStyle       OperatingStyle?
   structureOrientation StructureOrientation?
@@ -1629,14 +1734,13 @@ model Breed {
   allocationMode       AllocationMode?
   legitimacyBasis      LegitimacyBasis?
   authoritySource      AuthoritySource?
-  politicalForm        PoliticalForm?
-  economicForm         EconomicForm?
   loquacity            Loquacity?
   emotionalTemperature EmotionalTemperature?
   outlookOrientation   OutlookOrientation?
   collaborativePosture CollaborativePosture?
   species              Species                     @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
   culture              Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
+  personality          PersonalityExpression?      @relation(fields: [personalityId], references: [personalityId], onDelete: Restrict)
   characters           Character[]
   populationEvents     SettlementPopulationEvent[]
   dominantInWorlds     SettlementWorld[]           @relation("SettlementWorldDominantBreed")
@@ -1644,45 +1748,45 @@ model Breed {
 
   @@index([speciesId])
   @@index([cultureId])
+  @@index([personalityId])
 }
 
 model Culture {
-  cultureId                String            @id
-  culturePoolId            CulturePoolId
-  cultureName              String
-  hamletArchitecture       String
-  villageArchitecture      String
-  townArchitecture         String
-  cityArchitecture         String
-  metropolisArchitecture   String
-  architectureColorPalette String[]
-  clothingPalette          String[]
-  clothing                 String
-  breeds                   Breed[]
-  settlementWorlds         SettlementWorld[]
+  cultureId        String            @id
+  culturePoolId    CulturePoolId
+  name             String
+  appearance       String?
+  clothing         String?
+  architecture     String?
+  breeds           Breed[]
+  settlementWorlds SettlementWorld[]
 }
 
 model Character {
-  characterId       String       @id
-  displayName       String
-  breedId           String
-  occupationId      String?
-  worldKey          WorldKey?
-  soulId            String?
-  gender            String?
-  age               Int?
-  faction           Faction?
-  primaryAttribute  AbilityType?
+  characterId        String         @id
+  displayName        String
+  breedId            String
+  occupationId       String?
+  worldKey           WorldKey?
+  soulId             String?
+  gender             String?
+  age                String
+  skinScaleColor     String
+  hairFurColor       String
+  eyeColor           String
+  clothing           String
+  faction            Faction?
+  primaryAttribute   AbilityType?
   secondaryAttribute AbilityType?
-  breed             Breed        @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
-  occupation        Occupation?   @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
-  soul              Soul?         @relation(fields: [soulId], references: [soulId], onDelete: SetNull)
-  architect         Architect?
-  witness           Witness?
-  companion         Companion?
-  concordFor        CompanionDef[] @relation("CompanionDefConcordCharacter")
-  ruinFor           CompanionDef[] @relation("CompanionDefRuinCharacter")
-  schismFor         CompanionDef[] @relation("CompanionDefSchismCharacter")
+  breed              Breed          @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
+  occupation         Occupation?    @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
+  soul               Soul?          @relation(fields: [soulId], references: [soulId], onDelete: SetNull)
+  architect          Architect?
+  witness            Witness?
+  companion          Companion?
+  concordFor         CompanionDef[] @relation("CompanionDefConcordCharacter")
+  ruinFor            CompanionDef[] @relation("CompanionDefRuinCharacter")
+  schismFor          CompanionDef[] @relation("CompanionDefSchismCharacter")
 
   @@index([breedId])
   @@index([occupationId])
@@ -1690,16 +1794,16 @@ model Character {
 }
 
 model Architect {
-  architectId String                @id
-  characterId String                @unique
+  architectId String              @id
+  characterId String              @unique
   department  ArchitectDepartment
   profession  String?
-  character   Character             @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  character   Character           @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnesses   Witness[]
 }
 
 model WitnessDef {
-  witnessDefId   String                @id
+  witnessDefId   String              @id
   name           String
   department     ArchitectDepartment
   apparentDomain String
@@ -1737,19 +1841,19 @@ model Soul {
 }
 
 model CompanionDef {
-  companionKey       CompanionKey @id
-  concordCharacterId String       @unique
-  ruinCharacterId    String       @unique
-  schismCharacterId  String       @unique
-  soulId             String
-  heirloom           Heirloom
-  knowledgeSkill     KnowledgeSkill
-  awarenessSkill     AwarenessSkill
-  concordCharacter   Character    @relation("CompanionDefConcordCharacter", fields: [concordCharacterId], references: [characterId], onDelete: Restrict)
-  ruinCharacter      Character    @relation("CompanionDefRuinCharacter", fields: [ruinCharacterId], references: [characterId], onDelete: Restrict)
-  schismCharacter    Character    @relation("CompanionDefSchismCharacter", fields: [schismCharacterId], references: [characterId], onDelete: Restrict)
-  soul               Soul         @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
-  companions         Companion[]
+  companionKey          CompanionKey                    @id
+  concordCharacterId    String                          @unique
+  ruinCharacterId       String                          @unique
+  schismCharacterId     String                          @unique
+  soulId                String
+  heirloom              Heirloom
+  knowledgeSkill        KnowledgeSkill
+  awarenessSkill        AwarenessSkill
+  concordCharacter      Character                       @relation("CompanionDefConcordCharacter", fields: [concordCharacterId], references: [characterId], onDelete: Restrict)
+  ruinCharacter         Character                       @relation("CompanionDefRuinCharacter", fields: [ruinCharacterId], references: [characterId], onDelete: Restrict)
+  schismCharacter       Character                       @relation("CompanionDefSchismCharacter", fields: [schismCharacterId], references: [characterId], onDelete: Restrict)
+  soul                  Soul                            @relation(fields: [soulId], references: [soulId], onDelete: Restrict)
+  companions            Companion[]
   transformationBinding CompanionTransformationBinding?
 
   @@index([concordCharacterId])
@@ -1759,10 +1863,10 @@ model CompanionDef {
 }
 
 model Companion {
-  characterId      String       @id
+  characterId      String        @id
   companionKey     CompanionKey
-  character        Character    @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
-  companionDef     CompanionDef @relation(fields: [companionKey], references: [companionKey], onDelete: Restrict)
+  character        Character     @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  companionDef     CompanionDef  @relation(fields: [companionKey], references: [companionKey], onDelete: Restrict)
   partyMemberships PartyMember[]
 
   @@index([companionKey])
@@ -1828,13 +1932,13 @@ model InterludeSubstitution {
 }
 
 model Pillar {
-  pillarId   String  @id
-  name       String
-  domain     String?
+  pillarId String  @id
+  name     String
+  domain   String?
 }
 
 model LegendaryReward {
-  legendaryRewardId String            @id
+  legendaryRewardId String    @id
   name              String
   description       String
   witnesses         Witness[]
@@ -1861,12 +1965,12 @@ model Transition {
 }
 
 model Constellation {
-  constellationId   String       @id
-  name              String
-  rightAscension    String?
-  declination       String?
-  beforeWitnesses   Witness[] @relation("WitnessConstellationBefore")
-  afterWitnesses    Witness[] @relation("WitnessConstellationAfter")
+  constellationId String    @id
+  name            String
+  rightAscension  String?
+  declination     String?
+  beforeWitnesses Witness[] @relation("WitnessConstellationBefore")
+  afterWitnesses  Witness[] @relation("WitnessConstellationAfter")
 }
 
 model Ark {
@@ -2236,8 +2340,11 @@ model Layette {
 }
 
 model PersonalityExpression {
-  personalityExpressionId String @id
-  name                    String
+  personalityId   String            @id
+  family          PersonalityFamily
+  expression      String
+  dominantFaction Faction[]         @default([])
+  breeds          Breed[]
 }
 
 model CapabilityDefinition {
@@ -2731,13 +2838,6 @@ model OrderReturnEligibility {
   order                    Order    @relation(fields: [orderId], references: [orderId], onDelete: Restrict)
 }
 
-model SpeciesGroup {
-  speciesGroupId String      @id
-  name           String
-  speciesKind    SpeciesKind
-  description    String?
-}
-
 model PuzzleBlueprint {
   puzzleBlueprintId String                   @id
   title             String
@@ -2955,8 +3055,8 @@ model PartyMember {
   morale            Float?
   comfort           Float?
   conditionSentence String?
-  party             Party        @relation(fields: [partyId], references: [partyId], onDelete: Cascade)
-  companion         Companion    @relation(fields: [characterId], references: [characterId], onDelete: Restrict)
+  party             Party     @relation(fields: [partyId], references: [partyId], onDelete: Cascade)
+  companion         Companion @relation(fields: [characterId], references: [characterId], onDelete: Restrict)
 
   @@id([partyId, characterId])
 }

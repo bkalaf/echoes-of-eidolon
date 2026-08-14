@@ -2097,15 +2097,6 @@
     "reviewOrder": 233
   },
   {
-    "page": 236,
-    "screenId": "DATA_SPECIESGROUP_IMPORT",
-    "title": "Bulk Import SpeciesGroup",
-    "path": "/admin/data/speciesgroup/import",
-    "source": "REBUILT_V11",
-    "originalPage": 236,
-    "reviewOrder": 234
-  },
-  {
     "page": 237,
     "screenId": "DATA_SPECIES_IMPORT",
     "title": "Bulk Import Species",
@@ -2113,6 +2104,15 @@
     "source": "REBUILT_V11",
     "originalPage": 237,
     "reviewOrder": 235
+  },
+  {
+    "page": 236,
+    "screenId": "DATA_SPECIESGROUP_IMPORT",
+    "title": "Bulk Import SpeciesGroup",
+    "path": "/admin/data/speciesgroup/import",
+    "source": "REBUILT_V11",
+    "originalPage": 236,
+    "reviewOrder": 234
   },
   {
     "page": 238,

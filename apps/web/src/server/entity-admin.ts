@@ -2,6 +2,7 @@ import contractData from "../data/entity-admin-contract.json";
 import { entityForPath, type EntityName } from "../content/entities";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
+import { validateBreed, validateTaxonomy } from "../domain/worldbuilding";
 
 export interface EntityAdminField {
   enumValues: string[];
@@ -116,6 +117,31 @@ export function normalizeEntityData(entity: EntityName, value: unknown, mode: "c
   return normalized;
 }
 
+async function validateWorldbuildingWrite(database: PrismaClient, entity: EntityName, data: Record<string, unknown>): Promise<void> {
+  if (entity === "Species" && data.taxonomy != null) {
+    const errors = validateTaxonomy(data.taxonomy);
+    if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
+  }
+  if (entity !== "Breed") return;
+  const speciesId = data.speciesId;
+  if (typeof speciesId !== "string") throw new EntityAdminValidationError("speciesId is required.");
+  const species = await database.species.findUnique({ select: { speciesKind: true }, where: { speciesId } });
+  if (!species) throw new EntityAdminValidationError(`Species ${speciesId} does not exist.`);
+  const personalityId = typeof data.personalityId === "string" ? data.personalityId : null;
+  const personalityIds = new Set<string>();
+  if (personalityId && await database.personalityExpression.findUnique({ select: { personalityId: true }, where: { personalityId } })) personalityIds.add(personalityId);
+  const errors = validateBreed({
+    ...(data as unknown as Parameters<typeof validateBreed>[0]),
+    speciesKind: species.speciesKind,
+    foodBroad: Array.isArray(data.foodBroad) ? data.foodBroad as string[] : [],
+    foodSpecific: Array.isArray(data.foodSpecific) ? data.foodSpecific as string[] : [],
+    terrainBroad: Array.isArray(data.terrainBroad) ? data.terrainBroad as string[] : [],
+    terrainSpecific: Array.isArray(data.terrainSpecific) ? data.terrainSpecific as string[] : [],
+    groupId: String(data.groupId ?? ""), personalityId,
+  }, { personalityIds });
+  if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
+}
+
 function whereFor(contract: EntityAdminContract, recordId: string): Record<string, unknown> {
   if (!recordId.trim()) throw new EntityAdminValidationError("A record identity is required.");
   return { [contract.idField]: recordId };
@@ -133,7 +159,9 @@ export async function getEntityRecord(database: PrismaClient, entity: EntityName
 
 export async function createEntityRecord(database: PrismaClient, entity: EntityName, input: unknown): Promise<Record<string, unknown>> {
   const contract = entityAdminContract(entity);
-  return delegateFor(database, contract).create({ data: normalizeEntityData(entity, input, "create") });
+  const data = normalizeEntityData(entity, input, "create");
+  await validateWorldbuildingWrite(database, entity, data);
+  return delegateFor(database, contract).create({ data });
 }
 
 export async function updateEntityRecord(database: PrismaClient, entity: EntityName, recordId: string, input: unknown): Promise<Record<string, unknown>> {
@@ -141,6 +169,11 @@ export async function updateEntityRecord(database: PrismaClient, entity: EntityN
   const data = normalizeEntityData(entity, input, "update");
   if (data[contract.idField] !== undefined && data[contract.idField] !== recordId) throw new EntityAdminValidationError(`${contract.idField} is immutable.`);
   delete data[contract.idField];
+  if (entity === "Species" || entity === "Breed") {
+    const existing = await getEntityRecord(database, entity, recordId);
+    if (!existing) throw new EntityAdminValidationError(`${entity} record not found.`);
+    await validateWorldbuildingWrite(database, entity, { ...existing, ...data });
+  }
   return delegateFor(database, contract).update({ data, where: whereFor(contract, recordId) });
 }
 
@@ -172,6 +205,7 @@ export async function applyGenericEntityImport(rows: unknown[], entity: EntityNa
     let changed = 0;
     let unchanged = 0;
     for (const row of normalized) {
+      await validateWorldbuildingWrite(transaction as PrismaClient, entity, row);
       const identity = row[contract.idField];
       if (typeof identity !== "string") throw new EntityAdminValidationError(`${contract.idField} must be a string.`);
       const existing = await delegate.findUnique({ where: { [contract.idField]: identity } });

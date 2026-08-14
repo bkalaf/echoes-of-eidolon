@@ -763,11 +763,19 @@
           "type": "String"
         },
         {
-          "enumName": null,
-          "isList": true,
+          "enumName": "BreedGroupId",
+          "isList": false,
           "isRequired": true,
+          "kind": "enum",
+          "name": "groupId",
+          "type": "BreedGroupId"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "appearance",
+          "name": "personalityId",
           "type": "String"
         },
         {
@@ -775,23 +783,7 @@
           "isList": true,
           "isRequired": true,
           "kind": "scalar",
-          "name": "accent",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "costume",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architecture",
+          "name": "traits",
           "type": "String"
         },
         {
@@ -799,8 +791,64 @@
           "isList": false,
           "isRequired": false,
           "kind": "scalar",
-          "name": "structuralStability",
-          "type": "Float"
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "appearance",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "enumName": "FoodBroadCategory",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodBroad",
+          "type": "FoodBroadCategory"
+        },
+        {
+          "enumName": "FoodSpecific",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodSpecific",
+          "type": "FoodSpecific"
+        },
+        {
+          "enumName": "TerrainBroad",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainBroad",
+          "type": "TerrainBroad"
+        },
+        {
+          "enumName": "SpecificTerrain",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainSpecific",
+          "type": "SpecificTerrain"
         },
         {
           "enumName": "Motivation",
@@ -867,22 +915,6 @@
           "type": "AuthoritySource"
         },
         {
-          "enumName": "PoliticalForm",
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "politicalForm",
-          "type": "PoliticalForm"
-        },
-        {
-          "enumName": "EconomicForm",
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "economicForm",
-          "type": "EconomicForm"
-        },
-        {
           "enumName": "Loquacity",
           "isList": false,
           "isRequired": false,
@@ -929,6 +961,14 @@
           "kind": "relation",
           "name": "culture",
           "type": "Culture"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "personality",
+          "type": "PersonalityExpression"
         },
         {
           "enumName": null,
@@ -2257,10 +2297,42 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "kind": "scalar",
           "name": "age",
-          "type": "Int"
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "skinScaleColor",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "hairFurColor",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "eyeColor",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
         },
         {
           "enumName": "Faction",
@@ -2867,71 +2939,31 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "cultureName",
+          "name": "name",
           "type": "String"
         },
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "hamletArchitecture",
+          "name": "appearance",
           "type": "String"
         },
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "villageArchitecture",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "townArchitecture",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "cityArchitecture",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "metropolisArchitecture",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architectureColorPalette",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "clothingPalette",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
           "type": "String"
         },
         {
@@ -6427,16 +6459,40 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "personalityExpressionId",
+          "name": "personalityId",
           "type": "String"
+        },
+        {
+          "enumName": "PersonalityFamily",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "family",
+          "type": "PersonalityFamily"
         },
         {
           "enumName": null,
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "name",
+          "name": "expression",
           "type": "String"
+        },
+        {
+          "enumName": "Faction",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "dominantFaction",
+          "type": "Faction"
+        },
+        {
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "breeds",
+          "type": "Breed"
         }
       ]
     },
@@ -7995,16 +8051,120 @@
           "isList": true,
           "isRequired": true,
           "kind": "scalar",
+          "name": "traits",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "anthropomorphization",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
           "name": "appearance",
           "type": "String"
         },
         {
           "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "enumName": "OriginMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "originMode",
+          "type": "OriginMode"
+        },
+        {
+          "enumName": "ReproductionMethod",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "reproductiveMethod",
+          "type": "ReproductionMethod"
+        },
+        {
+          "enumName": "JuvenileStage",
           "isList": true,
           "isRequired": true,
-          "kind": "scalar",
-          "name": "anthropomorphization",
-          "type": "String"
+          "kind": "enum",
+          "name": "juvenileStages",
+          "type": "JuvenileStage"
+        },
+        {
+          "enumName": "NurseryMode",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "nurseryMode",
+          "type": "NurseryMode"
+        },
+        {
+          "enumName": "LongevityClass",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "longevityClass",
+          "type": "LongevityClass"
+        },
+        {
+          "enumName": "NaturalMortalityMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "mortalityMode",
+          "type": "NaturalMortalityMode"
+        },
+        {
+          "enumName": "SoulDisposition",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "soulDisposition",
+          "type": "SoulDisposition"
+        },
+        {
+          "enumName": "ContinuityGroupType",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityGroup",
+          "type": "ContinuityGroupType"
+        },
+        {
+          "enumName": "ContinuityPropagationMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityPropagationMode",
+          "type": "ContinuityPropagationMode"
         },
         {
           "enumName": null,
@@ -8013,42 +8173,6 @@
           "kind": "relation",
           "name": "breeds",
           "type": "Breed"
-        }
-      ]
-    },
-    "SpeciesGroup": {
-      "fields": [
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "speciesGroupId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "name",
-          "type": "String"
-        },
-        {
-          "enumName": "SpeciesKind",
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "speciesKind",
-          "type": "SpeciesKind"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": false,
-          "kind": "scalar",
-          "name": "description",
-          "type": "String"
         }
       ]
     },
@@ -9603,11 +9727,21 @@
         {
           "editability": "EDITABLE",
           "exclusionReason": null,
-          "enumName": null,
-          "isList": true,
+          "enumName": "BreedGroupId",
+          "isList": false,
           "isRequired": true,
+          "kind": "enum",
+          "name": "groupId",
+          "type": "BreedGroupId"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "appearance",
+          "name": "personalityId",
           "type": "String"
         },
         {
@@ -9617,27 +9751,7 @@
           "isList": true,
           "isRequired": true,
           "kind": "scalar",
-          "name": "accent",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "costume",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architecture",
+          "name": "traits",
           "type": "String"
         },
         {
@@ -9647,8 +9761,78 @@
           "isList": false,
           "isRequired": false,
           "kind": "scalar",
-          "name": "structuralStability",
-          "type": "Float"
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "appearance",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "FoodBroadCategory",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodBroad",
+          "type": "FoodBroadCategory"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "FoodSpecific",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodSpecific",
+          "type": "FoodSpecific"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "TerrainBroad",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainBroad",
+          "type": "TerrainBroad"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "SpecificTerrain",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainSpecific",
+          "type": "SpecificTerrain"
         },
         {
           "editability": "EDITABLE",
@@ -9733,26 +9917,6 @@
         {
           "editability": "EDITABLE",
           "exclusionReason": null,
-          "enumName": "PoliticalForm",
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "politicalForm",
-          "type": "PoliticalForm"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": "EconomicForm",
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "economicForm",
-          "type": "EconomicForm"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
           "enumName": "Loquacity",
           "isList": false,
           "isRequired": false,
@@ -9809,6 +9973,16 @@
           "kind": "relation",
           "name": "culture",
           "type": "Culture"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "personality",
+          "type": "PersonalityExpression"
         },
         {
           "editability": "EXCLUDED",
@@ -9890,39 +10064,115 @@
           "type": "String"
         },
         {
-          "enumValues": [],
+          "enumValues": [
+            "B01",
+            "B02",
+            "B03",
+            "B04",
+            "B05",
+            "B06",
+            "B07",
+            "B08",
+            "B09",
+            "B10",
+            "B11",
+            "B12",
+            "B13",
+            "B14",
+            "B15",
+            "B16",
+            "B17",
+            "B18",
+            "B19",
+            "B20",
+            "B21",
+            "B22",
+            "B23",
+            "B24",
+            "H01",
+            "H02",
+            "H03",
+            "H04",
+            "H05",
+            "H06",
+            "H07",
+            "H08",
+            "H09",
+            "H10",
+            "H11",
+            "H12",
+            "H13",
+            "H14",
+            "H15",
+            "H16",
+            "H17",
+            "H18",
+            "H19",
+            "H20",
+            "H21",
+            "H22",
+            "H23",
+            "H24",
+            "M01",
+            "M02",
+            "M03",
+            "M04",
+            "M05",
+            "M06",
+            "M07",
+            "M08",
+            "M09",
+            "M10",
+            "M11",
+            "M12",
+            "M13",
+            "M14",
+            "M15",
+            "M16",
+            "M17",
+            "M18",
+            "M19",
+            "M20",
+            "M21",
+            "M22",
+            "M23",
+            "M24",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06",
+            "P07",
+            "P08",
+            "P09",
+            "P10",
+            "P11",
+            "P12"
+          ],
           "hasDefault": false,
-          "isList": true,
+          "isList": false,
           "isRequired": true,
-          "kind": "scalar",
-          "name": "appearance",
-          "type": "String"
+          "kind": "enum",
+          "name": "groupId",
+          "type": "BreedGroupId"
         },
         {
           "enumValues": [],
           "hasDefault": false,
-          "isList": true,
-          "isRequired": true,
+          "isList": false,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "accent",
+          "name": "personalityId",
           "type": "String"
         },
         {
           "enumValues": [],
-          "hasDefault": false,
+          "hasDefault": true,
           "isList": true,
           "isRequired": true,
           "kind": "scalar",
-          "name": "costume",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architecture",
+          "name": "traits",
           "type": "String"
         },
         {
@@ -9931,8 +10181,221 @@
           "isList": false,
           "isRequired": false,
           "kind": "scalar",
-          "name": "structuralStability",
-          "type": "Float"
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "appearance",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "ANIMAL",
+            "ARCANE_ESSENCE",
+            "ELEMENTAL",
+            "FUNGUS_DETRITUS",
+            "MINERAL_MATERIAL",
+            "NO_FEEDING",
+            "PLANT"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodBroad",
+          "type": "FoodBroadCategory"
+        },
+        {
+          "enumValues": [
+            "AIR_WIND",
+            "ALGAE_SEAWEED",
+            "ANGER",
+            "AQUATIC_PLANTS",
+            "ARTHROPODS",
+            "BAMBOO",
+            "BERRIES",
+            "BIRDS",
+            "BLOOD",
+            "BONE_MARROW",
+            "BREAD_PORRIDGE",
+            "CARRION",
+            "COLD_ICE",
+            "DAIRY",
+            "DESIRE",
+            "DETRITUS_COMPOST",
+            "DREAMS",
+            "EGGS",
+            "ELECTRICITY_STORM",
+            "EMOTION",
+            "ESSENCE_OF_FAITH",
+            "FEAR",
+            "FERMENTED_DRINK",
+            "FIRE",
+            "FISH",
+            "FLOWERS_POLLEN",
+            "FRUIT",
+            "FUNGI",
+            "GLASS_SAND",
+            "GRASSES",
+            "GRIEF",
+            "HERBS_SPICES",
+            "HONEY",
+            "INSECTS",
+            "LEAVES",
+            "LIGHT",
+            "MAGIC",
+            "MEMORY",
+            "METAL_ORE",
+            "MIXED_DIET",
+            "MOLLUSKS",
+            "MOONLIGHT",
+            "MUSIC_ATTENTION",
+            "NECROMANTIC_ESSENCE",
+            "NECTAR",
+            "NO_FEEDING",
+            "NUTS",
+            "OATHS_HONOR",
+            "OIL_FUEL",
+            "PLANKTON_KRILL",
+            "PREPARED_MEALS",
+            "RED_MEAT",
+            "REPTILES_AMPHIBIANS",
+            "ROOTS_TUBERS",
+            "SALT",
+            "SAP_RESIN",
+            "SEEDS_GRAINS",
+            "SHELLFISH_CRUSTACEANS",
+            "SIN",
+            "SMALL_GAME",
+            "STONE_CLAY",
+            "WATER",
+            "WOODY_BIOMASS",
+            "WORMS_LARVAE"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "foodSpecific",
+          "type": "FoodSpecific"
+        },
+        {
+          "enumValues": [
+            "BUILT_ENVIRONMENT",
+            "COASTAL",
+            "DESERT",
+            "FOREST",
+            "FRESHWATER",
+            "GENERALIST",
+            "GRASSLAND",
+            "MOUNTAIN",
+            "OCEAN",
+            "POLAR_ICE",
+            "SUBTERRANEAN",
+            "WETLAND"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainBroad",
+          "type": "TerrainBroad"
+        },
+        {
+          "enumValues": [
+            "ALPINE",
+            "BOG",
+            "BOREAL_FOREST",
+            "BURROW",
+            "CANOPY",
+            "CANYON",
+            "CASTLE",
+            "CAVE",
+            "CITY",
+            "CLIFF",
+            "CLOUD_FOREST",
+            "COASTAL_CLIFF",
+            "COLD_DESERT",
+            "CORAL_REEF",
+            "DELTA",
+            "DUNES",
+            "ESTUARY",
+            "FARMLAND",
+            "FJORD",
+            "FLOODPLAIN",
+            "FLOWERING_HABITAT",
+            "FOREST_EDGE",
+            "FOREST_FLOOR",
+            "GENERALIST",
+            "GLACIER",
+            "HOT_DESERT",
+            "ISLAND",
+            "KARST",
+            "KELP_FOREST",
+            "LAKE",
+            "MANGROVE",
+            "MARSH",
+            "MEADOW",
+            "MINE",
+            "MONTANE_FOREST",
+            "MUDFLAT",
+            "OASIS",
+            "OLD_GROWTH_FOREST",
+            "PACK_ICE",
+            "PELAGIC",
+            "PLATEAU",
+            "POND",
+            "PRAIRIE",
+            "RAIN_FOREST",
+            "RIVER",
+            "ROAD",
+            "RUINS",
+            "SAVANNA",
+            "SCRUBLAND",
+            "SEAGRASS_BED",
+            "SEA_CAVE",
+            "SHADOW_FOREST",
+            "SOIL",
+            "STEPPE",
+            "SWAMP",
+            "TEMPLE",
+            "TUNDRA",
+            "TUNNEL",
+            "UNDERGROUND_RIVER",
+            "VILLAGE",
+            "VOLCANIC",
+            "WOODLAND",
+            "WORKSHOP"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "terrainSpecific",
+          "type": "SpecificTerrain"
         },
         {
           "enumValues": [
@@ -10037,62 +10500,6 @@
           "kind": "enum",
           "name": "authoritySource",
           "type": "AuthoritySource"
-        },
-        {
-          "enumValues": [
-            "ACCLAIMED_IMPERATOR",
-            "APPOINTED_COMMISSION",
-            "APPOINTED_DIRECTORATE",
-            "CAPTAINS_COUNCIL",
-            "CHIEFTAIN_COUNCIL",
-            "CONSECRATED_REPUBLIC",
-            "COVENANT_ASSEMBLY",
-            "COVENANT_CROWN",
-            "DELEGATE_LEAGUE",
-            "DIVINE_THRONE",
-            "ELDER_MOOT",
-            "ELECTED_EXECUTIVE",
-            "ELECTIVE_CROWN",
-            "ESTATES_DIET",
-            "FEUDAL_ORDER",
-            "FREE_COMPANY",
-            "GARRISON_COMMAND",
-            "HALLOWED_CUSTOM",
-            "JUNTA",
-            "MILITANT_ORDER",
-            "MILITANT_THEOCRACY",
-            "POPULAR_FEDERATION",
-            "RAIDER_CONFEDERACY",
-            "REGENT_THRONE",
-            "REPUBLIC",
-            "TEMPLE_HIERARCHY",
-            "ZEALOT_BANDS"
-          ],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "politicalForm",
-          "type": "PoliticalForm"
-        },
-        {
-          "enumValues": [
-            "COMMAND_DEMESNE",
-            "COMMUNE_PLAN",
-            "FOLK_COMMONS",
-            "GUILD_COMPACT",
-            "MONOPOLY_ESTATE",
-            "OPEN_BAZAAR",
-            "SHAREHOLDER_BOURSE",
-            "SYNDICATE_CARTEL",
-            "TRIBUTARY_DEMESNE"
-          ],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": false,
-          "kind": "enum",
-          "name": "economicForm",
-          "type": "EconomicForm"
         },
         {
           "enumValues": [
@@ -10226,10 +10633,50 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "kind": "scalar",
           "name": "age",
-          "type": "Int"
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "skinScaleColor",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "hairFurColor",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "eyeColor",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
         },
         {
           "editability": "EDITABLE",
@@ -10425,10 +10872,46 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": false,
+          "isRequired": true,
           "kind": "scalar",
           "name": "age",
-          "type": "Int"
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "skinScaleColor",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "hairFurColor",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "eyeColor",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
         },
         {
           "enumValues": [
@@ -11122,7 +11605,7 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "cultureName",
+          "name": "name",
           "type": "String"
         },
         {
@@ -11130,9 +11613,9 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "hamletArchitecture",
+          "name": "appearance",
           "type": "String"
         },
         {
@@ -11140,69 +11623,19 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "villageArchitecture",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "townArchitecture",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "cityArchitecture",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "metropolisArchitecture",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architectureColorPalette",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "clothingPalette",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
           "type": "String"
         },
         {
@@ -11278,79 +11711,34 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "cultureName",
+          "name": "name",
           "type": "String"
         },
         {
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "hamletArchitecture",
+          "name": "appearance",
           "type": "String"
         },
         {
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "villageArchitecture",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "townArchitecture",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "cityArchitecture",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "metropolisArchitecture",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architectureColorPalette",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "clothingPalette",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
           "type": "String"
         }
       ],
@@ -11737,7 +12125,6 @@
             "WITNESS",
             "ARCHITECT",
             "SPECIES",
-            "SPECIES_GROUP",
             "BREED",
             "PERSONALITY_EXPRESSION",
             "TIMELINE_EVENT",
@@ -12031,8 +12418,18 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "personalityExpressionId",
+          "name": "personalityId",
           "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "PersonalityFamily",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "family",
+          "type": "PersonalityFamily"
         },
         {
           "editability": "EDITABLE",
@@ -12041,8 +12438,28 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "name",
+          "name": "expression",
           "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "Faction",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "dominantFaction",
+          "type": "Faction"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "breeds",
+          "type": "Breed"
         }
       ],
       "delegate": "personalityExpression",
@@ -12053,8 +12470,98 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "personalityExpressionId",
+          "name": "personalityId",
           "type": "String"
+        },
+        {
+          "enumValues": [
+            "ACCOUNTABILITY",
+            "AMBIGUITY",
+            "ANGER",
+            "APPETITE",
+            "ATTACHMENT",
+            "AUTHENTICITY",
+            "AUTHORITY",
+            "AUTONOMY",
+            "BELONGING",
+            "BOUNDARIES",
+            "CARE",
+            "CHANGE",
+            "CLOSURE",
+            "COLLECTIVE_MEMORY",
+            "COMPASSION",
+            "COMPETITION",
+            "CONFORMITY",
+            "CONTROL",
+            "COOPERATION",
+            "COURAGE",
+            "CURIOSITY",
+            "DESIRE",
+            "DISCIPLINE",
+            "DISSENT",
+            "DOMINANCE",
+            "DOUBT",
+            "DUTY",
+            "EMBODIMENT",
+            "EMPATHY",
+            "ENVY",
+            "EQUANIMITY",
+            "EXILE",
+            "EXPOSURE",
+            "EXPRESSION",
+            "FAIRNESS",
+            "FAITH",
+            "FEAR",
+            "FORCE",
+            "FORGIVENESS",
+            "GRIEF",
+            "HIERARCHY",
+            "HOPE",
+            "HOSPITALITY",
+            "IMPULSE",
+            "INDIVIDUALITY",
+            "INTIMACY",
+            "LAND",
+            "LEGITIMACY",
+            "LOYALTY",
+            "MEANING",
+            "MEMORY",
+            "MERCY",
+            "MORTALITY",
+            "NOVELTY",
+            "PATIENCE",
+            "PERFECTION",
+            "PERSEVERANCE",
+            "PERSPECTIVE",
+            "PLEASURE",
+            "POSSESSION",
+            "POWER",
+            "PROTECTION",
+            "PURPOSE",
+            "REACTANCE",
+            "RECIPROCITY",
+            "RECOGNITION",
+            "REPAIR",
+            "REPUTATION",
+            "RESTRAINT",
+            "RISK",
+            "SCARCITY",
+            "SECRECY",
+            "SELF_KNOWLEDGE",
+            "SELF_REGARD",
+            "STATUS",
+            "STEWARDSHIP",
+            "TRADITION",
+            "TRUST",
+            "TRUTH",
+            "VENGEANCE"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "family",
+          "type": "PersonalityFamily"
         },
         {
           "enumValues": [],
@@ -12062,11 +12569,24 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "name",
+          "name": "expression",
           "type": "String"
+        },
+        {
+          "enumValues": [
+            "CONCORD",
+            "RUIN",
+            "SCHISM"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "dominantFaction",
+          "type": "Faction"
         }
       ],
-      "idField": "personalityExpressionId"
+      "idField": "personalityId"
     },
     "Pillar": {
       "auditFields": [
@@ -13454,6 +13974,36 @@
           "isList": true,
           "isRequired": true,
           "kind": "scalar",
+          "name": "traits",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "anthropomorphization",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
           "name": "appearance",
           "type": "String"
         },
@@ -13461,11 +14011,111 @@
           "editability": "EDITABLE",
           "exclusionReason": null,
           "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "clothing",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "architecture",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "OriginMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "originMode",
+          "type": "OriginMode"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "ReproductionMethod",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "reproductiveMethod",
+          "type": "ReproductionMethod"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "JuvenileStage",
           "isList": true,
           "isRequired": true,
-          "kind": "scalar",
-          "name": "anthropomorphization",
-          "type": "String"
+          "kind": "enum",
+          "name": "juvenileStages",
+          "type": "JuvenileStage"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "NurseryMode",
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "nurseryMode",
+          "type": "NurseryMode"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "LongevityClass",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "longevityClass",
+          "type": "LongevityClass"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "NaturalMortalityMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "mortalityMode",
+          "type": "NaturalMortalityMode"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "SoulDisposition",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "soulDisposition",
+          "type": "SoulDisposition"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "ContinuityGroupType",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityGroup",
+          "type": "ContinuityGroupType"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "ContinuityPropagationMode",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityPropagationMode",
+          "type": "ContinuityPropagationMode"
         },
         {
           "editability": "EXCLUDED",
@@ -13532,9 +14182,36 @@
         },
         {
           "enumValues": [],
-          "hasDefault": false,
+          "hasDefault": true,
           "isList": true,
           "isRequired": true,
+          "kind": "scalar",
+          "name": "traits",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "accent",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "anthropomorphization",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
           "kind": "scalar",
           "name": "appearance",
           "type": "String"
@@ -13542,103 +14219,217 @@
         {
           "enumValues": [],
           "hasDefault": false,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "anthropomorphization",
-          "type": "String"
-        }
-      ],
-      "idField": "speciesId"
-    },
-    "SpeciesGroup": {
-      "auditFields": [
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "speciesGroupId",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "name",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": "SpeciesKind",
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "speciesKind",
-          "type": "SpeciesKind"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
           "isList": false,
           "isRequired": false,
           "kind": "scalar",
-          "name": "description",
-          "type": "String"
-        }
-      ],
-      "delegate": "speciesGroup",
-      "fields": [
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "speciesGroupId",
+          "name": "clothing",
           "type": "String"
         },
         {
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
-          "name": "name",
+          "name": "architecture",
           "type": "String"
         },
         {
           "enumValues": [
-            "HUMAN",
-            "BEAST",
-            "MYTHOS",
-            "PET"
+            "BIOLOGICAL",
+            "ASSEMBLED",
+            "ELEMENTAL_CONDENSATION",
+            "HEAVENFALL",
+            "MANIFESTED",
+            "PIT_BORN",
+            "RESURRECTED",
+            "TRANSFORMATION",
+            "UNKNOWN"
           ],
           "hasDefault": false,
           "isList": false,
           "isRequired": true,
           "kind": "enum",
-          "name": "speciesKind",
-          "type": "SpeciesKind"
+          "name": "originMode",
+          "type": "OriginMode"
         },
         {
-          "enumValues": [],
+          "enumValues": [
+            "AQUATIC_SPAWNING",
+            "BROOD_POUCH",
+            "EGG_BEARING",
+            "EGG_LAYING",
+            "EXTERNAL_SPAWNING",
+            "HERMAPHRODITIC_COCOON",
+            "LIVE_BIRTH",
+            "MAGICAL_GESTATION",
+            "PARTHENOGENESIS",
+            "SELF_FERTILIZING",
+            "NONE",
+            "UNKNOWN"
+          ],
           "hasDefault": false,
           "isList": false,
-          "isRequired": false,
-          "kind": "scalar",
-          "name": "description",
-          "type": "String"
+          "isRequired": true,
+          "kind": "enum",
+          "name": "reproductiveMethod",
+          "type": "ReproductionMethod"
+        },
+        {
+          "enumValues": [
+            "AMMOCOETE_LARVA",
+            "AQUATIC_LARVA",
+            "AQUATIC_NYMPH",
+            "CALF",
+            "CALIBRATION_STAGE",
+            "CATERPILLAR",
+            "CHICK",
+            "CORE_FORM",
+            "DEPENDENT_CHILD",
+            "DEPENDENT_INFANT",
+            "DEPENDENT_YOUNG",
+            "ESSENCE_FORM",
+            "FIRST_SHIFT",
+            "FRY",
+            "HATCHLING",
+            "JUVENILE",
+            "LARVA",
+            "METAMORPHOSIS",
+            "NYMPH",
+            "PLANKTONIC_LARVA",
+            "POUCH_YOUNG",
+            "PUP",
+            "PUPA",
+            "SPIDERLING",
+            "TADPOLE",
+            "TRILOBITE_LARVA"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "juvenileStages",
+          "type": "JuvenileStage"
+        },
+        {
+          "enumValues": [
+            "NONE",
+            "GESTATIONAL_CARE",
+            "EGG_INCUBATION",
+            "BROOD_CARE",
+            "POUCH_CARE",
+            "AQUATIC_NURSERY",
+            "LARVAL_NURSERY",
+            "COLONY_NURSERY",
+            "CONSTRUCT_ASSEMBLY",
+            "ESSENCE_DEVELOPMENT",
+            "DEPENDENT_CHILDHOOD",
+            "UNKNOWN"
+          ],
+          "hasDefault": true,
+          "isList": true,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "nurseryMode",
+          "type": "NurseryMode"
+        },
+        {
+          "enumValues": [
+            "SHORT_LIVED",
+            "HUMAN_BASELINE",
+            "LONG_LIVED",
+            "EXTREMELY_LONG_LIVED",
+            "IN_PERPETUITY",
+            "UNKNOWN"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "longevityClass",
+          "type": "LongevityClass"
+        },
+        {
+          "enumValues": [
+            "NORMAL",
+            "REDUCED",
+            "AGELESS",
+            "NONE",
+            "UNKNOWN"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "mortalityMode",
+          "type": "NaturalMortalityMode"
+        },
+        {
+          "enumValues": [
+            "REINCARNATES",
+            "ONE_TIME_TRANSFERENCE",
+            "TERMINAL_BOUND",
+            "RETURNS_TO_WELL",
+            "DISSIPATES",
+            "NO_SOUL",
+            "SPECIAL_EXCEPTION",
+            "UNKNOWN"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "soulDisposition",
+          "type": "SoulDisposition"
+        },
+        {
+          "enumValues": [
+            "FAMILY",
+            "CLAN",
+            "HOUSE",
+            "BROOD",
+            "MAKER_LINE",
+            "ORDER",
+            "CHOIR",
+            "COVEN",
+            "PACK",
+            "COLONY",
+            "NONE",
+            "UNKNOWN"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityGroup",
+          "type": "ContinuityGroupType"
+        },
+        {
+          "enumValues": [
+            "MATERNAL_DESCENT",
+            "PATERNAL_DESCENT",
+            "BILATERAL_DESCENT",
+            "MAKER_ASSIGNMENT",
+            "SIRE_LINE",
+            "ADOPTION",
+            "INITIATION",
+            "SPONSORSHIP",
+            "APPOINTMENT",
+            "CONTRACT",
+            "REINCARNATION_CONTINUITY",
+            "SELF_SELECTED",
+            "NONE",
+            "UNKNOWN"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "continuityPropagationMode",
+          "type": "ContinuityPropagationMode"
         }
       ],
-      "idField": "speciesGroupId"
+      "idField": "speciesId"
     },
     "TimelineEvent": {
       "auditFields": [

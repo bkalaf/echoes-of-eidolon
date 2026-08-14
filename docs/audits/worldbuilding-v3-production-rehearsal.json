@@ -1,0 +1,42 @@
+{
+  "artifactVersion": 1,
+  "capturedAt": "2026-08-14T21:49:00Z",
+  "baselineGitSha": "5a9aff085d2a4a0428ccde418c04904d4224e094",
+  "finalImplementationDigest": "e3e615e26e3fd02b4e2cb6ab89adfc788a3dc78c95851ecd89bc98da68196c9a",
+  "mode": "isolated-production-backup-rehearsal-evidence",
+  "backup": {
+    "name": "20260814T210715Z_worldbuilding-v3-rehearsal_0a894bcbaf3310cc10a86fec74c2bb05dee0a8f763088ce7c243091c501be923.dump",
+    "bytes": 516342,
+    "mode": "0600",
+    "sha256": "5f8f03127ba0f7bc889a3a08f1187b4821c104e764903a94c6f1fca258b7a414",
+    "checksumVerifiedAfterCopy": true
+  },
+  "isolatedDatabase": "eidolon_wb3_rehearsal_beccc023",
+  "migrationsApplied": [
+    "20260814190000_worldbuilding_v3_expand_backfill",
+    "20260814191000_worldbuilding_v3_contract_retire"
+  ],
+  "results": {
+    "migrationDeploy": "PASS",
+    "migrationStatus": "PASS: 38 migrations, schema up to date",
+    "prismaNoDrift": "PASS: no difference detected",
+    "cleanAndLegacyMigrationReplay": "PASS",
+    "crudWriteSmoke": "PASS: Species, Culture, Breed, Character; controlled arrays; personality relation; presentation resolution; reverse-order deletion",
+    "integration": "PASS: 10 files, 47 tests",
+    "e2eStandalone": "PASS: 43 tests",
+    "fullGate": "PASS: lint; typecheck; 115 unit files/615 tests; 10 integration files/47 tests; navigation 290 active/0 blocking; 43 E2E; build; release check",
+    "researchStagingDryRun": "PASS: all five states represented; two-row dependency closure; blocked row retained without ID; zero Species/Culture/Breed writes",
+    "releaseState": "0.3.0 DRAFT, canonical=3, public=2"
+  },
+  "productionWrites": [],
+  "researchCorporaImported": [],
+  "cleanup": {
+    "isolatedDatabase": "removed after evidence capture",
+    "protectedLocalDump": "removed after checksum verification and evidence capture",
+    "productionBackup": "retained"
+  },
+  "notes": [
+    "The final implementation digest excludes these two self-referential audit evidence files and the user-owned untracked package.",
+    "The final implementation was restored, migrated, CRUD-smoked, and passed the cumulative gate before commit preparation; the recorded digest additionally includes non-semantic end-of-file blank-line normalization, followed by a fresh clean/legacy migration replay."
+  ]
+}
