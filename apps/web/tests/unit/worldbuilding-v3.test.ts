@@ -4,14 +4,27 @@ import {
   BREED_GROUPS,
   BREED_GROUP_IDS,
   WORLD_BUILDING_ENUMS,
+  canonicalEntityId,
+  canonicalIdToken,
+  canonicalTaxonomyLevelId,
   deriveEconomicForm,
   derivePoliticalForm,
   resolvePresentation,
   validateBreed,
+  validateSpecies,
   validateTaxonomy,
 } from "../../src/domain/worldbuilding";
 
 describe("WorldBuilding v3 simple domain", () => {
+  it("derives final persistence IDs only from finalized canonical names", () => {
+    expect(canonicalIdToken("Ancient Levantine / Nabataean-Phoenician")).toBe("ANCIENT_LEVANTINE_NABATAEAN_PHOENICIAN");
+    expect(canonicalIdToken("Taíno")).toBe("TAI_NO");
+    expect(canonicalEntityId("SPECIES", "Homo sapiens")).toBe("SPC_HOMO_SAPIENS");
+    expect(canonicalEntityId("CULTURE", "Arabian Peninsula Arab")).toBe("CLT_ARABIAN_PENINSULA_ARAB");
+    expect(canonicalEntityId("BREED", "Death's-head hawkmoth")).toBe("BRD_DEATH_S_HEAD_HAWKMOTH");
+    expect(canonicalTaxonomyLevelId("GENUS", "Homo")).toBe("TAX_GENUS_HOMO");
+  });
+
   it("pins the exact controlled registries", () => {
     expect(BREED_GROUP_IDS).toHaveLength(84);
     expect(new Set(BREED_GROUP_IDS)).toHaveLength(84);
@@ -28,30 +41,44 @@ describe("WorldBuilding v3 simple domain", () => {
 
   it("validates recursive taxonomy rank order, text, and cycles", () => {
     const taxonomy = {
-      taxonomyLevelId: "species",
+      taxonomyLevelId: "TAX_SPECIES_HOMO_SAPIENS",
       type: "SPECIES" as const,
       name: "Homo sapiens",
+      isOfficial: true,
       parent: {
-        taxonomyLevelId: "genus",
+        taxonomyLevelId: "TAX_GENUS_HOMO",
         type: "GENUS" as const,
         name: "Homo",
-        parent: { taxonomyLevelId: "family", type: "FAMILY" as const, name: "Hominidae" },
+        isOfficial: true,
+        parent: { taxonomyLevelId: "TAX_FAMILY_HOMINIDAE", type: "FAMILY" as const, name: "Hominidae", isOfficial: true },
       },
     };
     expect(validateTaxonomy(taxonomy)).toEqual([]);
     expect(validateTaxonomy({ ...taxonomy, parent: { ...taxonomy.parent, type: "ORDER" as const } })).toContain("Taxonomy parent of SPECIES must be GENUS.");
     expect(validateTaxonomy({ ...taxonomy, name: " " })).toContain("Taxonomy name cannot be blank.");
-    const cyclic: Record<string, unknown> = { taxonomyLevelId: "cycle", type: "SPECIES", name: "Cycle" };
+    expect(validateTaxonomy({ ...taxonomy, taxonomyLevelId: "species" })).toContain("Taxonomy SPECIES Homo sapiens must use taxonomyLevelId TAX_SPECIES_HOMO_SAPIENS.");
+    expect(validateTaxonomy({ ...taxonomy, isOfficial: "yes" })).toContain("Taxonomy isOfficial must be boolean.");
+    const cyclic: Record<string, unknown> = { taxonomyLevelId: "TAX_SPECIES_CYCLE", type: "SPECIES", name: "Cycle", isOfficial: false };
     cyclic.parent = cyclic;
     expect(validateTaxonomy(cyclic)).toContain("Taxonomy cannot contain cycles.");
   });
 
   it("resolves each presentation scalar independently by first nonblank value", () => {
     expect(resolvePresentation(
-      { appearance: "species appearance", clothing: "species clothing", architecture: "species architecture" },
-      { appearance: " culture appearance ", clothing: "", architecture: "culture architecture" },
-      { appearance: "   ", clothing: "breed clothing", architecture: null },
-    )).toEqual({ appearance: " culture appearance ", clothing: "breed clothing", architecture: "culture architecture" });
+      { accent: "species accent", appearance: "species appearance", clothing: "species clothing", architecture: "species architecture" },
+      { accent: "culture accent must not inherit", appearance: " culture appearance ", clothing: "", architecture: "culture architecture" },
+      { accent: "breed accent", appearance: "   ", clothing: "breed clothing", architecture: null },
+    )).toEqual({ accent: "breed accent", appearance: " culture appearance ", clothing: "breed clothing", architecture: "culture architecture" });
+  });
+
+  it("enforces the complete PET species presentation invariant", () => {
+    const valid = { speciesId: "SPC_HOUSE_CAT", name: "House cat", speciesKind: "PET" as const, anthropomorphization: null, appearance: "A compact domestic cat with a flexible spine, triangular ears, whiskered muzzle, and species-accurate paws.", clothing: null, architecture: null };
+    expect(validateSpecies(valid)).toEqual([]);
+    expect(validateSpecies({ ...valid, anthropomorphization: "upright person", clothing: "coat", architecture: "stone halls" })).toEqual(expect.arrayContaining([
+      "PET Species anthropomorphization must be null.",
+      "PET Species clothing must be null.",
+      "PET Species architecture must be null.",
+    ]));
   });
 
   it("enforces group prefix, PET, personality, and controlled-array invariants", () => {

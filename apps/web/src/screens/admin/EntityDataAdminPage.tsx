@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import { FiniteChipSelection } from "../../components/ui/controls";
 import { entityFields, entityForPath, type EntityName } from "../../content/entities";
 import contractData from "../../data/entity-admin-contract.json";
+import { adminFieldControl, validateAdminEntityDraft } from "../../domain/entity-form";
+import { clothingSections, formatClothingSections, parseClothingSections } from "../../domain/presentation-audit";
+import { canonicalEntityId, canonicalTaxonomyLevelId, type CanonicalWorldbuildingEntityKind, type TaxonomyType } from "../../domain/worldbuilding";
 import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
 
 interface AdminField {
@@ -49,28 +52,62 @@ function selectedList(value: string): string[] {
   try { const parsed = JSON.parse(value) as unknown; return Array.isArray(parsed) && parsed.every((entry) => typeof entry === "string") ? parsed : []; } catch { return []; }
 }
 
+function canonicalKindForEntity(entity: EntityName): CanonicalWorldbuildingEntityKind | undefined {
+  return entity === "Species" ? "SPECIES" : entity === "Culture" ? "CULTURE" : entity === "Breed" ? "BREED" : undefined;
+}
+
 function TaxonomyEditor({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const ranks = ["KINGDOM", "PHYLUM", "CLASS", "ORDER", "FAMILY", "GENUS", "SPECIES"] as const;
-  type Node = { taxonomyLevelId: string; type: typeof ranks[number]; name: string; text?: string; commonName?: string; parent?: Node };
+  type Node = { taxonomyLevelId: string; type: typeof ranks[number]; name: string; isOfficial: boolean; text?: string; commonName?: string; parent?: Node };
   let parsed: Node | undefined;
   try { const valueParsed = JSON.parse(value) as Node; if (valueParsed && typeof valueParsed === "object") parsed = valueParsed; } catch { /* editor starts blank */ }
   const nodes: Node[] = [];
   for (let current = parsed; current; current = current.parent) nodes.push(current);
-  const update = (index: number, field: keyof Omit<Node, "parent">, next: string) => {
-    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "" });
+  const update = (index: number, changes: Partial<Omit<Node, "parent">>) => {
+    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "", isOfficial: false });
     let current = cloned; for (let cursor = 0; cursor < index; cursor += 1) current = current.parent!;
-    if ((field === "text" || field === "commonName") && !next) delete current[field]; else (current as unknown as Record<string, string>)[field] = next;
+    Object.assign(current, changes);
+    if (changes.text === "") delete current.text;
+    if (changes.commonName === "") delete current.commonName;
+    if (current.name.trim()) current.taxonomyLevelId = canonicalTaxonomyLevelId(current.type as TaxonomyType, current.name);
     onChange(JSON.stringify(cloned, null, 2));
   };
   const addParent = () => {
-    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "" });
+    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "", isOfficial: false });
     let current = cloned; while (current.parent) current = current.parent;
     const index = ranks.indexOf(current.type); if (index <= 0) return;
-    current.parent = { taxonomyLevelId: "", type: ranks[index - 1], name: "" };
+    current.parent = { taxonomyLevelId: "", type: ranks[index - 1], name: "", isOfficial: false };
     onChange(JSON.stringify(cloned, null, 2));
   };
-  if (!parsed) return <div className="span-2"><button className="button" type="button" onClick={() => onChange(JSON.stringify({ taxonomyLevelId: "", type: "SPECIES", name: "" }, null, 2))}>Add taxonomy</button></div>;
-  return <fieldset className="span-2"><legend>taxonomy</legend>{nodes.map((node, index) => <div className="form-grid" key={index}><label className="field">rank<select className="select" value={node.type} onChange={(event) => update(index, "type", event.target.value)}>{ranks.map((rank) => <option key={rank}>{rank}</option>)}</select></label><label className="field">taxonomyLevelId<input className="input" value={node.taxonomyLevelId} onChange={(event) => update(index, "taxonomyLevelId", event.target.value)} /></label><label className="field">name<input className="input" value={node.name} onChange={(event) => update(index, "name", event.target.value)} /></label><label className="field">commonName<input className="input" value={node.commonName ?? ""} onChange={(event) => update(index, "commonName", event.target.value)} /></label><label className="field span-2">text<input className="input" value={node.text ?? ""} onChange={(event) => update(index, "text", event.target.value)} /></label></div>)}<div className="action-row"><button className="button" type="button" onClick={addParent}>Add parent rank</button><button className="button button--danger" type="button" onClick={() => onChange("{}")}>Clear taxonomy</button></div></fieldset>;
+  if (!parsed) return <div className="span-2"><button className="button" type="button" onClick={() => onChange(JSON.stringify({ taxonomyLevelId: "", type: "SPECIES", name: "", isOfficial: false }, null, 2))}>Add taxonomy</button></div>;
+  return <fieldset className="span-2"><legend>taxonomy</legend>{nodes.map((node, index) => <div className="form-grid" key={index}><label className="field">rank<select className="select" value={node.type} onChange={(event) => update(index, { type: event.target.value as TaxonomyType })}>{ranks.map((rank) => <option key={rank}>{rank}</option>)}</select></label><label className="field">taxonomyLevelId<input className="input" readOnly value={node.taxonomyLevelId} /></label><label className="field">name<input className="input" value={node.name} onChange={(event) => update(index, { name: event.target.value })} /></label><label className="field">commonName<input className="input" value={node.commonName ?? ""} onChange={(event) => update(index, { commonName: event.target.value })} /></label><label className="field"><input checked={node.isOfficial === true} type="checkbox" onChange={(event) => update(index, { isOfficial: event.target.checked })} /> Recognized by authoritative real-world taxonomy</label><label className="field span-2">text<input className="input" value={node.text ?? ""} onChange={(event) => update(index, { text: event.target.value })} /></label></div>)}<div className="action-row"><button className="button" type="button" onClick={addParent}>Add parent rank</button><button className="button button--danger" type="button" onClick={() => onChange("{}")}>Clear taxonomy</button></div></fieldset>;
+}
+
+function StringListEditor({ disabled, label, value, onChange }: { disabled: boolean; label: string; value: string; onChange: (value: string) => void }) {
+  const values = selectedList(value);
+  const update = (next: string[]) => onChange(JSON.stringify(next));
+  return <fieldset className="field span-2" disabled={disabled}><legend>{label}</legend><div className="stack">{values.map((entry, index) => <div className="action-row" key={`${index}:${entry}`}><input aria-label={`${label} value ${index + 1}`} className="input" value={entry} onChange={(event) => update(values.map((current, currentIndex) => currentIndex === index ? event.target.value : current))} /><button aria-label={`Remove ${label} value ${index + 1}`} className="button button--danger" onClick={() => update(values.filter((_, currentIndex) => currentIndex !== index))} type="button">Remove</button></div>)}</div><button className="button" onClick={() => update([...values, ""])} type="button">Add {label} value</button></fieldset>;
+}
+
+function ClothingEditor({ disabled, label, value, onChange }: { disabled: boolean; label: string; value: string; onChange: (value: string) => void }) {
+  const sections = parseClothingSections(value);
+  return <fieldset aria-label={label} className="field span-2" disabled={disabled}><legend>{label}</legend>{clothingSections.map((section) => <label className="field" key={section}>{section}<textarea className="textarea" rows={3} value={sections[section] ?? ""} onChange={(event) => onChange(formatClothingSections({ ...sections, [section]: event.target.value }))} /></label>)}</fieldset>;
+}
+
+function AdminFieldEditor({ contract, disabled, entity, field, value, onChange }: { contract: AdminContract; disabled: boolean; entity: EntityName; field: AdminField; value: string; onChange: (value: string) => void }) {
+  const label = `${field.name}${field.isRequired ? " *" : ""}`;
+  const control = adminFieldControl(entity, contract.idField, field);
+  if (control === "TAXONOMY") return <TaxonomyEditor value={value || "{}"} onChange={onChange} />;
+  if (control === "ENUM_LIST") return <div className="field span-2"><FiniteChipSelection allowedTokens={field.enumValues} label={label} multiple selectedTokens={selectedList(value || "[]")} onChange={(tokens) => onChange(JSON.stringify(tokens))} /></div>;
+  if (control === "STRING_LIST") return <StringListEditor disabled={disabled} label={label} value={value || "[]"} onChange={onChange} />;
+  if (control === "CLOTHING") return <ClothingEditor disabled={disabled} label={label} value={value} onChange={onChange} />;
+  if (control === "ENUM") return <label className="field">{label}<select className="select" disabled={disabled} value={value} onChange={(event) => onChange(event.target.value)}><option value="">Select…</option>{field.enumValues.map((option) => <option key={option}>{option}</option>)}</select></label>;
+  if (control === "BOOLEAN") return <label className="field"><input checked={value === "true"} disabled={disabled} type="checkbox" onChange={(event) => onChange(String(event.target.checked))} /> {label}</label>;
+  if (control === "JSON") return <label className="field span-2">{label}<textarea className="textarea" disabled={disabled} rows={8} value={value} onChange={(event) => onChange(event.target.value)} /></label>;
+  if (control === "LONG_TEXT") return <label className="field span-2">{label}<textarea className="textarea" disabled={disabled} rows={5} value={value} onChange={(event) => onChange(event.target.value)} /></label>;
+  if (control === "INTEGER" || control === "DECIMAL") return <label className="field">{label}<input className="input" disabled={disabled} inputMode="decimal" step={control === "INTEGER" ? 1 : "any"} type="number" value={value} onChange={(event) => onChange(event.target.value)} /></label>;
+  if (control === "DATETIME") return <label className="field">{label}<input className="input" disabled={disabled} type="datetime-local" value={value} onChange={(event) => onChange(event.target.value)} /></label>;
+  return <label className="field">{label}<input className="input" disabled={disabled} placeholder={control === "REFERENCE" ? "Canonical referenced entity ID" : undefined} value={value} onChange={(event) => onChange(event.target.value)} /></label>;
 }
 
 async function readCollection(entityKey: string): Promise<EntityCollection> {
@@ -103,10 +140,27 @@ function EntityForm({ contract, entity, initial, mode, onComplete }: {
   onComplete: (record: Record<string, unknown>) => void;
 }) {
   const entityKey = entity.toLowerCase();
+  const canonicalKind = canonicalKindForEntity(entity);
   const [draft, setDraft] = useState<Record<string, string>>(() => Object.fromEntries(contract.fields.map((field) => [field.name, editableValue(initial?.[field.name], field)])));
   const recordId = initial?.[contract.idField];
+  const petSpecies = entity === "Species" && draft.speciesKind === "PET";
+  const petNullFields = new Set(["anthropomorphization", "clothing", "architecture"]);
+  const updateDraftField = (field: AdminField, value: string) => setDraft((current) => {
+    const next = { ...current, [field.name]: value };
+    if (mode === "create" && canonicalKind && field.name === "name") next[contract.idField] = value.trim() ? canonicalEntityId(canonicalKind, value) : "";
+    if (entity === "Species" && field.name === "speciesKind" && value === "PET") {
+      for (const nullField of petNullFields) next[nullField] = "";
+    }
+    return next;
+  });
+  const fieldDisabled = (field: AdminField) =>
+    (field.name === contract.idField && (mode === "edit" || canonicalKind !== undefined))
+    || (canonicalKind !== undefined && mode === "edit" && field.name === "name")
+    || (petSpecies && petNullFields.has(field.name));
   const mutation = useMutation({
     mutationFn: async () => {
+      const formErrors = validateAdminEntityDraft(entity, contract.idField, contract.fields, draft);
+      if (formErrors.length) throw new Error(formErrors.join(" "));
       const record = payloadFromDraft(contract, draft);
       const endpoint = mode === "edit" ? `/api/admin/data/${entityKey}/${encodeURIComponent(String(recordId))}` : `/api/admin/data/${entityKey}`;
       const response = await fetch(endpoint, { body: JSON.stringify({ record }), headers: { "content-type": "application/json" }, method: mode === "edit" ? "PATCH" : "POST" });
@@ -118,7 +172,9 @@ function EntityForm({ contract, entity, initial, mode, onComplete }: {
   });
   return <section className="card">
     <div className="action-row action-row--between"><div><p className="kicker">{mode === "edit" ? "RECORD EDITOR" : "NEW RECORD"}</p><h2>{mode === "edit" ? `Edit ${entity}` : `Create ${entity}`}</h2></div><span className="tag">{contract.fields.length} fields</span></div>
-    <div className="form-grid">{contract.fields.map((field) => field.name === "taxonomy" ? <TaxonomyEditor key={field.name} value={draft[field.name] ?? "{}"} onChange={(value) => setDraft((current) => ({ ...current, [field.name]: value }))} /> : field.isList && field.kind === "enum" ? <div className="field span-2" key={field.name}><FiniteChipSelection allowedTokens={field.enumValues} label={`${field.name}${field.isRequired ? " *" : ""}`} multiple selectedTokens={selectedList(draft[field.name] ?? "[]")} onChange={(tokens) => setDraft((current) => ({ ...current, [field.name]: JSON.stringify(tokens) }))} /></div> : <label className={`field ${field.kind === "json" || field.isList ? "span-2" : ""}`} key={field.name}>{field.name}{field.isRequired && " *"}{field.kind === "enum" ? <select className="select" value={draft[field.name] ?? ""} disabled={mode === "edit" && field.name === contract.idField} onChange={(event) => setDraft((current) => ({ ...current, [field.name]: event.target.value }))}><option value="">Select…</option>{field.enumValues.map((value) => <option key={value} value={value}>{value}</option>)}</select> : field.type === "Boolean" ? <select className="select" value={draft[field.name] ?? ""} onChange={(event) => setDraft((current) => ({ ...current, [field.name]: event.target.value }))}><option value="">Select…</option><option value="true">true</option><option value="false">false</option></select> : field.kind === "json" || field.isList ? <textarea className="textarea" rows={4} value={draft[field.name] ?? ""} onChange={(event) => setDraft((current) => ({ ...current, [field.name]: event.target.value }))} /> : <input className="input" value={draft[field.name] ?? ""} disabled={mode === "edit" && field.name === contract.idField} inputMode={["Int", "Float", "Decimal"].includes(field.type) ? "decimal" : undefined} onChange={(event) => setDraft((current) => ({ ...current, [field.name]: event.target.value }))} />}</label>)}</div>
+    {canonicalKind && mode === "edit" && <p className="notice">Canonical WorldBuilding names and persistence IDs are immutable. Create a reviewed replacement entity for a genuine identity change.</p>}
+    {petSpecies && <p className="notice">PET invariant: clothing, architecture, and anthropomorphization remain null. Author a biologically prompt-ready appearance instead.</p>}
+    <div className="form-grid">{contract.fields.map((field) => <AdminFieldEditor contract={contract} disabled={fieldDisabled(field)} entity={entity} field={field} key={field.name} value={draft[field.name] ?? ""} onChange={(value) => updateDraftField(field, value)} />)}</div>
     <div className="action-row"><button className="button button--gold" disabled={mutation.isPending} onClick={() => mutation.mutate()}>{mutation.isPending ? "Saving…" : mode === "edit" ? "Save Changes" : `Create ${entity}`}</button></div>
     {mutation.error && <p className="notice notice--bad" role="alert">{mutation.error.message}</p>}
     {mutation.isSuccess && <p className="notice notice--good" role="status">{entity} saved.</p>}

@@ -67,4 +67,54 @@ describe("persisted Data administration", () => {
     fireEvent.click(screen.getByRole("button", { name: "Create Breed" }));
     await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/breed", expect.objectContaining({ body: JSON.stringify({ record: { breedId: "BREED-1", foodBroad: ["ANIMAL"] } }) })));
   });
+
+  it("derives canonical WorldBuilding persistence IDs from the finalized name", async () => {
+    const speciesCollection = { entity: "Species", records: [], contract: { delegate: "species", idField: "speciesId", fields: [
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "speciesId", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "name", type: "String" },
+    ] } };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => speciesCollection, ok: true }));
+    renderPage("/admin/data/species", "DATA007");
+    await screen.findByText("Species");
+    fireEvent.click(screen.getByRole("button", { name: "New" }));
+    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Greater blue-ringed octopus" } });
+    expect(screen.getByLabelText("speciesId *")).toHaveValue("SPC_GREATER_BLUE_RINGED_OCTOPUS");
+  });
+
+  it("locks the canonical name and persistence ID together when editing WorldBuilding records", async () => {
+    const speciesCollection = { entity: "Species", records: [{ speciesId: "SPC_HUMAN", name: "Human" }], contract: { delegate: "species", idField: "speciesId", fields: [
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "speciesId", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "name", type: "String" },
+    ] } };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => speciesCollection, ok: true }));
+    renderPage("/admin/data/species/SPC_HUMAN", "DATA_SPECIES_EDIT");
+
+    expect(await screen.findByLabelText("speciesId *")).toBeDisabled();
+    expect(screen.getByLabelText("name *")).toBeDisabled();
+    expect(screen.getByText(/Canonical WorldBuilding names and persistence IDs are immutable/)).toBeInTheDocument();
+  });
+
+  it("clears and disables non-applicable PET presentation fields", async () => {
+    const speciesCollection = { entity: "Species", records: [], contract: { delegate: "species", idField: "speciesId", fields: [
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "speciesId", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "name", type: "String" },
+      { enumValues: ["SAPIENT", "PET"], hasDefault: false, isList: false, isRequired: true, kind: "enum", name: "speciesKind", type: "SpeciesKind" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "anthropomorphization", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "clothing", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "architecture", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "appearance", type: "String" },
+    ] } };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => speciesCollection, ok: true }));
+    renderPage("/admin/data/species", "DATA007");
+    await screen.findByText("Species");
+    fireEvent.click(screen.getByRole("button", { name: "New" }));
+    fireEvent.change(screen.getByLabelText("Civilian"), { target: { value: "Stale clothing" } });
+    fireEvent.change(screen.getByLabelText("speciesKind *"), { target: { value: "PET" } });
+
+    expect(screen.getByLabelText("anthropomorphization")).toBeDisabled();
+    expect(screen.getByRole("group", { name: "clothing" })).toBeDisabled();
+    expect(screen.getByLabelText("Civilian")).toHaveValue("");
+    expect(screen.getByLabelText("architecture")).toBeDisabled();
+    expect(screen.getByText(/PET invariant: clothing, architecture, and anthropomorphization remain null/)).toBeInTheDocument();
+  });
 });

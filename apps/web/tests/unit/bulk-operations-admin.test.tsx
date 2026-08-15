@@ -5,9 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 import { pageManifest } from "../../src/lib/page-manifest";
 import { BulkOperationsAdminPage } from "../../src/screens/admin/BulkOperationsAdminPage";
 
-function renderState(screenId: string) {
+function renderState(screenId: string, pathname?: string) {
   const entry = pageManifest.find((candidate) => candidate.screenId === screenId)!;
-  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><BulkOperationsAdminPage screen={entry} /></QueryClientProvider>);
+  return render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><BulkOperationsAdminPage pathname={pathname} screen={entry} /></QueryClientProvider>);
 }
 
 describe("Bulk Operations administration", () => {
@@ -33,5 +33,19 @@ describe("Bulk Operations administration", () => {
     expect(screen.getByText("Temporary API key")).toBeInTheDocument();
     expect(screen.getByText("Soul")).toBeInTheDocument();
     expect(screen.getByText("CHANGED")).toBeInTheDocument();
+  });
+
+  it("exposes ordered rerun, apply, and delete actions on the envelope detail form", async () => {
+    const envelope = { bulkMutationEnvelopeId: "11111111-1111-4111-8111-111111111111", decidedAt: null, dryRunResult: { valid: true }, entityCode: "worldbuilding-research", notes: "Ready", operation: "CREATE", receivedAt: "2026-08-10T12:00:00Z", recordCount: 3, revalidationResult: null, sequence: "1", status: "PENDING_REVIEW" };
+    const overview = { activeSession: null, audits: [], envelopes: [envelope], maximumLifetimeMinutes: 60, state: "OFF" };
+    const fetchMock = vi.fn().mockResolvedValue({ json: async () => overview, ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderState("BULK02_BULK_CHANGE_DETAIL_V2", `/admin/bulk-changes/${envelope.bulkMutationEnvelopeId}`);
+
+    expect(await screen.findByRole("button", { name: "Rerun dry-run for sequence 1" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Apply sequence 1" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Delete sequence 1" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Rerun dry-run for sequence 1" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/bulk-operations", expect.objectContaining({ method: "POST", body: JSON.stringify({ action: "rerun", envelopeId: envelope.bulkMutationEnvelopeId }) })));
   });
 });

@@ -1794,10 +1794,8 @@ model Character {
 }
 
 model Architect {
-  architectId String              @id
-  characterId String              @unique
+  characterId String              @id
   department  ArchitectDepartment
-  profession  String?
   character   Character           @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnesses   Witness[]
 }
@@ -1813,23 +1811,22 @@ model WitnessDef {
 }
 
 model Witness {
-  witnessId             String          @id
-  characterId           String          @unique
+  characterId           String          @id
   witnessDefId          String
   trueFlawName          String
-  architectId           String
+  architectCharacterId  String
   legendaryRewardId     String
   constellationBeforeId String?
   constellationAfterId  String?
   character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnessDef            WitnessDef      @relation(fields: [witnessDefId], references: [witnessDefId], onDelete: Restrict)
-  architect             Architect       @relation(fields: [architectId], references: [architectId], onDelete: Restrict)
+  architect             Architect       @relation(fields: [architectCharacterId], references: [characterId], onDelete: Restrict)
   legendaryReward       LegendaryReward @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
   constellationBefore   Constellation?  @relation("WitnessConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
   constellationAfter    Constellation?  @relation("WitnessConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
 
   @@index([witnessDefId])
-  @@index([architectId])
+  @@index([architectCharacterId])
   @@index([legendaryRewardId])
 }
 
@@ -1847,8 +1844,8 @@ model CompanionDef {
   schismCharacterId     String                          @unique
   soulId                String
   heirloom              Heirloom
-  knowledgeSkill        KnowledgeSkill
-  awarenessSkill        AwarenessSkill
+  knowledgeSkill        KnowledgeSkill?
+  awarenessSkill        AwarenessSkill?
   concordCharacter      Character                       @relation("CompanionDefConcordCharacter", fields: [concordCharacterId], references: [characterId], onDelete: Restrict)
   ruinCharacter         Character                       @relation("CompanionDefRuinCharacter", fields: [ruinCharacterId], references: [characterId], onDelete: Restrict)
   schismCharacter       Character                       @relation("CompanionDefSchismCharacter", fields: [schismCharacterId], references: [characterId], onDelete: Restrict)

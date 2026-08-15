@@ -7,6 +7,7 @@ export interface Taxonomy {
   taxonomyLevelId: string;
   type: TaxonomyType;
   name: string;
+  isOfficial: boolean;
   text?: string;
   commonName?: string;
   parent?: Taxonomy;
@@ -19,6 +20,30 @@ export const BREED_GROUPS = Object.freeze(Object.fromEntries(breedGroups.map((gr
 
 const taxonomyOrder = ["KINGDOM", "PHYLUM", "CLASS", "ORDER", "FAMILY", "GENUS", "SPECIES"] as const;
 const taxonomyTypes = new Set<string>(taxonomyOrder);
+
+export type CanonicalWorldbuildingEntityKind = "SPECIES" | "CULTURE" | "BREED";
+
+export function canonicalIdToken(name: string): string {
+  return name
+    .normalize("NFKD")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+export function canonicalEntityId(kind: CanonicalWorldbuildingEntityKind, finalizedCanonicalName: string): string {
+  const token = canonicalIdToken(finalizedCanonicalName);
+  if (!token) throw new Error(`${kind} canonical name must contain at least one letter or number.`);
+  const prefix = kind === "SPECIES" ? "SPC" : kind === "CULTURE" ? "CLT" : "BRD";
+  return `${prefix}_${token}`;
+}
+
+export function canonicalTaxonomyLevelId(type: TaxonomyType, finalizedCanonicalName: string): string {
+  const token = canonicalIdToken(finalizedCanonicalName);
+  if (!token) throw new Error(`${type} taxonomy name must contain at least one letter or number.`);
+  return `TAX_${type}_${token}`;
+}
 
 export function validateTaxonomy(value: unknown): string[] {
   const errors: string[] = [];
@@ -40,6 +65,11 @@ export function validateTaxonomy(value: unknown): string[] {
     else visitedIds.add(record.taxonomyLevelId);
     if (typeof record.name !== "string" || !record.name.trim()) errors.push("Taxonomy name cannot be blank.");
     if (typeof record.type !== "string" || !taxonomyTypes.has(record.type)) errors.push("Taxonomy type is invalid.");
+    if (typeof record.isOfficial !== "boolean") errors.push("Taxonomy isOfficial must be boolean.");
+    if (typeof record.type === "string" && taxonomyTypes.has(record.type) && typeof record.name === "string" && record.name.trim() && typeof record.taxonomyLevelId === "string") {
+      const expectedId = canonicalTaxonomyLevelId(record.type as TaxonomyType, record.name);
+      if (record.taxonomyLevelId !== expectedId) errors.push(`Taxonomy ${record.type} ${record.name} must use taxonomyLevelId ${expectedId}.`);
+    }
     for (const field of ["text", "commonName"] as const) {
       if (record[field] !== undefined && (typeof record[field] !== "string" || !record[field].trim())) errors.push(`Taxonomy ${field} cannot be blank when supplied.`);
     }
@@ -58,14 +88,38 @@ export function validateTaxonomy(value: unknown): string[] {
   return [...new Set(errors)];
 }
 
-type Presentation = { appearance?: string | null; clothing?: string | null; architecture?: string | null };
+type Presentation = { accent?: string | null; appearance?: string | null; clothing?: string | null; architecture?: string | null };
 const firstNonblank = (...values: Array<string | null | undefined>) => values.find((value) => typeof value === "string" && value.trim().length > 0);
 export function resolvePresentation(species: Presentation, culture?: Presentation | null, breed?: Presentation | null): Presentation {
   return {
+    accent: firstNonblank(breed?.accent, species.accent),
     appearance: firstNonblank(breed?.appearance, culture?.appearance, species.appearance),
     clothing: firstNonblank(breed?.clothing, culture?.clothing, species.clothing),
     architecture: firstNonblank(breed?.architecture, culture?.architecture, species.architecture),
   };
+}
+
+export type SpeciesValidationInput = {
+  speciesId: string;
+  name: string;
+  speciesKind: SpeciesKind;
+  anthropomorphization?: string | null;
+  appearance?: string | null;
+  clothing?: string | null;
+  architecture?: string | null;
+};
+
+export function validateSpecies(input: SpeciesValidationInput): string[] {
+  const errors: string[] = [];
+  const expectedId = canonicalEntityId("SPECIES", input.name);
+  if (input.speciesId !== expectedId) errors.push(`Species ${input.name} must use speciesId ${expectedId}.`);
+  if (input.speciesKind === "PET") {
+    if (input.anthropomorphization != null) errors.push("PET Species anthropomorphization must be null.");
+    if (input.clothing != null) errors.push("PET Species clothing must be null.");
+    if (input.architecture != null) errors.push("PET Species architecture must be null.");
+    if (typeof input.appearance !== "string" || !input.appearance.trim()) errors.push("PET Species appearance must be biologically prompt-ready.");
+  }
+  return errors;
 }
 
 export const breedDimensionValues = Object.freeze(WORLD_BUILDING_ENUMS.BreedDimensions);

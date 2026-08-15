@@ -1,11 +1,13 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
 
-import { BREED_GROUPS, WORLD_BUILDING_ENUMS, validateBreed, validateTaxonomy, type BreedGroupId, type SpeciesKind } from "../domain/worldbuilding";
+import { BREED_GROUPS, WORLD_BUILDING_ENUMS, canonicalEntityId, validateBreed, validateSpecies, validateTaxonomy, type BreedGroupId, type SpeciesKind } from "../domain/worldbuilding";
 
 export const WORLD_BUILDING_RESEARCH_SCHEMA_VERSION = "eidolon-worldbuilding-research-v3-simple" as const;
-export const worldbuildingResearchStatuses = ["RESEARCH_COMPLETE_IMPORTABLE", "RESEARCH_COMPLETE_BLOCKED", "REVIEW_REQUIRED", "CONFLICTING_SOURCES", "NOT_FOUND"] as const;
-const statusSchema = z.enum(worldbuildingResearchStatuses);
+export const worldbuildingResearchStatuses = ["RESOLVED", "REVIEW_REQUIRED", "CONFLICTING_SOURCES", "NOT_FOUND", "ID_COLLISION_REVIEW_REQUIRED"] as const;
+export const worldbuildingImportStatuses = ["RESEARCH_COMPLETE_IMPORTABLE", "RESEARCH_COMPLETE_BLOCKED"] as const;
+const researchStatusSchema = z.enum(worldbuildingResearchStatuses);
+const importStatusSchema = z.enum(worldbuildingImportStatuses);
 const refSchema = z.string().trim().min(1);
 const recordSchema = z.object({
   recordKey: refSchema,
@@ -13,7 +15,8 @@ const recordSchema = z.object({
   speciesRef: refSchema.optional(),
   cultureRef: refSchema.optional(),
   breedRef: refSchema.optional(),
-  status: statusSchema,
+  researchStatus: researchStatusSchema,
+  importStatus: importStatusSchema,
   data: z.record(z.string(), z.unknown()),
   evidence: z.array(z.unknown()).optional(),
 }).strict();
@@ -23,22 +26,102 @@ const envelopeSchema = z.object({
   records: z.array(recordSchema).min(1).max(1_000),
 }).strict();
 export type WorldbuildingResearchEnvelope = z.infer<typeof envelopeSchema>;
-export type WorldbuildingResearchStatus = z.infer<typeof statusSchema>;
+export type WorldbuildingResearchStatus = z.infer<typeof researchStatusSchema>;
+export type WorldbuildingImportStatus = z.infer<typeof importStatusSchema>;
+export type WorldbuildingResearchRecord = WorldbuildingResearchEnvelope["records"][number];
 
-export interface WorldbuildingImportIdAllocator {
-  allocate(entity: "SPECIES" | "CULTURE" | "BREED", recordKey: string): string;
+export class WorldbuildingEnvelopeLimitError extends Error {
+  override name = "WorldbuildingEnvelopeLimitError";
+}
+
+function ownedId(record: WorldbuildingResearchEnvelope["records"][number]): string {
+  const reference = record.kind === "SPECIES" ? record.speciesRef : record.kind === "CULTURE" ? record.cultureRef : record.breedRef;
+  if (!reference) throw new Error(`${record.kind} ${record.recordKey} is missing its canonical persistence reference.`);
+  return reference;
+}
+
+function ownedIdField(kind: WorldbuildingResearchEnvelope["records"][number]["kind"]): "speciesId" | "cultureId" | "breedId" {
+  return kind === "SPECIES" ? "speciesId" : kind === "CULTURE" ? "cultureId" : "breedId";
 }
 
 export function parseWorldbuildingResearchEnvelope(value: unknown): WorldbuildingResearchEnvelope {
   const envelope = envelopeSchema.parse(value);
+  validateRecordIdentities(envelope.records);
+  return envelope;
+}
+
+function validateRecordIdentities(records: readonly WorldbuildingResearchRecord[]): void {
   const keys = new Set<string>();
-  for (const record of envelope.records) {
+  for (const record of records) {
     if (keys.has(record.recordKey)) throw new Error(`WorldBuilding research duplicates recordKey ${record.recordKey}.`);
     keys.add(record.recordKey);
-    const ownedRef = record.kind === "SPECIES" ? record.speciesRef : record.kind === "CULTURE" ? record.cultureRef : record.breedRef;
-    if (ownedRef !== record.recordKey) throw new Error(`${record.kind} recordKey must equal its owned stable reference.`);
+    const reference = ownedId(record);
+    const idField = ownedIdField(record.kind);
+    if (record.data[idField] !== reference) throw new Error(`${record.kind} ${idField} and its legacy reference must contain the same canonical persistence ID.`);
+    if (!nonblank(record.data.name)) throw new Error(`${record.kind} ${record.recordKey} is missing its finalized canonical name.`);
+    const expected = canonicalEntityId(record.kind, record.data.name);
+    if (reference !== expected) throw new Error(`${record.kind} ${record.data.name} must use canonical persistence ID ${expected}.`);
   }
-  return envelope;
+}
+
+export function buildWorldbuildingResearchEnvelopes(value: unknown, options: { maximumCanonicalRows?: number; externalRefs?: ReadonlySet<string> } = {}): WorldbuildingResearchEnvelope[] {
+  const records = z.array(recordSchema).min(1).parse(value);
+  validateRecordIdentities(records);
+  const maximumCanonicalRows = options.maximumCanonicalRows ?? 1_000;
+  if (!Number.isInteger(maximumCanonicalRows) || maximumCanonicalRows < 1 || maximumCanonicalRows > 1_000) throw new Error("maximumCanonicalRows must be an integer from 1 through 1000.");
+  const externalRefs = options.externalRefs ?? new Set<string>();
+  const recordById = new Map<string, WorldbuildingResearchRecord>();
+  for (const record of records) {
+    const id = ownedId(record);
+    const existing = recordById.get(id);
+    if (!existing) {
+      recordById.set(id, record);
+      continue;
+    }
+    if (existing.data.name !== record.data.name) throw new Error(`ID_COLLISION_REVIEW_REQUIRED: distinct canonical names converge on ${id}.`);
+    if (canonical(existing.data) !== canonical(record.data)) throw new Error(`CONFLICTING_SOURCES: canonical entity ${id} has incompatible normalized data.`);
+    const evidence = [...new Map([...(existing.evidence ?? []), ...(record.evidence ?? [])].map((entry) => [canonical(entry), entry])).values()];
+    recordById.set(id, { ...existing, evidence: evidence.length ? evidence : undefined });
+  }
+  const adjacency = new Map([...recordById.keys()].map((id) => [id, new Set<string>()]));
+  for (const record of recordById.values()) {
+    if (record.kind !== "BREED") continue;
+    if (!record.speciesRef) throw new Error(`DANGLING_REFERENCE: Breed ${ownedId(record)} has no Species reference.`);
+    for (const reference of [record.speciesRef, record.cultureRef].filter((entry): entry is string => Boolean(entry))) {
+      if (recordById.has(reference)) {
+        adjacency.get(ownedId(record))!.add(reference);
+        adjacency.get(reference)!.add(ownedId(record));
+      } else if (!externalRefs.has(reference)) {
+        throw new Error(`DANGLING_REFERENCE: Breed ${ownedId(record)} references unavailable ${reference}.`);
+      }
+    }
+  }
+  const visited = new Set<string>();
+  const components: WorldbuildingResearchRecord[][] = [];
+  for (const start of recordById.keys()) {
+    if (visited.has(start)) continue;
+    const pending = [start];
+    const componentIds: string[] = [];
+    while (pending.length) {
+      const id = pending.pop()!;
+      if (visited.has(id)) continue;
+      visited.add(id);
+      componentIds.push(id);
+      pending.push(...[...(adjacency.get(id) ?? [])].sort().reverse());
+    }
+    const component = componentIds.map((id) => recordById.get(id)!).sort((left, right) => {
+      const order = { SPECIES: 0, CULTURE: 1, BREED: 2 } as const;
+      return order[left.kind] - order[right.kind] || ownedId(left).localeCompare(ownedId(right));
+    });
+    if (component.length > maximumCanonicalRows) throw new WorldbuildingEnvelopeLimitError(`ENVELOPE_LIMIT_IMPLEMENTATION_BLOCKER: intact component has ${component.length} canonical rows, exceeding ${maximumCanonicalRows}.`);
+    components.push(component);
+  }
+  const bins: WorldbuildingResearchRecord[][] = [];
+  for (const component of components) {
+    const bin = bins.find((candidate) => candidate.length + component.length <= maximumCanonicalRows);
+    if (bin) bin.push(...component); else bins.push([...component]);
+  }
+  return bins.map((records) => parseWorldbuildingResearchEnvelope({ entity: "worldbuilding-research", schemaVersion: WORLD_BUILDING_RESEARCH_SCHEMA_VERSION, records }));
 }
 
 function nonblank(value: unknown): value is string { return typeof value === "string" && value.trim().length > 0; }
@@ -49,6 +132,7 @@ function missingRequired(record: WorldbuildingResearchEnvelope["records"][number
   if (record.kind === "SPECIES") {
     for (const field of ["speciesKind", "originMode", "reproductiveMethod", "longevityClass", "mortalityMode", "soulDisposition", "continuityGroup", "continuityPropagationMode"]) if (!nonblank(data[field])) missing.push(field);
     if (data.taxonomy != null) missing.push(...validateTaxonomy(data.taxonomy).map((error) => `taxonomy:${error}`));
+    missing.push(...validateSpecies(data as Parameters<typeof validateSpecies>[0]).map((error) => `species:${error}`));
   } else if (record.kind === "CULTURE") {
     if (!nonblank(data.culturePoolId)) missing.push("culturePoolId");
   } else {
@@ -75,26 +159,63 @@ function missingRequired(record: WorldbuildingResearchEnvelope["records"][number
 
 export function classifyWorldbuildingResearch(envelope: WorldbuildingResearchEnvelope, context: { existingRefs: ReadonlySet<string>; personalityIds: ReadonlySet<string>; speciesKindsByRef?: Readonly<Record<string, SpeciesKind>> }) {
   const rows = envelope.records.map((record) => ({ ...record, issues: [] as string[] }));
+  const grouped = new Map<string, typeof rows>();
+  for (const row of rows) {
+    const id = ownedId(row);
+    const group = grouped.get(id) ?? [];
+    group.push(row);
+    grouped.set(id, group);
+  }
+  const canonicalRows: typeof rows = [];
+  for (const [id, group] of grouped) {
+    const names = new Set(group.map((row) => String(row.data.name)));
+    if (names.size > 1) {
+      for (const row of group) {
+        row.researchStatus = "ID_COLLISION_REVIEW_REQUIRED";
+        row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
+        row.issues.push(`canonical-id-collision:${id}:${[...names].join("|")}`);
+      }
+    } else if (new Set(group.map((row) => canonical(row.data))).size > 1) {
+      for (const row of group) {
+        row.researchStatus = "CONFLICTING_SOURCES";
+        row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
+        row.issues.push(`canonical-data-conflict:${id}`);
+      }
+    }
+    const evidence = [...new Map(group.flatMap((row) => row.evidence ?? []).map((entry) => [canonical(entry), entry])).values()];
+    canonicalRows.push({ ...group[0]!, evidence: evidence.length ? evidence : undefined });
+  }
   const available = new Set(context.existingRefs);
   const importableClosure: string[] = [];
   for (const kind of ["SPECIES", "CULTURE", "BREED"] as const) {
-    for (const row of rows.filter((candidate) => candidate.kind === kind)) {
-      if (row.status !== "RESEARCH_COMPLETE_IMPORTABLE") continue;
-      const stagedSpecies = row.speciesRef ? rows.find((candidate) => candidate.kind === "SPECIES" && candidate.recordKey === row.speciesRef) : undefined;
+    for (const row of canonicalRows.filter((candidate) => candidate.kind === kind)) {
+      if (row.researchStatus !== "RESOLVED" || row.importStatus !== "RESEARCH_COMPLETE_IMPORTABLE") {
+        row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
+        continue;
+      }
+      const stagedSpecies = row.speciesRef ? rows.find((candidate) => candidate.kind === "SPECIES" && candidate.speciesRef === row.speciesRef) : undefined;
       const parentSpeciesKind = stagedSpecies?.data.speciesKind as SpeciesKind | undefined ?? (row.speciesRef ? context.speciesKindsByRef?.[row.speciesRef] : undefined);
       const missing = missingRequired(row, context.personalityIds, parentSpeciesKind);
-      if (row.speciesRef && row.speciesRef !== row.recordKey && !available.has(row.speciesRef)) missing.push(`dependency:${row.speciesRef}`);
-      if (row.cultureRef && row.cultureRef !== row.recordKey && !available.has(row.cultureRef)) missing.push(`dependency:${row.cultureRef}`);
+      if (row.kind === "BREED" && row.speciesRef && !available.has(row.speciesRef)) missing.push(`dependency:${row.speciesRef}`);
+      if (row.kind === "BREED" && row.cultureRef && !available.has(row.cultureRef)) missing.push(`dependency:${row.cultureRef}`);
       if (missing.length) {
-        row.status = "RESEARCH_COMPLETE_BLOCKED";
+        row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
         row.issues.push(...missing);
       } else {
-        importableClosure.push(row.recordKey);
-        available.add(row.recordKey);
+        const id = ownedId(row);
+        if (!importableClosure.includes(id)) importableClosure.push(id);
+        available.add(id);
       }
     }
   }
-  return { rows, importableClosure };
+  for (const canonicalRow of canonicalRows) {
+    for (const row of grouped.get(ownedId(canonicalRow)) ?? []) {
+      row.researchStatus = canonicalRow.researchStatus;
+      row.importStatus = canonicalRow.importStatus;
+      row.issues = [...canonicalRow.issues];
+    }
+  }
+  return { rows, canonicalRows, importableClosure };
 }
 
 function canonical(value: unknown): string {
@@ -106,21 +227,21 @@ function canonical(value: unknown): string {
 export function bindWorldbuildingResearchReview(
   envelope: WorldbuildingResearchEnvelope,
   classified: ReturnType<typeof classifyWorldbuildingResearch>,
-  allocator: WorldbuildingImportIdAllocator,
   reviewedIdMap: Readonly<Record<string, string>> = {},
 ) {
   const idMap: Record<string, string> = {};
-  const stagedKeys = new Set(envelope.records.map((record) => record.recordKey));
+  const stagedIds = new Set(envelope.records.map(ownedId));
   const externalDependencyRefs = new Set(
     envelope.records.flatMap((record) => [record.speciesRef, record.cultureRef])
-      .filter((reference): reference is string => Boolean(reference) && !stagedKeys.has(reference!)),
+      .filter((reference): reference is string => Boolean(reference) && !stagedIds.has(reference!)),
   );
   for (const reference of externalDependencyRefs) {
-    if (reviewedIdMap[reference]) idMap[reference] = reviewedIdMap[reference];
+    if (reviewedIdMap[reference] && reviewedIdMap[reference] !== reference) throw new Error(`Canonical dependency ID ${reference} cannot be replaced by ${reviewedIdMap[reference]}.`);
+    if (reviewedIdMap[reference]) idMap[reference] = reference;
   }
-  for (const recordKey of classified.importableClosure) {
-    const row = classified.rows.find((candidate) => candidate.recordKey === recordKey)!;
-    idMap[recordKey] = reviewedIdMap[recordKey] ?? allocator.allocate(row.kind, recordKey);
+  for (const canonicalId of classified.importableClosure) {
+    if (reviewedIdMap[canonicalId] && reviewedIdMap[canonicalId] !== canonicalId) throw new Error(`Canonical persistence ID ${canonicalId} cannot be replaced by ${reviewedIdMap[canonicalId]}.`);
+    idMap[canonicalId] = canonicalId;
   }
   const digest = createHash("sha256").update(canonical({ envelope, idMap })).digest("hex");
   return { digest, idMap };
@@ -140,8 +261,10 @@ export interface WorldbuildingResearchDatabase {
 }
 
 function persistenceData(row: ReturnType<typeof classifyWorldbuildingResearch>["rows"][number], idMap: Readonly<Record<string, string>>): Record<string, unknown> {
-  const id = idMap[row.recordKey];
-  if (!id) throw new Error(`Reviewed idMap has no persistence ID for ${row.recordKey}.`);
+  const canonicalId = ownedId(row);
+  const id = idMap[canonicalId];
+  if (!id) throw new Error(`Reviewed idMap has no persistence ID for ${canonicalId}.`);
+  if (id !== canonicalId) throw new Error(`Reviewed idMap cannot replace canonical persistence ID ${canonicalId}.`);
   const data = row.data;
   if (row.kind === "SPECIES") return {
     speciesId: id,
@@ -214,14 +337,14 @@ export async function applyWorldbuildingResearchReview(
   review: { digest: string; idMap: Readonly<Record<string, string>> },
   database: WorldbuildingResearchDatabase,
 ) {
-  const rebound = bindWorldbuildingResearchReview(envelope, classified, { allocate() { throw new Error("Reviewed apply cannot allocate new IDs."); } }, review.idMap);
+  const rebound = bindWorldbuildingResearchReview(envelope, classified, review.idMap);
   if (rebound.digest !== review.digest || canonical(rebound.idMap) !== canonical(review.idMap)) throw new Error("Reviewed WorldBuilding payload or idMap drifted after review.");
   return database.$transaction(async (transaction) => {
     let applied = 0;
     let unchanged = 0;
     for (const kind of ["SPECIES", "CULTURE", "BREED"] as const) {
-      for (const recordKey of classified.importableClosure) {
-        const row = classified.rows.find((candidate) => candidate.recordKey === recordKey && candidate.kind === kind);
+      for (const canonicalId of classified.importableClosure) {
+        const row = classified.canonicalRows.find((candidate) => ownedId(candidate) === canonicalId && candidate.kind === kind);
         if (!row) continue;
         const data = persistenceData(row, review.idMap);
         const idField = kind === "SPECIES" ? "speciesId" : kind === "CULTURE" ? "cultureId" : "breedId";
@@ -233,10 +356,10 @@ export async function applyWorldbuildingResearchReview(
         } else if (canonical(Object.fromEntries(Object.keys(data).map((key) => [key, existing[key]]))) === canonical(data)) {
           unchanged += 1;
         } else {
-          throw new Error(`${kind} ${recordKey} conflicts with persisted canonical data.`);
+          throw new Error(`${kind} ${canonicalId} conflicts with persisted canonical data.`);
         }
       }
     }
-    return { applied, unchanged, retainedBlocked: classified.rows.length - classified.importableClosure.length };
+    return { applied, unchanged, retainedBlocked: classified.canonicalRows.length - classified.importableClosure.length };
   });
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { decideBulkEnvelope, queueBulkMutation } from "../../src/server/bulk-gateway";
+import { decideBulkEnvelope, queueBulkMutation, worldbuildingDryRun } from "../../src/server/bulk-gateway";
 import type { PrismaClient } from "../../src/generated/prisma/client";
 
 const request = {
@@ -51,5 +51,32 @@ describe("bulk gateway persistence service", () => {
     const database = { $transaction: vi.fn(async (work: (value: typeof transaction) => unknown) => work(transaction)) } as unknown as PrismaClient;
     await expect(decideBulkEnvelope("ENV-1", "owner", "APPLY", database)).resolves.toMatchObject({ status: "REVALIDATION_FAILED" });
     expect(occupationCreate).not.toHaveBeenCalled();
+  });
+
+  it("resolves Breed dependencies against already-persisted Species and Cultures during dry-run", async () => {
+    const database = {
+      personalityExpression: { findMany: vi.fn().mockResolvedValue([{ personalityId: "PERSONALITY" }]) },
+      species: { findMany: vi.fn().mockResolvedValue([{ speciesId: "SPC_PERSISTED", speciesKind: "BEAST" }]) },
+      culture: { findMany: vi.fn().mockResolvedValue([{ cultureId: "CLT_PERSISTED" }]) },
+    } as unknown as PrismaClient;
+    const envelope = {
+      entity: "worldbuilding-research",
+      schemaVersion: "eidolon-worldbuilding-research-v3-simple",
+      records: [{
+        recordKey: "local:breed:new",
+        kind: "BREED",
+        breedRef: "BRD_NEW_BREED",
+        speciesRef: "SPC_PERSISTED",
+        cultureRef: "CLT_PERSISTED",
+        researchStatus: "RESOLVED",
+        importStatus: "RESEARCH_COMPLETE_IMPORTABLE",
+        data: { breedId: "BRD_NEW_BREED", name: "New Breed", groupId: "B01", personalityId: "PERSONALITY", foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] },
+      }],
+    };
+    await expect(worldbuildingDryRun(envelope, database)).resolves.toMatchObject({
+      valid: true,
+      importableClosure: ["BRD_NEW_BREED"],
+      idMap: { SPC_PERSISTED: "SPC_PERSISTED", CLT_PERSISTED: "CLT_PERSISTED", BRD_NEW_BREED: "BRD_NEW_BREED" },
+    });
   });
 });

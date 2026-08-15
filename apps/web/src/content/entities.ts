@@ -1,6 +1,6 @@
 export const entityFields = {
   AchievementDefinition: ["achievementDefinitionId", "name", "chainKey", "rank", "imageAssetId", "status"],
-  Architect: ["architectId", "characterId", "department"],
+  Architect: ["characterId", "department"],
   Ark: ["arkId", "name", "status"],
   Breed: ["breedId", "name", "speciesId", "cultureId", "groupId", "personalityId", "traits", "accent", "appearance", "clothing", "architecture", "foodBroad", "foodSpecific", "terrainBroad", "terrainSpecific", "motivation", "operatingStyle", "structureOrientation", "administrationMode", "ownershipMode", "allocationMode", "legitimacyBasis", "authoritySource", "loquacity", "emotionalTemperature", "outlookOrientation", "collaborativePosture"],
   CapabilityDefinition: ["capabilityDefinitionId", "code", "pathPattern", "valueKind", "minValue", "maxValue", "enumValues", "allowedReferenceEntityTypes", "allowedOperations", "monotonicPolicy", "initialValue", "description", "parameters"],
@@ -32,7 +32,7 @@ export const entityFields = {
   TimelineEvent: ["timelineEventId", "name", "timelineEventType", "summary"],
   Tome: ["tomeId", "title", "author"],
   Transition: ["transitionId", "name", "bookA", "bookB", "summary"],
-  Witness: ["witnessId", "characterId", "witnessDefId", "trueFlawName", "architectId", "legendaryRewardId", "constellationBeforeId", "constellationAfterId"],
+  Witness: ["characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId", "constellationBeforeId", "constellationAfterId"],
   WitnessDef: ["witnessDefId", "name", "department", "apparentDomain", "realDomain", "color"],
 } as const;
 

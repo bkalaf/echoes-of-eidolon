@@ -5,11 +5,10 @@ import type { Character, Companion, CompanionDef, PuzzleBlueprint, Witness, Worl
 
 export const witnessSchema = z
   .object({
-    witnessId: z.string().min(1),
     characterId: z.string().min(1),
     witnessDefId: z.string().min(1),
     trueFlawName: z.string().min(1),
-    architectId: z.string().min(1),
+    architectCharacterId: z.string().min(1),
     legendaryRewardId: z.string().min(1),
     constellationBeforeId: z.string().min(1).nullish(),
     constellationAfterId: z.string().min(1).nullish(),
@@ -31,8 +30,8 @@ export const companionDefSchema = z.object({
   schismCharacterId: z.string().min(1),
   soulId: z.string().min(1),
   heirloom: z.enum(Heirloom),
-  knowledgeSkill: z.enum(KnowledgeSkill),
-  awarenessSkill: z.enum(AwarenessSkill),
+  knowledgeSkill: z.enum(KnowledgeSkill).nullable(),
+  awarenessSkill: z.enum(AwarenessSkill).nullable(),
 }).strict().refine((companionDef) => new Set([
   companionDef.concordCharacterId,
   companionDef.ruinCharacterId,

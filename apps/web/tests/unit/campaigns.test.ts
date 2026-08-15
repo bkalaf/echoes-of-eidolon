@@ -45,14 +45,13 @@ describe("campaign transaction service", () => {
     expect(create).toHaveBeenCalledWith({ data: { legendaryRewardId: "LR-1", name: "The Lantern", description: "A canonical reward." } });
   });
 
-  it("creates Architect through Character and rejects unresolved profession authoring", async () => {
+  it("creates Architect through Character shared identity and rejects independent subtype identity", async () => {
     const create = vi.fn(async ({ data }) => data);
     const transaction = { character: { create } };
     const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
     const canonical = {
       objectType: "ARCHITECT" as const,
       payload: {
-        architectId: "ARCH-1",
         character: { characterId: "CHAR-1", displayName: "Ada", breedId: "BREED-1", worldKey: null, age: "37", skinScaleColor: "umber", hairFurColor: "black", eyeColor: "brown", clothing: "architect robes" },
         department: "COMPUTING",
       },
@@ -62,14 +61,39 @@ describe("campaign transaction service", () => {
     expect(create).toHaveBeenCalledWith({
       data: {
         ...canonical.payload.character,
-        architect: { create: { architectId: "ARCH-1", department: "COMPUTING" } },
+        architect: { create: { department: "COMPUTING" } },
       },
       include: { architect: true },
     });
     await expect(createCampaignCatalogItem({
       ...canonical,
-      payload: { ...canonical.payload, profession: "Navigator" },
+      payload: { ...canonical.payload, architectId: "ARCH-1" },
     }, database)).rejects.toThrow(/unrecognized key/i);
+  });
+
+  it("creates Witness through Character shared identity and points to the Architect Character", async () => {
+    const characterCreate = vi.fn(async ({ data }) => data);
+    const witnessDefCreate = vi.fn(async ({ data }) => data);
+    const transaction = { character: { create: characterCreate }, witnessDef: { create: witnessDefCreate } };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+    const payload = {
+      character: { characterId: "CHAR-WITNESS", displayName: "Iona", breedId: "BREED-1", worldKey: null, age: "41", skinScaleColor: "bronze", hairFurColor: "black", eyeColor: "green", clothing: "layered blue robes" },
+      witnessDef: { witnessDefId: "WDEF-1", name: "The Anchor", department: "NAVIGATION", apparentDomain: "Currents", realDomain: "Memory", color: "BLUE" },
+      trueFlawName: "Certainty",
+      architectCharacterId: "CHAR-ARCHITECT",
+      legendaryRewardId: "REWARD-1",
+    } as const;
+
+    await createCampaignCatalogItem({ objectType: "WITNESS", payload }, database);
+    expect(witnessDefCreate).toHaveBeenCalledWith({ data: payload.witnessDef });
+    expect(characterCreate).toHaveBeenCalledWith({
+      data: {
+        ...payload.character,
+        witness: { create: { architectCharacterId: "CHAR-ARCHITECT", constellationAfterId: null, constellationBeforeId: null, legendaryRewardId: "REWARD-1", trueFlawName: "Certainty", witnessDefId: "WDEF-1" } },
+      },
+      include: { witness: true },
+    });
+    await expect(createCampaignCatalogItem({ objectType: "WITNESS", payload: { ...payload, witnessId: "WIT-1" } }, database)).rejects.toThrow(/unrecognized key/i);
   });
 
   it("commits one complete linked group as one serializable transaction", async () => {

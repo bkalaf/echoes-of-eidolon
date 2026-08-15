@@ -31,10 +31,11 @@ describe("canonical Character subtype schema", () => {
   });
 
   it("uses direct one-to-one subtype links without global XOR or invented Companion identity", () => {
-    expect(model("Architect")).toMatch(/characterId\s+String\s+@unique/);
+    expect(model("Architect")).toMatch(/characterId\s+String\s+@id/);
+    expect(model("Architect")).not.toMatch(/architectId|profession/);
     expect(model("Architect")).toMatch(/department\s+ArchitectDepartment/);
-    expect(model("Architect")).toMatch(/profession\s+String\?/);
-    expect(model("Witness")).toMatch(/characterId\s+String\s+@unique/);
+    expect(model("Witness")).toMatch(/characterId\s+String\s+@id/);
+    expect(model("Witness")).not.toMatch(/witnessId/);
     expect(model("Companion")).toMatch(/characterId\s+String\s+@id/);
     expect(model("Companion")).not.toMatch(/companionId/);
     expect(schema).not.toMatch(/subtype.*xor|xor.*subtype/i);
@@ -54,7 +55,8 @@ describe("canonical Character subtype schema", () => {
 
   it("keeps canonical Witness reward and constellation bindings but no Puzzle ownership", () => {
     const witness = model("Witness");
-    for (const field of ["legendaryRewardId", "constellationBeforeId", "constellationAfterId", "architectId", "witnessDefId"]) expect(witness).toMatch(new RegExp(`\\b${field}\\b`));
+    for (const field of ["legendaryRewardId", "constellationBeforeId", "constellationAfterId", "architectCharacterId", "witnessDefId"]) expect(witness).toMatch(new RegExp(`\\b${field}\\b`));
+    expect(witness).toMatch(/architect\s+Architect\s+@relation\(fields: \[architectCharacterId\], references: \[characterId\], onDelete: Restrict\)/);
     expect(witness).not.toMatch(/puzzleBlueprintId|inversionRule|witnessName|presentsAs|family\s/);
     expect(model("LegendaryReward")).toMatch(/witnesses\s+Witness\[\]/);
   });

@@ -85,4 +85,15 @@ describe("entity import mapping and preview", () => {
     expect(preview.rows).toEqual([{ soulId: "SOUL-1", name: "One" }]);
     expect(source).toEqual([{ legacy_id: "SOUL-1", label: "One", ignored: "x" }]);
   });
+
+  it("blocks canonical WorldBuilding identity drift in preview without replacing supplied persistence IDs", () => {
+    const source = [{ speciesId: "SPC_WRONG", name: "Taíno" }];
+    const preview = prepareEntityImport("Species", source, {
+      speciesId: "speciesId",
+      name: "name",
+    });
+
+    expect(preview.rows).toEqual(source);
+    expect(preview.errors).toContain("Row 1 Species Taíno must use speciesId SPC_TAI_NO.");
+  });
 });

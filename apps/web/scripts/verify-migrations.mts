@@ -777,6 +777,126 @@ try {
     );
     await applyThrough("20260814191000_worldbuilding_v3_contract_retire");
 
+    await preCorrection.query(
+      `INSERT INTO "Character" ("characterId", "displayName", "breedId", "age", "skinScaleColor", "hairFurColor", "eyeColor", "clothing") VALUES
+       ('shared-pk-architect-character', 'Shared PK Architect', 'legacy-breed', '40', 'umber', 'black', 'brown', 'tailored layers'),
+       ('shared-pk-witness-character', 'Shared PK Witness', 'legacy-breed', '35', 'bronze', 'black', 'green', 'ceremonial layers')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Architect" ("architectId", "characterId", "department", "profession")
+       VALUES ('legacy-independent-architect-id', 'shared-pk-architect-character', 'NAVIGATION', NULL)`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "WitnessDef" ("witnessDefId", "name", "department", "apparentDomain", "realDomain", "color")
+       VALUES ('shared-pk-witness-def', 'The Anchor', 'NAVIGATION', 'Currents', 'Memory', 'BLUE')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "LegendaryReward" ("legendaryRewardId", "name", "description")
+       VALUES ('shared-pk-reward', 'The Lantern', 'A migration verification reward')`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "Witness" ("witnessId", "characterId", "witnessDefId", "trueFlawName", "architectId", "legendaryRewardId")
+       VALUES ('legacy-independent-witness-id', 'shared-pk-witness-character', 'shared-pk-witness-def', 'Certainty', 'legacy-independent-architect-id', 'shared-pk-reward')`,
+    );
+
+    const subtypeMigration = await readFile(resolve(migrationsRoot, "20260814192000_character_subtype_shared_primary_keys", "migration.sql"), "utf8");
+    await preCorrection.query(`ALTER TABLE "Witness" DROP CONSTRAINT "Witness_architectId_fkey"`);
+    await preCorrection.query(`UPDATE "Witness" SET "architectId"='unmapped-architect' WHERE "witnessId"='legacy-independent-witness-id'`);
+    let subtypeBlocker = "";
+    try {
+      await preCorrection.query(subtypeMigration);
+    } catch (error) {
+      subtypeBlocker = error instanceof Error ? error.message : String(error);
+    }
+    if (!subtypeBlocker.includes("CHARACTER_SUBTYPE_INHERITANCE_BLOCKER") || !subtypeBlocker.includes("unmappedWitnessArchitects=1")) {
+      throw new Error(`Character subtype migration did not fail closed with its unmapped relation count: ${subtypeBlocker}`);
+    }
+    await preCorrection.query(`UPDATE "Witness" SET "architectId"='legacy-independent-architect-id' WHERE "witnessId"='legacy-independent-witness-id'`);
+    await preCorrection.query(
+      `ALTER TABLE "Witness" ADD CONSTRAINT "Witness_architectId_fkey" FOREIGN KEY ("architectId") REFERENCES "Architect"("architectId") ON DELETE RESTRICT ON UPDATE CASCADE`,
+    );
+    await applyThrough("20260814192000_character_subtype_shared_primary_keys");
+
+    const remappedSubtype = await preCorrection.query(
+      `SELECT witness."characterId" AS "witnessCharacterId", witness."architectCharacterId", architect."characterId" AS "resolvedArchitectCharacterId"
+       FROM "Witness" witness JOIN "Architect" architect ON architect."characterId" = witness."architectCharacterId"
+       WHERE witness."characterId"='shared-pk-witness-character'`,
+    );
+    if (JSON.stringify(remappedSubtype.rows) !== JSON.stringify([{
+      witnessCharacterId: "shared-pk-witness-character",
+      architectCharacterId: "shared-pk-architect-character",
+      resolvedArchitectCharacterId: "shared-pk-architect-character",
+    }])) {
+      throw new Error(`Witness Architect relation was not remapped to Character identity: ${JSON.stringify(remappedSubtype.rows)}`);
+    }
+
+    await expectDatabaseRejection(
+      () => preCorrection.query(
+        `INSERT INTO "Witness" ("characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId")
+         VALUES ('shared-pk-witness-character', 'shared-pk-witness-def', 'Duplicate', 'shared-pk-architect-character', 'shared-pk-reward')`,
+      ),
+      "A second Witness subtype row for one Character was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => preCorrection.query(
+        `INSERT INTO "Witness" ("characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId")
+         VALUES ('missing-character', 'shared-pk-witness-def', 'Orphan', 'shared-pk-architect-character', 'shared-pk-reward')`,
+      ),
+      "An orphan Witness subtype row was not rejected",
+    );
+    await preCorrection.query(`DELETE FROM "Witness" WHERE "characterId"='shared-pk-witness-character'`);
+    const witnessParentAfterSubtypeDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Character" WHERE "characterId"='shared-pk-witness-character'`);
+    if (witnessParentAfterSubtypeDelete.rows[0]?.count !== 1) throw new Error("Deleting Witness incorrectly deleted Character");
+    await preCorrection.query(
+      `INSERT INTO "Witness" ("characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId")
+       VALUES ('shared-pk-witness-character', 'shared-pk-witness-def', 'Certainty', 'shared-pk-architect-character', 'shared-pk-reward')`,
+    );
+    await preCorrection.query(`DELETE FROM "Character" WHERE "characterId"='shared-pk-witness-character'`);
+    const witnessAfterParentDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Witness" WHERE "characterId"='shared-pk-witness-character'`);
+    if (witnessAfterParentDelete.rows[0]?.count !== 0) throw new Error("Deleting Character did not cascade to Witness");
+
+    await preCorrection.query(
+      `INSERT INTO "Character" ("characterId", "displayName", "breedId", "age", "skinScaleColor", "hairFurColor", "eyeColor", "clothing")
+       VALUES ('standalone-architect-character', 'Standalone Architect', 'legacy-breed', '44', 'umber', 'gray', 'brown', 'working layers')`,
+    );
+    await preCorrection.query(`INSERT INTO "Architect" ("characterId", "department") VALUES ('standalone-architect-character', 'COMPUTING')`);
+    await expectDatabaseRejection(
+      () => preCorrection.query(`INSERT INTO "Architect" ("characterId", "department") VALUES ('standalone-architect-character', 'SOFTWARE')`),
+      "A second Architect subtype row for one Character was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => preCorrection.query(`INSERT INTO "Architect" ("characterId", "department") VALUES ('missing-architect-character', 'SOFTWARE')`),
+      "An orphan Architect subtype row was not rejected",
+    );
+    await preCorrection.query(`DELETE FROM "Architect" WHERE "characterId"='standalone-architect-character'`);
+    const architectParentAfterSubtypeDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Character" WHERE "characterId"='standalone-architect-character'`);
+    if (architectParentAfterSubtypeDelete.rows[0]?.count !== 1) throw new Error("Deleting Architect incorrectly deleted Character");
+    await preCorrection.query(`INSERT INTO "Architect" ("characterId", "department") VALUES ('standalone-architect-character', 'COMPUTING')`);
+    await preCorrection.query(`DELETE FROM "Character" WHERE "characterId"='standalone-architect-character'`);
+    const architectAfterParentDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Architect" WHERE "characterId"='standalone-architect-character'`);
+    if (architectAfterParentDelete.rows[0]?.count !== 0) throw new Error("Deleting Character did not cascade to Architect");
+
+    await preCorrection.query(
+      `INSERT INTO "Character" ("characterId", "displayName", "breedId", "age", "skinScaleColor", "hairFurColor", "eyeColor", "clothing")
+       VALUES ('standalone-companion-character', 'Standalone Companion', 'legacy-breed', '29', 'umber', 'black', 'brown', 'travel layers')`,
+    );
+    await preCorrection.query(`INSERT INTO "Companion" ("characterId", "companionKey") VALUES ('standalone-companion-character', 'A')`);
+    await expectDatabaseRejection(
+      () => preCorrection.query(`INSERT INTO "Companion" ("characterId", "companionKey") VALUES ('standalone-companion-character', 'A')`),
+      "A second Companion subtype row for one Character was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => preCorrection.query(`INSERT INTO "Companion" ("characterId", "companionKey") VALUES ('missing-companion-character', 'A')`),
+      "An orphan Companion subtype row was not rejected",
+    );
+    await preCorrection.query(`DELETE FROM "Companion" WHERE "characterId"='standalone-companion-character'`);
+    const companionParentAfterSubtypeDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Character" WHERE "characterId"='standalone-companion-character'`);
+    if (companionParentAfterSubtypeDelete.rows[0]?.count !== 1) throw new Error("Deleting Companion incorrectly deleted Character");
+    await preCorrection.query(`INSERT INTO "Companion" ("characterId", "companionKey") VALUES ('standalone-companion-character', 'A')`);
+    await preCorrection.query(`DELETE FROM "Character" WHERE "characterId"='standalone-companion-character'`);
+    const companionAfterParentDelete = await preCorrection.query(`SELECT count(*)::int AS count FROM "Companion" WHERE "characterId"='standalone-companion-character'`);
+    if (companionAfterParentDelete.rows[0]?.count !== 0) throw new Error("Deleting Character did not cascade to Companion");
+
     const migratedCompanion = await preCorrection.query(
       `SELECT definition."companionKey", definition."soulId", count(companion."characterId")::int AS "concreteCount"
        FROM "CompanionDef" definition JOIN "Companion" companion USING ("companionKey")

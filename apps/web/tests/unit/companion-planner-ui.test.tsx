@@ -29,10 +29,10 @@ const planner = {
     transformationBinding: null,
   }, {
     companionKey: "B",
-    awarenessSkill: "PERCEPTION",
+    awarenessSkill: "DANGER_SENSE",
     concordCharacter: character("CONCORD", "CONCORD", "CHARISMA", "CHARISMA", "B"),
     heirloom: "RING",
-    knowledgeSkill: "HISTORY",
+    knowledgeSkill: "RESEARCH",
     ruinCharacter: character("RUIN", "RUIN", "CHARISMA", "WISDOM", "B"),
     schismCharacter: character("SCHISM", "SCHISM", "WISDOM", "CHARISMA", "B"),
     soul: { name: "Bran" },
@@ -68,5 +68,18 @@ describe("Companion Planner V4 controls", () => {
     const alert = screen.getByRole("alert");
     expect(within(alert).getByText("RUIN.A.occupationId", { exact: false })).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("loads the selected authored assignment and clears stale edits when companion or world changes", async () => {
+    renderPlanner();
+    await screen.findByText("CONCORD Hero A");
+    expect(screen.getByRole("combobox", { name: "Occupation" })).toHaveValue("SCHOLAR");
+    expect(screen.getByRole("combobox", { name: "Primary Attribute" })).toHaveValue("INTELLIGENCE");
+    expect(screen.getByRole("combobox", { name: "Secondary Attribute" })).toHaveValue("INTELLIGENCE");
+    expect(screen.getByRole("combobox", { name: "Knowledge Skill" })).toHaveValue("LORE");
+    fireEvent.change(screen.getByRole("textbox", { name: "Gender" }), { target: { value: "Edited only for A" } });
+    fireEvent.click(screen.getByRole("button", { name: "B" }));
+    expect(screen.getByRole("textbox", { name: "Gender" })).toHaveValue("Woman");
+    expect(screen.getByRole("combobox", { name: "Knowledge Skill" })).toHaveValue("RESEARCH");
   });
 });

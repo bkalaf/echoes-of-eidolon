@@ -100,14 +100,13 @@ export interface Character {
   primaryAttribute?: AbilityType | null;
   secondaryAttribute?: AbilityType | null;
 }
-export interface Architect { architectId: string; characterId: Character['characterId']; department: ArchitectDepartment; profession?: string | null; }
+export interface Architect { characterId: Character['characterId']; department: ArchitectDepartment; }
 export interface WitnessDef { witnessDefId: string; name: string; department: ArchitectDepartment; apparentDomain: string; realDomain: string; color: WitnessColor; }
 export interface Witness {
-  witnessId: string;
   characterId: Character['characterId'];
   witnessDefId: WitnessDef['witnessDefId'];
   trueFlawName: string;
-  architectId: Architect['architectId'];
+  architectCharacterId: Architect['characterId'];
   legendaryRewardId: string;
   constellationBeforeId?: string | null;
   constellationAfterId?: string | null;
@@ -120,8 +119,8 @@ export interface CompanionDef {
   schismCharacterId: Character['characterId'];
   soulId: Soul['soulId'];
   heirloom: Heirloom;
-  knowledgeSkill: KnowledgeSkill;
-  awarenessSkill: AwarenessSkill;
+  knowledgeSkill: KnowledgeSkill | null;
+  awarenessSkill: AwarenessSkill | null;
 }
 export interface Companion {
   characterId: Character['characterId'];

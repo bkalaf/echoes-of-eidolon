@@ -2,7 +2,8 @@ import contractData from "../data/entity-admin-contract.json";
 import { entityForPath, type EntityName } from "../content/entities";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
-import { validateBreed, validateTaxonomy } from "../domain/worldbuilding";
+import { canonicalEntityId, validateBreed, validateSpecies, validateTaxonomy } from "../domain/worldbuilding";
+import { staticPresentationQa, type PresentationField } from "../domain/presentation-audit";
 
 export interface EntityAdminField {
   enumValues: string[];
@@ -118,10 +119,25 @@ export function normalizeEntityData(entity: EntityName, value: unknown, mode: "c
 }
 
 async function validateWorldbuildingWrite(database: PrismaClient, entity: EntityName, data: Record<string, unknown>): Promise<void> {
-  if (entity === "Species" && data.taxonomy != null) {
-    const errors = validateTaxonomy(data.taxonomy);
-    if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
+  if (entity === "Species" || entity === "Culture" || entity === "Breed") {
+    const idField = entity === "Species" ? "speciesId" : entity === "Culture" ? "cultureId" : "breedId";
+    const kind = entity === "Species" ? "SPECIES" : entity === "Culture" ? "CULTURE" : "BREED";
+    if (typeof data.name !== "string" || !data.name.trim()) throw new EntityAdminValidationError(`${entity} name is required.`);
+    const expectedId = canonicalEntityId(kind, data.name);
+    if (data[idField] !== expectedId) throw new EntityAdminValidationError(`${entity} ${data.name} must use ${idField} ${expectedId}.`);
+    const presentationFields: PresentationField[] = entity === "Culture" ? ["appearance", "clothing", "architecture"] : ["accent", "appearance", "clothing", "architecture"];
+    const presentationErrors = presentationFields.flatMap((field) => typeof data[field] === "string" && data[field].trim() ? staticPresentationQa(field, data[field]).failures : []);
+    if (presentationErrors.length) throw new EntityAdminValidationError(presentationErrors.join(" "));
   }
+  if (entity === "Species") {
+    const errors = [
+      ...(data.taxonomy != null ? validateTaxonomy(data.taxonomy) : []),
+      ...validateSpecies(data as unknown as Parameters<typeof validateSpecies>[0]),
+    ];
+    if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
+    return;
+  }
+  if (entity === "Culture") return;
   if (entity !== "Breed") return;
   const speciesId = data.speciesId;
   if (typeof speciesId !== "string") throw new EntityAdminValidationError("speciesId is required.");
@@ -169,7 +185,7 @@ export async function updateEntityRecord(database: PrismaClient, entity: EntityN
   const data = normalizeEntityData(entity, input, "update");
   if (data[contract.idField] !== undefined && data[contract.idField] !== recordId) throw new EntityAdminValidationError(`${contract.idField} is immutable.`);
   delete data[contract.idField];
-  if (entity === "Species" || entity === "Breed") {
+  if (entity === "Species" || entity === "Culture" || entity === "Breed") {
     const existing = await getEntityRecord(database, entity, recordId);
     if (!existing) throw new EntityAdminValidationError(`${entity} record not found.`);
     await validateWorldbuildingWrite(database, entity, { ...existing, ...data });

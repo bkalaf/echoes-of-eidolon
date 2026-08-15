@@ -183,14 +183,6 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "architectId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
           "name": "characterId",
           "type": "String"
         },
@@ -201,14 +193,6 @@
           "kind": "enum",
           "name": "department",
           "type": "ArchitectDepartment"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": false,
-          "kind": "scalar",
-          "name": "profession",
-          "type": "String"
         },
         {
           "enumName": null,
@@ -2673,7 +2657,7 @@
         {
           "enumName": "KnowledgeSkill",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "knowledgeSkill",
           "type": "KnowledgeSkill"
@@ -2681,7 +2665,7 @@
         {
           "enumName": "AwarenessSkill",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "awarenessSkill",
           "type": "AwarenessSkill"
@@ -9099,14 +9083,6 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "witnessId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
           "name": "characterId",
           "type": "String"
         },
@@ -9131,7 +9107,7 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "architectId",
+          "name": "architectCharacterId",
           "type": "String"
         },
         {
@@ -9471,16 +9447,6 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "architectId",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
           "name": "characterId",
           "type": "String"
         },
@@ -9493,16 +9459,6 @@
           "kind": "enum",
           "name": "department",
           "type": "ArchitectDepartment"
-        },
-        {
-          "editability": "EXCLUDED",
-          "exclusionReason": "Persisted field is audited but intentionally excluded from this generic form.",
-          "enumName": null,
-          "isList": false,
-          "isRequired": false,
-          "kind": "scalar",
-          "name": "profession",
-          "type": "String"
         },
         {
           "editability": "EXCLUDED",
@@ -9527,15 +9483,6 @@
       ],
       "delegate": "architect",
       "fields": [
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "architectId",
-          "type": "String"
-        },
         {
           "enumValues": [],
           "hasDefault": false,
@@ -9610,7 +9557,7 @@
           "type": "ArchitectDepartment"
         }
       ],
-      "idField": "architectId"
+      "idField": "characterId"
     },
     "Ark": {
       "auditFields": [
@@ -11266,7 +11213,7 @@
           "exclusionReason": null,
           "enumName": "KnowledgeSkill",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "knowledgeSkill",
           "type": "KnowledgeSkill"
@@ -11276,7 +11223,7 @@
           "exclusionReason": null,
           "enumName": "AwarenessSkill",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "awarenessSkill",
           "type": "AwarenessSkill"
@@ -11443,7 +11390,7 @@
           ],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "knowledgeSkill",
           "type": "KnowledgeSkill"
@@ -11464,7 +11411,7 @@
           ],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "awarenessSkill",
           "type": "AwarenessSkill"
@@ -14697,16 +14644,6 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "witnessId",
-          "type": "String"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
           "name": "characterId",
           "type": "String"
         },
@@ -14737,7 +14674,7 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "architectId",
+          "name": "architectCharacterId",
           "type": "String"
         },
         {
@@ -14839,15 +14776,6 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "witnessId",
-          "type": "String"
-        },
-        {
-          "enumValues": [],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
           "name": "characterId",
           "type": "String"
         },
@@ -14875,7 +14803,7 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
-          "name": "architectId",
+          "name": "architectCharacterId",
           "type": "String"
         },
         {
@@ -14906,7 +14834,7 @@
           "type": "String"
         }
       ],
-      "idField": "witnessId"
+      "idField": "characterId"
     },
     "WitnessDef": {
       "auditFields": [

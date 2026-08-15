@@ -12,7 +12,9 @@ import {
 
 describe("canonical domain invariants", () => {
   it("requires canonical direct Witness subtype bindings", () => {
-    expect(witnessSchema.parse({ witnessId: "WIT-1", characterId: "CHAR-1", witnessDefId: "WDEF-1", trueFlawName: "Pride", architectId: "ARCH-1", legendaryRewardId: "REWARD-1" })).toMatchObject({ characterId: "CHAR-1", witnessDefId: "WDEF-1" });
+    const witness = witnessSchema.parse({ characterId: "CHAR-1", witnessDefId: "WDEF-1", trueFlawName: "Pride", architectCharacterId: "CHAR-ARCHITECT", legendaryRewardId: "REWARD-1" });
+    expect(witness).toMatchObject({ characterId: "CHAR-1", architectCharacterId: "CHAR-ARCHITECT", witnessDefId: "WDEF-1" });
+    expect(witnessSchema.safeParse({ ...witness, witnessId: "WIT-1" }).success).toBe(false);
   });
 
   it("requires three distinct Characters in matching CompanionDef world and Soul slots", () => {

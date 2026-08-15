@@ -1,6 +1,8 @@
 import { parse as parseYaml } from "yaml";
 
 import { entityFields, type EntityName } from "../content/entities";
+import { staticPresentationQa, type PresentationField } from "./presentation-audit";
+import { canonicalEntityId, type CanonicalWorldbuildingEntityKind } from "./worldbuilding";
 
 export type ImportRecord = Record<string, unknown>;
 export type FieldMapping = Record<string, string | null | undefined>;
@@ -166,6 +168,31 @@ export function prepareEntityImport(
     }
     identifiers.add(identifier);
   });
+
+  const worldbuildingKind: CanonicalWorldbuildingEntityKind | undefined = entity === "Species"
+    ? "SPECIES"
+    : entity === "Culture"
+      ? "CULTURE"
+      : entity === "Breed"
+        ? "BREED"
+        : undefined;
+  if (worldbuildingKind) {
+    rows.forEach((row, index) => {
+      const name = row.name;
+      const identifier = row[idField];
+      if (typeof name !== "string" || !name.trim()) {
+        errors.push(`Row ${index + 1} requires name to verify its canonical persistence ID.`);
+        return;
+      }
+      const expected = canonicalEntityId(worldbuildingKind, name);
+      if (identifier !== expected) errors.push(`Row ${index + 1} ${entity} ${name} must use ${idField} ${expected}.`);
+      const presentationFields: PresentationField[] = entity === "Culture" ? ["appearance", "clothing", "architecture"] : ["accent", "appearance", "clothing", "architecture"];
+      for (const field of presentationFields) {
+        const presentation = row[field];
+        if (typeof presentation === "string" && presentation.trim()) errors.push(...staticPresentationQa(field, presentation).failures.map((error) => `Row ${index + 1} ${error}`));
+      }
+    });
+  }
 
   return { errors: [...new Set(errors)], rows, sourceFields };
 }

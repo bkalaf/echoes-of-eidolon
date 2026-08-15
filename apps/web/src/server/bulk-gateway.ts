@@ -10,7 +10,6 @@ import {
   bindWorldbuildingResearchReview,
   classifyWorldbuildingResearch,
   parseWorldbuildingResearchEnvelope,
-  type WorldbuildingImportIdAllocator,
   type WorldbuildingResearchDatabase,
 } from "./worldbuilding-research";
 
@@ -56,16 +55,31 @@ async function occupationDryRun(request: Exclude<ParsedBulkRequest, { operation:
   return { valid: errors.length === 0, errors, warnings: [] as string[] };
 }
 
-async function worldbuildingDryRun(value: unknown, database: PrismaClient, reviewedIdMap: Readonly<Record<string, string>> = {}) {
+async function worldbuildingResearchContext(database: PrismaClient) {
+  const [personalityRows, speciesRows, cultureRows] = await Promise.all([
+    database.personalityExpression.findMany({ select: { personalityId: true } }),
+    database.species.findMany({ select: { speciesId: true, speciesKind: true } }),
+    database.culture.findMany({ select: { cultureId: true } }),
+  ]);
+  return {
+    existingRefs: new Set([...speciesRows.map((row) => row.speciesId), ...cultureRows.map((row) => row.cultureId)]),
+    personalityIds: new Set(personalityRows.map((row) => row.personalityId)),
+    speciesKindsByRef: Object.fromEntries(speciesRows.map((row) => [row.speciesId, row.speciesKind])),
+  };
+}
+
+export async function worldbuildingDryRun(value: unknown, database: PrismaClient, reviewedIdMap: Readonly<Record<string, string>> = {}) {
   const envelope = parseWorldbuildingResearchEnvelope(value);
-  const personalityIds = new Set((await database.personalityExpression.findMany({ select: { personalityId: true } })).map((row) => row.personalityId));
-  const classified = classifyWorldbuildingResearch(envelope, { existingRefs: new Set(), personalityIds });
-  const allocator: WorldbuildingImportIdAllocator = { allocate() { return randomUUID(); } };
-  const binding = bindWorldbuildingResearchReview(envelope, classified, allocator, reviewedIdMap);
+  const context = await worldbuildingResearchContext(database);
+  const classified = classifyWorldbuildingResearch(envelope, context);
+  const persistedIdentityMap = Object.fromEntries([...context.existingRefs].map((id) => [id, id]));
+  const binding = bindWorldbuildingResearchReview(envelope, classified, { ...persistedIdentityMap, ...reviewedIdMap });
   return {
     valid: classified.importableClosure.length > 0,
-    errors: classified.importableClosure.length ? [] : ["No dependency-closed RESEARCH_COMPLETE_IMPORTABLE rows are available."],
-    warnings: classified.rows.filter((row) => row.status !== "RESEARCH_COMPLETE_IMPORTABLE").map((row) => `${row.recordKey}: ${row.status}`),
+    errors: classified.importableClosure.length ? [] : ["No dependency-closed RESOLVED and RESEARCH_COMPLETE_IMPORTABLE rows are available."],
+    warnings: classified.rows
+      .filter((row) => row.researchStatus !== "RESOLVED" || row.importStatus !== "RESEARCH_COMPLETE_IMPORTABLE")
+      .map((row) => `${row.recordKey}: ${row.researchStatus}/${row.importStatus}`),
     rows: classified.rows,
     importableClosure: classified.importableClosure,
     idMap: binding.idMap,
@@ -227,7 +241,7 @@ export async function decideBulkEnvelope(
       if (!fresh.valid || fresh.digest !== prior.digest || JSON.stringify(fresh.idMap) !== JSON.stringify(prior.idMap)) {
         return transaction.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { revalidationResult: jsonValue(fresh), status: "REVALIDATION_FAILED" } });
       }
-      const classified = classifyWorldbuildingResearch(envelope, { existingRefs: new Set(), personalityIds: new Set((await transaction.personalityExpression.findMany({ select: { personalityId: true } })).map((row) => row.personalityId)) });
+      const classified = classifyWorldbuildingResearch(envelope, await worldbuildingResearchContext(transaction as unknown as PrismaClient));
       const applied = await applyWorldbuildingResearchReview(envelope, classified, { digest: prior.digest, idMap: prior.idMap }, { $transaction: (work) => work(transaction as unknown as Parameters<typeof work>[0]) } as WorldbuildingResearchDatabase);
       await transaction.bulkOperationAudit.create({ data: { actorUserId, bulkMutationEnvelopeId: envelopeId, bulkOperationAuditId: randomUUID(), detail: `Applied ${applied.applied}, unchanged ${applied.unchanged}, retained blocked ${applied.retainedBlocked}.`, entityName: head.entityCode, operation: head.operation, recordCount: head.recordCount, result: applied.applied ? "CHANGED" : "UNCHANGED" } });
       return transaction.bulkMutationEnvelope.update({ where: { bulkMutationEnvelopeId: envelopeId }, data: { decidedAt: now, decidedByUserId: actorUserId, revalidationResult: jsonValue({ valid: true, ...applied }), status: "APPLIED" } });

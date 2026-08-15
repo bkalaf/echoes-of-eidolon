@@ -33,9 +33,9 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 34 |
 | Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 8 |
 | Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 24 |
-| Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 6 |
+| Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 4 |
 | WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 7 |
-| Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 14 |
+| Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 13 |
 | Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 4 |
 | CompanionDef | Persisted entity | Narrative data | `CompanionDef` via typed import services | Admin Data, Campaign, Game | 14 |
 | Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 5 |
