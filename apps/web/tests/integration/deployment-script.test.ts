@@ -96,6 +96,7 @@ describe("production deployment entry point", () => {
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
     const source = readFileSync(script, "utf8");
+    expect(source).toContain("umask 077");
     expect(source).toContain('run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres');
     expect(source).toContain('pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB"');
     expect(source).not.toMatch(/run_unlocked pg_dump/);
@@ -138,6 +139,18 @@ describe("production deployment entry point", () => {
     expect(migration).toBeGreaterThan(backup);
     expect(e2e).toBeGreaterThan(migration);
     expect(restart).toBeGreaterThan(e2e);
+  });
+
+  it("rebuilds and verifies the production server artifact after E2E teardown before restart", () => {
+    const source = readFileSync(script, "utf8");
+    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_PORT=3100");
+    const finalBuild = source.indexOf('EIDOLON_BUILD_GIT_SHA="$target_revision"', e2e);
+    const artifactCheck = source.indexOf('test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs"', finalBuild);
+    const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');
+    expect(e2e).toBeGreaterThan(-1);
+    expect(finalBuild).toBeGreaterThan(e2e);
+    expect(artifactCheck).toBeGreaterThan(finalBuild);
+    expect(restart).toBeGreaterThan(artifactCheck);
   });
 
   it("rejects a symlink backup directory and non-exact revision", () => {

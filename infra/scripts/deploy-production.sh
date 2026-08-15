@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
+umask 077
 
 deployment_env_file="/etc/eidolon/deployment.env"
 target_revision=""
@@ -136,6 +137,7 @@ plan: docker compose up PostgreSQL
 plan: pg_dump before migration
 plan: prisma migrate deploy
 plan: pnpm test:e2e against the migrated schema
+plan: rebuild and verify the exact production server artifact after E2E teardown
 plan: restart systemd web service
 plan: verify HTTP health
 plan: record redacted deployment result
@@ -167,6 +169,7 @@ rollback_application() {
   run_unlocked git -C "$EIDOLON_REPOSITORY_DIR" checkout --detach "$previous_revision" || return
   run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" install --frozen-lockfile || return
   run_unlocked env EIDOLON_BUILD_GIT_SHA="$previous_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build || return
+  run_unlocked test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs" || return
   if $promotion_started; then
     run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE" || true
   fi
@@ -197,6 +200,8 @@ fi
 
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate
 run_unlocked env EIDOLON_E2E_PORT=3100 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
+run_unlocked env EIDOLON_BUILD_GIT_SHA="$target_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
+run_unlocked test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs"
 promotion_started=true
 run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"
 health_ready=false
