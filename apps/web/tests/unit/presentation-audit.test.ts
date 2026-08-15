@@ -79,4 +79,28 @@ describe("presentation completion audit", () => {
     })).not.toThrow();
     expect(() => assertPresentationPackagingGate({ audits: audits.slice(1), expected: [{ applicable: true, entityId: "BRD_TEST", field: "accent", researchStatus: "RESOLVED", scope: "EFFECTIVE_BREED" }] })).toThrow("PRESENTATION_AUDIT_COMPLETION_BLOCKER");
   });
+
+  it("does not inherit sapient Species presentation into a PET population", () => {
+    const appearance = "A compact domestic duck with a broad bill, webbed feet, layered waterproof plumage, and a low horizontal carriage.";
+    const accent = "Vocalization prompt: breath-led avian resonance, short call-length phrases, and restrained nonverbal sounds.";
+    const audits = auditEffectiveBreedPresentation({
+      breedId: "BRD_PET_DUCK",
+      researchStatus: "RESOLVED",
+      pet: true,
+      species: {
+        accent,
+        appearance: "An upright feathered person.",
+        clothing,
+        architecture: "Carved timber halls with reed-patterned screens.",
+      },
+      breed: { accent: null, appearance, clothing: null, architecture: null },
+      semanticReviews: { accent: semantic(accent), appearance: semantic(appearance) },
+    });
+    expect(audits.map(({ field, disposition }) => [field, disposition])).toEqual([
+      ["accent", "PASS"],
+      ["appearance", "PASS"],
+      ["clothing", "NOT_APPLICABLE"],
+      ["architecture", "NOT_APPLICABLE"],
+    ]);
+  });
 });

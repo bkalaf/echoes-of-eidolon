@@ -11,6 +11,7 @@ import {
   derivePoliticalForm,
   resolvePresentation,
   validateBreed,
+  validateBreedHierarchy,
   validateSpecies,
   validateTaxonomy,
 } from "../../src/domain/worldbuilding";
@@ -84,6 +85,7 @@ describe("WorldBuilding v3 simple domain", () => {
   it("enforces group prefix, PET, personality, and controlled-array invariants", () => {
     const base = {
       speciesKind: "BEAST" as const,
+      populationKind: "BEAST" as const,
       groupId: "B01" as const,
       cultureId: "CP01",
       personalityId: "KNOWN",
@@ -96,7 +98,38 @@ describe("WorldBuilding v3 simple domain", () => {
     expect(validateBreed({ ...base, groupId: "H01" }, { personalityIds: new Set(["KNOWN"]) })).toContain("Breed group H01 belongs to HUMAN, not BEAST.");
     expect(validateBreed({ ...base, foodBroad: ["ANIMAL", "ANIMAL"] }, { personalityIds: new Set(["KNOWN"]) })).toContain("foodBroad cannot contain duplicates.");
     expect(validateBreed({ ...base, personalityId: "MISSING" }, { personalityIds: new Set(["KNOWN"]) })).toContain("PersonalityExpression MISSING does not exist.");
-    expect(validateBreed({ ...base, speciesKind: "PET", groupId: "P01", cultureId: "CP01", personalityId: "KNOWN" }, { personalityIds: new Set(["KNOWN"]) })).toEqual(expect.arrayContaining(["PET breeds cannot have a Culture.", "PET breeds cannot have a PersonalityExpression."]));
+    expect(validateBreed({ ...base, populationKind: "PET", groupId: "P01", cultureId: "CP01", personalityId: "KNOWN" }, { personalityIds: new Set(["KNOWN"]) })).toEqual(expect.arrayContaining(["PET breeds cannot have a Culture.", "PET breeds cannot have a PersonalityExpression."]));
+  });
+
+  it("keeps biological Species kind separate from Breed population kind", () => {
+    const pet = {
+      speciesKind: "BEAST" as const,
+      populationKind: "PET" as const,
+      groupId: "P01" as const,
+      cultureId: null,
+      personalityId: null,
+      foodBroad: [],
+      foodSpecific: [],
+      terrainBroad: [],
+      terrainSpecific: [],
+    };
+    expect(validateBreed(pet, { personalityIds: new Set() })).toEqual([]);
+    expect(validateBreed({ ...pet, speciesKind: "MYTHOS" }, { personalityIds: new Set() })).toContain("PET populations must reference a BEAST Species, not MYTHOS.");
+    expect(validateBreed({ ...pet, accent: "A speaking voice.", clothing: "Civilian: Coat", architecture: "Stone halls", motivation: "ALTRUISTIC" }, { personalityIds: new Set() })).toEqual(expect.arrayContaining([
+      "PET breeds require accent to be null.",
+      "PET breeds require clothing to be null.",
+      "PET breeds require architecture to be null.",
+      "PET breeds require motivation to be null.",
+    ]));
+  });
+
+  it("requires Breed parents to share Species and population kind", () => {
+    const child = { breedId: "BRD_CHILD", speciesId: "SPC_ONE", populationKind: "HUMAN" as const, parentBreedId: "BRD_PARENT" };
+    expect(validateBreedHierarchy(child, { breedId: "BRD_PARENT", speciesId: "SPC_ONE", populationKind: "HUMAN" })).toEqual([]);
+    expect(validateBreedHierarchy(child, { breedId: "BRD_PARENT", speciesId: "SPC_TWO", populationKind: "HUMAN" })).toContain("Breed parent BRD_PARENT must share Species SPC_ONE.");
+    expect(validateBreedHierarchy(child, { breedId: "BRD_PARENT", speciesId: "SPC_ONE", populationKind: "MYTHOS" })).toContain("Breed parent BRD_PARENT must share populationKind HUMAN.");
+    expect(validateBreedHierarchy({ ...child, parentBreedId: "BRD_CHILD" }, { ...child, parentBreedId: null })).toContain("Breed BRD_CHILD cannot be its own parent.");
+    expect(validateBreedHierarchy(child, null)).toContain("Breed parent BRD_PARENT does not exist.");
   });
 
   it("derives all economic and political forms and returns null for incomplete raw inputs", () => {

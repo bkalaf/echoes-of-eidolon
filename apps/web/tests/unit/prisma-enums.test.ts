@@ -27,7 +27,7 @@ const suppliedEnumNames = [
   "CapabilityOperation", "CapabilityRequirementOperator", "CapabilityParameterKind", "CapabilityMonotonicPolicy",
   "CapabilityDefinitionVersionStatus", "CapabilityScopeType", "ScoringPolicyStatus",
   "FactionStandingEvidenceKind", "KnowledgeBaseBlockKind",
-  "CalendarTrigger", "SpeciesKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
+  "CalendarTrigger", "SpeciesKind", "PopulationKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
   "EntityType", "Heirloom", "CitationQuality", "SourceType", "ContributorType", "ResearchCategory",
   "ArchitectDepartment", "WitnessColor", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
   "BookGroupingType", "BookGroupingEditability",

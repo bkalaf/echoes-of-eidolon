@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
 
-import { BREED_GROUPS, WORLD_BUILDING_ENUMS, canonicalEntityId, validateBreed, validateSpecies, validateTaxonomy, type BreedGroupId, type SpeciesKind } from "../domain/worldbuilding";
+import { BREED_GROUPS, WORLD_BUILDING_ENUMS, canonicalEntityId, validateBreed, validateBreedHierarchy, validateSpecies, validateTaxonomy, type BreedGroupId, type BreedHierarchyNode, type SpeciesKind } from "../domain/worldbuilding";
 
 export const WORLD_BUILDING_RESEARCH_SCHEMA_VERSION = "eidolon-worldbuilding-research-v3-simple" as const;
 export const worldbuildingResearchStatuses = ["RESOLVED", "REVIEW_REQUIRED", "CONFLICTING_SOURCES", "NOT_FOUND", "ID_COLLISION_REVIEW_REQUIRED"] as const;
@@ -87,8 +87,10 @@ export function buildWorldbuildingResearchEnvelopes(value: unknown, options: { m
   for (const record of recordById.values()) {
     if (record.kind !== "BREED") continue;
     if (!record.speciesRef) throw new Error(`DANGLING_REFERENCE: Breed ${ownedId(record)} has no Species reference.`);
-    for (const reference of [record.speciesRef, record.cultureRef].filter((entry): entry is string => Boolean(entry))) {
+    const parentBreedId = nonblank(record.data.parentBreedId) ? record.data.parentBreedId : null;
+    for (const reference of [record.speciesRef, record.cultureRef, parentBreedId].filter((entry): entry is string => Boolean(entry))) {
       if (recordById.has(reference)) {
+        if (reference === parentBreedId && recordById.get(reference)?.kind !== "BREED") throw new Error(`DANGLING_REFERENCE: Breed ${ownedId(record)} parent ${reference} is not a Breed.`);
         adjacency.get(ownedId(record))!.add(reference);
         adjacency.get(reference)!.add(ownedId(record));
       } else if (!externalRefs.has(reference)) {
@@ -96,6 +98,17 @@ export function buildWorldbuildingResearchEnvelopes(value: unknown, options: { m
       }
     }
   }
+  const hierarchyState = new Map<string, "VISITING" | "VISITED">();
+  const visitBreedHierarchy = (id: string): void => {
+    if (hierarchyState.get(id) === "VISITING") throw new Error(`BREED_HIERARCHY_CYCLE: ${id} participates in a parent cycle.`);
+    if (hierarchyState.get(id) === "VISITED") return;
+    hierarchyState.set(id, "VISITING");
+    const record = recordById.get(id);
+    const parentBreedId = record?.kind === "BREED" && nonblank(record.data.parentBreedId) ? record.data.parentBreedId : null;
+    if (parentBreedId && recordById.get(parentBreedId)?.kind === "BREED") visitBreedHierarchy(parentBreedId);
+    hierarchyState.set(id, "VISITED");
+  };
+  for (const record of recordById.values()) if (record.kind === "BREED") visitBreedHierarchy(ownedId(record));
   const visited = new Set<string>();
   const components: WorldbuildingResearchRecord[][] = [];
   for (const start of recordById.keys()) {
@@ -109,10 +122,20 @@ export function buildWorldbuildingResearchEnvelopes(value: unknown, options: { m
       componentIds.push(id);
       pending.push(...[...(adjacency.get(id) ?? [])].sort().reverse());
     }
-    const component = componentIds.map((id) => recordById.get(id)!).sort((left, right) => {
-      const order = { SPECIES: 0, CULTURE: 1, BREED: 2 } as const;
-      return order[left.kind] - order[right.kind] || ownedId(left).localeCompare(ownedId(right));
+    const componentRecords = componentIds.map((id) => recordById.get(id)!);
+    const roots = componentRecords.filter((record) => record.kind !== "BREED").sort((left, right) => {
+      const order = { SPECIES: 0, CULTURE: 1 } as const;
+      return order[left.kind as keyof typeof order] - order[right.kind as keyof typeof order] || ownedId(left).localeCompare(ownedId(right));
     });
+    const pendingBreeds = componentRecords.filter((record) => record.kind === "BREED");
+    const orderedBreeds: WorldbuildingResearchRecord[] = [];
+    const pendingIds = new Set(pendingBreeds.map(ownedId));
+    while (pendingIds.size) {
+      const ready = pendingBreeds.filter((record) => pendingIds.has(ownedId(record)) && (!nonblank(record.data.parentBreedId) || !pendingIds.has(record.data.parentBreedId))).sort((left, right) => ownedId(left).localeCompare(ownedId(right)));
+      if (!ready.length) throw new Error("BREED_HIERARCHY_CYCLE: no parent-first Breed ordering exists.");
+      for (const record of ready) { orderedBreeds.push(record); pendingIds.delete(ownedId(record)); }
+    }
+    const component = [...roots, ...orderedBreeds];
     if (component.length > maximumCanonicalRows) throw new WorldbuildingEnvelopeLimitError(`ENVELOPE_LIMIT_IMPLEMENTATION_BLOCKER: intact component has ${component.length} canonical rows, exceeding ${maximumCanonicalRows}.`);
     components.push(component);
   }
@@ -125,7 +148,7 @@ export function buildWorldbuildingResearchEnvelopes(value: unknown, options: { m
 }
 
 function nonblank(value: unknown): value is string { return typeof value === "string" && value.trim().length > 0; }
-function missingRequired(record: WorldbuildingResearchEnvelope["records"][number], personalityIds: ReadonlySet<string>, parentSpeciesKind?: SpeciesKind): string[] {
+function missingRequired(record: WorldbuildingResearchEnvelope["records"][number], personalityIds: ReadonlySet<string>, parentSpeciesKind?: SpeciesKind, parentBreed?: BreedHierarchyNode | null): string[] {
   const data = record.data;
   const missing: string[] = [];
   if (!nonblank(data.name)) missing.push("name");
@@ -136,6 +159,7 @@ function missingRequired(record: WorldbuildingResearchEnvelope["records"][number
   } else if (record.kind === "CULTURE") {
     if (!nonblank(data.culturePoolId)) missing.push("culturePoolId");
   } else {
+    if (!nonblank(data.populationKind) || !new Set<string>(["HUMAN", "BEAST", "MYTHOS", "PET"]).has(data.populationKind)) missing.push("populationKind");
     if (!nonblank(data.groupId) || !BREED_GROUPS[data.groupId as BreedGroupId]) missing.push("groupId");
     const group = nonblank(data.groupId) ? BREED_GROUPS[data.groupId as BreedGroupId] : undefined;
     if (group?.speciesKind !== "PET" && (!nonblank(data.personalityId) || !personalityIds.has(data.personalityId))) missing.push("personalityId");
@@ -153,11 +177,20 @@ function missingRequired(record: WorldbuildingResearchEnvelope["records"][number
       terrainBroad: Array.isArray(data.terrainBroad) ? data.terrainBroad as string[] : [],
       terrainSpecific: Array.isArray(data.terrainSpecific) ? data.terrainSpecific as string[] : [],
     }, { personalityIds }).map((error) => `breed:${error}`));
+    if (data.parentBreedId !== undefined && data.parentBreedId !== null && !nonblank(data.parentBreedId)) missing.push("parentBreedId");
+    if (nonblank(data.parentBreedId) && nonblank(data.breedId) && nonblank(data.speciesId) && nonblank(data.populationKind)) {
+      missing.push(...validateBreedHierarchy({
+        breedId: data.breedId,
+        speciesId: data.speciesId,
+        populationKind: data.populationKind as BreedHierarchyNode["populationKind"],
+        parentBreedId: data.parentBreedId,
+      }, parentBreed).map((error) => `breedHierarchy:${error}`));
+    }
   }
   return [...new Set(missing)];
 }
 
-export function classifyWorldbuildingResearch(envelope: WorldbuildingResearchEnvelope, context: { existingRefs: ReadonlySet<string>; personalityIds: ReadonlySet<string>; speciesKindsByRef?: Readonly<Record<string, SpeciesKind>> }) {
+export function classifyWorldbuildingResearch(envelope: WorldbuildingResearchEnvelope, context: { existingRefs: ReadonlySet<string>; personalityIds: ReadonlySet<string>; speciesKindsByRef?: Readonly<Record<string, SpeciesKind>>; breedHierarchyByRef?: Readonly<Record<string, BreedHierarchyNode>> }) {
   const rows = envelope.records.map((record) => ({ ...record, issues: [] as string[] }));
   const grouped = new Map<string, typeof rows>();
   for (const row of rows) {
@@ -187,17 +220,25 @@ export function classifyWorldbuildingResearch(envelope: WorldbuildingResearchEnv
   }
   const available = new Set(context.existingRefs);
   const importableClosure: string[] = [];
-  for (const kind of ["SPECIES", "CULTURE", "BREED"] as const) {
-    for (const row of canonicalRows.filter((candidate) => candidate.kind === kind)) {
+  const classifyRow = (row: typeof canonicalRows[number]): void => {
       if (row.researchStatus !== "RESOLVED" || row.importStatus !== "RESEARCH_COMPLETE_IMPORTABLE") {
         row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
-        continue;
+        return;
       }
       const stagedSpecies = row.speciesRef ? rows.find((candidate) => candidate.kind === "SPECIES" && candidate.speciesRef === row.speciesRef) : undefined;
       const parentSpeciesKind = stagedSpecies?.data.speciesKind as SpeciesKind | undefined ?? (row.speciesRef ? context.speciesKindsByRef?.[row.speciesRef] : undefined);
-      const missing = missingRequired(row, context.personalityIds, parentSpeciesKind);
+      const parentBreedId = row.kind === "BREED" && nonblank(row.data.parentBreedId) ? row.data.parentBreedId : null;
+      const stagedParent = parentBreedId ? canonicalRows.find((candidate) => candidate.kind === "BREED" && ownedId(candidate) === parentBreedId) : undefined;
+      const parentBreed = stagedParent ? {
+        breedId: ownedId(stagedParent),
+        speciesId: String(stagedParent.data.speciesId ?? stagedParent.speciesRef ?? ""),
+        populationKind: stagedParent.data.populationKind as BreedHierarchyNode["populationKind"],
+        parentBreedId: nonblank(stagedParent.data.parentBreedId) ? stagedParent.data.parentBreedId : null,
+      } : parentBreedId ? context.breedHierarchyByRef?.[parentBreedId] ?? null : null;
+      const missing = missingRequired(row, context.personalityIds, parentSpeciesKind, parentBreed);
       if (row.kind === "BREED" && row.speciesRef && !available.has(row.speciesRef)) missing.push(`dependency:${row.speciesRef}`);
       if (row.kind === "BREED" && row.cultureRef && !available.has(row.cultureRef)) missing.push(`dependency:${row.cultureRef}`);
+      if (parentBreedId && !available.has(parentBreedId)) missing.push(`dependency:${parentBreedId}`);
       if (missing.length) {
         row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
         row.issues.push(...missing);
@@ -206,7 +247,26 @@ export function classifyWorldbuildingResearch(envelope: WorldbuildingResearchEnv
         if (!importableClosure.includes(id)) importableClosure.push(id);
         available.add(id);
       }
+  };
+  for (const kind of ["SPECIES", "CULTURE"] as const) for (const row of canonicalRows.filter((candidate) => candidate.kind === kind)) classifyRow(row);
+  const pendingBreeds = canonicalRows.filter((candidate) => candidate.kind === "BREED");
+  const stagedBreedIds = new Set(pendingBreeds.map(ownedId));
+  const pendingIds = new Set(stagedBreedIds);
+  while (pendingIds.size) {
+    const ready = pendingBreeds.filter((row) => {
+      if (!pendingIds.has(ownedId(row))) return false;
+      const parentBreedId = nonblank(row.data.parentBreedId) ? row.data.parentBreedId : null;
+      return !parentBreedId || !stagedBreedIds.has(parentBreedId) || available.has(parentBreedId);
+    });
+    if (!ready.length) {
+      for (const row of pendingBreeds.filter((candidate) => pendingIds.has(ownedId(candidate)))) {
+        row.importStatus = "RESEARCH_COMPLETE_BLOCKED";
+        row.issues.push(`dependency:${String(row.data.parentBreedId)}`, "BREED_HIERARCHY_CYCLE_OR_BLOCKED_PARENT");
+        pendingIds.delete(ownedId(row));
+      }
+      break;
     }
+    for (const row of ready) { classifyRow(row); pendingIds.delete(ownedId(row)); }
   }
   for (const canonicalRow of canonicalRows) {
     for (const row of grouped.get(ownedId(canonicalRow)) ?? []) {
@@ -232,7 +292,7 @@ export function bindWorldbuildingResearchReview(
   const idMap: Record<string, string> = {};
   const stagedIds = new Set(envelope.records.map(ownedId));
   const externalDependencyRefs = new Set(
-    envelope.records.flatMap((record) => [record.speciesRef, record.cultureRef])
+    envelope.records.flatMap((record) => [record.speciesRef, record.cultureRef, nonblank(record.data.parentBreedId) ? record.data.parentBreedId : undefined])
       .filter((reference): reference is string => Boolean(reference) && !stagedIds.has(reference!)),
   );
   for (const reference of externalDependencyRefs) {
@@ -298,14 +358,18 @@ function persistenceData(row: ReturnType<typeof classifyWorldbuildingResearch>["
   };
   const speciesId = row.speciesRef ? idMap[row.speciesRef] : undefined;
   const cultureId = row.cultureRef ? idMap[row.cultureRef] : null;
+  const parentBreedId = nonblank(data.parentBreedId) ? idMap[data.parentBreedId] : null;
   if (!speciesId) throw new Error(`Reviewed idMap cannot resolve Species dependency ${row.speciesRef ?? "missing"}.`);
   if (row.cultureRef && !cultureId) throw new Error(`Reviewed idMap cannot resolve Culture dependency ${row.cultureRef}.`);
+  if (nonblank(data.parentBreedId) && !parentBreedId) throw new Error(`Reviewed idMap cannot resolve Breed parent dependency ${data.parentBreedId}.`);
   return {
     breedId: id,
     name: data.name,
     speciesId,
     cultureId,
+    parentBreedId,
     groupId: data.groupId,
+    populationKind: data.populationKind,
     personalityId: data.personalityId ?? null,
     traits: data.traits ?? [],
     accent: data.accent ?? null,

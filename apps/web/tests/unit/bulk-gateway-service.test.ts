@@ -58,6 +58,7 @@ describe("bulk gateway persistence service", () => {
       personalityExpression: { findMany: vi.fn().mockResolvedValue([{ personalityId: "PERSONALITY" }]) },
       species: { findMany: vi.fn().mockResolvedValue([{ speciesId: "SPC_PERSISTED", speciesKind: "BEAST" }]) },
       culture: { findMany: vi.fn().mockResolvedValue([{ cultureId: "CLT_PERSISTED" }]) },
+      breed: { findMany: vi.fn().mockResolvedValue([]) },
     } as unknown as PrismaClient;
     const envelope = {
       entity: "worldbuilding-research",
@@ -70,7 +71,7 @@ describe("bulk gateway persistence service", () => {
         cultureRef: "CLT_PERSISTED",
         researchStatus: "RESOLVED",
         importStatus: "RESEARCH_COMPLETE_IMPORTABLE",
-        data: { breedId: "BRD_NEW_BREED", name: "New Breed", groupId: "B01", personalityId: "PERSONALITY", foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] },
+        data: { breedId: "BRD_NEW_BREED", name: "New Breed", populationKind: "BEAST", groupId: "B01", personalityId: "PERSONALITY", foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] },
       }],
     };
     await expect(worldbuildingDryRun(envelope, database)).resolves.toMatchObject({

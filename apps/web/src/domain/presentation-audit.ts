@@ -122,9 +122,15 @@ export function auditEffectiveBreedPresentation(input: {
   pet?: boolean;
   semanticReviews?: Partial<Record<PresentationField, SemanticPresentationReview>>;
 }): PresentationAuditResult[] {
-  const effective = resolvePresentation(input.species, input.culture, input.breed);
+  const inherited = resolvePresentation(input.species, input.culture, input.breed);
+  const effective = input.pet ? {
+    accent: inherited.accent,
+    appearance: input.breed?.appearance ?? input.species.appearance,
+    clothing: null,
+    architecture: null,
+  } : inherited;
   return (["accent", "appearance", "clothing", "architecture"] as const).map((field) => auditPresentationField({
-    applicable: !(input.pet && field !== "appearance"),
+    applicable: !(input.pet && (field === "clothing" || field === "architecture")),
     entityId: input.breedId,
     field,
     researchStatus: input.researchStatus,

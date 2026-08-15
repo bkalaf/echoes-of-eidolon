@@ -8,7 +8,7 @@ import type {
   EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity, BreedGroupId,
   KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode,
   PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
-  SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind,
+  SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind, PopulationKind,
   StructureOrientation, TimelineEventType, WitnessColor, WorldKey, Faction, FoodBroadCategory, FoodSpecific,
   TerrainBroad, SpecificTerrain, OriginMode, ReproductionMethod, JuvenileStage, NurseryMode,
   LongevityClass, NaturalMortalityMode, SoulDisposition, ContinuityGroupType, ContinuityPropagationMode, PersonalityFamily,
@@ -18,7 +18,7 @@ export type {
   AdministrationMode, AllocationMode, AuthoritySource, CitationQuality, CompanionKey,
   CulturePoolId, EconomicForm, Heirloom, InterludeType, LegitimacyBasis, Motivation,
   OperatingStyle, OwnershipMode, PoliticalForm, RegionId,
-  ResearchCategory, SettlementClassification, SpeciesKind, StructureOrientation,
+  ResearchCategory, SettlementClassification, SpeciesKind, PopulationKind, StructureOrientation,
   TimelineEventType, WorldKey,
 } from "../generated/prisma/enums";
 
@@ -51,6 +51,8 @@ export interface Breed {
   name: string;
   speciesId: Species['speciesId'];
   cultureId?: Culture['cultureId'] | null;
+  parentBreedId?: Breed['breedId'] | null;
+  populationKind: PopulationKind;
   groupId: BreedGroupId;
   personalityId?: string | null;
   traits: string[];

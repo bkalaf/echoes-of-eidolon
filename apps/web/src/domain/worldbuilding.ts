@@ -2,6 +2,8 @@ import breedGroups from "../data/breed-groups-v3.json";
 import worldBuildingEnums from "../data/worldbuilding-enums-v3.json";
 
 export type SpeciesKind = "BEAST" | "HUMAN" | "MYTHOS" | "PET";
+export type PopulationKind = "BEAST" | "HUMAN" | "MYTHOS" | "PET";
+export type BreedHierarchyNode = { breedId: string; speciesId: string; populationKind: PopulationKind; parentBreedId?: string | null };
 export type TaxonomyType = "KINGDOM" | "PHYLUM" | "CLASS" | "ORDER" | "FAMILY" | "GENUS" | "SPECIES";
 export interface Taxonomy {
   taxonomyLevelId: string;
@@ -125,9 +127,13 @@ export function validateSpecies(input: SpeciesValidationInput): string[] {
 export const breedDimensionValues = Object.freeze(WORLD_BUILDING_ENUMS.BreedDimensions);
 export type BreedValidationInput = {
   speciesKind: SpeciesKind;
+  populationKind: PopulationKind;
   groupId: string;
   cultureId?: string | null;
   personalityId?: string | null;
+  accent?: string | null;
+  clothing?: string | null;
+  architecture?: string | null;
   foodBroad: readonly string[];
   foodSpecific: readonly string[];
   terrainBroad: readonly string[];
@@ -150,12 +156,17 @@ export function validateBreed(input: BreedValidationInput, context: { personalit
   const errors: string[] = [];
   const group = BREED_GROUPS[input.groupId as BreedGroupId];
   if (!group) errors.push(`Breed group ${input.groupId} is not registered.`);
-  else if (group.speciesKind !== input.speciesKind) errors.push(`Breed group ${input.groupId} belongs to ${group.speciesKind}, not ${input.speciesKind}.`);
-  if (input.speciesKind === "PET") {
+  else if (group.speciesKind !== input.populationKind) errors.push(`Breed group ${input.groupId} belongs to ${group.speciesKind}, not ${input.populationKind}.`);
+  const expectedSpeciesKind = input.populationKind === "PET" ? "BEAST" : input.populationKind;
+  if (input.speciesKind !== expectedSpeciesKind) errors.push(`${input.populationKind} populations must reference a ${expectedSpeciesKind} Species, not ${input.speciesKind}.`);
+  if (input.populationKind === "PET") {
     if (input.cultureId != null) errors.push("PET breeds cannot have a Culture.");
     if (input.personalityId != null) errors.push("PET breeds cannot have a PersonalityExpression.");
+    for (const field of ["accent", "clothing", "architecture", ...Object.keys(breedDimensionValues)] as const) {
+      if (input[field as keyof BreedValidationInput] != null) errors.push(`PET breeds require ${field} to be null.`);
+    }
   } else if (!input.personalityId) {
-    errors.push(`${input.speciesKind} breeds require a PersonalityExpression.`);
+    errors.push(`${input.populationKind} breeds require a PersonalityExpression.`);
   } else if (!context.personalityIds.has(input.personalityId)) {
     errors.push(`PersonalityExpression ${input.personalityId} does not exist.`);
   }
@@ -173,6 +184,18 @@ export function validateBreed(input: BreedValidationInput, context: { personalit
   for (const [field, allowedValues] of Object.entries(breedDimensionValues)) {
     const value = input[field as keyof BreedValidationInput];
     if (value != null && !new Set<string>(allowedValues).has(String(value))) errors.push(`${field} contains invalid value ${String(value)}.`);
+  }
+  return errors;
+}
+
+export function validateBreedHierarchy(input: BreedHierarchyNode, parent: BreedHierarchyNode | null | undefined): string[] {
+  if (!input.parentBreedId) return [];
+  const errors: string[] = [];
+  if (input.parentBreedId === input.breedId) errors.push(`Breed ${input.breedId} cannot be its own parent.`);
+  if (!parent) errors.push(`Breed parent ${input.parentBreedId} does not exist.`);
+  else {
+    if (parent.speciesId !== input.speciesId) errors.push(`Breed parent ${parent.breedId} must share Species ${input.speciesId}.`);
+    if (parent.populationKind !== input.populationKind) errors.push(`Breed parent ${parent.breedId} must share populationKind ${input.populationKind}.`);
   }
   return errors;
 }

@@ -144,19 +144,29 @@ function EntityForm({ contract, entity, initial, mode, onComplete }: {
   const [draft, setDraft] = useState<Record<string, string>>(() => Object.fromEntries(contract.fields.map((field) => [field.name, editableValue(initial?.[field.name], field)])));
   const recordId = initial?.[contract.idField];
   const petSpecies = entity === "Species" && draft.speciesKind === "PET";
-  const petNullFields = new Set(["anthropomorphization", "clothing", "architecture"]);
+  const petBreed = entity === "Breed" && draft.populationKind === "PET";
+  const petSpeciesNullFields = new Set(["anthropomorphization", "clothing", "architecture"]);
+  const petBreedNullFields = new Set([
+    "cultureId", "personalityId", "accent", "clothing", "architecture", "motivation", "operatingStyle",
+    "structureOrientation", "administrationMode", "ownershipMode", "allocationMode", "legitimacyBasis",
+    "authoritySource", "loquacity", "emotionalTemperature", "outlookOrientation", "collaborativePosture",
+  ]);
   const updateDraftField = (field: AdminField, value: string) => setDraft((current) => {
     const next = { ...current, [field.name]: value };
     if (mode === "create" && canonicalKind && field.name === "name") next[contract.idField] = value.trim() ? canonicalEntityId(canonicalKind, value) : "";
     if (entity === "Species" && field.name === "speciesKind" && value === "PET") {
-      for (const nullField of petNullFields) next[nullField] = "";
+      for (const nullField of petSpeciesNullFields) next[nullField] = "";
+    }
+    if (entity === "Breed" && field.name === "populationKind" && value === "PET") {
+      for (const nullField of petBreedNullFields) next[nullField] = "";
     }
     return next;
   });
   const fieldDisabled = (field: AdminField) =>
     (field.name === contract.idField && (mode === "edit" || canonicalKind !== undefined))
     || (canonicalKind !== undefined && mode === "edit" && field.name === "name")
-    || (petSpecies && petNullFields.has(field.name));
+    || (petSpecies && petSpeciesNullFields.has(field.name))
+    || (petBreed && petBreedNullFields.has(field.name));
   const mutation = useMutation({
     mutationFn: async () => {
       const formErrors = validateAdminEntityDraft(entity, contract.idField, contract.fields, draft);
@@ -174,6 +184,7 @@ function EntityForm({ contract, entity, initial, mode, onComplete }: {
     <div className="action-row action-row--between"><div><p className="kicker">{mode === "edit" ? "RECORD EDITOR" : "NEW RECORD"}</p><h2>{mode === "edit" ? `Edit ${entity}` : `Create ${entity}`}</h2></div><span className="tag">{contract.fields.length} fields</span></div>
     {canonicalKind && mode === "edit" && <p className="notice">Canonical WorldBuilding names and persistence IDs are immutable. Create a reviewed replacement entity for a genuine identity change.</p>}
     {petSpecies && <p className="notice">PET invariant: clothing, architecture, and anthropomorphization remain null. Author a biologically prompt-ready appearance instead.</p>}
+    {petBreed && <p className="notice">PET population invariant: Culture, Personality, sapient presentation, and governance dimensions remain null. Appearance may contain biologically prompt-ready Breed detail.</p>}
     <div className="form-grid">{contract.fields.map((field) => <AdminFieldEditor contract={contract} disabled={fieldDisabled(field)} entity={entity} field={field} key={field.name} value={draft[field.name] ?? ""} onChange={(value) => updateDraftField(field, value)} />)}</div>
     <div className="action-row"><button className="button button--gold" disabled={mutation.isPending} onClick={() => mutation.mutate()}>{mutation.isPending ? "Saving…" : mode === "edit" ? "Save Changes" : `Create ${entity}`}</button></div>
     {mutation.error && <p className="notice notice--bad" role="alert">{mutation.error.message}</p>}

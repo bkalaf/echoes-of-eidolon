@@ -117,4 +117,35 @@ describe("persisted Data administration", () => {
     expect(screen.getByLabelText("architecture")).toBeDisabled();
     expect(screen.getByText(/PET invariant: clothing, architecture, and anthropomorphization remain null/)).toBeInTheDocument();
   });
+
+  it("clears and disables PET-only Breed null fields from populationKind", async () => {
+    const breedCollection = { entity: "Breed", records: [], contract: { delegate: "breed", idField: "breedId", fields: [
+      { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "scalar", name: "breedId", type: "String" },
+      { enumValues: ["HUMAN", "BEAST", "MYTHOS", "PET"], hasDefault: false, isList: false, isRequired: true, kind: "enum", name: "populationKind", type: "PopulationKind" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "cultureId", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "personalityId", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "accent", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "clothing", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "architecture", type: "String" },
+      { enumValues: [], hasDefault: false, isList: false, isRequired: false, kind: "scalar", name: "appearance", type: "String" },
+      { enumValues: ["ALTRUISTIC"], hasDefault: false, isList: false, isRequired: false, kind: "enum", name: "motivation", type: "Motivation" },
+    ] } };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => breedCollection, ok: true }));
+    renderPage("/admin/data/breed", "DATA019");
+    await screen.findByText("Breed");
+    fireEvent.click(screen.getByRole("button", { name: "New" }));
+    fireEvent.change(screen.getByLabelText("cultureId"), { target: { value: "CLT_STALE" } });
+    fireEvent.change(screen.getByLabelText("motivation"), { target: { value: "ALTRUISTIC" } });
+    fireEvent.change(screen.getByLabelText("populationKind *"), { target: { value: "PET" } });
+
+    expect(screen.getByLabelText("cultureId")).toBeDisabled();
+    expect(screen.getByLabelText("cultureId")).toHaveValue("");
+    expect(screen.getByLabelText("personalityId")).toBeDisabled();
+    expect(screen.getByLabelText("accent")).toBeDisabled();
+    expect(screen.getByRole("group", { name: "clothing" })).toBeDisabled();
+    expect(screen.getByLabelText("architecture")).toBeDisabled();
+    expect(screen.getByLabelText("motivation")).toBeDisabled();
+    expect(screen.getByLabelText("appearance")).not.toBeDisabled();
+    expect(screen.getByText(/PET population invariant: Culture, Personality, sapient presentation, and governance dimensions remain null/)).toBeInTheDocument();
+  });
 });

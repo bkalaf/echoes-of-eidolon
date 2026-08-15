@@ -17,7 +17,7 @@ describe("WorldBuilding v3 research staging", () => {
       records: [
         { recordKey: "local:species:one", kind: "SPECIES", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { speciesId: "SPC_ONE", name: "One", speciesKind: "BEAST", originMode: "UNKNOWN", reproductiveMethod: "UNKNOWN", longevityClass: "UNKNOWN", mortalityMode: "UNKNOWN", soulDisposition: "UNKNOWN", continuityGroup: "UNKNOWN", continuityPropagationMode: "UNKNOWN" } },
         { recordKey: "local:culture:blocked", kind: "CULTURE", cultureRef: "CLT_BLOCKED", researchStatus: "REVIEW_REQUIRED", importStatus: "RESEARCH_COMPLETE_BLOCKED", data: { cultureId: "CLT_BLOCKED", name: "Blocked", culturePoolId: null } },
-        { recordKey: "local:breed:one", kind: "BREED", breedRef: "BRD_BREED", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_BREED", name: "Breed", groupId: "B01", personalityId: null } },
+        { recordKey: "local:breed:one", kind: "BREED", breedRef: "BRD_BREED", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_BREED", name: "Breed", populationKind: "BEAST", groupId: "B01", personalityId: null } },
       ],
     });
     const result = classifyWorldbuildingResearch(pack, { existingRefs: new Set(), personalityIds: new Set() });
@@ -46,7 +46,7 @@ describe("WorldBuilding v3 research staging", () => {
   it("retains exact canonical IDs for persisted dependencies without allocating IDs to blocked staged rows", () => {
     const pack = parseWorldbuildingResearchEnvelope({ entity: "worldbuilding-research", schemaVersion: "eidolon-worldbuilding-research-v3-simple", records: [
       { recordKey: "local:culture:blocked", kind: "CULTURE", cultureRef: "CLT_BLOCKED", researchStatus: "REVIEW_REQUIRED", importStatus: "RESEARCH_COMPLETE_BLOCKED", data: { cultureId: "CLT_BLOCKED", name: "Blocked", culturePoolId: null } },
-      { recordKey: "local:breed:new", kind: "BREED", breedRef: "BRD_NEW_BREED", speciesRef: "SPC_PERSISTED", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_NEW_BREED", name: "New Breed", groupId: "B01", personalityId: "PERSONALITY", foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] } },
+      { recordKey: "local:breed:new", kind: "BREED", breedRef: "BRD_NEW_BREED", speciesRef: "SPC_PERSISTED", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_NEW_BREED", name: "New Breed", populationKind: "BEAST", groupId: "B01", personalityId: "PERSONALITY", foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] } },
     ] });
     const classified = classifyWorldbuildingResearch(pack, {
       existingRefs: new Set(["SPC_PERSISTED"]),
@@ -65,9 +65,9 @@ describe("WorldBuilding v3 research staging", () => {
 
   it("applies only the dependency-closed selection in Species to Culture to Breed order", async () => {
     const pack = parseWorldbuildingResearchEnvelope({ entity: "worldbuilding-research", schemaVersion: "eidolon-worldbuilding-research-v3-simple", records: [
-      { recordKey: "local:species:one", kind: "SPECIES", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { speciesId: "SPC_ONE", name: "One", speciesKind: "PET", anthropomorphization: null, appearance: "A compact biological animal form.", clothing: null, architecture: null, originMode: "UNKNOWN", reproductiveMethod: "UNKNOWN", longevityClass: "UNKNOWN", mortalityMode: "UNKNOWN", soulDisposition: "UNKNOWN", continuityGroup: "UNKNOWN", continuityPropagationMode: "UNKNOWN" } },
+      { recordKey: "local:species:one", kind: "SPECIES", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { speciesId: "SPC_ONE", name: "One", speciesKind: "BEAST", anthropomorphization: null, appearance: "A compact biological animal form.", clothing: null, architecture: null, originMode: "UNKNOWN", reproductiveMethod: "UNKNOWN", longevityClass: "UNKNOWN", mortalityMode: "UNKNOWN", soulDisposition: "UNKNOWN", continuityGroup: "UNKNOWN", continuityPropagationMode: "UNKNOWN" } },
       { recordKey: "local:culture:blocked", kind: "CULTURE", cultureRef: "CLT_BLOCKED", researchStatus: "REVIEW_REQUIRED", importStatus: "RESEARCH_COMPLETE_BLOCKED", data: { cultureId: "CLT_BLOCKED", name: "Blocked", culturePoolId: null } },
-      { recordKey: "local:breed:one", kind: "BREED", breedRef: "BRD_PET_BREED", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_PET_BREED", name: "Pet Breed", groupId: "P01", personalityId: null, foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] } },
+      { recordKey: "local:breed:one", kind: "BREED", breedRef: "BRD_PET_BREED", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_PET_BREED", name: "Pet Breed", populationKind: "PET", groupId: "P01", personalityId: null, foodBroad: [], foodSpecific: [], terrainBroad: [], terrainSpecific: [] } },
     ] });
     const classified = classifyWorldbuildingResearch(pack, { existingRefs: new Set(), personalityIds: new Set() });
     const review = bindWorldbuildingResearchReview(pack, classified);
@@ -120,5 +120,25 @@ describe("WorldBuilding v3 research staging", () => {
     ];
     expect(() => buildWorldbuildingResearchEnvelopes(records, { maximumCanonicalRows: 1 })).toThrow(WorldbuildingEnvelopeLimitError);
     expect(() => buildWorldbuildingResearchEnvelopes(records, { maximumCanonicalRows: 1 })).toThrow("ENVELOPE_LIMIT_IMPLEMENTATION_BLOCKER");
+  });
+
+  it("keeps Breed hierarchy components intact and orders parents before children", () => {
+    const records = [
+      { recordKey: "s:one", kind: "SPECIES", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { speciesId: "SPC_ONE", name: "One" } },
+      { recordKey: "b:child", kind: "BREED", breedRef: "BRD_A_CHILD", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_A_CHILD", name: "A Child", parentBreedId: "BRD_Z_PARENT" } },
+      { recordKey: "b:parent", kind: "BREED", breedRef: "BRD_Z_PARENT", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_Z_PARENT", name: "Z Parent", parentBreedId: null } },
+    ];
+    const envelopes = buildWorldbuildingResearchEnvelopes(records, { maximumCanonicalRows: 3 });
+    expect(envelopes).toHaveLength(1);
+    expect(envelopes[0]?.records.map((record) => record.breedRef ?? record.speciesRef)).toEqual(["SPC_ONE", "BRD_Z_PARENT", "BRD_A_CHILD"]);
+  });
+
+  it("rejects cyclic Breed hierarchy before envelope construction", () => {
+    const records = [
+      { recordKey: "s:one", kind: "SPECIES", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { speciesId: "SPC_ONE", name: "One" } },
+      { recordKey: "b:a", kind: "BREED", breedRef: "BRD_A", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_A", name: "A", parentBreedId: "BRD_B" } },
+      { recordKey: "b:b", kind: "BREED", breedRef: "BRD_B", speciesRef: "SPC_ONE", researchStatus: "RESOLVED", importStatus: "RESEARCH_COMPLETE_IMPORTABLE", data: { breedId: "BRD_B", name: "B", parentBreedId: "BRD_A" } },
+    ];
+    expect(() => buildWorldbuildingResearchEnvelopes(records)).toThrow("BREED_HIERARCHY_CYCLE");
   });
 });

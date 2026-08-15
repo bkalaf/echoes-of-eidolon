@@ -747,6 +747,22 @@
           "type": "String"
         },
         {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentBreedId",
+          "type": "String"
+        },
+        {
+          "enumName": "PopulationKind",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "populationKind",
+          "type": "PopulationKind"
+        },
+        {
           "enumName": "BreedGroupId",
           "isList": false,
           "isRequired": true,
@@ -953,6 +969,22 @@
           "kind": "relation",
           "name": "personality",
           "type": "PersonalityExpression"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "parentBreed",
+          "type": "Breed"
+        },
+        {
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "childBreeds",
+          "type": "Breed"
         },
         {
           "enumName": null,
@@ -9674,6 +9706,26 @@
         {
           "editability": "EDITABLE",
           "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentBreedId",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "PopulationKind",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "populationKind",
+          "type": "PopulationKind"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
           "enumName": "BreedGroupId",
           "isList": false,
           "isRequired": true,
@@ -9935,6 +9987,26 @@
           "editability": "EXCLUDED",
           "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
           "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "parentBreed",
+          "type": "Breed"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "childBreeds",
+          "type": "Breed"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
           "isList": true,
           "isRequired": true,
           "kind": "relation",
@@ -10009,6 +10081,29 @@
           "kind": "scalar",
           "name": "cultureId",
           "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentBreedId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "HUMAN",
+            "BEAST",
+            "MYTHOS",
+            "PET"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "populationKind",
+          "type": "PopulationKind"
         },
         {
           "enumValues": [

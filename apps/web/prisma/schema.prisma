@@ -159,6 +159,13 @@ enum SpeciesKind {
   PET
 }
 
+enum PopulationKind {
+  HUMAN
+  BEAST
+  MYTHOS
+  PET
+}
+
 enum BreedGroupId {
   B01
   B02
@@ -1715,6 +1722,8 @@ model Breed {
   name                 String
   speciesId            String
   cultureId            String?
+  parentBreedId        String?
+  populationKind       PopulationKind
   groupId              BreedGroupId
   personalityId        String?
   traits               String[]                    @default([])
@@ -1741,6 +1750,8 @@ model Breed {
   species              Species                     @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
   culture              Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
   personality          PersonalityExpression?      @relation(fields: [personalityId], references: [personalityId], onDelete: Restrict)
+  parentBreed          Breed?                       @relation("BreedHierarchy", fields: [parentBreedId], references: [breedId], onDelete: Restrict)
+  childBreeds          Breed[]                      @relation("BreedHierarchy")
   characters           Character[]
   populationEvents     SettlementPopulationEvent[]
   dominantInWorlds     SettlementWorld[]           @relation("SettlementWorldDominantBreed")
@@ -1748,6 +1759,7 @@ model Breed {
 
   @@index([speciesId])
   @@index([cultureId])
+  @@index([parentBreedId])
   @@index([personalityId])
 }
 

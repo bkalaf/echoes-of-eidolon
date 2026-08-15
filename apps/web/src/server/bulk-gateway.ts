@@ -56,13 +56,15 @@ async function occupationDryRun(request: Exclude<ParsedBulkRequest, { operation:
 }
 
 async function worldbuildingResearchContext(database: PrismaClient) {
-  const [personalityRows, speciesRows, cultureRows] = await Promise.all([
+  const [personalityRows, speciesRows, cultureRows, breedRows] = await Promise.all([
     database.personalityExpression.findMany({ select: { personalityId: true } }),
     database.species.findMany({ select: { speciesId: true, speciesKind: true } }),
     database.culture.findMany({ select: { cultureId: true } }),
+    database.breed.findMany({ select: { breedId: true, speciesId: true, populationKind: true, parentBreedId: true } }),
   ]);
   return {
-    existingRefs: new Set([...speciesRows.map((row) => row.speciesId), ...cultureRows.map((row) => row.cultureId)]),
+    existingRefs: new Set([...speciesRows.map((row) => row.speciesId), ...cultureRows.map((row) => row.cultureId), ...breedRows.map((row) => row.breedId)]),
+    breedHierarchyByRef: Object.fromEntries(breedRows.map((row) => [row.breedId, row])),
     personalityIds: new Set(personalityRows.map((row) => row.personalityId)),
     speciesKindsByRef: Object.fromEntries(speciesRows.map((row) => [row.speciesId, row.speciesKind])),
   };

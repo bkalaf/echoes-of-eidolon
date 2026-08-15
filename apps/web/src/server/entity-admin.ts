@@ -2,7 +2,7 @@ import contractData from "../data/entity-admin-contract.json";
 import { entityForPath, type EntityName } from "../content/entities";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
-import { canonicalEntityId, validateBreed, validateSpecies, validateTaxonomy } from "../domain/worldbuilding";
+import { canonicalEntityId, validateBreed, validateBreedHierarchy, validateSpecies, validateTaxonomy, type BreedHierarchyNode } from "../domain/worldbuilding";
 import { staticPresentationQa, type PresentationField } from "../domain/presentation-audit";
 
 export interface EntityAdminField {
@@ -155,6 +155,26 @@ async function validateWorldbuildingWrite(database: PrismaClient, entity: Entity
     terrainSpecific: Array.isArray(data.terrainSpecific) ? data.terrainSpecific as string[] : [],
     groupId: String(data.groupId ?? ""), personalityId,
   }, { personalityIds });
+  const breedId = typeof data.breedId === "string" ? data.breedId : "";
+  const parentBreedId = typeof data.parentBreedId === "string" && data.parentBreedId.trim() ? data.parentBreedId : null;
+  if (parentBreedId) {
+    const parent = await database.breed.findUnique({ select: { breedId: true, speciesId: true, populationKind: true, parentBreedId: true }, where: { breedId: parentBreedId } });
+    errors.push(...validateBreedHierarchy({ breedId, speciesId, populationKind: data.populationKind as BreedHierarchyNode["populationKind"], parentBreedId }, parent));
+    const visited = new Set<string>([breedId]);
+    let ancestor = parent;
+    while (ancestor) {
+      if (visited.has(ancestor.breedId)) { errors.push(`Breed hierarchy cycle detected for ${breedId}.`); break; }
+      visited.add(ancestor.breedId);
+      ancestor = ancestor.parentBreedId
+        ? await database.breed.findUnique({ select: { breedId: true, speciesId: true, populationKind: true, parentBreedId: true }, where: { breedId: ancestor.parentBreedId } })
+        : null;
+    }
+  }
+  if (breedId) {
+    const children = await database.breed.findMany({ select: { breedId: true, speciesId: true, populationKind: true, parentBreedId: true }, where: { parentBreedId: breedId } });
+    const proposed = { breedId, speciesId, populationKind: data.populationKind as BreedHierarchyNode["populationKind"], parentBreedId };
+    for (const child of children) errors.push(...validateBreedHierarchy(child, proposed));
+  }
   if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
 }
 

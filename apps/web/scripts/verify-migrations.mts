@@ -219,8 +219,23 @@ try {
        ) VALUES ('species-research', 'Research Species', 'HUMAN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN')`,
     );
     await verification.query(
-      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "groupId", "personalityId")
-       VALUES ('breed-research', 'Research Breed', 'species-research', 'H01', 'ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT')`,
+      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "populationKind", "groupId", "personalityId")
+       VALUES ('breed-research', 'Research Breed', 'species-research', 'HUMAN', 'H01', 'ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT')`,
+    );
+    await verification.query(
+      `INSERT INTO "Breed" ("breedId", "name", "speciesId", "parentBreedId", "populationKind", "groupId", "personalityId")
+       VALUES ('breed-research-child', 'Research Breed Child', 'species-research', 'breed-research', 'HUMAN', 'H01', 'ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT')`,
+    );
+    await expectDatabaseRejection(
+      () => verification.query(`UPDATE "Breed" SET "parentBreedId"='breed-research-child' WHERE "breedId"='breed-research'`),
+      "Breed hierarchy cycle was not rejected",
+    );
+    await expectDatabaseRejection(
+      () => verification.query(
+        `INSERT INTO "Breed" ("breedId", "name", "speciesId", "parentBreedId", "populationKind", "groupId", "personalityId")
+         VALUES ('breed-wrong-population', 'Wrong Population Child', 'species-research', 'breed-research', 'BEAST', 'B01', 'ACCOUNTABILITY_CURSE_EXCUSE_CONFLICT')`,
+      ),
+      "Breed parent population mismatch was not rejected",
     );
     await verification.query(
       `INSERT INTO "Source" ("sourceId", "title", "authors", "sourceType")
@@ -816,6 +831,8 @@ try {
       `ALTER TABLE "Witness" ADD CONSTRAINT "Witness_architectId_fkey" FOREIGN KEY ("architectId") REFERENCES "Architect"("architectId") ON DELETE RESTRICT ON UPDATE CASCADE`,
     );
     await applyThrough("20260814192000_character_subtype_shared_primary_keys");
+    await applyThrough("20260815103000_breed_population_kind");
+    await applyThrough("20260815124500_breed_parent_hierarchy");
 
     const remappedSubtype = await preCorrection.query(
       `SELECT witness."characterId" AS "witnessCharacterId", witness."architectCharacterId", architect."characterId" AS "resolvedArchitectCharacterId"
