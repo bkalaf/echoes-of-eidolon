@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-umask 077
 
 deployment_env_file="/etc/eidolon/deployment.env"
 target_revision=""
@@ -191,8 +190,11 @@ run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" up -d --wait postgres
 
 TZ=UTC printf -v backup_timestamp '%(%Y%m%dT%H%M%SZ)T' -1
 backup_path="$EIDOLON_BACKUP_DIR/${backup_timestamp}_${target_revision}.dump"
-run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres \
-  pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB" >"$backup_path"
+(
+  umask 077
+  run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres \
+    pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB" >"$backup_path"
+)
 if [[ ! -s "$backup_path" ]]; then
   echo "Pre-migration backup was not created." >&2
   exit 1

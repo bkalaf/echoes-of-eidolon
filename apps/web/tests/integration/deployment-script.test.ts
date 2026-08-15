@@ -96,7 +96,8 @@ describe("production deployment entry point", () => {
 
   it("creates the migration backup with the Compose-owned PostgreSQL client", () => {
     const source = readFileSync(script, "utf8");
-    expect(source).toContain("umask 077");
+    expect(source.split("deployment_env_file=")[0]).not.toContain("umask 077");
+    expect(source).toContain('(\n  umask 077\n  run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres');
     expect(source).toContain('run_unlocked docker compose -f "$EIDOLON_COMPOSE_FILE" exec -T postgres');
     expect(source).toContain('pg_dump --format=custom --username="$POSTGRES_USER" --dbname="$POSTGRES_DB"');
     expect(source).not.toMatch(/run_unlocked pg_dump/);
