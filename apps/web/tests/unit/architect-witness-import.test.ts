@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { canonicalArchitectWitnessRoster, canonicalCharacterId, canonicalSoulId } from "../../src/domain/architect-witness";
+import { canonicalArchitectWitnessGuideData, canonicalArchitectWitnessRoster, canonicalCharacterId, canonicalSoulId } from "../../src/domain/architect-witness";
 import {
   assertPersistedWitnessArchitectSoulContinuity,
   auditArchitectWitnessPopulation,
@@ -19,24 +19,23 @@ function inMemoryDatabase(options: { corruptWitnessSoul?: boolean } = {}) {
   const characters = new Map<string, Record<string, unknown>>();
   const architects = new Map<string, Record<string, unknown>>();
   const witnesses = new Map<string, Record<string, unknown>>();
-  const witnessDefs = new Map(canonicalArchitectWitnessRoster.ordinaryTransformations.map((row) => [row.department, {
-    witnessDefId: `TEST_WDEF_${row.department}`,
-    name: row.witnessName,
-    department: row.department,
-  }]));
+  const witnessDefs = new Map<string, Record<string, unknown>>();
   const architectBreedIds = new Set([
     ...canonicalArchitectWitnessRoster.ordinaryTransformations.map(({ architectBreedId }) => architectBreedId),
     ...canonicalArchitectWitnessRoster.presidingArchitects.map(({ breedId }) => breedId),
-    ...canonicalArchitectWitnessRoster.otherCharacters.map(({ breedId }) => breedId),
+    ...canonicalArchitectWitnessRoster.otherCharacters.flatMap(({ breedId }) => breedId ? [breedId] : []),
   ]);
   const breedIds = new Set(canonicalArchitectWitnessRoster.ordinaryTransformations.flatMap(({ architectBreedId, witnessBreedId }) => [architectBreedId, witnessBreedId]));
-  for (const row of [...canonicalArchitectWitnessRoster.presidingArchitects, ...canonicalArchitectWitnessRoster.otherCharacters]) breedIds.add(row.breedId);
+  for (const row of [...canonicalArchitectWitnessRoster.presidingArchitects, ...canonicalArchitectWitnessRoster.otherCharacters]) if (row.breedId) breedIds.add(row.breedId);
 
   const client = {
     breed: {
       findMany: async () => [...breedIds].map((breedId) => ({ breedId, populationKind: architectBreedIds.has(breedId) ? "HUMAN" : "BEAST" })),
     },
     witnessDef: {
+      findFirst: async ({ where }: { where: { OR: Array<Record<string, unknown>>; NOT: { witnessDefId: string } } }) => [...witnessDefs.values()].find((row) => row.witnessDefId !== where.NOT.witnessDefId && where.OR.some((clause) => Object.entries(clause).every(([field, value]) => row[field] === value))) ?? null,
+      findUnique: async ({ where: { witnessDefId } }: { where: { witnessDefId: string } }) => witnessDefs.get(witnessDefId) ?? null,
+      create: async ({ data }: DataArgument) => { witnessDefs.set(String(data.witnessDefId), { ...data }); return data; },
       findMany: async () => [...witnessDefs.values()],
     },
     soul: {
@@ -73,20 +72,20 @@ function inMemoryDatabase(options: { corruptWitnessSoul?: boolean } = {}) {
         const row = witnesses.get(id);
         if (!row) return [];
         const architect = architects.get(String(row.architectCharacterId))!;
-        const witnessDef = [...witnessDefs.values()].find(({ witnessDefId }) => witnessDefId === row.witnessDefId)!;
+        const witnessDef = witnessDefs.get(String(row.witnessDefId))!;
         return [{ ...row, character: characters.get(id), architect: { ...architect, character: characters.get(String(row.architectCharacterId)) }, witnessDef }];
       }),
     },
     async $transaction(work: (transaction: unknown) => Promise<unknown>) {
-      const snapshots = [souls, characters, architects, witnesses].map((store) => new Map(store));
+      const snapshots = [souls, characters, architects, witnessDefs, witnesses].map((store) => new Map(store));
       try { return await work(client); }
       catch (error) {
-        [souls, characters, architects, witnesses].forEach((store, index) => { store.clear(); for (const [key, value] of snapshots[index]!) store.set(key, value); });
+        [souls, characters, architects, witnessDefs, witnesses].forEach((store, index) => { store.clear(); for (const [key, value] of snapshots[index]!) store.set(key, value); });
         throw error;
       }
     },
   };
-  return { client, stores: { souls, characters, architects, witnesses } };
+  return { client, stores: { souls, characters, architects, witnessDefs, witnesses } };
 }
 
 describe("canonical Architect/Witness population import", () => {
@@ -104,19 +103,21 @@ describe("canonical Architect/Witness population import", () => {
   it("imports one batch, preserves independent paired Souls, and reruns idempotently", async () => {
     const database = inMemoryDatabase();
     await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
-      souls: { created: 57, unchanged: 0 },
-      characters: { created: 111, unchanged: 0 },
+      souls: { created: 58, unchanged: 0 },
+      characters: { created: 112, unchanged: 0 },
       architects: { created: 56, unchanged: 0 },
+      witnessDefs: { created: 54, unchanged: 0 },
       witnesses: { created: 54, unchanged: 0 },
     });
     await expect(auditArchitectWitnessPopulation(database.client as never)).resolves.toEqual({
-      counts: { souls: 57, characters: 111, architects: 56, witnesses: 54 },
+      counts: { souls: 58, characters: 112, architects: 56, witnessDefs: 54, witnesses: 54, guideMappings: 3 },
       issues: [],
     });
     await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
-      souls: { created: 0, unchanged: 57 },
-      characters: { created: 0, unchanged: 111 },
+      souls: { created: 0, unchanged: 58 },
+      characters: { created: 0, unchanged: 112 },
       architects: { created: 0, unchanged: 56 },
+      witnessDefs: { created: 0, unchanged: 54 },
       witnesses: { created: 0, unchanged: 54 },
     });
     for (const pair of canonicalArchitectWitnessRoster.compositePresentations) {
@@ -128,12 +129,13 @@ describe("canonical Architect/Witness population import", () => {
     expect(database.stores.witnesses.has(canonicalCharacterId("Hans Halycon Hohenzollern"))).toBe(false);
     expect(database.stores.witnesses.has(canonicalCharacterId("Noell Pieter Smukk"))).toBe(false);
     expect(database.stores.characters.get(canonicalCharacterId("Frank Adrian Voss"))?.soulId).toBe(canonicalSoulId("Frank Adrian Voss"));
-    expect([...database.stores.characters.values()].some(({ displayName }) => displayName === "Mother")).toBe(false);
+    expect(database.stores.characters.get("CHA_MOTHER")).toEqual(expect.objectContaining({ breedId: null, soulId: "SOUL_MOTHER" }));
+    expect(database.stores.witnessDefs.size).toBe(canonicalArchitectWitnessGuideData.witnessDefs.length);
   });
 
   it("rolls back the entire same-batch import when one Witness Soul differs", async () => {
     const database = inMemoryDatabase({ corruptWitnessSoul: true });
-    await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).rejects.toThrow("Witness and source Architect must reference the same Soul.");
+    await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).rejects.toThrow("Witness and source Architect must reference the same Soul");
     expect(database.stores.souls.size).toBe(0);
     expect(database.stores.characters.size).toBe(0);
     expect(database.stores.architects.size).toBe(0);

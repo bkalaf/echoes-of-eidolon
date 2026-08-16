@@ -69,6 +69,10 @@ describe("campaign transaction service", () => {
       ...canonical,
       payload: { ...canonical.payload, architectId: "ARCH-1" },
     }, database)).rejects.toThrow(/unrecognized key/i);
+    await expect(createCampaignCatalogItem({
+      ...canonical,
+      payload: { ...canonical.payload, character: { ...canonical.payload.character, breedId: null } },
+    }, database)).rejects.toThrow(/Breed is required/);
   });
 
   it("creates Witness through Character shared identity and points to the Architect Character", async () => {
@@ -76,12 +80,15 @@ describe("campaign transaction service", () => {
     const transaction = {
       architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION", character: { characterId: "CHAR-ARCHITECT", soulId: "SOUL-1" } }), findUniqueOrThrow: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION" }) },
       character: { create: characterCreate },
-      witnessDef: { findUniqueOrThrow: vi.fn().mockResolvedValue({ witnessDefId: "WDEF-1", department: "NAVIGATION" }) },
+      witnessDef: {
+        findUnique: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }),
+        findUniqueOrThrow: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }),
+      },
     };
     const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
     const payload = {
       character: { characterId: "CHAR-WITNESS", displayName: "Iona", breedId: "BREED-1", worldKey: null, soulId: "SOUL-1" },
-      witnessDefId: "WDEF-1",
+      witnessDefId: "WDF_WITNESS_1",
       trueFlawName: "Certainty",
       architectCharacterId: "CHAR-ARCHITECT",
       legendaryRewardId: "REWARD-1",
@@ -91,7 +98,7 @@ describe("campaign transaction service", () => {
     expect(characterCreate).toHaveBeenCalledWith({
       data: {
         ...payload.character,
-        witness: { create: { architectCharacterId: "CHAR-ARCHITECT", constellationAfterId: null, constellationBeforeId: null, legendaryRewardId: "REWARD-1", trueFlawName: "Certainty", witnessDefId: "WDEF-1" } },
+        witness: { create: { architectCharacterId: "CHAR-ARCHITECT", constellationAfterId: null, constellationBeforeId: null, legendaryRewardId: "REWARD-1", trueFlawName: "Certainty", witnessDefId: "WDF_WITNESS_1" } },
       },
       include: { witness: true },
     });
@@ -102,17 +109,41 @@ describe("campaign transaction service", () => {
     const transaction = {
       architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION", character: { characterId: "CHAR-ARCHITECT", soulId: "SOUL-1" } }), findUniqueOrThrow: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION" }) },
       character: { create: vi.fn() },
-      witnessDef: { findUniqueOrThrow: vi.fn().mockResolvedValue({ witnessDefId: "WDEF-1", department: "NAVIGATION" }) },
+      witnessDef: {
+        findUnique: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }),
+        findUniqueOrThrow: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }),
+      },
     };
     const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
     await expect(createCampaignCatalogItem({
       objectType: "WITNESS",
       payload: {
         character: { characterId: "CHAR-WITNESS", displayName: "Iona", breedId: "BREED-1", soulId: "SOUL-2" },
-        witnessDefId: "WDEF-1",
+        witnessDefId: "WDF_WITNESS_1",
         architectCharacterId: "CHAR-ARCHITECT",
       },
     }, database)).rejects.toThrow("Witness and source Architect must reference the same Soul.");
+    expect(transaction.character.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects null-Breed Witness and Companion Characters", async () => {
+    const transaction = {
+      architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION", character: { characterId: "CHAR-ARCHITECT", soulId: "SOUL-1" } }), findUniqueOrThrow: vi.fn().mockResolvedValue({ characterId: "CHAR-ARCHITECT", department: "NAVIGATION" }) },
+      character: { create: vi.fn() },
+      companion: { createMany: vi.fn() },
+      companionDef: { create: vi.fn() },
+      witnessDef: { findUnique: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }), findUniqueOrThrow: vi.fn().mockResolvedValue({ witnessDefId: "WDF_WITNESS_1", architectSoulId: "SOUL-1", department: "NAVIGATION" }) },
+    };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+    await expect(createCampaignCatalogItem({
+      objectType: "WITNESS",
+      payload: { character: { characterId: "CHAR-WITNESS", displayName: "Witness", breedId: null, soulId: "SOUL-1" }, witnessDefId: "WDF_WITNESS_1", architectCharacterId: "CHAR-ARCHITECT" },
+    }, database)).rejects.toThrow(/Breed is required/);
+    const companion = (worldKey: "CONCORD" | "RUIN" | "SCHISM") => ({ characterId: `CHAR-${worldKey}`, displayName: worldKey, breedId: null, soulId: "SOUL-COMPANION", worldKey });
+    await expect(createCampaignCatalogItem({
+      objectType: "COMPANION",
+      payload: { companionKey: "A", soulId: "SOUL-COMPANION", heirloom: "NECKLACE", knowledgeSkill: null, awarenessSkill: null, concordCharacter: companion("CONCORD"), ruinCharacter: companion("RUIN"), schismCharacter: companion("SCHISM") },
+    }, database)).rejects.toThrow(/Breed is required/);
     expect(transaction.character.create).not.toHaveBeenCalled();
   });
 

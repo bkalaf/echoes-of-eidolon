@@ -29,7 +29,7 @@ const suppliedEnumNames = [
   "FactionStandingEvidenceKind", "KnowledgeBaseBlockKind",
   "CalendarTrigger", "SpeciesKind", "PopulationKind", "TimelineEventType", "InterludeType", "ArkStatus", "DefinitionType", "Holiday",
   "EntityType", "Heirloom", "CitationQuality", "SourceType", "ContributorType", "ResearchCategory",
-  "ArchitectDepartment", "WitnessColor", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
+  "ArchitectDepartment", "PuzzleFamily", "PuzzleDifficultyTier", "AgeEligibility",
   "BookGroupingType", "BookGroupingEditability",
   "FriendInvitationRequestStatus", "ExternalBulkApiState", "BulkMutationStatus", "MembershipGrantSource", "PerkStatus", "PaymentProvider",
   "FulfillmentProvider", "ReleaseNotesStatus", "ReleaseAudience", "ReleaseNoteCategory",
@@ -37,7 +37,7 @@ const suppliedEnumNames = [
   "MembershipRevocationReason", "ManagedAssetMediaKind", "PromptFamily", "PromptStatus", "Loquacity",
   "EmotionalTemperature", "OutlookOrientation", "CollaborativePosture", "BreedResearchDimension",
   "BreedResearchReviewStatus", "BreedResearchProvenanceKind", "BreedDimensionValue",
-  "ContactTopic", "ContactRequestStatus", "GameTurnStatus", "DocumentDraftStatus", "DeploymentStatus", "CampaignObjectType",
+  "ContactTopic", "ContactRequestStatus", "GameTurnStatus", "DeploymentStatus", "CampaignObjectType",
   "DonationCheckoutStatus", "StoreProductType", "HelpTicketStatus", "HelpTicketChannel", "HelpTicketAuthorKind",
 ] as const;
 

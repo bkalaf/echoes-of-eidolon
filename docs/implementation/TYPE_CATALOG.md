@@ -4,9 +4,9 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 
 ## Inventory
 
-- Persisted entity types: 128
-- Controlled enums: 119
-- HTTP method/path contracts: 118
+- Persisted entity types: 124
+- Controlled enums: 117
+- HTTP method/path contracts: 116
 - Wireframe view-model rows: 264
 - Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 144, tools-review 5
 - Provider ports: DigitalOcean Spaces, Resend, Stripe, Printful, and owner-configured NPC runtime.
@@ -16,7 +16,7 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 
 | Type | Kind | Owner | Table/service | Consuming screens | Field count |
 |---|---|---|---|---|---:|
-| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 39 |
+| User | Persisted entity | Identity | `User` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 38 |
 | GuardianConsentRecord | Persisted entity | Repository core | `GuardianConsentRecord` via Prisma and owning route service | Registry-linked screens | 6 |
 | UserSettings | Persisted entity | Shared settings | `UserSettings` via server/user-settings.ts | Account Settings and Game Settings modal | 16 |
 | Session | Persisted entity | Identity | `Session` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 11 |
@@ -34,9 +34,9 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 7 |
 | Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 24 |
 | Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 4 |
-| WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 7 |
+| WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 9 |
 | Witness | Persisted entity | Narrative data | `Witness` via typed import services | Admin Data, Campaign, Game | 13 |
-| Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 4 |
+| Soul | Persisted entity | Narrative data | `Soul` via typed import services | Admin Data, Campaign, Game | 5 |
 | CompanionDef | Persisted entity | Narrative data | `CompanionDef` via typed import services | Admin Data, Campaign, Game | 14 |
 | Companion | Persisted entity | Narrative data | `Companion` via typed import services | Admin Data, Campaign, Game | 5 |
 | CompanionTransformationBinding | Persisted entity | Narrative data | `CompanionTransformationBinding` via typed import services | Admin Data, Campaign, Game | 6 |
@@ -124,10 +124,6 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Release | Persisted entity | Release operations | `Release` via server/releases.ts | Public Status and Admin Operations | 10 |
 | ReleaseNoteItem | Persisted entity | Release operations | `ReleaseNoteItem` via server/releases.ts | Public Status and Admin Operations | 6 |
 | DeploymentRecord | Persisted entity | Release operations | `DeploymentRecord` via server/releases.ts | Public Status and Admin Operations | 9 |
-| DocumentBucket | Persisted entity | Document Builder | `DocumentBucket` via server/documents.ts | Admin Document Builder | 5 |
-| DocumentSourcePoint | Persisted entity | Document Builder | `DocumentSourcePoint` via server/documents.ts | Admin Document Builder | 6 |
-| DocumentAmendment | Persisted entity | Document Builder | `DocumentAmendment` via server/documents.ts | Admin Document Builder | 5 |
-| DocumentDraft | Persisted entity | Document Builder | `DocumentDraft` via server/documents.ts | Admin Document Builder | 11 |
 | GameSession | Persisted entity | Player runtime | `GameSession` via server/game-runtime.ts | Game viewport | 14 |
 | WorldInstance | Persisted entity | Repository core | `WorldInstance` via Prisma and owning route service | Registry-linked screens | 7 |
 | Party | Persisted entity | Repository core | `Party` via Prisma and owning route service | Registry-linked screens | 10 |
@@ -204,8 +200,6 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | PATCH | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
 | DELETE | `/api/admin/data/:entityKey/:recordId` | Route Zod schema or empty request | Route server projection or bounded error |
 | POST | `/api/admin/data/:entityKey/import` | Route Zod schema or empty request | Route server projection or bounded error |
-| GET | `/api/admin/documents` | Route Zod schema or empty request | Route server projection or bounded error |
-| POST | `/api/admin/documents` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/money` | Route Zod schema or empty request | Route server projection or bounded error |
 | GET | `/api/admin/occupations` | Route Zod schema or empty request | Route server projection or bounded error |
 | PUT | `/api/admin/occupations` | Route Zod schema or empty request | Route server projection or bounded error |
@@ -318,7 +312,6 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | ContributorType | 7 | `AUTHOR`, `EDITOR`, `TRANSLATOR`, `DIRECTOR`, `ORGANIZATION`, `INTERVIEWEE`, `OTHER` |
 | ResearchCategory | 13 | `EXODUS_PROGRAM`, `REWARD`, `SPECIES`, `HISTORICAL_EVENT`, `CULTURAL_WOUND`, `PERSON`, `PLACE`, `INSTITUTION`, `ORGANIZATION`, `SYMBOL`, `TOME`, `TECHNOLOGY_OR_SYSTEM`, `OTHER` |
 | ArchitectDepartment | 54 | `ASTRONOMY`, `NAVIGATION`, `PROPULSION`, `HABITABILITY`, `PLANETOLOGY`, `PHYSICS`, `CHEMISTRY`, `COMPUTING`, `MATERIALS`, `ENERGY`, `NANOTECHNOLOGY`, `BIOLOGY`, `GENETICS`, `CRYOBIOLOGY`, `NEUROSCIENCE`, `MEDICINE`, `EPIDEMIOLOGY`, `ECOLOGY`, `TERRAFORMING`, `AGRICULTURE`, `BOTANY`, `ZOOLOGY`, `MICROBIOLOGY`, `INTELLIGENCE`, `ALIGNMENT`, `SOFTWARE`, `CYBERSECURITY`, `CONTINUITY`, `ARCHIVES`, `SYSTEMS`, `ARCHITECTURE`, `ROBOTICS`, `ELECTRICAL`, `MANUFACTURING`, `LOGISTICS`, `RESOURCES`, `RECYCLING`, `SAFETY`, `RELIABILITY`, `COMMAND`, `GOVERNANCE`, `JUSTICE`, `ECONOMICS`, `ADMINISTRATION`, `SOCIOLOGY`, `PSYCHOLOGY`, `ANTHROPOLOGY`, `HISTORY`, `EDUCATION`, `LINGUISTICS`, `HUMANITIES`, `OUTREACH`, `SPONSORSHIP`, `INNOVATION` |
-| WitnessColor | 7 | `BLACK`, `RED`, `ORANGE`, `YELLOW`, `GREEN`, `BLUE`, `WHITE` |
 | PuzzleFamily | 9 | `TEXT_LANGUAGE_LITERARY`, `CRYPTO_NUMERIC_DATA`, `VISUAL_COLOR_OPTICAL`, `SPATIAL_FOLDING_GEOMETRY`, `AUDIO_MUSIC_SPECTRAL`, `LOGIC_CONSTRAINT`, `HISTORICAL_RESEARCH`, `CONSTRUCTION_SIMULATION`, `CROSS_MODAL` |
 | PuzzleDifficultyTier | 5 | `TIER_1_INITIATE`, `TIER_2_ADEPT`, `TIER_3_EXPERT`, `TIER_4_MASTER`, `TIER_5_ORDEAL` |
 | CapabilityValueKind | 5 | `BOOLEAN`, `SCORE`, `COUNTER`, `ENUM`, `REFERENCE` |
@@ -366,7 +359,6 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | ContactTopic | 8 | `ACCESSIBILITY`, `CULTURAL_RESEARCH`, `GENERAL`, `LEGAL`, `PARTNERSHIP`, `PRESS`, `PRIVACY`, `SECURITY` |
 | ContactRequestStatus | 4 | `RECEIVED`, `DELIVERY_PENDING`, `DELIVERED`, `DELIVERY_FAILED` |
 | GameTurnStatus | 4 | `RECEIVED`, `PROVIDER_PENDING`, `COMPLETED`, `FAILED` |
-| DocumentDraftStatus | 3 | `DRAFT`, `REVIEWED`, `PUBLISHED` |
 | DeploymentStatus | 5 | `PLANNED`, `DEPLOYING`, `HEALTHY`, `FAILED`, `ROLLED_BACK` |
 | CampaignObjectType | 16 | `PILLAR`, `LESSON`, `IN_TRANSIT`, `EXODUS`, `TRANSITION`, `DEJA_VU`, `COMPANION`, `ATROCITY`, `WITNESS`, `ARCHITECT`, `LEGENDARY_REWARD`, `HOLIDAY`, `WWII_INTERLUDE`, `MYTH_INTERLUDE`, `SCIENCE_INTERLUDE`, `HISTORICAL_INTERLUDE` |
 | BookGroupingType | 8 | `ATROCITY`, `DUOLOGY`, `EXODUS`, `LESSON`, `PILLAR`, `CAMPAIGN`, `DISJOINT_TRILOGY`, `OPPOSING_FACTION` |

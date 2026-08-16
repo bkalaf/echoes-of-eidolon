@@ -4,8 +4,8 @@ import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
 import { validateBreed, validateBreedHierarchy, validateCanonicalPersistenceId, validateSpecies, validateTaxonomy, type BreedHierarchyNode } from "../domain/worldbuilding";
 import { staticPresentationQa, type PresentationField } from "../domain/presentation-audit";
-import { canonicalCharacterId } from "../domain/architect-witness";
-import { assertWitnessArchitectSoulContinuity } from "../domain/invariants";
+import { assertCanonicalCharacterBreedPolicy, canonicalCharacterId } from "../domain/architect-witness";
+import { assertWitnessArchitectSoulContinuity, witnessDefSchema } from "../domain/invariants";
 import { assertPersistedWitnessArchitectSoulContinuity } from "./architect-witness-import";
 
 export interface EntityAdminField {
@@ -187,26 +187,46 @@ const presidingArchitectIds = new Set([
 ]);
 
 async function validateCharacterSubtypeWrite(database: PrismaClient, entity: EntityName, data: Record<string, unknown>): Promise<void> {
+  const enforceBreedPolicy = (character: { characterId: string; breedId?: string | null }) => {
+    try { assertCanonicalCharacterBreedPolicy(character); }
+    catch (error) { throw new EntityAdminValidationError(error instanceof Error ? error.message : String(error)); }
+  };
   if (entity === "Architect") {
     const characterId = String(data.characterId ?? "");
     const department = data.department ?? null;
     if ((presidingArchitectIds.has(characterId) && department !== null) || (!presidingArchitectIds.has(characterId) && department === null)) {
       throw new EntityAdminValidationError("Only Hans and Noell are presiding Architects with no department.");
     }
-    if (!await database.character.findUnique({ select: { characterId: true }, where: { characterId } })) throw new EntityAdminValidationError(`Architect Character ${characterId} does not exist.`);
+    const character = await database.character.findUnique({ select: { characterId: true, breedId: true }, where: { characterId } });
+    if (!character) throw new EntityAdminValidationError(`Architect Character ${characterId} does not exist.`);
+    enforceBreedPolicy(character);
     return;
   }
   if (entity === "Witness") {
     const characterId = String(data.characterId ?? "");
     const architectCharacterId = String(data.architectCharacterId ?? "");
     const witnessDefId = String(data.witnessDefId ?? "");
-    await assertPersistedWitnessArchitectSoulContinuity(database, { architectCharacterId, witnessCharacterId: characterId });
+    const [witnessCharacter, sourceArchitect] = await Promise.all([
+      database.character.findUnique({ select: { characterId: true, breedId: true }, where: { characterId } }),
+      database.architect.findUnique({ include: { character: { select: { characterId: true, breedId: true } } }, where: { characterId: architectCharacterId } }),
+    ]);
+    if (!witnessCharacter) throw new EntityAdminValidationError(`Witness Character ${characterId} does not exist.`);
+    enforceBreedPolicy(witnessCharacter);
+    if (sourceArchitect) enforceBreedPolicy(sourceArchitect.character);
+    await assertPersistedWitnessArchitectSoulContinuity(database, { architectCharacterId, witnessCharacterId: characterId, witnessDefId });
     const [architect, witnessDef] = await Promise.all([
       database.architect.findUnique({ select: { department: true }, where: { characterId: architectCharacterId } }),
       database.witnessDef.findUnique({ select: { department: true }, where: { witnessDefId } }),
     ]);
     if (!witnessDef) throw new EntityAdminValidationError(`WitnessDef ${witnessDefId} does not exist.`);
     if (architect?.department !== witnessDef.department) throw new EntityAdminValidationError("WitnessDef department must match the source Architect department.");
+    return;
+  }
+  if (entity === "Companion") {
+    const characterId = String(data.characterId ?? "");
+    const character = await database.character.findUnique({ select: { characterId: true, breedId: true }, where: { characterId } });
+    if (!character) throw new EntityAdminValidationError(`Companion Character ${characterId} does not exist.`);
+    enforceBreedPolicy(character);
     return;
   }
   if (entity === "Character" && typeof data.characterId === "string") {
@@ -217,6 +237,7 @@ async function validateCharacterSubtypeWrite(database: PrismaClient, entity: Ent
       },
       where: { characterId: data.characterId },
     });
+    enforceBreedPolicy({ characterId: data.characterId, breedId: data.breedId as string | null | undefined });
     if (!existing) return;
     const proposed = { characterId: existing.characterId, soulId: data.soulId === undefined ? existing.soulId : data.soulId as string | null };
     if (existing.witness) {
@@ -230,12 +251,18 @@ async function validateCharacterSubtypeWrite(database: PrismaClient, entity: Ent
     return;
   }
   if (entity === "WitnessDef" && typeof data.witnessDefId === "string") {
+    const parsed = witnessDefSchema.safeParse(data);
+    if (!parsed.success) throw new EntityAdminValidationError(parsed.error.issues.map(({ message }) => message).join(" "));
+    if (!await database.soul.findUnique({ select: { soulId: true }, where: { soulId: parsed.data.architectSoulId } })) {
+      throw new EntityAdminValidationError(`Architect Soul ${parsed.data.architectSoulId} does not exist.`);
+    }
     const existing = await database.witnessDef.findUnique({
-      include: { witnesses: { include: { architect: true } } },
+      include: { witnesses: { include: { architect: { include: { character: true } } } } },
       where: { witnessDefId: data.witnessDefId },
     });
     const department = data.department ?? existing?.department;
     if (existing?.witnesses.some(({ architect }) => architect.department !== department)) throw new EntityAdminValidationError("WitnessDef department must match every source Architect department.");
+    if (existing?.witnesses.some(({ architect }) => architect.character.soulId !== parsed.data.architectSoulId)) throw new EntityAdminValidationError("WitnessDef and every source Architect must reference the same Soul.");
   }
 }
 

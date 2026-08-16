@@ -1,0 +1,31 @@
+{
+  "architects": {
+    "expected": 56,
+    "fieldMismatches": [],
+    "missingIds": [],
+    "persisted": 56,
+    "unexpectedIds": []
+  },
+  "souls": {
+    "expected": 58,
+    "fieldMismatches": [],
+    "missingIds": [],
+    "persisted": 58,
+    "unexpectedIds": []
+  },
+  "witnessDefs": {
+    "allColorSums100": true,
+    "expected": 54,
+    "fieldMismatches": [],
+    "missingIds": [],
+    "persisted": 54,
+    "unexpectedIds": []
+  },
+  "witnesses": {
+    "expected": 54,
+    "fieldMismatches": [],
+    "missingIds": [],
+    "persisted": 54,
+    "unexpectedIds": []
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "chains": [
+    {
+      "architectCharacterId": "CHA_GARETH_RHYS_MORGAN",
+      "architectCharacterSoulId": "SOUL_GARETH_RHYS_MORGAN",
+      "architectSoulId": "SOUL_GARETH_RHYS_MORGAN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK",
+      "witnessCharacterSoulId": "SOUL_GARETH_RHYS_MORGAN",
+      "witnessDefId": "WDF_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "architectCharacterId": "CHA_BRAM_WILLEM_DE_VRIES",
+      "architectCharacterSoulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+      "architectSoulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER",
+      "witnessCharacterSoulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+      "witnessDefId": "WDF_WITNESS_OF_STILLWATER"
+    },
+    {
+      "architectCharacterId": "CHA_EIRIK_MAGNUS_SOLBERG",
+      "architectCharacterSoulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+      "architectSoulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR",
+      "witnessCharacterSoulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "architectCharacterId": "CHA_TEMUULEN_ERDENEBAT_GANBOLD",
+      "architectCharacterSoulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+      "architectSoulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA",
+      "witnessCharacterSoulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "architectCharacterId": "CHA_NOMVULA_THANDIWE_DLAMINI",
+      "architectCharacterSoulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+      "architectSoulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR",
+      "witnessCharacterSoulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "architectCharacterId": "CHA_ELIN_ASTRID_SJOBERG",
+      "architectCharacterSoulId": "SOUL_ELIN_ASTRID_SJOBERG",
+      "architectSoulId": "SOUL_ELIN_ASTRID_SJOBERG",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM",
+      "witnessCharacterSoulId": "SOUL_ELIN_ASTRID_SJOBERG",
+      "witnessDefId": "WDF_WITNESS_OF_THE_BALM"
+    },
+    {
+      "architectCharacterId": "CHA_ARJUN_DEV_MEHTA",
+      "architectCharacterSoulId": "SOUL_ARJUN_DEV_MEHTA",
+      "architectSoulId": "SOUL_ARJUN_DEV_MEHTA",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER",
+      "witnessCharacterSoulId": "SOUL_ARJUN_DEV_MEHTA",
+      "witnessDefId": "WDF_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "architectCharacterId": "CHA_RACHEL_DAWN_ADAIR",
+      "architectCharacterSoulId": "SOUL_RACHEL_DAWN_ADAIR",
+      "architectSoulId": "SOUL_RACHEL_DAWN_ADAIR",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL",
+      "witnessCharacterSoulId": "SOUL_RACHEL_DAWN_ADAIR",
+      "witnessDefId": "WDF_WITNESS_OF_THE_BELL"
+    },
+    {
+      "architectCharacterId": "CHA_NOOR_AMAL_KHOURY",
+      "architectCharacterSoulId": "SOUL_NOOR_AMAL_KHOURY",
+      "architectSoulId": "SOUL_NOOR_AMAL_KHOURY",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD",
+      "witnessCharacterSoulId": "SOUL_NOOR_AMAL_KHOURY",
+      "witnessDefId": "WDF_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "architectCharacterId": "CHA_EMI_HARUKA_TAKAHASHI",
+      "architectCharacterSoulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+      "architectSoulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE",
+      "witnessCharacterSoulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "architectCharacterId": "CHA_SOFIE_ELISE_DE_SMET",
+      "architectCharacterSoulId": "SOUL_SOFIE_ELISE_DE_SMET",
+      "architectSoulId": "SOUL_SOFIE_ELISE_DE_SMET",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME",
+      "witnessCharacterSoulId": "SOUL_SOFIE_ELISE_DE_SMET",
+      "witnessDefId": "WDF_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "architectCharacterId": "CHA_CAMILLE_ELODIE_MOREAU",
+      "architectCharacterSoulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+      "architectSoulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN",
+      "witnessCharacterSoulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+      "witnessDefId": "WDF_WITNESS_OF_THE_COIN"
+    },
+    {
+      "architectCharacterId": "CHA_ELI_DAVID_ROSENFELD",
+      "architectCharacterSoulId": "SOUL_ELI_DAVID_ROSENFELD",
+      "architectSoulId": "SOUL_ELI_DAVID_ROSENFELD",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS",
+      "witnessCharacterSoulId": "SOUL_ELI_DAVID_ROSENFELD",
+      "witnessDefId": "WDF_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "architectCharacterId": "CHA_IMAN_ZAHRA_EL_IDRISSI",
+      "architectCharacterSoulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+      "architectSoulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE",
+      "witnessCharacterSoulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "architectCharacterId": "CHA_KATARZYNA_MARIA_NOWAK",
+      "architectCharacterSoulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+      "architectSoulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM",
+      "witnessCharacterSoulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+      "witnessDefId": "WDF_WITNESS_OF_THE_DAM"
+    },
+    {
+      "architectCharacterId": "CHA_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "architectCharacterSoulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "architectSoulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME",
+      "witnessCharacterSoulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "architectCharacterId": "CHA_DAWIT_TESFAYE_BEKELE",
+      "architectCharacterSoulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+      "architectSoulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE",
+      "witnessCharacterSoulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+      "witnessDefId": "WDF_WITNESS_OF_THE_GATE"
+    },
+    {
+      "architectCharacterId": "CHA_ANDREI_MIHAI_POPESCU",
+      "architectCharacterSoulId": "SOUL_ANDREI_MIHAI_POPESCU",
+      "architectSoulId": "SOUL_ANDREI_MIHAI_POPESCU",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER",
+      "witnessCharacterSoulId": "SOUL_ANDREI_MIHAI_POPESCU",
+      "witnessDefId": "WDF_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "architectCharacterId": "CHA_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "architectCharacterSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "architectSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS",
+      "witnessCharacterSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "architectCharacterId": "CHA_ALEX_ROWAN_WREN",
+      "architectCharacterSoulId": "SOUL_ALEX_ROWAN_WREN",
+      "architectSoulId": "SOUL_ALEX_ROWAN_WREN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH",
+      "witnessCharacterSoulId": "SOUL_ALEX_ROWAN_WREN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "architectCharacterId": "CHA_BALINT_ADAM_KOVACS",
+      "architectCharacterSoulId": "SOUL_BALINT_ADAM_KOVACS",
+      "architectSoulId": "SOUL_BALINT_ADAM_KOVACS",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS",
+      "witnessCharacterSoulId": "SOUL_BALINT_ADAM_KOVACS",
+      "witnessDefId": "WDF_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "architectCharacterId": "CHA_FELIX_JOHANN_HARTMANN",
+      "architectCharacterSoulId": "SOUL_FELIX_JOHANN_HARTMANN",
+      "architectSoulId": "SOUL_FELIX_JOHANN_HARTMANN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY",
+      "witnessCharacterSoulId": "SOUL_FELIX_JOHANN_HARTMANN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_KEY"
+    },
+    {
+      "architectCharacterId": "CHA_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "architectCharacterSoulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "architectSoulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE",
+      "witnessCharacterSoulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "architectCharacterId": "CHA_DARYA_MEHR_FARZAN",
+      "architectCharacterSoulId": "SOUL_DARYA_MEHR_FARZAN",
+      "architectSoulId": "SOUL_DARYA_MEHR_FARZAN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT",
+      "witnessCharacterSoulId": "SOUL_DARYA_MEHR_FARZAN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "architectCharacterId": "CHA_NGUYEN_LINH_MINH_CHAU",
+      "architectCharacterSoulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+      "architectSoulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN",
+      "witnessCharacterSoulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "architectCharacterId": "CHA_ELENA_ISABEL_SERRANO",
+      "architectCharacterSoulId": "SOUL_ELENA_ISABEL_SERRANO",
+      "architectSoulId": "SOUL_ELENA_ISABEL_SERRANO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL",
+      "witnessCharacterSoulId": "SOUL_ELENA_ISABEL_SERRANO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "architectCharacterId": "CHA_MIKKEL_ANDERS_S_RENSEN",
+      "architectCharacterSoulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+      "architectSoulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER",
+      "witnessCharacterSoulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "architectCharacterId": "CHA_FIONA_MAIRI_MACLEOD",
+      "architectCharacterSoulId": "SOUL_FIONA_MAIRI_MACLEOD",
+      "architectSoulId": "SOUL_FIONA_MAIRI_MACLEOD",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS",
+      "witnessCharacterSoulId": "SOUL_FIONA_MAIRI_MACLEOD",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LENS"
+    },
+    {
+      "architectCharacterId": "CHA_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "architectCharacterSoulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "architectSoulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK",
+      "witnessCharacterSoulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "architectCharacterId": "CHA_MARISOL_ELENA_REYES_MORGAN",
+      "architectCharacterSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "architectSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM",
+      "witnessCharacterSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "architectCharacterId": "CHA_EVAN_JAMES_MERCER",
+      "architectCharacterSoulId": "SOUL_EVAN_JAMES_MERCER",
+      "architectSoulId": "SOUL_EVAN_JAMES_MERCER",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE",
+      "witnessCharacterSoulId": "SOUL_EVAN_JAMES_MERCER",
+      "witnessDefId": "WDF_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "architectCharacterId": "CHA_ALEJANDRO_RAFAEL_VALDES",
+      "architectCharacterSoulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+      "architectSoulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR",
+      "witnessCharacterSoulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+      "witnessDefId": "WDF_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "architectCharacterId": "CHA_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "architectCharacterSoulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "architectSoulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC",
+      "witnessCharacterSoulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "witnessDefId": "WDF_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "architectCharacterId": "CHA_LIN_XIAOYU_MEILIN",
+      "architectCharacterSoulId": "SOUL_LIN_XIAOYU_MEILIN",
+      "architectSoulId": "SOUL_LIN_XIAOYU_MEILIN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE",
+      "witnessCharacterSoulId": "SOUL_LIN_XIAOYU_MEILIN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "architectCharacterId": "CHA_LUCIA_MARISOL_HERNANDEZ",
+      "architectCharacterSoulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+      "architectSoulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD",
+      "witnessCharacterSoulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "architectCharacterId": "CHA_AYLIN_DEFNE_DEMIR",
+      "architectCharacterSoulId": "SOUL_AYLIN_DEFNE_DEMIR",
+      "architectSoulId": "SOUL_AYLIN_DEFNE_DEMIR",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE",
+      "witnessCharacterSoulId": "SOUL_AYLIN_DEFNE_DEMIR",
+      "witnessDefId": "WDF_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "architectCharacterId": "CHA_RORY_SIOBHAN_O_SULLIVAN",
+      "architectCharacterSoulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+      "architectSoulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM",
+      "witnessCharacterSoulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "architectCharacterId": "CHA_PARK_MIN_JUN_SEONG_HO",
+      "architectCharacterSoulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+      "architectSoulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS",
+      "witnessCharacterSoulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_REINS"
+    },
+    {
+      "architectCharacterId": "CHA_AINO_KAARINA_LEHTINEN",
+      "architectCharacterSoulId": "SOUL_AINO_KAARINA_LEHTINEN",
+      "architectSoulId": "SOUL_AINO_KAARINA_LEHTINEN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY",
+      "witnessCharacterSoulId": "SOUL_AINO_KAARINA_LEHTINEN",
+      "witnessDefId": "WDF_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "architectCharacterId": "CHA_MARA_ELIZABETH_MERCER",
+      "architectCharacterSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "architectSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING",
+      "witnessCharacterSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "witnessDefId": "WDF_WITNESS_OF_THE_RING"
+    },
+    {
+      "architectCharacterId": "CHA_TOMAS_IGNACIO_AGUIRRE",
+      "architectCharacterSoulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+      "architectSoulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD",
+      "witnessCharacterSoulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "architectCharacterId": "CHA_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "architectCharacterSoulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "architectSoulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT",
+      "witnessCharacterSoulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "architectCharacterId": "CHA_NADEGE_SOLANGE_PIERRE",
+      "architectCharacterSoulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+      "architectSoulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE",
+      "witnessCharacterSoulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "architectCharacterId": "CHA_INES_LEONOR_CARVALHO",
+      "architectCharacterSoulId": "SOUL_INES_LEONOR_CARVALHO",
+      "architectSoulId": "SOUL_INES_LEONOR_CARVALHO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL",
+      "witnessCharacterSoulId": "SOUL_INES_LEONOR_CARVALHO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "architectCharacterId": "CHA_LAILA_SORAYA_AHMADZAI",
+      "architectCharacterSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "architectSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL",
+      "witnessCharacterSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "architectCharacterId": "CHA_MARIAM_NEFERTARI_EL_MASRY",
+      "architectCharacterSoulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+      "architectSoulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD",
+      "witnessCharacterSoulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "architectCharacterId": "CHA_SASHA_VALENTINA_CARDENAS",
+      "architectCharacterSoulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+      "architectSoulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL",
+      "witnessCharacterSoulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "architectCharacterId": "CHA_DANIYAR_SERIKULY_BEKETOV",
+      "architectCharacterSoulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+      "architectSoulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT",
+      "witnessCharacterSoulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "architectCharacterId": "CHA_MATEUS_GABRIEL_RIBEIRO",
+      "architectCharacterSoulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+      "architectSoulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING",
+      "witnessCharacterSoulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "architectCharacterId": "CHA_KRIS_MAARJA_TAMM",
+      "architectCharacterSoulId": "SOUL_KRIS_MAARJA_TAMM",
+      "architectSoulId": "SOUL_KRIS_MAARJA_TAMM",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT",
+      "witnessCharacterSoulId": "SOUL_KRIS_MAARJA_TAMM",
+      "witnessDefId": "WDF_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "architectCharacterId": "CHA_NADIA_ROSE_CARDINAL",
+      "architectCharacterSoulId": "SOUL_NADIA_ROSE_CARDINAL",
+      "architectSoulId": "SOUL_NADIA_ROSE_CARDINAL",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE",
+      "witnessCharacterSoulId": "SOUL_NADIA_ROSE_CARDINAL",
+      "witnessDefId": "WDF_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "architectCharacterId": "CHA_GIULIA_FRANCESCA_CONTI",
+      "architectCharacterSoulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+      "architectSoulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL",
+      "witnessCharacterSoulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+      "witnessDefId": "WDF_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "architectCharacterId": "CHA_ARI_RANGI_NGATA_MCKENZIE",
+      "architectCharacterSoulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+      "architectSoulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW",
+      "witnessCharacterSoulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+      "witnessDefId": "WDF_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "architectCharacterId": "CHA_FARID_HASAN_RAHMAN",
+      "architectCharacterSoulId": "SOUL_FARID_HASAN_RAHMAN",
+      "architectSoulId": "SOUL_FARID_HASAN_RAHMAN",
+      "matches": true,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING",
+      "witnessCharacterSoulId": "SOUL_FARID_HASAN_RAHMAN",
+      "witnessDefId": "WDF_WITNESS_OF_WEATHERING"
+    }
+  ],
+  "matching": 54,
+  "mismatching": 0,
+  "nulls": 0,
+  "ordinaryChains": 54,
+  "pairedBodies": {
+    "The Witness of the Loom != The Witness of Patchwork": {
+      "bothChainsMatch": true,
+      "distinct": true,
+      "leftCharacterId": "CHA_WITNESS_OF_THE_LOOM",
+      "leftSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "rightCharacterId": "CHA_WITNESS_OF_PATCHWORK",
+      "rightSoulId": "SOUL_GARETH_RHYS_MORGAN"
+    },
+    "The Witness of the Ring != The Witness of the Mantle": {
+      "bothChainsMatch": true,
+      "distinct": true,
+      "leftCharacterId": "CHA_WITNESS_OF_THE_RING",
+      "leftSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "rightCharacterId": "CHA_WITNESS_OF_THE_MANTLE",
+      "rightSoulId": "SOUL_EVAN_JAMES_MERCER"
+    },
+    "The Witness of the Seal != The Witness of the Harness": {
+      "bothChainsMatch": true,
+      "distinct": true,
+      "leftCharacterId": "CHA_WITNESS_OF_THE_SEAL",
+      "leftSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "rightCharacterId": "CHA_WITNESS_OF_THE_HARNESS",
+      "rightSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI"
+    }
+  },
+  "witnessOnlySoulIds": []
+}

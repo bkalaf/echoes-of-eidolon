@@ -1,12 +1,13 @@
 import { z } from "zod";
 
-import { ArchitectDepartment, AwarenessSkill, CompanionKey, Heirloom, KnowledgeSkill, PuzzleDifficultyTier, PuzzleFamily, WitnessColor, WorldKey as PrismaWorldKey } from "../generated/prisma/enums";
+import { ArchitectDepartment, AwarenessSkill, CompanionKey, Heirloom, KnowledgeSkill, PuzzleDifficultyTier, PuzzleFamily, WorldKey as PrismaWorldKey } from "../generated/prisma/enums";
+import { witnessDefIdSchema } from "./architect-witness";
 import type { Character, Companion, CompanionDef, PuzzleBlueprint, Witness, WorldKey } from "./types";
 
 export const witnessSchema = z
   .object({
     characterId: z.string().min(1),
-    witnessDefId: z.string().min(1),
+    witnessDefId: z.string().regex(/^WDF_[A-Z0-9]+(?:_[A-Z0-9]+)*$/),
     trueFlawName: z.string().min(1).nullish(),
     architectCharacterId: z.string().min(1),
     legendaryRewardId: z.string().min(1).nullish(),
@@ -15,8 +16,21 @@ export const witnessSchema = z
   }).strict() satisfies z.ZodType<Witness>;
 
 export const witnessDefSchema = z.object({
-  witnessDefId: z.string().min(1), name: z.string().min(1), department: z.enum(ArchitectDepartment), apparentDomain: z.string().min(1), realDomain: z.string().min(1), color: z.enum(WitnessColor),
-}).strict();
+  witnessDefId: witnessDefIdSchema,
+  name: z.string().min(1),
+  department: z.enum(ArchitectDepartment),
+  apparentDomain: z.string().min(1),
+  realDomain: z.string().min(1),
+  color: z.object({
+    SPECTRAL_VIOLET: z.number().min(0).max(100),
+    GREEN: z.number().min(0).max(100),
+    WHITE: z.number().min(0).max(100),
+  }).strict(),
+  architectSoulId: z.string().regex(/^SOUL_[A-Z0-9]+(?:_[A-Z0-9]+)*$/),
+}).strict().superRefine((definition, context) => {
+  const total = Object.values(definition.color).reduce((sum, percentage) => sum + percentage, 0);
+  if (Math.abs(total - 100) > 0.000001) context.addIssue({ code: "custom", message: "WitnessDef color percentages must total 100." });
+});
 
 /**
  * Concrete Witness transformation preserves Soul identity. The Witness

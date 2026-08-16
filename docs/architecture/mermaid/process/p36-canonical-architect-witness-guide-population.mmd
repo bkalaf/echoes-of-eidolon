@@ -1,0 +1,19 @@
+%% Canonical Architect Witness Guide population
+flowchart LR
+  Validatecanonicalm0["Validate canonical manifest"]
+  ResolveBreeddepend1["Resolve Breed dependencies"]
+  CreateSouls2["Create Souls"]
+  CreateArchitectCha3["Create Architect Characters and subtypes"]
+  CreateWitnessdefin4["Create Witness definitions"]
+  CreateWitnessChara5["Create Witness Characters with preserved Souls"]
+  CreateWitnesssubty6["Create Witness subtypes"]
+  AuditGuideidentity7["Audit Guide identity mappings"]
+  Verifyidempotency8["Verify idempotency"]
+  Validatecanonicalm0 --> ResolveBreeddepend1
+  ResolveBreeddepend1 --> CreateSouls2
+  CreateSouls2 --> CreateArchitectCha3
+  CreateArchitectCha3 --> CreateWitnessdefin4
+  CreateWitnessdefin4 --> CreateWitnessChara5
+  CreateWitnessChara5 --> CreateWitnesssubty6
+  CreateWitnesssubty6 --> AuditGuideidentity7
+  AuditGuideidentity7 --> Verifyidempotency8

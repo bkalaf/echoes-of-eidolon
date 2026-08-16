@@ -45,7 +45,6 @@ const ownership = [
   [/^Contact/, ["Contact", "server/contact.ts", "Public Contact and Admin operations"]],
   [/^Donation/, ["Donations", "server/donations.ts", "Public Donation and Account Membership"]],
   [/^(Release|Deployment)/, ["Release operations", "server/releases.ts", "Public Status and Admin Operations"]],
-  [/^Document/, ["Document Builder", "server/documents.ts", "Admin Document Builder"]],
   [/^Game/, ["Player runtime", "server/game-runtime.ts", "Game viewport"]],
   [/^(City|Parcel|Street|Building)$/, ["City geometry", "settlement and City services", "Admin City Builder"]],
 ];

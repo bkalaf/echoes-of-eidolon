@@ -112,16 +112,55 @@ describe("closed-world generic entity administration", () => {
     };
     const transaction = {
       witness,
-      character: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_WITNESS", soulId: "SOUL_2" }) },
-      architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_ARCHITECT", department: "ASTRONOMY", character: { characterId: "CHA_ARCHITECT", soulId: "SOUL_1" } }) },
-      witnessDef: { findUnique: vi.fn().mockResolvedValue({ department: "ASTRONOMY" }) },
+      character: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_WITNESS", breedId: "BRD_WITNESS", soulId: "SOUL_2" }) },
+      architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_ARCHITECT", department: "ASTRONOMY", character: { characterId: "CHA_ARCHITECT", breedId: "BRD_ARCHITECT", soulId: "SOUL_1" } }) },
+      witnessDef: { findUnique: vi.fn().mockResolvedValue({ architectSoulId: "SOUL_1", department: "ASTRONOMY", witnessDefId: "WDF_WITNESS_OF_THE_SUMMIT" }) },
     };
     const database = { ...transaction, $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) };
     await expect(applyGenericEntityImport([{
       characterId: "CHA_WITNESS",
-      witnessDefId: "WDEF_SUMMIT",
+      witnessDefId: "WDF_WITNESS_OF_THE_SUMMIT",
       architectCharacterId: "CHA_ARCHITECT",
     }], "Witness", database as never)).rejects.toThrow("Witness and source Architect must reference the same Soul.");
     expect(witness.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects arbitrary null-Breed Characters through direct and batch administration", async () => {
+    const character = {
+      create: vi.fn(async ({ data }) => data),
+      findUnique: vi.fn().mockResolvedValue(null),
+    };
+    const transaction = { character };
+    const database = { ...transaction, $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) };
+    const row = { characterId: "CHA_UNKNOWN", displayName: "Unknown", breedId: null };
+    await expect(createEntityRecord(database as never, "Character", row)).rejects.toThrow(/Breed is required/);
+    await expect(applyGenericEntityImport([row], "Character", database as never)).rejects.toThrow(/Breed is required/);
+    expect(character.create).not.toHaveBeenCalled();
+  });
+
+  it("allows only the canonical Mother identity to use the null-Breed exception", async () => {
+    const character = {
+      create: vi.fn(async ({ data }) => data),
+      findUnique: vi.fn().mockResolvedValue(null),
+    };
+    const database = { character };
+    const mother = { characterId: "CHA_MOTHER", displayName: "Mother", breedId: null };
+    await expect(createEntityRecord(database as never, "Character", mother)).resolves.toMatchObject(mother);
+    await expect(createEntityRecord(database as never, "Character", { ...mother, breedId: "BRD_FAKE" })).rejects.toThrow(/must have breedId null/);
+  });
+
+  it("does not let subtype administration attach Architect or Companion roles to null-Breed Characters", async () => {
+    const delegate = {
+      create: vi.fn(async ({ data }) => data),
+      findUnique: vi.fn().mockResolvedValue(null),
+    };
+    const database = {
+      architect: delegate,
+      companion: delegate,
+      character: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_NULL", breedId: null }) },
+    };
+    await expect(createEntityRecord(database as never, "Architect", { characterId: "CHA_NULL", department: "ASTRONOMY" })).rejects.toThrow(/Breed is required/);
+    await expect(createEntityRecord(database as never, "Companion", { characterId: "CHA_NULL", companionKey: "A" })).rejects.toThrow(/Breed is required/);
+    expect(delegate.create).not.toHaveBeenCalled();
   });
 });

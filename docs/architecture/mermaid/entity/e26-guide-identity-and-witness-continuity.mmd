@@ -1,0 +1,23 @@
+%% Guide identity and Witness continuity
+erDiagram
+  Soul {
+    string id PK
+  }
+  Character {
+    string id PK
+  }
+  Architect {
+    string id PK
+  }
+  WitnessDef {
+    string id PK
+  }
+  Witness {
+    string id PK
+  }
+  Character ||--o| Soul : "relates to"
+  Character ||--o| Architect : "relates to"
+  Character ||--o| Witness : "relates to"
+  Architect ||--o{ Witness : "relates to"
+  WitnessDef ||--|| Soul : "relates to"
+  WitnessDef ||--o{ Witness : "relates to"

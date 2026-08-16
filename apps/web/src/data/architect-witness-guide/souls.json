@@ -1,0 +1,295 @@
+{
+  "schemaVersion": "eidolon-souls-v2",
+  "rows": [
+    {
+      "soulId": "SOUL_KRIS_MAARJA_TAMM",
+      "name": "Kris Maarja Tamm",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_INES_LEONOR_CARVALHO",
+      "name": "Inês Leonor Carvalho",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ARJUN_DEV_MEHTA",
+      "name": "Arjun Dev Mehta",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NADIA_ROSE_CARDINAL",
+      "name": "Nadia Rose Cardinal",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+      "name": "Tomás Ignacio Aguirre",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+      "name": "Emi Haruka Takahashi",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_DARYA_MEHR_FARZAN",
+      "name": "Darya Mehr Farzan",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+      "name": "Park Min-jun Seong-ho",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+      "name": "Nomvula Thandiwe Dlamini",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "name": "Faisal Abdulrahman Al-Harbi",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_LIN_XIAOYU_MEILIN",
+      "name": "Lin Xiaoyu Meilin",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+      "name": "Mateus Gabriel Ribeiro",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_EVAN_JAMES_MERCER",
+      "name": "Evan James Mercer",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_AINO_KAARINA_LEHTINEN",
+      "name": "Aino Kaarina Lehtinen",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+      "name": "Ari Rangi Ngata-McKenzie",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+      "name": "Mariam Nefertari El-Masry",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+      "name": "Dawit Tesfaye Bekele",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+      "name": "Iman Zahra El Idrissi",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "name": "Mikhail Andreyevich Sokolov",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+      "name": "Lucía Marisol Hernández",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+      "name": "Bram Willem de Vries",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ELIN_ASTRID_SJOBERG",
+      "name": "Elin Astrid Sjöberg",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_FARID_HASAN_RAHMAN",
+      "name": "Farid Hasan Rahman",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+      "name": "Nguyễn Linh Minh Châu",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ELI_DAVID_ROSENFELD",
+      "name": "Eli David Rosenfeld",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "name": "Oksana Mykhailivna Kovalenko",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "name": "Laila Soraya Ahmadzai",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "name": "Nikos Alexandros Papadopoulos",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+      "name": "Rory Siobhán O'Sullivan",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+      "name": "Mikkel Anders Sørensen",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "name": "Mara Elizabeth Mercer",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_FELIX_JOHANN_HARTMANN",
+      "name": "Felix Johann Hartmann",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_SOFIE_ELISE_DE_SMET",
+      "name": "Sofie Elise De Smet",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "name": "Marisol Elena Reyes-Morgan",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "name": "Jean-Baptiste Alain Mbuyi",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_AYLIN_DEFNE_DEMIR",
+      "name": "Aylin Defne Demir",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_GARETH_RHYS_MORGAN",
+      "name": "Gareth Rhys Morgan",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_RACHEL_DAWN_ADAIR",
+      "name": "Rachel Dawn Adair",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+      "name": "Eirik Magnus Solberg",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+      "name": "Katarzyna Maria Nowak",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NOOR_AMAL_KHOURY",
+      "name": "Noor Amal Khoury",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ANDREI_MIHAI_POPESCU",
+      "name": "Andrei Mihai Popescu",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+      "name": "Camille Élodie Moreau",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_BALINT_ADAM_KOVACS",
+      "name": "Bálint Ádám Kovács",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+      "name": "Nadège Solange Pierre",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+      "name": "Alejandro Rafael Valdés",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+      "name": "Sasha Valentina Cárdenas",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_FIONA_MAIRI_MACLEOD",
+      "name": "Fiona Mairi MacLeod",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "name": "Rev. Dr. Samuel Olufemi Adebayo",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+      "name": "Giulia Francesca Conti",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ALEX_ROWAN_WREN",
+      "name": "Alex Rowan Wren",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_ELENA_ISABEL_SERRANO",
+      "name": "Elena Isabel Serrano",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+      "name": "Daniyar Serikuly Beketov",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+      "name": "Temüülen Erdenebat Ganbold",
+      "purpose": "ARCHITECT_WITNESS_CONTINUITY"
+    },
+    {
+      "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN",
+      "name": "Hans Halycon Hohenzollern",
+      "purpose": "PRESIDING_ORIGINAL_ARCHITECT"
+    },
+    {
+      "soulId": "SOUL_NOELL_PIETER_SMUKK",
+      "name": "Noell Pieter Smukk",
+      "purpose": "PRESIDING_ORIGINAL_ARCHITECT"
+    },
+    {
+      "soulId": "SOUL_FRANK_ADRIAN_VOSS",
+      "name": "Frank Adrian Voss",
+      "purpose": "GUIDE_UNDERLYING_CHARACTER"
+    },
+    {
+      "soulId": "SOUL_MOTHER",
+      "name": "Mother",
+      "purpose": "GUIDE_UNDERLYING_CHARACTER"
+    }
+  ]
+}

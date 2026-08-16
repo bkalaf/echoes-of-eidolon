@@ -795,16 +795,6 @@ enum ArchitectDepartment {
   INNOVATION
 }
 
-enum WitnessColor {
-  BLACK
-  RED
-  ORANGE
-  YELLOW
-  GREEN
-  BLUE
-  WHITE
-}
-
 enum PuzzleFamily {
   TEXT_LANGUAGE_LITERARY
   CRYPTO_NUMERIC_DATA
@@ -1245,12 +1235,6 @@ enum GameTurnStatus {
   FAILED
 }
 
-enum DocumentDraftStatus {
-  DRAFT
-  REVIEWED
-  PUBLISHED
-}
-
 enum DeploymentStatus {
   PLANNED
   DEPLOYING
@@ -1500,7 +1484,6 @@ model User {
   helpTickets             HelpTicket[]
   helpTicketMessages      HelpTicketMessage[]
   gameSessions            GameSession[]
-  authoredDocuments       DocumentDraft[]
   donationCheckouts       DonationCheckout[]
   settings                UserSettings?
   externalBulkApiSessions ExternalBulkApiSession[]
@@ -1750,8 +1733,8 @@ model Breed {
   species              Species                     @relation(fields: [speciesId], references: [speciesId], onDelete: Restrict)
   culture              Culture?                    @relation(fields: [cultureId], references: [cultureId], onDelete: Restrict)
   personality          PersonalityExpression?      @relation(fields: [personalityId], references: [personalityId], onDelete: Restrict)
-  parentBreed          Breed?                       @relation("BreedHierarchy", fields: [parentBreedId], references: [breedId], onDelete: Restrict)
-  childBreeds          Breed[]                      @relation("BreedHierarchy")
+  parentBreed          Breed?                      @relation("BreedHierarchy", fields: [parentBreedId], references: [breedId], onDelete: Restrict)
+  childBreeds          Breed[]                     @relation("BreedHierarchy")
   characters           Character[]
   populationEvents     SettlementPopulationEvent[]
   dominantInWorlds     SettlementWorld[]           @relation("SettlementWorldDominantBreed")
@@ -1764,7 +1747,7 @@ model Breed {
 }
 
 model Culture {
-  cultureId        String             @id
+  cultureId        String            @id
   name             String
   appearance       String?
   clothing         String?
@@ -1776,7 +1759,7 @@ model Culture {
 model Character {
   characterId        String         @id
   displayName        String
-  breedId            String
+  breedId            String?
   occupationId       String?
   worldKey           WorldKey?
   soulId             String?
@@ -1789,7 +1772,7 @@ model Character {
   faction            Faction?
   primaryAttribute   AbilityType?
   secondaryAttribute AbilityType?
-  breed              Breed          @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
+  breed              Breed?         @relation(fields: [breedId], references: [breedId], onDelete: Restrict)
   occupation         Occupation?    @relation(fields: [occupationId], references: [occupationId], onDelete: SetNull)
   soul               Soul?          @relation(fields: [soulId], references: [soulId], onDelete: SetNull)
   architect          Architect?
@@ -1805,36 +1788,40 @@ model Character {
 }
 
 model Architect {
-  characterId String              @id
+  characterId String               @id
   department  ArchitectDepartment? @unique
-  character   Character           @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  character   Character            @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnesses   Witness[]
 }
 
 model WitnessDef {
-  witnessDefId   String              @id
-  name           String
-  department     ArchitectDepartment @unique
-  apparentDomain String
-  realDomain     String
-  color          WitnessColor
-  witnesses      Witness[]
+  witnessDefId    String              @id
+  name            String
+  department      ArchitectDepartment @unique
+  apparentDomain  String
+  realDomain      String
+  color           Json
+  architectSoulId String
+  architectSoul   Soul                @relation(fields: [architectSoulId], references: [soulId], onDelete: Restrict)
+  witnesses       Witness[]
+
+  @@index([architectSoulId])
 }
 
 model Witness {
-  characterId           String          @id
+  characterId           String           @id
   witnessDefId          String
   trueFlawName          String?
   architectCharacterId  String
   legendaryRewardId     String?
   constellationBeforeId String?
   constellationAfterId  String?
-  character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
-  witnessDef            WitnessDef      @relation(fields: [witnessDefId], references: [witnessDefId], onDelete: Restrict)
-  architect             Architect       @relation(fields: [architectCharacterId], references: [characterId], onDelete: Restrict)
+  character             Character        @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
+  witnessDef            WitnessDef       @relation(fields: [witnessDefId], references: [witnessDefId], onDelete: Restrict)
+  architect             Architect        @relation(fields: [architectCharacterId], references: [characterId], onDelete: Restrict)
   legendaryReward       LegendaryReward? @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
-  constellationBefore   Constellation?  @relation("WitnessConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
-  constellationAfter    Constellation?  @relation("WitnessConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
+  constellationBefore   Constellation?   @relation("WitnessConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
+  constellationAfter    Constellation?   @relation("WitnessConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
 
   @@index([witnessDefId])
   @@index([architectCharacterId])
@@ -1845,6 +1832,7 @@ model Soul {
   soulId        String         @id
   name          String
   characters    Character[]
+  witnessDefs   WitnessDef[]
   companionDefs CompanionDef[]
 }
 
@@ -2959,52 +2947,6 @@ model DeploymentRecord {
   release            Release          @relation(fields: [releaseId], references: [releaseId], onDelete: Restrict)
 
   @@index([gitSha, status])
-}
-
-model DocumentBucket {
-  documentBucketId String                @id
-  name             String
-  sourcePoints     DocumentSourcePoint[]
-  amendments       DocumentAmendment[]
-  drafts           DocumentDraft[]
-}
-
-model DocumentSourcePoint {
-  documentSourcePointId String         @id
-  documentBucketId      String
-  ordinal               Int
-  content               String
-  sourceLabel           String
-  bucket                DocumentBucket @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
-
-  @@unique([documentBucketId, ordinal])
-}
-
-model DocumentAmendment {
-  documentAmendmentId String         @id
-  documentBucketId    String
-  ordinal             Int
-  content             String
-  bucket              DocumentBucket @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
-
-  @@unique([documentBucketId, ordinal])
-}
-
-model DocumentDraft {
-  documentDraftId  String              @id
-  documentBucketId String
-  version          Int
-  status           DocumentDraftStatus @default(DRAFT)
-  content          String
-  sourcePointIds   String[]
-  amendmentIds     String[]
-  authoredByUserId String
-  createdAt        DateTime            @default(now())
-  bucket           DocumentBucket      @relation(fields: [documentBucketId], references: [documentBucketId], onDelete: Cascade)
-  authoredBy       User                @relation(fields: [authoredByUserId], references: [id], onDelete: Restrict)
-
-  @@unique([documentBucketId, version])
-  @@index([authoredByUserId])
 }
 
 model GameSession {

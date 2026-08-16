@@ -1,0 +1,21 @@
+// Canonical owner lock for this import tranche.
+export type Color = "SPECTRAL_VIOLET" | "GREEN" | "WHITE";
+
+export type WitnessDef = {
+  witnessDefId: string;
+  name: string;
+  department: ArchitectDepartment;
+  apparentDomain: string;
+  realDomain: string;
+  color: Record<Color, number>; // percentage values; must sum to exactly 100
+  architectSoulId: string;      // FK/reference to Soul; does NOT move concrete Soul ownership off Character
+};
+
+Canonical invariants:
+- Character remains the concrete owner of soulId.
+- WitnessDef.architectSoulId explicitly identifies the source Architect Soul for that definition.
+- Architect Character and concrete Witness Character are distinct Character rows but share that same Soul.
+- Hans, Frank, and Mother each have exactly one underlying Character/Soul used by their Guide representation.
+- Guide forms do not create replacement Souls or duplicate Characters.
+- Mother is now an underlying Character with SOUL_MOTHER / CHA_MOTHER.
+- Mother is an AI and must not be assigned a biological Breed merely to satisfy persistence.

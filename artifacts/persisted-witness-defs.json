@@ -1,0 +1,704 @@
+[
+  {
+    "apparentDomain": "Resourcefulness",
+    "architectSoulId": "SOUL_GARETH_RHYS_MORGAN",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "RECYCLING",
+    "name": "The Witness of Patchwork",
+    "realDomain": "Cannibalization",
+    "witnessDefId": "WDF_WITNESS_OF_PATCHWORK"
+  },
+  {
+    "apparentDomain": "Serenity",
+    "architectSoulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 60.26,
+      "WHITE": 0
+    },
+    "department": "BOTANY",
+    "name": "The Witness of Stillwater",
+    "realDomain": "Capitulation",
+    "witnessDefId": "WDF_WITNESS_OF_STILLWATER"
+  },
+  {
+    "apparentDomain": "Confidence",
+    "architectSoulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 100,
+      "WHITE": 0
+    },
+    "department": "RELIABILITY",
+    "name": "The Witness of the Anchor",
+    "realDomain": "Indecision",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ANCHOR"
+  },
+  {
+    "apparentDomain": "Excellence",
+    "architectSoulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 93.25,
+      "WHITE": 0
+    },
+    "department": "INNOVATION",
+    "name": "The Witness of the Arena",
+    "realDomain": "Rivalry",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ARENA"
+  },
+  {
+    "apparentDomain": "Resilience",
+    "architectSoulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 73.9
+    },
+    "department": "MATERIALS",
+    "name": "The Witness of the Armor",
+    "realDomain": "Hardening",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ARMOR"
+  },
+  {
+    "apparentDomain": "Kindness",
+    "architectSoulId": "SOUL_ELIN_ASTRID_SJOBERG",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 9.23
+    },
+    "department": "ZOOLOGY",
+    "name": "The Witness of the Balm",
+    "realDomain": "Indulgence",
+    "witnessDefId": "WDF_WITNESS_OF_THE_BALM"
+  },
+  {
+    "apparentDomain": "Valor",
+    "architectSoulId": "SOUL_ARJUN_DEV_MEHTA",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 85.02,
+      "WHITE": 0
+    },
+    "department": "PROPULSION",
+    "name": "The Witness of the Banner",
+    "realDomain": "Trepidation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_BANNER"
+  },
+  {
+    "apparentDomain": "Prudence",
+    "architectSoulId": "SOUL_RACHEL_DAWN_ADAIR",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 73.9,
+      "WHITE": 0
+    },
+    "department": "SAFETY",
+    "name": "The Witness of the Bell",
+    "realDomain": "Alarmism",
+    "witnessDefId": "WDF_WITNESS_OF_THE_BELL"
+  },
+  {
+    "apparentDomain": "Fairness",
+    "architectSoulId": "SOUL_NOOR_AMAL_KHOURY",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 44.57,
+      "WHITE": 0
+    },
+    "department": "GOVERNANCE",
+    "name": "The Witness of the Blindfold",
+    "realDomain": "Condemnation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_BLINDFOLD"
+  },
+  {
+    "apparentDomain": "Balance",
+    "architectSoulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+    "color": {
+      "GREEN": 1.7,
+      "SPECTRAL_VIOLET": 98.3,
+      "WHITE": 0
+    },
+    "department": "PHYSICS",
+    "name": "The Witness of the Bridge",
+    "realDomain": "Fracture",
+    "witnessDefId": "WDF_WITNESS_OF_THE_BRIDGE"
+  },
+  {
+    "apparentDomain": "Clarity",
+    "architectSoulId": "SOUL_SOFIE_ELISE_DE_SMET",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 60.26,
+      "WHITE": 0
+    },
+    "department": "ELECTRICAL",
+    "name": "The Witness of the Chime",
+    "realDomain": "Noise",
+    "witnessDefId": "WDF_WITNESS_OF_THE_CHIME"
+  },
+  {
+    "apparentDomain": "Mutuality",
+    "architectSoulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 85.02,
+      "WHITE": 0
+    },
+    "department": "ECONOMICS",
+    "name": "The Witness of the Coin",
+    "realDomain": "Indebtedness",
+    "witnessDefId": "WDF_WITNESS_OF_THE_COIN"
+  },
+  {
+    "apparentDomain": "Principle",
+    "architectSoulId": "SOUL_ELI_DAVID_ROSENFELD",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 44.57
+    },
+    "department": "ALIGNMENT",
+    "name": "The Witness of the Compass",
+    "realDomain": "Self-Condemnation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_COMPASS"
+  },
+  {
+    "apparentDomain": "Care",
+    "architectSoulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 44.57
+    },
+    "department": "ECOLOGY",
+    "name": "The Witness of the Cradle",
+    "realDomain": "Ownership",
+    "witnessDefId": "WDF_WITNESS_OF_THE_CRADLE"
+  },
+  {
+    "apparentDomain": "Temperance",
+    "architectSoulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 27.37,
+      "WHITE": 0
+    },
+    "department": "COMMAND",
+    "name": "The Witness of the Dam",
+    "realDomain": "Wrath",
+    "witnessDefId": "WDF_WITNESS_OF_THE_DAM"
+  },
+  {
+    "apparentDomain": "Purpose",
+    "architectSoulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 85.02
+    },
+    "department": "EDUCATION",
+    "name": "The Witness of the Flame",
+    "realDomain": "Dependency",
+    "witnessDefId": "WDF_WITNESS_OF_THE_FLAME"
+  },
+  {
+    "apparentDomain": "Security",
+    "architectSoulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 9.23,
+      "WHITE": 0
+    },
+    "department": "EPIDEMIOLOGY",
+    "name": "The Witness of the Gate",
+    "realDomain": "Confinement",
+    "witnessDefId": "WDF_WITNESS_OF_THE_GATE"
+  },
+  {
+    "apparentDomain": "Restitution",
+    "architectSoulId": "SOUL_ANDREI_MIHAI_POPESCU",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 100
+    },
+    "department": "JUSTICE",
+    "name": "The Witness of the Hammer",
+    "realDomain": "Retaliation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_HAMMER"
+  },
+  {
+    "apparentDomain": "Dedication",
+    "architectSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "LOGISTICS",
+    "name": "The Witness of the Harness",
+    "realDomain": "Submission",
+    "witnessDefId": "WDF_WITNESS_OF_THE_HARNESS"
+  },
+  {
+    "apparentDomain": "Heritage",
+    "architectSoulId": "SOUL_ALEX_ROWAN_WREN",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 9.23
+    },
+    "department": "HUMANITIES",
+    "name": "The Witness of the Hearth",
+    "realDomain": "Stagnation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_HEARTH"
+  },
+  {
+    "apparentDomain": "Patience",
+    "architectSoulId": "SOUL_BALINT_ADAM_KOVACS",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 100,
+      "WHITE": 0
+    },
+    "department": "ADMINISTRATION",
+    "name": "The Witness of the Hourglass",
+    "realDomain": "Haste",
+    "witnessDefId": "WDF_WITNESS_OF_THE_HOURGLASS"
+  },
+  {
+    "apparentDomain": "Autonomy",
+    "architectSoulId": "SOUL_FELIX_JOHANN_HARTMANN",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 9.23,
+      "WHITE": 0
+    },
+    "department": "ROBOTICS",
+    "name": "The Witness of the Key",
+    "realDomain": "Futility",
+    "witnessDefId": "WDF_WITNESS_OF_THE_KEY"
+  },
+  {
+    "apparentDomain": "Steadiness",
+    "architectSoulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 60.26
+    },
+    "department": "ENERGY",
+    "name": "The Witness of the Keystone",
+    "realDomain": "Fragility",
+    "witnessDefId": "WDF_WITNESS_OF_THE_KEYSTONE"
+  },
+  {
+    "apparentDomain": "Affection",
+    "architectSoulId": "SOUL_DARYA_MEHR_FARZAN",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 100,
+      "WHITE": 0
+    },
+    "department": "CHEMISTRY",
+    "name": "The Witness of the Knot",
+    "realDomain": "Entanglement",
+    "witnessDefId": "WDF_WITNESS_OF_THE_KNOT"
+  },
+  {
+    "apparentDomain": "Wisdom",
+    "architectSoulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 93.25,
+      "WHITE": 0
+    },
+    "department": "INTELLIGENCE",
+    "name": "The Witness of the Lantern",
+    "realDomain": "Fallibility",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LANTERN"
+  },
+  {
+    "apparentDomain": "Honor",
+    "architectSoulId": "SOUL_ELENA_ISABEL_SERRANO",
+    "color": {
+      "GREEN": 1.7,
+      "SPECTRAL_VIOLET": 98.3,
+      "WHITE": 0
+    },
+    "department": "OUTREACH",
+    "name": "The Witness of the Laurel",
+    "realDomain": "Facade",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LAUREL"
+  },
+  {
+    "apparentDomain": "Reason",
+    "architectSoulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 73.9,
+      "WHITE": 0
+    },
+    "department": "SYSTEMS",
+    "name": "The Witness of the Ledger",
+    "realDomain": "Excuse",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LEDGER"
+  },
+  {
+    "apparentDomain": "Discernment",
+    "architectSoulId": "SOUL_FIONA_MAIRI_MACLEOD",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 73.9,
+      "WHITE": 0
+    },
+    "department": "HISTORY",
+    "name": "The Witness of the Lens",
+    "realDomain": "Contempt",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LENS"
+  },
+  {
+    "apparentDomain": "Safekeeping",
+    "architectSoulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 100
+    },
+    "department": "SOFTWARE",
+    "name": "The Witness of the Lock",
+    "realDomain": "Overreach",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LOCK"
+  },
+  {
+    "apparentDomain": "Industry",
+    "architectSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "MANUFACTURING",
+    "name": "The Witness of the Loom",
+    "realDomain": "Exploitation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_LOOM"
+  },
+  {
+    "apparentDomain": "Continuity",
+    "architectSoulId": "SOUL_EVAN_JAMES_MERCER",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "GENETICS",
+    "name": "The Witness of the Mantle",
+    "realDomain": "Entitlement",
+    "witnessDefId": "WDF_WITNESS_OF_THE_MANTLE"
+  },
+  {
+    "apparentDomain": "Dignity",
+    "architectSoulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 73.9
+    },
+    "department": "PSYCHOLOGY",
+    "name": "The Witness of the Mirror",
+    "realDomain": "Self-Loathing",
+    "witnessDefId": "WDF_WITNESS_OF_THE_MIRROR"
+  },
+  {
+    "apparentDomain": "Restoration",
+    "architectSoulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+    "color": {
+      "GREEN": 26.1,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 73.9
+    },
+    "department": "TERRAFORMING",
+    "name": "The Witness of the Mosaic",
+    "realDomain": "Despair",
+    "witnessDefId": "WDF_WITNESS_OF_THE_MOSAIC"
+  },
+  {
+    "apparentDomain": "Precision",
+    "architectSoulId": "SOUL_LIN_XIAOYU_MEILIN",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 27.37,
+      "WHITE": 0
+    },
+    "department": "NANOTECHNOLOGY",
+    "name": "The Witness of the Needle",
+    "realDomain": "Intrusion",
+    "witnessDefId": "WDF_WITNESS_OF_THE_NEEDLE"
+  },
+  {
+    "apparentDomain": "Cultivation",
+    "architectSoulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 27.37
+    },
+    "department": "AGRICULTURE",
+    "name": "The Witness of the Orchard",
+    "realDomain": "Neglect",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ORCHARD"
+  },
+  {
+    "apparentDomain": "Equity",
+    "architectSoulId": "SOUL_AYLIN_DEFNE_DEMIR",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 60.26,
+      "WHITE": 0
+    },
+    "department": "RESOURCES",
+    "name": "The Witness of the Plumbline",
+    "realDomain": "Bias",
+    "witnessDefId": "WDF_WITNESS_OF_THE_PLUMBLINE"
+  },
+  {
+    "apparentDomain": "Honesty",
+    "architectSoulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+    "color": {
+      "GREEN": 0,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 100
+    },
+    "department": "ARCHIVES",
+    "name": "The Witness of the Prism",
+    "realDomain": "Distortion",
+    "witnessDefId": "WDF_WITNESS_OF_THE_PRISM"
+  },
+  {
+    "apparentDomain": "Mastery",
+    "architectSoulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 9.23,
+      "WHITE": 0
+    },
+    "department": "COMPUTING",
+    "name": "The Witness of the Reins",
+    "realDomain": "Domination",
+    "witnessDefId": "WDF_WITNESS_OF_THE_REINS"
+  },
+  {
+    "apparentDomain": "Remembrance",
+    "architectSoulId": "SOUL_AINO_KAARINA_LEHTINEN",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 27.37
+    },
+    "department": "CRYOBIOLOGY",
+    "name": "The Witness of the Reliquary",
+    "realDomain": "Fixation",
+    "witnessDefId": "WDF_WITNESS_OF_THE_RELIQUARY"
+  },
+  {
+    "apparentDomain": "Promise",
+    "architectSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "ARCHITECTURE",
+    "name": "The Witness of the Ring",
+    "realDomain": "Breach",
+    "witnessDefId": "WDF_WITNESS_OF_THE_RING"
+  },
+  {
+    "apparentDomain": "Independence",
+    "architectSoulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 44.57
+    },
+    "department": "PLANETOLOGY",
+    "name": "The Witness of the Road",
+    "realDomain": "Estrangement",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ROAD"
+  },
+  {
+    "apparentDomain": "Tenacity",
+    "architectSoulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 27.37,
+      "WHITE": 0
+    },
+    "department": "CONTINUITY",
+    "name": "The Witness of the Root",
+    "realDomain": "Survivalism",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ROOT"
+  },
+  {
+    "apparentDomain": "Trust",
+    "architectSoulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 44.57,
+      "WHITE": 0
+    },
+    "department": "SOCIOLOGY",
+    "name": "The Witness of the Rope",
+    "realDomain": "Severance",
+    "witnessDefId": "WDF_WITNESS_OF_THE_ROPE"
+  },
+  {
+    "apparentDomain": "Adaptability",
+    "architectSoulId": "SOUL_INES_LEONOR_CARVALHO",
+    "color": {
+      "GREEN": 55.43,
+      "SPECTRAL_VIOLET": 44.57,
+      "WHITE": 0
+    },
+    "department": "NAVIGATION",
+    "name": "The Witness of the Sail",
+    "realDomain": "Drift",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SAIL"
+  },
+  {
+    "apparentDomain": "Fidelity",
+    "architectSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 93.25
+    },
+    "department": "CYBERSECURITY",
+    "name": "The Witness of the Seal",
+    "realDomain": "Duplicity",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SEAL"
+  },
+  {
+    "apparentDomain": "Protection",
+    "architectSoulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 60.26
+    },
+    "department": "MEDICINE",
+    "name": "The Witness of the Shield",
+    "realDomain": "Saviorism",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SHIELD"
+  },
+  {
+    "apparentDomain": "Allegiance",
+    "architectSoulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 85.02
+    },
+    "department": "ANTHROPOLOGY",
+    "name": "The Witness of the Sigil",
+    "realDomain": "Factionalism",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SIGIL"
+  },
+  {
+    "apparentDomain": "Aspiration",
+    "architectSoulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+    "color": {
+      "GREEN": 1.7,
+      "SPECTRAL_VIOLET": 98.3,
+      "WHITE": 0
+    },
+    "department": "SPONSORSHIP",
+    "name": "The Witness of the Spotlight",
+    "realDomain": "Vainglory",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SPOTLIGHT"
+  },
+  {
+    "apparentDomain": "Renewal",
+    "architectSoulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+    "color": {
+      "GREEN": 90.77,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 9.23
+    },
+    "department": "BIOLOGY",
+    "name": "The Witness of the Spring",
+    "realDomain": "Wishfulness",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SPRING"
+  },
+  {
+    "apparentDomain": "Perspective",
+    "architectSoulId": "SOUL_KRIS_MAARJA_TAMM",
+    "color": {
+      "GREEN": 6.75,
+      "SPECTRAL_VIOLET": 93.25,
+      "WHITE": 0
+    },
+    "department": "ASTRONOMY",
+    "name": "The Witness of the Summit",
+    "realDomain": "Conceit",
+    "witnessDefId": "WDF_WITNESS_OF_THE_SUMMIT"
+  },
+  {
+    "apparentDomain": "Belonging",
+    "architectSoulId": "SOUL_NADIA_ROSE_CARDINAL",
+    "color": {
+      "GREEN": 39.74,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 60.26
+    },
+    "department": "HABITABILITY",
+    "name": "The Witness of the Table",
+    "realDomain": "Insularity",
+    "witnessDefId": "WDF_WITNESS_OF_THE_TABLE"
+  },
+  {
+    "apparentDomain": "Harmony",
+    "architectSoulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+    "color": {
+      "GREEN": 72.63,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 27.37
+    },
+    "department": "LINGUISTICS",
+    "name": "The Witness of the Veil",
+    "realDomain": "Appeasement",
+    "witnessDefId": "WDF_WITNESS_OF_THE_VEIL"
+  },
+  {
+    "apparentDomain": "Candor",
+    "architectSoulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 85.02,
+      "WHITE": 0
+    },
+    "department": "NEUROSCIENCE",
+    "name": "The Witness of the Window",
+    "realDomain": "Evasion",
+    "witnessDefId": "WDF_WITNESS_OF_THE_WINDOW"
+  },
+  {
+    "apparentDomain": "Adaptation",
+    "architectSoulId": "SOUL_FARID_HASAN_RAHMAN",
+    "color": {
+      "GREEN": 14.98,
+      "SPECTRAL_VIOLET": 0,
+      "WHITE": 85.02
+    },
+    "department": "MICROBIOLOGY",
+    "name": "The Witness of Weathering",
+    "realDomain": "Decay",
+    "witnessDefId": "WDF_WITNESS_OF_WEATHERING"
+  }
+]

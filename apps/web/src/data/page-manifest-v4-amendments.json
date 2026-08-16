@@ -26,6 +26,8 @@
     { "page": 303, "screenId": "BULK02_BULK_CHANGE_DETAIL_V2", "title": "Bulk Change Detail", "path": "/admin/bulk-changes/:envelopeId", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 303, "reviewOrder": 300 },
     { "page": 304, "screenId": "ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS", "title": "Settlement Soundtracks", "path": "/admin/atlas/settlements/:settlementId/soundtracks", "source": "NEXT_IMPLEMENTATION_CODEX_PACKAGE_V1_V4", "originalPage": 304, "reviewOrder": 301 },
     { "page": 305, "screenId": "DATA_WITNESS_DEF", "title": "Data - WitnessDef", "path": "/admin/data/witness-def", "source": "ACTION_A_CANONICAL_TYPE_UNIFICATION", "originalPage": 305, "reviewOrder": 302 },
-    { "page": 306, "screenId": "DATA_COMPANION_DEF", "title": "Data - CompanionDef", "path": "/admin/data/companion-def", "source": "ACTION_A_CANONICAL_TYPE_UNIFICATION", "originalPage": 306, "reviewOrder": 303 }
+    { "page": 306, "screenId": "DATA_COMPANION_DEF", "title": "Data - CompanionDef", "path": "/admin/data/companion-def", "source": "ACTION_A_CANONICAL_TYPE_UNIFICATION", "originalPage": 306, "reviewOrder": 303 },
+    { "page": 307, "screenId": "CAMPAIGN_DOCUMENT_CORPUS", "title": "Historical Document Corpus", "path": "/admin/campaigns/:campaignId/documents", "source": "ARCHITECT_WITNESS_GUIDE_CANONICAL_INPUT_20260815", "originalPage": 307, "reviewOrder": 304 },
+    { "page": 308, "screenId": "CAMPAIGN_DOCUMENT_QUESTS", "title": "Document Quest and Research Planner", "path": "/admin/campaigns/:campaignId/document-quests", "source": "ARCHITECT_WITNESS_GUIDE_CANONICAL_INPUT_20260815", "originalPage": 308, "reviewOrder": 305 }
   ]
 }

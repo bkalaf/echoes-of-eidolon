@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "Soul": 58,
+    "Character": 112,
+    "Architect": 56,
+    "WitnessDef": 54,
+    "Witness": 54,
+    "GuideMapping": 3
+  },
+  "guides": [
+    {
+      "guideForm": "The Overseer",
+      "underlyingCharacterId": "CHA_HANS_HALYCON_HOHENZOLLERN"
+    },
+    {
+      "guideForm": "The Herald",
+      "underlyingCharacterId": "CHA_FRANK_ADRIAN_VOSS"
+    },
+    {
+      "guideForm": "The Steward",
+      "underlyingCharacterId": "CHA_MOTHER"
+    }
+  ],
+  "guideIdentityAudit": {
+    "newGuideCharacters": 0,
+    "newGuideSouls": 0,
+    "persistedGuideTable": false
+  },
+  "witnessDefAudit": {
+    "count": 54,
+    "colorSumsAll100": true,
+    "architectSoulLinksValid": true
+  },
+  "soulContinuity": {
+    "ordinaryPairs": 54,
+    "matching": 54,
+    "mismatching": 0,
+    "nullSoulPairs": 0
+  },
+  "pairedBodies": {
+    "sealHarnessIndependentSouls": true,
+    "ringMantleIndependentSouls": true,
+    "loomPatchworkIndependentSouls": true
+  },
+  "bulkApi": {
+    "keyedIntegrationPass": true,
+    "keylessIntegrationPass": true,
+    "browserSmokePass": true
+  },
+  "documentBuilder": {
+    "unauthorizedBucketUiRemoved": true,
+    "canonicalDocumentRoutesTested": true
+  },
+  "idempotency": {
+    "secondRunChangedRows": 0
+  }
+}

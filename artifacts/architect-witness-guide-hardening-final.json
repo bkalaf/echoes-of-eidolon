@@ -1,0 +1,85 @@
+{
+  "breedAudit": {
+    "architectsWithBreed": 56,
+    "frankHasBreed": true,
+    "hansHasBreed": true,
+    "motherBreedId": null,
+    "noellHasBreed": true,
+    "unauthorizedNullBreedCharacters": [],
+    "witnessesWithBreed": 54
+  },
+  "bulkApi": {
+    "browserPass": true,
+    "keyedPass": true,
+    "keylessPass": true
+  },
+  "canonicalDiff": {
+    "architectsFieldMismatches": 0,
+    "missingIds": 0,
+    "soulsFieldMismatches": 0,
+    "unexpectedIds": 0,
+    "witnessDefsFieldMismatches": 0,
+    "witnessesFieldMismatches": 0
+  },
+  "counts": {
+    "Architect": 56,
+    "Character": 112,
+    "Soul": 58,
+    "Witness": 54,
+    "WitnessDef": 54
+  },
+  "documentMigrationSafety": {
+    "emptyDatabasePathPass": true,
+    "persistedDataPreservedAfterRefusal": true,
+    "persistedDataRefusalPass": true
+  },
+  "guideMappings": {
+    "count": 3,
+    "mappings": [
+      {
+        "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+        "createsAdditionalCharacter": false,
+        "resolvesPersistedCharacter": true,
+        "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN",
+        "title": "The Overseer"
+      },
+      {
+        "characterId": "CHA_FRANK_ADRIAN_VOSS",
+        "createsAdditionalCharacter": false,
+        "resolvesPersistedCharacter": true,
+        "soulId": "SOUL_FRANK_ADRIAN_VOSS",
+        "title": "The Herald"
+      },
+      {
+        "characterId": "CHA_MOTHER",
+        "createsAdditionalCharacter": false,
+        "resolvesPersistedCharacter": true,
+        "soulId": "SOUL_MOTHER",
+        "title": "The Steward"
+      }
+    ],
+    "newGuideCharacters": 0,
+    "newGuideSouls": 0,
+    "persistedGuideTable": false
+  },
+  "idempotency": {
+    "secondRunChangedRows": 0
+  },
+  "pairedBodies": {
+    "loomPatchworkDistinctSouls": true,
+    "ringMantleDistinctSouls": true,
+    "sealHarnessDistinctSouls": true
+  },
+  "soulContinuity": {
+    "matching": 54,
+    "mismatching": 0,
+    "nulls": 0,
+    "ordinaryChains": 54
+  },
+  "witnessDefAudit": {
+    "allColorKeysExact": true,
+    "allColorSums100": true,
+    "architectSoulLinksValid": true,
+    "count": 54
+  }
+}

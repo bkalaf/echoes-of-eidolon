@@ -9,7 +9,7 @@ import type {
   KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode,
   PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
   SettlementClassification, SettlementPopulationEventType, SourceType, SpeciesKind, PopulationKind,
-  StructureOrientation, TimelineEventType, WitnessColor, WorldKey, Faction, FoodBroadCategory, FoodSpecific,
+  StructureOrientation, TimelineEventType, WorldKey, Faction, FoodBroadCategory, FoodSpecific,
   TerrainBroad, SpecificTerrain, OriginMode, ReproductionMethod, JuvenileStage, NurseryMode,
   LongevityClass, NaturalMortalityMode, SoulDisposition, ContinuityGroupType, ContinuityPropagationMode, PersonalityFamily,
 } from "../generated/prisma/enums";
@@ -87,7 +87,7 @@ export interface Culture {
 export interface Character {
   characterId: string;
   displayName: string;
-  breedId: Breed['breedId'];
+  breedId: Breed['breedId'] | null;
   occupationId?: string | null;
   worldKey?: WorldKey | null;
   soulId?: Soul['soulId'] | null;
@@ -102,7 +102,16 @@ export interface Character {
   secondaryAttribute?: AbilityType | null;
 }
 export interface Architect { characterId: Character['characterId']; department: ArchitectDepartment | null; }
-export interface WitnessDef { witnessDefId: string; name: string; department: ArchitectDepartment; apparentDomain: string; realDomain: string; color: WitnessColor; }
+export type Color = 'SPECTRAL_VIOLET' | 'GREEN' | 'WHITE';
+export interface WitnessDef {
+  witnessDefId: string;
+  name: string;
+  department: ArchitectDepartment;
+  apparentDomain: string;
+  realDomain: string;
+  color: Record<Color, number>;
+  architectSoulId: Soul['soulId'];
+}
 export interface Witness {
   characterId: Character['characterId'];
   witnessDefId: WitnessDef['witnessDefId'];

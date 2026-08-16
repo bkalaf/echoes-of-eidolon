@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "eidolon-architect-witness-guide-canonical-v2",
+  "ownerLocks": {
+    "witnessDefIdKey": "WDF",
+    "witnessDefIdRule": "WDF_{WITNESS_NAME_WITH_DISPLAY_ARTICLE_THE_OMITTED}_IN_SCREAMING_SNAKE_CASE",
+    "colorType": "Record<Color, number>",
+    "Color": [
+      "SPECTRAL_VIOLET",
+      "GREEN",
+      "WHITE"
+    ],
+    "colorUnits": "PERCENT",
+    "colorSumRequired": 100,
+    "witnessDefArchitectSoulLink": "WitnessDef.architectSoulId -> Soul.soulId",
+    "characterRemainsConcreteSoulOwner": true,
+    "motherNowHasSoulAndCharacter": true,
+    "motherBiologicalBreed": null
+  },
+  "targetCounts": {
+    "souls": 58,
+    "characters": 112,
+    "architects": 56,
+    "witnessDefs": 54,
+    "witnesses": 54,
+    "guideMappings": 3
+  }
+}

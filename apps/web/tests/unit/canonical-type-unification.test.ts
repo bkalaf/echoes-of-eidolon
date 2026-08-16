@@ -23,11 +23,11 @@ describe("canonical Character subtype schema", () => {
     expect(character).toMatch(/soulId\s+String\?/);
   });
 
-  it("uses the exact ArchitectDepartment and WitnessColor enums", () => {
+  it("uses the exact ArchitectDepartment enum and canonical WitnessDef color payload", () => {
     expect(enumValues("ArchitectDepartment")).toEqual([
       "ASTRONOMY", "NAVIGATION", "PROPULSION", "HABITABILITY", "PLANETOLOGY", "PHYSICS", "CHEMISTRY", "COMPUTING", "MATERIALS", "ENERGY", "NANOTECHNOLOGY", "BIOLOGY", "GENETICS", "CRYOBIOLOGY", "NEUROSCIENCE", "MEDICINE", "EPIDEMIOLOGY", "ECOLOGY", "TERRAFORMING", "AGRICULTURE", "BOTANY", "ZOOLOGY", "MICROBIOLOGY", "INTELLIGENCE", "ALIGNMENT", "SOFTWARE", "CYBERSECURITY", "CONTINUITY", "ARCHIVES", "SYSTEMS", "ARCHITECTURE", "ROBOTICS", "ELECTRICAL", "MANUFACTURING", "LOGISTICS", "RESOURCES", "RECYCLING", "SAFETY", "RELIABILITY", "COMMAND", "GOVERNANCE", "JUSTICE", "ECONOMICS", "ADMINISTRATION", "SOCIOLOGY", "PSYCHOLOGY", "ANTHROPOLOGY", "HISTORY", "EDUCATION", "LINGUISTICS", "HUMANITIES", "OUTREACH", "SPONSORSHIP", "INNOVATION",
     ]);
-    expect(enumValues("WitnessColor")).toEqual(["BLACK", "RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "WHITE"]);
+    expect(enumValues("WitnessColor")).toEqual([]);
   });
 
   it("uses direct one-to-one subtype links without global XOR or invented Companion identity", () => {
@@ -47,7 +47,8 @@ describe("canonical Character subtype schema", () => {
     expect(witnessDef).toMatch(/department\s+ArchitectDepartment/);
     expect(witnessDef).toMatch(/apparentDomain\s+String/);
     expect(witnessDef).toMatch(/realDomain\s+String/);
-    expect(witnessDef).toMatch(/color\s+WitnessColor/);
+    expect(witnessDef).toMatch(/color\s+Json/);
+    expect(witnessDef).toMatch(/architectSoulId\s+String/);
     const companionDef = model("CompanionDef");
     expect(companionDef).toMatch(/companionKey\s+CompanionKey\s+@id/);
     for (const field of ["concordCharacterId", "ruinCharacterId", "schismCharacterId", "soulId", "heirloom", "knowledgeSkill", "awarenessSkill"]) expect(companionDef).toMatch(new RegExp(`\\b${field}\\b`));

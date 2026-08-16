@@ -342,7 +342,7 @@ Therefore **38 of 293 active V3/V4** wireframe pages/states are not fully implem
 | 299 | `GAME_INN01_INN` | Inn | `Modal in /game` | **IMPLEMENTED** | Current-POI Inn configuration previews and transactionally applies authored Rest/Morale/Comfort and currency costs, with meeting entry actions. |
 | 300 | `BULK02_BULK_CHANGE_DETAIL_V2` | Bulk Change Detail | `/admin/bulk-changes/:envelopeId` | **IMPLEMENTED** | Displays envelope payload, automatic dry-run and revalidation results, sequence state, and head-only review actions. |
 | 301 | `ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS` | Settlement Soundtracks | `/admin/atlas/settlements/:settlementId/soundtracks` | **IMPLEMENTED** | Assigns multiple ordered CITY/TAVERN managed Soundtracks to a Settlement without fabricating culture mappings. |
-| 302 | `DATA_WITNESS_DEF` | Data - WitnessDef | `/admin/data/witness-def` | **IMPLEMENTED** | Canonical Witness definitions expose department, string domains, and seven-value color through the generated Data Admin contract. |
+| 302 | `DATA_WITNESS_DEF` | Data - WitnessDef | `/admin/data/witness-def` | **IMPLEMENTED** | Canonical Witness definitions expose WDF identity, department, string domains, exact three-color percentage records, and source Architect Soul through the generated Data Admin contract. |
 | 303 | `DATA_COMPANION_DEF` | Data - CompanionDef | `/admin/data/companion-def` | **IMPLEMENTED** | Canonical A-L Companion definitions expose three world Character references, Soul, Heirloom, and reusable skills. |
 
 ## Principal implementation evidence

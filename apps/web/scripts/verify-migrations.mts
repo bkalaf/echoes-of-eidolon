@@ -49,12 +49,15 @@ if (!["127.0.0.1", "localhost"].includes(configuredUrl.hostname)) {
 
 const databaseName = `eidolon_migration_verify_${randomUUID().replaceAll("-", "")}`;
 const preCorrectionDatabaseName = `eidolon_migration_precorrection_${randomUUID().replaceAll("-", "")}`;
+const documentGuardDatabaseName = `eidolon_document_guard_${randomUUID().replaceAll("-", "")}`;
 const adminUrl = new URL(configuredUrl);
 adminUrl.pathname = "/postgres";
 const verificationUrl = new URL(configuredUrl);
 verificationUrl.pathname = `/${databaseName}`;
 const preCorrectionUrl = new URL(configuredUrl);
 preCorrectionUrl.pathname = `/${preCorrectionDatabaseName}`;
+const documentGuardUrl = new URL(configuredUrl);
+documentGuardUrl.pathname = `/${documentGuardDatabaseName}`;
 const admin = new Client({ connectionString: adminUrl.toString() });
 
 await admin.connect();
@@ -563,6 +566,44 @@ try {
        ) VALUES ('bulk-session', 'bulk-owner', repeat('a', 64), 'KEYED', now() + interval '30 minutes', now())`,
     );
     await verification.query(
+      `INSERT INTO "ExternalBulkApiSession" (
+         "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt"
+       ) VALUES ('bulk-keyless', 'bulk-owner', NULL, 'KEYLESS', now() + interval '30 minutes', now())`,
+    );
+    await verification.query(
+      `INSERT INTO "ExternalBulkApiSession" (
+         "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt", "revokedAt"
+       ) VALUES ('bulk-off', 'bulk-owner', NULL, 'OFF', now() + interval '30 minutes', now(), now())`,
+    );
+    await expectTransactionRejection(verification, async () => {
+      await verification.query(
+        `INSERT INTO "ExternalBulkApiSession" (
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt"
+         ) VALUES ('bad-keyless-hash', 'bulk-owner', repeat('b', 64), 'KEYLESS', now() + interval '30 minutes', now())`,
+      );
+    }, "KEYLESS external bulk session accepted a non-null key hash");
+    await expectTransactionRejection(verification, async () => {
+      await verification.query(
+        `INSERT INTO "ExternalBulkApiSession" (
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt"
+         ) VALUES ('bad-keyed-null', 'bulk-owner', NULL, 'KEYED', now() + interval '30 minutes', now())`,
+      );
+    }, "KEYED external bulk session accepted a null key hash");
+    await expectTransactionRejection(verification, async () => {
+      await verification.query(
+        `INSERT INTO "ExternalBulkApiSession" (
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt", "revokedAt"
+         ) VALUES ('bad-active-revoked', 'bulk-owner', NULL, 'KEYLESS', now() + interval '30 minutes', now(), now())`,
+      );
+    }, "Active external bulk session accepted a revokedAt value");
+    await expectTransactionRejection(verification, async () => {
+      await verification.query(
+        `INSERT INTO "ExternalBulkApiSession" (
+           "externalBulkApiSessionId", "issuedByUserId", "keyHash", "state", "expiresAt", "lastActivityAt"
+         ) VALUES ('bad-off-active', 'bulk-owner', NULL, 'OFF', now() + interval '30 minutes', now())`,
+      );
+    }, "OFF external bulk session accepted a null revokedAt value");
+    await verification.query(
       `INSERT INTO "BulkOperationAudit" (
          "bulkOperationAuditId", "externalBulkApiSessionId", "operation", "entityName", "result", "recordCount"
        ) VALUES ('bulk-audit', 'bulk-session', 'QUERY', 'Soul', 'UNCHANGED', 0)`,
@@ -578,6 +619,10 @@ try {
     await verification.query(
       `UPDATE "ExternalBulkApiSession" SET "state" = 'OFF', "revokedAt" = now()
        WHERE "externalBulkApiSessionId" = 'bulk-session'`,
+    );
+    await verification.query(
+      `UPDATE "ExternalBulkApiSession" SET "state" = 'OFF', "revokedAt" = now()
+       WHERE "externalBulkApiSessionId" = 'bulk-keyless'`,
     );
   } finally {
     await verification.end();
@@ -973,6 +1018,39 @@ try {
       throw new Error(`WorldBuilding v3 retirement/catalog verification failed: ${JSON.stringify(worldbuildingCatalog.rows)}`);
     }
 
+    const canonicalWitnessMigration = await readFile(resolve(migrationsRoot, "20260816000000_architect_witness_guide_canon", "migration.sql"), "utf8");
+    let witnessDefinitionBlocker = "";
+    try {
+      await preCorrection.query(canonicalWitnessMigration);
+    } catch (error) {
+      witnessDefinitionBlocker = error instanceof Error ? error.message : String(error);
+    }
+    if (!witnessDefinitionBlocker.includes("WITNESS_DEF_CANONICAL_MIGRATION_BLOCKER")) {
+      throw new Error(`Canonical WitnessDef migration did not fail closed on legacy definitions: ${witnessDefinitionBlocker}`);
+    }
+    await preCorrection.query(`DELETE FROM "Witness"`);
+    await preCorrection.query(`DELETE FROM "WitnessDef"`);
+    await applyThrough("20260816000000_architect_witness_guide_canon");
+    const emptyDocumentTables = await preCorrection.query(
+      `SELECT (SELECT count(*)::int FROM "DocumentBucket") AS bucket,
+              (SELECT count(*)::int FROM "DocumentSourcePoint") AS source_point,
+              (SELECT count(*)::int FROM "DocumentAmendment") AS amendment,
+              (SELECT count(*)::int FROM "DocumentDraft") AS draft`,
+    );
+    if (Object.values(emptyDocumentTables.rows[0] ?? {}).some((value) => value !== 0)) {
+      throw new Error(`Document remediation empty-table path fixture is not empty: ${JSON.stringify(emptyDocumentTables.rows)}`);
+    }
+    await applyThrough("20260816003000_bulk_api_and_document_bucket_remediation");
+    const retiredDocumentTables = await preCorrection.query(
+      `SELECT to_regclass('public."DocumentBucket"') AS bucket,
+              to_regclass('public."DocumentSourcePoint"') AS source_point,
+              to_regclass('public."DocumentAmendment"') AS amendment,
+              to_regclass('public."DocumentDraft"') AS draft`,
+    );
+    if (Object.values(retiredDocumentTables.rows[0] ?? {}).some((value) => value !== null)) {
+      throw new Error(`Unauthorized Document Builder tables remain after remediation: ${JSON.stringify(retiredDocumentTables.rows)}`);
+    }
+
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [
       "exec", "prisma", "migrate", "diff",
@@ -981,8 +1059,71 @@ try {
   } finally {
     await preCorrection.end();
   }
+
+  await admin.query(`CREATE DATABASE "${documentGuardDatabaseName}"`);
+  const documentGuard = new Client({ connectionString: documentGuardUrl.toString() });
+  await documentGuard.connect();
+  try {
+    const migrationsRoot = resolve(import.meta.dirname, "../prisma/migrations");
+    const migrations = (await readdir(migrationsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    for (const migration of migrations.filter((name) => name <= "20260816000000_architect_witness_guide_canon")) {
+      await documentGuard.query(await readFile(resolve(migrationsRoot, migration, "migration.sql"), "utf8"));
+    }
+    await documentGuard.query(
+      `INSERT INTO "User" ("id", "name", "email", "eligibilityStatus", "updatedAt")
+       VALUES ('document-guard-user', 'Document Guard User', 'document-guard@example.test', 'ADULT_18_PLUS', CURRENT_TIMESTAMP)`,
+    );
+    await documentGuard.query(`INSERT INTO "DocumentBucket" ("documentBucketId", "name") VALUES ('preserved-bucket', 'Preserved bucket')`);
+    await documentGuard.query(
+      `INSERT INTO "DocumentSourcePoint" ("documentSourcePointId", "documentBucketId", "ordinal", "content", "sourceLabel")
+       VALUES ('preserved-source', 'preserved-bucket', 0, 'Preserved source', 'Owner source')`,
+    );
+    await documentGuard.query(
+      `INSERT INTO "DocumentAmendment" ("documentAmendmentId", "documentBucketId", "ordinal", "content")
+       VALUES ('preserved-amendment', 'preserved-bucket', 0, 'Preserved amendment')`,
+    );
+    await documentGuard.query(
+      `INSERT INTO "DocumentDraft" ("documentDraftId", "documentBucketId", "version", "content", "sourcePointIds", "amendmentIds", "authoredByUserId")
+       VALUES ('preserved-draft', 'preserved-bucket', 1, 'Preserved draft', ARRAY['preserved-source'], ARRAY['preserved-amendment'], 'document-guard-user')`,
+    );
+    const remediationMigration = await readFile(
+      resolve(migrationsRoot, "20260816003000_bulk_api_and_document_bucket_remediation", "migration.sql"),
+      "utf8",
+    );
+    let guardError = "";
+    try {
+      await documentGuard.query(remediationMigration);
+    } catch (error) {
+      guardError = error instanceof Error ? error.message : String(error);
+    }
+    if (!guardError.includes("Refusing to remove superseded DocumentBucket persistence because Document* rows exist")) {
+      throw new Error(`Document remediation did not fail closed with the required diagnostic: ${guardError}`);
+    }
+    const preservedDocumentRows = await documentGuard.query(
+      `SELECT to_regclass('public."DocumentBucket"') IS NOT NULL AS bucket_table,
+              to_regclass('public."DocumentSourcePoint"') IS NOT NULL AS source_table,
+              to_regclass('public."DocumentAmendment"') IS NOT NULL AS amendment_table,
+              to_regclass('public."DocumentDraft"') IS NOT NULL AS draft_table,
+              (SELECT count(*)::int FROM "DocumentBucket") AS bucket_rows,
+              (SELECT count(*)::int FROM "DocumentSourcePoint") AS source_rows,
+              (SELECT count(*)::int FROM "DocumentAmendment") AS amendment_rows,
+              (SELECT count(*)::int FROM "DocumentDraft") AS draft_rows`,
+    );
+    const preserved = preservedDocumentRows.rows[0];
+    if (!preserved?.bucket_table || !preserved.source_table || !preserved.amendment_table || !preserved.draft_table
+      || preserved.bucket_rows !== 1 || preserved.source_rows !== 1 || preserved.amendment_rows !== 1 || preserved.draft_rows !== 1) {
+      throw new Error(`Document remediation failure did not preserve all tables and rows: ${JSON.stringify(preservedDocumentRows.rows)}`);
+    }
+    process.stdout.write("Document remediation safety verified: empty path succeeds; persisted-data path refuses and preserves all four tables and rows.\n");
+  } finally {
+    await documentGuard.end();
+  }
 } finally {
   await admin.query(`DROP DATABASE IF EXISTS "${databaseName}" WITH (FORCE)`);
   await admin.query(`DROP DATABASE IF EXISTS "${preCorrectionDatabaseName}" WITH (FORCE)`);
+  await admin.query(`DROP DATABASE IF EXISTS "${documentGuardDatabaseName}" WITH (FORCE)`);
   await admin.end();
 }

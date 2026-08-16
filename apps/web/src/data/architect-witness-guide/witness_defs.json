@@ -1,0 +1,869 @@
+{
+  "schemaVersion": "eidolon-witness-defs-v2",
+  "rows": [
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SUMMIT",
+      "name": "The Witness of the Summit",
+      "department": "ASTRONOMY",
+      "kernelKey": "HUMILITY",
+      "apparentDomain": "Perspective",
+      "realDomain": "Conceit",
+      "color": {
+        "SPECTRAL_VIOLET": 93.25,
+        "GREEN": 6.75,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_KRIS_MAARJA_TAMM",
+      "worldKey": "CONCORD",
+      "bookNumber": 3
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SAIL",
+      "name": "The Witness of the Sail",
+      "department": "NAVIGATION",
+      "kernelKey": "DRIFT",
+      "apparentDomain": "Adaptability",
+      "realDomain": "Drift",
+      "color": {
+        "SPECTRAL_VIOLET": 44.57,
+        "GREEN": 55.43,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_INES_LEONOR_CARVALHO",
+      "worldKey": "SCHISM",
+      "bookNumber": 7
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_BANNER",
+      "name": "The Witness of the Banner",
+      "department": "PROPULSION",
+      "kernelKey": "COURAGE",
+      "apparentDomain": "Valor",
+      "realDomain": "Trepidation",
+      "color": {
+        "SPECTRAL_VIOLET": 85.02,
+        "GREEN": 14.98,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_ARJUN_DEV_MEHTA",
+      "worldKey": "CONCORD",
+      "bookNumber": 4
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_TABLE",
+      "name": "The Witness of the Table",
+      "department": "HABITABILITY",
+      "kernelKey": "COMMUNITY",
+      "apparentDomain": "Belonging",
+      "realDomain": "Insularity",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 39.74,
+        "WHITE": 60.26
+      },
+      "architectSoulId": "SOUL_NADIA_ROSE_CARDINAL",
+      "worldKey": "CONCORD",
+      "bookNumber": 13
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROAD",
+      "name": "The Witness of the Road",
+      "department": "PLANETOLOGY",
+      "kernelKey": "EXILE",
+      "apparentDomain": "Independence",
+      "realDomain": "Estrangement",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 55.43,
+        "WHITE": 44.57
+      },
+      "architectSoulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+      "worldKey": "RUIN",
+      "bookNumber": 12
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_BRIDGE",
+      "name": "The Witness of the Bridge",
+      "department": "PHYSICS",
+      "kernelKey": "TENSION",
+      "apparentDomain": "Balance",
+      "realDomain": "Fracture",
+      "color": {
+        "SPECTRAL_VIOLET": 98.3,
+        "GREEN": 1.7,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+      "worldKey": "RUIN",
+      "bookNumber": 2
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_KNOT",
+      "name": "The Witness of the Knot",
+      "department": "CHEMISTRY",
+      "kernelKey": "BOND",
+      "apparentDomain": "Affection",
+      "realDomain": "Entanglement",
+      "color": {
+        "SPECTRAL_VIOLET": 100.0,
+        "GREEN": 0.0,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_DARYA_MEHR_FARZAN",
+      "worldKey": "SCHISM",
+      "bookNumber": 1
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_REINS",
+      "name": "The Witness of the Reins",
+      "department": "COMPUTING",
+      "kernelKey": "CONTROL",
+      "apparentDomain": "Mastery",
+      "realDomain": "Domination",
+      "color": {
+        "SPECTRAL_VIOLET": 9.23,
+        "GREEN": 90.77,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+      "worldKey": "CONCORD",
+      "bookNumber": 9
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ARMOR",
+      "name": "The Witness of the Armor",
+      "department": "MATERIALS",
+      "kernelKey": "ATTRITION",
+      "apparentDomain": "Resilience",
+      "realDomain": "Hardening",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 26.1,
+        "WHITE": 73.9
+      },
+      "architectSoulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+      "worldKey": "SCHISM",
+      "bookNumber": 14
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_KEYSTONE",
+      "name": "The Witness of the Keystone",
+      "department": "ENERGY",
+      "kernelKey": "STABILITY",
+      "apparentDomain": "Steadiness",
+      "realDomain": "Fragility",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 39.74,
+        "WHITE": 60.26
+      },
+      "architectSoulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "worldKey": "SCHISM",
+      "bookNumber": 13
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_NEEDLE",
+      "name": "The Witness of the Needle",
+      "department": "NANOTECHNOLOGY",
+      "kernelKey": "REFINEMENT",
+      "apparentDomain": "Precision",
+      "realDomain": "Intrusion",
+      "color": {
+        "SPECTRAL_VIOLET": 27.37,
+        "GREEN": 72.63,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_LIN_XIAOYU_MEILIN",
+      "worldKey": "RUIN",
+      "bookNumber": 8
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SPRING",
+      "name": "The Witness of the Spring",
+      "department": "BIOLOGY",
+      "kernelKey": "RECOVERY",
+      "apparentDomain": "Renewal",
+      "realDomain": "Wishfulness",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 90.77,
+        "WHITE": 9.23
+      },
+      "architectSoulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+      "worldKey": "SCHISM",
+      "bookNumber": 10
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_MANTLE",
+      "name": "The Witness of the Mantle",
+      "department": "GENETICS",
+      "kernelKey": "INHERITANCE",
+      "apparentDomain": "Continuity",
+      "realDomain": "Entitlement",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_EVAN_JAMES_MERCER",
+      "worldKey": "RUIN",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_RELIQUARY",
+      "name": "The Witness of the Reliquary",
+      "department": "CRYOBIOLOGY",
+      "kernelKey": "MOURNING",
+      "apparentDomain": "Remembrance",
+      "realDomain": "Fixation",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 72.63,
+        "WHITE": 27.37
+      },
+      "architectSoulId": "SOUL_AINO_KAARINA_LEHTINEN",
+      "worldKey": "RUIN",
+      "bookNumber": 11
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_WINDOW",
+      "name": "The Witness of the Window",
+      "department": "NEUROSCIENCE",
+      "kernelKey": "ACKNOWLEDGMENT",
+      "apparentDomain": "Candor",
+      "realDomain": "Evasion",
+      "color": {
+        "SPECTRAL_VIOLET": 85.02,
+        "GREEN": 14.98,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+      "worldKey": "RUIN",
+      "bookNumber": 4
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SHIELD",
+      "name": "The Witness of the Shield",
+      "department": "MEDICINE",
+      "kernelKey": "RESCUE",
+      "apparentDomain": "Protection",
+      "realDomain": "Saviorism",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 39.74,
+        "WHITE": 60.26
+      },
+      "architectSoulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+      "worldKey": "RUIN",
+      "bookNumber": 13
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_GATE",
+      "name": "The Witness of the Gate",
+      "department": "EPIDEMIOLOGY",
+      "kernelKey": "SAFETY",
+      "apparentDomain": "Security",
+      "realDomain": "Confinement",
+      "color": {
+        "SPECTRAL_VIOLET": 9.23,
+        "GREEN": 90.77,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+      "worldKey": "RUIN",
+      "bookNumber": 9
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_CRADLE",
+      "name": "The Witness of the Cradle",
+      "department": "ECOLOGY",
+      "kernelKey": "CUSTODIANSHIP",
+      "apparentDomain": "Care",
+      "realDomain": "Ownership",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 55.43,
+        "WHITE": 44.57
+      },
+      "architectSoulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+      "worldKey": "SCHISM",
+      "bookNumber": 12
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_MOSAIC",
+      "name": "The Witness of the Mosaic",
+      "department": "TERRAFORMING",
+      "kernelKey": "IRREPARABILITY",
+      "apparentDomain": "Restoration",
+      "realDomain": "Despair",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 26.1,
+        "WHITE": 73.9
+      },
+      "architectSoulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "worldKey": "RUIN",
+      "bookNumber": 14
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ORCHARD",
+      "name": "The Witness of the Orchard",
+      "department": "AGRICULTURE",
+      "kernelKey": "NEGLECT",
+      "apparentDomain": "Cultivation",
+      "realDomain": "Neglect",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 72.63,
+        "WHITE": 27.37
+      },
+      "architectSoulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+      "worldKey": "SCHISM",
+      "bookNumber": 11
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_STILLWATER",
+      "name": "The Witness of Stillwater",
+      "department": "BOTANY",
+      "kernelKey": "SURRENDER",
+      "apparentDomain": "Serenity",
+      "realDomain": "Capitulation",
+      "color": {
+        "SPECTRAL_VIOLET": 60.26,
+        "GREEN": 39.74,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+      "worldKey": "SCHISM",
+      "bookNumber": 6
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_BALM",
+      "name": "The Witness of the Balm",
+      "department": "ZOOLOGY",
+      "kernelKey": "SYMPATHY",
+      "apparentDomain": "Kindness",
+      "realDomain": "Indulgence",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 90.77,
+        "WHITE": 9.23
+      },
+      "architectSoulId": "SOUL_ELIN_ASTRID_SJOBERG",
+      "worldKey": "RUIN",
+      "bookNumber": 10
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_WEATHERING",
+      "name": "The Witness of Weathering",
+      "department": "MICROBIOLOGY",
+      "kernelKey": "DEGRADATION",
+      "apparentDomain": "Adaptation",
+      "realDomain": "Decay",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 14.98,
+        "WHITE": 85.02
+      },
+      "architectSoulId": "SOUL_FARID_HASAN_RAHMAN",
+      "worldKey": "SCHISM",
+      "bookNumber": 15
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LANTERN",
+      "name": "The Witness of the Lantern",
+      "department": "INTELLIGENCE",
+      "kernelKey": "JUDGMENT",
+      "apparentDomain": "Wisdom",
+      "realDomain": "Fallibility",
+      "color": {
+        "SPECTRAL_VIOLET": 93.25,
+        "GREEN": 6.75,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+      "worldKey": "RUIN",
+      "bookNumber": 3
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_COMPASS",
+      "name": "The Witness of the Compass",
+      "department": "ALIGNMENT",
+      "kernelKey": "CONSCIENCE",
+      "apparentDomain": "Principle",
+      "realDomain": "Self-Condemnation",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 55.43,
+        "WHITE": 44.57
+      },
+      "architectSoulId": "SOUL_ELI_DAVID_ROSENFELD",
+      "worldKey": "CONCORD",
+      "bookNumber": 12
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LOCK",
+      "name": "The Witness of the Lock",
+      "department": "SOFTWARE",
+      "kernelKey": "GUARDIANSHIP",
+      "apparentDomain": "Safekeeping",
+      "realDomain": "Overreach",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 0.0,
+        "WHITE": 100.0
+      },
+      "architectSoulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "worldKey": "SCHISM",
+      "bookNumber": 17
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SEAL",
+      "name": "The Witness of the Seal",
+      "department": "CYBERSECURITY",
+      "kernelKey": "INTEGRITY",
+      "apparentDomain": "Fidelity",
+      "realDomain": "Duplicity",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+      "worldKey": "CONCORD",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROOT",
+      "name": "The Witness of the Root",
+      "department": "CONTINUITY",
+      "kernelKey": "ENDURANCE",
+      "apparentDomain": "Tenacity",
+      "realDomain": "Survivalism",
+      "color": {
+        "SPECTRAL_VIOLET": 27.37,
+        "GREEN": 72.63,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "worldKey": "SCHISM",
+      "bookNumber": 8
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_PRISM",
+      "name": "The Witness of the Prism",
+      "department": "ARCHIVES",
+      "kernelKey": "TRUTH",
+      "apparentDomain": "Honesty",
+      "realDomain": "Distortion",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 0.0,
+        "WHITE": 100.0
+      },
+      "architectSoulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+      "worldKey": "CONCORD",
+      "bookNumber": 17
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LEDGER",
+      "name": "The Witness of the Ledger",
+      "department": "SYSTEMS",
+      "kernelKey": "JUSTIFICATION",
+      "apparentDomain": "Reason",
+      "realDomain": "Excuse",
+      "color": {
+        "SPECTRAL_VIOLET": 73.9,
+        "GREEN": 26.1,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+      "worldKey": "RUIN",
+      "bookNumber": 5
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_RING",
+      "name": "The Witness of the Ring",
+      "department": "ARCHITECTURE",
+      "kernelKey": "COVENANT",
+      "apparentDomain": "Promise",
+      "realDomain": "Breach",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_MARA_ELIZABETH_MERCER",
+      "worldKey": "RUIN",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_KEY",
+      "name": "The Witness of the Key",
+      "department": "ROBOTICS",
+      "kernelKey": "AGENCY",
+      "apparentDomain": "Autonomy",
+      "realDomain": "Futility",
+      "color": {
+        "SPECTRAL_VIOLET": 9.23,
+        "GREEN": 90.77,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_FELIX_JOHANN_HARTMANN",
+      "worldKey": "SCHISM",
+      "bookNumber": 9
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_CHIME",
+      "name": "The Witness of the Chime",
+      "department": "ELECTRICAL",
+      "kernelKey": "SIGNAL",
+      "apparentDomain": "Clarity",
+      "realDomain": "Noise",
+      "color": {
+        "SPECTRAL_VIOLET": 60.26,
+        "GREEN": 39.74,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_SOFIE_ELISE_DE_SMET",
+      "worldKey": "RUIN",
+      "bookNumber": 6
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LOOM",
+      "name": "The Witness of the Loom",
+      "department": "MANUFACTURING",
+      "kernelKey": "PRODUCTIVITY",
+      "apparentDomain": "Industry",
+      "realDomain": "Exploitation",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+      "worldKey": "SCHISM",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_HARNESS",
+      "name": "The Witness of the Harness",
+      "department": "LOGISTICS",
+      "kernelKey": "SERVICE",
+      "apparentDomain": "Dedication",
+      "realDomain": "Submission",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "worldKey": "CONCORD",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_PLUMBLINE",
+      "name": "The Witness of the Plumbline",
+      "department": "RESOURCES",
+      "kernelKey": "IMPARTIALITY",
+      "apparentDomain": "Equity",
+      "realDomain": "Bias",
+      "color": {
+        "SPECTRAL_VIOLET": 60.26,
+        "GREEN": 39.74,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_AYLIN_DEFNE_DEMIR",
+      "worldKey": "CONCORD",
+      "bookNumber": 6
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_PATCHWORK",
+      "name": "The Witness of Patchwork",
+      "department": "RECYCLING",
+      "kernelKey": "CONSERVATION",
+      "apparentDomain": "Resourcefulness",
+      "realDomain": "Cannibalization",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 6.75,
+        "WHITE": 93.25
+      },
+      "architectSoulId": "SOUL_GARETH_RHYS_MORGAN",
+      "worldKey": "SCHISM",
+      "bookNumber": 16
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_BELL",
+      "name": "The Witness of the Bell",
+      "department": "SAFETY",
+      "kernelKey": "CAUTION",
+      "apparentDomain": "Prudence",
+      "realDomain": "Alarmism",
+      "color": {
+        "SPECTRAL_VIOLET": 73.9,
+        "GREEN": 26.1,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_RACHEL_DAWN_ADAIR",
+      "worldKey": "CONCORD",
+      "bookNumber": 5
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ANCHOR",
+      "name": "The Witness of the Anchor",
+      "department": "RELIABILITY",
+      "kernelKey": "ASSURANCE",
+      "apparentDomain": "Confidence",
+      "realDomain": "Indecision",
+      "color": {
+        "SPECTRAL_VIOLET": 100.0,
+        "GREEN": 0.0,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+      "worldKey": "RUIN",
+      "bookNumber": 1
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_DAM",
+      "name": "The Witness of the Dam",
+      "department": "COMMAND",
+      "kernelKey": "RESTRAINT",
+      "apparentDomain": "Temperance",
+      "realDomain": "Wrath",
+      "color": {
+        "SPECTRAL_VIOLET": 27.37,
+        "GREEN": 72.63,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+      "worldKey": "CONCORD",
+      "bookNumber": 8
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_BLINDFOLD",
+      "name": "The Witness of the Blindfold",
+      "department": "GOVERNANCE",
+      "kernelKey": "JUSTICE",
+      "apparentDomain": "Fairness",
+      "realDomain": "Condemnation",
+      "color": {
+        "SPECTRAL_VIOLET": 44.57,
+        "GREEN": 55.43,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_NOOR_AMAL_KHOURY",
+      "worldKey": "CONCORD",
+      "bookNumber": 7
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_HAMMER",
+      "name": "The Witness of the Hammer",
+      "department": "JUSTICE",
+      "kernelKey": "REDRESS",
+      "apparentDomain": "Restitution",
+      "realDomain": "Retaliation",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 0.0,
+        "WHITE": 100.0
+      },
+      "architectSoulId": "SOUL_ANDREI_MIHAI_POPESCU",
+      "worldKey": "RUIN",
+      "bookNumber": 17
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_COIN",
+      "name": "The Witness of the Coin",
+      "department": "ECONOMICS",
+      "kernelKey": "RECIPROCITY",
+      "apparentDomain": "Mutuality",
+      "realDomain": "Indebtedness",
+      "color": {
+        "SPECTRAL_VIOLET": 85.02,
+        "GREEN": 14.98,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+      "worldKey": "SCHISM",
+      "bookNumber": 4
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_HOURGLASS",
+      "name": "The Witness of the Hourglass",
+      "department": "ADMINISTRATION",
+      "kernelKey": "DELIBERATION",
+      "apparentDomain": "Patience",
+      "realDomain": "Haste",
+      "color": {
+        "SPECTRAL_VIOLET": 100.0,
+        "GREEN": 0.0,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_BALINT_ADAM_KOVACS",
+      "worldKey": "CONCORD",
+      "bookNumber": 1
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ROPE",
+      "name": "The Witness of the Rope",
+      "department": "SOCIOLOGY",
+      "kernelKey": "RELIANCE",
+      "apparentDomain": "Trust",
+      "realDomain": "Severance",
+      "color": {
+        "SPECTRAL_VIOLET": 44.57,
+        "GREEN": 55.43,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+      "worldKey": "RUIN",
+      "bookNumber": 7
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_MIRROR",
+      "name": "The Witness of the Mirror",
+      "department": "PSYCHOLOGY",
+      "kernelKey": "ESTEEM",
+      "apparentDomain": "Dignity",
+      "realDomain": "Self-Loathing",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 26.1,
+        "WHITE": 73.9
+      },
+      "architectSoulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+      "worldKey": "CONCORD",
+      "bookNumber": 14
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SIGIL",
+      "name": "The Witness of the Sigil",
+      "department": "ANTHROPOLOGY",
+      "kernelKey": "AFFILIATION",
+      "apparentDomain": "Allegiance",
+      "realDomain": "Factionalism",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 14.98,
+        "WHITE": 85.02
+      },
+      "architectSoulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+      "worldKey": "RUIN",
+      "bookNumber": 15
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LENS",
+      "name": "The Witness of the Lens",
+      "department": "HISTORY",
+      "kernelKey": "DISENCHANTMENT",
+      "apparentDomain": "Discernment",
+      "realDomain": "Contempt",
+      "color": {
+        "SPECTRAL_VIOLET": 73.9,
+        "GREEN": 26.1,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_FIONA_MAIRI_MACLEOD",
+      "worldKey": "SCHISM",
+      "bookNumber": 5
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_FLAME",
+      "name": "The Witness of the Flame",
+      "department": "EDUCATION",
+      "kernelKey": "CONVICTION",
+      "apparentDomain": "Purpose",
+      "realDomain": "Dependency",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 14.98,
+        "WHITE": 85.02
+      },
+      "architectSoulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "worldKey": "CONCORD",
+      "bookNumber": 15
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_VEIL",
+      "name": "The Witness of the Veil",
+      "department": "LINGUISTICS",
+      "kernelKey": "PEACE",
+      "apparentDomain": "Harmony",
+      "realDomain": "Appeasement",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 72.63,
+        "WHITE": 27.37
+      },
+      "architectSoulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+      "worldKey": "CONCORD",
+      "bookNumber": 11
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_HEARTH",
+      "name": "The Witness of the Hearth",
+      "department": "HUMANITIES",
+      "kernelKey": "TRADITION",
+      "apparentDomain": "Heritage",
+      "realDomain": "Stagnation",
+      "color": {
+        "SPECTRAL_VIOLET": 0.0,
+        "GREEN": 90.77,
+        "WHITE": 9.23
+      },
+      "architectSoulId": "SOUL_ALEX_ROWAN_WREN",
+      "worldKey": "CONCORD",
+      "bookNumber": 10
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_LAUREL",
+      "name": "The Witness of the Laurel",
+      "department": "OUTREACH",
+      "kernelKey": "REPUTATION",
+      "apparentDomain": "Honor",
+      "realDomain": "Facade",
+      "color": {
+        "SPECTRAL_VIOLET": 98.3,
+        "GREEN": 1.7,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_ELENA_ISABEL_SERRANO",
+      "worldKey": "SCHISM",
+      "bookNumber": 2
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_SPOTLIGHT",
+      "name": "The Witness of the Spotlight",
+      "department": "SPONSORSHIP",
+      "kernelKey": "PRESTIGE",
+      "apparentDomain": "Aspiration",
+      "realDomain": "Vainglory",
+      "color": {
+        "SPECTRAL_VIOLET": 98.3,
+        "GREEN": 1.7,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+      "worldKey": "CONCORD",
+      "bookNumber": 2
+    },
+    {
+      "witnessDefId": "WDF_WITNESS_OF_THE_ARENA",
+      "name": "The Witness of the Arena",
+      "department": "INNOVATION",
+      "kernelKey": "RIVALRY",
+      "apparentDomain": "Excellence",
+      "realDomain": "Rivalry",
+      "color": {
+        "SPECTRAL_VIOLET": 93.25,
+        "GREEN": 6.75,
+        "WHITE": 0.0
+      },
+      "architectSoulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+      "worldKey": "SCHISM",
+      "bookNumber": 3
+    }
+  ]
+}

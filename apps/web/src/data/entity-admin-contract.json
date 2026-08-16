@@ -2273,7 +2273,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "breedId",
           "type": "String"
@@ -2377,7 +2377,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "relation",
           "name": "breed",
           "type": "Breed"
@@ -3093,238 +3093,6 @@
           "kind": "relation",
           "name": "release",
           "type": "Release"
-        }
-      ]
-    },
-    "DocumentAmendment": {
-      "fields": [
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentAmendmentId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentBucketId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "ordinal",
-          "type": "Int"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "content",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "bucket",
-          "type": "DocumentBucket"
-        }
-      ]
-    },
-    "DocumentBucket": {
-      "fields": [
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentBucketId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "name",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "sourcePoints",
-          "type": "DocumentSourcePoint"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "amendments",
-          "type": "DocumentAmendment"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "drafts",
-          "type": "DocumentDraft"
-        }
-      ]
-    },
-    "DocumentDraft": {
-      "fields": [
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentDraftId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentBucketId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "version",
-          "type": "Int"
-        },
-        {
-          "enumName": "DocumentDraftStatus",
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "status",
-          "type": "DocumentDraftStatus"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "content",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "sourcePointIds",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "amendmentIds",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "authoredByUserId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "createdAt",
-          "type": "DateTime"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "bucket",
-          "type": "DocumentBucket"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "authoredBy",
-          "type": "User"
-        }
-      ]
-    },
-    "DocumentSourcePoint": {
-      "fields": [
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentSourcePointId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "documentBucketId",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "ordinal",
-          "type": "Int"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "content",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "scalar",
-          "name": "sourceLabel",
-          "type": "String"
-        },
-        {
-          "enumName": null,
-          "isList": false,
-          "isRequired": true,
-          "kind": "relation",
-          "name": "bucket",
-          "type": "DocumentBucket"
         }
       ]
     },
@@ -7879,6 +7647,14 @@
           "isList": true,
           "isRequired": true,
           "kind": "relation",
+          "name": "witnessDefs",
+          "type": "WitnessDef"
+        },
+        {
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
           "name": "companionDefs",
           "type": "CompanionDef"
         }
@@ -8863,14 +8639,6 @@
           "isList": true,
           "isRequired": true,
           "kind": "relation",
-          "name": "authoredDocuments",
-          "type": "DocumentDraft"
-        },
-        {
-          "enumName": null,
-          "isList": true,
-          "isRequired": true,
-          "kind": "relation",
           "name": "donationCheckouts",
           "type": "DonationCheckout"
         },
@@ -9251,12 +9019,28 @@
           "type": "String"
         },
         {
-          "enumName": "WitnessColor",
+          "enumName": null,
           "isList": false,
           "isRequired": true,
-          "kind": "enum",
+          "kind": "json",
           "name": "color",
-          "type": "WitnessColor"
+          "type": "Json"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectSoulId",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "architectSoul",
+          "type": "Soul"
         },
         {
           "enumName": null,
@@ -10617,7 +10401,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "breedId",
           "type": "String"
@@ -10747,7 +10531,7 @@
           "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "relation",
           "name": "breed",
           "type": "Breed"
@@ -10857,7 +10641,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "breedId",
           "type": "String"
@@ -13714,6 +13498,16 @@
           "isList": true,
           "isRequired": true,
           "kind": "relation",
+          "name": "witnessDefs",
+          "type": "WitnessDef"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
           "name": "companionDefs",
           "type": "CompanionDef"
         }
@@ -14933,12 +14727,32 @@
         {
           "editability": "EDITABLE",
           "exclusionReason": null,
-          "enumName": "WitnessColor",
+          "enumName": null,
           "isList": false,
           "isRequired": true,
-          "kind": "enum",
+          "kind": "json",
           "name": "color",
-          "type": "WitnessColor"
+          "type": "Json"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectSoulId",
+          "type": "String"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "architectSoul",
+          "type": "Soul"
         },
         {
           "editability": "EXCLUDED",
@@ -15054,21 +14868,22 @@
           "type": "String"
         },
         {
-          "enumValues": [
-            "BLACK",
-            "RED",
-            "ORANGE",
-            "YELLOW",
-            "GREEN",
-            "BLUE",
-            "WHITE"
-          ],
+          "enumValues": [],
           "hasDefault": false,
           "isList": false,
           "isRequired": true,
-          "kind": "enum",
+          "kind": "json",
           "name": "color",
-          "type": "WitnessColor"
+          "type": "Json"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "architectSoulId",
+          "type": "String"
         }
       ],
       "idField": "witnessDefId"

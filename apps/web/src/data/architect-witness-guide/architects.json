@@ -1,0 +1,845 @@
+{
+  "schemaVersion": "eidolon-architects-v2",
+  "rows": [
+    {
+      "character": {
+        "characterId": "CHA_KRIS_MAARJA_TAMM",
+        "displayName": "Kris Maarja Tamm",
+        "breedId": "BRD_HUMAN_FINNIC_ESTONIAN",
+        "soulId": "SOUL_KRIS_MAARJA_TAMM",
+        "worldKey": null,
+        "age": "44",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_KRIS_MAARJA_TAMM",
+        "department": "ASTRONOMY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_INES_LEONOR_CARVALHO",
+        "displayName": "Inês Leonor Carvalho",
+        "breedId": "BRD_HUMAN_IBERIAN_ATLANTIC_PORTUGUESE_CREOLE_PORTUGUESE",
+        "soulId": "SOUL_INES_LEONOR_CARVALHO",
+        "worldKey": null,
+        "age": "46",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_INES_LEONOR_CARVALHO",
+        "department": "NAVIGATION"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ARJUN_DEV_MEHTA",
+        "displayName": "Arjun Dev Mehta",
+        "breedId": "BRD_HUMAN_GUJARATI_GUJARATI",
+        "soulId": "SOUL_ARJUN_DEV_MEHTA",
+        "worldKey": null,
+        "age": "43",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_ARJUN_DEV_MEHTA",
+        "department": "PROPULSION"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NADIA_ROSE_CARDINAL",
+        "displayName": "Nadia Rose Cardinal",
+        "breedId": "BRD_HUMAN_CANADIAN_SETTLER_INDIGENOUS_MIXED",
+        "soulId": "SOUL_NADIA_ROSE_CARDINAL",
+        "worldKey": null,
+        "age": "52",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_NADIA_ROSE_CARDINAL",
+        "department": "HABITABILITY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_TOMAS_IGNACIO_AGUIRRE",
+        "displayName": "Tomás Ignacio Aguirre",
+        "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_ARGENTINE",
+        "soulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+        "worldKey": null,
+        "age": "50",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_TOMAS_IGNACIO_AGUIRRE",
+        "department": "PLANETOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_EMI_HARUKA_TAKAHASHI",
+        "displayName": "Emi Haruka Takahashi",
+        "breedId": "BRD_HUMAN_JAPANESE_JAPANESE",
+        "soulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+        "worldKey": null,
+        "age": "39",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_EMI_HARUKA_TAKAHASHI",
+        "department": "PHYSICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_DARYA_MEHR_FARZAN",
+        "displayName": "Darya Mehr Farzan",
+        "breedId": "BRD_HUMAN_PERSIAN_IRANIAN_PERSIAN_IRANIAN",
+        "soulId": "SOUL_DARYA_MEHR_FARZAN",
+        "worldKey": null,
+        "age": "47",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_DARYA_MEHR_FARZAN",
+        "department": "CHEMISTRY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_PARK_MIN_JUN_SEONG_HO",
+        "displayName": "Park Min-jun Seong-ho",
+        "breedId": "BRD_HUMAN_KOREAN_KOREAN",
+        "soulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+        "worldKey": null,
+        "age": "36",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_PARK_MIN_JUN_SEONG_HO",
+        "department": "COMPUTING"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NOMVULA_THANDIWE_DLAMINI",
+        "displayName": "Nomvula Thandiwe Dlamini",
+        "breedId": "BRD_HUMAN_SOUTHERN_AFRICAN_BANTU_NGUNI_SOTHO_TSWANA_ZULU",
+        "soulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+        "worldKey": null,
+        "age": "49",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_NOMVULA_THANDIWE_DLAMINI",
+        "department": "MATERIALS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_FAISAL_ABDULRAHMAN_AL_HARBI",
+        "displayName": "Faisal Abdulrahman Al-Harbi",
+        "breedId": "BRD_HUMAN_ARABIAN_PENINSULA_ARAB_NAJDI",
+        "soulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+        "worldKey": null,
+        "age": "45",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_FAISAL_ABDULRAHMAN_AL_HARBI",
+        "department": "ENERGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_LIN_XIAOYU_MEILIN",
+        "displayName": "Lin Xiaoyu Meilin",
+        "breedId": "BRD_HUMAN_NORTHERN_HAN_CHINESE_HAN_CHINESE",
+        "soulId": "SOUL_LIN_XIAOYU_MEILIN",
+        "worldKey": null,
+        "age": "37",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_LIN_XIAOYU_MEILIN",
+        "department": "NANOTECHNOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MATEUS_GABRIEL_RIBEIRO",
+        "displayName": "Mateus Gabriel Ribeiro",
+        "breedId": "BRD_HUMAN_IBERIAN_ATLANTIC_PORTUGUESE_CREOLE_LUSO_BRAZILIAN",
+        "soulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+        "worldKey": null,
+        "age": "54",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_MATEUS_GABRIEL_RIBEIRO",
+        "department": "BIOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_EVAN_JAMES_MERCER",
+        "displayName": "Evan James Mercer",
+        "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ANGLO_AUSTRALIAN",
+        "soulId": "SOUL_EVAN_JAMES_MERCER",
+        "worldKey": null,
+        "age": "41",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_EVAN_JAMES_MERCER",
+        "department": "GENETICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_AINO_KAARINA_LEHTINEN",
+        "displayName": "Aino Kaarina Lehtinen",
+        "breedId": "BRD_HUMAN_FINNIC_FINNISH",
+        "soulId": "SOUL_AINO_KAARINA_LEHTINEN",
+        "worldKey": null,
+        "age": "55",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_AINO_KAARINA_LEHTINEN",
+        "department": "CRYOBIOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ARI_RANGI_NGATA_MCKENZIE",
+        "displayName": "Ari Rangi Ngata-McKenzie",
+        "breedId": "BRD_HUMAN_NEW_ZEALANDER_PAKEHA_MAORI_MIXED",
+        "soulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+        "worldKey": null,
+        "age": "42",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_ARI_RANGI_NGATA_MCKENZIE",
+        "department": "NEUROSCIENCE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MARIAM_NEFERTARI_EL_MASRY",
+        "displayName": "Mariam Nefertari El-Masry",
+        "breedId": "BRD_HUMAN_EGYPTIAN_COPTIC_EGYPTIAN_ARAB",
+        "soulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+        "worldKey": null,
+        "age": "53",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_MARIAM_NEFERTARI_EL_MASRY",
+        "department": "MEDICINE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_DAWIT_TESFAYE_BEKELE",
+        "displayName": "Dawit Tesfaye Bekele",
+        "breedId": "BRD_HUMAN_ETHIOPIAN_ERITREAN_HIGHLANDS_AND_SOUTH_HABESHA_ETHIOPIAN_HIGHLAND",
+        "soulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+        "worldKey": null,
+        "age": "48",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_DAWIT_TESFAYE_BEKELE",
+        "department": "EPIDEMIOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_IMAN_ZAHRA_EL_IDRISSI",
+        "displayName": "Iman Zahra El Idrissi",
+        "breedId": "BRD_HUMAN_MAGHREBI_ARAB_MOROCCAN_ARAB",
+        "soulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+        "worldKey": null,
+        "age": "51",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_IMAN_ZAHRA_EL_IDRISSI",
+        "department": "ECOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MIKHAIL_ANDREYEVICH_SOKOLOV",
+        "displayName": "Mikhail Andreyevich Sokolov",
+        "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_RUSSIAN",
+        "soulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+        "worldKey": null,
+        "age": "40",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_MIKHAIL_ANDREYEVICH_SOKOLOV",
+        "department": "TERRAFORMING"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_LUCIA_MARISOL_HERNANDEZ",
+        "displayName": "Lucía Marisol Hernández",
+        "breedId": "BRD_HUMAN_MEXICAN",
+        "soulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+        "worldKey": null,
+        "age": "44",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_LUCIA_MARISOL_HERNANDEZ",
+        "department": "AGRICULTURE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_BRAM_WILLEM_DE_VRIES",
+        "displayName": "Bram Willem de Vries",
+        "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_DUTCH",
+        "soulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+        "worldKey": null,
+        "age": "56",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_BRAM_WILLEM_DE_VRIES",
+        "department": "BOTANY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ELIN_ASTRID_SJOBERG",
+        "displayName": "Elin Astrid Sjöberg",
+        "breedId": "BRD_HUMAN_NORDIC_SWEDISH",
+        "soulId": "SOUL_ELIN_ASTRID_SJOBERG",
+        "worldKey": null,
+        "age": "38",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_ELIN_ASTRID_SJOBERG",
+        "department": "ZOOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_FARID_HASAN_RAHMAN",
+        "displayName": "Farid Hasan Rahman",
+        "breedId": "BRD_HUMAN_BENGALI_BENGALI",
+        "soulId": "SOUL_FARID_HASAN_RAHMAN",
+        "worldKey": null,
+        "age": "46",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_FARID_HASAN_RAHMAN",
+        "department": "MICROBIOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NGUYEN_LINH_MINH_CHAU",
+        "displayName": "Nguyễn Linh Minh Châu",
+        "breedId": "BRD_HUMAN_VIETNAMESE_VIETNAMESE",
+        "soulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+        "worldKey": null,
+        "age": "35",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_NGUYEN_LINH_MINH_CHAU",
+        "department": "INTELLIGENCE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ELI_DAVID_ROSENFELD",
+        "displayName": "Eli David Rosenfeld",
+        "breedId": "BRD_HUMAN_JEWISH_DIASPORA_JEWISH_DIASPORA",
+        "soulId": "SOUL_ELI_DAVID_ROSENFELD",
+        "worldKey": null,
+        "age": "57",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_ELI_DAVID_ROSENFELD",
+        "department": "ALIGNMENT"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_OKSANA_MYKHAILIVNA_KOVALENKO",
+        "displayName": "Oksana Mykhailivna Kovalenko",
+        "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_UKRAINIAN",
+        "soulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+        "worldKey": null,
+        "age": "34",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_OKSANA_MYKHAILIVNA_KOVALENKO",
+        "department": "SOFTWARE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_LAILA_SORAYA_AHMADZAI",
+        "displayName": "Laila Soraya Ahmadzai",
+        "breedId": "BRD_HUMAN_PASHTUN_PASHTUN",
+        "soulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+        "worldKey": null,
+        "age": "38",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_LAILA_SORAYA_AHMADZAI",
+        "department": "CYBERSECURITY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NIKOS_ALEXANDROS_PAPADOPOULOS",
+        "displayName": "Nikos Alexandros Papadopoulos",
+        "breedId": "BRD_HUMAN_GREEK_AEGEAN_BYZANTINE_GREEK",
+        "soulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+        "worldKey": null,
+        "age": "58",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_NIKOS_ALEXANDROS_PAPADOPOULOS",
+        "department": "CONTINUITY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_RORY_SIOBHAN_O_SULLIVAN",
+        "displayName": "Rory Siobhán O'Sullivan",
+        "breedId": "BRD_HUMAN_IRISH_GAELIC_IRISH",
+        "soulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+        "worldKey": null,
+        "age": "63",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_RORY_SIOBHAN_O_SULLIVAN",
+        "department": "ARCHIVES"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MIKKEL_ANDERS_S_RENSEN",
+        "displayName": "Mikkel Anders Sørensen",
+        "breedId": "BRD_HUMAN_NORDIC_DANISH",
+        "soulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+        "worldKey": null,
+        "age": "47",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_MIKKEL_ANDERS_S_RENSEN",
+        "department": "SYSTEMS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MARA_ELIZABETH_MERCER",
+        "displayName": "Mara Elizabeth Mercer",
+        "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ANGLO_AUSTRALIAN",
+        "soulId": "SOUL_MARA_ELIZABETH_MERCER",
+        "worldKey": null,
+        "age": "41",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_MARA_ELIZABETH_MERCER",
+        "department": "ARCHITECTURE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_FELIX_JOHANN_HARTMANN",
+        "displayName": "Felix Johann Hartmann",
+        "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_GERMAN",
+        "soulId": "SOUL_FELIX_JOHANN_HARTMANN",
+        "worldKey": null,
+        "age": "45",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_FELIX_JOHANN_HARTMANN",
+        "department": "ROBOTICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_SOFIE_ELISE_DE_SMET",
+        "displayName": "Sofie Elise De Smet",
+        "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_FLEMISH",
+        "soulId": "SOUL_SOFIE_ELISE_DE_SMET",
+        "worldKey": null,
+        "age": "43",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_SOFIE_ELISE_DE_SMET",
+        "department": "ELECTRICAL"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_MARISOL_ELENA_REYES_MORGAN",
+        "displayName": "Marisol Elena Reyes-Morgan",
+        "breedId": "BRD_HUMAN_LOWLAND_FILIPINO_TAGALOG_VISAYAN_FILIPINO",
+        "soulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+        "worldKey": null,
+        "age": "50",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_MARISOL_ELENA_REYES_MORGAN",
+        "department": "MANUFACTURING"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_JEAN_BAPTISTE_ALAIN_MBUYI",
+        "displayName": "Jean-Baptiste Alain Mbuyi",
+        "breedId": "BRD_HUMAN_CENTRAL_AND_GREAT_LAKES_AFRICAN_KONGO_BANTU_TWA_LUBA_LUNDA",
+        "soulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+        "worldKey": null,
+        "age": "61",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_JEAN_BAPTISTE_ALAIN_MBUYI",
+        "department": "LOGISTICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_AYLIN_DEFNE_DEMIR",
+        "displayName": "Aylin Defne Demir",
+        "breedId": "BRD_HUMAN_OGHUZ_TURKIC_TURKISH",
+        "soulId": "SOUL_AYLIN_DEFNE_DEMIR",
+        "worldKey": null,
+        "age": "46",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_AYLIN_DEFNE_DEMIR",
+        "department": "RESOURCES"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_GARETH_RHYS_MORGAN",
+        "displayName": "Gareth Rhys Morgan",
+        "breedId": "BRD_HUMAN_WELSH_BRITTONIC_CELTIC_WELSH",
+        "soulId": "SOUL_GARETH_RHYS_MORGAN",
+        "worldKey": null,
+        "age": "52",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_GARETH_RHYS_MORGAN",
+        "department": "RECYCLING"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_RACHEL_DAWN_ADAIR",
+        "displayName": "Rachel Dawn Adair",
+        "breedId": "BRD_HUMAN_AMERICAN_SETTLER_INDIGENOUS_MIXED",
+        "soulId": "SOUL_RACHEL_DAWN_ADAIR",
+        "worldKey": null,
+        "age": "48",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_RACHEL_DAWN_ADAIR",
+        "department": "SAFETY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_EIRIK_MAGNUS_SOLBERG",
+        "displayName": "Eirik Magnus Solberg",
+        "breedId": "BRD_HUMAN_NORDIC_NORWEGIAN",
+        "soulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+        "worldKey": null,
+        "age": "55",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_EIRIK_MAGNUS_SOLBERG",
+        "department": "RELIABILITY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_KATARZYNA_MARIA_NOWAK",
+        "displayName": "Katarzyna Maria Nowak",
+        "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_POLISH",
+        "soulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+        "worldKey": null,
+        "age": "50",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_KATARZYNA_MARIA_NOWAK",
+        "department": "COMMAND"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NOOR_AMAL_KHOURY",
+        "displayName": "Noor Amal Khoury",
+        "breedId": "BRD_HUMAN_LEVANTINE_ARAB_LEBANESE_ARAB",
+        "soulId": "SOUL_NOOR_AMAL_KHOURY",
+        "worldKey": null,
+        "age": "57",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_NOOR_AMAL_KHOURY",
+        "department": "GOVERNANCE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ANDREI_MIHAI_POPESCU",
+        "displayName": "Andrei Mihai Popescu",
+        "breedId": "BRD_HUMAN_ROMANIAN_MOLDOVAN_ROMANIAN",
+        "soulId": "SOUL_ANDREI_MIHAI_POPESCU",
+        "worldKey": null,
+        "age": "53",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_ANDREI_MIHAI_POPESCU",
+        "department": "JUSTICE"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_CAMILLE_ELODIE_MOREAU",
+        "displayName": "Camille Élodie Moreau",
+        "breedId": "BRD_HUMAN_FRENCH_FRANCOPHONE_FRENCH",
+        "soulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+        "worldKey": null,
+        "age": "47",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_CAMILLE_ELODIE_MOREAU",
+        "department": "ECONOMICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_BALINT_ADAM_KOVACS",
+        "displayName": "Bálint Ádám Kovács",
+        "breedId": "BRD_HUMAN_HUNGARIAN_MAGYAR_HUNGARIAN",
+        "soulId": "SOUL_BALINT_ADAM_KOVACS",
+        "worldKey": null,
+        "age": "51",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_BALINT_ADAM_KOVACS",
+        "department": "ADMINISTRATION"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NADEGE_SOLANGE_PIERRE",
+        "displayName": "Nadège Solange Pierre",
+        "breedId": "BRD_HUMAN_FRANCOPHONE_CARIBBEAN_CREOLE_HAITIAN",
+        "soulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+        "worldKey": null,
+        "age": "45",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_NADEGE_SOLANGE_PIERRE",
+        "department": "SOCIOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ALEJANDRO_RAFAEL_VALDES",
+        "displayName": "Alejandro Rafael Valdés",
+        "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_CUBAN",
+        "soulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+        "worldKey": null,
+        "age": "43",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_ALEJANDRO_RAFAEL_VALDES",
+        "department": "PSYCHOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_SASHA_VALENTINA_CARDENAS",
+        "displayName": "Sasha Valentina Cárdenas",
+        "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_COLOMBIAN_MESTIZO",
+        "soulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+        "worldKey": null,
+        "age": "56",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_SASHA_VALENTINA_CARDENAS",
+        "department": "ANTHROPOLOGY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_FIONA_MAIRI_MACLEOD",
+        "displayName": "Fiona Mairi MacLeod",
+        "breedId": "BRD_HUMAN_IRISH_GAELIC_HIGHLAND_SCOTS",
+        "soulId": "SOUL_FIONA_MAIRI_MACLEOD",
+        "worldKey": null,
+        "age": "62",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_FIONA_MAIRI_MACLEOD",
+        "department": "HISTORY"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+        "displayName": "Rev. Dr. Samuel Olufemi Adebayo",
+        "breedId": "BRD_HUMAN_YORUBA_YORUBA",
+        "soulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+        "worldKey": null,
+        "age": "65",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+        "department": "EDUCATION"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_GIULIA_FRANCESCA_CONTI",
+        "displayName": "Giulia Francesca Conti",
+        "breedId": "BRD_HUMAN_ITALIAN_CENTRAL_MEDITERRANEAN_ITALIAN",
+        "soulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+        "worldKey": null,
+        "age": "44",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_GIULIA_FRANCESCA_CONTI",
+        "department": "LINGUISTICS"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ALEX_ROWAN_WREN",
+        "displayName": "Alex Rowan Wren",
+        "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ENGLISH",
+        "soulId": "SOUL_ALEX_ROWAN_WREN",
+        "worldKey": null,
+        "age": "60",
+        "gender": "NON_BINARY"
+      },
+      "architect": {
+        "characterId": "CHA_ALEX_ROWAN_WREN",
+        "department": "HUMANITIES"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_ELENA_ISABEL_SERRANO",
+        "displayName": "Elena Isabel Serrano",
+        "breedId": "BRD_HUMAN_SPANISH_CASTILIAN_CASTILIAN",
+        "soulId": "SOUL_ELENA_ISABEL_SERRANO",
+        "worldKey": null,
+        "age": "39",
+        "gender": "FEMALE"
+      },
+      "architect": {
+        "characterId": "CHA_ELENA_ISABEL_SERRANO",
+        "department": "OUTREACH"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_DANIYAR_SERIKULY_BEKETOV",
+        "displayName": "Daniyar Serikuly Beketov",
+        "breedId": "BRD_HUMAN_KIPCHAK_AND_NORTHERN_TURKIC_KAZAKH",
+        "soulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+        "worldKey": null,
+        "age": "52",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_DANIYAR_SERIKULY_BEKETOV",
+        "department": "SPONSORSHIP"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_TEMUULEN_ERDENEBAT_GANBOLD",
+        "displayName": "Temüülen Erdenebat Ganbold",
+        "breedId": "BRD_HUMAN_MONGOL_MONGOL",
+        "soulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+        "worldKey": null,
+        "age": "54",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_TEMUULEN_ERDENEBAT_GANBOLD",
+        "department": "INNOVATION"
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+        "displayName": "Hans Halycon Hohenzollern",
+        "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_GERMAN",
+        "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN",
+        "worldKey": null,
+        "age": "58",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+        "department": null
+      }
+    },
+    {
+      "character": {
+        "characterId": "CHA_NOELL_PIETER_SMUKK",
+        "displayName": "Noell Pieter Smukk",
+        "breedId": "BRD_HUMAN_AFRIKANER_AFRIKANER",
+        "soulId": "SOUL_NOELL_PIETER_SMUKK",
+        "worldKey": null,
+        "age": "48",
+        "gender": "MALE"
+      },
+      "architect": {
+        "characterId": "CHA_NOELL_PIETER_SMUKK",
+        "department": null
+      }
+    }
+  ]
+}

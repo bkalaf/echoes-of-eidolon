@@ -7,10 +7,10 @@
     "routeTree.gen.ts",
     "navigation-registry.json"
   ],
-  "activeScreenCount": 290,
+  "activeScreenCount": 292,
   "statusCounts": {
     "REACHABLE": 60,
-    "ROLE_GATED_REACHABLE": 192,
+    "ROLE_GATED_REACHABLE": 194,
     "STATE_TRIGGERED": 38,
     "ORPHANED": 0,
     "DEAD_END": 0,
@@ -4935,6 +4935,40 @@
       "screenId": "DATA_COMPANION_DEF",
       "title": "Data - CompanionDef",
       "routeOrState": "/admin/data/companion-def",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "entryPoint": "/admin",
+      "parentAction": "Administration shell section, owning list action, or Administration page directory",
+      "exitDestination": "/",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ],
+      "routeRegistered": true,
+      "status": "ROLE_GATED_REACHABLE"
+    },
+    {
+      "reviewOrder": 304,
+      "screenId": "CAMPAIGN_DOCUMENT_CORPUS",
+      "title": "Historical Document Corpus",
+      "routeOrState": "/admin/campaigns/:campaignId/documents",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "entryPoint": "/admin",
+      "parentAction": "Administration shell section, owning list action, or Administration page directory",
+      "exitDestination": "/",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ],
+      "routeRegistered": true,
+      "status": "ROLE_GATED_REACHABLE"
+    },
+    {
+      "reviewOrder": 305,
+      "screenId": "CAMPAIGN_DOCUMENT_QUESTS",
+      "title": "Document Quest and Research Planner",
+      "routeOrState": "/admin/campaigns/:campaignId/document-quests",
       "kind": "route",
       "shell": "admin",
       "authorization": "administration",

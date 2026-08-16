@@ -1,0 +1,1139 @@
+{
+  "schemaVersion": "eidolon-witnesses-v2",
+  "rows": [
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SUMMIT",
+        "displayName": "The Witness of the Summit",
+        "breedId": "BRD_ALPINE_IBEX",
+        "soulId": "SOUL_KRIS_MAARJA_TAMM",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SUMMIT",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SUMMIT",
+        "architectCharacterId": "CHA_KRIS_MAARJA_TAMM",
+        "trueFlawName": "Conceit",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 3
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SAIL",
+        "displayName": "The Witness of the Sail",
+        "breedId": "BRD_SELKIE",
+        "soulId": "SOUL_INES_LEONOR_CARVALHO",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SAIL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SAIL",
+        "architectCharacterId": "CHA_INES_LEONOR_CARVALHO",
+        "trueFlawName": "Drift",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 7
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_BANNER",
+        "displayName": "The Witness of the Banner",
+        "breedId": "BRD_GRIFFIN",
+        "soulId": "SOUL_ARJUN_DEV_MEHTA",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_BANNER",
+        "witnessDefId": "WDF_WITNESS_OF_THE_BANNER",
+        "architectCharacterId": "CHA_ARJUN_DEV_MEHTA",
+        "trueFlawName": "Trepidation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 4
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_TABLE",
+        "displayName": "The Witness of the Table",
+        "breedId": "BRD_AFRICAN_SAVANNA_ELEPHANT",
+        "soulId": "SOUL_NADIA_ROSE_CARDINAL",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_TABLE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_TABLE",
+        "architectCharacterId": "CHA_NADIA_ROSE_CARDINAL",
+        "trueFlawName": "Insularity",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 13
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ROAD",
+        "displayName": "The Witness of the Road",
+        "breedId": "BRD_REINDEER",
+        "soulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ROAD",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ROAD",
+        "architectCharacterId": "CHA_TOMAS_IGNACIO_AGUIRRE",
+        "trueFlawName": "Estrangement",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 12
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_BRIDGE",
+        "displayName": "The Witness of the Bridge",
+        "breedId": "BRD_ARACHNE",
+        "soulId": "SOUL_EMI_HARUKA_TAKAHASHI",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_BRIDGE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_BRIDGE",
+        "architectCharacterId": "CHA_EMI_HARUKA_TAKAHASHI",
+        "trueFlawName": "Fracture",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 2
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_KNOT",
+        "displayName": "The Witness of the Knot",
+        "breedId": "BRD_COMMON_OCTOPUS",
+        "soulId": "SOUL_DARYA_MEHR_FARZAN",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_KNOT",
+        "witnessDefId": "WDF_WITNESS_OF_THE_KNOT",
+        "architectCharacterId": "CHA_DARYA_MEHR_FARZAN",
+        "trueFlawName": "Entanglement",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 1
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_REINS",
+        "displayName": "The Witness of the Reins",
+        "breedId": "BRD_CENTAUR",
+        "soulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_REINS",
+        "witnessDefId": "WDF_WITNESS_OF_THE_REINS",
+        "architectCharacterId": "CHA_PARK_MIN_JUN_SEONG_HO",
+        "trueFlawName": "Domination",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 9
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ARMOR",
+        "displayName": "The Witness of the Armor",
+        "breedId": "BRD_GROUND_PANGOLIN",
+        "soulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ARMOR",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ARMOR",
+        "architectCharacterId": "CHA_NOMVULA_THANDIWE_DLAMINI",
+        "trueFlawName": "Hardening",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 14
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_KEYSTONE",
+        "displayName": "The Witness of the Keystone",
+        "breedId": "BRD_AMERICAN_BISON",
+        "soulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_KEYSTONE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_KEYSTONE",
+        "architectCharacterId": "CHA_FAISAL_ABDULRAHMAN_AL_HARBI",
+        "trueFlawName": "Fragility",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 13
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_NEEDLE",
+        "displayName": "The Witness of the Needle",
+        "breedId": "BRD_EUROPEAN_MANTIS",
+        "soulId": "SOUL_LIN_XIAOYU_MEILIN",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_NEEDLE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_NEEDLE",
+        "architectCharacterId": "CHA_LIN_XIAOYU_MEILIN",
+        "trueFlawName": "Intrusion",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 8
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SPRING",
+        "displayName": "The Witness of the Spring",
+        "breedId": "BRD_AXOLOTL_BEAST",
+        "soulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SPRING",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SPRING",
+        "architectCharacterId": "CHA_MATEUS_GABRIEL_RIBEIRO",
+        "trueFlawName": "Wishfulness",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 10
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_MANTLE",
+        "displayName": "The Witness of the Mantle",
+        "breedId": "BRD_DINGO",
+        "soulId": "SOUL_EVAN_JAMES_MERCER",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_MANTLE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_MANTLE",
+        "architectCharacterId": "CHA_EVAN_JAMES_MERCER",
+        "trueFlawName": "Entitlement",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_RELIQUARY",
+        "displayName": "The Witness of the Reliquary",
+        "breedId": "BRD_MUMMY",
+        "soulId": "SOUL_AINO_KAARINA_LEHTINEN",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_RELIQUARY",
+        "witnessDefId": "WDF_WITNESS_OF_THE_RELIQUARY",
+        "architectCharacterId": "CHA_AINO_KAARINA_LEHTINEN",
+        "trueFlawName": "Fixation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 11
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_WINDOW",
+        "displayName": "The Witness of the Window",
+        "breedId": "BRD_GOLEMS_GLASS",
+        "soulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_WINDOW",
+        "witnessDefId": "WDF_WITNESS_OF_THE_WINDOW",
+        "architectCharacterId": "CHA_ARI_RANGI_NGATA_MCKENZIE",
+        "trueFlawName": "Evasion",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 4
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SHIELD",
+        "displayName": "The Witness of the Shield",
+        "breedId": "BRD_NINE_BANDED_ARMADILLO",
+        "soulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SHIELD",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SHIELD",
+        "architectCharacterId": "CHA_MARIAM_NEFERTARI_EL_MASRY",
+        "trueFlawName": "Saviorism",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 13
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_GATE",
+        "displayName": "The Witness of the Gate",
+        "breedId": "BRD_NILE_CROCODILE",
+        "soulId": "SOUL_DAWIT_TESFAYE_BEKELE",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_GATE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_GATE",
+        "architectCharacterId": "CHA_DAWIT_TESFAYE_BEKELE",
+        "trueFlawName": "Confinement",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 9
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_CRADLE",
+        "displayName": "The Witness of the Cradle",
+        "breedId": "BRD_URSUS_ARCTOS_BROWN_BEAR",
+        "soulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_CRADLE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_CRADLE",
+        "architectCharacterId": "CHA_IMAN_ZAHRA_EL_IDRISSI",
+        "trueFlawName": "Ownership",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 12
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_MOSAIC",
+        "displayName": "The Witness of the Mosaic",
+        "breedId": "BRD_GOLEMS_KINTSUGI_CERAMIC",
+        "soulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_MOSAIC",
+        "witnessDefId": "WDF_WITNESS_OF_THE_MOSAIC",
+        "architectCharacterId": "CHA_MIKHAIL_ANDREYEVICH_SOKOLOV",
+        "trueFlawName": "Despair",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 14
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ORCHARD",
+        "displayName": "The Witness of the Orchard",
+        "breedId": "BRD_WESTERN_HONEY_BEE",
+        "soulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ORCHARD",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ORCHARD",
+        "architectCharacterId": "CHA_LUCIA_MARISOL_HERNANDEZ",
+        "trueFlawName": "Neglect",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 11
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_STILLWATER",
+        "displayName": "The Witness of Stillwater",
+        "breedId": "BRD_KELPIE",
+        "soulId": "SOUL_BRAM_WILLEM_DE_VRIES",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_STILLWATER",
+        "witnessDefId": "WDF_WITNESS_OF_STILLWATER",
+        "architectCharacterId": "CHA_BRAM_WILLEM_DE_VRIES",
+        "trueFlawName": "Capitulation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 6
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_BALM",
+        "displayName": "The Witness of the Balm",
+        "breedId": "BRD_UNICORN",
+        "soulId": "SOUL_ELIN_ASTRID_SJOBERG",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_BALM",
+        "witnessDefId": "WDF_WITNESS_OF_THE_BALM",
+        "architectCharacterId": "CHA_ELIN_ASTRID_SJOBERG",
+        "trueFlawName": "Indulgence",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 10
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_WEATHERING",
+        "displayName": "The Witness of Weathering",
+        "breedId": "BRD_DECAY_SPIRIT",
+        "soulId": "SOUL_FARID_HASAN_RAHMAN",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_WEATHERING",
+        "witnessDefId": "WDF_WITNESS_OF_WEATHERING",
+        "architectCharacterId": "CHA_FARID_HASAN_RAHMAN",
+        "trueFlawName": "Decay",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 15
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LANTERN",
+        "displayName": "The Witness of the Lantern",
+        "breedId": "BRD_HUMPBACK_ANGLERFISH",
+        "soulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LANTERN",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LANTERN",
+        "architectCharacterId": "CHA_NGUYEN_LINH_MINH_CHAU",
+        "trueFlawName": "Fallibility",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 3
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_COMPASS",
+        "displayName": "The Witness of the Compass",
+        "breedId": "BRD_HOMING_PIGEON_BEAST",
+        "soulId": "SOUL_ELI_DAVID_ROSENFELD",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_COMPASS",
+        "witnessDefId": "WDF_WITNESS_OF_THE_COMPASS",
+        "architectCharacterId": "CHA_ELI_DAVID_ROSENFELD",
+        "trueFlawName": "Self-Condemnation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 12
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LOCK",
+        "displayName": "The Witness of the Lock",
+        "breedId": "BRD_GOLEMS_IRON",
+        "soulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LOCK",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LOCK",
+        "architectCharacterId": "CHA_OKSANA_MYKHAILIVNA_KOVALENKO",
+        "trueFlawName": "Overreach",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 17
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SEAL",
+        "displayName": "The Witness of the Seal",
+        "breedId": "BRD_GARGOYLE_TWO_HEADED",
+        "soulId": "SOUL_LAILA_SORAYA_AHMADZAI",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SEAL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SEAL",
+        "architectCharacterId": "CHA_LAILA_SORAYA_AHMADZAI",
+        "trueFlawName": "Duplicity",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ROOT",
+        "displayName": "The Witness of the Root",
+        "breedId": "BRD_TREANT",
+        "soulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ROOT",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ROOT",
+        "architectCharacterId": "CHA_NIKOS_ALEXANDROS_PAPADOPOULOS",
+        "trueFlawName": "Survivalism",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 8
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_PRISM",
+        "displayName": "The Witness of the Prism",
+        "breedId": "BRD_ELEMENTALS_CRYSTAL",
+        "soulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_PRISM",
+        "witnessDefId": "WDF_WITNESS_OF_THE_PRISM",
+        "architectCharacterId": "CHA_RORY_SIOBHAN_O_SULLIVAN",
+        "trueFlawName": "Distortion",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 17
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LEDGER",
+        "displayName": "The Witness of the Ledger",
+        "breedId": "BRD_DWARF",
+        "soulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LEDGER",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LEDGER",
+        "architectCharacterId": "CHA_MIKKEL_ANDERS_S_RENSEN",
+        "trueFlawName": "Excuse",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 5
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_RING",
+        "displayName": "The Witness of the Ring",
+        "breedId": "BRD_DINGO",
+        "soulId": "SOUL_MARA_ELIZABETH_MERCER",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_RING",
+        "witnessDefId": "WDF_WITNESS_OF_THE_RING",
+        "architectCharacterId": "CHA_MARA_ELIZABETH_MERCER",
+        "trueFlawName": "Breach",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_KEY",
+        "displayName": "The Witness of the Key",
+        "breedId": "BRD_DJINN",
+        "soulId": "SOUL_FELIX_JOHANN_HARTMANN",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_KEY",
+        "witnessDefId": "WDF_WITNESS_OF_THE_KEY",
+        "architectCharacterId": "CHA_FELIX_JOHANN_HARTMANN",
+        "trueFlawName": "Futility",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 9
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_CHIME",
+        "displayName": "The Witness of the Chime",
+        "breedId": "BRD_GREATER_HORSESHOE_BAT",
+        "soulId": "SOUL_SOFIE_ELISE_DE_SMET",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_CHIME",
+        "witnessDefId": "WDF_WITNESS_OF_THE_CHIME",
+        "architectCharacterId": "CHA_SOFIE_ELISE_DE_SMET",
+        "trueFlawName": "Noise",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 6
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LOOM",
+        "displayName": "The Witness of the Loom",
+        "breedId": "BRD_OGRE",
+        "soulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LOOM",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LOOM",
+        "architectCharacterId": "CHA_MARISOL_ELENA_REYES_MORGAN",
+        "trueFlawName": "Exploitation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_HARNESS",
+        "displayName": "The Witness of the Harness",
+        "breedId": "BRD_GARGOYLE_TWO_HEADED",
+        "soulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_HARNESS",
+        "witnessDefId": "WDF_WITNESS_OF_THE_HARNESS",
+        "architectCharacterId": "CHA_JEAN_BAPTISTE_ALAIN_MBUYI",
+        "trueFlawName": "Submission",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_PLUMBLINE",
+        "displayName": "The Witness of the Plumbline",
+        "breedId": "BRD_STONE_GIANT",
+        "soulId": "SOUL_AYLIN_DEFNE_DEMIR",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_PLUMBLINE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_PLUMBLINE",
+        "architectCharacterId": "CHA_AYLIN_DEFNE_DEMIR",
+        "trueFlawName": "Bias",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 6
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_PATCHWORK",
+        "displayName": "The Witness of Patchwork",
+        "breedId": "BRD_OGRE",
+        "soulId": "SOUL_GARETH_RHYS_MORGAN",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_PATCHWORK",
+        "witnessDefId": "WDF_WITNESS_OF_PATCHWORK",
+        "architectCharacterId": "CHA_GARETH_RHYS_MORGAN",
+        "trueFlawName": "Cannibalization",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 16
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_BELL",
+        "displayName": "The Witness of the Bell",
+        "breedId": "BRD_WHITE_BELLBIRD",
+        "soulId": "SOUL_RACHEL_DAWN_ADAIR",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_BELL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_BELL",
+        "architectCharacterId": "CHA_RACHEL_DAWN_ADAIR",
+        "trueFlawName": "Alarmism",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 5
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ANCHOR",
+        "displayName": "The Witness of the Anchor",
+        "breedId": "BRD_SPERM_WHALE",
+        "soulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ANCHOR",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ANCHOR",
+        "architectCharacterId": "CHA_EIRIK_MAGNUS_SOLBERG",
+        "trueFlawName": "Indecision",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 1
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_DAM",
+        "displayName": "The Witness of the Dam",
+        "breedId": "BRD_NORTH_AMERICAN_BEAVER",
+        "soulId": "SOUL_KATARZYNA_MARIA_NOWAK",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_DAM",
+        "witnessDefId": "WDF_WITNESS_OF_THE_DAM",
+        "architectCharacterId": "CHA_KATARZYNA_MARIA_NOWAK",
+        "trueFlawName": "Wrath",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 8
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_BLINDFOLD",
+        "displayName": "The Witness of the Blindfold",
+        "breedId": "BRD_BARN_OWL",
+        "soulId": "SOUL_NOOR_AMAL_KHOURY",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_BLINDFOLD",
+        "witnessDefId": "WDF_WITNESS_OF_THE_BLINDFOLD",
+        "architectCharacterId": "CHA_NOOR_AMAL_KHOURY",
+        "trueFlawName": "Condemnation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 7
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_HAMMER",
+        "displayName": "The Witness of the Hammer",
+        "breedId": "BRD_MINOTAUR",
+        "soulId": "SOUL_ANDREI_MIHAI_POPESCU",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_HAMMER",
+        "witnessDefId": "WDF_WITNESS_OF_THE_HAMMER",
+        "architectCharacterId": "CHA_ANDREI_MIHAI_POPESCU",
+        "trueFlawName": "Retaliation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 17
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_COIN",
+        "displayName": "The Witness of the Coin",
+        "breedId": "BRD_EURASIAN_MAGPIE",
+        "soulId": "SOUL_CAMILLE_ELODIE_MOREAU",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_COIN",
+        "witnessDefId": "WDF_WITNESS_OF_THE_COIN",
+        "architectCharacterId": "CHA_CAMILLE_ELODIE_MOREAU",
+        "trueFlawName": "Indebtedness",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 4
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_HOURGLASS",
+        "displayName": "The Witness of the Hourglass",
+        "breedId": "BRD_GALAPAGOS_GIANT_TORTOISE",
+        "soulId": "SOUL_BALINT_ADAM_KOVACS",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_HOURGLASS",
+        "witnessDefId": "WDF_WITNESS_OF_THE_HOURGLASS",
+        "architectCharacterId": "CHA_BALINT_ADAM_KOVACS",
+        "trueFlawName": "Haste",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 1
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ROPE",
+        "displayName": "The Witness of the Rope",
+        "breedId": "BRD_LAR_GIBBON",
+        "soulId": "SOUL_NADEGE_SOLANGE_PIERRE",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ROPE",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ROPE",
+        "architectCharacterId": "CHA_NADEGE_SOLANGE_PIERRE",
+        "trueFlawName": "Severance",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 7
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_MIRROR",
+        "displayName": "The Witness of the Mirror",
+        "breedId": "BRD_DOPPELGANGER",
+        "soulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_MIRROR",
+        "witnessDefId": "WDF_WITNESS_OF_THE_MIRROR",
+        "architectCharacterId": "CHA_ALEJANDRO_RAFAEL_VALDES",
+        "trueFlawName": "Self-Loathing",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 14
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SIGIL",
+        "displayName": "The Witness of the Sigil",
+        "breedId": "BRD_LION",
+        "soulId": "SOUL_SASHA_VALENTINA_CARDENAS",
+        "worldKey": "RUIN",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SIGIL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SIGIL",
+        "architectCharacterId": "CHA_SASHA_VALENTINA_CARDENAS",
+        "trueFlawName": "Factionalism",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 15
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LENS",
+        "displayName": "The Witness of the Lens",
+        "breedId": "BRD_SPHINX",
+        "soulId": "SOUL_FIONA_MAIRI_MACLEOD",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LENS",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LENS",
+        "architectCharacterId": "CHA_FIONA_MAIRI_MACLEOD",
+        "trueFlawName": "Contempt",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 5
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_FLAME",
+        "displayName": "The Witness of the Flame",
+        "breedId": "BRD_HUMAN_YORUBA_YORUBA",
+        "soulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_FLAME",
+        "witnessDefId": "WDF_WITNESS_OF_THE_FLAME",
+        "architectCharacterId": "CHA_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+        "trueFlawName": "Dependency",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 15
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_VEIL",
+        "displayName": "The Witness of the Veil",
+        "breedId": "BRD_LUNA_MOTH",
+        "soulId": "SOUL_GIULIA_FRANCESCA_CONTI",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_VEIL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_VEIL",
+        "architectCharacterId": "CHA_GIULIA_FRANCESCA_CONTI",
+        "trueFlawName": "Appeasement",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 11
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_HEARTH",
+        "displayName": "The Witness of the Hearth",
+        "breedId": "BRD_BROWNIE",
+        "soulId": "SOUL_ALEX_ROWAN_WREN",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_HEARTH",
+        "witnessDefId": "WDF_WITNESS_OF_THE_HEARTH",
+        "architectCharacterId": "CHA_ALEX_ROWAN_WREN",
+        "trueFlawName": "Stagnation",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 10
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_LAUREL",
+        "displayName": "The Witness of the Laurel",
+        "breedId": "BRD_MANDRILL",
+        "soulId": "SOUL_ELENA_ISABEL_SERRANO",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_LAUREL",
+        "witnessDefId": "WDF_WITNESS_OF_THE_LAUREL",
+        "architectCharacterId": "CHA_ELENA_ISABEL_SERRANO",
+        "trueFlawName": "Facade",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 2
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_SPOTLIGHT",
+        "displayName": "The Witness of the Spotlight",
+        "breedId": "BRD_INDIAN_PEAFOWL",
+        "soulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
+        "worldKey": "CONCORD",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_SPOTLIGHT",
+        "witnessDefId": "WDF_WITNESS_OF_THE_SPOTLIGHT",
+        "architectCharacterId": "CHA_DANIYAR_SERIKULY_BEKETOV",
+        "trueFlawName": "Vainglory",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 2
+    },
+    {
+      "character": {
+        "characterId": "CHA_WITNESS_OF_THE_ARENA",
+        "displayName": "The Witness of the Arena",
+        "breedId": "BRD_RED_DEER",
+        "soulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
+        "worldKey": "SCHISM",
+        "age": null,
+        "gender": null
+      },
+      "witness": {
+        "characterId": "CHA_WITNESS_OF_THE_ARENA",
+        "witnessDefId": "WDF_WITNESS_OF_THE_ARENA",
+        "architectCharacterId": "CHA_TEMUULEN_ERDENEBAT_GANBOLD",
+        "trueFlawName": "Rivalry",
+        "legendaryRewardId": null,
+        "constellationBeforeId": null,
+        "constellationAfterId": null
+      },
+      "bookNumber": 3
+    }
+  ]
+}

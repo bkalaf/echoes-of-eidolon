@@ -297,7 +297,13 @@ function CampaignManagerLanding() {
   ].map(([label, value, detail]) => <article className="card" key={label}><p className="kicker">{label}</p><p className="stat">{value}</p><p>{detail}</p></article>)}</section><div className="split"><section className="card"><h2>Continue authoring</h2><p>Planner cards span the exact Book rows they own. Each authorable campaign column has its own typed Unassigned listbox.</p><div className="action-row">{Object.entries(campaignWorldScreens).map(([world, state]) => <a className="button button--gold" href={`/admin/campaign/planner?state=${state}`} key={world}>Open {world} planner</a>)}</div></section><section className="card"><h2>Current Book-grouping overlays</h2><table className="data-table"><thead><tr><th>Grouping</th><th>Shape</th><th>Editability</th></tr></thead><tbody><tr><td>Disjoint Trilogy</td><td>two disconnected segments</td><td>Editable</td></tr><tr><td>Opposing Faction</td><td>Books 1–6 + 13–18</td><td>Locked · derived</td></tr><tr><td>Mirrored Duology</td><td>partner = 19 − Book</td><td>Canonical</td></tr></tbody></table></section></div></div>;
 }
 
+function CampaignDocumentWorkflow({ screen }: { screen: PageManifestEntry }) {
+  const isCorpus = screen.screenId === "CAMPAIGN_DOCUMENT_CORPUS";
+  return <div className="stack"><div className="workspace-page-head"><h2>{screen.title}</h2><p>{isCorpus ? "Review the active campaign's historical document corpus in campaign context." : "Plan document quests and their research work in campaign context."}</p></div><section className="card"><h2>{isCorpus ? "Campaign-owned document corpus" : "Campaign-owned research planning"}</h2><p>This surface replaces the unauthorized global Document Bucket workflow. It does not create a parallel document persistence model.</p><a className="button" href="/admin/campaign">Return to Campaign Manager</a></section></div>;
+}
+
 export function CampaignAdminPage({ screen }: { screen: PageManifestEntry }) {
+  if (["CAMPAIGN_DOCUMENT_CORPUS", "CAMPAIGN_DOCUMENT_QUESTS"].includes(screen.screenId)) return <CampaignDocumentWorkflow screen={screen} />;
   const world = campaignWorld(screen.screenId);
   if (screen.screenId === "CAM006") return <div className="stack">{worldTabs(world)}<GroupingEditor world={world ?? "CONCORD"} /></div>;
   if (!world) return <CampaignManagerLanding />;

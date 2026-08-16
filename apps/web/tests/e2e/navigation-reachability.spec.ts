@@ -54,7 +54,7 @@ async function crawlDirectory(page: Page, label: string) {
 }
 
 test("generated navigation registry has no active orphan, dead-end, or broken-link screens", () => {
-  expect(registry.activeScreenCount).toBe(290);
+  expect(registry.activeScreenCount).toBe(292);
   expect(registry.rows).toHaveLength(registry.activeScreenCount);
   expect(registry.statusCounts.ORPHANED).toBe(0);
   expect(registry.statusCounts.DEAD_END).toBe(0);

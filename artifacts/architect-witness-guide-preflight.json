@@ -1,0 +1,95 @@
+{
+  "git": {
+    "branch": "main",
+    "head": "8b7be311f285788fd57b1e63e50c3ddefd325784",
+    "originMain": "8b7be311f285788fd57b1e63e50c3ddefd325784",
+    "dirtyFiles": [
+      "apps/web/prisma/schema.prisma",
+      "apps/web/src/data/architect-witness-roster.json",
+      "apps/web/src/domain/architect-witness.ts",
+      "apps/web/src/server/architect-witness-import.ts",
+      "apps/web/tests/unit/architect-witness-roster.test.ts",
+      "apps/web/tests/unit/domain-invariants.test.ts",
+      "apps/web/tests/unit/operations-admin.test.tsx",
+      "apps/web/prisma/migrations/20260816000000_architect_witness_guide_canon/",
+      "apps/web/prisma/migrations/20260816003000_bulk_api_and_document_bucket_remediation/",
+      "apps/web/src/data/architect-witness-guide/",
+      "apps/web/tests/integration/architect-witness-guide-migration.test.ts",
+      "artifacts/",
+      "next_implementation_codex_package_v1/"
+    ]
+  },
+  "database": {
+    "migrationStatus": "46 migrations found; 20260816000000_architect_witness_guide_canon and 20260816003000_bulk_api_and_document_bucket_remediation are pending",
+    "counts": {
+      "Soul": 0,
+      "Character": 0,
+      "Architect": 0,
+      "WitnessDef": 0,
+      "Witness": 0,
+      "Species": 1131,
+      "Culture": 125,
+      "Breed": 2056
+    },
+    "architectDepartments": [
+      "ASTRONOMY", "NAVIGATION", "PROPULSION", "HABITABILITY", "PLANETOLOGY", "PHYSICS", "CHEMISTRY", "COMPUTING", "MATERIALS", "ENERGY", "NANOTECHNOLOGY", "BIOLOGY", "GENETICS", "CRYOBIOLOGY", "NEUROSCIENCE", "MEDICINE", "EPIDEMIOLOGY", "ECOLOGY", "TERRAFORMING", "AGRICULTURE", "BOTANY", "ZOOLOGY", "MICROBIOLOGY", "INTELLIGENCE", "ALIGNMENT", "SOFTWARE", "CYBERSECURITY", "CONTINUITY", "ARCHIVES", "SYSTEMS", "ARCHITECTURE", "ROBOTICS", "ELECTRICAL", "MANUFACTURING", "LOGISTICS", "RESOURCES", "RECYCLING", "SAFETY", "RELIABILITY", "COMMAND", "GOVERNANCE", "JUSTICE", "ECONOMICS", "ADMINISTRATION", "SOCIOLOGY", "PSYCHOLOGY", "ANTHROPOLOGY", "HISTORY", "EDUCATION", "LINGUISTICS", "HUMANITIES", "OUTREACH", "SPONSORSHIP", "INNOVATION"
+    ],
+    "witnessDefColumns": ["witnessDefId", "name", "department", "apparentDomain", "realDomain", "color"],
+    "witnessColumns": ["characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId", "constellationBeforeId", "constellationAfterId"],
+    "characterColumns": ["characterId", "displayName", "breedId", "faction", "gender", "occupationId", "primaryAttribute", "secondaryAttribute", "soulId", "worldKey", "age", "skinScaleColor", "hairFurColor", "eyeColor", "clothing"],
+    "constraints": {
+      "ExternalBulkApiSession_state_check": "CHECK ((((state = 'KEYED'::\"ExternalBulkApiState\") AND (\"revokedAt\" IS NULL)) OR ((state = 'OFF'::\"ExternalBulkApiState\") AND (\"revokedAt\" IS NOT NULL))))",
+      "ExternalBulkApiSession_key_hash_check": "CHECK ((length(\"keyHash\") = 64))"
+    }
+  },
+  "canonicalDataPackage": {
+    "souls": 58,
+    "characters": 112,
+    "architects": 56,
+    "witnessDefs": 54,
+    "witnesses": 54,
+    "guideMappings": 3,
+    "checksumResults": {
+      "zipSha256": "f9dbadc4e9816ce8b6f360c4c835c3ef200de00afbb3093c956c4edafef6b3f5",
+      "souls.json": {"sha256": "a7bfe4361351543b45273e6e012c521e7e0724bfac5bebb46012624a4329a320", "repositoryCopyMatches": true},
+      "architects.json": {"sha256": "07938309f55accd52e59f9283cc6e502f4e7381e948cd44d75a6372148e991f6", "repositoryCopyMatches": true},
+      "witness_defs.json": {"sha256": "bed8a8ee54ccd2a55888e1a79e30b4f1500a150cb324c7551f3ec3a907197224", "repositoryCopyMatches": true},
+      "witnesses.json": {"sha256": "2aeefa1ef51c71ce098c16bf3d90371b0ab2a73f0fabb589c91d8b66c8ceced6", "repositoryCopyMatches": true},
+      "guides.json": {"sha256": "610bfc0b34d6306f2a8917d1e65df6b7ab15ce6019e6b00908e04326515a778b", "repositoryCopyMatches": true}
+    }
+  },
+  "existingCanonicalRows": {
+    "souls": [],
+    "characters": [],
+    "architects": [],
+    "witnessDefs": [],
+    "witnesses": []
+  },
+  "documentBuilder": {
+    "documentBucketRowCount": 0,
+    "sourcePointRowCount": 0,
+    "amendmentRowCount": 0,
+    "draftRowCount": 0,
+    "createBucketWritePathFound": false,
+    "consumers": [
+      "apps/web/src/screens/admin/OperationsAdminPage.tsx",
+      "apps/web/src/routes/api/admin/documents.ts",
+      "apps/web/src/server/documents.ts"
+    ]
+  },
+  "bulkApi": {
+    "enumValues": ["OFF", "KEYED", "KEYLESS"],
+    "activeSession": null,
+    "stateConstraintAllowsKeyed": true,
+    "stateConstraintAllowsKeyless": false,
+    "observedDefect": "ExternalBulkApiSession_state_check recognizes KEYED and OFF only; KEYLESS is present in the enum but rejected by the database constraint."
+  },
+  "requiredWork": [
+    "Apply and verify the canonical Architect/Witness/Guide schema and data migration.",
+    "Persist the canonical package transactionally and prove the second run changes zero rows.",
+    "Replace the ExternalBulkApiSession constraints with KEYED, KEYLESS, and OFF semantics and verify real database inserts.",
+    "Remove the unauthorized zero-row DocumentBucket model and dead Operations UI while retaining campaign document routes.",
+    "Add and run integration and browser click-through coverage.",
+    "Run the complete local verification matrix and write the final persisted audit."
+  ]
+}

@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  assertCanonicalCharacterBreedPolicy,
+  canonicalArchitectWitnessGuideData,
   canonicalArchitectWitnessRoster,
   canonicalCharacterId,
+  canonicalNonBiologicalCharacterIds,
   canonicalSoulId,
+  WITNESS_DEF_ID_PREFIX,
 } from "../../src/domain/architect-witness";
 
 describe("canonical Architect and Witness roster", () => {
@@ -13,6 +17,10 @@ describe("canonical Architect and Witness roster", () => {
     expect(new Set(rows.map(({ department }) => department)).size).toBe(54);
     expect(rows.map(({ department }) => department)).not.toContain("PATRON");
     expect(rows.map(({ department }) => department)).not.toContain("TECHNOCRAT");
+  });
+
+  it("registers WDF as the authored WitnessDef identity key", () => {
+    expect(WITNESS_DEF_ID_PREFIX).toBe("WDF");
   });
 
   it("locks the two replacement seats", () => {
@@ -48,8 +56,40 @@ describe("canonical Architect and Witness roster", () => {
     expect(canonicalSoulId("Kris Maarja Tamm")).toBe("SOUL_KRIS_MAARJA_TAMM");
     expect(canonicalCharacterId("The Witness of the Summit")).toBe("CHA_WITNESS_OF_THE_SUMMIT");
     expect(canonicalArchitectWitnessRoster.presidingArchitects).toHaveLength(2);
-    expect(canonicalArchitectWitnessRoster.otherCharacters).toHaveLength(1);
-    expect(canonicalArchitectWitnessRoster.omittedIdentities[0].displayName).toBe("Mother");
+    expect(canonicalArchitectWitnessRoster.otherCharacters).toHaveLength(2);
+    expect(canonicalArchitectWitnessRoster.otherCharacters).toContainEqual(expect.objectContaining({
+      displayName: "Mother",
+      breedId: null,
+      guideForm: "The Steward",
+      identityKind: "AI",
+    }));
+  });
+
+  it("locks the three static Guide mappings without creating Guide identities", () => {
+    expect(canonicalArchitectWitnessGuideData.guides.guides.map(({ title, characterId, soulId, createsAdditionalCharacter }) => ({
+      title, characterId, soulId, createsAdditionalCharacter,
+    }))).toEqual([
+      { title: "The Overseer", characterId: "CHA_HANS_HALYCON_HOHENZOLLERN", soulId: "SOUL_HANS_HALYCON_HOHENZOLLERN", createsAdditionalCharacter: false },
+      { title: "The Herald", characterId: "CHA_FRANK_ADRIAN_VOSS", soulId: "SOUL_FRANK_ADRIAN_VOSS", createsAdditionalCharacter: false },
+      { title: "The Steward", characterId: "CHA_MOTHER", soulId: "SOUL_MOTHER", createsAdditionalCharacter: false },
+    ]);
+  });
+
+  it("allows only the canonical non-biological registry to omit Breed", () => {
+    expect(canonicalNonBiologicalCharacterIds).toEqual(["CHA_MOTHER"]);
+    expect(() => assertCanonicalCharacterBreedPolicy({ characterId: "CHA_MOTHER", breedId: null })).not.toThrow();
+    expect(() => assertCanonicalCharacterBreedPolicy({ characterId: "CHA_MOTHER", breedId: "BRD_FAKE" })).toThrow(/must have breedId null/);
+    for (const row of canonicalArchitectWitnessGuideData.architects) {
+      expect(row.character.breedId, row.character.characterId).not.toBeNull();
+      expect(() => assertCanonicalCharacterBreedPolicy(row.character)).not.toThrow();
+    }
+    for (const row of canonicalArchitectWitnessGuideData.witnesses) {
+      expect(row.character.breedId, row.character.characterId).not.toBeNull();
+      expect(() => assertCanonicalCharacterBreedPolicy(row.character)).not.toThrow();
+    }
+    for (const characterId of ["CHA_KRIS_MAARJA_TAMM", "CHA_WITNESS_OF_THE_SUMMIT", "CHA_FRANK_ADRIAN_VOSS", "CHA_UNKNOWN"]) {
+      expect(() => assertCanonicalCharacterBreedPolicy({ characterId, breedId: null })).toThrow(/Breed is required/);
+    }
   });
 
   it("keeps every paired-body presentation as two roster identities", () => {

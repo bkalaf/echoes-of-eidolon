@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "eidolon-guide-identity-v1",
+  "charactersToEnsure": [
+    {
+      "characterId": "CHA_FRANK_ADRIAN_VOSS",
+      "displayName": "Frank Adrian Voss",
+      "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_GERMAN",
+      "soulId": "SOUL_FRANK_ADRIAN_VOSS",
+      "worldKey": null,
+      "age": "28",
+      "gender": "MALE",
+      "identityKind": "HUMAN"
+    },
+    {
+      "characterId": "CHA_MOTHER",
+      "displayName": "Mother",
+      "breedId": null,
+      "soulId": "SOUL_MOTHER",
+      "worldKey": null,
+      "age": "ageless",
+      "gender": "FEMALE",
+      "identityKind": "AI",
+      "breedPolicy": "NULL_BY_CANON: Mother is an artificial intelligence and must not be assigned a biological Breed merely to satisfy persistence."
+    }
+  ],
+  "guides": [
+    {
+      "worldKey": "CONCORD",
+      "title": "The Overseer",
+      "underlyingDisplayName": "Hans Halycon Hohenzollern",
+      "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+      "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN",
+      "form": "elderly anthropomorphic rat",
+      "createsAdditionalCharacter": false
+    },
+    {
+      "worldKey": "SCHISM",
+      "title": "The Herald",
+      "underlyingDisplayName": "Frank Adrian Voss",
+      "characterId": "CHA_FRANK_ADRIAN_VOSS",
+      "soulId": "SOUL_FRANK_ADRIAN_VOSS",
+      "form": "anthropomorphic red fox",
+      "createsAdditionalCharacter": false
+    },
+    {
+      "worldKey": "RUIN",
+      "title": "The Steward",
+      "underlyingDisplayName": "Mother",
+      "characterId": "CHA_MOTHER",
+      "soulId": "SOUL_MOTHER",
+      "form": "life-sized warm-ivory porcelain woman/doll with one minor hairline crack; carries beloved Chihuahua-Dachshund mix in purse",
+      "createsAdditionalCharacter": false
+    }
+  ]
+}

@@ -4,9 +4,9 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 
 ## Result
 
-- Active screens/states: 290
+- Active screens/states: 292
 - REACHABLE: 60
-- ROLE_GATED_REACHABLE: 192
+- ROLE_GATED_REACHABLE: 194
 - STATE_TRIGGERED: 38
 - ORPHANED: 0
 - DEAD_END: 0
@@ -306,3 +306,5 @@ This artifact is generated from the active base, V3, and V4 screen registries, t
 | 301 | ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS | /admin/atlas/settlements/:settlementId/soundtracks | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 302 | DATA_WITNESS_DEF | /admin/data/witness-def | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
 | 303 | DATA_COMPANION_DEF | /admin/data/companion-def | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
+| 304 | CAMPAIGN_DOCUMENT_CORPUS | /admin/campaigns/:campaignId/documents | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |
+| 305 | CAMPAIGN_DOCUMENT_QUESTS | /admin/campaigns/:campaignId/document-quests | admin | administration | /admin | Administration shell section, owning list action, or Administration page directory | / | tests/e2e/navigation-reachability.spec.ts | **ROLE_GATED_REACHABLE** |

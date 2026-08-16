@@ -21,6 +21,16 @@ describe("release-note operations boundary", () => {
     expect(screen.getByRole("button", { name: "Requires explicit authorization" })).toBeDisabled();
     expect(initMethods(fetchMock)).toEqual(["GET"]);
   });
+
+  it("removes the unauthorized bucket workflow and routes document work to Campaign Manager", () => {
+    const entry = pageManifest.find((item) => item.screenId === "OPS001")!;
+    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><OperationsAdminPage screen={entry} /></QueryClientProvider>);
+    expect(screen.queryByText("Document Builder")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Document bucket")).not.toBeInTheDocument();
+    expect(screen.queryByText("Select a bucket")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Historical Document Corpus" })).toHaveAttribute("href", "/admin/campaigns/current/documents");
+    expect(screen.getByRole("link", { name: "Document Quest and Research Planner" })).toHaveAttribute("href", "/admin/campaigns/current/document-quests");
+  });
 });
 
 function initMethods(mock: ReturnType<typeof vi.fn>): string[] {

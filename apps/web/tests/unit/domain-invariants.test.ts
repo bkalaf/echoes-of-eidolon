@@ -7,14 +7,31 @@ import {
   planMigration,
   puzzleBlueprintSchema,
   validateCompanionWorldSlots,
+  witnessDefSchema,
   witnessSchema,
 } from "../../src/domain/invariants";
 
 describe("canonical domain invariants", () => {
   it("requires canonical direct Witness subtype bindings", () => {
-    const witness = witnessSchema.parse({ characterId: "CHAR-1", witnessDefId: "WDEF-1", trueFlawName: "Pride", architectCharacterId: "CHAR-ARCHITECT", legendaryRewardId: "REWARD-1" });
-    expect(witness).toMatchObject({ characterId: "CHAR-1", architectCharacterId: "CHAR-ARCHITECT", witnessDefId: "WDEF-1" });
+    const witness = witnessSchema.parse({ characterId: "CHAR-1", witnessDefId: "WDF_WITNESS_1", trueFlawName: "Pride", architectCharacterId: "CHAR-ARCHITECT", legendaryRewardId: "REWARD-1" });
+    expect(witness).toMatchObject({ characterId: "CHAR-1", architectCharacterId: "CHAR-ARCHITECT", witnessDefId: "WDF_WITNESS_1" });
     expect(witnessSchema.safeParse({ ...witness, witnessId: "WIT-1" }).success).toBe(false);
+  });
+
+  it("requires exact WDF identity, percentage color records, and source Architect Soul", () => {
+    const definition = witnessDefSchema.parse({
+      witnessDefId: "WDF_WITNESS_OF_THE_SUMMIT",
+      name: "The Witness of the Summit",
+      department: "ASTRONOMY",
+      apparentDomain: "Perspective",
+      realDomain: "Conceit",
+      color: { SPECTRAL_VIOLET: 93.25, GREEN: 6.75, WHITE: 0 },
+      architectSoulId: "SOUL_KRIS_MAARJA_TAMM",
+    });
+    expect(definition.color).toEqual({ SPECTRAL_VIOLET: 93.25, GREEN: 6.75, WHITE: 0 });
+    expect(witnessDefSchema.safeParse({ ...definition, witnessDefId: "WDEF_SUMMIT" }).success).toBe(false);
+    expect(witnessDefSchema.safeParse({ ...definition, color: { ...definition.color, WHITE: 1 } }).success).toBe(false);
+    expect(witnessDefSchema.safeParse({ ...definition, color: { SPECTRAL_VIOLET: 93.25, GREEN: 6.75 } }).success).toBe(false);
   });
 
   it("requires three distinct Characters in matching CompanionDef world and Soul slots", () => {

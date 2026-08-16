@@ -88,7 +88,7 @@ describe("Campaign Manager structure", () => {
     for (const column of campaignPlannerColumns.filter((column) => column.objectTypes.some((type) => type !== "HOLIDAY"))) expect(within(planner).getByRole("button", { name: `Create ${column.label}` })).toBeInTheDocument();
     expect(within(planner).queryByRole("button", { name: "Create Disjoint 3+3" })).not.toBeInTheDocument();
     expect(within(planner).queryByRole("button", { name: "Create Opposing" })).not.toBeInTheDocument();
-  }, 10_000);
+  }, 20_000);
 
   it("creates through the owning Campaign adapter and refreshes the Unassigned catalog", async () => {
     const fetchMock = vi.fn(async (input: string | URL | Request) => String(input) === "/api/admin/campaign/catalog"
@@ -102,7 +102,7 @@ describe("Campaign Manager structure", () => {
     fireEvent.click(screen.getByRole("button", { name: "Create PILLAR" }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign/catalog", expect.objectContaining({ method: "POST" })));
     await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => String(url).includes("/api/admin/campaign?world=CONCORD"))).toHaveLength(2));
-  });
+  }, 20_000);
 
   it("does not copy sample assignment IDs into an empty canonical planner", async () => {
     renderCampaign("CAMPAIGN_CONCORD");

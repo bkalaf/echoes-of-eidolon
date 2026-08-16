@@ -42,6 +42,17 @@ export interface PlayerAccessResponse {
   voiceWindowSeconds: number;
 }
 export interface ImportResponse { changed: number; unchanged: number; }
+export type BulkApiAction =
+  | { action: "generate" | "enable-keyless" }
+  | { action: "revoke"; sessionId: string }
+  | { action: "apply" | "delete" | "rerun"; envelopeId: string };
+export interface BulkApiOverviewResponse extends JsonObject {
+  activeSession: JsonObject | null;
+  audits: JsonObject[];
+  envelopes: JsonObject[];
+  maximumLifetimeMinutes: number;
+  state: "OFF" | "KEYED" | "KEYLESS";
+}
 
 export interface ApiContractMap {
   "GET /api/account/membership": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
@@ -57,6 +68,8 @@ export interface ApiContractMap {
   "PATCH /api/admin/accounts/:userId/role": ApiContract<{ role: Exclude<AuthorizationRole, "guest"> }, { userId: string; role: string } | ErrorResponse>;
   "GET /api/admin/assets": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
   "GET /api/admin/beta-invitations": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
+  "GET /api/admin/bulk-operations": ApiContract<EmptyRequest, BulkApiOverviewResponse | ErrorResponse>;
+  "POST /api/admin/bulk-operations": ApiContract<BulkApiAction, JsonObject | ErrorResponse>;
   "POST /api/admin/beta-invitations/:id/approve": ApiContract<{ expiresAt: string }, MutationResult<"approved">>;
   "POST /api/admin/beta-invitations/:id/reject": ApiContract<EmptyRequest, MutationResult<"rejected">>;
   "GET /api/admin/commerce": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
@@ -68,8 +81,6 @@ export interface ApiContractMap {
   "PATCH /api/admin/perks/:perkId": ApiContract<JsonObject, JsonObject | ErrorResponse>;
   "GET /api/admin/prompts": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
   "GET /api/admin/puzzles/blueprints": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
-  "GET /api/admin/documents": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
-  "POST /api/admin/documents": ApiContract<JsonObject, JsonObject | ErrorResponse>;
   "GET /api/admin/releases": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
   "POST /api/admin/releases": ApiContract<JsonObject, JsonObject | ErrorResponse>;
   "POST /api/admin/releases/:id/publish": ApiContract<EmptyRequest, JsonObject | ErrorResponse>;
