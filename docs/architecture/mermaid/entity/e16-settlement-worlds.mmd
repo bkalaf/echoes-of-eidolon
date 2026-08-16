@@ -16,6 +16,7 @@ erDiagram
     string id PK
   }
   Breed ||--o| Culture : "relates to"
+  Breed ||--o| Breed : "relates to"
   Breed ||--o{ SettlementWorld : "relates to"
   Culture ||--o{ SettlementWorld : "relates to"
   Site ||--o| Settlement : "relates to"

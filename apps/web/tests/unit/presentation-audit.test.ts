@@ -41,6 +41,13 @@ describe("presentation completion audit", () => {
     expect(auditPresentationField({ entityId: "BRD_TEST", field: "clothing", researchStatus: "RESOLVED", value: clothing, semanticReview: semantic(`${clothing} changed`) }).disposition).toBe("FAIL");
   });
 
+  it("accepts the five canonical clothing sections inline and does not misclassify source-animal anatomy as commentary", () => {
+    const inline = clothing.replaceAll("\n", " ");
+    expect(auditPresentationField({ entityId: "SPC_MOTH", field: "clothing", researchStatus: "RESOLVED", value: inline, semanticReview: semantic(inline) }).disposition).toBe("PASS");
+    const anatomy = "Preserve the source-animal silhouette, sensory structures, and nonhuman proportions.";
+    expect(auditPresentationField({ entityId: "SPC_MOTH", field: "appearance", researchStatus: "RESOLVED", value: anatomy, semanticReview: semantic(anatomy) }).staticQa.passed).toBe(true);
+  });
+
   it("blocks meta language and cannot treat keyword checks as semantic review", () => {
     const contaminated = "A source-supported appearance that may use blue cloth.";
     const result = auditPresentationField({ entityId: "CLT_TEST", field: "appearance", researchStatus: "RESOLVED", value: contaminated, semanticReview: semantic(contaminated) });

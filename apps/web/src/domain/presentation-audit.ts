@@ -36,7 +36,7 @@ export interface PresentationAuditResult {
 
 const bannedMetaPatterns: Array<[RegExp, string]> = [
   [/\bEIDOLON_NORMALIZED\b/i, "EIDOLON_NORMALIZED label"],
-  [/\b(?:source|citation|evidence|research)\s*[-:]/i, "source or research commentary"],
+  [/\b(?:source|citation|evidence|research)(?:\s*:|\s+-\s+)/i, "source or research commentary"],
   [/\b(?:may use|can draw from)\b/i, "optional source language"],
   [/\b(?:not historically attested|historicity caveat|disclaimer|inference)\b/i, "research caveat"],
 ];
@@ -46,17 +46,13 @@ const prohibitedRespectPatterns: Array<[RegExp, string]> = [
 
 export function parseClothingSections(value: string): Partial<Record<ClothingSection, string>> {
   const result: Partial<Record<ClothingSection, string>> = {};
-  const heading = /^(Civilian|Light armor|Medium armor|Heavy armor|Weapons):\s*(.*)$/;
-  let current: ClothingSection | undefined;
-  for (const rawLine of value.split(/\r?\n/)) {
-    const line = rawLine.trim();
-    const match = heading.exec(line);
-    if (match) {
-      current = match[1] as ClothingSection;
-      result[current] = match[2]?.trim() ?? "";
-    } else if (current && line) {
-      result[current] = `${result[current] ? `${result[current]} ` : ""}${line}`;
-    }
+  const heading = /(?:^|\s)(Civilian|Light armor|Medium armor|Heavy armor|Weapons):\s*/g;
+  const matches = [...value.matchAll(heading)];
+  for (const [index, match] of matches.entries()) {
+    const section = match[1] as ClothingSection;
+    const start = match.index! + match[0].length;
+    const end = matches[index + 1]?.index ?? value.length;
+    result[section] = value.slice(start, end).trim();
   }
   return result;
 }
@@ -75,7 +71,7 @@ export function staticPresentationQa(field: PresentationField, value: string): {
   if (field === "clothing") {
     const sections = parseClothingSections(value);
     for (const section of clothingSections) if (!sections[section]?.trim()) failures.push(`clothing requires section ${section} with renderable design.`);
-    const encountered = value.split(/\r?\n/).map((line) => /^(Civilian|Light armor|Medium armor|Heavy armor|Weapons):/.exec(line.trim())?.[1]).filter(Boolean);
+    const encountered = [...value.matchAll(/(?:^|\s)(Civilian|Light armor|Medium armor|Heavy armor|Weapons):/g)].map((match) => match[1]);
     if (encountered.length === clothingSections.length && encountered.some((section, index) => section !== clothingSections[index])) failures.push("clothing sections must use canonical order.");
   }
   return { passed: failures.length === 0, failures: [...new Set(failures)] };

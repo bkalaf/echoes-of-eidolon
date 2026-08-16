@@ -189,7 +189,7 @@
         {
           "enumName": "ArchitectDepartment",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "department",
           "type": "ArchitectDepartment"
@@ -2313,7 +2313,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "age",
           "type": "String"
@@ -2321,7 +2321,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "skinScaleColor",
           "type": "String"
@@ -2329,7 +2329,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "hairFurColor",
           "type": "String"
@@ -2337,7 +2337,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "eyeColor",
           "type": "String"
@@ -2345,7 +2345,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
           "type": "String"
@@ -2941,14 +2941,6 @@
           "kind": "scalar",
           "name": "cultureId",
           "type": "String"
-        },
-        {
-          "enumName": "CulturePoolId",
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "culturePoolId",
-          "type": "CulturePoolId"
         },
         {
           "enumName": null,
@@ -9129,7 +9121,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "trueFlawName",
           "type": "String"
@@ -9145,7 +9137,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "legendaryRewardId",
           "type": "String"
@@ -9193,7 +9185,7 @@
         {
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "relation",
           "name": "legendaryReward",
           "type": "LegendaryReward"
@@ -9487,7 +9479,7 @@
           "exclusionReason": null,
           "enumName": "ArchitectDepartment",
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "department",
           "type": "ArchitectDepartment"
@@ -9578,12 +9570,12 @@
             "LINGUISTICS",
             "HUMANITIES",
             "OUTREACH",
-            "PATRON",
-            "TECHNOCRAT"
+            "SPONSORSHIP",
+            "INNOVATION"
           ],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "enum",
           "name": "department",
           "type": "ArchitectDepartment"
@@ -10675,7 +10667,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "age",
           "type": "String"
@@ -10685,7 +10677,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "skinScaleColor",
           "type": "String"
@@ -10695,7 +10687,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "hairFurColor",
           "type": "String"
@@ -10705,7 +10697,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "eyeColor",
           "type": "String"
@@ -10715,7 +10707,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
           "type": "String"
@@ -10914,7 +10906,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "age",
           "type": "String"
@@ -10923,7 +10915,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "skinScaleColor",
           "type": "String"
@@ -10932,7 +10924,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "hairFurColor",
           "type": "String"
@@ -10941,7 +10933,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "eyeColor",
           "type": "String"
@@ -10950,7 +10942,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "clothing",
           "type": "String"
@@ -11633,16 +11625,6 @@
         {
           "editability": "EDITABLE",
           "exclusionReason": null,
-          "enumName": "CulturePoolId",
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "culturePoolId",
-          "type": "CulturePoolId"
-        },
-        {
-          "editability": "EDITABLE",
-          "exclusionReason": null,
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11711,41 +11693,6 @@
           "kind": "scalar",
           "name": "cultureId",
           "type": "String"
-        },
-        {
-          "enumValues": [
-            "CP01",
-            "CP02",
-            "CP03",
-            "CP04",
-            "CP05",
-            "CP06",
-            "CP07",
-            "CP08",
-            "CP09",
-            "CP10",
-            "CP11",
-            "CP12",
-            "CP13",
-            "CP14",
-            "CP15",
-            "CP16",
-            "CP17",
-            "CP18",
-            "CP19",
-            "CP20",
-            "CP21",
-            "CP22",
-            "CP23",
-            "CP24",
-            "CP25"
-          ],
-          "hasDefault": false,
-          "isList": false,
-          "isRequired": true,
-          "kind": "enum",
-          "name": "culturePoolId",
-          "type": "CulturePoolId"
         },
         {
           "enumValues": [],
@@ -14757,7 +14704,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "trueFlawName",
           "type": "String"
@@ -14777,7 +14724,7 @@
           "exclusionReason": null,
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "legendaryRewardId",
           "type": "String"
@@ -14837,7 +14784,7 @@
           "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
           "enumName": null,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "relation",
           "name": "legendaryReward",
           "type": "LegendaryReward"
@@ -14887,7 +14834,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "trueFlawName",
           "type": "String"
@@ -14905,7 +14852,7 @@
           "enumValues": [],
           "hasDefault": false,
           "isList": false,
-          "isRequired": true,
+          "isRequired": false,
           "kind": "scalar",
           "name": "legendaryRewardId",
           "type": "String"
@@ -15078,8 +15025,8 @@
             "LINGUISTICS",
             "HUMANITIES",
             "OUTREACH",
-            "PATRON",
-            "TECHNOCRAT"
+            "SPONSORSHIP",
+            "INNOVATION"
           ],
           "hasDefault": false,
           "isList": false,

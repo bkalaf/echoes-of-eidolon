@@ -73,4 +73,55 @@ describe("closed-world generic entity administration", () => {
     const drift = soulDatabase({ soulId: "SOUL-1", name: "First" });
     await expect(applyGenericEntityImport([{ soulId: "SOUL-1", name: "Changed" }], "Soul", drift.database as never)).rejects.toThrow(/conflicts with authoritative persisted data/);
   });
+
+  it("accepts an explicit canonical Species ID when optional taxonomy is JSON null", async () => {
+    const species = {
+      create: vi.fn(async ({ data }) => data),
+      findUnique: vi.fn().mockResolvedValue(null),
+    };
+    const transaction = { species };
+    const database = { ...transaction, $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) };
+    await expect(applyGenericEntityImport([{
+      speciesId: "SPC_HOMO_SAPIENS",
+      name: "Human",
+      speciesKind: "HUMAN",
+      scientificName: "Homo sapiens",
+      taxonomy: null,
+      traits: [],
+      accent: null,
+      anthropomorphization: null,
+      appearance: null,
+      clothing: null,
+      architecture: null,
+      originMode: "BIOLOGICAL",
+      reproductiveMethod: "LIVE_BIRTH",
+      juvenileStages: [],
+      nurseryMode: [],
+      longevityClass: "HUMAN_BASELINE",
+      mortalityMode: "NORMAL",
+      soulDisposition: "RETURNS_TO_WELL",
+      continuityGroup: "FAMILY",
+      continuityPropagationMode: "BILATERAL_DESCENT",
+    }], "Species", database as never)).resolves.toEqual({ changed: 1, unchanged: 0 });
+  });
+
+  it("does not let generic Witness import bypass Architect Soul continuity", async () => {
+    const witness = {
+      create: vi.fn(async ({ data }) => data),
+      findUnique: vi.fn().mockResolvedValue(null),
+    };
+    const transaction = {
+      witness,
+      character: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_WITNESS", soulId: "SOUL_2" }) },
+      architect: { findUnique: vi.fn().mockResolvedValue({ characterId: "CHA_ARCHITECT", department: "ASTRONOMY", character: { characterId: "CHA_ARCHITECT", soulId: "SOUL_1" } }) },
+      witnessDef: { findUnique: vi.fn().mockResolvedValue({ department: "ASTRONOMY" }) },
+    };
+    const database = { ...transaction, $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) };
+    await expect(applyGenericEntityImport([{
+      characterId: "CHA_WITNESS",
+      witnessDefId: "WDEF_SUMMIT",
+      architectCharacterId: "CHA_ARCHITECT",
+    }], "Witness", database as never)).rejects.toThrow("Witness and source Architect must reference the same Soul.");
+    expect(witness.create).not.toHaveBeenCalled();
+  });
 });

@@ -13,6 +13,7 @@ import {
   validateBreed,
   validateBreedHierarchy,
   validateSpecies,
+  validateCanonicalPersistenceId,
   validateTaxonomy,
 } from "../../src/domain/worldbuilding";
 
@@ -24,6 +25,12 @@ describe("WorldBuilding v3 simple domain", () => {
     expect(canonicalEntityId("CULTURE", "Arabian Peninsula Arab")).toBe("CLT_ARABIAN_PENINSULA_ARAB");
     expect(canonicalEntityId("BREED", "Death's-head hawkmoth")).toBe("BRD_DEATH_S_HEAD_HAWKMOTH");
     expect(canonicalTaxonomyLevelId("GENUS", "Homo")).toBe("TAX_GENUS_HOMO");
+  });
+
+  it("validates supplied persistence ID structure without deriving from display text", () => {
+    expect(validateCanonicalPersistenceId("SPECIES", "SPC_HOMO_SAPIENS")).toEqual([]);
+    expect(validateCanonicalPersistenceId("BREED", "BRD_AXOLOTL_BEAST")).toEqual([]);
+    expect(validateCanonicalPersistenceId("CULTURE", "culture-ainu")).toEqual(["cultureId must use canonical CLT_* SCREAMING_SNAKE_CASE form."]);
   });
 
   it("pins the exact controlled registries", () => {
@@ -55,7 +62,9 @@ describe("WorldBuilding v3 simple domain", () => {
       },
     };
     expect(validateTaxonomy(taxonomy)).toEqual([]);
-    expect(validateTaxonomy({ ...taxonomy, parent: { ...taxonomy.parent, type: "ORDER" as const } })).toContain("Taxonomy parent of SPECIES must be GENUS.");
+    expect(validateTaxonomy({ taxonomyLevelId: "TAX_KINGDOM_ANIMALIA", type: "KINGDOM", name: "Animalia", isOfficial: true, parent: null })).toEqual([]);
+    expect(validateTaxonomy({ ...taxonomy, parent: { ...taxonomy.parent, type: "SPECIES" as const } })).toContain("Taxonomy parent of SPECIES must be a higher rank.");
+    expect(validateTaxonomy({ taxonomyLevelId: "TAX_FAMILY_ALLIGATORIDAE", type: "FAMILY", name: "Alligatoridae", isOfficial: true, parent: { taxonomyLevelId: "TAX_CLASS_CROCODYLIA", type: "CLASS", name: "Crocodylia", isOfficial: true, parent: null } })).toEqual([]);
     expect(validateTaxonomy({ ...taxonomy, name: " " })).toContain("Taxonomy name cannot be blank.");
     expect(validateTaxonomy({ ...taxonomy, taxonomyLevelId: "species" })).toContain("Taxonomy SPECIES Homo sapiens must use taxonomyLevelId TAX_SPECIES_HOMO_SAPIENS.");
     expect(validateTaxonomy({ ...taxonomy, isOfficial: "yes" })).toContain("Taxonomy isOfficial must be boolean.");
@@ -95,6 +104,7 @@ describe("WorldBuilding v3 simple domain", () => {
       terrainSpecific: ["PELAGIC"],
     };
     expect(validateBreed(base, { personalityIds: new Set(["KNOWN"]) })).toEqual([]);
+    expect(validateBreed({ ...base, personalityId: null }, { personalityIds: new Set(["KNOWN"]) })).toEqual([]);
     expect(validateBreed({ ...base, groupId: "H01" }, { personalityIds: new Set(["KNOWN"]) })).toContain("Breed group H01 belongs to HUMAN, not BEAST.");
     expect(validateBreed({ ...base, foodBroad: ["ANIMAL", "ANIMAL"] }, { personalityIds: new Set(["KNOWN"]) })).toContain("foodBroad cannot contain duplicates.");
     expect(validateBreed({ ...base, personalityId: "MISSING" }, { personalityIds: new Set(["KNOWN"]) })).toContain("PersonalityExpression MISSING does not exist.");

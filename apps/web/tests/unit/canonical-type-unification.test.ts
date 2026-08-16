@@ -25,7 +25,7 @@ describe("canonical Character subtype schema", () => {
 
   it("uses the exact ArchitectDepartment and WitnessColor enums", () => {
     expect(enumValues("ArchitectDepartment")).toEqual([
-      "ASTRONOMY", "NAVIGATION", "PROPULSION", "HABITABILITY", "PLANETOLOGY", "PHYSICS", "CHEMISTRY", "COMPUTING", "MATERIALS", "ENERGY", "NANOTECHNOLOGY", "BIOLOGY", "GENETICS", "CRYOBIOLOGY", "NEUROSCIENCE", "MEDICINE", "EPIDEMIOLOGY", "ECOLOGY", "TERRAFORMING", "AGRICULTURE", "BOTANY", "ZOOLOGY", "MICROBIOLOGY", "INTELLIGENCE", "ALIGNMENT", "SOFTWARE", "CYBERSECURITY", "CONTINUITY", "ARCHIVES", "SYSTEMS", "ARCHITECTURE", "ROBOTICS", "ELECTRICAL", "MANUFACTURING", "LOGISTICS", "RESOURCES", "RECYCLING", "SAFETY", "RELIABILITY", "COMMAND", "GOVERNANCE", "JUSTICE", "ECONOMICS", "ADMINISTRATION", "SOCIOLOGY", "PSYCHOLOGY", "ANTHROPOLOGY", "HISTORY", "EDUCATION", "LINGUISTICS", "HUMANITIES", "OUTREACH", "PATRON", "TECHNOCRAT",
+      "ASTRONOMY", "NAVIGATION", "PROPULSION", "HABITABILITY", "PLANETOLOGY", "PHYSICS", "CHEMISTRY", "COMPUTING", "MATERIALS", "ENERGY", "NANOTECHNOLOGY", "BIOLOGY", "GENETICS", "CRYOBIOLOGY", "NEUROSCIENCE", "MEDICINE", "EPIDEMIOLOGY", "ECOLOGY", "TERRAFORMING", "AGRICULTURE", "BOTANY", "ZOOLOGY", "MICROBIOLOGY", "INTELLIGENCE", "ALIGNMENT", "SOFTWARE", "CYBERSECURITY", "CONTINUITY", "ARCHIVES", "SYSTEMS", "ARCHITECTURE", "ROBOTICS", "ELECTRICAL", "MANUFACTURING", "LOGISTICS", "RESOURCES", "RECYCLING", "SAFETY", "RELIABILITY", "COMMAND", "GOVERNANCE", "JUSTICE", "ECONOMICS", "ADMINISTRATION", "SOCIOLOGY", "PSYCHOLOGY", "ANTHROPOLOGY", "HISTORY", "EDUCATION", "LINGUISTICS", "HUMANITIES", "OUTREACH", "SPONSORSHIP", "INNOVATION",
     ]);
     expect(enumValues("WitnessColor")).toEqual(["BLACK", "RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "WHITE"]);
   });
@@ -33,7 +33,7 @@ describe("canonical Character subtype schema", () => {
   it("uses direct one-to-one subtype links without global XOR or invented Companion identity", () => {
     expect(model("Architect")).toMatch(/characterId\s+String\s+@id/);
     expect(model("Architect")).not.toMatch(/architectId|profession/);
-    expect(model("Architect")).toMatch(/department\s+ArchitectDepartment/);
+    expect(model("Architect")).toMatch(/department\s+ArchitectDepartment\?/);
     expect(model("Witness")).toMatch(/characterId\s+String\s+@id/);
     expect(model("Witness")).not.toMatch(/witnessId/);
     expect(model("Companion")).toMatch(/characterId\s+String\s+@id/);
@@ -66,5 +66,11 @@ describe("canonical Character subtype schema", () => {
     expect(model("Pillar")).not.toMatch(/seatNumber/);
     for (const token of ["PROTAGONIST", "ANTAGONIST", "DEPARTMENT", "MATRIX"]) expect(enumValues("EntityType")).not.toContain(token);
     expect(enumValues("CapabilityValueKind")).toContain("SCORE");
+  });
+
+  it("keeps Culture independent from Species and CulturePool persistence", () => {
+    const culture = model("Culture");
+    expect(culture).not.toMatch(/speciesId|culturePoolId/);
+    expect(culture).toMatch(/cultureId\s+String\s+@id/);
   });
 });

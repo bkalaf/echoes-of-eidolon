@@ -17,6 +17,8 @@
     "atlas:import-sites": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-sites.mts",
     "atlas:import-naming": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-atlas-naming.mts",
     "worldbuilding:research": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/worldbuilding-research.mts",
+    "architect-witness:roster": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-architect-witness-roster.mts",
+    "worldbuilding:import-packages": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-worldbuilding-packages.mts",
     "owner:bootstrap": "node scripts/run-owner-bootstrap.mjs",
     "release:draft": "tsx scripts/draft-release-notes.mts",
     "release:check": "tsx scripts/check-release.mts",

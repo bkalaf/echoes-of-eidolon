@@ -156,13 +156,11 @@ function missingRequired(record: WorldbuildingResearchEnvelope["records"][number
     for (const field of ["speciesKind", "originMode", "reproductiveMethod", "longevityClass", "mortalityMode", "soulDisposition", "continuityGroup", "continuityPropagationMode"]) if (!nonblank(data[field])) missing.push(field);
     if (data.taxonomy != null) missing.push(...validateTaxonomy(data.taxonomy).map((error) => `taxonomy:${error}`));
     missing.push(...validateSpecies(data as Parameters<typeof validateSpecies>[0]).map((error) => `species:${error}`));
-  } else if (record.kind === "CULTURE") {
-    if (!nonblank(data.culturePoolId)) missing.push("culturePoolId");
-  } else {
+  } else if (record.kind !== "CULTURE") {
     if (!nonblank(data.populationKind) || !new Set<string>(["HUMAN", "BEAST", "MYTHOS", "PET"]).has(data.populationKind)) missing.push("populationKind");
     if (!nonblank(data.groupId) || !BREED_GROUPS[data.groupId as BreedGroupId]) missing.push("groupId");
     const group = nonblank(data.groupId) ? BREED_GROUPS[data.groupId as BreedGroupId] : undefined;
-    if (group?.speciesKind !== "PET" && (!nonblank(data.personalityId) || !personalityIds.has(data.personalityId))) missing.push("personalityId");
+    if (nonblank(data.personalityId) && !personalityIds.has(data.personalityId)) missing.push("personalityId");
     for (const [field, allowed] of [["foodBroad", WORLD_BUILDING_ENUMS.FoodBroadCategory], ["foodSpecific", WORLD_BUILDING_ENUMS.FoodSpecific], ["terrainBroad", WORLD_BUILDING_ENUMS.TerrainBroad], ["terrainSpecific", WORLD_BUILDING_ENUMS.SpecificTerrain]] as const) {
       if (!Array.isArray(data[field]) || data[field].some((value) => typeof value !== "string" || !new Set<string>(allowed).has(value))) missing.push(field);
     }
@@ -350,7 +348,6 @@ function persistenceData(row: ReturnType<typeof classifyWorldbuildingResearch>["
   };
   if (row.kind === "CULTURE") return {
     cultureId: id,
-    culturePoolId: data.culturePoolId,
     name: data.name,
     appearance: data.appearance ?? null,
     clothing: data.clothing ?? null,

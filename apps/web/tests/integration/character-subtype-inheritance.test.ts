@@ -10,6 +10,7 @@ const entities = readFileSync(resolve(webRoot, "src/content/entities.ts"), "utf8
 const campaigns = readFileSync(resolve(webRoot, "src/server/campaigns.ts"), "utf8");
 const adminContract = JSON.parse(readFileSync(resolve(webRoot, "src/data/entity-admin-contract.json"), "utf8")) as { entities: Record<string, { fields: Array<{ name: string }>; idField: string }> };
 const migration = readFileSync(resolve(webRoot, "prisma/migrations/20260814192000_character_subtype_shared_primary_keys/migration.sql"), "utf8");
+const continuityMigration = readFileSync(resolve(webRoot, "prisma/migrations/20260815150000_architect_witness_soul_continuity/migration.sql"), "utf8");
 
 const model = (name: string) => schema.match(new RegExp(`model ${name} \\{([\\s\\S]*?)\\n\\}`))?.[1] ?? "";
 
@@ -44,5 +45,15 @@ describe("Character subtype shared-primary-key persistence", () => {
     expect(migration).toContain('PRIMARY KEY ("characterId")');
     expect(migration).toContain('REFERENCES "Architect"("characterId") ON DELETE RESTRICT');
     expect(migration).toContain('DROP COLUMN "profession"');
+  });
+
+  it("reconciles presiding Architects and audits Soul continuity without duplicate ownership", () => {
+    expect(continuityMigration).toContain("ARCHITECT_WITNESS_CANON_BLOCKER");
+    expect(continuityMigration).toContain("'SPONSORSHIP', 'INNOVATION'");
+    expect(continuityMigration).not.toContain("ADD COLUMN \"soulId\"");
+    expect(continuityMigration).not.toMatch(/CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION|CREATE\s+TRIGGER/i);
+    expect(model("Architect")).toMatch(/department\s+ArchitectDepartment\?\s+@unique/);
+    expect(model("Witness")).toMatch(/architectCharacterId\s+String/);
+    expect(model("Witness")).not.toMatch(/witnessSoulId|architectSoulId/);
   });
 });

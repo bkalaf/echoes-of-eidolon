@@ -2,8 +2,11 @@ import contractData from "../data/entity-admin-contract.json";
 import { entityForPath, type EntityName } from "../content/entities";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
-import { canonicalEntityId, validateBreed, validateBreedHierarchy, validateSpecies, validateTaxonomy, type BreedHierarchyNode } from "../domain/worldbuilding";
+import { validateBreed, validateBreedHierarchy, validateCanonicalPersistenceId, validateSpecies, validateTaxonomy, type BreedHierarchyNode } from "../domain/worldbuilding";
 import { staticPresentationQa, type PresentationField } from "../domain/presentation-audit";
+import { canonicalCharacterId } from "../domain/architect-witness";
+import { assertWitnessArchitectSoulContinuity } from "../domain/invariants";
+import { assertPersistedWitnessArchitectSoulContinuity } from "./architect-witness-import";
 
 export interface EntityAdminField {
   enumValues: string[];
@@ -123,8 +126,8 @@ async function validateWorldbuildingWrite(database: PrismaClient, entity: Entity
     const idField = entity === "Species" ? "speciesId" : entity === "Culture" ? "cultureId" : "breedId";
     const kind = entity === "Species" ? "SPECIES" : entity === "Culture" ? "CULTURE" : "BREED";
     if (typeof data.name !== "string" || !data.name.trim()) throw new EntityAdminValidationError(`${entity} name is required.`);
-    const expectedId = canonicalEntityId(kind, data.name);
-    if (data[idField] !== expectedId) throw new EntityAdminValidationError(`${entity} ${data.name} must use ${idField} ${expectedId}.`);
+    const idErrors = validateCanonicalPersistenceId(kind, data[idField]);
+    if (idErrors.length) throw new EntityAdminValidationError(idErrors.join(" "));
     const presentationFields: PresentationField[] = entity === "Culture" ? ["appearance", "clothing", "architecture"] : ["accent", "appearance", "clothing", "architecture"];
     const presentationErrors = presentationFields.flatMap((field) => typeof data[field] === "string" && data[field].trim() ? staticPresentationQa(field, data[field]).failures : []);
     if (presentationErrors.length) throw new EntityAdminValidationError(presentationErrors.join(" "));
@@ -178,6 +181,64 @@ async function validateWorldbuildingWrite(database: PrismaClient, entity: Entity
   if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
 }
 
+const presidingArchitectIds = new Set([
+  canonicalCharacterId("Hans Halycon Hohenzollern"),
+  canonicalCharacterId("Noell Pieter Smukk"),
+]);
+
+async function validateCharacterSubtypeWrite(database: PrismaClient, entity: EntityName, data: Record<string, unknown>): Promise<void> {
+  if (entity === "Architect") {
+    const characterId = String(data.characterId ?? "");
+    const department = data.department ?? null;
+    if ((presidingArchitectIds.has(characterId) && department !== null) || (!presidingArchitectIds.has(characterId) && department === null)) {
+      throw new EntityAdminValidationError("Only Hans and Noell are presiding Architects with no department.");
+    }
+    if (!await database.character.findUnique({ select: { characterId: true }, where: { characterId } })) throw new EntityAdminValidationError(`Architect Character ${characterId} does not exist.`);
+    return;
+  }
+  if (entity === "Witness") {
+    const characterId = String(data.characterId ?? "");
+    const architectCharacterId = String(data.architectCharacterId ?? "");
+    const witnessDefId = String(data.witnessDefId ?? "");
+    await assertPersistedWitnessArchitectSoulContinuity(database, { architectCharacterId, witnessCharacterId: characterId });
+    const [architect, witnessDef] = await Promise.all([
+      database.architect.findUnique({ select: { department: true }, where: { characterId: architectCharacterId } }),
+      database.witnessDef.findUnique({ select: { department: true }, where: { witnessDefId } }),
+    ]);
+    if (!witnessDef) throw new EntityAdminValidationError(`WitnessDef ${witnessDefId} does not exist.`);
+    if (architect?.department !== witnessDef.department) throw new EntityAdminValidationError("WitnessDef department must match the source Architect department.");
+    return;
+  }
+  if (entity === "Character" && typeof data.characterId === "string") {
+    const existing = await database.character.findUnique({
+      include: {
+        witness: { include: { architect: { include: { character: true } } } },
+        architect: { include: { witnesses: { include: { character: true } } } },
+      },
+      where: { characterId: data.characterId },
+    });
+    if (!existing) return;
+    const proposed = { characterId: existing.characterId, soulId: data.soulId === undefined ? existing.soulId : data.soulId as string | null };
+    if (existing.witness) {
+      try { assertWitnessArchitectSoulContinuity(proposed, existing.witness.architect.character); }
+      catch { throw new EntityAdminValidationError("Witness and source Architect must reference the same Soul."); }
+    }
+    for (const witness of existing.architect?.witnesses ?? []) {
+      try { assertWitnessArchitectSoulContinuity(witness.character, proposed); }
+      catch { throw new EntityAdminValidationError("Witness and source Architect must reference the same Soul."); }
+    }
+    return;
+  }
+  if (entity === "WitnessDef" && typeof data.witnessDefId === "string") {
+    const existing = await database.witnessDef.findUnique({
+      include: { witnesses: { include: { architect: true } } },
+      where: { witnessDefId: data.witnessDefId },
+    });
+    const department = data.department ?? existing?.department;
+    if (existing?.witnesses.some(({ architect }) => architect.department !== department)) throw new EntityAdminValidationError("WitnessDef department must match every source Architect department.");
+  }
+}
+
 function whereFor(contract: EntityAdminContract, recordId: string): Record<string, unknown> {
   if (!recordId.trim()) throw new EntityAdminValidationError("A record identity is required.");
   return { [contract.idField]: recordId };
@@ -197,6 +258,7 @@ export async function createEntityRecord(database: PrismaClient, entity: EntityN
   const contract = entityAdminContract(entity);
   const data = normalizeEntityData(entity, input, "create");
   await validateWorldbuildingWrite(database, entity, data);
+  await validateCharacterSubtypeWrite(database, entity, data);
   return delegateFor(database, contract).create({ data });
 }
 
@@ -209,6 +271,11 @@ export async function updateEntityRecord(database: PrismaClient, entity: EntityN
     const existing = await getEntityRecord(database, entity, recordId);
     if (!existing) throw new EntityAdminValidationError(`${entity} record not found.`);
     await validateWorldbuildingWrite(database, entity, { ...existing, ...data });
+  }
+  if (["Character", "Architect", "Witness", "WitnessDef"].includes(entity)) {
+    const existing = await getEntityRecord(database, entity, recordId);
+    if (!existing) throw new EntityAdminValidationError(`${entity} record not found.`);
+    await validateCharacterSubtypeWrite(database, entity, { ...existing, ...data, [contract.idField]: recordId });
   }
   return delegateFor(database, contract).update({ data, where: whereFor(contract, recordId) });
 }
@@ -227,33 +294,45 @@ function canonical(value: unknown): unknown {
 }
 
 function sameCanonicalFields(existing: Record<string, unknown>, proposed: Record<string, unknown>, fields: EntityAdminField[]): boolean {
-  return fields.every(({ name }) => JSON.stringify(canonical(existing[name])) === JSON.stringify(canonical(proposed[name])));
+  return fields.every((field) => JSON.stringify(canonical(existing[field.name])) === JSON.stringify(canonical(proposed[field.name] === undefined && !field.isRequired ? null : proposed[field.name])));
 }
 
-export async function applyGenericEntityImport(rows: unknown[], entity: EntityName, database: PrismaClient): Promise<{ changed: number; unchanged: number }> {
+function differingCanonicalFields(existing: Record<string, unknown>, proposed: Record<string, unknown>, fields: EntityAdminField[]): string[] {
+  return fields.filter((field) => JSON.stringify(canonical(existing[field.name])) !== JSON.stringify(canonical(proposed[field.name] === undefined && !field.isRequired ? null : proposed[field.name]))).map(({ name }) => name);
+}
+
+export async function applyGenericEntityImportInTransaction(rows: unknown[], entity: EntityName, database: PrismaClient): Promise<{ changed: number; unchanged: number }> {
   if (!rows.length) throw new EntityAdminValidationError("Import requires at least one row.");
   const contract = entityAdminContract(entity);
   const normalized = rows.map((row) => normalizeEntityData(entity, row, "create"));
   const identities = normalized.map((row) => row[contract.idField]);
   if (new Set(identities).size !== identities.length) throw new EntityAdminValidationError(`Import duplicates ${contract.idField}.`);
-  return database.$transaction(async (transaction) => {
-    const delegate = delegateFor(transaction, contract);
-    let changed = 0;
-    let unchanged = 0;
-    for (const row of normalized) {
-      await validateWorldbuildingWrite(transaction as PrismaClient, entity, row);
-      const identity = row[contract.idField];
-      if (typeof identity !== "string") throw new EntityAdminValidationError(`${contract.idField} must be a string.`);
-      const existing = await delegate.findUnique({ where: { [contract.idField]: identity } });
-      if (!existing) {
-        await delegate.create({ data: row });
-        changed += 1;
-      } else if (sameCanonicalFields(existing, row, contract.fields)) {
-        unchanged += 1;
-      } else {
-        throw new CanonicalImportDriftError(`${entity} ${identity} conflicts with authoritative persisted data.`);
-      }
+  const delegate = delegateFor(database, contract);
+  let changed = 0;
+  let unchanged = 0;
+  for (const row of normalized) {
+    const identity = row[contract.idField];
+    if (typeof identity !== "string") throw new EntityAdminValidationError(`${contract.idField} must be a string.`);
+    try {
+      await validateWorldbuildingWrite(database, entity, row);
+      await validateCharacterSubtypeWrite(database, entity, row);
+    } catch (error) {
+      if (error instanceof EntityAdminValidationError) throw new EntityAdminValidationError(`${entity} ${identity}: ${error.message}`);
+      throw error;
     }
-    return { changed, unchanged };
-  });
+    const existing = await delegate.findUnique({ where: { [contract.idField]: identity } });
+    if (!existing) {
+      await delegate.create({ data: row });
+      changed += 1;
+    } else if (sameCanonicalFields(existing, row, contract.fields)) {
+      unchanged += 1;
+    } else {
+      throw new CanonicalImportDriftError(`${entity} ${identity} conflicts with authoritative persisted data in fields: ${differingCanonicalFields(existing, row, contract.fields).join(", ")}.`);
+    }
+  }
+  return { changed, unchanged };
+}
+
+export async function applyGenericEntityImport(rows: unknown[], entity: EntityName, database: PrismaClient): Promise<{ changed: number; unchanged: number }> {
+  return database.$transaction((transaction) => applyGenericEntityImportInTransaction(rows, entity, transaction as unknown as PrismaClient));
 }

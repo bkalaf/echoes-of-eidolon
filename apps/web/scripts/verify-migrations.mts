@@ -834,6 +834,23 @@ try {
     await applyThrough("20260815103000_breed_population_kind");
     await applyThrough("20260815124500_breed_parent_hierarchy");
 
+    await preCorrection.query(`INSERT INTO "Soul" ("soulId", "name") VALUES ('shared-soul-architect', 'Architect Soul'), ('shared-soul-witness', 'Witness Soul')`);
+    await preCorrection.query(`UPDATE "Character" SET "soulId"='shared-soul-architect' WHERE "characterId"='shared-pk-architect-character'`);
+    await preCorrection.query(`UPDATE "Character" SET "soulId"='shared-soul-witness' WHERE "characterId"='shared-pk-witness-character'`);
+    const continuityMigration = await readFile(resolve(migrationsRoot, "20260815150000_architect_witness_soul_continuity", "migration.sql"), "utf8");
+    let continuityBlocker = "";
+    try {
+      await preCorrection.query(continuityMigration);
+    } catch (error) {
+      continuityBlocker = error instanceof Error ? error.message : String(error);
+    }
+    if (!continuityBlocker.includes("ARCHITECT_WITNESS_CANON_BLOCKER") || !continuityBlocker.includes("invalidSoulChains=1")) {
+      throw new Error(`Architect/Witness Soul migration did not fail closed with its mismatch count: ${continuityBlocker}`);
+    }
+    await preCorrection.query(`UPDATE "Character" SET "soulId"='shared-soul-architect' WHERE "characterId"='shared-pk-witness-character'`);
+    await applyThrough("20260815150000_architect_witness_soul_continuity");
+    await applyThrough("20260815153000_culture_independent_root");
+
     const remappedSubtype = await preCorrection.query(
       `SELECT witness."characterId" AS "witnessCharacterId", witness."architectCharacterId", architect."characterId" AS "resolvedArchitectCharacterId"
        FROM "Witness" witness JOIN "Architect" architect ON architect."characterId" = witness."architectCharacterId"

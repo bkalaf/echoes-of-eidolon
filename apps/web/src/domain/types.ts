@@ -4,7 +4,7 @@
 import type {
   AdministrationMode, AllocationMode, ArkStatus, AuthoritySource, CapabilityMonotonicPolicy,
   CapabilityOperation, CapabilityParameterKind, CapabilityValueKind,
-  AbilityType, ArchitectDepartment, AwarenessSkill, CitationQuality, CollaborativePosture, CompanionKey, CulturePoolId,
+  AbilityType, ArchitectDepartment, AwarenessSkill, CitationQuality, CollaborativePosture, CompanionKey,
   EmotionalTemperature, EntityType, Heirloom, InterludeType, LegitimacyBasis, Loquacity, BreedGroupId,
   KnowledgeSkill, Motivation, OperatingStyle, OutlookOrientation, OwnershipMode,
   PuzzleDifficultyTier, PuzzleFamily, RegionId, ResearchCategory,
@@ -79,7 +79,6 @@ export interface Breed {
 }
 export interface Culture {
   cultureId: string;
-  culturePoolId: CulturePoolId;
   name: string;
   appearance?: string | null;
   clothing?: string | null;
@@ -93,23 +92,23 @@ export interface Character {
   worldKey?: WorldKey | null;
   soulId?: Soul['soulId'] | null;
   gender?: string | null;
-  age: string;
-  skinScaleColor: string;
-  hairFurColor: string;
-  eyeColor: string;
-  clothing: string;
+  age?: string | null;
+  skinScaleColor?: string | null;
+  hairFurColor?: string | null;
+  eyeColor?: string | null;
+  clothing?: string | null;
   faction?: Faction | null;
   primaryAttribute?: AbilityType | null;
   secondaryAttribute?: AbilityType | null;
 }
-export interface Architect { characterId: Character['characterId']; department: ArchitectDepartment; }
+export interface Architect { characterId: Character['characterId']; department: ArchitectDepartment | null; }
 export interface WitnessDef { witnessDefId: string; name: string; department: ArchitectDepartment; apparentDomain: string; realDomain: string; color: WitnessColor; }
 export interface Witness {
   characterId: Character['characterId'];
   witnessDefId: WitnessDef['witnessDefId'];
-  trueFlawName: string;
+  trueFlawName?: string | null;
   architectCharacterId: Architect['characterId'];
-  legendaryRewardId: string;
+  legendaryRewardId?: string | null;
   constellationBeforeId?: string | null;
   constellationAfterId?: string | null;
 }

@@ -154,6 +154,7 @@ test.describe("P0 role-aware navigation", () => {
         if (administrative) {
           await page.getByRole("link", { name: "Administration" }).click();
           await expect(page).toHaveURL(/\/admin$/);
+          await expect(page.getByText(/Checking account session/)).toHaveCount(0, { timeout: 15_000 });
           await expect(page.getByRole("link", { name: "Account", exact: true })).toBeVisible();
           const administrationLogo = page.getByRole("link", { name: "Echoes of Eidolon home" });
           await administrationLogo.focus();

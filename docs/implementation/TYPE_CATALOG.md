@@ -5,7 +5,7 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 ## Inventory
 
 - Persisted entity types: 128
-- Controlled enums: 118
+- Controlled enums: 119
 - HTTP method/path contracts: 118
 - Wireframe view-model rows: 264
 - Wireframe shell distribution: public 36, game 14, auth 10, account 24, state-only 19, store 12, admin 144, tools-review 5
@@ -30,8 +30,8 @@ Generated from the current Prisma schema, API route tree, and mechanically recon
 | Verification | Persisted entity | Identity | `Verification` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 6 |
 | Passkey | Persisted entity | Identity | `Passkey` via server/auth.ts and server/account-sessions.ts | Auth, Account, Admin Accounts | 12 |
 | Species | Persisted entity | Canonical data | `Species` via typed imports and server/breed-research.ts | Admin Data and Game | 21 |
-| Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 34 |
-| Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 8 |
+| Breed | Persisted entity | Canonical data | `Breed` via typed imports and server/breed-research.ts | Admin Data and Game | 38 |
+| Culture | Persisted entity | Canonical data | `Culture` via typed imports and server/breed-research.ts | Admin Data and Game | 7 |
 | Character | Persisted entity | Canonical data | `Character` via typed imports and server/breed-research.ts | Admin Data and Game | 24 |
 | Architect | Persisted entity | Narrative data | `Architect` via typed import services | Admin Data, Campaign, Game | 4 |
 | WitnessDef | Persisted entity | Narrative data | `WitnessDef` via typed import services | Admin Data, Campaign, Game | 7 |
@@ -282,6 +282,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | CulturePoolId | 25 | `CP01`, `CP02`, `CP03`, `CP04`, `CP05`, `CP06`, `CP07`, `CP08`, `CP09`, `CP10`, `CP11`, `CP12`, `CP13`, `CP14`, `CP15`, `CP16`, `CP17`, `CP18`, `CP19`, `CP20`, `CP21`, `CP22`, `CP23`, `CP24`, `CP25` |
 | WorldKey | 3 | `CONCORD`, `RUIN`, `SCHISM` |
 | SpeciesKind | 4 | `HUMAN`, `BEAST`, `MYTHOS`, `PET` |
+| PopulationKind | 4 | `HUMAN`, `BEAST`, `MYTHOS`, `PET` |
 | BreedGroupId | 84 | `B01`, `B02`, `B03`, `B04`, `B05`, `B06`, `B07`, `B08`, `B09`, `B10`, `B11`, `B12`, `B13`, `B14`, `B15`, `B16`, `B17`, `B18`, `B19`, `B20`, `B21`, `B22`, `B23`, `B24`, `H01`, `H02`, `H03`, `H04`, `H05`, `H06`, `H07`, `H08`, `H09`, `H10`, `H11`, `H12`, `H13`, `H14`, `H15`, `H16`, `H17`, `H18`, `H19`, `H20`, `H21`, `H22`, `H23`, `H24`, `M01`, `M02`, `M03`, `M04`, `M05`, `M06`, `M07`, `M08`, `M09`, `M10`, `M11`, `M12`, `M13`, `M14`, `M15`, `M16`, `M17`, `M18`, `M19`, `M20`, `M21`, `M22`, `M23`, `M24`, `P01`, `P02`, `P03`, `P04`, `P05`, `P06`, `P07`, `P08`, `P09`, `P10`, `P11`, `P12` |
 | TimelineEventType | 4 | `HISTORICAL`, `ATROCITY`, `EXODUS`, `IN_TRANSIT` |
 | InterludeType | 6 | `WWII`, `HISTORICAL`, `MYTH`, `SCIENCE`, `DEJA_VU`, `OTHER` |
@@ -316,7 +317,7 @@ Every route below has a corresponding key in `ApiContractMap`; Zod schemas and s
 | SourceType | 11 | `BOOK`, `JOURNAL_ARTICLE`, `WEBPAGE`, `REPORT`, `THESIS`, `DATASET`, `ARCHIVE`, `INTERVIEW`, `AUDIOVISUAL`, `PRIMARY_DOCUMENT`, `OTHER` |
 | ContributorType | 7 | `AUTHOR`, `EDITOR`, `TRANSLATOR`, `DIRECTOR`, `ORGANIZATION`, `INTERVIEWEE`, `OTHER` |
 | ResearchCategory | 13 | `EXODUS_PROGRAM`, `REWARD`, `SPECIES`, `HISTORICAL_EVENT`, `CULTURAL_WOUND`, `PERSON`, `PLACE`, `INSTITUTION`, `ORGANIZATION`, `SYMBOL`, `TOME`, `TECHNOLOGY_OR_SYSTEM`, `OTHER` |
-| ArchitectDepartment | 54 | `ASTRONOMY`, `NAVIGATION`, `PROPULSION`, `HABITABILITY`, `PLANETOLOGY`, `PHYSICS`, `CHEMISTRY`, `COMPUTING`, `MATERIALS`, `ENERGY`, `NANOTECHNOLOGY`, `BIOLOGY`, `GENETICS`, `CRYOBIOLOGY`, `NEUROSCIENCE`, `MEDICINE`, `EPIDEMIOLOGY`, `ECOLOGY`, `TERRAFORMING`, `AGRICULTURE`, `BOTANY`, `ZOOLOGY`, `MICROBIOLOGY`, `INTELLIGENCE`, `ALIGNMENT`, `SOFTWARE`, `CYBERSECURITY`, `CONTINUITY`, `ARCHIVES`, `SYSTEMS`, `ARCHITECTURE`, `ROBOTICS`, `ELECTRICAL`, `MANUFACTURING`, `LOGISTICS`, `RESOURCES`, `RECYCLING`, `SAFETY`, `RELIABILITY`, `COMMAND`, `GOVERNANCE`, `JUSTICE`, `ECONOMICS`, `ADMINISTRATION`, `SOCIOLOGY`, `PSYCHOLOGY`, `ANTHROPOLOGY`, `HISTORY`, `EDUCATION`, `LINGUISTICS`, `HUMANITIES`, `OUTREACH`, `PATRON`, `TECHNOCRAT` |
+| ArchitectDepartment | 54 | `ASTRONOMY`, `NAVIGATION`, `PROPULSION`, `HABITABILITY`, `PLANETOLOGY`, `PHYSICS`, `CHEMISTRY`, `COMPUTING`, `MATERIALS`, `ENERGY`, `NANOTECHNOLOGY`, `BIOLOGY`, `GENETICS`, `CRYOBIOLOGY`, `NEUROSCIENCE`, `MEDICINE`, `EPIDEMIOLOGY`, `ECOLOGY`, `TERRAFORMING`, `AGRICULTURE`, `BOTANY`, `ZOOLOGY`, `MICROBIOLOGY`, `INTELLIGENCE`, `ALIGNMENT`, `SOFTWARE`, `CYBERSECURITY`, `CONTINUITY`, `ARCHIVES`, `SYSTEMS`, `ARCHITECTURE`, `ROBOTICS`, `ELECTRICAL`, `MANUFACTURING`, `LOGISTICS`, `RESOURCES`, `RECYCLING`, `SAFETY`, `RELIABILITY`, `COMMAND`, `GOVERNANCE`, `JUSTICE`, `ECONOMICS`, `ADMINISTRATION`, `SOCIOLOGY`, `PSYCHOLOGY`, `ANTHROPOLOGY`, `HISTORY`, `EDUCATION`, `LINGUISTICS`, `HUMANITIES`, `OUTREACH`, `SPONSORSHIP`, `INNOVATION` |
 | WitnessColor | 7 | `BLACK`, `RED`, `ORANGE`, `YELLOW`, `GREEN`, `BLUE`, `WHITE` |
 | PuzzleFamily | 9 | `TEXT_LANGUAGE_LITERARY`, `CRYPTO_NUMERIC_DATA`, `VISUAL_COLOR_OPTICAL`, `SPATIAL_FOLDING_GEOMETRY`, `AUDIO_MUSIC_SPECTRAL`, `LOGIC_CONSTRAINT`, `HISTORICAL_RESEARCH`, `CONSTRUCTION_SIMULATION`, `CROSS_MODAL` |
 | PuzzleDifficultyTier | 5 | `TIER_1_INITIATE`, `TIER_2_ADEPT`, `TIER_3_EXPERT`, `TIER_4_MASTER`, `TIER_5_ORDEAL` |

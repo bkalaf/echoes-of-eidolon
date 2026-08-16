@@ -791,8 +791,8 @@ enum ArchitectDepartment {
   LINGUISTICS
   HUMANITIES
   OUTREACH
-  PATRON
-  TECHNOCRAT
+  SPONSORSHIP
+  INNOVATION
 }
 
 enum WitnessColor {
@@ -1764,8 +1764,7 @@ model Breed {
 }
 
 model Culture {
-  cultureId        String            @id
-  culturePoolId    CulturePoolId
+  cultureId        String             @id
   name             String
   appearance       String?
   clothing         String?
@@ -1782,11 +1781,11 @@ model Character {
   worldKey           WorldKey?
   soulId             String?
   gender             String?
-  age                String
-  skinScaleColor     String
-  hairFurColor       String
-  eyeColor           String
-  clothing           String
+  age                String?
+  skinScaleColor     String?
+  hairFurColor       String?
+  eyeColor           String?
+  clothing           String?
   faction            Faction?
   primaryAttribute   AbilityType?
   secondaryAttribute AbilityType?
@@ -1807,7 +1806,7 @@ model Character {
 
 model Architect {
   characterId String              @id
-  department  ArchitectDepartment
+  department  ArchitectDepartment? @unique
   character   Character           @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnesses   Witness[]
 }
@@ -1815,7 +1814,7 @@ model Architect {
 model WitnessDef {
   witnessDefId   String              @id
   name           String
-  department     ArchitectDepartment
+  department     ArchitectDepartment @unique
   apparentDomain String
   realDomain     String
   color          WitnessColor
@@ -1825,15 +1824,15 @@ model WitnessDef {
 model Witness {
   characterId           String          @id
   witnessDefId          String
-  trueFlawName          String
+  trueFlawName          String?
   architectCharacterId  String
-  legendaryRewardId     String
+  legendaryRewardId     String?
   constellationBeforeId String?
   constellationAfterId  String?
   character             Character       @relation(fields: [characterId], references: [characterId], onDelete: Cascade)
   witnessDef            WitnessDef      @relation(fields: [witnessDefId], references: [witnessDefId], onDelete: Restrict)
   architect             Architect       @relation(fields: [architectCharacterId], references: [characterId], onDelete: Restrict)
-  legendaryReward       LegendaryReward @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
+  legendaryReward       LegendaryReward? @relation(fields: [legendaryRewardId], references: [legendaryRewardId], onDelete: Restrict)
   constellationBefore   Constellation?  @relation("WitnessConstellationBefore", fields: [constellationBeforeId], references: [constellationId], onDelete: SetNull)
   constellationAfter    Constellation?  @relation("WitnessConstellationAfter", fields: [constellationAfterId], references: [constellationId], onDelete: SetNull)
 

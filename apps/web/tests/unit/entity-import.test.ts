@@ -86,14 +86,25 @@ describe("entity import mapping and preview", () => {
     expect(source).toEqual([{ legacy_id: "SOUL-1", label: "One", ignored: "x" }]);
   });
 
-  it("blocks canonical WorldBuilding identity drift in preview without replacing supplied persistence IDs", () => {
-    const source = [{ speciesId: "SPC_WRONG", name: "Taíno" }];
+  it("preserves canonical persistence IDs instead of regenerating them from display labels", () => {
+    const source = [{ speciesId: "SPC_HOMO_SAPIENS", name: "Human" }];
     const preview = prepareEntityImport("Species", source, {
       speciesId: "speciesId",
       name: "name",
     });
 
     expect(preview.rows).toEqual(source);
-    expect(preview.errors).toContain("Row 1 Species Taíno must use speciesId SPC_TAI_NO.");
+    expect(preview.errors).toEqual([]);
+  });
+
+  it("rejects malformed canonical persistence IDs without allocating a replacement", () => {
+    const source = [{ speciesId: "species-human", name: "Human" }];
+    const preview = prepareEntityImport("Species", source, {
+      speciesId: "speciesId",
+      name: "name",
+    });
+
+    expect(preview.rows).toEqual(source);
+    expect(preview.errors).toContain("Row 1 speciesId must use canonical SPC_* SCREAMING_SNAKE_CASE form.");
   });
 });

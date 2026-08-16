@@ -7,9 +7,9 @@ export const witnessSchema = z
   .object({
     characterId: z.string().min(1),
     witnessDefId: z.string().min(1),
-    trueFlawName: z.string().min(1),
+    trueFlawName: z.string().min(1).nullish(),
     architectCharacterId: z.string().min(1),
-    legendaryRewardId: z.string().min(1),
+    legendaryRewardId: z.string().min(1).nullish(),
     constellationBeforeId: z.string().min(1).nullish(),
     constellationAfterId: z.string().min(1).nullish(),
   }).strict() satisfies z.ZodType<Witness>;
@@ -17,6 +17,38 @@ export const witnessSchema = z
 export const witnessDefSchema = z.object({
   witnessDefId: z.string().min(1), name: z.string().min(1), department: z.enum(ArchitectDepartment), apparentDomain: z.string().min(1), realDomain: z.string().min(1), color: z.enum(WitnessColor),
 }).strict();
+
+/**
+ * Concrete Witness transformation preserves Soul identity. The Witness
+ * Character and its source Architect Character are distinct Character records
+ * but must reference the same Character.soulId.
+ */
+export function assertWitnessArchitectSoulContinuity(
+  witnessCharacter: { characterId: string; soulId?: string | null },
+  architectCharacter: { characterId: string; soulId?: string | null },
+): void {
+  if (
+    witnessCharacter.characterId === architectCharacter.characterId
+    || !witnessCharacter.soulId
+    || !architectCharacter.soulId
+    || witnessCharacter.soulId !== architectCharacter.soulId
+  ) {
+    throw new Error("Witness and source Architect must reference the same Soul.");
+  }
+}
+
+export function assertDistinctWitnessSoulChains(
+  chains: readonly {
+    architect: { characterId: string; soulId?: string | null };
+    witness: { characterId: string; soulId?: string | null };
+  }[],
+): void {
+  for (const chain of chains) assertWitnessArchitectSoulContinuity(chain.witness, chain.architect);
+  const architectSoulIds = chains.map(({ architect }) => architect.soulId);
+  if (new Set(architectSoulIds).size !== architectSoulIds.length) {
+    throw new Error("Paired Witness components must retain independent Soul identities.");
+  }
+}
 
 export const companionSchema = z.object({
   characterId: z.string().min(1),

@@ -18,6 +18,7 @@ erDiagram
   Source {
     string id PK
   }
+  Breed ||--o| Breed : "relates to"
   Breed ||--o{ BreedResearchValue : "relates to"
   Source ||--o{ Citation : "relates to"
   Citation ||--o{ Research : "relates to"

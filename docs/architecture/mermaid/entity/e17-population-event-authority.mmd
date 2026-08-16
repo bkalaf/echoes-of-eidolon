@@ -9,6 +9,7 @@ erDiagram
   Breed {
     string id PK
   }
+  Breed ||--o| Breed : "relates to"
   Breed ||--o{ SettlementPopulationEvent : "relates to"
   Breed ||--o{ SettlementWorld : "relates to"
   SettlementWorld ||--o{ SettlementPopulationEvent : "relates to"

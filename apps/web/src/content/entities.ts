@@ -9,7 +9,7 @@ export const entityFields = {
   Companion: ["characterId", "companionKey"],
   CompanionDef: ["companionKey", "concordCharacterId", "ruinCharacterId", "schismCharacterId", "soulId", "heirloom", "knowledgeSkill", "awarenessSkill"],
   Constellation: ["constellationId", "name", "rightAscension", "declination"],
-  Culture: ["cultureId", "culturePoolId", "name", "appearance", "clothing", "architecture"],
+  Culture: ["cultureId", "name", "appearance", "clothing", "architecture"],
   Definition: ["definitionId", "term", "definition"],
   Interlude: ["interludeId", "name", "interludeType", "summary"],
   InterludeSubstitution: ["interludeSubstitutionId", "interludeId", "replacementInterludeId", "reason"],

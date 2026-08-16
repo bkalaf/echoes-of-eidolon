@@ -41,6 +41,14 @@ export function canonicalEntityId(kind: CanonicalWorldbuildingEntityKind, finali
   return `${prefix}_${token}`;
 }
 
+export function validateCanonicalPersistenceId(kind: CanonicalWorldbuildingEntityKind, value: unknown): string[] {
+  const prefix = kind === "SPECIES" ? "SPC" : kind === "CULTURE" ? "CLT" : "BRD";
+  const field = kind === "SPECIES" ? "speciesId" : kind === "CULTURE" ? "cultureId" : "breedId";
+  return typeof value === "string" && new RegExp(`^${prefix}_[A-Z0-9]+(?:_[A-Z0-9]+)*$`).test(value)
+    ? []
+    : [`${field} must use canonical ${prefix}_* SCREAMING_SNAKE_CASE form.`];
+}
+
 export function canonicalTaxonomyLevelId(type: TaxonomyType, finalizedCanonicalName: string): string {
   const token = canonicalIdToken(finalizedCanonicalName);
   if (!token) throw new Error(`${type} taxonomy name must contain at least one letter or number.`);
@@ -75,12 +83,12 @@ export function validateTaxonomy(value: unknown): string[] {
     for (const field of ["text", "commonName"] as const) {
       if (record[field] !== undefined && (typeof record[field] !== "string" || !record[field].trim())) errors.push(`Taxonomy ${field} cannot be blank when supplied.`);
     }
-    if (record.parent !== undefined) {
+    if (record.parent !== undefined && record.parent !== null) {
       if (typeof record.type === "string" && taxonomyTypes.has(record.type) && typeof record.parent === "object" && record.parent !== null) {
         const parentType = (record.parent as Record<string, unknown>).type;
         const index = taxonomyOrder.indexOf(record.type as TaxonomyType);
-        const expected = index > 0 ? taxonomyOrder[index - 1] : undefined;
-        if (parentType !== expected) errors.push(`Taxonomy parent of ${record.type} must be ${expected ?? "absent"}.`);
+        const parentIndex = typeof parentType === "string" ? taxonomyOrder.indexOf(parentType as TaxonomyType) : -1;
+        if (index === 0 || parentIndex < 0 || parentIndex >= index) errors.push(`Taxonomy parent of ${record.type} must be a higher rank.`);
       }
       visit(record.parent);
     }
@@ -112,9 +120,7 @@ export type SpeciesValidationInput = {
 };
 
 export function validateSpecies(input: SpeciesValidationInput): string[] {
-  const errors: string[] = [];
-  const expectedId = canonicalEntityId("SPECIES", input.name);
-  if (input.speciesId !== expectedId) errors.push(`Species ${input.name} must use speciesId ${expectedId}.`);
+  const errors = validateCanonicalPersistenceId("SPECIES", input.speciesId);
   if (input.speciesKind === "PET") {
     if (input.anthropomorphization != null) errors.push("PET Species anthropomorphization must be null.");
     if (input.clothing != null) errors.push("PET Species clothing must be null.");
@@ -165,9 +171,7 @@ export function validateBreed(input: BreedValidationInput, context: { personalit
     for (const field of ["accent", "clothing", "architecture", ...Object.keys(breedDimensionValues)] as const) {
       if (input[field as keyof BreedValidationInput] != null) errors.push(`PET breeds require ${field} to be null.`);
     }
-  } else if (!input.personalityId) {
-    errors.push(`${input.populationKind} breeds require a PersonalityExpression.`);
-  } else if (!context.personalityIds.has(input.personalityId)) {
+  } else if (input.personalityId && !context.personalityIds.has(input.personalityId)) {
     errors.push(`PersonalityExpression ${input.personalityId} does not exist.`);
   }
   const arrays = [
