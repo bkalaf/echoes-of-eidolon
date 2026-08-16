@@ -121,8 +121,8 @@ describe("production deployment entry point", () => {
     const test = fixture();
     const before = execFileSync("git", ["-C", test.repository, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
     const output = execFileSync("bash", [script, "--revision", test.revision, "--dry-run", "--env-file", test.envFile], { encoding: "utf8" });
-    expect(output).toMatch(/pnpm lint[\s\S]*pnpm typecheck[\s\S]*pnpm test[\s\S]*pnpm test:integration[\s\S]*pnpm navigation:check[\s\S]*pnpm build[\s\S]*pnpm release:check/);
-    expect(output).toMatch(/pg_dump before migration[\s\S]*prisma migrate deploy[\s\S]*pnpm test:e2e[\s\S]*restart systemd[\s\S]*verify HTTP health/);
+    expect(output).toMatch(/pnpm lint[\s\S]*pnpm typecheck[\s\S]*pnpm test[\s\S]*pnpm navigation:check[\s\S]*pnpm build[\s\S]*pnpm release:check/);
+    expect(output).toMatch(/pg_dump before migration[\s\S]*prisma migrate deploy[\s\S]*pnpm test:integration against the migrated schema[\s\S]*pnpm test:e2e[\s\S]*restart systemd[\s\S]*verify HTTP health/);
     expect(execFileSync("git", ["-C", test.repository, "rev-parse", "HEAD"], { encoding: "utf8" }).trim()).toBe(before);
     expect(readFileSync(test.envFile, "utf8")).toContain("DATABASE_URL=");
     expect(output).not.toContain("unused:unused");
@@ -130,15 +130,18 @@ describe("production deployment entry point", () => {
     expect(existsSync(resolve(test.root, "deployments.log"))).toBe(false);
   });
 
-  it("runs database-dependent browser verification only after the guarded backup and migration", () => {
+  it("runs database-dependent integration and browser verification only after the guarded backup and migration", () => {
     const source = readFileSync(script, "utf8");
     const backup = source.indexOf('backup_path="$EIDOLON_BACKUP_DIR/');
     const migration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate');
+    const integration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration');
     const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_PORT=3100");
     const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');
     expect(backup).toBeGreaterThan(-1);
     expect(migration).toBeGreaterThan(backup);
+    expect(integration).toBeGreaterThan(migration);
     expect(e2e).toBeGreaterThan(migration);
+    expect(e2e).toBeGreaterThan(integration);
     expect(restart).toBeGreaterThan(e2e);
   });
 
