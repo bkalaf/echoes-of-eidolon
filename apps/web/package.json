@@ -19,6 +19,7 @@
     "worldbuilding:research": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/worldbuilding-research.mts",
     "architect-witness:roster": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-architect-witness-roster.mts",
     "architect-witness:hardening-audit": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/audit-architect-witness-guide-hardening.mts",
+    "puzzles:import": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-puzzle-blueprints.mts",
     "worldbuilding:import-packages": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-worldbuilding-packages.mts",
     "owner:bootstrap": "node scripts/run-owner-bootstrap.mjs",
     "release:draft": "tsx scripts/draft-release-notes.mts",

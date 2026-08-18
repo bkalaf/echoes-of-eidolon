@@ -1,0 +1,4326 @@
+[
+  {
+    "puzzleBlueprintId": "PZB-001",
+    "title": "Missing Commas Almanac",
+    "concept": "Two short almanac entries contain identical words but different punctuation, spacing, and omissions. Aligning the entries makes the absences index a generated code.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Normalize only letter case; retain punctuation and blank positions, align by token ordinal, then read the symbols missing from the second entry.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT",
+      "DOCUMENT_COMPARE"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-LAP",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Missing",
+      "Commas",
+      "Almanac",
+      "SEAL-001"
+    ],
+    "decoys": [
+      "CA9J7E",
+      "7EDGDU"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Normalize only letter case; retain punctuation and blank positions, align by token ordinal, then read the symbols missing from the second entry. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Normalize only letter case; retain punctuation and blank positions, align by token ordinal, then read the symbols missing from the second entry.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-002",
+    "title": "Twin-Column Punctuation Echo",
+    "concept": "Parallel witness statements look synonymous, but sentence boundaries and em-dash placement encode a coordinate walk through a letter table.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Map comma, period, colon, and dash to four cardinal moves; apply only marks that occur in one column at the same word boundary.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT",
+      "GRID"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-9KY",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "TwinColumn",
+      "Punctuation",
+      "Echo",
+      "SEAL-002"
+    ],
+    "decoys": [
+      "VL8ZR7Z3",
+      "R7Z365RF"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Map comma, period, colon, and dash to four cardinal moves; apply only marks that occur in one column at the same word boundary. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Map comma, period, colon, and dash to four cardinal moves; apply only marks that occur in one column at the same word boundary.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-003",
+    "title": "Edition Drift Acrostic",
+    "concept": "A materially transformed chapter-title concept uses a generated private edition: reordered headings, one omitted title, and edition metadata determine an acrostic. Static public chapter lists alone are insufficient.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Verify the instance edition ID, sort titles by generated folio marks, insert the omitted-title placeholder, then take edition-selected initials.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT",
+      "METADATA"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-J43",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Edition",
+      "Drift",
+      "Acrostic",
+      "SEAL-003"
+    ],
+    "decoys": [
+      "84UUV9XD",
+      "V9XDARAQ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Verify the instance edition ID, sort titles by generated folio marks, insert the omitted-title placeholder, then take edition-selected initials. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Verify the instance edition ID, sort titles by generated folio marks, insert the omitted-title placeholder, then take edition-selected initials.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-004",
+    "title": "Pangram Margin Index",
+    "concept": "Generated pangrams have apparently decorative margin numerals; only letters whose first occurrence lands on a numeral survive.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Track first occurrence of A-Z in each pangram and select positions listed by the alternating margin index.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-Q2F",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Pangram",
+      "Margin",
+      "Index",
+      "SEAL-004"
+    ],
+    "decoys": [
+      "FL8E57H2ZL",
+      "57H2ZLERUM"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Track first occurrence of A-Z in each pangram and select positions listed by the alternating margin index. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Track first occurrence of A-Z in each pangram and select positions listed by the alternating margin index.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-005",
+    "title": "Palindrome Breath Marks",
+    "concept": "A prose recital contains breath marks. Reading clauses forward and backward exposes marks that fail palindromic symmetry.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "AUDIO_MUSIC_SPECTRAL"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Tokenize clauses, reverse their normalized phoneme labels, and collect unmatched pause ordinals.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT",
+      "AUDIO_CAPTION"
+    ],
+    "accessibilityModalities": [
+      "CAPTIONS",
+      "TRANSCRIPT_WITH_PAUSE_MARKS",
+      "KEYBOARD_ONLY",
+      "DYSLEXIA_AWARE"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-GDQ",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Palindrome",
+      "Breath",
+      "Marks",
+      "SEAL-005"
+    ],
+    "decoys": [
+      "9B4U",
+      "Q3RP"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Tokenize clauses, reverse their normalized phoneme labels, and collect unmatched pause ordinals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Tokenize clauses, reverse their normalized phoneme labels, and collect unmatched pause ordinals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-006",
+    "title": "Redacted Concordance",
+    "concept": "Three redacted documents share a concordance. The same black bar means different lengths; only cross-document word-frequency constraints recover the generated phrase.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Solve redaction lengths against a generated vocabulary and sentence grammar, then select the unique concordant phrase.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-WVC",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Redacted",
+      "Concordance",
+      "SEAL-006"
+    ],
+    "decoys": [
+      "58DZJMBF74EN3D",
+      "JMBF74EN3DGNA4"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Solve redaction lengths against a generated vocabulary and sentence grammar, then select the unique concordant phrase. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Solve redaction lengths against a generated vocabulary and sentence grammar, then select the unique concordant phrase.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-007",
+    "title": "Footnote Dependency Graph",
+    "concept": "Footnotes cite one another in a directed graph; dangling, circular, and unreachable notes encode different symbol classes.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Construct the citation graph, collapse strongly connected components, topologically order the remainder, and read component labels.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT",
+      "GRAPH"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-4U8",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Footnote",
+      "Dependency",
+      "Graph",
+      "SEAL-007"
+    ],
+    "decoys": [
+      "FXYTR3",
+      "R3RGSY"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Construct the citation graph, collapse strongly connected components, topologically order the remainder, and read component labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Construct the citation graph, collapse strongly connected components, topologically order the remainder, and read component labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-008",
+    "title": "Homograph Ledger",
+    "concept": "A ledger uses generated homographs whose pronunciation or meaning changes by context. Sense tags hidden in accounting structure select the correct reading.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "HISTORICAL_RESEARCH"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Classify each repeated spelling by grammatical role and ledger column, then translate sense ordinals to symbols.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-NHF",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Homograph",
+      "Ledger",
+      "SEAL-008"
+    ],
+    "decoys": [
+      "W6Y9GYCD",
+      "GYCDELRQ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Classify each repeated spelling by grammatical role and ledger column, then translate sense ordinals to symbols. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Classify each repeated spelling by grammatical role and ledger column, then translate sense ordinals to symbols.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-009",
+    "title": "Shuffled Micro-Narrative Reconstruction",
+    "concept": "Inspired by the reconstructive satisfaction of Cain's Jawbone without reproducing its scale, forty generated fragments contain tense, weather, object-state, and speaker clues that establish one order.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT",
+      "HISTORICAL_RESEARCH"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Build a precedence graph from internal state changes and temporal references; the unique topological order yields edge letters.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "TEXT",
+      "TIMELINE",
+      "CARDS"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-Y22",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Shuffled",
+      "MicroNarrative",
+      "Reconstruction",
+      "SEAL-009"
+    ],
+    "decoys": [
+      "ADGER6GV",
+      "R6GVLHT8"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Build a precedence graph from internal state changes and temporal references; the unique topological order yields edge letters. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Build a precedence graph from internal state changes and temporal references; the unique topological order yields edge letters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-010",
+    "title": "Ligature Frequency Layer",
+    "concept": "A typeset page alternates equivalent ligatures and letter pairs. Their distribution forms a low-resolution bitmap after reflow at the instructed width.",
+    "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Reflow to the generated column width, mark ligature versus expanded pair, and decode the resulting bitmap font.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TEXT",
+      "OPTICAL_BITMAP"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_LIGATURE_TABLE",
+      "TEXT_SCALING",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "TEXT_COMPARE",
+    "controls": [
+      "CONTROL-MVP",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Ligature",
+      "Frequency",
+      "Layer",
+      "SEAL-010"
+    ],
+    "decoys": [
+      "DCZEFB9DR3",
+      "FB9DR3HQBV"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Reflow to the generated column width, mark ligature versus expanded pair, and decode the resulting bitmap font. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Reflow to the generated column width, mark ligature versus expanded pair, and decode the resulting bitmap font.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-011",
+    "title": "Ordinal Cancellation Files",
+    "concept": "Two independently plausible text matrices use signed alphabet offsets. Corresponding values that sum to zero form a generated six-character bitmap.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Map A-Z to -13..12, add corresponding cells, and plot exact zeros; nonzero results are deterministic noise.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "TWO_TEXT_FILES",
+      "MATRIX",
+      "BITMAP"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-Y7A",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Ordinal",
+      "Cancellation",
+      "Files",
+      "SEAL-011"
+    ],
+    "decoys": [
+      "R5BNL",
+      "LUKC9"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "The two documents are meant to be read together, cell for cell."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Map A through Z symmetrically around zero, add corresponding cells, and plot only exact cancellations."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Map A-Z to -13..12, add corresponding cells, and plot exact zeros; nonzero results are deterministic noise.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-012",
+    "title": "Set Union / Intersection Ambigram",
+    "concept": "U and I act as both literal characters and formally scoped union/intersection operators. Generated set cards have exactly one parse that satisfies the checksum.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Apply the supplied precedence evidence, enumerate parses, execute set operations, preserve ordered-string annotations, and concatenate the unique checksum-valid result.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "SET_CARDS",
+      "TEXT_NOTATION"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-3LK",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Set",
+      "Union",
+      "Intersection",
+      "Ambigram",
+      "SEAL-012"
+    ],
+    "decoys": [
+      "6XFC768RWHA99N",
+      "768RWHA99NYKLQ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "U and I are not always letters, but they are not always operators either."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Use the scope marks to enumerate parses, apply union before the indicated intersections, and keep the sole checksum-valid result."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Apply the supplied precedence evidence, enumerate parses, execute set operations, preserve ordered-string annotations, and concatenate the unique checksum-valid result.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-013",
+    "title": "Checksum Window",
+    "concept": "A long record has overlapping windows with several plausible checksums. Only one window size and checksum family agrees with all control rows.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Infer the checksum from control rows, slide the selected window across payload rows, and translate passing window ordinals.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-MR5",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Checksum",
+      "Window",
+      "SEAL-013"
+    ],
+    "decoys": [
+      "4P9A5Q",
+      "5QKVQT"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Infer the checksum from control rows, slide the selected window across payload rows, and translate passing window ordinals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Infer the checksum from control rows, slide the selected window across payload rows, and translate passing window ordinals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-014",
+    "title": "Modular Timestamp Weave",
+    "concept": "Generated timestamps in mixed calendar and clock conventions become loom coordinates after modular normalization.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "HISTORICAL_RESEARCH"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Normalize declared zones/calendars, reduce day and minute fields modulo the loom dimensions, and read intersections.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TABLE",
+      "GRID"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-PSD",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Modular",
+      "Timestamp",
+      "Weave",
+      "SEAL-014"
+    ],
+    "decoys": [
+      "85GDQ53P",
+      "Q53PEHZY"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Normalize declared zones/calendars, reduce day and minute fields modulo the loom dimensions, and read intersections. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Normalize declared zones/calendars, reduce day and minute fields modulo the loom dimensions, and read intersections.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-015",
+    "title": "Bit-Plane Ledger",
+    "concept": "Inventory quantities look mundane until decomposed into eight bit planes. One generated plane contains the symbol sequence while the others are balanced noise.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Convert values to fixed-width binary, render each bit position as a plane, and select the plane identified by parity controls.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TABLE",
+      "BITMAP"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-PUB",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "BitPlane",
+      "Ledger",
+      "SEAL-015"
+    ],
+    "decoys": [
+      "SZ6JUA7K",
+      "UA7KYY7E"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Convert values to fixed-width binary, render each bit position as a plane, and select the plane identified by parity controls. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Convert values to fixed-width binary, render each bit position as a plane, and select the plane identified by parity controls.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-016",
+    "title": "Coordinate Transposition Audit",
+    "concept": "Two coordinate logs use different axis orders and origins. Correctly reconciling them leaves an ordered route.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Infer each convention from calibration records, transform both sets into the canonical frame, and follow matched points by timestamp.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "FILES",
+      "MAP"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-Y92",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Coordinate",
+      "Transposition",
+      "Audit",
+      "SEAL-016"
+    ],
+    "decoys": [
+      "MHY3X4EBZ8",
+      "X4EBZ8TU46"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Infer each convention from calibration records, transform both sets into the canonical frame, and follow matched points by timestamp. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Infer each convention from calibration records, transform both sets into the canonical frame, and follow matched points by timestamp.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-017",
+    "title": "Error-Correcting Symbol Strip",
+    "concept": "A strip contains generated symbols with burst errors. Parity blocks repair it, but the error locations themselves encode a second answer layer.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Use the declared Hamming-like parity layout to correct each block, then translate corrected positions rather than corrected data.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-7LR",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ErrorCorrecting",
+      "Symbol",
+      "Strip",
+      "SEAL-017"
+    ],
+    "decoys": [
+      "SSQAY",
+      "YBKQK"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use the declared Hamming-like parity layout to correct each block, then translate corrected positions rather than corrected data. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use the declared Hamming-like parity layout to correct each block, then translate corrected positions rather than corrected data.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-018",
+    "title": "Merkle Leaf Path",
+    "concept": "A player-specific collection of records supplies leaf hashes and sibling proofs. Only one record order reaches the signed root.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Canonicalize records, hash leaves, verify sibling paths, and sort the accepted leaves by proof depth to form the code.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-9BA",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Merkle",
+      "Leaf",
+      "Path",
+      "SEAL-018"
+    ],
+    "decoys": [
+      "YG2Z6ZFPQ8ZXDR",
+      "6ZFPQ8ZXDRWVKS"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Canonicalize records, hash leaves, verify sibling paths, and sort the accepted leaves by proof depth to form the code. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Canonicalize records, hash leaves, verify sibling paths, and sort the accepted leaves by proof depth to form the code.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.rfc-editor.org/info/rfc2104/"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-019",
+    "title": "Sparse Matrix Nullspace",
+    "concept": "A sparse integer matrix has many apparent patterns, but a bounded nullspace vector selects generated columns whose labels form the answer.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Solve Ax=0 over the stated finite field, choose the normalized minimum-weight vector, and read nonzero column labels.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-59K",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Sparse",
+      "Matrix",
+      "Nullspace",
+      "SEAL-019"
+    ],
+    "decoys": [
+      "P3DNS4",
+      "S4V7KN"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Solve Ax=0 over the stated finite field, choose the normalized minimum-weight vector, and read nonzero column labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Solve Ax=0 over the stated finite field, choose the normalized minimum-weight vector, and read nonzero column labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-020",
+    "title": "Differential Archive Pack",
+    "concept": "Several compressed-looking change manifests describe revisions. Applying only semantically valid operations reconstructs a final record without exposing it as a plain diff.",
+    "primaryFamily": "CRYPTO_NUMERIC_DATA",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Validate operation preconditions, apply the unique consistent patch order, and read the final selected fields.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "FILE_MANIFESTS",
+      "TEXT_RECORD"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "DATA_TRANSFORM",
+    "controls": [
+      "CONTROL-CBN",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Differential",
+      "Archive",
+      "Pack",
+      "SEAL-020"
+    ],
+    "decoys": [
+      "HWZGCJGE",
+      "CJGEVJZQ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Validate operation preconditions, apply the unique consistent patch order, and read the final selected fields. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Validate operation preconditions, apply the unique consistent patch order, and read the final selected fields.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-021",
+    "title": "Typographic QR Threshold",
+    "concept": "A dense field of microtext has module-level luminance chosen so downsampling resolves a QR code. The QR contains only a signed player-bound route token.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Downsample or blur to recover modules, scan the QR, authenticate, and complete the route's next generated stage.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "MICROTEXT_IMAGE",
+      "QR",
+      "SIGNED_WEB_ROUTE"
+    ],
+    "accessibilityModalities": [
+      "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
+      "MODULE_MATRIX_TABLE",
+      "SCREEN_READER_ROUTE_ACTION",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-85M",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Typographic",
+      "Threshold",
+      "SEAL-021"
+    ],
+    "decoys": [
+      "F85BWFRW",
+      "WFRWA3Z2"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Downsample or blur to recover modules, scan the QR, authenticate, and complete the route's next generated stage. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Downsample or blur to recover modules, scan the QR, authenticate, and complete the route's next generated stage.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.qrcode.com/en/about/error_correction.html",
+      "https://www.qrcode.com/en/about/version.html"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-022",
+    "title": "Color-Wheel Channel Tribunal",
+    "concept": "Labeled shapes provide evidence for RGB additive, CMY subtractive, or artistic wheel behavior. Applying the inferred model reveals a generated sequence.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Use control swatches to identify the model, combine labeled channels, then read surviving shape and texture labels.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "COLOR",
+      "SHAPES",
+      "TEXTURES",
+      "NUMERIC_CHANNELS"
+    ],
+    "accessibilityModalities": [
+      "COLOR_LABELS",
+      "TEXTURES",
+      "NUMERIC_CHANNEL_TABLE",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-3QY",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ColorWheel",
+      "Channel",
+      "Tribunal",
+      "SEAL-022"
+    ],
+    "decoys": [
+      "WFTBH6QW4P",
+      "H6QW4PKVNX"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use control swatches to identify the model, combine labeled channels, then read surviving shape and texture labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use control swatches to identify the model, combine labeled channels, then read surviving shape and texture labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-023",
+    "title": "Afterimage Shape Ledger",
+    "concept": "Timed fixation plates produce afterimages that align with labeled outlines; a non-afterimage numeric-channel path preserves the same reasoning.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "AUDIO_MUSIC_SPECTRAL"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Identify complementary afterimage placements, align them to outlines, and order labels by exposure duration.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TIMED_VISUAL",
+      "SHAPE_LABELS",
+      "AUDIO_CUES"
+    ],
+    "accessibilityModalities": [
+      "REDUCED_MOTION",
+      "NUMERIC_CHANNEL_EQUIVALENT",
+      "SHAPE_LABELS",
+      "AUDIO_DESCRIPTION"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-3DK",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Afterimage",
+      "Shape",
+      "Ledger",
+      "SEAL-023"
+    ],
+    "decoys": [
+      "WXZ99",
+      "9REHW"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Identify complementary afterimage placements, align them to outlines, and order labels by exposure duration. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Identify complementary afterimage placements, align them to outlines, and order labels by exposure duration.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-024",
+    "title": "Moiré Line Phase",
+    "concept": "Two generated line screens reveal symbols only at specific translation and rotation phases.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Overlay the screens, calibrate phase using corner marks, and record symbols at the generated stops.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "IMAGE_LAYERS",
+      "INTERACTIVE_TRANSFORM"
+    ],
+    "accessibilityModalities": [
+      "NUMERIC_PHASE_TABLE",
+      "TACTILE_PRINTABLE_OVERLAY",
+      "KEYBOARD_TRANSFORM"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-RD4",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Moiré",
+      "Line",
+      "Phase",
+      "SEAL-024"
+    ],
+    "decoys": [
+      "ZYTKQ2E8R4CL7C",
+      "Q2E8R4CL7CH7DY"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Overlay the screens, calibrate phase using corner marks, and record symbols at the generated stops. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Overlay the screens, calibrate phase using corner marks, and record symbols at the generated stops.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-025",
+    "title": "Negative-Space Glyph Census",
+    "concept": "A crowded illustrated census hides generated glyphs only in negative spaces shared by three object classes.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Mask each object class, intersect the empty regions, and order connected components by centroid.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "IMAGE",
+      "MASKS",
+      "TEXT_LABELS"
+    ],
+    "accessibilityModalities": [
+      "STRUCTURED_REGION_TABLE",
+      "AUDIO_SPATIAL_DESCRIPTION",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-VAX",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "NegativeSpace",
+      "Glyph",
+      "Census",
+      "SEAL-025"
+    ],
+    "decoys": [
+      "BB9SBC",
+      "BCHFFY"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Mask each object class, intersect the empty regions, and order connected components by centroid. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Mask each object class, intersect the empty regions, and order connected components by centroid.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-026",
+    "title": "Layered Opacity Map",
+    "concept": "Transparent map sheets at generated opacity ratios cancel noise and expose a route.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_ROUTE",
+    "answerDerivation": "Infer alpha weights from calibration patches, composite layers in depth order, and trace the remaining connected line.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "MAP_LAYERS",
+      "OPACITY_CONTROLS"
+    ],
+    "accessibilityModalities": [
+      "EDGE_LIST_EQUIVALENT",
+      "KEYBOARD_CONTROLS",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-4GC",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Layered",
+      "Opacity",
+      "Map",
+      "SEAL-026"
+    ],
+    "decoys": [
+      "JSDSVFHTTB66CZBH428BZTY",
+      "VFHTTB66CZBH428BZTYZBV"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Infer alpha weights from calibration patches, composite layers in depth order, and trace the remaining connected line. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Infer alpha weights from calibration patches, composite layers in depth order, and trace the remaining connected line.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-027",
+    "title": "Ambiguous Figure Segmentation",
+    "concept": "Reversible figures support several segmentations; adjacency clues force one segmentation and generated label order.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Enumerate region interpretations, apply adjacency and area constraints, then read the unique region labels.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_REGION_MAP",
+      "STRUCTURED_ADJACENCY_TABLE",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-NZK",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Ambiguous",
+      "Figure",
+      "Segmentation",
+      "SEAL-027"
+    ],
+    "decoys": [
+      "YCHA3KTJ",
+      "3KTJKEXP"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Enumerate region interpretations, apply adjacency and area constraints, then read the unique region labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Enumerate region interpretations, apply adjacency and area constraints, then read the unique region labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-028",
+    "title": "Lens Distortion Calibration",
+    "concept": "A warped grid contains multiple apparent messages. Calibration marks identify the radial distortion model that rectifies the player-specific code.",
+    "primaryFamily": "VISUAL_COLOR_OPTICAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Fit the bounded distortion coefficients from control points, rectify the image, and read the central code strip.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "IMAGE",
+      "CALIBRATION_TABLE"
+    ],
+    "accessibilityModalities": [
+      "PRECOMPUTED_KEYBOARD_CALIBRATION",
+      "COORDINATE_TABLE",
+      "AUDIO_DESCRIPTION"
+    ],
+    "prototypeKind": "VISUAL_LAYER",
+    "controls": [
+      "CONTROL-WHQ",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Lens",
+      "Distortion",
+      "Calibration",
+      "SEAL-028"
+    ],
+    "decoys": [
+      "NSSXXJ2UP9",
+      "XJ2UP9FWT4"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Fit the bounded distortion coefficients from control points, rectify the image, and read the central code strip. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Fit the bounded distortion coefficients from control points, rectify the image, and read the central code strip.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-029",
+    "title": "Polyhedral Witness Box",
+    "concept": "A deterministic 320-face polyhedral puzzle box can rotate and unfold. Exactly one 16-face path shares color, orientation, and adjacency properties.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIXTEEN_CHARACTER_SEQUENCE",
+    "answerDerivation": "Use face marks to select an admissible net, unfold it, then follow the unique gold/upright adjacent path and read its characters.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "INTERACTIVE_3D",
+      "UNFOLDED_NET",
+      "ADJACENCY_TABLE"
+    ],
+    "accessibilityModalities": [
+      "NON_3D_NET",
+      "ADJACENCY_TABLE",
+      "KEYBOARD_ROTATE",
+      "REDUCED_MOTION",
+      "SCREEN_READER_FACE_LIST"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-QM9",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Polyhedral",
+      "Witness",
+      "Box",
+      "SEAL-029"
+    ],
+    "decoys": [
+      "BZATM2P4",
+      "M2P4EY74"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "The object has more than one correct way to unfold, but only one preserves all three marked properties."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Filter faces to gold and upright first; then test adjacency in the unfolded net until one 16-face continuous path remains."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use face marks to select an admissible net, unfold it, then follow the unique gold/upright adjacent path and read its characters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://registry.khronos.org/webgl/specs/latest/1.0/"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-030",
+    "title": "Net of Many Doors",
+    "concept": "Several polygon nets appear foldable, but hinge labels and door-clearance constraints admit one solid and one ordered door sequence.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Reject overlapping folds, enforce hinge parity, and read door labels in closure order.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "2D_NET",
+      "OPTIONAL_3D_PREVIEW"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_PRINTABLE_NET",
+      "HINGE_TABLE",
+      "KEYBOARD_CONTROLS"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-MAZ",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Net",
+      "Many",
+      "Doors",
+      "SEAL-030"
+    ],
+    "decoys": [
+      "HURT92V4DLS899",
+      "92V4DLS8999KB6"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Reject overlapping folds, enforce hinge parity, and read door labels in closure order. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Reject overlapping folds, enforce hinge parity, and read door labels in closure order.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-031",
+    "title": "Knot Projection Atlas",
+    "concept": "Generated knot diagrams from several projections must be matched using crossing invariants; selected crossings spell a code.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "HISTORICAL_RESEARCH"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Compute crossing signs and simple invariants, match equivalent knots, then read labels on unmatched crossings.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "DIAGRAMS",
+      "MANIPULABLE_STRINGS"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_RAISED_LINES",
+      "CROSSING_TABLE",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-M4D",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Knot",
+      "Projection",
+      "Atlas",
+      "SEAL-031"
+    ],
+    "decoys": [
+      "RX5YQV",
+      "QVN9ZJ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Compute crossing signs and simple invariants, match equivalent knots, then read labels on unmatched crossings. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Compute crossing signs and simple invariants, match equivalent knots, then read labels on unmatched crossings.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-032",
+    "title": "Möbius Label Walk",
+    "concept": "Labels on a strip seem duplicated until one half-twist changes orientation and reading direction.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Apply the marked half-twist, traverse a single boundary, and select labels upright at generated checkpoints.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "PAPER_STRIP",
+      "3D_PREVIEW"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_STRIP",
+      "LINEAR_ORIENTATION_TABLE"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-E4Y",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Möbius",
+      "Label",
+      "Walk",
+      "SEAL-032"
+    ],
+    "decoys": [
+      "R9P3ZJXM",
+      "ZJXMEB3P"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Apply the marked half-twist, traverse a single boundary, and select labels upright at generated checkpoints. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Apply the marked half-twist, traverse a single boundary, and select labels upright at generated checkpoints.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-033",
+    "title": "Voronoi Adjacency Cipher",
+    "concept": "Generated sites form a Voronoi diagram. Cell adjacency and area ranks define a path independent of exact rendering pixels.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Construct or inspect cells, follow the unique alternating degree rule, and translate site labels.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "MAP",
+      "ADJACENCY_TABLE"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-FVW",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Voronoi",
+      "Adjacency",
+      "Cipher",
+      "SEAL-033"
+    ],
+    "decoys": [
+      "4U32F98S",
+      "F98SCNBF"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Construct or inspect cells, follow the unique alternating degree rule, and translate site labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Construct or inspect cells, follow the unique alternating degree rule, and translate site labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-034",
+    "title": "Shadow-Casting Blocks",
+    "concept": "Arrange generated blocks so shadows match three orthogonal silhouettes; the visible top faces form the answer.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "CONSTRUCTION_SIMULATION"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Use silhouette constraints to determine block heights and rotations, then read exposed top labels.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "3D_BLOCKS",
+      "THREE_SILHOUETTES"
+    ],
+    "accessibilityModalities": [
+      "HEIGHT_MATRIX_EQUIVALENT",
+      "TACTILE_BLOCKS",
+      "KEYBOARD_ONLY"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-6ZR",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ShadowCasting",
+      "Blocks",
+      "SEAL-034"
+    ],
+    "decoys": [
+      "3V5G5XJ8P9",
+      "5XJ8P9J47Y"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use silhouette constraints to determine block heights and rotations, then read exposed top labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use silhouette constraints to determine block heights and rotations, then read exposed top labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-035",
+    "title": "Nonogram Topology Bridge",
+    "concept": "A generated nonogram has multiple bitmap completions, but only one makes the marked terminals connected without holes.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Solve row/column runs, then apply topology constraints to select the unique bridge and terminal labels.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-V37",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Nonogram",
+      "Topology",
+      "Bridge",
+      "SEAL-035"
+    ],
+    "decoys": [
+      "8HBF",
+      "G4CC"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Solve row/column runs, then apply topology constraints to select the unique bridge and terminal labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Solve row/column runs, then apply topology constraints to select the unique bridge and terminal labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-036",
+    "title": "Fold-and-Punch Constellation",
+    "concept": "A generated sequence of folds and punches creates a symmetric hole pattern; star labels visible through designated holes form the code.",
+    "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Execute folds in ordinal order, mirror punch coordinates through each fold, unfold, and read pierced labels.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "PAPER",
+      "INTERACTIVE_FOLD"
+    ],
+    "accessibilityModalities": [
+      "COORDINATE_TRANSFORM_TABLE",
+      "TACTILE_TEMPLATE",
+      "KEYBOARD_FOLD"
+    ],
+    "prototypeKind": "SPATIAL_BOARD",
+    "controls": [
+      "CONTROL-VUA",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "FoldandPunch",
+      "Constellation",
+      "SEAL-036"
+    ],
+    "decoys": [
+      "ZQNX3QRX7ESGEW",
+      "3QRX7ESGEWRN4E"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Execute folds in ordinal order, mirror punch coordinates through each fold, unfold, and read pierced labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Execute folds in ordinal order, mirror punch coordinates through each fold, unfold, and read pierced labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-037",
+    "title": "Musical Hexadecimal Grid",
+    "concept": "A coherent melody uses note names A-F as hexadecimal digits; G is only a control marker. Six-note groups form colors in a 32×4 grid whose repeated structures reveal a generated code.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_1_INITIATE",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_CHARACTER_HEXADECIMAL",
+    "answerDerivation": "Extract written note names A-F without requiring pitch recognition, group six at a time, render colors, and decode the 3×4 glyph field.",
+    "estimatedSolveTime": "10–30 minutes",
+    "playerFacingModalities": [
+      "AUDIO",
+      "MUSIC_NOTATION",
+      "NOTE_EVENT_TABLE",
+      "COLOR_GRID"
+    ],
+    "accessibilityModalities": [
+      "NOTATION",
+      "CAPTIONS",
+      "NOTE_EVENT_TABLE",
+      "COLOR_LABELS",
+      "TEXTURE_GRID"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-WQU",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Musical",
+      "Hexadecimal",
+      "Grid",
+      "SEAL-037"
+    ],
+    "decoys": [
+      "R66TES",
+      "ES5FCJ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "The sounds matter less as music than as written note names."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Keep only note names A through F, group them six at a time, and render each group as a hexadecimal color in the stated grid."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Extract written note names A-F without requiring pitch recognition, group six at a time, render colors, and decode the 3×4 glyph field.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.w3.org/2021/06/musicxml40/tutorial/notation-basics/"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-038",
+    "title": "Rhythm Morse Counterpoint",
+    "concept": "Two percussion lines encode dots, dashes, and separators by duration ratios while accents and pitch are camouflage.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Measure relative durations in each line, interleave by bar number, and decode the generated symbol stream.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "AUDIO",
+      "RHYTHM_NOTATION",
+      "HAPTIC_PULSES"
+    ],
+    "accessibilityModalities": [
+      "RHYTHM_NOTATION",
+      "HAPTIC_PULSES",
+      "CAPTIONS"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-53E",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Rhythm",
+      "Morse",
+      "Counterpoint",
+      "SEAL-038"
+    ],
+    "decoys": [
+      "DNRWZMD9",
+      "ZMD94U7W"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Measure relative durations in each line, interleave by bar number, and decode the generated symbol stream. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Measure relative durations in each line, interleave by bar number, and decode the generated symbol stream.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-039",
+    "title": "Spectral Watermark Ladder",
+    "concept": "Broadband ambience contains generated frequency bands that form steps in a spectrogram; captions provide an equivalent frequency table.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Render or inspect the spectrum, quantize marked bands, and read step heights as symbols.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "AUDIO",
+      "SPECTROGRAM",
+      "FREQUENCY_TABLE"
+    ],
+    "accessibilityModalities": [
+      "FREQUENCY_TABLE",
+      "HIGH_CONTRAST_SPECTROGRAM",
+      "CAPTIONS"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-F2N",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Spectral",
+      "Watermark",
+      "Ladder",
+      "SEAL-039"
+    ],
+    "decoys": [
+      "D9XAXLNP",
+      "XLNP5HRM"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Render or inspect the spectrum, quantize marked bands, and read step heights as symbols. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Render or inspect the spectrum, quantize marked bands, and read step heights as symbols.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.w3.org/TR/webaudio-1.1/"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-040",
+    "title": "Chord-Inversion Route",
+    "concept": "Chord labels and bass-note notation identify root, first, and second inversions that select branches on a route map.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_ROUTE",
+    "answerDerivation": "Use notated bass relationships—not perfect pitch—to classify inversions and traverse the generated ternary route.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "AUDIO",
+      "NOTATION",
+      "ROUTE_MAP"
+    ],
+    "accessibilityModalities": [
+      "CHORD_SYMBOLS",
+      "BASS_NOTE_TABLE",
+      "TACTILE_ROUTE"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-LG4",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ChordInversion",
+      "Route",
+      "SEAL-040"
+    ],
+    "decoys": [
+      "F4UVG4X65QGHZZW8LTPXUJE",
+      "G4X65QGHZZW8LTPXUJEE54"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use notated bass relationships—not perfect pitch—to classify inversions and traverse the generated ternary route. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use notated bass relationships—not perfect pitch—to classify inversions and traverse the generated ternary route.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-041",
+    "title": "Eightfold Lantern Maze",
+    "concept": "A 60×60 dark grid is crossed in 120 notes. Whole, half, quarter, and eighth durations map to lantern settings 1, 2, 4, and 8; each setting reveals a tile class, while 3, 5, 6, and 7 are decoy layers.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY",
+      "CROSS_MODAL",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ROUTE_SIGNATURE_16",
+    "answerDerivation": "For note n, ignore pitch, select the duration-coded lantern setting, and move to the only illuminated unvisited tile among the eight neighboring squares. The generated route ends at the opposite corner.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "AUDIO",
+      "RHYTHM_NOTATION",
+      "60X60_GRID",
+      "EIGHT_LANTERN_LAYERS",
+      "HAPTIC_NEIGHBOR_MODE"
+    ],
+    "accessibilityModalities": [
+      "RHYTHM_NOTATION",
+      "SPOKEN_EIGHT_NEIGHBOR_STATUS",
+      "HAPTIC_DIRECTION_STATUS",
+      "KEYBOARD_NAVIGATION",
+      "LOCAL_NEIGHBOR_TABLE",
+      "REDUCED_MOTION"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-PXT",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Eightfold",
+      "Lantern",
+      "Maze",
+      "SEAL-041"
+    ],
+    "decoys": [
+      "E287NQJTXXCFGJT2",
+      "NQJTXXCFGJT28NBN"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Pitch is scenery; measure each note by how long it lasts. The lantern’s numbers are literal."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Translate whole, half, quarter, and eighth notes to 1, 2, 4, and 8. For each note, choose that lantern setting and move to the only illuminated unvisited square among the eight neighbors."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: For note n, ignore pitch, select the duration-coded lantern setting, and move to the only illuminated unvisited tile among the eight neighboring squares. The generated route ends at the opposite corner.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-042",
+    "title": "Stereo Phase-Cancel Text",
+    "concept": "Left and right channels mostly cancel; swapping selected phase blocks reveals spoken phonemes and a parallel waveform label stream.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Identify phase markers, invert the designated channel blocks, sum channels, and order recovered phoneme labels.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "STEREO_AUDIO",
+      "WAVEFORM",
+      "PHONEME_TRANSCRIPT"
+    ],
+    "accessibilityModalities": [
+      "PHASE_BLOCK_TABLE",
+      "PHONEME_TRANSCRIPT",
+      "MONO_EQUIVALENT"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-2SS",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Stereo",
+      "PhaseCancel",
+      "Text",
+      "SEAL-042"
+    ],
+    "decoys": [
+      "HV2E4LZMRHP28T",
+      "4LZMRHP28TRXCP"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Identify phase markers, invert the designated channel blocks, sum channels, and order recovered phoneme labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Identify phase markers, invert the designated channel blocks, sum channels, and order recovered phoneme labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-043",
+    "title": "Percussion Polycycle",
+    "concept": "Three non-pitched rhythms repeat at coprime lengths. Coincidences at generated checkpoints select symbols.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Represent hits as modular residue sets, intersect the cycles, and map coincidence ordinals.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "PERCUSSION_AUDIO",
+      "RHYTHM_GRID"
+    ],
+    "accessibilityModalities": [
+      "RHYTHM_GRID",
+      "HAPTIC_TRACKS",
+      "CAPTIONS"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-PYM",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Percussion",
+      "Polycycle",
+      "SEAL-043"
+    ],
+    "decoys": [
+      "NMB3ZQ",
+      "ZQFAFX"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Represent hits as modular residue sets, intersect the cycles, and map coincidence ordinals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Represent hits as modular residue sets, intersect the cycles, and map coincidence ordinals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-044",
+    "title": "Phoneme Formant Map",
+    "concept": "Synthetic vowel-like sounds plot as points on a labeled formant map. Regional pronunciations are excluded unless an authored corpus supplies them.",
+    "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "HISTORICAL_RESEARCH"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_ROUTE",
+    "answerDerivation": "Use supplied F1/F2 measurements rather than hearing labels, match points to regions, and read route letters.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "AUDIO",
+      "FORMANT_TABLE",
+      "SCATTER_MAP"
+    ],
+    "accessibilityModalities": [
+      "FORMANT_TABLE",
+      "CAPTIONS",
+      "TACTILE_SCATTER"
+    ],
+    "prototypeKind": "AUDIO_SEQUENCE",
+    "controls": [
+      "CONTROL-KMM",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Phoneme",
+      "Formant",
+      "Map",
+      "SEAL-044"
+    ],
+    "decoys": [
+      "93DKKP285KJYS9VXD2QKRLJ",
+      "KP285KJYS9VXD2QKRLJQV4"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use supplied F1/F2 measurements rather than hearing labels, match points to regions, and read route letters. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use supplied F1/F2 measurements rather than hearing labels, match points to regions, and read route letters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-045",
+    "title": "Constraint-Shifting Logic Grid",
+    "concept": "A traditional who/where/when/object/route mystery has generated relation structure and clue order—not merely substituted names. A formal solver certifies one solution.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Translate clues into equality, inequality, adjacency, order, and exclusive-or constraints; solve the unique assignment.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "LOGIC_GRID",
+      "CLUE_CARDS"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-QJB",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ConstraintShifting",
+      "Logic",
+      "Grid",
+      "SEAL-045"
+    ],
+    "decoys": [
+      "EH9YB8P2",
+      "B8P28Q9S"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Translate clues into equality, inequality, adjacency, order, and exclusive-or constraints; solve the unique assignment. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Translate clues into equality, inequality, adjacency, order, and exclusive-or constraints; solve the unique assignment.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-046",
+    "title": "Scheduling Contradiction",
+    "concept": "A timetable appears overconstrained. One record uses a different clock convention; correcting it produces a unique schedule and code.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Model intervals, detect the minimal unsatisfied core, transform the marked clock, then solve the schedule.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-HN6",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Scheduling",
+      "Contradiction",
+      "SEAL-046"
+    ],
+    "decoys": [
+      "C2D47CHCKE",
+      "7CHCKEEDCD"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Model intervals, detect the minimal unsatisfied core, transform the marked clock, then solve the schedule. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Model intervals, detect the minimal unsatisfied core, transform the marked clock, then solve the schedule.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-047",
+    "title": "Truth-Teller Network",
+    "concept": "Generated speakers make statements about one another, with a bounded count of liars and conditional truths.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Convert statements to Boolean constraints, solve all assignments, and read labels on uniquely determined speakers.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-VZ5",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "TruthTeller",
+      "Network",
+      "SEAL-047"
+    ],
+    "decoys": [
+      "TDZW",
+      "3NBY"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Convert statements to Boolean constraints, solve all assignments, and read labels on uniquely determined speakers. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Convert statements to Boolean constraints, solve all assignments, and read labels on uniquely determined speakers.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-048",
+    "title": "River-Crossing Ledger",
+    "concept": "Cargo, passengers, and ferry states obey generated incompatibilities. The shortest valid crossing sequence encodes directions.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Search the state graph under capacity and incompatibility constraints, prove the shortest solution is unique, and translate moves.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "STATE_CARDS",
+      "RIVER_MAP"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-C32",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "RiverCrossing",
+      "Ledger",
+      "SEAL-048"
+    ],
+    "decoys": [
+      "G3KHZQ6UKVJXEE",
+      "ZQ6UKVJXEEWNZP"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Search the state graph under capacity and incompatibility constraints, prove the shortest solution is unique, and translate moves. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Search the state graph under capacity and incompatibility constraints, prove the shortest solution is unique, and translate moves.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-049",
+    "title": "Seating Constraint Spiral",
+    "concept": "Guests occupy a spiral table with asymmetric facing and distance rules; generated cultural labels are fictional unless reviewed.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Normalize facing directions, apply adjacency/distance constraints, and read seats at prime indices.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "SEAT_MAP",
+      "CLUES"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-RJH",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Seating",
+      "Constraint",
+      "Spiral",
+      "SEAL-049"
+    ],
+    "decoys": [
+      "G2XRTD",
+      "TDNSAF"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Normalize facing directions, apply adjacency/distance constraints, and read seats at prime indices. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Normalize facing directions, apply adjacency/distance constraints, and read seats at prime indices.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-050",
+    "title": "Mastermind Testimony",
+    "concept": "Witness statements report correct symbols and positions, but exactly one statement uses inclusive counting.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Enumerate candidate codes, test each counting interpretation, and retain the unique code satisfying all rows.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-LYT",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Mastermind",
+      "Testimony",
+      "SEAL-050"
+    ],
+    "decoys": [
+      "WS8LUD4D",
+      "UD4DX3A3"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Enumerate candidate codes, test each counting interpretation, and retain the unique code satisfying all rows. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Enumerate candidate codes, test each counting interpretation, and retain the unique code satisfying all rows.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-051",
+    "title": "Exact-Cover Mosaic",
+    "concept": "Generated polyominoes cover a board in many apparent ways; symbol-edge constraints leave one exact cover.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Build the exact-cover matrix, solve the unique tiling, and read boundary symbols.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "MOSAIC",
+      "PIECE_TABLE"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_PIECES",
+      "TEXT_EDGE_TABLE",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-5DQ",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ExactCover",
+      "Mosaic",
+      "SEAL-051"
+    ],
+    "decoys": [
+      "M4B44YD5",
+      "4YD59P73"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Build the exact-cover matrix, solve the unique tiling, and read boundary symbols. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Build the exact-cover matrix, solve the unique tiling, and read boundary symbols.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-052",
+    "title": "Boolean Door Circuit",
+    "concept": "Doors are logic gates with generated truth labels. One input sequence opens a route while satisfying safety interlocks.",
+    "primaryFamily": "LOGIC_CONSTRAINT",
+    "secondaryFamilies": [
+      "CONSTRUCTION_SIMULATION",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Derive gate functions from test pulses, solve the Boolean network, and submit the input vector.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "CIRCUIT",
+      "TRUTH_TABLE"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "CONSTRAINT_GRID",
+    "controls": [
+      "CONTROL-32N",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Boolean",
+      "Door",
+      "Circuit",
+      "SEAL-052"
+    ],
+    "decoys": [
+      "U6XCCC8PKN",
+      "CC8PKNU8QH"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Derive gate functions from test pulses, solve the Boolean network, and submit the input vector. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Derive gate functions from test pulses, solve the Boolean network, and submit the input vector.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-053",
+    "title": "Twenty-Digit Year Sequence",
+    "concept": "Five researched clues each have multiple plausible four-digit years because names repeat or dates are commonly conflated. Cross-clues select a unique 20-digit sequence.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "TWENTY_DIGIT_YEAR_SEQUENCE",
+    "answerDerivation": "Build candidate-year sets from the approved corpus, apply poem constraints and chronology, then concatenate the five surviving years.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "POEM",
+      "SOURCE_DOSSIERS",
+      "TIMELINE"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-ZRX",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "TwentyDigit",
+      "Year",
+      "Sequence",
+      "SEAL-053"
+    ],
+    "decoys": [
+      "DYFZ93DSYET52MSSNPQ6",
+      "93DSYET52MSSNPQ6CYLH"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Build candidate-year sets from the approved corpus, apply poem constraints and chronology, then concatenate the five surviving years. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Build candidate-year sets from the approved corpus, apply poem constraints and chronology, then concatenate the five surviving years.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://history.state.gov/milestones/1914-1920/paris-peace",
+      "https://www.archives.gov/milestone-documents/treaty-of-paris",
+      "https://www.museumoflondon.org.uk/museum-london/great-fire",
+      "https://www.royal.uk/coronation-guide"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-054",
+    "title": "Repeated Treaty Dossier",
+    "concept": "Several treaties share a city name or common shorthand. Signatory, subject, and ratification clues distinguish the generated records.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Research only the approved institutional corpus, match dossier facts to treaties, then order signing years by seal geometry.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-6BK",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Repeated",
+      "Treaty",
+      "Dossier",
+      "SEAL-054"
+    ],
+    "decoys": [
+      "QDXUUGTZJXX9GX",
+      "UGTZJXX9GXZTX8"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Research only the approved institutional corpus, match dossier facts to treaties, then order signing years by seal geometry. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Research only the approved institutional corpus, match dossier facts to treaties, then order signing years by seal geometry.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://history.state.gov/historicaldocuments/frus1919Parisv13",
+      "https://www.archives.gov/milestone-documents/treaty-of-paris"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-055",
+    "title": "Namesake Archive Chain",
+    "concept": "Repeated surnames and titles across archival authority records form a chain only when occupations, dates, and collection provenance agree.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Resolve identities in the approved authority corpus, follow collection references, and read generated call-number segments.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-57Q",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Namesake",
+      "Archive",
+      "Chain",
+      "SEAL-055"
+    ],
+    "decoys": [
+      "PVNE75",
+      "75TA3N"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Resolve identities in the approved authority corpus, follow collection references, and read generated call-number segments. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Resolve identities in the approved authority corpus, follow collection references, and read generated call-number segments.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.archives.gov/nhprc/projects/catalog/benjamin-franklin",
+      "https://www.bl.uk/collection/digitised-manuscripts-archives"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-056",
+    "title": "Calendar Reform Dispatches",
+    "concept": "Dispatches dated under different calendar reforms appear out of order. Local adoption evidence restores chronology.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Identify calendar regime from location and record cues, convert within the approved date range, and order dispatch seals.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-LJF",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Calendar",
+      "Reform",
+      "Dispatches",
+      "SEAL-056"
+    ],
+    "decoys": [
+      "7YX6GSDJ",
+      "GSDJXJMZ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Identify calendar regime from location and record cues, convert within the approved date range, and order dispatch seals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Identify calendar regime from location and record cues, convert within the approved date range, and order dispatch seals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.vatican.va/content/benedict-xvi/en/speeches/2006/november/documents/hf_ben-xvi_spe_20061103_gregoriana.html",
+      "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-057",
+    "title": "Multilingual Inscription Provenance",
+    "concept": "Transliterated inscriptions share borrowed terms but differ by period and medium. Script form, object metadata, and source notes identify a unique order.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "VISUAL_COLOR_OPTICAL"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Use supplied scholarly transliterations and catalog metadata, never machine translation alone, then order artifact labels by provenance.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "INSCRIPTION_IMAGES",
+      "TRANSLITERATIONS",
+      "CATALOG_RECORDS"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-KSS",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Multilingual",
+      "Inscription",
+      "Provenance",
+      "SEAL-057"
+    ],
+    "decoys": [
+      "Y7RJM6NW",
+      "M6NWWWM3"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use supplied scholarly transliterations and catalog metadata, never machine translation alone, then order artifact labels by provenance. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use supplied scholarly transliterations and catalog metadata, never machine translation alone, then order artifact labels by provenance.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.bl.uk/collection/digitised-manuscripts-archives"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-058",
+    "title": "Historical Map Edition Trail",
+    "concept": "Near-identical historical map editions differ in cartouche, scale, and corrected place names. Generated edition choices trace a coordinate code.",
+    "primaryFamily": "HISTORICAL_RESEARCH",
+    "secondaryFamilies": [
+      "VISUAL_COLOR_OPTICAL",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_ROUTE",
+    "answerDerivation": "Verify edition provenance, identify changed features, and apply their coordinates to the instance grid.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "MAPS",
+      "CATALOG_METADATA",
+      "COORDINATE_GRID"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "SOURCE_CHAIN",
+    "controls": [
+      "CONTROL-7SE",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Historical",
+      "Map",
+      "Edition",
+      "Trail",
+      "SEAL-058"
+    ],
+    "decoys": [
+      "QT4D5VKUEFMCT94E2RSPJCG",
+      "5VKUEFMCT94E2RSPJCGZHL"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Verify edition provenance, identify changed features, and apply their coordinates to the instance grid. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Verify edition provenance, identify changed features, and apply their coordinates to the instance grid.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://www.bl.uk/collection/explore-the-collection",
+      "https://www.bl.uk/stories/blogs/posts/a-guide-to-british-library-book-stamps"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-059",
+    "title": "Chain-Reaction Mechanism",
+    "concept": "Players connect ramps, triggers, counterweights, and gates. Several assemblies look plausible, but only one satisfies energy, timing, and reset constraints.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT",
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "COORDINATE",
+    "answerDerivation": "Use component transfer rules to construct a causal chain, simulate discrete ticks, and read the triggered gate signature.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "DRAG_ASSEMBLY",
+      "RULE_TABLE",
+      "TIMELINE"
+    ],
+    "accessibilityModalities": [
+      "KEYBOARD_ASSEMBLY",
+      "TEXT_CONNECTION_LIST",
+      "REDUCED_MOTION",
+      "TACTILE_PRINTABLE_PIECES"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-95B",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "ChainReaction",
+      "Mechanism",
+      "SEAL-059"
+    ],
+    "decoys": [
+      "CRUJX",
+      "XR5QS"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Use component transfer rules to construct a causal chain, simulate discrete ticks, and read the triggered gate signature. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use component transfer rules to construct a causal chain, simulate discrete ticks, and read the triggered gate signature.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-060",
+    "title": "Pipe Pressure Assembly",
+    "concept": "Valves and pipes can connect many ways, but flow, pressure drop, and contamination constraints admit one functional network.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Assemble a graph, compute bounded pressure and direction, and read outlet labels in activation order.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "PIPE_BOARD",
+      "FLOW_TABLE"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-7ML",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Pipe",
+      "Pressure",
+      "Assembly",
+      "SEAL-060"
+    ],
+    "decoys": [
+      "ECVXAYBWUUJX3X",
+      "AYBWUUJX3X8Z6X"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Assemble a graph, compute bounded pressure and direction, and read outlet labels in activation order. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Assemble a graph, compute bounded pressure and direction, and read outlet labels in activation order.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-061",
+    "title": "Gear Ratio Seal",
+    "concept": "Generated gears must mesh to align several seals simultaneously; decorative gears create ratio traps.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "CRYPTO_NUMERIC_DATA",
+      "SPATIAL_FOLDING_GEOMETRY"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SIX_DIGIT_CODE",
+    "answerDerivation": "Construct the gear graph, propagate rational rotations, reject collisions, and read aligned teeth.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "GEAR_BOARD",
+      "RATIO_TABLE"
+    ],
+    "accessibilityModalities": [
+      "RATIO_TABLE",
+      "KEYBOARD_CONTROLS",
+      "TACTILE_GEARS"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-JNR",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Gear",
+      "Ratio",
+      "Seal",
+      "SEAL-061"
+    ],
+    "decoys": [
+      "49DTA5",
+      "A58GQJ"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Construct the gear graph, propagate rational rotations, reject collisions, and read aligned teeth. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Construct the gear graph, propagate rational rotations, reject collisions, and read aligned teeth.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-062",
+    "title": "Balanced Bridge Modules",
+    "concept": "Bridge modules have load, span, and connector constraints. Only one arrangement survives every generated load case.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Assemble modules, compute simplified static loads, and read connector markings along the safe deck.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "MODULE_BOARD",
+      "LOAD_DIAGRAMS"
+    ],
+    "accessibilityModalities": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-TM2",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Balanced",
+      "Bridge",
+      "Modules",
+      "SEAL-062"
+    ],
+    "decoys": [
+      "UQZUJKVG",
+      "JKVG8ZH7"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Assemble modules, compute simplified static loads, and read connector markings along the safe deck. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Assemble modules, compute simplified static loads, and read connector markings along the safe deck.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-063",
+    "title": "Circuit Routing Beacon",
+    "concept": "Route power and signals through a board while avoiding crosstalk and satisfying gate timing. A unique valid trace yields the code.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "LOGIC_CONSTRAINT",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_3_EXPERT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Solve connectivity, layer, and timing constraints; hash the ordered terminal route.",
+    "estimatedSolveTime": "1–3 hours",
+    "playerFacingModalities": [
+      "CIRCUIT_BOARD",
+      "NETLIST"
+    ],
+    "accessibilityModalities": [
+      "TEXT_NETLIST",
+      "KEYBOARD_ROUTING",
+      "HIGH_CONTRAST"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-KQT",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Circuit",
+      "Routing",
+      "Beacon",
+      "SEAL-063"
+    ],
+    "decoys": [
+      "FZV69E56",
+      "9E563WSN"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Solve connectivity, layer, and timing constraints; hash the ordered terminal route. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Solve connectivity, layer, and timing constraints; hash the ordered terminal route.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-064",
+    "title": "Counterweight Loom",
+    "concept": "Counterweights select warp threads while a beat pattern schedules lifts. The woven strip reveals a generated phrase.",
+    "primaryFamily": "CONSTRUCTION_SIMULATION",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "AUDIO_MUSIC_SPECTRAL"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Balance beam groups, apply captioned rhythm events, and render over/under crossings as pixels.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "MECHANISM",
+      "RHYTHM",
+      "TEXTILE_GRID"
+    ],
+    "accessibilityModalities": [
+      "RHYTHM_NOTATION",
+      "CONNECTION_TABLE",
+      "TACTILE_GRID"
+    ],
+    "prototypeKind": "MECHANISM_BOARD",
+    "controls": [
+      "CONTROL-T23",
+      "ORDER-1",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Counterweight",
+      "Loom",
+      "SEAL-064"
+    ],
+    "decoys": [
+      "RASLNAKQ4D",
+      "NAKQ4DK3M6"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Balance beam groups, apply captioned rhythm events, and render over/under crossings as pixels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Balance beam groups, apply captioned rhythm events, and render over/under crossings as pixels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-065",
+    "title": "Chess Fragments in Prose",
+    "concept": "Ordinal-prefixed coordinate fragments hidden in prose reconstruct a legal generated chess game. Both sides finish with equal piece counts; the answer is the total remaining.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "LOGIC_CONSTRAINT",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "INTEGER_PIECES_REMAINING",
+    "answerDerivation": "Find valid fragments, sort by ordinal, replay under formal chess rules, and count pieces after the final legal move.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TEXT",
+      "CHESS_BOARD",
+      "MOVE_LIST"
+    ],
+    "accessibilityModalities": [
+      "ALGEBRAIC_MOVE_LIST",
+      "TACTILE_BOARD",
+      "SCREEN_READER_BOARD"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-ZKG",
+      "ORDER-2",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Chess",
+      "Fragments",
+      "Prose",
+      "SEAL-065"
+    ],
+    "decoys": [
+      "EB",
+      "FL"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Some number-letter fragments are moves, and their leading numbers are not part of the board."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Sort candidate fragments by the leading ordinal, replay the remaining four-character coordinates under legal chess rules, then count all pieces still on the board."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Find valid fragments, sort by ordinal, replay under formal chess rules, and count pieces after the final legal move.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": [
+      "https://handbook.fide.com/chapter/e012023"
+    ]
+  },
+  {
+    "puzzleBlueprintId": "PZB-066",
+    "title": "Braille-Audio Constellation",
+    "concept": "An original cross-modal design: star groups form Braille cells while inter-star tone intervals independently confirm dot order. Neither channel alone exposes the entire instance.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "AUDIO_MUSIC_SPECTRAL",
+      "SPATIAL_FOLDING_GEOMETRY",
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "answerDerivation": "Order stars by captioned interval class, map lit positions to Braille dots, and read the generated short phrase.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "STAR_MAP",
+      "NON_PITCH_INTERVAL_LABELS",
+      "BRAILLE_CELLS",
+      "HAPTIC_DOTS"
+    ],
+    "accessibilityModalities": [
+      "TACTILE_BRAILLE_MAP",
+      "INTERVAL_TABLE",
+      "CAPTIONS",
+      "HAPTIC_DOTS"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-QLM",
+      "ORDER-3",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "BrailleAudio",
+      "Constellation",
+      "SEAL-066"
+    ],
+    "decoys": [
+      "653TNZWZ9YBB45",
+      "NZWZ9YBB45WFSX"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Order stars by captioned interval class, map lit positions to Braille dots, and read the generated short phrase. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Order stars by captioned interval class, map lit positions to Braille dots, and read the generated short phrase.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-067",
+    "title": "Weather Sonification Map",
+    "concept": "Generated weather fields are available as a map, sonification, and numeric table. Cross-modal anomalies select a route.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "AUDIO_MUSIC_SPECTRAL",
+      "VISUAL_COLOR_OPTICAL",
+      "CRYPTO_NUMERIC_DATA"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_ROUTE",
+    "answerDerivation": "Normalize pressure, wind, and rainfall channels; find cells where map and sonification controls agree; follow time order.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "MAP",
+      "SONIFICATION",
+      "DATA_TABLE"
+    ],
+    "accessibilityModalities": [
+      "DATA_TABLE",
+      "CAPTIONS",
+      "TACTILE_MAP"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-BPB",
+      "ORDER-4",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Weather",
+      "Sonification",
+      "Map",
+      "SEAL-067"
+    ],
+    "decoys": [
+      "NWFFJ6GXGC4L49U9PTCFSEA",
+      "J6GXGC4L49U9PTCFSEAHL8"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Normalize pressure, wind, and rainfall channels; find cells where map and sonification controls agree; follow time order. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Normalize pressure, wind, and rainfall channels; find cells where map and sonification controls agree; follow time order.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-068",
+    "title": "Gesture-Punctuation Score",
+    "concept": "A captioned movement score uses punctuation as gestures and rhythm as timing. Performing or simulating the generated sequence traces symbols.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "TEXT_LANGUAGE_LITERARY",
+      "SPATIAL_FOLDING_GEOMETRY",
+      "AUDIO_MUSIC_SPECTRAL"
+    ],
+    "difficultyTier": "TIER_2_ADEPT",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "answerDerivation": "Map punctuation to direction, duration to distance, and pauses to pen lifts; plot the path.",
+    "estimatedSolveTime": "30–75 minutes",
+    "playerFacingModalities": [
+      "TEXT_SCORE",
+      "AUDIO_RHYTHM",
+      "GESTURE_PATH"
+    ],
+    "accessibilityModalities": [
+      "KEYBOARD_SIMULATION",
+      "RHYTHM_NOTATION",
+      "MOTION_OPTIONAL",
+      "REDUCED_MOTION"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-E4F",
+      "ORDER-5",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "GesturePunctuation",
+      "Score",
+      "SEAL-068"
+    ],
+    "decoys": [
+      "WEWECETX",
+      "CETXHX7F"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Map punctuation to direction, duration to distance, and pauses to pen lifts; plot the path. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Map punctuation to direction, duration to distance, and pauses to pen lifts; plot the path.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-069",
+    "title": "Spectrogram Foldout Chronicle",
+    "concept": "A chronicle's fold marks align with spectrogram bands and marginal phrases. Several plausible alignments exist until chronology and audio controls agree.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "AUDIO_MUSIC_SPECTRAL",
+      "VISUAL_COLOR_OPTICAL",
+      "TEXT_LANGUAGE_LITERARY"
+    ],
+    "difficultyTier": "TIER_5_ORDEAL",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "answerDerivation": "Render the spectrum or use its frequency table, fold the document at generated marks, align dated phrases, and read overlaps.",
+    "estimatedSolveTime": "6–20 hours across sessions",
+    "playerFacingModalities": [
+      "AUDIO",
+      "SPECTROGRAM",
+      "FOLDING_DOCUMENT",
+      "TIMELINE"
+    ],
+    "accessibilityModalities": [
+      "FREQUENCY_TABLE",
+      "COORDINATE_FOLD_TABLE",
+      "CAPTIONS"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-PE5",
+      "ORDER-6",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Spectrogram",
+      "Foldout",
+      "Chronicle",
+      "SEAL-069"
+    ],
+    "decoys": [
+      "23439PS6",
+      "9PS63Z4R"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Render the spectrum or use its frequency table, fold the document at generated marks, align dated phrases, and read overlaps. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Render the spectrum or use its frequency table, fold the document at generated marks, align dated phrases, and read overlaps.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  },
+  {
+    "puzzleBlueprintId": "PZB-070",
+    "title": "Tangram Phoneme Lock",
+    "concept": "Tangram silhouettes correspond to mouth-shape diagrams, while synthetic phoneme labels order the pieces. The assembled lock yields an arrangement signature.",
+    "primaryFamily": "CROSS_MODAL",
+    "secondaryFamilies": [
+      "SPATIAL_FOLDING_GEOMETRY",
+      "AUDIO_MUSIC_SPECTRAL",
+      "LOGIC_CONSTRAINT"
+    ],
+    "difficultyTier": "TIER_4_MASTER",
+    "generatorVersion": "1.0.0",
+    "answerFormat": "SHORT_PHRASE",
+    "answerDerivation": "Match captioned phoneme features to silhouettes, assemble the unique tangram, and submit piece orientation order.",
+    "estimatedSolveTime": "3–8 hours",
+    "playerFacingModalities": [
+      "TANGRAM",
+      "PHONEME_TABLE",
+      "AUDIO_OPTION"
+    ],
+    "accessibilityModalities": [
+      "PHONEME_FEATURE_TABLE",
+      "TACTILE_TANGRAM",
+      "CAPTIONS"
+    ],
+    "prototypeKind": "CROSS_MODAL",
+    "controls": [
+      "CONTROL-RTC",
+      "ORDER-7",
+      "RESET",
+      "UNDO"
+    ],
+    "cues": [
+      "Tangram",
+      "Phoneme",
+      "Lock",
+      "SEAL-070"
+    ],
+    "decoys": [
+      "JVFDE68NYN",
+      "E68NYNAQC8"
+    ],
+    "hints": [
+      {
+        "level": 1,
+        "kind": "DIRECTIONAL",
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "level": 2,
+        "kind": "GUIDED",
+        "text": "Bobalus identifies this operation: Match captioned phoneme features to silhouettes, assemble the unique tangram, and submit piece orientation order. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Match captioned phoneme features to silhouettes, assemble the unique tangram, and submit piece orientation order.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "sources": []
+  }
+]
+
