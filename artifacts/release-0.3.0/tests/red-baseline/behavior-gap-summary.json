@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "echoes-release-red-baseline-v1",
+  "generatedAt": "2026-08-18T14:03:02-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "apps/web/tests/unit/release-0.3.0-red-baseline.test.ts",
+      "sha256": "d32809f8a316d0371d4984d937a62b051194aa15543b501e146e407754f0a252"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-red-baseline.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T14:01:10-07:00",
+      "finishedAt": "2026-08-18T14:01:12-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/tests/red-baseline/vitest-summary.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Focused RED baseline contains requirement failures",
+      "expected": 8,
+      "observed": 8,
+      "pass": true
+    },
+    {
+      "name": "Existing Guide title and identity lock remains green",
+      "expected": 1,
+      "observed": 1,
+      "pass": true
+    },
+    {
+      "name": "Every prompt is covered by prompt mapping or focused behavior gap",
+      "expected": 18,
+      "observed": 18,
+      "pass": true
+    }
+  ],
+  "artifacts": [
+    "artifacts/release-0.3.0/tests/red-baseline/prompt-coverage.json",
+    "artifacts/release-0.3.0/tests/red-baseline/vitest-summary.txt"
+  ],
+  "blockers": [],
+  "notes": [
+    "Status PASS means the intentional failing baseline was captured successfully; it does not mean the eight missing behavior groups are implemented."
+  ],
+  "testFiles": 1,
+  "testCount": 9,
+  "failedCount": 8,
+  "passedCount": 1,
+  "gaps": [
+    {
+      "promptIds": ["R030-Q01", "R030-Q02", "R030-Q03"],
+      "status": "FAIL",
+      "gap": "The authoritative 2D Atlas image is still cropped with object-fit: cover."
+    },
+    {
+      "promptIds": ["R030-Q04", "R030-Q05"],
+      "status": "FAIL",
+      "gap": "Deterministic founding Settlement and population importers do not exist."
+    },
+    {
+      "promptIds": ["R030-Q06", "R030-Q07"],
+      "status": "FAIL",
+      "gap": "Atlas Sites do not resolve selected-world occupancy before offering founding actions."
+    },
+    {
+      "promptIds": ["R030-Q08"],
+      "status": "PASS",
+      "gap": null
+    },
+    {
+      "promptIds": ["R030-Q09", "R030-Q14U"],
+      "status": "FAIL",
+      "gap": "Campaign cards do not expose the exact readable Move up and Move down controls."
+    },
+    {
+      "promptIds": ["R030-Q10", "R030-Q11", "R030-Q12", "R030-Q13", "R030-Q15"],
+      "status": "FAIL",
+      "gap": "The exhaustive owner data UI audit and inline row-edit audit do not exist."
+    },
+    {
+      "promptIds": ["R030-Q16A"],
+      "status": "FAIL",
+      "gap": "The registry-backed owner record detail route does not exist."
+    },
+    {
+      "promptIds": ["R030-Q16B"],
+      "status": "FAIL",
+      "gap": "Taxonomy is not a first-class relational Prisma entity."
+    },
+    {
+      "promptIds": ["R030-Q17"],
+      "status": "FAIL",
+      "gap": "Production generator coverage evidence for all 70 blueprints does not exist."
+    }
+  ]
+}

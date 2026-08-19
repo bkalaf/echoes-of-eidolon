@@ -34,16 +34,18 @@ function parsedModelFields(block) {
     const field = /^\s{2}(\w+)\s+([A-Za-z][A-Za-z0-9]*)(\[\])?(\?)?(?:\s+.*)?$/.exec(line);
     if (!field) continue;
     const [, name, type, listMarker, optionalMarker] = field;
+    const kind = modelNames.has(type) ? "relation" : enums.has(type) ? "enum" : type === "Json" ? "json" : "scalar";
+    const relationFields = kind === "relation" ? /@relation\([^)]*fields:\s*\[([^\]]*)\]/.exec(line)?.[1] : undefined;
     fields.push({
       enumValues: enums.get(type) ?? [], hasDefault: line.includes("@default("), isId: line.includes("@id"), isList: Boolean(listMarker), isRequired: !optionalMarker,
-      kind: modelNames.has(type) ? "relation" : enums.has(type) ? "enum" : type === "Json" ? "json" : "scalar", name, type,
+      kind, name, relationFromFields: kind === "relation" ? [...(relationFields ?? "").matchAll(/\w+/g)].map((match) => match[0]) : undefined, type,
     });
   }
   return fields;
 }
 
 const auditModels = Object.fromEntries([...modelBlocks].sort(([left], [right]) => left.localeCompare(right)).map(([model, block]) => [model, {
-  fields: parsedModelFields(block).map((field) => ({ enumName: field.kind === "enum" ? field.type : null, isList: field.isList, isRequired: field.isRequired, kind: field.kind, name: field.name, type: field.type })),
+  fields: parsedModelFields(block).map((field) => ({ enumName: field.kind === "enum" ? field.type : null, isList: field.isList, isRequired: field.isRequired, kind: field.kind, name: field.name, relationFromFields: field.relationFromFields, type: field.type })),
 }]));
 
 const entities = {};
@@ -69,6 +71,7 @@ for (const [entity, registeredFields] of [...registered].sort(([left], [right]) 
       isRequired: field.isRequired,
       kind: field.kind,
       name: field.name,
+      relationFromFields: field.relationFromFields,
       type: field.type,
     })),
     delegate: `${entity[0].toLowerCase()}${entity.slice(1)}`,

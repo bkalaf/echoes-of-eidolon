@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { entityFields, entityForPath } from "../../content/entities";
 import {
   createDefaultFieldMapping,
@@ -91,6 +92,17 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
       setApplying(false);
     }
   };
+  const mappingRows = prepared?.sourceFields.map((sourceField) => ({ sourceField })) ?? [];
+  const mappingColumns: DataTableColumnDef<(typeof mappingRows)[number]>[] = [
+    { accessorKey: "sourceField", header: "Source field" },
+    { accessorFn: (row) => mapping[row.sourceField] ?? (mapping[row.sourceField] === null ? "Ignore" : "Unmapped"), cell: ({ row }) => <select className="select" aria-label={`Map ${row.original.sourceField}`} value={mapping[row.original.sourceField] ?? (mapping[row.original.sourceField] === null ? "__ignore__" : "")} onChange={(event) => updateMapping(row.original.sourceField, event.target.value)}><option value="">Select a field</option><option value="__ignore__">Ignore source field</option>{entityFields[entity].map((field) => <option value={field} key={field}>{field}</option>)}</select>, header: `Canonical ${entity} field`, id: "targetField" },
+  ];
+  const previewColumns: DataTableColumnDef<ImportRecord>[] = entityFields[entity].map((field) => ({
+    accessorFn: (row: ImportRecord) => displayValue(row[field]),
+    header: field,
+    id: field,
+  }));
+  const previewRows = prepared?.rows.map((row, index) => ({ ...row, __previewRowId: `${index}:${String(row[entityFields[entity][0]])}` })) ?? [];
 
   return <div className="stack">
     <section className="card">
@@ -110,13 +122,13 @@ export function EntityImportPage({ screen }: { screen: PageManifestEntry }) {
     {prepared && <>
       <section className="card">
         <h2>Field mapping</h2>
-        <table className="simple-table"><thead><tr><th>Source field</th><th>Canonical {entity} field</th></tr></thead><tbody>{prepared.sourceFields.map((sourceField) => <tr key={sourceField}><td>{sourceField}</td><td><select className="select" aria-label={`Map ${sourceField}`} value={mapping[sourceField] ?? (mapping[sourceField] === null ? "__ignore__" : "")} onChange={(event) => updateMapping(sourceField, event.target.value)}><option value="">Select a field</option><option value="__ignore__">Ignore source field</option>{entityFields[entity].map((field) => <option value={field} key={field}>{field}</option>)}</select></td></tr>)}</tbody></table>
+        <DataTable columns={mappingColumns} data={mappingRows} getRowId={(row) => row.sourceField} preferenceKey={`admin.entity-import.${entity}.mapping`} />
       </section>
 
       <section className="card">
         <div className="action-row action-row--between"><h2>Concrete preview</h2><span className="tag">{prepared.rows.length} rows</span></div>
         {prepared.errors.length > 0 && <div className="notice notice--bad" role="alert"><strong>Validation failed</strong><ul>{prepared.errors.map((error) => <li key={error}>{error}</li>)}</ul></div>}
-        {prepared.errors.length === 0 && <div className="table-scroll"><table className="simple-table"><thead><tr>{entityFields[entity].map((field) => <th key={field}>{field}</th>)}</tr></thead><tbody>{prepared.rows.map((row, index) => <tr key={`${String(row[entityFields[entity][0]])}-${index}`}>{entityFields[entity].map((field) => <td key={field}>{displayValue(row[field])}</td>)}</tr>)}</tbody></table></div>}
+        {prepared.errors.length === 0 && <DataTable columns={previewColumns} data={previewRows} getRowId={(row) => String(row.__previewRowId)} preferenceKey={`admin.entity-import.${entity}.preview`} />}
         <div className="action-row">
           <button className="button button--gold" disabled={prepared.errors.length > 0 || applying} onClick={() => void apply()}>{applying ? "Applying…" : `Apply ${entity} import`}</button>
           <p className="muted">The server revalidates this preview, refuses canonical drift, and applies all new rows in one transaction.</p>

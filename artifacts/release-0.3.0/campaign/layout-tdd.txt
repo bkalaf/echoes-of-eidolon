@@ -1,0 +1,14 @@
+T401 Campaign Planner viewport containment and readability — implementation evidence
+
+RED
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/campaign-layout-contract.test.ts
+Exit: 1
+Result: 3/3 tests failed: no dedicated board viewport, no type-specific column widths, and unassigned/movement controls still used 8px text.
+
+GREEN
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/campaign-layout-contract.test.ts tests/unit/campaign-admin.test.tsx tests/unit/campaigns.test.ts
+Exit: 0
+Result: 3 files / 36 tests pass. The board owns horizontal scrolling; its card cannot expand the page shell; record-heavy columns use 210-220px minima; other columns use 168px; unassigned records use 36px rows and 12px text; movement controls remain fully labeled at 11px; placed cards show human-readable labels before IDs.
+
+Typecheck: PASS.
+Required 1600x900 Chromium regression and screenshot are specified in apps/web/tests/e2e/campaign-planner.spec.ts but remain BLOCKED under B08 because the webServer cannot bind loopback.

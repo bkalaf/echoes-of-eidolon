@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "echoes-owner-table-browser-matrix-v1",
+  "browser": "Chromium",
+  "environment": "current execution container",
+  "scenarios": [
+    {
+      "name": "narrow",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "wide",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "empty",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "populated",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "filtered",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "sorted",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "relation-heavy",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "Character",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "Witness",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    },
+    {
+      "name": "WitnessDef",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+    }
+  ]
+}

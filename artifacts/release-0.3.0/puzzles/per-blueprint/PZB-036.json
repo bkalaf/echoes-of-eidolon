@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-036",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:45cc69182c998e4a",
+  "instanceChecksum": "2787bafc0e3f3a8fab0c62801ebe67225ff915c18333a27e3343ce79b76f84eb",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "concept": "A generated sequence of folds and punches creates a symmetric hole pattern; star labels visible through designated holes form the code.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Execute folds in ordinal order, mirror punch coordinates through each fold, unfold, and read pierced labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Execute folds in ordinal order, mirror punch coordinates through each fold, unfold, and read pierced labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "PAPER",
+      "INTERACTIVE_FOLD"
+    ],
+    "accessibilityModes": [
+      "COORDINATE_TRANSFORM_TABLE",
+      "TACTILE_TEMPLATE",
+      "KEYBOARD_FOLD"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

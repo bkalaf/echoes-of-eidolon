@@ -8,6 +8,7 @@ import {
   isValidCampaignSpan,
   linkedCampaignGroup,
   opposingFactionGrouping,
+  plannerColumnForObjectType,
   validateDisjointTrilogy,
   type BookGroupingValueContract,
   type CampaignObjectType,
@@ -62,6 +63,20 @@ export const campaignPlacementInputSchema = z.object({
 export const linkedCampaignPlacementInputSchema = z.object({
   placements: z.array(campaignPlacementInputSchema).min(1),
 }).strict();
+
+export const campaignPlacementReorderSchema = z.object({
+  beforeCampaignPlacementId: z.string().trim().min(1).optional(),
+  campaignPlacementId: z.string().trim().min(1),
+  direction: z.enum(["UP", "DOWN"]).optional(),
+  worldKey: z.enum(WorldKey),
+}).strict().superRefine((value, context) => {
+  if (Number(Boolean(value.direction)) + Number(Boolean(value.beforeCampaignPlacementId)) !== 1) {
+    context.addIssue({ code: "custom", message: "Choose exactly one reorder operation." });
+  }
+  if (value.beforeCampaignPlacementId === value.campaignPlacementId) {
+    context.addIssue({ code: "custom", message: "A placement cannot be moved before itself." });
+  }
+});
 
 const groupingValueSchema = z.object({
   bookGroupingValueId: z.string().trim().min(1),
@@ -144,7 +159,14 @@ export async function getCampaignWorkspace(worldKey: WorldKey, database: Databas
     catalog[objectType].filter((item) => !assigned.get(objectType)?.has(item.objectId)),
   ])) as Record<CampaignObjectType, CampaignCatalogItem[]>;
   const disjoint = validateDisjointTrilogy(groupingRows, worldKey);
-  return { campaign, unassigned, bookGroupings: { disjoint, opposingFaction: opposingFactionGrouping(worldKey) } };
+  const projectedCampaign = campaign ? {
+    ...campaign,
+    placements: campaign.placements.map((placement) => ({
+      ...placement,
+      label: catalog[placement.objectType as CampaignObjectType].find((item) => item.objectId === placement.objectId)?.label ?? placement.objectId,
+    })),
+  } : null;
+  return { campaign: projectedCampaign, unassigned, bookGroupings: { disjoint, opposingFaction: opposingFactionGrouping(worldKey) } };
 }
 
 async function assertCampaignObjectExists(transaction: Transaction, objectType: CampaignObjectType, objectId: string) {
@@ -187,6 +209,49 @@ async function savePlacement(input: z.infer<typeof campaignPlacementInputSchema>
     create: { campaignPlacementId: randomUUID(), campaignId, objectId: input.objectId, objectType: input.objectType, bookNumbers, ordinal: (maximum._max.ordinal ?? 0) + 1 },
     update: { bookNumbers, ordinal: existing?.ordinal ?? (maximum._max.ordinal ?? 0) + 1 },
   });
+}
+
+export async function reorderCampaignPlacement(input: z.infer<typeof campaignPlacementReorderSchema>, database: Database = getDatabase()) {
+  const parsed = campaignPlacementReorderSchema.parse(input);
+  return database.$transaction(async (transaction) => {
+    const campaign = await transaction.campaign.findUnique({
+      where: { worldKey: parsed.worldKey },
+      include: { placements: { orderBy: { ordinal: "asc" } } },
+    });
+    if (!campaign) throw new CampaignBookRangeError(`${parsed.worldKey} Campaign does not exist.`);
+    const current = [...campaign.placements];
+    const moving = current.find((placement) => placement.campaignPlacementId === parsed.campaignPlacementId);
+    if (!moving) throw new CampaignBookRangeError(`Campaign placement ${parsed.campaignPlacementId} does not exist in ${parsed.worldKey}.`);
+    const columnId = plannerColumnForObjectType(moving.objectType);
+    if (!columnId) throw new CampaignBookRangeError(`${moving.objectType} has no Campaign Planner column.`);
+    const siblings = current.filter((placement) => plannerColumnForObjectType(placement.objectType) === columnId);
+    const siblingIndex = siblings.findIndex((placement) => placement.campaignPlacementId === moving.campaignPlacementId);
+    let target;
+    if (parsed.direction) target = siblings[siblingIndex + (parsed.direction === "UP" ? -1 : 1)];
+    else target = siblings.find((placement) => placement.campaignPlacementId === parsed.beforeCampaignPlacementId);
+    if (!target) throw new CampaignBookRangeError(`Campaign placement ${moving.campaignPlacementId} cannot move ${parsed.direction?.toLowerCase() ?? "to that position"}.`);
+
+    const reordered = [...current];
+    const movingIndex = reordered.findIndex((placement) => placement.campaignPlacementId === moving.campaignPlacementId);
+    const targetIndex = reordered.findIndex((placement) => placement.campaignPlacementId === target.campaignPlacementId);
+    if (parsed.direction) [reordered[movingIndex], reordered[targetIndex]] = [reordered[targetIndex]!, reordered[movingIndex]!];
+    else {
+      const [removed] = reordered.splice(movingIndex, 1);
+      const insertion = reordered.findIndex((placement) => placement.campaignPlacementId === target.campaignPlacementId);
+      reordered.splice(insertion, 0, removed!);
+    }
+    const ordinals = current.map((placement) => placement.ordinal);
+    const changed = reordered.flatMap((placement, index) => placement.ordinal === ordinals[index]
+      ? []
+      : [{ campaignPlacementId: placement.campaignPlacementId, ordinal: ordinals[index]! }]);
+    for (const [index, placement] of changed.entries()) {
+      await transaction.campaignPlacement.update({ where: { campaignPlacementId: placement.campaignPlacementId }, data: { ordinal: -(index + 1) } });
+    }
+    for (const placement of changed) {
+      await transaction.campaignPlacement.update({ where: { campaignPlacementId: placement.campaignPlacementId }, data: { ordinal: placement.ordinal } });
+    }
+    return { campaignId: campaign.campaignId, placements: reordered.map((placement, index) => ({ campaignPlacementId: placement.campaignPlacementId, ordinal: ordinals[index]! })) };
+  }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
 }
 
 export async function saveCampaignPlacement(input: z.infer<typeof campaignPlacementInputSchema>, database: Database = getDatabase()) {

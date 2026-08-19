@@ -1,0 +1,150 @@
+{
+  "lookupPresentation": {
+    "Character": {
+      "primary": "displayName",
+      "secondary": "characterId"
+    },
+    "Architect": {
+      "primary": "character.displayName",
+      "secondary": "characterId",
+      "context": [
+        "department"
+      ]
+    },
+    "Witness": {
+      "primary": "character.displayName",
+      "secondary": "characterId",
+      "context": [
+        "witnessDef.name",
+        "architect.character.displayName"
+      ]
+    },
+    "WitnessDef": {
+      "primary": "name",
+      "secondary": "witnessDefId",
+      "context": [
+        "sourceArchitect.character.displayName",
+        "architectSoulId"
+      ]
+    },
+    "Companion": {
+      "primary": "character.displayName",
+      "secondary": "characterId",
+      "context": [
+        "companionKey",
+        "character.worldKey"
+      ]
+    },
+    "CompanionDef": {
+      "primaryTemplate": "Companion {companionKey}",
+      "secondary": "companionKey",
+      "context": [
+        "concordCharacter.displayName",
+        "ruinCharacter.displayName",
+        "schismCharacter.displayName"
+      ]
+    },
+    "Species": {
+      "primary": "name",
+      "secondary": "speciesId"
+    },
+    "Culture": {
+      "primary": "name",
+      "secondary": "cultureId"
+    },
+    "Breed": {
+      "primary": "name",
+      "secondary": "breedId",
+      "context": [
+        "species.name",
+        "culture.name"
+      ]
+    },
+    "Occupation": {
+      "primary": "name",
+      "secondary": "occupationId"
+    },
+    "LegendaryReward": {
+      "primary": "name",
+      "secondary": "legendaryRewardId"
+    },
+    "Constellation": {
+      "primary": "name",
+      "secondary": "constellationId"
+    },
+    "Settlement": {
+      "primary": "name",
+      "secondary": "settlementId"
+    },
+    "Site": {
+      "primaryTemplate": "{siteId} — {regionId} — {candidateType}",
+      "secondary": "siteId"
+    },
+    "Region": {
+      "primaryTemplate": "{regionId} — {canonicalRegionName}",
+      "secondary": "regionId"
+    },
+    "Soul": {
+      "primary": "soulId",
+      "secondaryDerived": "linked Character.displayName + subtype role"
+    }
+  },
+  "ownerFormLookupPresentation": {
+    "Soul": {
+      "primary": "name",
+      "secondary": "soulId"
+    },
+    "Source": {
+      "primary": "title",
+      "secondary": "sourceId",
+      "context": [
+        "publisher",
+        "publicationDate"
+      ]
+    },
+    "Citation": {
+      "primary": "rendering",
+      "secondary": "citationId",
+      "context": [
+        "source.title",
+        "locator"
+      ]
+    },
+    "Interlude": {
+      "primary": "name",
+      "secondary": "interludeId",
+      "context": [
+        "interludeType"
+      ]
+    },
+    "ManagedAsset": {
+      "primary": "objectKey",
+      "secondary": "managedAssetId",
+      "context": [
+        "mediaKind",
+        "mimeType"
+      ]
+    },
+    "PersonalityExpression": {
+      "primary": "expression",
+      "secondary": "personalityId",
+      "context": [
+        "family"
+      ]
+    },
+    "SettlementWorld": {
+      "primaryTemplate": "{settlement.name} — {worldKey}",
+      "secondary": "settlementWorldId",
+      "context": [
+        "dominantBreed.name",
+        "culture.name"
+      ]
+    }
+  },
+  "relationCell": {
+    "line1": "human-readable lookup label",
+    "line2": "canonical raw ID",
+    "rawIdStillSearchable": true,
+    "rawIdStillCopyable": true
+  }
+}

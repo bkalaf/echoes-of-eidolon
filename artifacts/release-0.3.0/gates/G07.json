@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "echoes-release-gate-report-v1",
+  "gateId": "G07",
+  "status": "BLOCKED",
+  "release": "0.3.0",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local isolated release worktree with restricted loopback and child-process policy",
+  "startedAt": "2026-08-18T18:01:00-07:00",
+  "finishedAt": "2026-08-18T18:10:00-07:00",
+  "dependencies": [
+    { "gateId": "G03", "status": "BLOCKED" },
+    { "gateId": "G04", "status": "BLOCKED" },
+    { "gateId": "G05", "status": "BLOCKED" },
+    { "gateId": "G06", "status": "BLOCKED" }
+  ],
+  "commands": [
+    { "command": "pnpm lint", "exitCode": 0, "logPath": null },
+    { "command": "pnpm typecheck", "exitCode": 0, "logPath": null },
+    { "command": "pnpm test", "exitCode": 1, "logPath": null },
+    { "command": "pnpm test:integration", "exitCode": 1, "logPath": null },
+    { "command": "EIDOLON_ATLAS_RELEASE_ROOT=/home/bobby/echoes-of-eidolon/EIDOLON_ATLAS_DATASET_R09_AUTHORITATIVE_DEPLOYMENT_V2 pnpm --filter web exec vitest run --config vitest.integration.config.ts tests/integration/atlas-release.test.ts", "exitCode": 0, "logPath": null },
+    { "command": "pnpm navigation:check", "exitCode": 0, "logPath": null },
+    { "command": "pnpm --filter web exec playwright test tests/e2e/atlas-sites.spec.ts --project=chromium", "exitCode": 1, "logPath": "artifacts/release-0.3.0/atlas/interaction-filter-occupancy-tdd.txt" },
+    { "command": "pnpm build", "exitCode": 0, "logPath": null },
+    { "command": "pnpm --filter web release:check", "exitCode": 1, "logPath": null },
+    { "command": "git diff --check", "exitCode": 0, "logPath": null }
+  ],
+  "assertions": [
+    { "name": "Atlas final audit", "expected": "PASS", "observed": "LOCAL_PASS_BROWSER_DATABASE_BLOCKED", "pass": false },
+    { "name": "Owner UI final audit", "expected": "PASS", "observed": "81 tables and 54 forms locally complete; Taxonomy and Chromium blocked", "pass": false },
+    { "name": "Campaign browser matrix", "expected": "PASS", "observed": "LOCAL_PASS_BROWSER_BLOCKED", "pass": false },
+    { "name": "Full unit suite", "expected": "PASS", "observed": "784 passed; 2 intentional pending-tranche failures and 2 spawnSync python3 EPERM failures; zero behavioral timeouts", "pass": false },
+    { "name": "Full integration suite", "expected": "PASS", "observed": "53 passed; database/config and sandbox child-process gates unavailable; Atlas R09 fixture passes when given the canonical path", "pass": false },
+    { "name": "Lint", "expected": "PASS", "observed": "PASS", "pass": true },
+    { "name": "Strict TypeScript", "expected": "PASS", "observed": "PASS", "pass": true },
+    { "name": "Navigation audit", "expected": "PASS", "observed": "292 active, 0 blocking defects", "pass": true },
+    { "name": "Production build", "expected": "PASS", "observed": "PASS", "pass": true },
+    { "name": "Release check", "expected": "PASS", "observed": "BLOCKED: tsx IPC listen EPERM and spawnSync git EPERM", "pass": false },
+    { "name": "Diff whitespace check", "expected": "PASS", "observed": "PASS", "pass": true }
+  ],
+  "artifacts": [
+    { "path": "artifacts/release-0.3.0-owner-data-ui-audit.json", "sha256": "b8f911bffe7e1972a12c836573ac32d663e3259bd7b7940615952b1146bc7896" },
+    { "path": "artifacts/release-0.3.0/atlas/classification-occupancy-audit.json", "sha256": "f5827fcb85e7223798816e95f56aac502ff76222ccf632ceba8e30c309720235" },
+    { "path": "artifacts/release-0.3.0/atlas/interaction-browser-matrix.json", "sha256": "cfc95ecdf9f555175afa36a9915c695cd90ea30ce01504886167de46317057ca" },
+    { "path": "artifacts/release-0.3.0/campaign/layout-browser-matrix.json", "sha256": "5be63b3bb67c73cb22806e1c67d3ea980c7c9538e13e010611d830f17f294a7b" },
+    { "path": "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json", "sha256": "bbe1cd0721a9d9af0017d4778dc85d8c7f07f6681a5578218b1dd460aeb754f7" }
+  ],
+  "blockers": [
+    { "id": "B01", "condition": "Exact founder population authority is not authored." },
+    { "id": "B07-TAXONOMY-PREFLIGHT-DATABASE", "condition": "Current complete taxonomy export is unavailable, so lossless Taxonomy work cannot begin." },
+    { "id": "B07-ATLAS-DATABASE", "condition": "Persisted INITIAL occupancy proof cannot run." },
+    { "id": "B08-ATLAS-CHROMIUM", "condition": "Vite cannot bind 127.0.0.1:3000 in this environment." },
+    { "id": "B08-OWNER-CHROMIUM", "condition": "Required owner table/form/edit/detail Chromium matrices cannot run." },
+    { "id": "B08-CAMPAIGN-CHROMIUM", "condition": "Required Campaign Chromium matrices cannot run." },
+    { "id": "B08-PUZZLE-CI", "condition": "The safe-ZIP tests cannot create fixtures because Node child-process creation is denied." },
+    { "id": "B10-PUZZLE-PRODUCTION-REVIEW", "condition": "Named Puzzle owner, security, and accessibility approvals are absent." }
+  ],
+  "notes": [
+    "This report records a real cumulative attempt and does not promote G07 to PASS.",
+    "No migration, import, deployment, publication, tag, push, provider mutation, or production mutation occurred."
+  ]
+}

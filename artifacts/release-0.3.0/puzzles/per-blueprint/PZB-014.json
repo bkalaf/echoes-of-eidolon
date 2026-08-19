@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-014",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "CRYPTO_NUMERIC_DATA",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:eb8e472fedafa92f",
+  "instanceChecksum": "adae6c156d2384a059eef9835388d64e6bb5e408fd8a165a6885639c75c567d6",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "concept": "Generated timestamps in mixed calendar and clock conventions become loom coordinates after modular normalization.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Normalize declared zones/calendars, reduce day and minute fields modulo the loom dimensions, and read intersections.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Normalize declared zones/calendars, reduce day and minute fields modulo the loom dimensions, and read intersections. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TABLE",
+      "GRID"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

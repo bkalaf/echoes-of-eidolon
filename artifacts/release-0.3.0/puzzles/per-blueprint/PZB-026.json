@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-026",
+  "tier": "TIER_3_EXPERT",
+  "primaryFamily": "VISUAL_COLOR_OPTICAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:ff624bb656c3eeb7",
+  "instanceChecksum": "1faa2d6ef5286fc10bbdf9f003e2671c70fc78e3430efcf26b87ef28b38bc59c",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_ROUTE",
+    "concept": "Transparent map sheets at generated opacity ratios cancel noise and expose a route.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Infer alpha weights from calibration patches, composite layers in depth order, and trace the remaining connected line.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Infer alpha weights from calibration patches, composite layers in depth order, and trace the remaining connected line. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "MAP_LAYERS",
+      "OPACITY_CONTROLS"
+    ],
+    "accessibilityModes": [
+      "EDGE_LIST_EQUIVALENT",
+      "KEYBOARD_CONTROLS",
+      "HIGH_CONTRAST"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

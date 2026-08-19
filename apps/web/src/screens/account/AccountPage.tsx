@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from "react";
 import type { ReactNode } from "react";
 
 import { AccountShell } from "../../components/shells/Shells";
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { SettingsPanel } from "../../components/SettingsPanel";
 import { OtpInput, PasswordInput } from "../../components/ui/controls";
 import { inviteConsent } from "../../content/public";
@@ -296,13 +297,27 @@ function Subscription({ screen }: { screen: PageManifestEntry }) {
 
   const subscription = membership?.subscription;
   const providerStatus = subscription?.providerStatus ?? "NOT_SUBSCRIBED";
+  type Grant = MembershipProjection["grants"][number];
+  type SubscriptionEvent = NonNullable<MembershipProjection["subscription"]>["events"][number];
+  const grantColumns: DataTableColumnDef<Grant>[] = [
+    { accessorKey: "source", header: "Source" },
+    { accessorKey: "membershipGrantId", header: "Grant ID" },
+    { accessorKey: "monthsGranted", header: "Months" },
+    { accessorKey: "effectiveStartAt", header: "Effective start", cell: ({ row }) => new Date(row.original.effectiveStartAt).toLocaleString() },
+    { accessorKey: "effectiveEndAt", header: "Effective end", cell: ({ row }) => new Date(row.original.effectiveEndAt).toLocaleString() },
+  ];
+  const eventColumns: DataTableColumnDef<SubscriptionEvent>[] = [
+    { accessorKey: "eventType", header: "Event" },
+    { accessorKey: "providerStatus", header: "Status" },
+    { accessorKey: "occurredAt", header: "Occurred", cell: ({ row }) => new Date(row.original.occurredAt).toLocaleString() },
+  ];
   return <><AccountHead screen={screen} description="Subscription status, billing state and history." />{loading ? <p className="notice">Loading membership entitlement…</p> : error || !membership ? <p className="notice notice--bad" role="alert">{error ?? "Membership entitlement could not be loaded."}</p> : <div className="stack">
     {screen.screenId === "ACC005" && <section className="card"><h2>Monthly membership</h2><p><strong>{`$${(subscriptionPriceCents / 100).toFixed(2)} per calendar month`}</strong></p><p>A subscription will never be required.</p><button className="button button--gold" disabled={busy} onClick={() => void post("/api/account/subscription/checkout")}>{busy ? "Opening Stripe…" : "Subscribe with Stripe"}</button><p className="muted">Member is an entitlement. It never changes your account, admin, invitation, or participation authorization.</p></section>}
     {screen.screenId === "ACC006" && <section className="card"><h2>Payment accepted</h2><p className={`notice ${providerStatus === "ACTIVE" ? "notice--good" : "notice--warn"}`}>{providerStatus === "ACTIVE" ? "Stripe payment and the persisted subscription event are confirmed." : "Stripe returned successfully; waiting for the signed webhook before granting Member time."}</p></section>}
     {screen.screenId === "ACC007" && <section className="card"><h2>Payment not completed</h2><p>No Member entitlement was granted by this declined/canceled browser state.</p><a className="button button--gold" href="/account/subscription?state=ACC005">Try again</a></section>}
     {screen.screenId === "ACC009" && <section className="card"><h2>Cancel renewal</h2><p>Cancellation stops renewal. Already-earned access remains through its existing exclusive Member-through boundary.</p><button className="button button--gold" disabled={busy || !subscription || subscription.cancelAtPeriodEnd} onClick={() => void post("/api/account/subscription/cancel")}>{subscription?.cancelAtPeriodEnd ? "Renewal already canceled" : busy ? "Canceling…" : "Confirm cancellation"}</button></section>}
     <section className="card"><h2>Membership entitlement</h2><dl className="detail-list"><dt>Provider state</dt><dd>{providerStatus}</dd><dt>Entitlement</dt><dd>{membership.active ? "Active" : "Inactive"}</dd><dt>Member through (exclusive)</dt><dd>{membership.effectiveEndAt ? new Date(membership.effectiveEndAt).toLocaleString() : "No active entitlement"}</dd><dt>Renewal</dt><dd>{subscription?.cancelAtPeriodEnd ? "Canceled at period end" : subscription ? "Enabled" : "Not subscribed"}</dd></dl><div className="action-row">{subscription?.stripeCustomerReference !== null && subscription && <button className="button" disabled={busy} onClick={() => void post("/api/account/subscription/portal")}>Manage payment method</button>}{screen.screenId === "ACC008" && subscription && !subscription.cancelAtPeriodEnd && <a className="button" href="/account/subscription?state=ACC009">Cancel renewal</a>}</div><p className="muted">Membership benefits do not grant an authorization role or beta/player eligibility.</p></section>
-    {screen.screenId === "ACC010" && <><section className="card"><h2>Membership grant history</h2>{membership.grants.length === 0 ? <p>No membership grants.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Source</th><th>Months</th><th>Effective start</th><th>Effective end</th></tr></thead><tbody>{membership.grants.map((grant) => <tr key={grant.membershipGrantId}><td>{grant.source}</td><td>{grant.monthsGranted}</td><td>{new Date(grant.effectiveStartAt).toLocaleString()}</td><td>{new Date(grant.effectiveEndAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section><section className="card"><h2>Subscription event history</h2>{!subscription?.events.length ? <p>No persisted subscription events.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Event</th><th>Status</th><th>Occurred</th></tr></thead><tbody>{subscription.events.map((event) => <tr key={`${event.eventType}:${event.occurredAt}`}><td>{event.eventType}</td><td>{event.providerStatus}</td><td>{new Date(event.occurredAt).toLocaleString()}</td></tr>)}</tbody></table></div>}</section></>}
+    {screen.screenId === "ACC010" && <><section className="card"><h2>Membership grant history</h2><DataTable columns={grantColumns} data={membership.grants} getRowId={(grant) => grant.membershipGrantId} preferenceKey="account.membership-grants" /></section><section className="card"><h2>Subscription event history</h2><DataTable columns={eventColumns} data={subscription?.events ?? []} getRowId={(event) => `${event.eventType}:${event.occurredAt}`} preferenceKey="account.subscription-events" /></section></>}
     {membership.activePerks.length > 0 && <section className="card"><h2>Active perks</h2><ul>{membership.activePerks.map((perk) => <li key={perk.perkId}><strong>{perk.name}</strong>: {perk.description}</li>)}</ul></section>}
     {message && <p className="notice notice--good" role="status">{message}</p>}
   </div>}</>;
@@ -360,14 +375,35 @@ function Orders({ pathname, screen }: { pathname?: string; screen: PageManifestE
   }, [detail, orderId]);
 
   const order = orders[0];
+  const orderColumns: DataTableColumnDef<AccountOrderProjection>[] = [
+    { accessorKey: "orderId", header: "Order ID", cell: ({ row }) => <a href={`/account/orders/${encodeURIComponent(row.original.orderId)}`}>{row.original.orderId}</a> },
+    { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
+    { accessorFn: (item) => item.lines.reduce((sum, line) => sum + line.quantity, 0), header: "Items", id: "itemCount" },
+    { accessorFn: (item) => item.payment ? `${money(item.payment.amountCents)} confirmed` : "No confirmed payment", header: "Payment", id: "paymentLabel" },
+    { accessorFn: (item) => item.payment?.fulfillmentSubmittedAt ? "Submitted to Printful" : "Not submitted", header: "Fulfillment", id: "fulfillment" },
+    { accessorFn: (item) => JSON.stringify(item.lines), header: "Order lines", id: "lines" },
+    { accessorFn: (item) => JSON.stringify(item.payment), header: "Payment record", id: "payment" },
+    { accessorFn: (item) => JSON.stringify(item.refunds), header: "Refunds", id: "refunds" },
+    { accessorKey: "returnEligibleAt", header: "Return eligible" },
+  ];
+  type AccountOrderLine = AccountOrderProjection["lines"][number];
+  const lineColumns: DataTableColumnDef<AccountOrderLine>[] = [
+    { accessorKey: "name", header: "Product" },
+    { accessorKey: "orderLineId", header: "Order line ID" },
+    { accessorKey: "storeVariantId", header: "Variant ID" },
+    { accessorKey: "size", header: "Size" },
+    { accessorKey: "color", header: "Color" },
+    { accessorKey: "quantity", header: "Quantity" },
+    { accessorKey: "unitPriceCents", header: "Unit price", cell: ({ row }) => money(row.original.unitPriceCents) },
+  ];
   let content;
   if (detail && !orderId) content = <p className="notice notice--bad" role="alert">Order identity is required.</p>;
   else if (loading) content = <p className="notice">Loading orders…</p>;
   else if (error) content = <p className="notice notice--bad" role="alert">{error}</p>;
-  else if (!detail) content = orders.length === 0 ? <p>No merchandise orders.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Order</th><th>Created</th><th>Items</th><th>Payment</th><th>Fulfillment</th></tr></thead><tbody>{orders.map((item) => <tr key={item.orderId}><td><a href={`/account/orders/${encodeURIComponent(item.orderId)}`}>{item.orderId}</a></td><td>{new Date(item.createdAt).toLocaleString()}</td><td>{item.lines.reduce((sum, line) => sum + line.quantity, 0)}</td><td>{item.payment ? `${money(item.payment.amountCents)} confirmed` : "No confirmed payment"}</td><td>{item.payment?.fulfillmentSubmittedAt ? "Submitted to Printful" : "Not submitted"}</td></tr>)}</tbody></table></div>;
+  else if (!detail) content = <DataTable columns={orderColumns} data={orders} getRowId={(item) => item.orderId} preferenceKey="account.orders" />;
   else if (!order) content = <p className="notice notice--bad" role="alert">Order not found.</p>;
   else if (screen.screenId === "ACC013") content = order.returnEligibleAt ? <ReturnRequestForm order={order} /> : <section className="card"><h2>Return unavailable</h2><p>This order has no persisted return eligibility.</p><a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}`}>Back to order</a></section>;
-  else content = <div className="stack"><section className="card"><h2>Order {order.orderId}</h2><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Payment</dt><dd>{order.payment ? `${money(order.payment.amountCents)} confirmed ${new Date(order.payment.confirmedAt).toLocaleString()}` : "No confirmed payment"}</dd><dt>Fulfillment</dt><dd>{order.payment?.fulfillmentSubmittedAt ? `Submitted ${new Date(order.payment.fulfillmentSubmittedAt).toLocaleString()}` : "Not submitted"}</dd><dt>Refunded</dt><dd>{money(order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0))}</dd></dl>{order.returnEligibleAt && <a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}/return`}>Request a return</a>}</section><section className="card"><h2>Items</h2><div className="table-scroll"><table className="simple-table"><thead><tr><th>Product</th><th>Size</th><th>Color</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>{order.lines.map((line) => <tr key={line.orderLineId}><td>{line.name}</td><td>{line.size ?? "—"}</td><td>{line.color ?? "—"}</td><td>{line.quantity}</td><td>{money(line.unitPriceCents)}</td></tr>)}</tbody></table></div></section></div>;
+  else content = <div className="stack"><section className="card"><h2>Order {order.orderId}</h2><dl className="detail-list"><dt>Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd><dt>Payment</dt><dd>{order.payment ? `${money(order.payment.amountCents)} confirmed ${new Date(order.payment.confirmedAt).toLocaleString()}` : "No confirmed payment"}</dd><dt>Fulfillment</dt><dd>{order.payment?.fulfillmentSubmittedAt ? `Submitted ${new Date(order.payment.fulfillmentSubmittedAt).toLocaleString()}` : "Not submitted"}</dd><dt>Refunded</dt><dd>{money(order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0))}</dd></dl>{order.returnEligibleAt && <a className="button" href={`/account/orders/${encodeURIComponent(order.orderId)}/return`}>Request a return</a>}</section><section className="card"><h2>Items</h2><DataTable columns={lineColumns} data={order.lines} getRowId={(line) => line.orderLineId} preferenceKey="account.order-lines" /></section></div>;
 
   return <><AccountHead screen={screen} description="Merchandise orders and fulfillment status." />{content}<section className="card"><h2>Provider boundary</h2><p>Stripe payment and Printful fulfillment remain separate. Provider identifiers are not exposed.</p></section></>;
 }

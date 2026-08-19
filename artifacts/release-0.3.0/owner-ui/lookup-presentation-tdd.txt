@@ -1,0 +1,24 @@
+T201 owner-authored lookup presentation registry
+
+RED 1
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/lookup-presentation.test.ts
+Exit: 1
+Result: lookup presentation implementation module did not exist.
+
+GREEN 1
+Exit: 0
+Result: 1 file passed; 5 tests passed after the exhaustive all-rule case was added.
+
+RED 2
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/lookup-display.test.tsx
+Exit: 1
+Result: reusable LookupDisplay component did not exist.
+
+GREEN 2
+Exit: 0
+Result: 2 lookup files passed; 7 tests passed.
+
+CUMULATIVE
+Result: 6 owner UI/entity files passed; 27 tests passed.
+Typecheck: PASS
+git diff --check: PASS

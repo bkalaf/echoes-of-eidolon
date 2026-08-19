@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "echoes-campaign-reorder-browser-matrix-v1",
+  "browser": "Chromium",
+  "route": "/admin/campaign/planner?state=CAMPAIGN_RUIN",
+  "environment": "current execution container",
+  "spec": "apps/web/tests/e2e/campaign-planner.spec.ts",
+  "specDiscovery": "PASS",
+  "execution": {
+    "status": "BLOCKED",
+    "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+    "observedError": "listen EPERM: operation not permitted 127.0.0.1:3000"
+  },
+  "scenarios": [
+    {
+      "name": "exact readable movement labels and disabled boundaries",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    },
+    {
+      "name": "Move down persistence after reload",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    },
+    {
+      "name": "keyboard Move up reversal and focus retention",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    },
+    {
+      "name": "same-column drag persistence parity",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    },
+    {
+      "name": "placement identity and Book assignment continuity",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    }
+  ],
+  "note": "Component, service, build, and static contrast gates are recorded separately; this artifact does not claim a browser run."
+}

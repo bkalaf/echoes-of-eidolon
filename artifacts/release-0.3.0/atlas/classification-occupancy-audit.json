@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "echoes-atlas-classification-occupancy-audit-v1",
+  "generatedAt": "2026-08-18T18:00:00-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "status": "BLOCKED",
+  "implementationStatus": "LOCAL_PASS_BROWSER_BLOCKED",
+  "classificationPresentation": {
+    "HAMLET": { "color": "#8FA7BA", "relativeMarkerSize": 1.0 },
+    "VILLAGE": { "color": "#51D29A", "relativeMarkerSize": 1.15 },
+    "TOWN": { "color": "#6FD3FF", "relativeMarkerSize": 1.3 },
+    "CITY": { "color": "#EFB83A", "relativeMarkerSize": 1.5 },
+    "METROPOLIS": { "color": "#D6A7FF", "relativeMarkerSize": 1.8 }
+  },
+  "filters": {
+    "classification": "IMPLEMENTED",
+    "regionR01ThroughR25": "IMPLEMENTED",
+    "occupancyBySelectedWorld": "IMPLEMENTED",
+    "partialSiteId": "IMPLEMENTED",
+    "clearAll": "IMPLEMENTED",
+    "baseMorphology": "DISABLED_PENDING_AUTHORIZED_READ_MODEL"
+  },
+  "occupancy": {
+    "source": "/api/admin/settlements/?world={WorldKey}",
+    "physicalSitesWorldIndependent": true,
+    "settlementOverlayWorldSpecific": true,
+    "occupiedMarkerDistinct": true,
+    "occupiedFoundCityDisabled": true,
+    "worldSwitchPreservesCoordinates": true,
+    "initial24PerWorldPersistedProof": "BLOCKED_PENDING_POSTGRESQL_INTEGRATION_GATE",
+    "site0243UnoccupiedPersistedProof": "BLOCKED_PENDING_POSTGRESQL_INTEGRATION_GATE"
+  },
+  "inputs": [
+    { "path": "apps/web/src/components/AtlasMapViewport.tsx", "sha256": "17d3f350e988c2f6f61df92bd0d911770d8fe74b914d24a4f9726d4bc9b16bda" },
+    { "path": "apps/web/src/screens/admin/AtlasAdminPage.tsx", "sha256": "1668ef01c13ebbec8b17a52711f8de304eded0464a4f389b0bbbcc2c483cb93c" },
+    { "path": "apps/web/src/styles.css", "sha256": "50f3b04ec013cf7525760bfd898edbf1b2929b4a09809c76c3ba85a576f733a1" },
+    { "path": "apps/web/tests/unit/atlas-map-viewport.test.tsx", "sha256": "122c84dfd526d65d9ca15662bb9abeb6d7e004cff67bd99d53ee87edc63e75f1" },
+    { "path": "apps/web/tests/unit/atlas-admin.test.tsx", "sha256": "38870ddef8214af3ef02e54d039aeb67ff3de55b9f2b283d5bed965870f3f8c4" },
+    { "path": "apps/web/tests/e2e/atlas-sites.spec.ts", "sha256": "9ee1b89d0d85926e4e039a97d1864a3610aa3bc9662ab3e627ca5dbe80f97efb" }
+  ],
+  "focusedVerification": {
+    "unitFiles": 2,
+    "unitTests": 12,
+    "unitStatus": "PASS",
+    "typecheck": "PASS",
+    "browserSpecDiscovery": "PASS",
+    "browserExecution": "BLOCKED_LISTEN_EPERM"
+  },
+  "notes": [
+    "No persisted enum or color field was added for UI presentation.",
+    "No baseMorphology value was inferred from label, map position, Region, classification, or artwork.",
+    "No Site coordinate is mutated by clustering or spiderfy."
+  ]
+}

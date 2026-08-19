@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-069",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "CROSS_MODAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:55502628ed5cfcfb",
+  "instanceChecksum": "f6428c4403fdd4289313b0527b643be4d486ad23c2856193dfac9f99d685544a",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "concept": "A chronicle's fold marks align with spectrogram bands and marginal phrases. Several plausible alignments exist until chronology and audio controls agree.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Render the spectrum or use its frequency table, fold the document at generated marks, align dated phrases, and read overlaps.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Render the spectrum or use its frequency table, fold the document at generated marks, align dated phrases, and read overlaps. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "SPECTROGRAM",
+      "FOLDING_DOCUMENT",
+      "TIMELINE"
+    ],
+    "accessibilityModes": [
+      "FREQUENCY_TABLE",
+      "COORDINATE_FOLD_TABLE",
+      "CAPTIONS"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

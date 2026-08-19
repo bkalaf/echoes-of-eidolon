@@ -51,6 +51,7 @@ import { Route as ApiStoreCheckoutRouteImport } from './routes/api/store/checkou
 import { Route as ApiStoreOrderLookupRouteImport } from './routes/api/store/order-lookup'
 import { Route as ApiStoreSupportRouteImport } from './routes/api/store/support'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
+import { Route as AdminDataEntityKeyRecordIdRouteImport } from './routes/admin/data/$entityKey/$recordId'
 import { Route as ApiAccountOrdersIndexRouteImport } from './routes/api/account/orders/index'
 import { Route as ApiAccountOrdersOrderIdRouteImport } from './routes/api/account/orders/$orderId'
 import { Route as ApiAccountSessionsIndexRouteImport } from './routes/api/account/sessions/index'
@@ -68,6 +69,7 @@ import { Route as ApiAdminBetaInvitationsIndexRouteImport } from './routes/api/a
 import { Route as ApiAdminCampaignCatalogRouteImport } from './routes/api/admin/campaign/catalog'
 import { Route as ApiAdminCampaignGroupingsRouteImport } from './routes/api/admin/campaign/groupings'
 import { Route as ApiAdminCampaignLinkedMoveRouteImport } from './routes/api/admin/campaign/linked-move'
+import { Route as ApiAdminCampaignReorderRouteImport } from './routes/api/admin/campaign/reorder'
 import { Route as ApiAdminCapabilitiesInspectorRouteImport } from './routes/api/admin/capabilities/inspector'
 import { Route as ApiAdminCapabilitiesScoringRouteImport } from './routes/api/admin/capabilities/scoring'
 import { Route as ApiAdminCitiesIndexRouteImport } from './routes/api/admin/cities/index'
@@ -318,6 +320,12 @@ const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   path: '/api/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDataEntityKeyRecordIdRoute =
+  AdminDataEntityKeyRecordIdRouteImport.update({
+    id: '/admin/data/$entityKey/$recordId',
+    path: '/admin/data/$entityKey/$recordId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAccountOrdersIndexRoute = ApiAccountOrdersIndexRouteImport.update({
   id: '/api/account/orders/',
   path: '/api/account/orders/',
@@ -412,6 +420,11 @@ const ApiAdminCampaignLinkedMoveRoute =
     path: '/linked-move',
     getParentRoute: () => ApiAdminCampaignRoute,
   } as any)
+const ApiAdminCampaignReorderRoute = ApiAdminCampaignReorderRouteImport.update({
+  id: '/reorder',
+  path: '/reorder',
+  getParentRoute: () => ApiAdminCampaignRoute,
+} as any)
 const ApiAdminCapabilitiesInspectorRoute =
   ApiAdminCapabilitiesInspectorRouteImport.update({
     id: '/inspector',
@@ -657,6 +670,7 @@ export interface FileRoutesByFullPath {
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -668,6 +682,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/campaign/catalog': typeof ApiAdminCampaignCatalogRoute
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
+  '/api/admin/campaign/reorder': typeof ApiAdminCampaignReorderRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRoute
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
@@ -753,6 +768,7 @@ export interface FileRoutesByTo {
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -764,6 +780,7 @@ export interface FileRoutesByTo {
   '/api/admin/campaign/catalog': typeof ApiAdminCampaignCatalogRoute
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
+  '/api/admin/campaign/reorder': typeof ApiAdminCampaignReorderRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRoute
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
@@ -850,6 +867,7 @@ export interface FileRoutesById {
   '/api/store/order-lookup': typeof ApiStoreOrderLookupRoute
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -861,6 +879,7 @@ export interface FileRoutesById {
   '/api/admin/campaign/catalog': typeof ApiAdminCampaignCatalogRoute
   '/api/admin/campaign/groupings': typeof ApiAdminCampaignGroupingsRoute
   '/api/admin/campaign/linked-move': typeof ApiAdminCampaignLinkedMoveRoute
+  '/api/admin/campaign/reorder': typeof ApiAdminCampaignReorderRoute
   '/api/admin/capabilities/inspector': typeof ApiAdminCapabilitiesInspectorRoute
   '/api/admin/capabilities/scoring': typeof ApiAdminCapabilitiesScoringRoute
   '/api/admin/cities/$cityId': typeof ApiAdminCitiesCityIdRoute
@@ -948,6 +967,7 @@ export interface FileRouteTypes {
     | '/api/store/order-lookup'
     | '/api/store/support'
     | '/api/stripe/webhook'
+    | '/admin/data/$entityKey/$recordId'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -959,6 +979,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/catalog'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
+    | '/api/admin/campaign/reorder'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/cities/$cityId'
@@ -1044,6 +1065,7 @@ export interface FileRouteTypes {
     | '/api/store/order-lookup'
     | '/api/store/support'
     | '/api/stripe/webhook'
+    | '/admin/data/$entityKey/$recordId'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -1055,6 +1077,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/catalog'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
+    | '/api/admin/campaign/reorder'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/cities/$cityId'
@@ -1140,6 +1163,7 @@ export interface FileRouteTypes {
     | '/api/store/order-lookup'
     | '/api/store/support'
     | '/api/stripe/webhook'
+    | '/admin/data/$entityKey/$recordId'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -1151,6 +1175,7 @@ export interface FileRouteTypes {
     | '/api/admin/campaign/catalog'
     | '/api/admin/campaign/groupings'
     | '/api/admin/campaign/linked-move'
+    | '/api/admin/campaign/reorder'
     | '/api/admin/capabilities/inspector'
     | '/api/admin/capabilities/scoring'
     | '/api/admin/cities/$cityId'
@@ -1236,6 +1261,7 @@ export interface RootRouteChildren {
   ApiStoreOrderLookupRoute: typeof ApiStoreOrderLookupRoute
   ApiStoreSupportRoute: typeof ApiStoreSupportRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
+  AdminDataEntityKeyRecordIdRoute: typeof AdminDataEntityKeyRecordIdRoute
   ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRouteWithChildren
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
@@ -1570,6 +1596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/data/$entityKey/$recordId': {
+      id: '/admin/data/$entityKey/$recordId'
+      path: '/admin/data/$entityKey/$recordId'
+      fullPath: '/admin/data/$entityKey/$recordId'
+      preLoaderRoute: typeof AdminDataEntityKeyRecordIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/account/orders/': {
       id: '/api/account/orders/'
       path: '/api/account/orders'
@@ -1687,6 +1720,13 @@ declare module '@tanstack/react-router' {
       path: '/linked-move'
       fullPath: '/api/admin/campaign/linked-move'
       preLoaderRoute: typeof ApiAdminCampaignLinkedMoveRouteImport
+      parentRoute: typeof ApiAdminCampaignRoute
+    }
+    '/api/admin/campaign/reorder': {
+      id: '/api/admin/campaign/reorder'
+      path: '/reorder'
+      fullPath: '/api/admin/campaign/reorder'
+      preLoaderRoute: typeof ApiAdminCampaignReorderRouteImport
       parentRoute: typeof ApiAdminCampaignRoute
     }
     '/api/admin/capabilities/inspector': {
@@ -1953,12 +1993,14 @@ interface ApiAdminCampaignRouteChildren {
   ApiAdminCampaignCatalogRoute: typeof ApiAdminCampaignCatalogRoute
   ApiAdminCampaignGroupingsRoute: typeof ApiAdminCampaignGroupingsRoute
   ApiAdminCampaignLinkedMoveRoute: typeof ApiAdminCampaignLinkedMoveRoute
+  ApiAdminCampaignReorderRoute: typeof ApiAdminCampaignReorderRoute
 }
 
 const ApiAdminCampaignRouteChildren: ApiAdminCampaignRouteChildren = {
   ApiAdminCampaignCatalogRoute: ApiAdminCampaignCatalogRoute,
   ApiAdminCampaignGroupingsRoute: ApiAdminCampaignGroupingsRoute,
   ApiAdminCampaignLinkedMoveRoute: ApiAdminCampaignLinkedMoveRoute,
+  ApiAdminCampaignReorderRoute: ApiAdminCampaignReorderRoute,
 }
 
 const ApiAdminCampaignRouteWithChildren =
@@ -2134,6 +2176,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiStoreOrderLookupRoute: ApiStoreOrderLookupRoute,
   ApiStoreSupportRoute: ApiStoreSupportRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
+  AdminDataEntityKeyRecordIdRoute: AdminDataEntityKeyRecordIdRoute,
   ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRouteWithChildren,
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,

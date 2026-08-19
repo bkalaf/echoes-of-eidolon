@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T14:13:31-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+      "sha256": "96b51f4f898f7a70df7bd63b2cbbcffb1eb60c03d6848c9e8ed770fa0e7462e4"
+    },
+    {
+      "path": "apps/web/src/data/initial-founding-settlements.json",
+      "sha256": "96b51f4f898f7a70df7bd63b2cbbcffb1eb60c03d6848c9e8ed770fa0e7462e4"
+    },
+    {
+      "path": "apps/web/src/server/initial-founding-settlements.ts",
+      "sha256": "61edf784b3ceabd204b5915481b52f7ee09dc04a0aeeb8801c6f72526a0984fc"
+    },
+    {
+      "path": "apps/web/tests/unit/initial-founding-settlements.test.ts",
+      "sha256": "20c90c8cb86c2262aeddce6e540c29e1101853863dd3e82d7c39b3d2d6661aab"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/initial-founding-settlements.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T14:10:43-07:00",
+      "finishedAt": "2026-08-18T14:10:45-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+    },
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/initial-founding-settlements.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T14:12:32-07:00",
+      "finishedAt": "2026-08-18T14:12:34-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+    },
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/initial-founding-settlements.test.ts tests/unit/atlas-sites.test.ts tests/unit/settlement-list.test.ts tests/unit/settlement-service.test.ts tests/unit/settlement-route-input.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T14:13:26-07:00",
+      "finishedAt": "2026-08-18T14:13:31-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+    },
+    {
+      "command": "pnpm --dir apps/web typecheck",
+      "startedAt": "2026-08-18T14:12:48-07:00",
+      "finishedAt": "2026-08-18T14:13:16-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+    },
+    {
+      "command": "git diff --check",
+      "startedAt": "2026-08-18T14:13:31-07:00",
+      "finishedAt": "2026-08-18T14:13:31-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Packaged canonical data copied without drift",
+      "expected": "96b51f4f898f7a70df7bd63b2cbbcffb1eb60c03d6848c9e8ed770fa0e7462e4",
+      "observed": "96b51f4f898f7a70df7bd63b2cbbcffb1eb60c03d6848c9e8ed770fa0e7462e4",
+      "pass": true
+    },
+    {
+      "name": "Physical Settlement count",
+      "expected": 24,
+      "observed": 24,
+      "pass": true
+    },
+    {
+      "name": "INITIAL SettlementWorld identity count",
+      "expected": 72,
+      "observed": 72,
+      "pass": true
+    },
+    {
+      "name": "R10 INITIAL rows",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "Verify-only default performs no writes",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Exact second apply changes zero rows",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "Missing Site and canonical conflicts fail before writes",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Site candidate classification is reused",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Focused cumulative unit tests",
+      "expected": 19,
+      "observed": 19,
+      "pass": true
+    }
+  ],
+  "artifacts": [
+    "apps/web/src/data/initial-founding-settlements.json",
+    "apps/web/src/server/initial-founding-settlements.ts",
+    "apps/web/scripts/import-initial-settlements.mts",
+    "apps/web/tests/unit/initial-founding-settlements.test.ts",
+    "artifacts/release-0.3.0/data/founding-settlement-tdd.txt"
+  ],
+  "blockers": [],
+  "notes": [
+    "No database apply, migration, deployment, push, tag, or publication occurred.",
+    "SettlementWorld rows use the existing application UUID identity policy; canonical ownership is the unique Settlement and World pair.",
+    "Population event materialization remains outside T110 and is not inferred from broad founding groups."
+  ]
+}

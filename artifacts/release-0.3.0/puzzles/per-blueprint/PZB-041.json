@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-041",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:07afee11f585acbf",
+  "instanceChecksum": "25ade863b2227f715774f0296115f7c48b7d158b2e3a7cfba85cf5924d4b5c6c",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ROUTE_SIGNATURE_16",
+    "concept": "A 60×60 dark grid is crossed in 120 notes. Whole, half, quarter, and eighth durations map to lantern settings 1, 2, 4, and 8; each setting reveals a tile class, while 3, 5, 6, and 7 are decoy layers.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: For note n, ignore pitch, select the duration-coded lantern setting, and move to the only illuminated unvisited tile among the eight neighboring squares. The generated route ends at the opposite corner.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Pitch is scenery; measure each note by how long it lasts. The lantern’s numbers are literal."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Translate whole, half, quarter, and eighth notes to 1, 2, 4, and 8. For each note, choose that lantern setting and move to the only illuminated unvisited square among the eight neighbors."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "RHYTHM_NOTATION",
+      "60X60_GRID",
+      "EIGHT_LANTERN_LAYERS",
+      "HAPTIC_NEIGHBOR_MODE"
+    ],
+    "accessibilityModes": [
+      "RHYTHM_NOTATION",
+      "SPOKEN_EIGHT_NEIGHBOR_STATUS",
+      "HAPTIC_DIRECTION_STATUS",
+      "KEYBOARD_NAVIGATION",
+      "LOCAL_NEIGHBOR_TABLE",
+      "REDUCED_MOTION"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

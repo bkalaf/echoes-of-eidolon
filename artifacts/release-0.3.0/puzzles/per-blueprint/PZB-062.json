@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-062",
+  "tier": "TIER_3_EXPERT",
+  "primaryFamily": "CONSTRUCTION_SIMULATION",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:61d99fa6cdcca723",
+  "instanceChecksum": "8fe79e8eca9fd922ee7822ca1a4eb16af8a2fe21cad1ab26c69678161c61a50f",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "concept": "Bridge modules have load, span, and connector constraints. Only one arrangement survives every generated load case.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Assemble modules, compute simplified static loads, and read connector markings along the safe deck.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Assemble modules, compute simplified static loads, and read connector markings along the safe deck. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "MODULE_BOARD",
+      "LOAD_DIAGRAMS"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

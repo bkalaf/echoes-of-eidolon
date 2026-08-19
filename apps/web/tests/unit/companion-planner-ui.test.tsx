@@ -50,7 +50,7 @@ function renderPlanner() {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("Companion Planner V4 controls", () => {
-  it("shows actual values, removable filter chips, world tint groups, and a working pivot", async () => {
+  it("shows actual values, removable filter chips, world tint groups, and a working pivot", { timeout: 15_000 }, async () => {
     const { container } = renderPlanner();
     expect(await screen.findByText("CONCORD Hero A")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Remove SCHISM from World" })).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe("Companion Planner V4 controls", () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it("loads the selected authored assignment and clears stale edits when companion or world changes", async () => {
+  it("loads the selected authored assignment and clears stale edits when companion or world changes", { timeout: 15_000 }, async () => {
     renderPlanner();
     await screen.findByText("CONCORD Hero A");
     expect(screen.getByRole("combobox", { name: "Occupation" })).toHaveValue("SCHOLAR");

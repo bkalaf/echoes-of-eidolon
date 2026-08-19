@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-051",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "LOGIC_CONSTRAINT",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:88f5a1fc99849069",
+  "instanceChecksum": "fa535ac905c2255dd7da33dd21f825c8728b033f70816bf33aa8c836a5ac3dc8",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "concept": "Generated polyominoes cover a board in many apparent ways; symbol-edge constraints leave one exact cover.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Build the exact-cover matrix, solve the unique tiling, and read boundary symbols.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the logic constraint representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Build the exact-cover matrix, solve the unique tiling, and read boundary symbols. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "MOSAIC",
+      "PIECE_TABLE"
+    ],
+    "accessibilityModes": [
+      "TACTILE_PIECES",
+      "TEXT_EDGE_TABLE",
+      "HIGH_CONTRAST"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { adminCapabilities, hasAdminCapability } from "../../domain/authorization";
 import type { FriendInvitationRequestStatus } from "../../generated/prisma/enums";
 import type { PageManifestEntry } from "../../lib/page-manifest";
@@ -38,7 +39,20 @@ async function mutateRequest(id: string, action: "approve" | "reject", expiresAt
 }
 
 function Roles({ role }: { role: "admin" | "owner" }) {
-  return <section className="card"><div className="action-row action-row--between"><div><h2>Access levels and administrative capabilities</h2><p>Authorization roles are a finite application policy, not administrator-created records.</p></div><a className="button" href="/admin/access">Manage account assignments</a></div><table className="simple-table"><thead><tr><th>Access level</th><th>Administration</th><th>Member benefits</th><th>Play</th></tr></thead><tbody><tr><td>GUEST</td><td>No</td><td>No</td><td>No</td></tr><tr><td>USER</td><td>No</td><td>No</td><td>When beta/player eligible</td></tr><tr><td>MEMBER</td><td>No</td><td>From membership entitlement</td><td>When beta/player eligible</td></tr><tr><td>ADMIN</td><td>Yes</td><td>Not implicit</td><td>Participation-dependent</td></tr><tr><td>OWNER</td><td>Yes</td><td>Owner policy</td><td>Yes</td></tr></tbody></table><h3>Current administrative capabilities</h3><ul>{adminCapabilities.map((capability) => <li key={capability}><strong>{capability}</strong>: {hasAdminCapability(role, capability) ? "granted" : "not granted"}</li>)}</ul><p className="notice">Only OWNER may change authorization roles for accounts through the account-detail workflow. Membership entitlement and beta/player eligibility remain separate.</p></section>;
+  const rows = [
+    { accessLevel: "GUEST", administration: "No", memberBenefits: "No", play: "No" },
+    { accessLevel: "USER", administration: "No", memberBenefits: "No", play: "When beta/player eligible" },
+    { accessLevel: "MEMBER", administration: "No", memberBenefits: "From membership entitlement", play: "When beta/player eligible" },
+    { accessLevel: "ADMIN", administration: "Yes", memberBenefits: "Not implicit", play: "Participation-dependent" },
+    { accessLevel: "OWNER", administration: "Yes", memberBenefits: "Owner policy", play: "Yes" },
+  ];
+  const columns: DataTableColumnDef<(typeof rows)[number]>[] = [
+    { accessorKey: "accessLevel", header: "Access level" },
+    { accessorKey: "administration", header: "Administration" },
+    { accessorKey: "memberBenefits", header: "Member benefits" },
+    { accessorKey: "play", header: "Play" },
+  ];
+  return <section className="card"><div className="action-row action-row--between"><div><h2>Access levels and administrative capabilities</h2><p>Authorization roles are a finite application policy, not administrator-created records.</p></div><a className="button" href="/admin/access">Manage account assignments</a></div><DataTable columns={columns} data={rows} getRowId={(row) => row.accessLevel} preferenceKey="admin.access.roles" /><h3>Current administrative capabilities</h3><ul>{adminCapabilities.map((capability) => <li key={capability}><strong>{capability}</strong>: {hasAdminCapability(role, capability) ? "granted" : "not granted"}</li>)}</ul><p className="notice">Only OWNER may change authorization roles for accounts through the account-detail workflow. Membership entitlement and beta/player eligibility remain separate.</p></section>;
 }
 
 export function BetaInvitationAdminPage({ role, screen }: { role: "admin" | "owner"; screen: PageManifestEntry }) {
@@ -65,5 +79,25 @@ export function BetaInvitationAdminPage({ role, screen }: { role: "admin" | "own
 
   const showCodes = screen.screenId === "ADM006";
   const rows = requests.data ?? [];
-  return <section className="card"><div className="action-row action-row--between"><div><h2>{showCodes ? "Issued beta invitations" : "Invite/access approval queue"}</h2><p>{showCodes ? "Safe invitation lifecycle fields; plaintext bearer codes are never displayed or stored." : "Approve or reject participant requests. Approval sends the invitation by email."}</p></div><span className="tag">{rows.length} records</span></div>{requests.isPending ? <p className="notice">Loading invitation records…</p> : requests.isError ? <p className="notice notice--bad" role="alert">{requests.error.message}</p> : rows.length === 0 ? <p>No invitation records were returned.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Friend</th><th>Email</th><th>Reason</th><th>Status</th>{showCodes ? <><th>Expires</th><th>Lifecycle</th></> : <th>Action</th>}</tr></thead><tbody>{rows.filter((row) => showCodes ? row.invitation !== null : row.status === "PENDING").map((row) => <tr key={row.id}><td>{row.friendName}</td><td>{row.email}</td><td>{row.reason}</td><td>{row.status}</td>{showCodes ? <><td>{row.invitation ? new Date(row.invitation.expiresAt).toLocaleString() : "Not issued"}</td><td>{row.invitation?.consumedAt ? "Consumed" : row.invitation?.revokedAt ? "Revoked" : "Available"}</td></> : <td><label className="field">Invitation expiry<input className="input" type="datetime-local" value={expiries[row.id] ?? ""} onChange={(event) => setExpiries((current) => ({ ...current, [row.id]: event.target.value }))} /></label><div className="action-row"><button className="button button--gold" disabled={busyId === row.id || !expiries[row.id]} onClick={() => run(row, "approve")}>Approve & send</button><button className="button" disabled={busyId === row.id} onClick={() => run(row, "reject")}>Reject</button></div></td>}</tr>)}</tbody></table></div>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section>;
+  const visibleRows = rows.filter((row) => showCodes ? row.invitation !== null : row.status === "PENDING");
+  const columns: DataTableColumnDef<BetaInviteRow>[] = [
+    { accessorKey: "friendName", header: "Friend" },
+    { accessorKey: "id", header: "Request ID" },
+    { accessorKey: "email", header: "Email" },
+    { accessorKey: "reason", header: "Reason" },
+    { accessorKey: "status", header: "Status" },
+    { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
+    ...(showCodes ? [
+      { accessorFn: (row: BetaInviteRow) => row.invitation?.id ?? "Not issued", header: "Invitation ID", id: "invitationId" },
+      { accessorFn: (row: BetaInviteRow) => row.invitation ? new Date(row.invitation.expiresAt).toLocaleString() : "Not issued", header: "Expires", id: "expiresAt" },
+      { accessorFn: (row: BetaInviteRow) => row.invitation?.consumedAt ? "Consumed" : row.invitation?.revokedAt ? "Revoked" : "Available", header: "Lifecycle", id: "lifecycle" },
+    ] satisfies DataTableColumnDef<BetaInviteRow>[] : [{
+      cell: ({ row }: { row: { original: BetaInviteRow } }) => <><label className="field">Invitation expiry<input className="input" type="datetime-local" value={expiries[row.original.id] ?? ""} onChange={(event) => setExpiries((current) => ({ ...current, [row.original.id]: event.target.value }))} /></label><div className="action-row"><button className="button button--gold" disabled={busyId === row.original.id || !expiries[row.original.id]} onClick={() => run(row.original, "approve")}>Approve & send</button><button className="button" disabled={busyId === row.original.id} onClick={() => run(row.original, "reject")}>Reject</button></div></>,
+      enableColumnFilter: false,
+      enableSorting: false,
+      header: "Actions",
+      id: "actions",
+    }] satisfies DataTableColumnDef<BetaInviteRow>[]),
+  ];
+  return <section className="card"><div className="action-row action-row--between"><div><h2>{showCodes ? "Issued beta invitations" : "Invite/access approval queue"}</h2><p>{showCodes ? "Safe invitation lifecycle fields; plaintext bearer codes are never displayed or stored." : "Approve or reject participant requests. Approval sends the invitation by email."}</p></div><span className="tag">{visibleRows.length} records</span></div>{requests.isPending ? <p className="notice">Loading invitation records…</p> : requests.isError ? <p className="notice notice--bad" role="alert">{requests.error.message}</p> : visibleRows.length === 0 ? <p>No invitation records were returned.</p> : <DataTable columns={columns} data={visibleRows} getRowId={(row) => row.id} preferenceKey={`admin.beta-invitations.${showCodes ? "codes" : "requests"}`} />}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section>;
 }

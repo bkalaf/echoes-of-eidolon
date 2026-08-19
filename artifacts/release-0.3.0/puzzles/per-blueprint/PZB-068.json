@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-068",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "CROSS_MODAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:1acdb48d32bd8078",
+  "instanceChecksum": "c3e553db56f4de7ae1632864bbfbce6f7563a3999afaa63a61cdbf87c4d59c03",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "concept": "A captioned movement score uses punctuation as gestures and rhythm as timing. Performing or simulating the generated sequence traces symbols.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Map punctuation to direction, duration to distance, and pauses to pen lifts; plot the path.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Map punctuation to direction, duration to distance, and pauses to pen lifts; plot the path. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TEXT_SCORE",
+      "AUDIO_RHYTHM",
+      "GESTURE_PATH"
+    ],
+    "accessibilityModes": [
+      "KEYBOARD_SIMULATION",
+      "RHYTHM_NOTATION",
+      "MOTION_OPTIONAL",
+      "REDUCED_MOTION"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

@@ -1,0 +1,24 @@
+Release 0.3.0 T111 founding population authority audit
+
+Coverage
+- 24 Settlements
+- 3 INITIAL worlds
+- 72 unique broad founding groups
+- 216 complete Settlement/world/group unresolved rows
+- All 72 labels resolve exactly to the current controlled Breed group registry.
+
+Candidate evidence
+- Historical ignored validation snapshots contain candidate Species/Breed/group relationships for all 72 groups.
+- 46 groups contain more than one candidate Species.
+- Every group contains at least two candidate Breeds.
+- These snapshots do not select the founder Species/Breed set or provide allocation totals, weights, remainder behavior, culture projection, dominance rule, or current provenance.
+
+Current authority
+- Read-only local PostgreSQL access was attempted and denied by sandbox policy with connect EPERM 127.0.0.1:5432.
+- The repository and package contain no exact Settlement/group-to-founder allocation mapping.
+
+Outcome
+- B01 is open.
+- T111 is BLOCKED.
+- T112 is BLOCKED and was not implemented or applied.
+- The complete unresolved report passes the packaged unresolved-founder-mapping JSON Schema.

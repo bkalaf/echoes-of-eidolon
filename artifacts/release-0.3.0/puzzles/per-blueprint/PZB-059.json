@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-059",
+  "tier": "TIER_4_MASTER",
+  "primaryFamily": "CONSTRUCTION_SIMULATION",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:cdd6fe67ad0c9c55",
+  "instanceChecksum": "e90500941f55b1c9d31f2b3fd2fa91085666f26eb1b57bff2c7b11a95cbcb9b5",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "COORDINATE",
+    "concept": "Players connect ramps, triggers, counterweights, and gates. Several assemblies look plausible, but only one satisfies energy, timing, and reset constraints.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use component transfer rules to construct a causal chain, simulate discrete ticks, and read the triggered gate signature.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the construction simulation representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Use component transfer rules to construct a causal chain, simulate discrete ticks, and read the triggered gate signature. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "DRAG_ASSEMBLY",
+      "RULE_TABLE",
+      "TIMELINE"
+    ],
+    "accessibilityModes": [
+      "KEYBOARD_ASSEMBLY",
+      "TEXT_CONNECTION_LIST",
+      "REDUCED_MOTION",
+      "TACTILE_PRINTABLE_PIECES"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

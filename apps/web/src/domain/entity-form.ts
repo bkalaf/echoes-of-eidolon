@@ -83,6 +83,16 @@ export function validateAdminEntityDraft(
     if (control === "JSON" || control === "TAXONOMY") {
       try { JSON.parse(value); } catch { errors.push(`${field.name} must contain valid JSON.`); }
     }
+    if (entity === "WitnessDef" && field.name === "color") {
+      try {
+        const color = JSON.parse(value) as Record<string, unknown>;
+        const channels = ["SPECTRAL_VIOLET", "GREEN", "WHITE"];
+        const exactKeys = Object.keys(color).sort().join(",") === [...channels].sort().join(",");
+        const percentages = channels.map((channel) => color[channel]);
+        if (!exactKeys || percentages.some((percentage) => typeof percentage !== "number" || !Number.isFinite(percentage) || percentage < 0 || percentage > 100)) errors.push("color requires exactly SPECTRAL_VIOLET, GREEN, and WHITE percentages from 0 through 100.");
+        else if (Math.abs((percentages as number[]).reduce((sum, percentage) => sum + percentage, 0) - 100) > 0.0001) errors.push("color percentages must total 100.");
+      } catch { /* generic JSON validation already owns parse errors */ }
+    }
     if (control === "CLOTHING") errors.push(...staticPresentationQa("clothing", value).failures);
   }
   return [...new Set(errors)];

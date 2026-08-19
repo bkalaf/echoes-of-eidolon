@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-058",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "HISTORICAL_RESEARCH",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:6c18f08af94b7445",
+  "instanceChecksum": "fc5959a6bd96440befde2cc3528bee61c087279de1868a688bbcf7f20288b197",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_ROUTE",
+    "concept": "Near-identical historical map editions differ in cartouche, scale, and corrected place names. Generated edition choices trace a coordinate code.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Verify edition provenance, identify changed features, and apply their coordinates to the instance grid.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the historical research representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Verify edition provenance, identify changed features, and apply their coordinates to the instance grid. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "MAPS",
+      "CATALOG_METADATA",
+      "COORDINATE_GRID"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

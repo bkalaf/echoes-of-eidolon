@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T13:51:17-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18.zip",
+      "sha256": "c6af5370fe29113594e61a9ac13db3180aaf3401740784bc9a1417eeaf817c34"
+    },
+    {
+      "url": "https://app.notion.com/p/3be2380d0cae81d8bdcff5163bf38529?pvs=204",
+      "role": "live Release 0.3.0 queue"
+    },
+    {
+      "url": "https://app.notion.com/p/3b82380d0cae81b2b3fcecc58a1f1007?pvs=204",
+      "role": "live START HERE authority"
+    },
+    {
+      "path": "AGENTS.md",
+      "role": "repository instructions"
+    },
+    {
+      "path": "docs/RELEASES.md",
+      "role": "release lifecycle"
+    },
+    {
+      "path": "docs/COMMITS_AND_RELEASE_NOTES.md",
+      "role": "commit and release-note convention"
+    },
+    {
+      "path": "docs/release-notes/0_3_0.md",
+      "role": "canonical draft note"
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 checks/validate_package.py .",
+      "startedAt": "2026-08-18T13:51:17-07:00",
+      "finishedAt": "2026-08-18T13:51:17-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "package integrity",
+      "expected": {
+        "checks": 1005,
+        "errors": 0
+      },
+      "observed": {
+        "checks": 1005,
+        "errors": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "release queue scope",
+      "expected": {
+        "workItems": 18
+      },
+      "observed": {
+        "workItems": 18,
+        "source": "live Notion fetch"
+      },
+      "pass": true
+    },
+    {
+      "name": "release target conflict resolved",
+      "expected": "0.3.0",
+      "observed": {
+        "packages": "0.3.0",
+        "releaseDocs": "0.3.0",
+        "packageAuthority": "0.3.0",
+        "priorAgentsTarget": "0.2.0",
+        "updatedAgentsTarget": "0.3.0"
+      },
+      "pass": true
+    },
+    {
+      "name": "draft publication boundary",
+      "expected": {
+        "status": "DRAFT",
+        "releaseDate": null
+      },
+      "observed": {
+        "status": "DRAFT",
+        "releaseDate": null
+      },
+      "pass": true
+    }
+  ],
+  "artifacts": [],
+  "blockers": [],
+  "notes": [
+    "The live START HERE page still records an older production SHA and is treated as historical for production identity.",
+    "The live Release 0.3.0 queue fetched successfully and retains all 18 packaged work items.",
+    "Publication, tags, GitHub Releases, provider mutation, migrations, and production deployment remain separately gated."
+  ]
+}
+

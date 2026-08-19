@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { PublicShell } from "../../components/shells/Shells";
 import { BoundedNumberField, FiniteChipSelection, HardenedSelect } from "../../components/ui/controls";
 import { PersonalityFamily } from "../../generated/prisma/enums";
@@ -49,7 +50,17 @@ function ReviewQueue({ screen }: { screen: PageManifestEntry }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const rows = pageManifest.filter((entry) => !normalizedQuery || [entry.screenId, entry.title, entry.path ?? "state-only"].some((value) => value.toLowerCase().includes(normalizedQuery)));
-  return <><ToolsHead screen={screen} description={`All ${pageManifest.length} active base-plus-amendment screen/state records, backed directly by the application registry.`} /><section className="card"><div className="toolbar"><label className="field grow">Find screen, title, or route<input className="input" value={query} onChange={(event) => setQuery(event.target.value)} /></label><span className="tag">{rows.length} of {pageManifest.length}</span></div><div className="table-scroll"><table className="simple-table"><thead><tr><th>Order</th><th>Screen/state</th><th>Title</th><th>Route or modal owner</th><th>Revision</th><th>Review</th></tr></thead><tbody>{rows.map((entry) => { const ownedPath = entry.path?.replace(/^Modal in /, ""); const href = ownedPath ? `${ownedPath}${ownedPath.includes("?") ? "&" : "?"}state=${encodeURIComponent(entry.screenId)}` : `/tools/wireframe-builder?state=${encodeURIComponent(entry.screenId)}`; return <tr key={`${entry.reviewOrder}-${entry.screenId}`}><td>{entry.reviewOrder}</td><td>{entry.screenId}</td><td>{entry.title}</td><td>{entry.path ?? "Owned state; no standalone route"}</td><td>{entry.source.startsWith("V3_REMEDIATION") ? "V3 amendment" : "v11.3 base"}</td><td><a className="button" href={href}>Open rendered UI</a></td></tr>; })}</tbody></table></div></section></>;
+  const columns: DataTableColumnDef<PageManifestEntry>[] = [
+    { accessorKey: "title", header: "Title" },
+    { accessorKey: "screenId", header: "Screen/state ID" },
+    { accessorKey: "reviewOrder", header: "Review order" },
+    { accessorKey: "page", header: "Page" },
+    { accessorKey: "originalPage", header: "Original page" },
+    { accessorFn: (entry) => entry.path ?? "Owned state; no standalone route", header: "Route or modal owner", id: "path" },
+    { accessorKey: "source", header: "Source" },
+    { cell: ({ row }) => { const ownedPath = row.original.path?.replace(/^Modal in /, ""); const href = ownedPath ? `${ownedPath}${ownedPath.includes("?") ? "&" : "?"}state=${encodeURIComponent(row.original.screenId)}` : `/tools/wireframe-builder?state=${encodeURIComponent(row.original.screenId)}`; return <a className="button" href={href}>Open rendered UI</a>; }, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
+  return <><ToolsHead screen={screen} description={`All ${pageManifest.length} active base-plus-amendment screen/state records, backed directly by the application registry.`} /><section className="card"><div className="toolbar"><label className="field grow">Find screen, title, or route<input className="input" value={query} onChange={(event) => setQuery(event.target.value)} /></label><span className="tag">{rows.length} of {pageManifest.length}</span></div><DataTable columns={columns} data={rows} getRowId={(entry) => entry.screenId} preferenceKey="tools.review-queue" /></section></>;
 }
 
 function Builder({ screen }: { screen: PageManifestEntry }) {
@@ -73,7 +84,16 @@ function NavigationStates({ screen }: { screen: PageManifestEntry }) {
     ["Administer users/data", "no", "no", "no", "yes", "yes"],
     ["Change authorization roles", "no", "no", "no", "no", "yes"],
   ] as const;
-  return <><ToolsHead screen={screen} description="The five displayed access levels and their supplied capability boundaries." /><section className="card"><p>Authorization role, beta/player eligibility, and membership entitlement remain separate.</p><div className="table-scroll"><table aria-label="Access level capabilities" className="simple-table"><thead><tr><th>Capability</th>{["GUEST", "USER", "MEMBER", "ADMIN", "OWNER"].map((level) => <th key={level}>{level}</th>)}</tr></thead><tbody>{capabilities.map(([capability, ...levels]) => <tr key={capability}><th scope="row">{capability}</th>{levels.map((value, index) => <td key={`${capability}-${index}`}>{value}</td>)}</tr>)}</tbody></table></div></section></>;
+  const rows = capabilities.map(([capability, guest, user, member, admin, owner]) => ({ admin, capability, guest, member, owner, user }));
+  const columns: DataTableColumnDef<(typeof rows)[number]>[] = [
+    { accessorKey: "capability", header: "Capability" },
+    { accessorKey: "guest", header: "GUEST" },
+    { accessorKey: "user", header: "USER" },
+    { accessorKey: "member", header: "MEMBER" },
+    { accessorKey: "admin", header: "ADMIN" },
+    { accessorKey: "owner", header: "OWNER" },
+  ];
+  return <><ToolsHead screen={screen} description="The five displayed access levels and their supplied capability boundaries." /><section className="card"><p>Authorization role, beta/player eligibility, and membership entitlement remain separate.</p><DataTable ariaLabel="Access level capabilities" columns={columns} data={rows} getRowId={(row) => row.capability} preferenceKey="tools.navigation-states" /></section></>;
 }
 
 export function ToolsPage({ screen }: { screen: PageManifestEntry }) {

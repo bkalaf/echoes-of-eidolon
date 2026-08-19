@@ -1,0 +1,313 @@
+{
+  "schemaVersion": "eidolon-release-0.3.0-initial-founding-settlements-v1",
+  "phase": "INITIAL",
+  "worlds": [
+    "CONCORD",
+    "SCHISM",
+    "RUIN"
+  ],
+  "expectedPhysicalSettlementCount": 24,
+  "expectedSettlementWorldCount": 72,
+  "settlements": [
+    {
+      "settlementId": "SET_ANSERIS",
+      "regionId": "R01",
+      "regionName": "Icewake",
+      "siteId": "SITE-0081",
+      "name": "Anseris",
+      "foundingPopulationGroups": [
+        "Arctic & North American Indigenous",
+        "Waterbirds & Seabirds",
+        "Cetaceans"
+      ]
+    },
+    {
+      "settlementId": "SET_LUPIN_GHAR",
+      "regionId": "R02",
+      "regionName": "Timbersteppe",
+      "siteId": "SITE-0049",
+      "name": "Lupin-Ghar",
+      "foundingPopulationGroups": [
+        "Central Asian & Steppe",
+        "Carnivorans",
+        "Even-Toed Ungulates"
+      ]
+    },
+    {
+      "settlementId": "SET_HIGH_TORVEN",
+      "regionId": "R03",
+      "regionName": "Highsteppe",
+      "siteId": "SITE-0113",
+      "name": "High Torven",
+      "foundingPopulationGroups": [
+        "Western & Northern European",
+        "Fae & Fairy Folk",
+        "Dwarves, Halflings & Little Folk"
+      ]
+    },
+    {
+      "settlementId": "SET_SURO_MARA",
+      "regionId": "R04",
+      "regionName": "Rivergrass",
+      "siteId": "SITE-0001",
+      "name": "Suro Mara",
+      "foundingPopulationGroups": [
+        "East African & Nilotic",
+        "Turtles & Crocodilians",
+        "Water Spirits & Aquatic Monsters"
+      ]
+    },
+    {
+      "settlementId": "SET_CREST_HAVEN",
+      "regionId": "R05",
+      "regionName": "Shadowspine",
+      "siteId": "SITE-0007",
+      "name": "Crest Haven",
+      "foundingPopulationGroups": [
+        "Ghosts, Wraiths & Specters",
+        "Liches, Mummies & Greater Undead",
+        "Demons & Fiends"
+      ]
+    },
+    {
+      "settlementId": "SET_ASCENDANCY",
+      "regionId": "R06",
+      "regionName": "Highcourt",
+      "siteId": "SITE-0401",
+      "name": "Ascendancy",
+      "foundingPopulationGroups": [
+        "Iranian, Kurdish & Eastern West Asian",
+        "Angels & Celestials",
+        "Djinn & Genie-Kin"
+      ]
+    },
+    {
+      "settlementId": "SET_SANGUIN_BAY",
+      "regionId": "R07",
+      "regionName": "Duskcanopy",
+      "siteId": "SITE-0065",
+      "name": "Sanguin Bay",
+      "foundingPopulationGroups": [
+        "Southern & Eastern European",
+        "Vampires & Blood-Drinkers",
+        "Shapeshifters & Werebeings"
+      ]
+    },
+    {
+      "settlementId": "SET_LUMINTHALAS",
+      "regionId": "R08",
+      "regionName": "Shadeleaf",
+      "siteId": "SITE-0033",
+      "name": "Luminthalas",
+      "foundingPopulationGroups": [
+        "East Asian",
+        "Songbirds",
+        "Elves"
+      ]
+    },
+    {
+      "settlementId": "SET_DZONGKHAR",
+      "regionId": "R09",
+      "regionName": "Ironcrown",
+      "siteId": "SITE-0133",
+      "name": "Dzongkhar",
+      "foundingPopulationGroups": [
+        "Himalayan & Tibetan",
+        "Giants & Titans",
+        "Elementals"
+      ]
+    },
+    {
+      "settlementId": "SET_AL_MIHRAQ",
+      "regionId": "R11",
+      "regionName": "Sunscar",
+      "siteId": "SITE-0129",
+      "name": "Al-Mihraq",
+      "foundingPopulationGroups": [
+        "Arabian Peninsula",
+        "North African & Saharan",
+        "Elephants, Hyraxes & Afrotherians"
+      ]
+    },
+    {
+      "settlementId": "SET_THALASSOR",
+      "regionId": "R12",
+      "regionName": "Reefward",
+      "siteId": "SITE-0225",
+      "name": "Thalassor",
+      "foundingPopulationGroups": [
+        "Household, Land & Place Spirits",
+        "Merfolk & Aquatic Peoples",
+        "Sharks, Rays & Jawless Fish"
+      ]
+    },
+    {
+      "settlementId": "SET_CELESTIAL_QUAY",
+      "regionId": "R13",
+      "regionName": "Drymarsh",
+      "siteId": "SITE-0177",
+      "name": "Celestial Quay",
+      "foundingPopulationGroups": [
+        "Levantine & Mesopotamian",
+        "Divine & Heavenly Spirits",
+        "Amphibians"
+      ]
+    },
+    {
+      "settlementId": "SET_HYDROS",
+      "regionId": "R14",
+      "regionName": "Manywater",
+      "siteId": "SITE-0242",
+      "name": "Hydros",
+      "foundingPopulationGroups": [
+        "Horn of Africa & Red Sea",
+        "Bony Fish",
+        "Mollusks & Other Invertebrates"
+      ]
+    },
+    {
+      "settlementId": "SET_DEVANAGRI",
+      "regionId": "R15",
+      "regionName": "Forestfold",
+      "siteId": "SITE-0193",
+      "name": "Devanagri",
+      "foundingPopulationGroups": [
+        "South Asian",
+        "Caucasian & Anatolian",
+        "Primates"
+      ]
+    },
+    {
+      "settlementId": "SET_NAGA_PURA",
+      "regionId": "R16",
+      "regionName": "Eastchain",
+      "siteId": "SITE-0145",
+      "name": "Naga-Pura",
+      "foundingPopulationGroups": [
+        "Mainland Southeast Asian",
+        "Maritime Southeast Asian",
+        "Dragons & Dragonkin"
+      ]
+    },
+    {
+      "settlementId": "SET_SYLVAN_GATE",
+      "regionId": "R17",
+      "regionName": "Seawall",
+      "siteId": "SITE-0305",
+      "name": "Sylvan Gate",
+      "foundingPopulationGroups": [
+        "West African",
+        "Central African & Great Lakes",
+        "Pigeons, Gamebirds & Groundbirds"
+      ]
+    },
+    {
+      "settlementId": "SET_GRYPHON_REACH",
+      "regionId": "R18",
+      "regionName": "Aerie Peaks",
+      "siteId": "SITE-0385",
+      "name": "Gryphon Reach",
+      "foundingPopulationGroups": [
+        "Southern African",
+        "Odd-Toed Ungulates",
+        "Raptors & Owls"
+      ]
+    },
+    {
+      "settlementId": "SET_WHAKAREVA",
+      "regionId": "R19",
+      "regionName": "Caldera Heights",
+      "siteId": "SITE-0289",
+      "name": "Whakareva",
+      "foundingPopulationGroups": [
+        "Pacific & Oceanian",
+        "Parrots & Cockatoos",
+        "Ogres, Trolls & Oni"
+      ]
+    },
+    {
+      "settlementId": "SET_CHIROPTERA",
+      "regionId": "R20",
+      "regionName": "Heartgrove",
+      "siteId": "SITE-0353",
+      "name": "Chiroptera",
+      "foundingPopulationGroups": [
+        "Bats",
+        "Rodents & Lagomorphs",
+        "Nature & Plant Spirits"
+      ]
+    },
+    {
+      "settlementId": "SET_ATLANTIA",
+      "regionId": "R21",
+      "regionName": "Ringwood Isles",
+      "siteId": "SITE-0275",
+      "name": "Atlantia",
+      "foundingPopulationGroups": [
+        "Diaspora, Creole & Legendary Human Civilizations",
+        "Golems",
+        "Goblinoids & Orc-Kin"
+      ]
+    },
+    {
+      "settlementId": "SET_TJURINGA",
+      "regionId": "R22",
+      "regionName": "The Chains",
+      "siteId": "SITE-0321",
+      "name": "Tjuringa",
+      "foundingPopulationGroups": [
+        "Australian Indigenous",
+        "Marsupials & Monotremes",
+        "Other Specialized Birds"
+      ]
+    },
+    {
+      "settlementId": "SET_YUPANQUI",
+      "regionId": "R23",
+      "regionName": "Highwater",
+      "siteId": "SITE-0257",
+      "name": "Yupanqui",
+      "foundingPopulationGroups": [
+        "South American Indigenous",
+        "Xenarthrans & Other Mammals",
+        "Hybrid & Legendary Monsters"
+      ]
+    },
+    {
+      "settlementId": "SET_LACERTA_SHORE",
+      "regionId": "R24",
+      "regionName": "Edgewood",
+      "siteId": "SITE-0369",
+      "name": "Lacerta Shore",
+      "foundingPopulationGroups": [
+        "Mesoamerican & Caribbean Indigenous",
+        "Lizards",
+        "Constructs & Animated Objects"
+      ]
+    },
+    {
+      "settlementId": "SET_SERPENTIS",
+      "regionId": "R25",
+      "regionName": "Marshroot",
+      "siteId": "SITE-0338",
+      "name": "Serpentis",
+      "foundingPopulationGroups": [
+        "Arthropods",
+        "Snakes",
+        "Skeletons & Zombies"
+      ]
+    }
+  ],
+  "excludedFromInitial": {
+    "regionId": "R10",
+    "regionName": "Innerwood",
+    "siteId": "SITE-0243",
+    "settlementExists": false,
+    "foundingPopulation": null,
+    "postDjtNames": {
+      "CONCORD": "Ashgarden",
+      "SCHISM": "Second Song",
+      "RUIN": "Last Well"
+    }
+  }
+}

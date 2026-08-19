@@ -1,0 +1,5223 @@
+{
+  "schemaVersion": "echoes-owner-table-inventory-v1",
+  "generatedAt": "2026-08-19T00:34:00.034Z",
+  "sharedContract": {
+    "clearFilters": true,
+    "columnResizing": true,
+    "fieldAppropriateFilters": [
+      "text",
+      "enum",
+      "boolean",
+      "relation",
+      "number",
+      "date",
+      "array",
+      "nullable"
+    ],
+    "horizontalScroll": true,
+    "keyboardRowActivation": true,
+    "pagination": [
+      10,
+      25,
+      50,
+      100
+    ],
+    "quickSearch": true,
+    "stickyActions": true,
+    "stickyHeader": true,
+    "stickyIdentity": true,
+    "totalAndFilteredCounts": true,
+    "zebraHoverFocusSelectionStates": true,
+    "inlineRowContract": {
+      "editRowLabel": true,
+      "explicitSave": true,
+      "immutableIdentity": true,
+      "preservesFailedDraft": true,
+      "subtypeCharacterComposition": true
+    }
+  },
+  "sourceSurfaceCount": 48,
+  "renderedTableCount": 81,
+  "nativeTableElementsOutsideSharedGrid": [],
+  "nativeTableExemptions": [
+    {
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+      "reason": "Puzzle carrier semantics, not an owner record table."
+    }
+  ],
+  "tables": [
+    {
+      "canonicalFieldsExpected": [
+        "byteSize",
+        "managedAssetId",
+        "mediaKind",
+        "mimeType",
+        "objectKey",
+        "purposeLinks",
+        "sha256",
+        "technicalMetadata"
+      ],
+      "columnsRendered": [
+        "managedAssetId",
+        "mediaKind",
+        "mimeType",
+        "byteSize",
+        "purposeLinks",
+        "objectKey",
+        "sha256",
+        "technicalMetadata"
+      ],
+      "component": "AssetManager",
+      "dataExpression": "assets.data.assets",
+      "filterableFields": [
+        "managedAssetId",
+        "mediaKind",
+        "mimeType",
+        "byteSize",
+        "purposeLinks",
+        "objectKey",
+        "sha256",
+        "technicalMetadata"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.assets.${mediaKind.toLowerCase()}`",
+      "relationFields": [
+        {
+          "field": "managedAssetId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/assets",
+        "/admin/prompts"
+      ],
+      "sortableFields": [
+        "managedAssetId",
+        "mediaKind",
+        "mimeType",
+        "byteSize",
+        "purposeLinks",
+        "objectKey",
+        "sha256",
+        "technicalMetadata"
+      ],
+      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:77"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "createdAt",
+        "email",
+        "friendName",
+        "id",
+        "invitation",
+        "reason",
+        "status"
+      ],
+      "columnsRendered": [
+        "friendName",
+        "id",
+        "email",
+        "reason",
+        "status",
+        "createdAt",
+        "invitationId",
+        "expiresAt",
+        "lifecycle",
+        "actions"
+      ],
+      "component": "BetaInvitationAdminPage",
+      "dataExpression": "visibleRows",
+      "filterableFields": [
+        "friendName",
+        "id",
+        "email",
+        "reason",
+        "status",
+        "createdAt",
+        "invitationId",
+        "expiresAt",
+        "lifecycle"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.beta-invitations.${showCodes ? \"codes\" : \"requests\"}`",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/access/approvals",
+        "/admin/beta-invitations",
+        "/admin/access/roles"
+      ],
+      "sortableFields": [
+        "friendName",
+        "id",
+        "email",
+        "reason",
+        "status",
+        "createdAt",
+        "invitationId",
+        "expiresAt",
+        "lifecycle"
+      ],
+      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:102"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "id",
+        "parcelId",
+        "geometry"
+      ],
+      "columnsRendered": [
+        "id",
+        "parcelId",
+        "geometry"
+      ],
+      "component": "GeometryTable",
+      "dataExpression": "records",
+      "filterableFields": [
+        "id",
+        "parcelId",
+        "geometry"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.cities.geometry.${type.toLowerCase()}`",
+      "relationFields": [
+        {
+          "field": "parcelId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/cities",
+        "/admin/cities/:id/:view"
+      ],
+      "sortableFields": [
+        "id",
+        "parcelId",
+        "geometry"
+      ],
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:132"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "rowLabel",
+        "dynamic[headings]"
+      ],
+      "columnsRendered": [
+        "rowLabel",
+        "dynamic[headings]"
+      ],
+      "component": "PlannerWorldGrid",
+      "dataExpression": "rows",
+      "filterableFields": [
+        "rowLabel",
+        "dynamic[headings]"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.companion-planner.${world}.${propertiesOnRows ? \"properties\" : \"companions\"}`",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "sortableFields": [
+        "rowLabel",
+        "dynamic[headings]"
+      ],
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:112"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "entity",
+        "name",
+        "kind",
+        "type",
+        "nullable",
+        "isList",
+        "enumName",
+        "editability",
+        "exclusionReason"
+      ],
+      "columnsRendered": [
+        "entity",
+        "name",
+        "kind",
+        "type",
+        "nullable",
+        "isList",
+        "enumName",
+        "editability",
+        "exclusionReason"
+      ],
+      "component": "ObjectTypeIndex",
+      "dataExpression": "auditRows.filter((field) => field.domain === domain)",
+      "filterableFields": [
+        "entity",
+        "name",
+        "kind",
+        "type",
+        "nullable",
+        "isList",
+        "enumName",
+        "editability",
+        "exclusionReason"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.data-integrity.${domain}`",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data",
+        "/admin/data/:entity"
+      ],
+      "sortableFields": [
+        "entity",
+        "name",
+        "kind",
+        "type",
+        "nullable",
+        "isList",
+        "enumName",
+        "editability",
+        "exclusionReason"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx:368"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "sourceField",
+        "targetField"
+      ],
+      "columnsRendered": [
+        "sourceField",
+        "targetField"
+      ],
+      "component": "EntityImportPage",
+      "dataExpression": "mappingRows",
+      "filterableFields": [
+        "sourceField",
+        "targetField"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.entity-import.${entity}.mapping`",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/:entity/import"
+      ],
+      "sortableFields": [
+        "sourceField",
+        "targetField"
+      ],
+      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:125"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "dynamic[entityFields[entity]]"
+      ],
+      "columnsRendered": [
+        "dynamic[entityFields[entity]]"
+      ],
+      "component": "EntityImportPage",
+      "dataExpression": "previewRows",
+      "filterableFields": [
+        "dynamic[entityFields[entity]]"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.entity-import.${entity}.preview`",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/:entity/import"
+      ],
+      "sortableFields": [
+        "dynamic[entityFields[entity]]"
+      ],
+      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:131"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "family",
+        "promptRecordId",
+        "purpose",
+        "status",
+        "targetId",
+        "targetType",
+        "versions"
+      ],
+      "columnsRendered": [
+        "promptRecordId",
+        "family",
+        "purpose",
+        "status",
+        "targetType",
+        "targetId",
+        "latestVersion",
+        "result",
+        "versions"
+      ],
+      "component": "PromptManager",
+      "dataExpression": "prompts.data.prompts",
+      "filterableFields": [
+        "promptRecordId",
+        "family",
+        "purpose",
+        "status",
+        "targetType",
+        "targetId",
+        "latestVersion",
+        "result",
+        "versions"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.prompts.${outstandingOnly ? \"outstanding\" : \"all\"}`",
+      "relationFields": [
+        {
+          "field": "promptRecordId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "targetId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/assets",
+        "/admin/prompts"
+      ],
+      "sortableFields": [
+        "promptRecordId",
+        "family",
+        "purpose",
+        "status",
+        "targetType",
+        "targetId",
+        "latestVersion",
+        "result",
+        "versions"
+      ],
+      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:147"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "culture",
+        "dominantBreed",
+        "latestYear",
+        "populations",
+        "settlement",
+        "settlementWorldId",
+        "totalPopulation",
+        "worldKey"
+      ],
+      "columnsRendered": [
+        "settlementName",
+        "settlementId",
+        "classification",
+        "siteId",
+        "regionId",
+        "longitude",
+        "latitude",
+        "settlementWorldId",
+        "worldKey",
+        "totalPopulation",
+        "latestYear",
+        "dominantBreedName",
+        "dominantBreedId",
+        "cultureName",
+        "cultureId",
+        "populations",
+        "actions"
+      ],
+      "component": "SettlementAdminPage",
+      "dataExpression": "settlements.data",
+      "filterableFields": [
+        "settlementName",
+        "settlementId",
+        "classification",
+        "siteId",
+        "regionId",
+        "longitude",
+        "latitude",
+        "settlementWorldId",
+        "worldKey",
+        "totalPopulation",
+        "latestYear",
+        "dominantBreedName",
+        "dominantBreedId",
+        "cultureName",
+        "cultureId",
+        "populations"
+      ],
+      "missingFields": [],
+      "preferenceKey": "`admin.settlements.${worldKey}`",
+      "relationFields": [
+        {
+          "field": "culture",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "dominantBreed",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "settlement",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "settlementWorldId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/atlas/settlements"
+      ],
+      "sortableFields": [
+        "settlementName",
+        "settlementId",
+        "classification",
+        "siteId",
+        "regionId",
+        "longitude",
+        "latitude",
+        "settlementWorldId",
+        "worldKey",
+        "totalPopulation",
+        "latestYear",
+        "dominantBreedName",
+        "dominantBreedId",
+        "cultureName",
+        "cultureId",
+        "populations"
+      ],
+      "source": "apps/web/src/screens/admin/SettlementAdminPage.tsx:74"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "source",
+        "membershipGrantId",
+        "monthsGranted",
+        "effectiveStartAt",
+        "effectiveEndAt"
+      ],
+      "columnsRendered": [
+        "source",
+        "membershipGrantId",
+        "monthsGranted",
+        "effectiveStartAt",
+        "effectiveEndAt"
+      ],
+      "component": "Subscription",
+      "dataExpression": "membership.grants",
+      "filterableFields": [
+        "source",
+        "membershipGrantId",
+        "monthsGranted",
+        "effectiveStartAt",
+        "effectiveEndAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "account.membership-grants",
+      "relationFields": [
+        {
+          "field": "membershipGrantId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/account/subscription",
+        "/account/orders"
+      ],
+      "sortableFields": [
+        "source",
+        "membershipGrantId",
+        "monthsGranted",
+        "effectiveStartAt",
+        "effectiveEndAt"
+      ],
+      "source": "apps/web/src/screens/account/AccountPage.tsx:320"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "name",
+        "orderLineId",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents"
+      ],
+      "columnsRendered": [
+        "name",
+        "orderLineId",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents"
+      ],
+      "component": "Orders",
+      "dataExpression": "order.lines",
+      "filterableFields": [
+        "name",
+        "orderLineId",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents"
+      ],
+      "missingFields": [],
+      "preferenceKey": "account.order-lines",
+      "relationFields": [
+        {
+          "field": "orderLineId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "storeVariantId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/account/subscription",
+        "/account/orders"
+      ],
+      "sortableFields": [
+        "name",
+        "orderLineId",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents"
+      ],
+      "source": "apps/web/src/screens/account/AccountPage.tsx:406"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "createdAt",
+        "lines",
+        "orderId",
+        "payment",
+        "refunds",
+        "returnEligibleAt"
+      ],
+      "columnsRendered": [
+        "orderId",
+        "createdAt",
+        "itemCount",
+        "paymentLabel",
+        "fulfillment",
+        "lines",
+        "payment",
+        "refunds",
+        "returnEligibleAt"
+      ],
+      "component": "Orders",
+      "dataExpression": "orders",
+      "filterableFields": [
+        "orderId",
+        "createdAt",
+        "itemCount",
+        "paymentLabel",
+        "fulfillment",
+        "lines",
+        "payment",
+        "refunds",
+        "returnEligibleAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "account.orders",
+      "relationFields": [
+        {
+          "field": "orderId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/account/subscription",
+        "/account/orders"
+      ],
+      "sortableFields": [
+        "orderId",
+        "createdAt",
+        "itemCount",
+        "paymentLabel",
+        "fulfillment",
+        "lines",
+        "payment",
+        "refunds",
+        "returnEligibleAt"
+      ],
+      "source": "apps/web/src/screens/account/AccountPage.tsx:403"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "eventType",
+        "providerStatus",
+        "occurredAt"
+      ],
+      "columnsRendered": [
+        "eventType",
+        "providerStatus",
+        "occurredAt"
+      ],
+      "component": "Subscription",
+      "dataExpression": "subscription?.events ?? []",
+      "filterableFields": [
+        "eventType",
+        "providerStatus",
+        "occurredAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "account.subscription-events",
+      "relationFields": [],
+      "routeOrState": [
+        "/account/subscription",
+        "/account/orders"
+      ],
+      "sortableFields": [
+        "eventType",
+        "providerStatus",
+        "occurredAt"
+      ],
+      "source": "apps/web/src/screens/account/AccountPage.tsx:320"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "accessLevel",
+        "administration",
+        "memberBenefits",
+        "play"
+      ],
+      "columnsRendered": [
+        "accessLevel",
+        "administration",
+        "memberBenefits",
+        "play"
+      ],
+      "component": "Roles",
+      "dataExpression": "rows",
+      "filterableFields": [
+        "accessLevel",
+        "administration",
+        "memberBenefits",
+        "play"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.access.roles",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/access/approvals",
+        "/admin/beta-invitations",
+        "/admin/access/roles"
+      ],
+      "sortableFields": [
+        "accessLevel",
+        "administration",
+        "memberBenefits",
+        "play"
+      ],
+      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:55"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "banned",
+        "betaEligible",
+        "createdAt",
+        "email",
+        "name",
+        "role",
+        "userId",
+        "username"
+      ],
+      "columnsRendered": [
+        "name",
+        "userId",
+        "username",
+        "email",
+        "role",
+        "betaEligible",
+        "banned",
+        "createdAt",
+        "actions"
+      ],
+      "component": "AccountsList",
+      "dataExpression": "accounts.data.accounts",
+      "filterableFields": [
+        "name",
+        "userId",
+        "username",
+        "email",
+        "role",
+        "betaEligible",
+        "banned",
+        "createdAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.accounts",
+      "relationFields": [
+        {
+          "field": "userId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/access",
+        "/admin/access/:userId"
+      ],
+      "sortableFields": [
+        "name",
+        "userId",
+        "username",
+        "email",
+        "role",
+        "betaEligible",
+        "banned",
+        "createdAt"
+      ],
+      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:85"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "createdAt",
+        "expiresAt",
+        "ipAddress",
+        "sessionId",
+        "updatedAt",
+        "userAgent"
+      ],
+      "columnsRendered": [
+        "userAgent",
+        "sessionId",
+        "ipAddress",
+        "createdAt",
+        "updatedAt",
+        "expiresAt"
+      ],
+      "component": "AccountDetailView",
+      "dataExpression": "record.sessions",
+      "filterableFields": [
+        "userAgent",
+        "sessionId",
+        "ipAddress",
+        "createdAt",
+        "updatedAt",
+        "expiresAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.accounts.sessions",
+      "relationFields": [
+        {
+          "field": "sessionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/access",
+        "/admin/access/:userId"
+      ],
+      "sortableFields": [
+        "userAgent",
+        "sessionId",
+        "ipAddress",
+        "createdAt",
+        "updatedAt",
+        "expiresAt"
+      ],
+      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:118"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "originName",
+        "originSettlementWorldId",
+        "breedId",
+        "amount"
+      ],
+      "columnsRendered": [
+        "originName",
+        "originSettlementWorldId",
+        "breedId",
+        "amount"
+      ],
+      "component": "FoundCity",
+      "dataExpression": "departures",
+      "filterableFields": [
+        "originName",
+        "originSettlementWorldId",
+        "breedId",
+        "amount"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.atlas.founding-departures",
+      "relationFields": [
+        {
+          "field": "originSettlementWorldId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "breedId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/atlas/pois",
+        "/admin/atlas/sites",
+        "/admin/atlas/sites/:siteId"
+      ],
+      "sortableFields": [
+        "originName",
+        "originSettlementWorldId",
+        "breedId",
+        "amount"
+      ],
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:141"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "name",
+        "poiId",
+        "displayName",
+        "workingLabel",
+        "nameStatus",
+        "category",
+        "regionId",
+        "latticeId",
+        "longitude",
+        "latitude"
+      ],
+      "columnsRendered": [
+        "name",
+        "poiId",
+        "displayName",
+        "workingLabel",
+        "nameStatus",
+        "category",
+        "regionId",
+        "latticeId",
+        "longitude",
+        "latitude"
+      ],
+      "component": "PoiAtlas",
+      "dataExpression": "atlas.pointsOfInterest",
+      "filterableFields": [
+        "name",
+        "poiId",
+        "displayName",
+        "workingLabel",
+        "nameStatus",
+        "category",
+        "regionId",
+        "latticeId",
+        "longitude",
+        "latitude"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.atlas.points-of-interest",
+      "relationFields": [
+        {
+          "field": "poiId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "regionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "latticeId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/atlas/pois",
+        "/admin/atlas/sites",
+        "/admin/atlas/sites/:siteId"
+      ],
+      "sortableFields": [
+        "name",
+        "poiId",
+        "displayName",
+        "workingLabel",
+        "nameStatus",
+        "category",
+        "regionId",
+        "latticeId",
+        "longitude",
+        "latitude"
+      ],
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:62"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "siteId",
+        "regionId",
+        "latticeId",
+        "classification",
+        "longitude",
+        "latitude"
+      ],
+      "columnsRendered": [
+        "siteId",
+        "regionId",
+        "latticeId",
+        "classification",
+        "longitude",
+        "latitude"
+      ],
+      "component": "Sites",
+      "dataExpression": "atlas.settlementSites",
+      "filterableFields": [
+        "siteId",
+        "regionId",
+        "latticeId",
+        "classification",
+        "longitude",
+        "latitude"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.atlas.sites",
+      "relationFields": [
+        {
+          "field": "siteId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "regionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "latticeId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/atlas/pois",
+        "/admin/atlas/sites",
+        "/admin/atlas/sites/:siteId"
+      ],
+      "sortableFields": [
+        "siteId",
+        "regionId",
+        "latticeId",
+        "classification",
+        "longitude",
+        "latitude"
+      ],
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:70"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "actorName",
+        "actorEmail",
+        "bulkOperationAuditId",
+        "operation",
+        "entityName",
+        "result",
+        "recordCount",
+        "detail",
+        "occurredAt"
+      ],
+      "columnsRendered": [
+        "actorName",
+        "actorEmail",
+        "bulkOperationAuditId",
+        "operation",
+        "entityName",
+        "result",
+        "recordCount",
+        "detail",
+        "occurredAt"
+      ],
+      "component": "BulkOperationsAdminPage",
+      "dataExpression": "data.audits",
+      "filterableFields": [
+        "actorName",
+        "actorEmail",
+        "bulkOperationAuditId",
+        "operation",
+        "entityName",
+        "result",
+        "recordCount",
+        "detail",
+        "occurredAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.bulk.audits",
+      "relationFields": [
+        {
+          "field": "bulkOperationAuditId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/bulk-changes",
+        "/admin/data/bulk-operations"
+      ],
+      "sortableFields": [
+        "actorName",
+        "actorEmail",
+        "bulkOperationAuditId",
+        "operation",
+        "entityName",
+        "result",
+        "recordCount",
+        "detail",
+        "occurredAt"
+      ],
+      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:91"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "sequence",
+        "bulkMutationEnvelopeId",
+        "entityCode",
+        "operation",
+        "status",
+        "recordCount",
+        "notes",
+        "receivedAt",
+        "decidedAt",
+        "dryRunResult",
+        "revalidationResult"
+      ],
+      "columnsRendered": [
+        "sequence",
+        "bulkMutationEnvelopeId",
+        "entityCode",
+        "operation",
+        "status",
+        "recordCount",
+        "notes",
+        "receivedAt",
+        "decidedAt",
+        "dryRunResult",
+        "revalidationResult",
+        "actions"
+      ],
+      "component": "BulkOperationsAdminPage",
+      "dataExpression": "data.envelopes",
+      "filterableFields": [
+        "sequence",
+        "bulkMutationEnvelopeId",
+        "entityCode",
+        "operation",
+        "status",
+        "recordCount",
+        "notes",
+        "receivedAt",
+        "decidedAt",
+        "dryRunResult",
+        "revalidationResult"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.bulk.envelopes",
+      "relationFields": [
+        {
+          "field": "bulkMutationEnvelopeId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/bulk-changes",
+        "/admin/data/bulk-operations"
+      ],
+      "sortableFields": [
+        "sequence",
+        "bulkMutationEnvelopeId",
+        "entityCode",
+        "operation",
+        "status",
+        "recordCount",
+        "notes",
+        "receivedAt",
+        "decidedAt",
+        "dryRunResult",
+        "revalidationResult"
+      ],
+      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:85"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "grouping",
+        "shape",
+        "editability"
+      ],
+      "columnsRendered": [
+        "grouping",
+        "shape",
+        "editability"
+      ],
+      "component": "CampaignManagerLanding",
+      "dataExpression": "overlays",
+      "filterableFields": [
+        "grouping",
+        "shape",
+        "editability"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.campaign.overlays",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/campaign"
+      ],
+      "sortableFields": [
+        "grouping",
+        "shape",
+        "editability"
+      ],
+      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:383"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "sequence",
+        "scopeType",
+        "scopeId",
+        "operation",
+        "capabilityEventId"
+      ],
+      "columnsRendered": [
+        "sequence",
+        "scopeType",
+        "scopeId",
+        "operation",
+        "capabilityEventId"
+      ],
+      "component": "Inspector",
+      "dataExpression": "result.events",
+      "filterableFields": [
+        "sequence",
+        "scopeType",
+        "scopeId",
+        "operation",
+        "capabilityEventId"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.capabilities.events",
+      "relationFields": [
+        {
+          "field": "scopeId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "capabilityEventId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "sortableFields": [
+        "sequence",
+        "scopeType",
+        "scopeId",
+        "operation",
+        "capabilityEventId"
+      ],
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:187"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "capabilityDefinitionId",
+        "code",
+        "versions"
+      ],
+      "columnsRendered": [
+        "code",
+        "capabilityDefinitionId",
+        "activeVersion",
+        "activeValueKind",
+        "activePath",
+        "versionCount",
+        "versions",
+        "actions"
+      ],
+      "component": "Registry",
+      "dataExpression": "definitions",
+      "filterableFields": [
+        "code",
+        "capabilityDefinitionId",
+        "activeVersion",
+        "activeValueKind",
+        "activePath",
+        "versionCount",
+        "versions"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.capabilities.registry",
+      "relationFields": [
+        {
+          "field": "capabilityDefinitionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "sortableFields": [
+        "code",
+        "capabilityDefinitionId",
+        "activeVersion",
+        "activeValueKind",
+        "activePath",
+        "versionCount",
+        "versions"
+      ],
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:83"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "capabilityDefinitionVersionId",
+        "version",
+        "pathPattern",
+        "valueKind",
+        "minValue",
+        "maxValue",
+        "enumValues",
+        "allowedReferenceEntityTypes",
+        "allowedOperations",
+        "monotonicPolicy",
+        "description",
+        "status",
+        "parameters"
+      ],
+      "columnsRendered": [
+        "version",
+        "capabilityDefinitionVersionId",
+        "status",
+        "valueKind",
+        "pathPattern",
+        "minValue",
+        "maxValue",
+        "enumValues",
+        "allowedReferenceEntityTypes",
+        "allowedOperations",
+        "monotonicPolicy",
+        "description",
+        "parameters",
+        "actions"
+      ],
+      "component": "VersionEditor",
+      "dataExpression": "definition?.versions ?? []",
+      "filterableFields": [
+        "version",
+        "capabilityDefinitionVersionId",
+        "status",
+        "valueKind",
+        "pathPattern",
+        "minValue",
+        "maxValue",
+        "enumValues",
+        "allowedReferenceEntityTypes",
+        "allowedOperations",
+        "monotonicPolicy",
+        "description",
+        "parameters"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.capabilities.versions",
+      "relationFields": [
+        {
+          "field": "capabilityDefinitionVersionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "sortableFields": [
+        "version",
+        "capabilityDefinitionVersionId",
+        "status",
+        "valueKind",
+        "pathPattern",
+        "minValue",
+        "maxValue",
+        "enumValues",
+        "allowedReferenceEntityTypes",
+        "allowedOperations",
+        "monotonicPolicy",
+        "description",
+        "parameters"
+      ],
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:150"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "settlement",
+        "settlementWorldId",
+        "worldKey"
+      ],
+      "columnsRendered": [
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "worldKey",
+        "classification",
+        "siteId",
+        "regionId",
+        "actions"
+      ],
+      "component": "CityProjectList",
+      "dataExpression": "projects.data.availableSettlementWorlds",
+      "filterableFields": [
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "worldKey",
+        "classification",
+        "siteId",
+        "regionId"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.cities.available-settlement-worlds",
+      "relationFields": [
+        {
+          "field": "settlement",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "settlementWorldId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/cities",
+        "/admin/cities/:id/:view"
+      ],
+      "sortableFields": [
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "worldKey",
+        "classification",
+        "siteId",
+        "regionId"
+      ],
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "buildings",
+        "cityId",
+        "geometryVersion",
+        "name",
+        "parcels",
+        "settlementWorld",
+        "streets"
+      ],
+      "columnsRendered": [
+        "name",
+        "cityId",
+        "worldKey",
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "classification",
+        "regionId",
+        "siteId",
+        "geometryVersion",
+        "parcels",
+        "streets",
+        "buildings",
+        "actions"
+      ],
+      "component": "CityProjectList",
+      "dataExpression": "projects.data.cities",
+      "filterableFields": [
+        "name",
+        "cityId",
+        "worldKey",
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "classification",
+        "regionId",
+        "siteId",
+        "geometryVersion",
+        "parcels",
+        "streets",
+        "buildings"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.cities.projects",
+      "relationFields": [
+        {
+          "field": "cityId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/cities",
+        "/admin/cities/:id/:view"
+      ],
+      "sortableFields": [
+        "name",
+        "cityId",
+        "worldKey",
+        "settlementName",
+        "settlementId",
+        "settlementWorldId",
+        "classification",
+        "regionId",
+        "siteId",
+        "geometryVersion",
+        "parcels",
+        "streets",
+        "buildings"
+      ],
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "activeItems",
+        "categoryPath",
+        "items",
+        "name",
+        "productType"
+      ],
+      "columnsRendered": [
+        "name",
+        "productType",
+        "items",
+        "activeItems",
+        "categoryPath"
+      ],
+      "component": "Categories",
+      "dataExpression": "categories",
+      "filterableFields": [
+        "name",
+        "productType",
+        "items",
+        "activeItems",
+        "categoryPath"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.categories",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "name",
+        "productType",
+        "items",
+        "activeItems",
+        "categoryPath"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:186"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "amountCents",
+        "confirmedAt",
+        "createdAt",
+        "donationCheckoutId",
+        "monthsGranted",
+        "status",
+        "stripeConfigured",
+        "user"
+      ],
+      "columnsRendered": [
+        "account",
+        "donationCheckoutId",
+        "userId",
+        "createdAt",
+        "amountCents",
+        "monthsGranted",
+        "status",
+        "confirmedAt",
+        "stripeConfigured"
+      ],
+      "component": "Donations",
+      "dataExpression": "donations",
+      "filterableFields": [
+        "account",
+        "donationCheckoutId",
+        "userId",
+        "createdAt",
+        "amountCents",
+        "monthsGranted",
+        "status",
+        "confirmedAt",
+        "stripeConfigured"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.donations",
+      "relationFields": [
+        {
+          "field": "donationCheckoutId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "user",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "account",
+        "donationCheckoutId",
+        "userId",
+        "createdAt",
+        "amountCents",
+        "monthsGranted",
+        "status",
+        "confirmedAt",
+        "stripeConfigured"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:281"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "productName",
+        "orderLineId",
+        "variantLabel",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents",
+        "lineTotal"
+      ],
+      "columnsRendered": [
+        "productName",
+        "orderLineId",
+        "variantLabel",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents",
+        "lineTotal"
+      ],
+      "component": "OrderDetail",
+      "dataExpression": "order.lines",
+      "filterableFields": [
+        "productName",
+        "orderLineId",
+        "variantLabel",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents",
+        "lineTotal"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.order-lines",
+      "relationFields": [
+        {
+          "field": "orderLineId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "storeVariantId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "productName",
+        "orderLineId",
+        "variantLabel",
+        "storeVariantId",
+        "size",
+        "color",
+        "quantity",
+        "unitPriceCents",
+        "lineTotal"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "subject",
+        "helpTicketId",
+        "channel",
+        "categoryKey",
+        "status",
+        "updatedAt"
+      ],
+      "columnsRendered": [
+        "subject",
+        "helpTicketId",
+        "channel",
+        "categoryKey",
+        "status",
+        "updatedAt"
+      ],
+      "component": "OrderDetail",
+      "dataExpression": "order.helpTickets",
+      "filterableFields": [
+        "subject",
+        "helpTicketId",
+        "channel",
+        "categoryKey",
+        "status",
+        "updatedAt"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.order-tickets",
+      "relationFields": [
+        {
+          "field": "helpTicketId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "subject",
+        "helpTicketId",
+        "channel",
+        "categoryKey",
+        "status",
+        "updatedAt"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "contactEmail",
+        "createdAt",
+        "helpTickets",
+        "lines",
+        "orderId",
+        "paymentConfirmation",
+        "refundedAmountCents",
+        "refunds",
+        "returnEligibility",
+        "returnRequest",
+        "user"
+      ],
+      "columnsRendered": [
+        "account",
+        "orderId",
+        "contactEmail",
+        "userId",
+        "createdAt",
+        "amount",
+        "payment",
+        "fulfillment",
+        "refundedAmountCents",
+        "lines",
+        "paymentConfirmation",
+        "refunds",
+        "returnEligibility",
+        "returnRequest",
+        "helpTickets"
+      ],
+      "component": "MerchandiseOrders",
+      "dataExpression": "orders",
+      "filterableFields": [
+        "account",
+        "orderId",
+        "contactEmail",
+        "userId",
+        "createdAt",
+        "amount",
+        "payment",
+        "fulfillment",
+        "refundedAmountCents",
+        "lines",
+        "paymentConfirmation",
+        "refunds",
+        "returnEligibility",
+        "returnRequest",
+        "helpTickets"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.orders",
+      "relationFields": [
+        {
+          "field": "orderId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "user",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "account",
+        "orderId",
+        "contactEmail",
+        "userId",
+        "createdAt",
+        "amount",
+        "payment",
+        "fulfillment",
+        "refundedAmountCents",
+        "lines",
+        "paymentConfirmation",
+        "refunds",
+        "returnEligibility",
+        "returnRequest",
+        "helpTickets"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:277"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "active",
+        "artworkAssetId",
+        "name",
+        "productType",
+        "storeProductId",
+        "variants"
+      ],
+      "columnsRendered": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "component": "StoreOverview",
+      "dataExpression": "data.products",
+      "filterableFields": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.overview",
+      "relationFields": [
+        {
+          "field": "artworkAssetId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "storeProductId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:182"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "active",
+        "artworkAssetId",
+        "name",
+        "productType",
+        "storeProductId",
+        "variants"
+      ],
+      "columnsRendered": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "component": "ProductList",
+      "dataExpression": "products",
+      "filterableFields": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.products",
+      "relationFields": [
+        {
+          "field": "artworkAssetId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "storeProductId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "name",
+        "storeProductId",
+        "productType",
+        "active",
+        "artworkAssetId",
+        "variants",
+        "available",
+        "variantRecords"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:209"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "cancelAtPeriodEnd",
+        "canceledAt",
+        "createdAt",
+        "currentPeriodEndAt",
+        "currentPeriodStartAt",
+        "events",
+        "membershipSubscriptionId",
+        "providerStatus",
+        "updatedAt",
+        "user"
+      ],
+      "columnsRendered": [
+        "account",
+        "membershipSubscriptionId",
+        "userId",
+        "providerStatus",
+        "createdAt",
+        "renewal",
+        "cancelAtPeriodEnd",
+        "canceledAt",
+        "currentPeriodStartAt",
+        "currentPeriodEndAt",
+        "updatedAt",
+        "events"
+      ],
+      "component": "Subscriptions",
+      "dataExpression": "subscriptions",
+      "filterableFields": [
+        "account",
+        "membershipSubscriptionId",
+        "userId",
+        "providerStatus",
+        "createdAt",
+        "renewal",
+        "cancelAtPeriodEnd",
+        "canceledAt",
+        "currentPeriodStartAt",
+        "currentPeriodEndAt",
+        "updatedAt",
+        "events"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.subscriptions",
+      "relationFields": [
+        {
+          "field": "membershipSubscriptionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "user",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "account",
+        "membershipSubscriptionId",
+        "userId",
+        "providerStatus",
+        "createdAt",
+        "renewal",
+        "cancelAtPeriodEnd",
+        "canceledAt",
+        "currentPeriodStartAt",
+        "currentPeriodEndAt",
+        "updatedAt",
+        "events"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:285"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "available",
+        "color",
+        "priceCents",
+        "printfulConfigured",
+        "printfulVariantReference",
+        "size",
+        "storeVariantId",
+        "stripeConfigured",
+        "stripePriceReference"
+      ],
+      "columnsRendered": [
+        "storeVariantId",
+        "size",
+        "color",
+        "priceCents",
+        "stripePriceReference",
+        "stripeConfigured",
+        "printfulVariantReference",
+        "printfulConfigured",
+        "available",
+        "actions"
+      ],
+      "component": "ProductEditor",
+      "dataExpression": "product.variants",
+      "filterableFields": [
+        "storeVariantId",
+        "size",
+        "color",
+        "priceCents",
+        "stripePriceReference",
+        "stripeConfigured",
+        "printfulVariantReference",
+        "printfulConfigured",
+        "available"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.commerce.variants",
+      "relationFields": [
+        {
+          "field": "storeVariantId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "sortableFields": [
+        "storeVariantId",
+        "size",
+        "color",
+        "priceCents",
+        "stripePriceReference",
+        "stripeConfigured",
+        "printfulVariantReference",
+        "printfulConfigured",
+        "available"
+      ],
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:263"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "label",
+        "key",
+        "count",
+        "state"
+      ],
+      "columnsRendered": [
+        "label",
+        "key",
+        "count",
+        "state",
+        "actions"
+      ],
+      "component": "AdminDashboardPage",
+      "dataExpression": "queueRows",
+      "filterableFields": [
+        "label",
+        "key",
+        "count",
+        "state"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.dashboard.work-queue",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin"
+      ],
+      "sortableFields": [
+        "label",
+        "key",
+        "count",
+        "state"
+      ],
+      "source": "apps/web/src/screens/admin/AdminDashboardPage.tsx:32"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "moneyTransactionId",
+        "occurredAtGameMinute",
+        "delta",
+        "withdrawalAmount",
+        "worldInstance",
+        "party"
+      ],
+      "columnsRendered": [
+        "accountName",
+        "accountEmail",
+        "party",
+        "moneyTransactionId",
+        "worldKey",
+        "worldInstance",
+        "delta",
+        "withdrawalAmount",
+        "occurredAtGameMinute",
+        "recordedAt",
+        "context"
+      ],
+      "component": "MoneyAuditPage",
+      "dataExpression": "query.data",
+      "filterableFields": [
+        "accountName",
+        "accountEmail",
+        "party",
+        "moneyTransactionId",
+        "worldKey",
+        "worldInstance",
+        "delta",
+        "withdrawalAmount",
+        "occurredAtGameMinute",
+        "recordedAt",
+        "context"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.money.transactions",
+      "relationFields": [
+        {
+          "field": "moneyTransactionId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "worldInstance",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "party",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "sortableFields": [
+        "accountName",
+        "accountEmail",
+        "party",
+        "moneyTransactionId",
+        "worldKey",
+        "worldInstance",
+        "delta",
+        "withdrawalAmount",
+        "occurredAtGameMinute",
+        "recordedAt",
+        "context"
+      ],
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:185"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "occupationId",
+        "name",
+        "description",
+        "active",
+        "affinities"
+      ],
+      "columnsRendered": [
+        "name",
+        "occupationId",
+        "active",
+        "description",
+        "affinities",
+        "actions"
+      ],
+      "component": "OccupationAdminPage",
+      "dataExpression": "query.data",
+      "filterableFields": [
+        "name",
+        "occupationId",
+        "active",
+        "description",
+        "affinities"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.occupations",
+      "relationFields": [
+        {
+          "field": "occupationId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "sortableFields": [
+        "name",
+        "occupationId",
+        "active",
+        "description",
+        "affinities"
+      ],
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:33"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "version",
+        "status",
+        "title",
+        "summary",
+        "releaseDate",
+        "previousVersion",
+        "items",
+        "publication",
+        "deployment"
+      ],
+      "columnsRendered": [
+        "version",
+        "status",
+        "title",
+        "summary",
+        "releaseDate",
+        "previousVersion",
+        "items",
+        "publication",
+        "deployment"
+      ],
+      "component": "ReleaseManager",
+      "dataExpression": "releases.data.releases",
+      "filterableFields": [
+        "version",
+        "status",
+        "title",
+        "summary",
+        "releaseDate",
+        "previousVersion",
+        "items"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.operations.releases",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/operations/releases"
+      ],
+      "sortableFields": [
+        "version",
+        "status",
+        "title",
+        "summary",
+        "releaseDate",
+        "previousVersion",
+        "items"
+      ],
+      "source": "apps/web/src/screens/admin/OperationsAdminPage.tsx:20"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "description",
+        "name",
+        "perkId",
+        "status"
+      ],
+      "columnsRendered": [
+        "perkId",
+        "name",
+        "description",
+        "status"
+      ],
+      "component": "PerkList",
+      "dataExpression": "perks.data.perks",
+      "filterableFields": [
+        "perkId",
+        "name",
+        "description",
+        "status"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.perks",
+      "relationFields": [
+        {
+          "field": "perkId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/perks"
+      ],
+      "sortableFields": [
+        "perkId",
+        "name",
+        "description",
+        "status"
+      ],
+      "source": "apps/web/src/screens/admin/PerkAdminPage.tsx:39"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "difficultyTier",
+        "primaryFamily",
+        "title",
+        "puzzleBlueprintId",
+        "versions"
+      ],
+      "columnsRendered": [
+        "title",
+        "puzzleBlueprintId",
+        "primaryFamily",
+        "difficultyTier",
+        "latestVersion",
+        "hintContract",
+        "versions",
+        "actions"
+      ],
+      "component": "BlueprintList",
+      "dataExpression": "blueprints.data.blueprints",
+      "filterableFields": [
+        "title",
+        "puzzleBlueprintId",
+        "primaryFamily",
+        "difficultyTier",
+        "latestVersion",
+        "hintContract",
+        "versions"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.puzzles.blueprints",
+      "relationFields": [
+        {
+          "field": "puzzleBlueprintId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/puzzles/blueprints"
+      ],
+      "sortableFields": [
+        "title",
+        "puzzleBlueprintId",
+        "primaryFamily",
+        "difficultyTier",
+        "latestVersion",
+        "hintContract",
+        "versions"
+      ],
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:73"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "soundtrackName",
+        "soundtrackId",
+        "settlementSoundtrackAssignmentId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "columnsRendered": [
+        "soundtrackName",
+        "soundtrackId",
+        "settlementSoundtrackAssignmentId",
+        "category",
+        "ordinal",
+        "active",
+        "actions"
+      ],
+      "component": "SettlementSoundtracksPage",
+      "dataExpression": "query.data.settlement.soundtrackAssignments",
+      "filterableFields": [
+        "soundtrackName",
+        "soundtrackId",
+        "settlementSoundtrackAssignmentId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "missingFields": [],
+      "preferenceKey": "admin.settlement-soundtracks",
+      "relationFields": [
+        {
+          "field": "soundtrackId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        },
+        {
+          "field": "settlementSoundtrackAssignmentId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "sortableFields": [
+        "soundtrackName",
+        "soundtrackId",
+        "settlementSoundtrackAssignmentId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:208"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset"
+      ],
+      "columnsRendered": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "AchievementDefinition persisted records",
+      "filterableFields": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-achievementdefinition",
+      "relationFields": [
+        {
+          "field": "imageAsset",
+          "resolver": "lookupPresentationFor(ManagedAsset) plus raw imageAssetId"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/achievement-definition"
+      ],
+      "sortableFields": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "department",
+        "character",
+        "witnesses"
+      ],
+      "columnsRendered": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "department",
+        "character",
+        "witnesses",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Architect persisted records",
+      "filterableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "department",
+        "character",
+        "witnesses"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-architect",
+      "relationFields": [
+        {
+          "field": "character",
+          "resolver": "lookupPresentationFor(Character) plus raw characterId"
+        },
+        {
+          "field": "witnesses",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/architect"
+      ],
+      "sortableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "department",
+        "character",
+        "witnesses"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "columnsRendered": [
+        "arkId",
+        "name",
+        "status",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Ark persisted records",
+      "filterableFields": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-ark",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/ark"
+      ],
+      "sortableFields": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "columnsRendered": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Breed persisted records",
+      "filterableFields": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-breed",
+      "relationFields": [
+        {
+          "field": "species",
+          "resolver": "lookupPresentationFor(Species) plus raw speciesId"
+        },
+        {
+          "field": "culture",
+          "resolver": "lookupPresentationFor(Culture) plus raw cultureId"
+        },
+        {
+          "field": "personality",
+          "resolver": "lookupPresentationFor(PersonalityExpression) plus raw personalityId"
+        },
+        {
+          "field": "parentBreed",
+          "resolver": "lookupPresentationFor(Breed) plus raw parentBreedId"
+        },
+        {
+          "field": "childBreeds",
+          "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
+        },
+        {
+          "field": "characters",
+          "resolver": "lookupPresentationFor(Character) plus raw relation identity"
+        },
+        {
+          "field": "populationEvents",
+          "resolver": "lookupPresentationFor(SettlementPopulationEvent) plus raw relation identity"
+        },
+        {
+          "field": "dominantInWorlds",
+          "resolver": "lookupPresentationFor(SettlementWorld) plus raw relation identity"
+        },
+        {
+          "field": "researchValues",
+          "resolver": "lookupPresentationFor(BreedResearchValue) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/breed"
+      ],
+      "sortableFields": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "columnsRendered": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Character persisted records",
+      "filterableFields": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-character",
+      "relationFields": [
+        {
+          "field": "breed",
+          "resolver": "lookupPresentationFor(Breed) plus raw breedId"
+        },
+        {
+          "field": "occupation",
+          "resolver": "lookupPresentationFor(Occupation) plus raw occupationId"
+        },
+        {
+          "field": "soul",
+          "resolver": "lookupPresentationFor(Soul) plus raw soulId"
+        },
+        {
+          "field": "architect",
+          "resolver": "lookupPresentationFor(Architect) plus raw relation identity"
+        },
+        {
+          "field": "witness",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        },
+        {
+          "field": "companion",
+          "resolver": "lookupPresentationFor(Companion) plus raw relation identity"
+        },
+        {
+          "field": "concordFor",
+          "resolver": "lookupPresentationFor(CompanionDef) plus raw relation identity"
+        },
+        {
+          "field": "ruinFor",
+          "resolver": "lookupPresentationFor(CompanionDef) plus raw relation identity"
+        },
+        {
+          "field": "schismFor",
+          "resolver": "lookupPresentationFor(CompanionDef) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/character"
+      ],
+      "sortableFields": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "columnsRendered": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Citation persisted records",
+      "filterableFields": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-citation",
+      "relationFields": [
+        {
+          "field": "source",
+          "resolver": "lookupPresentationFor(Source) plus raw sourceId"
+        },
+        {
+          "field": "research",
+          "resolver": "lookupPresentationFor(Research) plus raw relation identity"
+        },
+        {
+          "field": "knowledgeItems",
+          "resolver": "lookupPresentationFor(KnowledgeBaseItemCitation) plus raw relation identity"
+        },
+        {
+          "field": "disclosureCitations",
+          "resolver": "lookupPresentationFor(KnowledgeBaseDisclosureCitation) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/citation"
+      ],
+      "sortableFields": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "columnsRendered": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Companion persisted records",
+      "filterableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-companion",
+      "relationFields": [
+        {
+          "field": "character",
+          "resolver": "lookupPresentationFor(Character) plus raw characterId"
+        },
+        {
+          "field": "companionDef",
+          "resolver": "lookupPresentationFor(CompanionDef) plus raw companionKey"
+        },
+        {
+          "field": "partyMemberships",
+          "resolver": "lookupPresentationFor(PartyMember) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/companion"
+      ],
+      "sortableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "columnsRendered": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "CompanionDef persisted records",
+      "filterableFields": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-companiondef",
+      "relationFields": [
+        {
+          "field": "concordCharacter",
+          "resolver": "lookupPresentationFor(Character) plus raw concordCharacterId"
+        },
+        {
+          "field": "ruinCharacter",
+          "resolver": "lookupPresentationFor(Character) plus raw ruinCharacterId"
+        },
+        {
+          "field": "schismCharacter",
+          "resolver": "lookupPresentationFor(Character) plus raw schismCharacterId"
+        },
+        {
+          "field": "soul",
+          "resolver": "lookupPresentationFor(Soul) plus raw soulId"
+        },
+        {
+          "field": "companions",
+          "resolver": "lookupPresentationFor(Companion) plus raw relation identity"
+        },
+        {
+          "field": "transformationBinding",
+          "resolver": "lookupPresentationFor(CompanionTransformationBinding) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/companion-def"
+      ],
+      "sortableFields": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "columnsRendered": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Constellation persisted records",
+      "filterableFields": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-constellation",
+      "relationFields": [
+        {
+          "field": "beforeWitnesses",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        },
+        {
+          "field": "afterWitnesses",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/constellation"
+      ],
+      "sortableFields": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds"
+      ],
+      "columnsRendered": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Culture persisted records",
+      "filterableFields": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-culture",
+      "relationFields": [
+        {
+          "field": "breeds",
+          "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
+        },
+        {
+          "field": "settlementWorlds",
+          "resolver": "lookupPresentationFor(SettlementWorld) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/culture"
+      ],
+      "sortableFields": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "columnsRendered": [
+        "definitionId",
+        "term",
+        "definition",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Definition persisted records",
+      "filterableFields": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-definition",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/definition"
+      ],
+      "sortableFields": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "columnsRendered": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Interlude persisted records",
+      "filterableFields": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-interlude",
+      "relationFields": [
+        {
+          "field": "substitutionsFrom",
+          "resolver": "lookupPresentationFor(InterludeSubstitution) plus raw relation identity"
+        },
+        {
+          "field": "substitutionsTo",
+          "resolver": "lookupPresentationFor(InterludeSubstitution) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/interlude"
+      ],
+      "sortableFields": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude"
+      ],
+      "columnsRendered": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "InterludeSubstitution persisted records",
+      "filterableFields": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-interludesubstitution",
+      "relationFields": [
+        {
+          "field": "interlude",
+          "resolver": "lookupPresentationFor(Interlude) plus raw interludeId"
+        },
+        {
+          "field": "replacementInterlude",
+          "resolver": "lookupPresentationFor(Interlude) plus raw replacementInterludeId"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/interlude-substitution"
+      ],
+      "sortableFields": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "columnsRendered": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "KnowledgeBaseItem persisted records",
+      "filterableFields": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-knowledgebaseitem",
+      "relationFields": [
+        {
+          "field": "citations",
+          "resolver": "lookupPresentationFor(KnowledgeBaseItemCitation) plus raw relation identity"
+        },
+        {
+          "field": "blocks",
+          "resolver": "lookupPresentationFor(KnowledgeBaseBlock) plus raw relation identity"
+        },
+        {
+          "field": "disclosures",
+          "resolver": "lookupPresentationFor(KnowledgeBaseDisclosure) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/knowledge-base-item"
+      ],
+      "sortableFields": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings"
+      ],
+      "columnsRendered": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Layette persisted records",
+      "filterableFields": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-layette",
+      "relationFields": [
+        {
+          "field": "transformationBindings",
+          "resolver": "lookupPresentationFor(CompanionTransformationBinding) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/layette"
+      ],
+      "sortableFields": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses"
+      ],
+      "columnsRendered": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "LegendaryReward persisted records",
+      "filterableFields": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-legendaryreward",
+      "relationFields": [
+        {
+          "field": "witnesses",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/legendary-reward"
+      ],
+      "sortableFields": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "columnsRendered": [
+        "lessonId",
+        "name",
+        "description",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Lesson persisted records",
+      "filterableFields": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-lesson",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/lesson"
+      ],
+      "sortableFields": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds"
+      ],
+      "columnsRendered": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "PersonalityExpression persisted records",
+      "filterableFields": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-personalityexpression",
+      "relationFields": [
+        {
+          "field": "breeds",
+          "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/personality-expression"
+      ],
+      "sortableFields": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "columnsRendered": [
+        "pillarId",
+        "name",
+        "domain",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Pillar persisted records",
+      "filterableFields": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-pillar",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/pillar"
+      ],
+      "sortableFields": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions"
+      ],
+      "columnsRendered": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "PointOfInterest persisted records",
+      "filterableFields": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-pointofinterest",
+      "relationFields": [
+        {
+          "field": "services",
+          "resolver": "lookupPresentationFor(PointOfInterestServiceAssignment) plus raw relation identity"
+        },
+        {
+          "field": "gameSessions",
+          "resolver": "lookupPresentationFor(GameSession) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/point-of-interest"
+      ],
+      "sortableFields": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions"
+      ],
+      "columnsRendered": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "PuzzleBlueprint persisted records",
+      "filterableFields": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-puzzleblueprint",
+      "relationFields": [
+        {
+          "field": "versions",
+          "resolver": "lookupPresentationFor(PuzzleBlueprintVersion) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/puzzle-blueprint"
+      ],
+      "sortableFields": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence"
+      ],
+      "columnsRendered": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Research persisted records",
+      "filterableFields": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-research",
+      "relationFields": [
+        {
+          "field": "citation",
+          "resolver": "lookupPresentationFor(Citation) plus raw citationId"
+        },
+        {
+          "field": "breedEvidence",
+          "resolver": "lookupPresentationFor(BreedResearchEvidence) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/research"
+      ],
+      "sortableFields": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "columnsRendered": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Settlement persisted records",
+      "filterableFields": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-settlement",
+      "relationFields": [
+        {
+          "field": "site",
+          "resolver": "lookupPresentationFor(Site) plus raw siteId"
+        },
+        {
+          "field": "worlds",
+          "resolver": "lookupPresentationFor(SettlementWorld) plus raw relation identity"
+        },
+        {
+          "field": "soundtrackAssignments",
+          "resolver": "lookupPresentationFor(SettlementSoundtrackAssignment) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/settlement"
+      ],
+      "sortableFields": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed"
+      ],
+      "columnsRendered": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "SettlementPopulationEvent persisted records",
+      "filterableFields": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-settlementpopulationevent",
+      "relationFields": [
+        {
+          "field": "settlementWorld",
+          "resolver": "lookupPresentationFor(SettlementWorld) plus raw settlementWorldId"
+        },
+        {
+          "field": "breed",
+          "resolver": "lookupPresentationFor(Breed) plus raw breedId"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/settlement-population-event"
+      ],
+      "sortableFields": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "columnsRendered": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "SettlementWorld persisted records",
+      "filterableFields": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-settlementworld",
+      "relationFields": [
+        {
+          "field": "settlement",
+          "resolver": "lookupPresentationFor(Settlement) plus raw settlementId"
+        },
+        {
+          "field": "dominantBreed",
+          "resolver": "lookupPresentationFor(Breed) plus raw dominantBreedId"
+        },
+        {
+          "field": "culture",
+          "resolver": "lookupPresentationFor(Culture) plus raw cultureId"
+        },
+        {
+          "field": "populationEvents",
+          "resolver": "lookupPresentationFor(SettlementPopulationEvent) plus raw relation identity"
+        },
+        {
+          "field": "cities",
+          "resolver": "lookupPresentationFor(City) plus raw relation identity"
+        },
+        {
+          "field": "gameSessions",
+          "resolver": "lookupPresentationFor(GameSession) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/settlement-world"
+      ],
+      "sortableFields": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "columnsRendered": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Site persisted records",
+      "filterableFields": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-site",
+      "relationFields": [
+        {
+          "field": "settlement",
+          "resolver": "lookupPresentationFor(Settlement) plus raw relation identity"
+        },
+        {
+          "field": "namingEligibility",
+          "resolver": "lookupPresentationFor(AtlasNamingEligibility) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/site"
+      ],
+      "sortableFields": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "columnsRendered": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Soul persisted records",
+      "filterableFields": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-soul",
+      "relationFields": [
+        {
+          "field": "characters",
+          "resolver": "lookupPresentationFor(Character) plus raw relation identity"
+        },
+        {
+          "field": "witnessDefs",
+          "resolver": "lookupPresentationFor(WitnessDef) plus raw relation identity"
+        },
+        {
+          "field": "companionDefs",
+          "resolver": "lookupPresentationFor(CompanionDef) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/soul"
+      ],
+      "sortableFields": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations"
+      ],
+      "columnsRendered": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Source persisted records",
+      "filterableFields": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-source",
+      "relationFields": [
+        {
+          "field": "citations",
+          "resolver": "lookupPresentationFor(Citation) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/source"
+      ],
+      "sortableFields": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds"
+      ],
+      "columnsRendered": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Species persisted records",
+      "filterableFields": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-species",
+      "relationFields": [
+        {
+          "field": "breeds",
+          "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/species"
+      ],
+      "sortableFields": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "columnsRendered": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "TimelineEvent persisted records",
+      "filterableFields": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-timelineevent",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/timeline-event"
+      ],
+      "sortableFields": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "columnsRendered": [
+        "tomeId",
+        "title",
+        "author",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Tome persisted records",
+      "filterableFields": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-tome",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/tome"
+      ],
+      "sortableFields": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "columnsRendered": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Transition persisted records",
+      "filterableFields": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-transition",
+      "relationFields": [],
+      "routeOrState": [
+        "/admin/data/transition"
+      ],
+      "sortableFields": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "columnsRendered": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Witness persisted records",
+      "filterableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-witness",
+      "relationFields": [
+        {
+          "field": "character",
+          "resolver": "lookupPresentationFor(Character) plus raw characterId"
+        },
+        {
+          "field": "witnessDef",
+          "resolver": "lookupPresentationFor(WitnessDef) plus raw witnessDefId"
+        },
+        {
+          "field": "architect",
+          "resolver": "lookupPresentationFor(Architect) plus raw architectCharacterId"
+        },
+        {
+          "field": "legendaryReward",
+          "resolver": "lookupPresentationFor(LegendaryReward) plus raw legendaryRewardId"
+        },
+        {
+          "field": "constellationBefore",
+          "resolver": "lookupPresentationFor(Constellation) plus raw constellationBeforeId"
+        },
+        {
+          "field": "constellationAfter",
+          "resolver": "lookupPresentationFor(Constellation) plus raw constellationAfterId"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/witness"
+      ],
+      "sortableFields": [
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor",
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses"
+      ],
+      "columnsRendered": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "WitnessDef persisted records",
+      "filterableFields": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-witnessdef",
+      "relationFields": [
+        {
+          "field": "architectSoul",
+          "resolver": "lookupPresentationFor(Soul) plus raw architectSoulId"
+        },
+        {
+          "field": "witnesses",
+          "resolver": "lookupPresentationFor(Witness) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/witness-def"
+      ],
+      "sortableFields": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "occurredAtGameMinute",
+        "amount"
+      ],
+      "columnsRendered": [
+        "occurredAtGameMinute",
+        "amount"
+      ],
+      "component": "WithdrawalLedgerOverlay",
+      "dataExpression": "rows",
+      "filterableFields": [
+        "occurredAtGameMinute",
+        "amount"
+      ],
+      "missingFields": [],
+      "preferenceKey": "game.withdrawal-ledger",
+      "relationFields": [],
+      "routeOrState": [
+        "/game?state=withdrawal-ledger"
+      ],
+      "sortableFields": [
+        "occurredAtGameMinute",
+        "amount"
+      ],
+      "source": "apps/web/src/screens/game/GameplayOverlays.tsx:58"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "label",
+        "token",
+        "responseTarget"
+      ],
+      "columnsRendered": [
+        "label",
+        "token",
+        "responseTarget"
+      ],
+      "component": "ContactPage",
+      "dataExpression": "responseRows",
+      "filterableFields": [
+        "label",
+        "token",
+        "responseTarget"
+      ],
+      "missingFields": [],
+      "preferenceKey": "public.contact-response-targets",
+      "relationFields": [],
+      "routeOrState": [
+        "/contact"
+      ],
+      "sortableFields": [
+        "label",
+        "token",
+        "responseTarget"
+      ],
+      "source": "apps/web/src/screens/public/PublicPage.tsx:149"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "capability",
+        "guest",
+        "user",
+        "member",
+        "admin",
+        "owner"
+      ],
+      "columnsRendered": [
+        "capability",
+        "guest",
+        "user",
+        "member",
+        "admin",
+        "owner"
+      ],
+      "component": "NavigationStates",
+      "dataExpression": "rows",
+      "filterableFields": [
+        "capability",
+        "guest",
+        "user",
+        "member",
+        "admin",
+        "owner"
+      ],
+      "missingFields": [],
+      "preferenceKey": "tools.navigation-states",
+      "relationFields": [
+        {
+          "field": "user",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/tools/wireframe-review",
+        "/tools/navigation-states"
+      ],
+      "sortableFields": [
+        "capability",
+        "guest",
+        "user",
+        "member",
+        "admin",
+        "owner"
+      ],
+      "source": "apps/web/src/screens/tools/ToolsPage.tsx:96"
+    },
+    {
+      "canonicalFieldsExpected": [
+        "title",
+        "screenId",
+        "reviewOrder",
+        "page",
+        "originalPage",
+        "path",
+        "source"
+      ],
+      "columnsRendered": [
+        "title",
+        "screenId",
+        "reviewOrder",
+        "page",
+        "originalPage",
+        "path",
+        "source",
+        "actions"
+      ],
+      "component": "ReviewQueue",
+      "dataExpression": "rows",
+      "filterableFields": [
+        "title",
+        "screenId",
+        "reviewOrder",
+        "page",
+        "originalPage",
+        "path",
+        "source"
+      ],
+      "missingFields": [],
+      "preferenceKey": "tools.review-queue",
+      "relationFields": [
+        {
+          "field": "screenId",
+          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+        }
+      ],
+      "routeOrState": [
+        "/tools/wireframe-review",
+        "/tools/navigation-states"
+      ],
+      "sortableFields": [
+        "title",
+        "screenId",
+        "reviewOrder",
+        "page",
+        "originalPage",
+        "path",
+        "source"
+      ],
+      "source": "apps/web/src/screens/tools/ToolsPage.tsx:63"
+    }
+  ]
+}

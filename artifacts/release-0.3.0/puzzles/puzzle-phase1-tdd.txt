@@ -1,0 +1,16 @@
+T130/T131 Witness Puzzle Box Phase 1 review and component reconciliation
+
+RED 2026-08-18T16:45:50-07:00
+Command: pnpm --filter web exec vitest run tests/unit/puzzle-component-reconciliation.test.ts --reporter=verbose
+Exit: 1
+Evidence: required puzzle-phase1-review.json did not exist.
+
+RED 2026-08-18T16:47:32-07:00
+Command: pnpm --filter web exec vitest run tests/unit/puzzle-component-reconciliation.test.ts tests/unit/puzzle-blueprint.test.ts tests/unit/puzzle-blueprint-package.test.ts tests/unit/puzzle-blueprint-import.test.ts tests/unit/puzzle-prototype-catalog.test.ts tests/unit/puzzle-prototypes.test.ts tests/unit/puzzle-prototype-lab.test.tsx --reporter=dot
+Exit: 1
+Evidence: the first reconciliation test exposed whitespace around authored pipe-separated handles; the test was corrected to use the same trimmed provenance identity as the intake parser.
+
+GREEN 2026-08-18T16:47:53-07:00
+Command: pnpm --filter web exec vitest run tests/unit/puzzle-component-reconciliation.test.ts tests/unit/puzzle-blueprint.test.ts tests/unit/puzzle-blueprint-package.test.ts tests/unit/puzzle-blueprint-import.test.ts tests/unit/puzzle-prototype-catalog.test.ts tests/unit/puzzle-prototypes.test.ts tests/unit/puzzle-prototype-lab.test.tsx --reporter=dot
+Exit: 0
+Evidence: 7 files and 20 tests passed. All 30 normalized PUZCMP handles and 552 source occurrences reconcile to the locked six-item authority through reuse, local composition, Phase 2 deferral, or explicit phase-boundary rejection. No second registry is created.

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-029",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:2e4ef7fea2ba57b0",
+  "instanceChecksum": "d4e76a5f74885fb4c508d993e2b687dcb4930140288d7bd12c5052e98df69e86",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "SIXTEEN_CHARACTER_SEQUENCE",
+    "concept": "A deterministic 320-face polyhedral puzzle box can rotate and unfold. Exactly one 16-face path shares color, orientation, and adjacency properties.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use face marks to select an admissible net, unfold it, then follow the unique gold/upright adjacent path and read its characters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "The object has more than one correct way to unfold, but only one preserves all three marked properties."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Filter faces to gold and upright first; then test adjacency in the unfolded net until one 16-face continuous path remains."
+      }
+    ],
+    "playerFacingModalities": [
+      "INTERACTIVE_3D",
+      "UNFOLDED_NET",
+      "ADJACENCY_TABLE"
+    ],
+    "accessibilityModes": [
+      "NON_3D_NET",
+      "ADJACENCY_TABLE",
+      "KEYBOARD_ROTATE",
+      "REDUCED_MOTION",
+      "SCREEN_READER_FACE_LIST"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-027",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "VISUAL_COLOR_OPTICAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:31eaad65395ca5f4",
+  "instanceChecksum": "30ad18d9e7ddbc8fbf153c2f2801f88655041e6b80caca992d8f0dca802ece3a",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "concept": "Reversible figures support several segmentations; adjacency clues force one segmentation and generated label order.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Enumerate region interpretations, apply adjacency and area constraints, then read the unique region labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Enumerate region interpretations, apply adjacency and area constraints, then read the unique region labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModes": [
+      "TACTILE_REGION_MAP",
+      "STRUCTURED_ADJACENCY_TABLE",
+      "HIGH_CONTRAST"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

@@ -1,0 +1,24 @@
+Release 0.3.0 T010 focused baseline
+
+Command:
+pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-prompt-coverage.test.ts --reporter=verbose
+Exit: 0
+Result: 1 file passed; 4 tests passed.
+
+Command:
+pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-red-baseline.test.ts --reporter=verbose
+Exit: 1 (intentional RED baseline)
+Result: 1 file failed; 8 tests failed; 1 test passed.
+
+Failed requirement groups:
+- R030-Q01 through Q03: 2D Atlas stage crops via object-fit: cover.
+- R030-Q04 and Q05: founding Settlement/population importers absent.
+- R030-Q06 and Q07: selected-world Site occupancy behavior absent.
+- R030-Q09 and Q14U: exact readable reorder controls absent.
+- R030-Q10 through Q13 and Q15: final exhaustive owner UI and inline-edit audits absent.
+- R030-Q16A: owner record detail route absent.
+- R030-Q16B: relational Taxonomy model absent.
+- R030-Q17: 70-blueprint production generator evidence absent.
+
+Passing requirement group:
+- R030-Q08: exact Guide titles, Character IDs, Soul IDs, and world mappings already match authority.

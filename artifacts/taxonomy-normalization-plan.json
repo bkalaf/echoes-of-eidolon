@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "eidolon-taxonomy-normalization-plan-v1",
+  "status": "BLOCKED",
+  "generatedAt": "2026-08-18T14:26:00-07:00",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "speciesCount": null,
+  "speciesWithTaxonomy": null,
+  "speciesWithoutTaxonomy": null,
+  "uniqueTaxonomyNodeIds": null,
+  "nodes": [],
+  "conflicts": [],
+  "historicalCandidateSnapshot": {
+    "status": "NOT_CURRENT_AUTHORITY",
+    "speciesRows": 1124,
+    "knownCurrentReferenceCount": 1131,
+    "sources": [
+      {
+        "path": ".local/worldbuilding-import-validation-2026-08-15.zIe72w/beast_pet/species.jsonl",
+        "rows": 992,
+        "sha256": "400888824370b6a3e257cba11acd3ed1b04ddb8e7c01819b5d3ff35d3f05e2fe"
+      },
+      {
+        "path": ".local/worldbuilding-import-validation-2026-08-15.zIe72w/human/species.jsonl",
+        "rows": 1,
+        "sha256": "18d4294e7e68665689c05624719637bf34c5df567c2706898fb6bffb887e950f"
+      },
+      {
+        "path": ".local/worldbuilding-import-validation-2026-08-15.zIe72w/mythos/species.jsonl",
+        "rows": 131,
+        "sha256": "243b40da3a65c20fec22f8857fab941b78d4740bd7fc653b8f7fd67e79601dbd"
+      }
+    ],
+    "reasonNotUsed": "The ignored 2026-08-15 validation snapshot is seven Species short of the known 1,131 reference and cannot prove current taxonomy values or conflicts."
+  },
+  "blockers": [
+    {
+      "id": "B07-TAXONOMY-PREFLIGHT-DATABASE",
+      "condition": "Current preflight rows are unavailable, so node deduplication and conflict analysis cannot be performed losslessly.",
+      "requiredResolution": "Export the current database first, then flatten, deduplicate, compare canonical facts, and stop if conflicts are non-empty."
+    }
+  ],
+  "notes": [
+    "Null counts mean not observed; they are not zeros.",
+    "The current Prisma Species model still owns taxonomy as nullable Json at schema.prisma line 1684."
+  ]
+}

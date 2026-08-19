@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "echoes-lookup-presentation-audit-v1",
+  "status": "PASS",
+  "generatedAt": "2026-08-18T14:41:30-07:00",
+  "canonicalSource": {
+    "packagePath": "canonical/lookup-presentation.json",
+    "repositoryPath": "apps/web/src/data/lookup-presentation.json",
+    "sha256": "0ce3ed846bfedf77a7d83ce9a5fb30941cae5168a2d3df0cd47f6e8fc999acff",
+    "byteForByteMatch": true
+  },
+  "ruleCount": 16,
+  "rulesTested": [
+    "Character",
+    "Architect",
+    "Witness",
+    "WitnessDef",
+    "Companion",
+    "CompanionDef",
+    "Species",
+    "Culture",
+    "Breed",
+    "Occupation",
+    "LegendaryReward",
+    "Constellation",
+    "Settlement",
+    "Site",
+    "Region",
+    "Soul"
+  ],
+  "assertions": [
+    { "name": "Every owner-authored rule resolves", "expected": 16, "observed": 16, "pass": true },
+    { "name": "Named lookup renders human label first and canonical ID second", "pass": true },
+    { "name": "Compound Site and Region templates resolve exact placeholders", "pass": true },
+    { "name": "Witness and WitnessDef identity-chain context resolves", "pass": true },
+    { "name": "Search text contains human label, canonical ID, and context", "pass": true },
+    { "name": "Null renders as None/em dash", "pass": true },
+    { "name": "Missing human label or unregistered rule fails closed", "pass": true },
+    { "name": "Canonical ID remains represented as copyable secondary data", "pass": true }
+  ],
+  "implementation": [
+    { "path": "apps/web/src/domain/lookup-presentation.ts", "sha256": "59c37a1d7e5aaafe536aee081137206e1950e1d97266b606ceb84197bf30cc0d" },
+    { "path": "apps/web/src/components/LookupDisplay.tsx", "sha256": "b6d8ea0a05aa711ab8d11624c013194435ff2875662336242f20c33a3cfdb6e8" }
+  ],
+  "tests": {
+    "files": 2,
+    "passed": 7,
+    "failed": 0,
+    "paths": [
+      "apps/web/tests/unit/lookup-presentation.test.ts",
+      "apps/web/tests/unit/lookup-display.test.tsx"
+    ]
+  },
+  "notes": [
+    "This task establishes the explicit lookup registry and reusable renderer. T202-T205 consume it across tables, forms, inline editing, and detail routes."
+  ]
+}

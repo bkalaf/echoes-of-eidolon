@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "echoes-owner-form-browser-matrix-v1",
+  "browser": "Chromium",
+  "environment": "current execution container",
+  "scenarios": [
+    {
+      "name": "Character",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Architect",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "WitnessDef",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Witness",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "CompanionDef",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Companion",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Breed",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Species",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "Culture",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    },
+    {
+      "name": "unrelated-generic-entities",
+      "status": "BLOCKED",
+      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+    }
+  ]
+}

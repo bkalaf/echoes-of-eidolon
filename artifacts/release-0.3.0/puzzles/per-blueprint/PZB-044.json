@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-044",
+  "tier": "TIER_4_MASTER",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:f3f4c8e3c22ef4fe",
+  "instanceChecksum": "3d31c6b58651d534193b6c0abb2d3fc7ddc9f1a7c1dc68a7be71c6140ec714dc",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_ROUTE",
+    "concept": "Synthetic vowel-like sounds plot as points on a labeled formant map. Regional pronunciations are excluded unless an authored corpus supplies them.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use supplied F1/F2 measurements rather than hearing labels, match points to regions, and read route letters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Use supplied F1/F2 measurements rather than hearing labels, match points to regions, and read route letters. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "FORMANT_TABLE",
+      "SCATTER_MAP"
+    ],
+    "accessibilityModes": [
+      "FORMANT_TABLE",
+      "CAPTIONS",
+      "TACTILE_SCATTER"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

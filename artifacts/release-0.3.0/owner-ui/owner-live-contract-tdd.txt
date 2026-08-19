@@ -1,0 +1,24 @@
+T200 owner UI live-contract inventory
+
+RED
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-ui-live-inventory.test.ts
+Exit: 1
+Result: module ../../src/domain/owner-ui-live-inventory did not exist.
+
+GREEN
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-ui-live-inventory.test.ts
+Exit: 0
+Result: 1 file passed; 3 tests passed.
+
+CUMULATIVE
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-ui-live-inventory.test.ts tests/unit/entity-form-coverage.test.ts tests/unit/entity-admin.test.ts tests/unit/release-0.3.0-prompt-coverage.test.ts
+Exit: 0
+Result: 4 files passed; 20 tests passed.
+
+Command: pnpm --dir apps/web typecheck
+Exit: 0
+
+Command: git diff --check
+Exit: 0
+
+Generated live inventory assertions: 34/34 active entities; 124/124 persisted Prisma models classified; 282/282 active canonical fields assigned a write owner.

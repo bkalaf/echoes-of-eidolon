@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-009",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:bbe61712b60475d0",
+  "instanceChecksum": "6ca3b98266cd605fe0bb26af0af29aabd327651ad77f73875b1e2a9c239fb99c",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "concept": "Inspired by the reconstructive satisfaction of Cain's Jawbone without reproducing its scale, forty generated fragments contain tense, weather, object-state, and speaker clues that establish one order.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Build a precedence graph from internal state changes and temporal references; the unique topological order yields edge letters.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Build a precedence graph from internal state changes and temporal references; the unique topological order yields edge letters. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TEXT",
+      "TIMELINE",
+      "CARDS"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

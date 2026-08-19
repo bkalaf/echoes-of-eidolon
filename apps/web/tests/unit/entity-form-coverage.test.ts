@@ -43,4 +43,12 @@ describe("all canonical entity forms", () => {
       expect.stringContaining("clothing requires section Light armor"),
     ]));
   });
+
+  it("requires the exact three WitnessDef spectral channels to total 100", () => {
+    const color: EntityFormField = { enumValues: [], hasDefault: false, isList: false, isRequired: true, kind: "json", name: "color", type: "Json" };
+    expect(validateAdminEntityDraft("WitnessDef", "witnessDefId", [color], { color: JSON.stringify({ SPECTRAL_VIOLET: 90, GREEN: 5, WHITE: 0 }) })).toEqual([
+      "color percentages must total 100.",
+    ]);
+    expect(validateAdminEntityDraft("WitnessDef", "witnessDefId", [color], { color: JSON.stringify({ SPECTRAL_VIOLET: 90, GREEN: 5, WHITE: 5 }) })).toEqual([]);
+  });
 });

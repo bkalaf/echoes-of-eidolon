@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-030",
+  "tier": "TIER_3_EXPERT",
+  "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:c0a1f60a25283c60",
+  "instanceChecksum": "eedf7d2588a6ebf52d64b72b97223a0ae92554405fc808d897b122af7bd1c043",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "concept": "Several polygon nets appear foldable, but hinge labels and door-clearance constraints admit one solid and one ordered door sequence.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Reject overlapping folds, enforce hinge parity, and read door labels in closure order.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the spatial folding geometry representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Reject overlapping folds, enforce hinge parity, and read door labels in closure order. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "2D_NET",
+      "OPTIONAL_3D_PREVIEW"
+    ],
+    "accessibilityModes": [
+      "TACTILE_PRINTABLE_NET",
+      "HINGE_TABLE",
+      "KEYBOARD_CONTROLS"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

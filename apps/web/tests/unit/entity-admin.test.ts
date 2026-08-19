@@ -33,6 +33,14 @@ describe("closed-world generic entity administration", () => {
     expect(auditModels).not.toHaveProperty("Protagonist");
     expect(auditModels).not.toHaveProperty("Antagonist");
   });
+
+  it("retains owning foreign-key metadata for every Prisma relation", () => {
+    const breedFields = contractData.entities.Breed.auditFields as Array<{ name: string; relationFromFields?: string[] }>;
+    const witnessFields = contractData.entities.Witness.auditFields as Array<{ name: string; relationFromFields?: string[] }>;
+    expect(breedFields.find(({ name }) => name === "species")?.relationFromFields).toEqual(["speciesId"]);
+    expect(breedFields.find(({ name }) => name === "childBreeds")?.relationFromFields).toEqual([]);
+    expect(witnessFields.find(({ name }) => name === "architect")?.relationFromFields).toEqual(["architectCharacterId"]);
+  });
   it("generates contracts for every registered authorable entity except the specialized Capability root", () => {
     for (const entity of Object.keys(entityFields)) {
       if (entity === "CapabilityDefinition") continue;
@@ -59,6 +67,17 @@ describe("closed-world generic entity administration", () => {
     await expect(updateEntityRecord(database as never, "Soul", "SOUL-1", { soulId: "SOUL-1", name: "Renamed" })).resolves.toEqual({ soulId: "SOUL-1", name: "Renamed" });
     expect(delegate.findMany).toHaveBeenCalledWith({ orderBy: { soulId: "asc" }, take: 500 });
     expect(delegate.update).toHaveBeenCalledWith({ data: { name: "Renamed" }, where: { soulId: "SOUL-1" } });
+  });
+
+  it("loads owning to-one relations needed for human-readable lookup presentation", async () => {
+    const findMany = vi.fn(async () => []);
+    const findUnique = vi.fn(async () => null);
+    const database = { breed: { findMany, findUnique } };
+    await listEntityRecords(database as never, "Breed");
+    await getEntityRecord(database as never, "Breed", "BRD_AARDVARK");
+    const include = { culture: true, parentBreed: true, personality: true, species: true };
+    expect(findMany).toHaveBeenCalledWith({ include, orderBy: { breedId: "asc" }, take: 500 });
+    expect(findUnique).toHaveBeenCalledWith({ include, where: { breedId: "BRD_AARDVARK" } });
   });
 
   it("imports atomically, stays idempotent, and refuses canonical drift", async () => {

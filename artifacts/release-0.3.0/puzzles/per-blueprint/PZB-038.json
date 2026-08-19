@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-038",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:2bb0b38c497babfd",
+  "instanceChecksum": "b230a3c8d5c147a88bbcd4f45f07008043bfc7bda848c88b92cf33d362767af4",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "EIGHT_CHARACTER_ALPHANUMERIC",
+    "concept": "Two percussion lines encode dots, dashes, and separators by duration ratios while accents and pitch are camouflage.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Measure relative durations in each line, interleave by bar number, and decode the generated symbol stream.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Measure relative durations in each line, interleave by bar number, and decode the generated symbol stream. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "RHYTHM_NOTATION",
+      "HAPTIC_PULSES"
+    ],
+    "accessibilityModes": [
+      "RHYTHM_NOTATION",
+      "HAPTIC_PULSES",
+      "CAPTIONS"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

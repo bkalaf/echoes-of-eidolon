@@ -112,6 +112,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -172,6 +175,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "imageAsset",
+          "relationFromFields": [
+            "imageAssetId"
+          ],
           "type": "ManagedAsset"
         }
       ]
@@ -200,6 +206,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -208,6 +217,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ]
@@ -272,6 +282,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "managedAsset",
+          "relationFromFields": [
+            "managedAssetId"
+          ],
           "type": "ManagedAsset"
         }
       ]
@@ -368,6 +381,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "eligibilities",
+          "relationFromFields": [],
           "type": "AtlasNamingEligibility"
         }
       ]
@@ -412,6 +426,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "site",
+          "relationFromFields": [
+            "siteId"
+          ],
           "type": "Site"
         },
         {
@@ -420,6 +437,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "feature",
+          "relationFromFields": [
+            "featureId"
+          ],
           "type": "AtlasNameableFeature"
         }
       ]
@@ -504,6 +524,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "request",
+          "relationFromFields": [
+            "requestId"
+          ],
           "type": "BetaInviteRequest"
         },
         {
@@ -512,6 +535,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "consumedBy",
+          "relationFromFields": [
+            "consumedByUserId"
+          ],
           "type": "User"
         }
       ]
@@ -588,6 +614,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "requester",
+          "relationFromFields": [
+            "requesterId"
+          ],
           "type": "User"
         },
         {
@@ -596,6 +625,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "invitation",
+          "relationFromFields": [],
           "type": "BetaInvitationCode"
         }
       ]
@@ -632,6 +662,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "values",
+          "relationFromFields": [],
           "type": "BookGroupingValue"
         }
       ]
@@ -708,6 +739,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "definition",
+          "relationFromFields": [
+            "bookGroupingDefinitionId"
+          ],
           "type": "BookGroupingDefinition"
         }
       ]
@@ -952,6 +986,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "species",
+          "relationFromFields": [
+            "speciesId"
+          ],
           "type": "Species"
         },
         {
@@ -960,6 +997,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "culture",
+          "relationFromFields": [
+            "cultureId"
+          ],
           "type": "Culture"
         },
         {
@@ -968,6 +1008,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "personality",
+          "relationFromFields": [
+            "personalityId"
+          ],
           "type": "PersonalityExpression"
         },
         {
@@ -976,6 +1019,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "parentBreed",
+          "relationFromFields": [
+            "parentBreedId"
+          ],
           "type": "Breed"
         },
         {
@@ -984,6 +1030,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "childBreeds",
+          "relationFromFields": [],
           "type": "Breed"
         },
         {
@@ -992,6 +1039,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "characters",
+          "relationFromFields": [],
           "type": "Character"
         },
         {
@@ -1000,6 +1048,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "populationEvents",
+          "relationFromFields": [],
           "type": "SettlementPopulationEvent"
         },
         {
@@ -1008,6 +1057,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "dominantInWorlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         },
         {
@@ -1016,6 +1066,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "researchValues",
+          "relationFromFields": [],
           "type": "BreedResearchValue"
         }
       ]
@@ -1052,6 +1103,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breedResearchValue",
+          "relationFromFields": [
+            "breedResearchValueId"
+          ],
           "type": "BreedResearchValue"
         },
         {
@@ -1060,6 +1114,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "research",
+          "relationFromFields": [
+            "researchId"
+          ],
           "type": "Research"
         }
       ]
@@ -1104,6 +1161,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breed",
+          "relationFromFields": [
+            "breedId"
+          ],
           "type": "Breed"
         },
         {
@@ -1112,6 +1172,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "evidence",
+          "relationFromFields": [],
           "type": "BreedResearchEvidence"
         }
       ]
@@ -1156,6 +1217,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "city",
+          "relationFromFields": [
+            "cityId"
+          ],
           "type": "City"
         }
       ]
@@ -1288,6 +1352,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "externalSession",
+          "relationFromFields": [
+            "externalBulkApiSessionId"
+          ],
           "type": "ExternalBulkApiSession"
         },
         {
@@ -1296,6 +1363,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "decidedBy",
+          "relationFromFields": [
+            "decidedByUserId"
+          ],
           "type": "User"
         },
         {
@@ -1304,6 +1374,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "audits",
+          "relationFromFields": [],
           "type": "BulkOperationAudit"
         }
       ]
@@ -1396,6 +1467,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "actor",
+          "relationFromFields": [
+            "actorUserId"
+          ],
           "type": "User"
         },
         {
@@ -1404,6 +1478,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "externalSession",
+          "relationFromFields": [
+            "externalBulkApiSessionId"
+          ],
           "type": "ExternalBulkApiSession"
         },
         {
@@ -1412,6 +1489,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "envelope",
+          "relationFromFields": [
+            "bulkMutationEnvelopeId"
+          ],
           "type": "BulkMutationEnvelope"
         }
       ]
@@ -1500,6 +1580,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "placements",
+          "relationFromFields": [],
           "type": "CampaignPlacement"
         }
       ]
@@ -1560,6 +1641,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "campaign",
+          "relationFromFields": [
+            "campaignId"
+          ],
           "type": "Campaign"
         }
       ]
@@ -1612,6 +1696,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinition",
+          "relationFromFields": [
+            "capabilityDefinitionId"
+          ],
           "type": "CapabilityDefinition"
         },
         {
@@ -1620,6 +1707,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "events",
+          "relationFromFields": [],
           "type": "CapabilityEvent"
         },
         {
@@ -1628,6 +1716,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "states",
+          "relationFromFields": [],
           "type": "CapabilityState"
         }
       ]
@@ -1664,6 +1753,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "versions",
+          "relationFromFields": [],
           "type": "CapabilityDefinitionVersion"
         },
         {
@@ -1672,6 +1762,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "addresses",
+          "relationFromFields": [],
           "type": "CapabilityAddress"
         },
         {
@@ -1680,6 +1771,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "transformationBindings",
+          "relationFromFields": [],
           "type": "CompanionTransformationBinding"
         }
       ]
@@ -1852,6 +1944,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinition",
+          "relationFromFields": [
+            "capabilityDefinitionId"
+          ],
           "type": "CapabilityDefinition"
         },
         {
@@ -1860,6 +1955,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "parameters",
+          "relationFromFields": [],
           "type": "CapabilityParameterDefinition"
         },
         {
@@ -1868,6 +1964,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "events",
+          "relationFromFields": [],
           "type": "CapabilityEvent"
         },
         {
@@ -1876,6 +1973,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "states",
+          "relationFromFields": [],
           "type": "CapabilityState"
         }
       ]
@@ -2048,6 +2146,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityAddress",
+          "relationFromFields": [
+            "capabilityAddressId"
+          ],
           "type": "CapabilityAddress"
         },
         {
@@ -2056,6 +2157,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinitionVersion",
+          "relationFromFields": [
+            "capabilityDefinitionVersionId"
+          ],
           "type": "CapabilityDefinitionVersion"
         }
       ]
@@ -2124,6 +2228,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinitionVersion",
+          "relationFromFields": [
+            "capabilityDefinitionVersionId"
+          ],
           "type": "CapabilityDefinitionVersion"
         }
       ]
@@ -2240,6 +2347,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityAddress",
+          "relationFromFields": [
+            "capabilityAddressId"
+          ],
           "type": "CapabilityAddress"
         },
         {
@@ -2248,6 +2358,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinitionVersion",
+          "relationFromFields": [
+            "capabilityDefinitionVersionId"
+          ],
           "type": "CapabilityDefinitionVersion"
         }
       ]
@@ -2380,6 +2493,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "breed",
+          "relationFromFields": [
+            "breedId"
+          ],
           "type": "Breed"
         },
         {
@@ -2388,6 +2504,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "occupation",
+          "relationFromFields": [
+            "occupationId"
+          ],
           "type": "Occupation"
         },
         {
@@ -2396,6 +2515,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "soul",
+          "relationFromFields": [
+            "soulId"
+          ],
           "type": "Soul"
         },
         {
@@ -2404,6 +2526,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "architect",
+          "relationFromFields": [],
           "type": "Architect"
         },
         {
@@ -2412,6 +2535,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "witness",
+          "relationFromFields": [],
           "type": "Witness"
         },
         {
@@ -2420,6 +2544,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "companion",
+          "relationFromFields": [],
           "type": "Companion"
         },
         {
@@ -2428,6 +2553,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "concordFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         },
         {
@@ -2436,6 +2562,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "ruinFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         },
         {
@@ -2444,6 +2571,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "schismFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         }
       ]
@@ -2496,6 +2624,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "source",
+          "relationFromFields": [
+            "sourceId"
+          ],
           "type": "Source"
         },
         {
@@ -2504,6 +2635,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "research",
+          "relationFromFields": [],
           "type": "Research"
         },
         {
@@ -2512,6 +2644,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "knowledgeItems",
+          "relationFromFields": [],
           "type": "KnowledgeBaseItemCitation"
         },
         {
@@ -2520,6 +2653,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosureCitations",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosureCitation"
         }
       ]
@@ -2564,6 +2698,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlementWorld",
+          "relationFromFields": [
+            "settlementWorldId"
+          ],
           "type": "SettlementWorld"
         },
         {
@@ -2572,6 +2709,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "parcels",
+          "relationFromFields": [],
           "type": "Parcel"
         },
         {
@@ -2580,6 +2718,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "streets",
+          "relationFromFields": [],
           "type": "Street"
         },
         {
@@ -2588,6 +2727,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "buildings",
+          "relationFromFields": [],
           "type": "Building"
         }
       ]
@@ -2616,6 +2756,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -2624,6 +2767,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companionDef",
+          "relationFromFields": [
+            "companionKey"
+          ],
           "type": "CompanionDef"
         },
         {
@@ -2632,6 +2778,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "partyMemberships",
+          "relationFromFields": [],
           "type": "PartyMember"
         }
       ]
@@ -2708,6 +2855,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "concordCharacter",
+          "relationFromFields": [
+            "concordCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -2716,6 +2866,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "ruinCharacter",
+          "relationFromFields": [
+            "ruinCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -2724,6 +2877,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "schismCharacter",
+          "relationFromFields": [
+            "schismCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -2732,6 +2888,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soul",
+          "relationFromFields": [
+            "soulId"
+          ],
           "type": "Soul"
         },
         {
@@ -2740,6 +2899,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companions",
+          "relationFromFields": [],
           "type": "Companion"
         },
         {
@@ -2748,6 +2908,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "transformationBinding",
+          "relationFromFields": [],
           "type": "CompanionTransformationBinding"
         }
       ]
@@ -2784,6 +2945,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companionDef",
+          "relationFromFields": [
+            "companionKey"
+          ],
           "type": "CompanionDef"
         },
         {
@@ -2792,6 +2956,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "layette",
+          "relationFromFields": [
+            "layetteId"
+          ],
           "type": "Layette"
         },
         {
@@ -2800,6 +2967,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "capabilityDefinition",
+          "relationFromFields": [
+            "capabilityDefinitionId"
+          ],
           "type": "CapabilityDefinition"
         }
       ]
@@ -2844,6 +3014,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "beforeWitnesses",
+          "relationFromFields": [],
           "type": "Witness"
         },
         {
@@ -2852,6 +3023,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "afterWitnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ]
@@ -2980,6 +3152,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         },
         {
@@ -2988,6 +3161,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlementWorlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         }
       ]
@@ -3092,6 +3266,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "release",
+          "relationFromFields": [
+            "releaseId"
+          ],
           "type": "Release"
         }
       ]
@@ -3168,6 +3345,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -3244,6 +3424,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "issuedBy",
+          "relationFromFields": [
+            "issuedByUserId"
+          ],
           "type": "User"
         },
         {
@@ -3252,6 +3435,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "audits",
+          "relationFromFields": [],
           "type": "BulkOperationAudit"
         },
         {
@@ -3260,6 +3444,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "envelopes",
+          "relationFromFields": [],
           "type": "BulkMutationEnvelope"
         }
       ]
@@ -3360,6 +3545,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "factionStandingScoringPolicy",
+          "relationFromFields": [
+            "scoringPolicyVersion"
+          ],
           "type": "FactionStandingScoringPolicy"
         }
       ]
@@ -3420,6 +3608,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "weights",
+          "relationFromFields": [],
           "type": "FactionStandingScoringWeight"
         },
         {
@@ -3428,6 +3617,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "evidenceEvents",
+          "relationFromFields": [],
           "type": "FactionStandingEvidenceEvent"
         }
       ]
@@ -3464,6 +3654,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "factionStandingScoringPolicy",
+          "relationFromFields": [
+            "factionStandingScoringPolicyId"
+          ],
           "type": "FactionStandingScoringPolicy"
         }
       ]
@@ -3540,6 +3733,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -3548,6 +3744,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "settlementWorld",
+          "relationFromFields": [
+            "settlementWorldId"
+          ],
           "type": "SettlementWorld"
         },
         {
@@ -3556,6 +3755,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "worldInstance",
+          "relationFromFields": [
+            "worldInstanceId"
+          ],
           "type": "WorldInstance"
         },
         {
@@ -3564,6 +3766,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "party",
+          "relationFromFields": [
+            "partyId"
+          ],
           "type": "Party"
         },
         {
@@ -3572,6 +3777,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "currentPointOfInterest",
+          "relationFromFields": [
+            "currentPointOfInterestId"
+          ],
           "type": "PointOfInterest"
         },
         {
@@ -3580,6 +3788,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "turns",
+          "relationFromFields": [],
           "type": "GameTurn"
         }
       ]
@@ -3672,6 +3881,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSession",
+          "relationFromFields": [
+            "gameSessionId"
+          ],
           "type": "GameSession"
         }
       ]
@@ -3724,6 +3936,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "account",
+          "relationFromFields": [
+            "accountId"
+          ],
           "type": "User"
         }
       ]
@@ -3816,6 +4031,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -3824,6 +4042,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         },
         {
@@ -3832,6 +4053,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "messages",
+          "relationFromFields": [],
           "type": "HelpTicketMessage"
         },
         {
@@ -3840,6 +4062,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "returnRequest",
+          "relationFromFields": [],
           "type": "OrderReturnRequest"
         }
       ]
@@ -3916,6 +4139,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "message",
+          "relationFromFields": [
+            "helpTicketMessageId"
+          ],
           "type": "HelpTicketMessage"
         }
       ]
@@ -3976,6 +4202,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "helpTicket",
+          "relationFromFields": [
+            "helpTicketId"
+          ],
           "type": "HelpTicket"
         },
         {
@@ -3984,6 +4213,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "authorUser",
+          "relationFromFields": [
+            "authorUserId"
+          ],
           "type": "User"
         },
         {
@@ -3992,6 +4224,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "attachments",
+          "relationFromFields": [],
           "type": "HelpTicketAttachment"
         }
       ]
@@ -4036,6 +4269,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "substitutionsFrom",
+          "relationFromFields": [],
           "type": "InterludeSubstitution"
         },
         {
@@ -4044,6 +4278,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "substitutionsTo",
+          "relationFromFields": [],
           "type": "InterludeSubstitution"
         }
       ]
@@ -4088,6 +4323,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "interlude",
+          "relationFromFields": [
+            "interludeId"
+          ],
           "type": "Interlude"
         },
         {
@@ -4096,6 +4334,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "replacementInterlude",
+          "relationFromFields": [
+            "replacementInterludeId"
+          ],
           "type": "Interlude"
         }
       ]
@@ -4172,6 +4413,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "organization",
+          "relationFromFields": [
+            "organizationId"
+          ],
           "type": "Organization"
         },
         {
@@ -4180,6 +4424,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "inviter",
+          "relationFromFields": [
+            "inviterId"
+          ],
           "type": "User"
         }
       ]
@@ -4232,6 +4479,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "knowledgeBaseItem",
+          "relationFromFields": [
+            "knowledgeBaseItemId"
+          ],
           "type": "KnowledgeBaseItem"
         },
         {
@@ -4240,6 +4490,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "anchoredDisclosures",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosure"
         }
       ]
@@ -4300,6 +4551,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "knowledgeBaseItem",
+          "relationFromFields": [
+            "knowledgeBaseItemId"
+          ],
           "type": "KnowledgeBaseItem"
         },
         {
@@ -4308,6 +4562,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "anchorBlock",
+          "relationFromFields": [
+            "anchorBlockId"
+          ],
           "type": "KnowledgeBaseBlock"
         },
         {
@@ -4316,6 +4573,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "blocks",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosureBlock"
         },
         {
@@ -4324,6 +4582,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citations",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosureCitation"
         }
       ]
@@ -4376,6 +4635,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosure",
+          "relationFromFields": [
+            "knowledgeBaseDisclosureId"
+          ],
           "type": "KnowledgeBaseDisclosure"
         }
       ]
@@ -4412,6 +4674,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosure",
+          "relationFromFields": [
+            "knowledgeBaseDisclosureId"
+          ],
           "type": "KnowledgeBaseDisclosure"
         },
         {
@@ -4420,6 +4685,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citation",
+          "relationFromFields": [
+            "citationId"
+          ],
           "type": "Citation"
         }
       ]
@@ -4472,6 +4740,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citations",
+          "relationFromFields": [],
           "type": "KnowledgeBaseItemCitation"
         },
         {
@@ -4480,6 +4749,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "blocks",
+          "relationFromFields": [],
           "type": "KnowledgeBaseBlock"
         },
         {
@@ -4488,6 +4758,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosures",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosure"
         }
       ]
@@ -4524,6 +4795,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "knowledgeBaseItem",
+          "relationFromFields": [
+            "knowledgeBaseItemId"
+          ],
           "type": "KnowledgeBaseItem"
         },
         {
@@ -4532,6 +4806,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citation",
+          "relationFromFields": [
+            "citationId"
+          ],
           "type": "Citation"
         }
       ]
@@ -4568,6 +4845,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "transformationBindings",
+          "relationFromFields": [],
           "type": "CompanionTransformationBinding"
         }
       ]
@@ -4604,6 +4882,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ]
@@ -4700,6 +4979,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "purposeLinks",
+          "relationFromFields": [],
           "type": "AssetPurposeLink"
         },
         {
@@ -4708,6 +4988,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "generatedFromPrompts",
+          "relationFromFields": [],
           "type": "PromptVersion"
         },
         {
@@ -4716,6 +4997,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "achievementImages",
+          "relationFromFields": [],
           "type": "AchievementDefinition"
         },
         {
@@ -4724,6 +5006,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "storeProductArtwork",
+          "relationFromFields": [],
           "type": "StoreProduct"
         },
         {
@@ -4732,6 +5015,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soundtracks",
+          "relationFromFields": [],
           "type": "Soundtrack"
         }
       ]
@@ -4784,6 +5068,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "organization",
+          "relationFromFields": [
+            "organizationId"
+          ],
           "type": "Organization"
         },
         {
@@ -4792,6 +5079,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -4884,6 +5174,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -4892,6 +5185,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "revocations",
+          "relationFromFields": [],
           "type": "MembershipRevocation"
         }
       ]
@@ -4984,6 +5278,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "membershipGrant",
+          "relationFromFields": [
+            "membershipGrantId"
+          ],
           "type": "MembershipGrant"
         }
       ]
@@ -5092,6 +5389,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -5100,6 +5400,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "events",
+          "relationFromFields": [],
           "type": "MembershipSubscriptionEvent"
         }
       ]
@@ -5184,6 +5485,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "subscription",
+          "relationFromFields": [
+            "membershipSubscriptionId"
+          ],
           "type": "MembershipSubscription"
         }
       ]
@@ -5260,6 +5564,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "party",
+          "relationFromFields": [
+            "partyId"
+          ],
           "type": "Party"
         },
         {
@@ -5268,6 +5575,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "worldInstance",
+          "relationFromFields": [
+            "worldInstanceId"
+          ],
           "type": "WorldInstance"
         }
       ]
@@ -5312,6 +5622,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "affinities",
+          "relationFromFields": [],
           "type": "OccupationAttributeAffinity"
         },
         {
@@ -5320,6 +5631,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "characters",
+          "relationFromFields": [],
           "type": "Character"
         }
       ]
@@ -5356,6 +5668,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "occupation",
+          "relationFromFields": [
+            "occupationId"
+          ],
           "type": "Occupation"
         }
       ]
@@ -5416,6 +5731,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -5424,6 +5742,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "lines",
+          "relationFromFields": [],
           "type": "OrderLine"
         },
         {
@@ -5432,6 +5751,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "paymentConfirmation",
+          "relationFromFields": [],
           "type": "OrderPaymentConfirmation"
         },
         {
@@ -5440,6 +5760,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "refunds",
+          "relationFromFields": [],
           "type": "OrderRefund"
         },
         {
@@ -5448,6 +5769,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "returnEligibility",
+          "relationFromFields": [],
           "type": "OrderReturnEligibility"
         },
         {
@@ -5456,6 +5778,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "returnRequest",
+          "relationFromFields": [],
           "type": "OrderReturnRequest"
         },
         {
@@ -5464,6 +5787,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "helpTickets",
+          "relationFromFields": [],
           "type": "HelpTicket"
         },
         {
@@ -5472,6 +5796,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "publicAccessTokens",
+          "relationFromFields": [],
           "type": "OrderPublicAccessToken"
         }
       ]
@@ -5524,6 +5849,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         },
         {
@@ -5532,6 +5860,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "storeVariant",
+          "relationFromFields": [
+            "storeVariantId"
+          ],
           "type": "StoreVariant"
         }
       ]
@@ -5592,6 +5923,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         },
         {
@@ -5600,6 +5934,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "stripeWebhookEvent",
+          "relationFromFields": [
+            "stripeWebhookEventId"
+          ],
           "type": "StripeWebhookEvent"
         },
         {
@@ -5608,6 +5945,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "fulfillment",
+          "relationFromFields": [],
           "type": "PrintfulFulfillmentSubmission"
         }
       ]
@@ -5676,6 +6014,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         }
       ]
@@ -5736,6 +6077,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         },
         {
@@ -5744,6 +6088,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "stripeWebhookEvent",
+          "relationFromFields": [
+            "stripeWebhookEventId"
+          ],
           "type": "StripeWebhookEvent"
         }
       ]
@@ -5780,6 +6127,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         }
       ]
@@ -5824,6 +6174,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "order",
+          "relationFromFields": [
+            "orderId"
+          ],
           "type": "Order"
         },
         {
@@ -5832,6 +6185,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "helpTicket",
+          "relationFromFields": [
+            "helpTicketId"
+          ],
           "type": "HelpTicket"
         }
       ]
@@ -5892,6 +6248,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "members",
+          "relationFromFields": [],
           "type": "Member"
         },
         {
@@ -5900,6 +6257,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "invitations",
+          "relationFromFields": [],
           "type": "Invitation"
         }
       ]
@@ -5936,6 +6294,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "city",
+          "relationFromFields": [
+            "cityId"
+          ],
           "type": "City"
         }
       ]
@@ -5988,6 +6349,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -5996,6 +6360,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "worldInstance",
+          "relationFromFields": [
+            "worldInstanceId"
+          ],
           "type": "WorldInstance"
         },
         {
@@ -6004,6 +6371,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "members",
+          "relationFromFields": [],
           "type": "PartyMember"
         },
         {
@@ -6012,6 +6380,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "moneyTransactions",
+          "relationFromFields": [],
           "type": "MoneyTransaction"
         },
         {
@@ -6020,6 +6389,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ]
@@ -6080,6 +6450,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "party",
+          "relationFromFields": [
+            "partyId"
+          ],
           "type": "Party"
         },
         {
@@ -6088,6 +6461,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companion",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Companion"
         }
       ]
@@ -6188,6 +6564,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -6268,6 +6647,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         }
       ]
@@ -6356,6 +6736,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "services",
+          "relationFromFields": [],
           "type": "PointOfInterestServiceAssignment"
         },
         {
@@ -6364,6 +6745,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ]
@@ -6408,6 +6790,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "pointOfInterest",
+          "relationFromFields": [
+            "pointOfInterestId"
+          ],
           "type": "PointOfInterest"
         }
       ]
@@ -6460,6 +6845,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "orderPaymentConfirmation",
+          "relationFromFields": [
+            "orderPaymentConfirmationId"
+          ],
           "type": "OrderPaymentConfirmation"
         }
       ]
@@ -6520,6 +6908,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "versions",
+          "relationFromFields": [],
           "type": "PromptVersion"
         }
       ]
@@ -6580,6 +6969,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "promptVersion",
+          "relationFromFields": [
+            "promptVersionId"
+          ],
           "type": "PromptVersion"
         }
       ]
@@ -6648,6 +7040,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "promptRecord",
+          "relationFromFields": [
+            "promptRecordId"
+          ],
           "type": "PromptRecord"
         },
         {
@@ -6656,6 +7051,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "generatedManagedAsset",
+          "relationFromFields": [
+            "generatedManagedAssetId"
+          ],
           "type": "ManagedAsset"
         },
         {
@@ -6664,6 +7062,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "textResults",
+          "relationFromFields": [],
           "type": "PromptTextResult"
         }
       ]
@@ -6708,6 +7107,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "versions",
+          "relationFromFields": [],
           "type": "PuzzleBlueprintVersion"
         }
       ]
@@ -6752,6 +7152,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "puzzleBlueprint",
+          "relationFromFields": [
+            "puzzleBlueprintId"
+          ],
           "type": "PuzzleBlueprint"
         },
         {
@@ -6760,6 +7163,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "hints",
+          "relationFromFields": [],
           "type": "PuzzleHintTemplate"
         },
         {
@@ -6768,6 +7172,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "acceptances",
+          "relationFromFields": [],
           "type": "PuzzleChallengeAccepted"
         }
       ]
@@ -6820,6 +7225,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         },
         {
@@ -6828,6 +7236,10 @@
           "isRequired": true,
           "kind": "relation",
           "name": "puzzleVersion",
+          "relationFromFields": [
+            "puzzleBlueprintId",
+            "generatorVersion"
+          ],
           "type": "PuzzleBlueprintVersion"
         }
       ]
@@ -6880,6 +7292,10 @@
           "isRequired": true,
           "kind": "relation",
           "name": "puzzleVersion",
+          "relationFromFields": [
+            "puzzleBlueprintId",
+            "generatorVersion"
+          ],
           "type": "PuzzleBlueprintVersion"
         }
       ]
@@ -7036,6 +7452,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "notes",
+          "relationFromFields": [],
           "type": "ReleaseNoteItem"
         },
         {
@@ -7044,6 +7461,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "deployments",
+          "relationFromFields": [],
           "type": "DeploymentRecord"
         }
       ]
@@ -7096,6 +7514,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "release",
+          "relationFromFields": [
+            "releaseId"
+          ],
           "type": "Release"
         }
       ]
@@ -7140,6 +7561,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citation",
+          "relationFromFields": [
+            "citationId"
+          ],
           "type": "Citation"
         },
         {
@@ -7148,6 +7572,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "breedEvidence",
+          "relationFromFields": [],
           "type": "BreedResearchEvidence"
         }
       ]
@@ -7240,6 +7665,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -7284,6 +7712,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "site",
+          "relationFromFields": [
+            "siteId"
+          ],
           "type": "Site"
         },
         {
@@ -7292,6 +7723,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "worlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         },
         {
@@ -7300,6 +7732,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soundtrackAssignments",
+          "relationFromFields": [],
           "type": "SettlementSoundtrackAssignment"
         }
       ]
@@ -7368,6 +7801,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlementWorld",
+          "relationFromFields": [
+            "settlementWorldId"
+          ],
           "type": "SettlementWorld"
         },
         {
@@ -7376,6 +7812,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breed",
+          "relationFromFields": [
+            "breedId"
+          ],
           "type": "Breed"
         }
       ]
@@ -7436,6 +7875,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlement",
+          "relationFromFields": [
+            "settlementId"
+          ],
           "type": "Settlement"
         },
         {
@@ -7444,6 +7886,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soundtrack",
+          "relationFromFields": [
+            "soundtrackId"
+          ],
           "type": "Soundtrack"
         }
       ]
@@ -7504,6 +7949,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlement",
+          "relationFromFields": [
+            "settlementId"
+          ],
           "type": "Settlement"
         },
         {
@@ -7512,6 +7960,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "dominantBreed",
+          "relationFromFields": [
+            "dominantBreedId"
+          ],
           "type": "Breed"
         },
         {
@@ -7520,6 +7971,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "culture",
+          "relationFromFields": [
+            "cultureId"
+          ],
           "type": "Culture"
         },
         {
@@ -7528,6 +7982,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "populationEvents",
+          "relationFromFields": [],
           "type": "SettlementPopulationEvent"
         },
         {
@@ -7536,6 +7991,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "cities",
+          "relationFromFields": [],
           "type": "City"
         },
         {
@@ -7544,6 +8000,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ]
@@ -7604,6 +8061,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "settlement",
+          "relationFromFields": [],
           "type": "Settlement"
         },
         {
@@ -7612,6 +8070,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "namingEligibility",
+          "relationFromFields": [],
           "type": "AtlasNamingEligibility"
         }
       ]
@@ -7640,6 +8099,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "characters",
+          "relationFromFields": [],
           "type": "Character"
         },
         {
@@ -7648,6 +8108,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnessDefs",
+          "relationFromFields": [],
           "type": "WitnessDef"
         },
         {
@@ -7656,6 +8117,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companionDefs",
+          "relationFromFields": [],
           "type": "CompanionDef"
         }
       ]
@@ -7708,6 +8170,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "managedAsset",
+          "relationFromFields": [
+            "managedAssetId"
+          ],
           "type": "ManagedAsset"
         },
         {
@@ -7716,6 +8181,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "assignments",
+          "relationFromFields": [],
           "type": "SettlementSoundtrackAssignment"
         }
       ]
@@ -7784,6 +8250,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citations",
+          "relationFromFields": [],
           "type": "Citation"
         }
       ]
@@ -7956,6 +8423,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         }
       ]
@@ -8008,6 +8476,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "artworkAsset",
+          "relationFromFields": [
+            "artworkAssetId"
+          ],
           "type": "ManagedAsset"
         },
         {
@@ -8016,6 +8487,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "variants",
+          "relationFromFields": [],
           "type": "StoreVariant"
         }
       ]
@@ -8092,6 +8564,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "storeProduct",
+          "relationFromFields": [
+            "storeProductId"
+          ],
           "type": "StoreProduct"
         },
         {
@@ -8100,6 +8575,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "orderLines",
+          "relationFromFields": [],
           "type": "OrderLine"
         }
       ]
@@ -8136,6 +8612,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "city",
+          "relationFromFields": [
+            "cityId"
+          ],
           "type": "City"
         }
       ]
@@ -8188,6 +8667,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "paymentConfirmation",
+          "relationFromFields": [],
           "type": "OrderPaymentConfirmation"
         },
         {
@@ -8196,6 +8676,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "refunds",
+          "relationFromFields": [],
           "type": "OrderRefund"
         }
       ]
@@ -8372,6 +8853,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -8512,6 +8996,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "sessions",
+          "relationFromFields": [],
           "type": "Session"
         },
         {
@@ -8520,6 +9005,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "accounts",
+          "relationFromFields": [],
           "type": "Account"
         },
         {
@@ -8528,6 +9014,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "passkeys",
+          "relationFromFields": [],
           "type": "Passkey"
         },
         {
@@ -8536,6 +9023,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "memberships",
+          "relationFromFields": [],
           "type": "Member"
         },
         {
@@ -8544,6 +9032,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "sentInvitations",
+          "relationFromFields": [],
           "type": "Invitation"
         },
         {
@@ -8552,6 +9041,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "betaInviteRequests",
+          "relationFromFields": [],
           "type": "BetaInviteRequest"
         },
         {
@@ -8560,6 +9050,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "consumedBetaInvites",
+          "relationFromFields": [],
           "type": "BetaInvitationCode"
         },
         {
@@ -8568,6 +9059,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "twoFactors",
+          "relationFromFields": [],
           "type": "TwoFactor"
         },
         {
@@ -8576,6 +9068,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "puzzleAcceptances",
+          "relationFromFields": [],
           "type": "PuzzleChallengeAccepted"
         },
         {
@@ -8584,6 +9077,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "membershipGrants",
+          "relationFromFields": [],
           "type": "MembershipGrant"
         },
         {
@@ -8592,6 +9086,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "orders",
+          "relationFromFields": [],
           "type": "Order"
         },
         {
@@ -8600,6 +9095,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "guardianConsents",
+          "relationFromFields": [],
           "type": "GuardianConsentRecord"
         },
         {
@@ -8608,6 +9104,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "subscriptions",
+          "relationFromFields": [],
           "type": "MembershipSubscription"
         },
         {
@@ -8616,6 +9113,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "helpTickets",
+          "relationFromFields": [],
           "type": "HelpTicket"
         },
         {
@@ -8624,6 +9122,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "helpTicketMessages",
+          "relationFromFields": [],
           "type": "HelpTicketMessage"
         },
         {
@@ -8632,6 +9131,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         },
         {
@@ -8640,6 +9140,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "donationCheckouts",
+          "relationFromFields": [],
           "type": "DonationCheckout"
         },
         {
@@ -8648,6 +9149,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "settings",
+          "relationFromFields": [],
           "type": "UserSettings"
         },
         {
@@ -8656,6 +9158,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "externalBulkApiSessions",
+          "relationFromFields": [],
           "type": "ExternalBulkApiSession"
         },
         {
@@ -8664,6 +9167,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "bulkOperationAudits",
+          "relationFromFields": [],
           "type": "BulkOperationAudit"
         },
         {
@@ -8672,6 +9176,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "parties",
+          "relationFromFields": [],
           "type": "Party"
         },
         {
@@ -8680,6 +9185,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "bulkEnvelopeDecisions",
+          "relationFromFields": [],
           "type": "BulkMutationEnvelope"
         }
       ]
@@ -8812,6 +9318,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "user",
+          "relationFromFields": [
+            "userId"
+          ],
           "type": "User"
         }
       ]
@@ -8932,6 +9441,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -8940,6 +9452,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnessDef",
+          "relationFromFields": [
+            "witnessDefId"
+          ],
           "type": "WitnessDef"
         },
         {
@@ -8948,6 +9463,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "architect",
+          "relationFromFields": [
+            "architectCharacterId"
+          ],
           "type": "Architect"
         },
         {
@@ -8956,6 +9474,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "legendaryReward",
+          "relationFromFields": [
+            "legendaryRewardId"
+          ],
           "type": "LegendaryReward"
         },
         {
@@ -8964,6 +9485,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "constellationBefore",
+          "relationFromFields": [
+            "constellationBeforeId"
+          ],
           "type": "Constellation"
         },
         {
@@ -8972,6 +9496,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "constellationAfter",
+          "relationFromFields": [
+            "constellationAfterId"
+          ],
           "type": "Constellation"
         }
       ]
@@ -9040,6 +9567,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "architectSoul",
+          "relationFromFields": [
+            "architectSoulId"
+          ],
           "type": "Soul"
         },
         {
@@ -9048,6 +9578,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ]
@@ -9092,6 +9623,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "parties",
+          "relationFromFields": [],
           "type": "Party"
         },
         {
@@ -9100,6 +9632,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "moneyTransactions",
+          "relationFromFields": [],
           "type": "MoneyTransaction"
         },
         {
@@ -9108,6 +9641,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ]
@@ -9184,6 +9718,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "imageAsset",
+          "relationFromFields": [
+            "imageAssetId"
+          ],
           "type": "ManagedAsset"
         }
       ],
@@ -9276,6 +9813,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -9286,6 +9826,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ],
@@ -9737,6 +10278,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "species",
+          "relationFromFields": [
+            "speciesId"
+          ],
           "type": "Species"
         },
         {
@@ -9747,6 +10291,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "culture",
+          "relationFromFields": [
+            "cultureId"
+          ],
           "type": "Culture"
         },
         {
@@ -9757,6 +10304,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "personality",
+          "relationFromFields": [
+            "personalityId"
+          ],
           "type": "PersonalityExpression"
         },
         {
@@ -9767,6 +10317,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "parentBreed",
+          "relationFromFields": [
+            "parentBreedId"
+          ],
           "type": "Breed"
         },
         {
@@ -9777,6 +10330,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "childBreeds",
+          "relationFromFields": [],
           "type": "Breed"
         },
         {
@@ -9787,6 +10341,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "characters",
+          "relationFromFields": [],
           "type": "Character"
         },
         {
@@ -9797,6 +10352,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "populationEvents",
+          "relationFromFields": [],
           "type": "SettlementPopulationEvent"
         },
         {
@@ -9807,6 +10363,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "dominantInWorlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         },
         {
@@ -9817,6 +10374,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "researchValues",
+          "relationFromFields": [],
           "type": "BreedResearchValue"
         }
       ],
@@ -10534,6 +11092,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "breed",
+          "relationFromFields": [
+            "breedId"
+          ],
           "type": "Breed"
         },
         {
@@ -10544,6 +11105,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "occupation",
+          "relationFromFields": [
+            "occupationId"
+          ],
           "type": "Occupation"
         },
         {
@@ -10554,6 +11118,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "soul",
+          "relationFromFields": [
+            "soulId"
+          ],
           "type": "Soul"
         },
         {
@@ -10564,6 +11131,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "architect",
+          "relationFromFields": [],
           "type": "Architect"
         },
         {
@@ -10574,6 +11142,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "witness",
+          "relationFromFields": [],
           "type": "Witness"
         },
         {
@@ -10584,6 +11153,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "companion",
+          "relationFromFields": [],
           "type": "Companion"
         },
         {
@@ -10594,6 +11164,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "concordFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         },
         {
@@ -10604,6 +11175,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "ruinFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         },
         {
@@ -10614,6 +11186,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "schismFor",
+          "relationFromFields": [],
           "type": "CompanionDef"
         }
       ],
@@ -10839,6 +11412,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "source",
+          "relationFromFields": [
+            "sourceId"
+          ],
           "type": "Source"
         },
         {
@@ -10849,6 +11425,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "research",
+          "relationFromFields": [],
           "type": "Research"
         },
         {
@@ -10859,6 +11436,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "knowledgeItems",
+          "relationFromFields": [],
           "type": "KnowledgeBaseItemCitation"
         },
         {
@@ -10869,6 +11447,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosureCitations",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosureCitation"
         }
       ],
@@ -10958,6 +11537,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -10968,6 +11550,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companionDef",
+          "relationFromFields": [
+            "companionKey"
+          ],
           "type": "CompanionDef"
         },
         {
@@ -10978,6 +11563,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "partyMemberships",
+          "relationFromFields": [],
           "type": "PartyMember"
         }
       ],
@@ -11107,6 +11693,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "concordCharacter",
+          "relationFromFields": [
+            "concordCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -11117,6 +11706,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "ruinCharacter",
+          "relationFromFields": [
+            "ruinCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -11127,6 +11719,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "schismCharacter",
+          "relationFromFields": [
+            "schismCharacterId"
+          ],
           "type": "Character"
         },
         {
@@ -11137,6 +11732,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soul",
+          "relationFromFields": [
+            "soulId"
+          ],
           "type": "Soul"
         },
         {
@@ -11147,6 +11745,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companions",
+          "relationFromFields": [],
           "type": "Companion"
         },
         {
@@ -11157,6 +11756,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "transformationBinding",
+          "relationFromFields": [],
           "type": "CompanionTransformationBinding"
         }
       ],
@@ -11340,6 +11940,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "beforeWitnesses",
+          "relationFromFields": [],
           "type": "Witness"
         },
         {
@@ -11350,6 +11951,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "afterWitnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ],
@@ -11454,6 +12056,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         },
         {
@@ -11464,6 +12067,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlementWorlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         }
       ],
@@ -11632,6 +12236,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "substitutionsFrom",
+          "relationFromFields": [],
           "type": "InterludeSubstitution"
         },
         {
@@ -11642,6 +12247,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "substitutionsTo",
+          "relationFromFields": [],
           "type": "InterludeSubstitution"
         }
       ],
@@ -11743,6 +12349,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "interlude",
+          "relationFromFields": [
+            "interludeId"
+          ],
           "type": "Interlude"
         },
         {
@@ -11753,6 +12362,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "replacementInterlude",
+          "relationFromFields": [
+            "replacementInterludeId"
+          ],
           "type": "Interlude"
         }
       ],
@@ -11857,6 +12469,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citations",
+          "relationFromFields": [],
           "type": "KnowledgeBaseItemCitation"
         },
         {
@@ -11867,6 +12480,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "blocks",
+          "relationFromFields": [],
           "type": "KnowledgeBaseBlock"
         },
         {
@@ -11877,6 +12491,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "disclosures",
+          "relationFromFields": [],
           "type": "KnowledgeBaseDisclosure"
         }
       ],
@@ -12007,6 +12622,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "transformationBindings",
+          "relationFromFields": [],
           "type": "CompanionTransformationBinding"
         }
       ],
@@ -12082,6 +12698,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ],
@@ -12232,6 +12849,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         }
       ],
@@ -12496,6 +13114,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "services",
+          "relationFromFields": [],
           "type": "PointOfInterestServiceAssignment"
         },
         {
@@ -12506,6 +13125,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ],
@@ -12644,6 +13264,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "versions",
+          "relationFromFields": [],
           "type": "PuzzleBlueprintVersion"
         }
       ],
@@ -12754,6 +13375,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citation",
+          "relationFromFields": [
+            "citationId"
+          ],
           "type": "Citation"
         },
         {
@@ -12764,6 +13388,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "breedEvidence",
+          "relationFromFields": [],
           "type": "BreedResearchEvidence"
         }
       ],
@@ -12872,6 +13497,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "site",
+          "relationFromFields": [
+            "siteId"
+          ],
           "type": "Site"
         },
         {
@@ -12882,6 +13510,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "worlds",
+          "relationFromFields": [],
           "type": "SettlementWorld"
         },
         {
@@ -12892,6 +13521,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "soundtrackAssignments",
+          "relationFromFields": [],
           "type": "SettlementSoundtrackAssignment"
         }
       ],
@@ -13022,6 +13652,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlementWorld",
+          "relationFromFields": [
+            "settlementWorldId"
+          ],
           "type": "SettlementWorld"
         },
         {
@@ -13032,6 +13665,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breed",
+          "relationFromFields": [
+            "breedId"
+          ],
           "type": "Breed"
         }
       ],
@@ -13178,6 +13814,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "settlement",
+          "relationFromFields": [
+            "settlementId"
+          ],
           "type": "Settlement"
         },
         {
@@ -13188,6 +13827,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "dominantBreed",
+          "relationFromFields": [
+            "dominantBreedId"
+          ],
           "type": "Breed"
         },
         {
@@ -13198,6 +13840,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "culture",
+          "relationFromFields": [
+            "cultureId"
+          ],
           "type": "Culture"
         },
         {
@@ -13208,6 +13853,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "populationEvents",
+          "relationFromFields": [],
           "type": "SettlementPopulationEvent"
         },
         {
@@ -13218,6 +13864,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "cities",
+          "relationFromFields": [],
           "type": "City"
         },
         {
@@ -13228,6 +13875,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "gameSessions",
+          "relationFromFields": [],
           "type": "GameSession"
         }
       ],
@@ -13364,6 +14012,7 @@
           "isRequired": false,
           "kind": "relation",
           "name": "settlement",
+          "relationFromFields": [],
           "type": "Settlement"
         },
         {
@@ -13374,6 +14023,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "namingEligibility",
+          "relationFromFields": [],
           "type": "AtlasNamingEligibility"
         }
       ],
@@ -13489,6 +14139,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "characters",
+          "relationFromFields": [],
           "type": "Character"
         },
         {
@@ -13499,6 +14150,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnessDefs",
+          "relationFromFields": [],
           "type": "WitnessDef"
         },
         {
@@ -13509,6 +14161,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "companionDefs",
+          "relationFromFields": [],
           "type": "CompanionDef"
         }
       ],
@@ -13615,6 +14268,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "citations",
+          "relationFromFields": [],
           "type": "Citation"
         }
       ],
@@ -13908,6 +14562,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "breeds",
+          "relationFromFields": [],
           "type": "Breed"
         }
       ],
@@ -14551,6 +15206,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "character",
+          "relationFromFields": [
+            "characterId"
+          ],
           "type": "Character"
         },
         {
@@ -14561,6 +15219,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnessDef",
+          "relationFromFields": [
+            "witnessDefId"
+          ],
           "type": "WitnessDef"
         },
         {
@@ -14571,6 +15232,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "architect",
+          "relationFromFields": [
+            "architectCharacterId"
+          ],
           "type": "Architect"
         },
         {
@@ -14581,6 +15245,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "legendaryReward",
+          "relationFromFields": [
+            "legendaryRewardId"
+          ],
           "type": "LegendaryReward"
         },
         {
@@ -14591,6 +15258,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "constellationBefore",
+          "relationFromFields": [
+            "constellationBeforeId"
+          ],
           "type": "Constellation"
         },
         {
@@ -14601,6 +15271,9 @@
           "isRequired": false,
           "kind": "relation",
           "name": "constellationAfter",
+          "relationFromFields": [
+            "constellationAfterId"
+          ],
           "type": "Constellation"
         }
       ],
@@ -14752,6 +15425,9 @@
           "isRequired": true,
           "kind": "relation",
           "name": "architectSoul",
+          "relationFromFields": [
+            "architectSoulId"
+          ],
           "type": "Soul"
         },
         {
@@ -14762,6 +15438,7 @@
           "isRequired": true,
           "kind": "relation",
           "name": "witnesses",
+          "relationFromFields": [],
           "type": "Witness"
         }
       ],

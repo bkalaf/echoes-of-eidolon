@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-015",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "CRYPTO_NUMERIC_DATA",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:5052305764d8ea4b",
+  "instanceChecksum": "64b249c50bb762ebad7fe356da5b5cc11911101543bf4091716d25f80fd8d9a6",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
+    "concept": "Inventory quantities look mundane until decomposed into eight bit planes. One generated plane contains the symbol sequence while the others are balanced noise.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Convert values to fixed-width binary, render each bit position as a plane, and select the plane identified by parity controls.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the crypto numeric data representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Convert values to fixed-width binary, render each bit position as a plane, and select the plane identified by parity controls. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TABLE",
+      "BITMAP"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

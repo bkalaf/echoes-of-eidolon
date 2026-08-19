@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface BulkOverview {
@@ -10,6 +11,9 @@ interface BulkOverview {
   maximumLifetimeMinutes: number;
   state: "OFF" | "KEYED" | "KEYLESS";
 }
+
+type BulkAuditRow = BulkOverview["audits"][number];
+type BulkEnvelopeRow = BulkOverview["envelopes"][number];
 
 async function loadOverview(): Promise<BulkOverview> {
   const response = await fetch("/api/admin/bulk-operations");
@@ -27,7 +31,6 @@ export function BulkOperationsAdminPage({ pathname, screen }: { pathname?: strin
   const queryClient = useQueryClient();
   const overview = useQuery({ queryKey: ["bulk-operations"], queryFn: loadOverview });
   const [rawKey, setRawKey] = useState<string>();
-  const [search, setSearch] = useState("");
   const action = useMutation({
     mutationFn: async (input: BulkAction) => {
       const response = await fetch("/api/admin/bulk-operations", { body: JSON.stringify(input), headers: { "content-type": "application/json" }, method: "POST" });
@@ -47,6 +50,31 @@ export function BulkOperationsAdminPage({ pathname, screen }: { pathname?: strin
   const headEnvelope = data.envelopes.find((envelope) => !terminal.has(envelope.status));
   const selectedEnvelopeId = pathname?.startsWith("/admin/bulk-changes/") ? pathname.split("/").at(-1) : undefined;
   const selectedEnvelope = selectedEnvelopeId ? data.envelopes.find((envelope) => envelope.bulkMutationEnvelopeId === selectedEnvelopeId) : undefined;
+  const envelopeColumns: DataTableColumnDef<BulkEnvelopeRow>[] = [
+    { accessorKey: "sequence", header: "Sequence", cell: ({ row }) => <a href={`/admin/bulk-changes/${row.original.bulkMutationEnvelopeId}`}>{row.original.sequence}</a> },
+    { accessorKey: "bulkMutationEnvelopeId", header: "Envelope ID" },
+    { accessorKey: "entityCode", header: "Entity" },
+    { accessorKey: "operation", header: "Operation" },
+    { accessorKey: "status", header: "Status" },
+    { accessorKey: "recordCount", header: "Records" },
+    { accessorKey: "notes", header: "Notes" },
+    { accessorKey: "receivedAt", header: "Received", cell: ({ row }) => new Date(row.original.receivedAt).toLocaleString() },
+    { accessorKey: "decidedAt", header: "Decided", cell: ({ row }) => row.original.decidedAt ? new Date(row.original.decidedAt).toLocaleString() : "—" },
+    { accessorFn: (row) => JSON.stringify(row.dryRunResult), header: "Dry-run result", id: "dryRunResult" },
+    { accessorFn: (row) => row.revalidationResult == null ? "—" : JSON.stringify(row.revalidationResult), header: "Revalidation result", id: "revalidationResult" },
+    { cell: ({ row }) => { const envelope = row.original; const actionable = headEnvelope?.bulkMutationEnvelopeId === envelope.bulkMutationEnvelopeId; return <div className="action-row"><button className="button" disabled={action.isPending || terminal.has(envelope.status)} onClick={() => action.mutate({ action: "rerun", envelopeId: envelope.bulkMutationEnvelopeId })}>Rerun dry-run</button><button className="button" disabled={action.isPending || !actionable} onClick={() => action.mutate({ action: "apply", envelopeId: envelope.bulkMutationEnvelopeId })}>Apply</button><button className="button button--danger" disabled={action.isPending || !actionable} onClick={() => action.mutate({ action: "delete", envelopeId: envelope.bulkMutationEnvelopeId })}>Delete</button></div>; }, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
+  const auditColumns: DataTableColumnDef<BulkAuditRow>[] = [
+    { accessorFn: (row) => row.actor?.name ?? "Temporary API key", header: "Actor", id: "actorName" },
+    { accessorFn: (row) => row.actor?.email ?? "—", header: "Actor email", id: "actorEmail" },
+    { accessorKey: "bulkOperationAuditId", header: "Audit ID" },
+    { accessorKey: "operation", header: "Operation" },
+    { accessorKey: "entityName", header: "Entity" },
+    { accessorKey: "result", header: "Result" },
+    { accessorKey: "recordCount", header: "Records" },
+    { accessorKey: "detail", header: "Detail" },
+    { accessorKey: "occurredAt", header: "Time", cell: ({ row }) => new Date(row.original.occurredAt).toLocaleString() },
+  ];
   if (screen.screenId === "BULK02_BULK_CHANGE_DETAIL_V2") return <section className="card">
     <div className="action-row action-row--between"><div><p className="kicker">ORDERED MUTATION DETAIL</p><h2>{selectedEnvelope ? `Sequence ${selectedEnvelope.sequence}` : "Envelope not found"}</h2></div><a className="button" href="/admin/bulk-changes">Back to queue</a></div>
     {selectedEnvelope ? <div className="stack"><p><strong>{selectedEnvelope.entityCode}</strong> · {selectedEnvelope.operation} · {selectedEnvelope.recordCount} records</p><p>{selectedEnvelope.notes}</p><span className="tag">{selectedEnvelope.status}</span><div className="action-row"><button aria-label={`Rerun dry-run for sequence ${selectedEnvelope.sequence}`} className="button" disabled={action.isPending || terminal.has(selectedEnvelope.status)} onClick={() => action.mutate({ action: "rerun", envelopeId: selectedEnvelope.bulkMutationEnvelopeId })} title="Rerun dry-run">↻</button><button aria-label={`Apply sequence ${selectedEnvelope.sequence}`} className="button" disabled={action.isPending || headEnvelope?.bulkMutationEnvelopeId !== selectedEnvelope.bulkMutationEnvelopeId} onClick={() => action.mutate({ action: "apply", envelopeId: selectedEnvelope.bulkMutationEnvelopeId })} title="Apply">✓</button><button aria-label={`Delete sequence ${selectedEnvelope.sequence}`} className="button button--danger" disabled={action.isPending || headEnvelope?.bulkMutationEnvelopeId !== selectedEnvelope.bulkMutationEnvelopeId} onClick={() => action.mutate({ action: "delete", envelopeId: selectedEnvelope.bulkMutationEnvelopeId })} title="Delete">×</button></div><h3>Automatic dry-run</h3><pre className="code-block">{JSON.stringify(selectedEnvelope.dryRunResult, null, 2)}</pre>{selectedEnvelope.revalidationResult != null && <><h3>Apply-time revalidation</h3><pre className="code-block">{JSON.stringify(selectedEnvelope.revalidationResult, null, 2)}</pre></>}{action.error && <p className="notice notice--bad" role="alert">{action.error.message}</p>}</div> : <p className="notice notice--bad">No retained envelope matches this route.</p>}
@@ -54,16 +82,13 @@ export function BulkOperationsAdminPage({ pathname, screen }: { pathname?: strin
   if (screen.screenId === "BULK01_BULK_CHANGES_QUEUE_V2") return <div className="stack">
     {rawKey && <section className="notice notice--good" role="status"><strong>Copy this temporary key now.</strong><p className="code-block">{rawKey}</p><p>Only its SHA-256 hash is retained.</p></section>}
     <section className="card"><div className="action-row action-row--between"><div><p className="kicker">EXTERNAL BULK GATEWAY</p><h2>{data.state}</h2><p>Modes expire after {data.maximumLifetimeMinutes} minutes without endpoint activity.</p></div><div className="action-row">{data.activeSession ? <button className="button button--danger" disabled={action.isPending} onClick={() => action.mutate({ action: "revoke", sessionId: data.activeSession!.externalBulkApiSessionId })}>Turn Off</button> : <><button className="button" disabled={action.isPending} onClick={() => action.mutate({ action: "enable-keyless" })}>Enable Keyless</button><button className="button button--gold" disabled={action.isPending} onClick={() => action.mutate({ action: "generate" })}>Generate Key</button></>}</div></div></section>
-    <section className="card"><div className="action-row action-row--between"><div><p className="kicker">RECEIVE ORDER</p><h2>Bulk Changes Queue</h2></div><span className="tag">{data.envelopes.length} envelopes</span></div><div className="table-scroll"><table className="simple-table"><thead><tr><th>Sequence</th><th>Received</th><th>Entity</th><th>Operation</th><th>Records</th><th>Notes</th><th>Status</th><th>Actions</th></tr></thead><tbody>{data.envelopes.map((envelope) => { const actionable = headEnvelope?.bulkMutationEnvelopeId === envelope.bulkMutationEnvelopeId; return <tr key={envelope.bulkMutationEnvelopeId}><td><a href={`/admin/bulk-changes/${envelope.bulkMutationEnvelopeId}`}>{envelope.sequence}</a></td><td>{new Date(envelope.receivedAt).toLocaleString()}</td><td>{envelope.entityCode}</td><td>{envelope.operation}</td><td>{envelope.recordCount}</td><td>{envelope.notes}</td><td><span className="tag">{envelope.status}</span></td><td><div className="action-row"><button aria-label={`Rerun dry-run for sequence ${envelope.sequence}`} className="button" disabled={action.isPending || terminal.has(envelope.status)} onClick={() => action.mutate({ action: "rerun", envelopeId: envelope.bulkMutationEnvelopeId })} title="Rerun dry-run">↻</button><button aria-label={`Apply sequence ${envelope.sequence}`} className="button" disabled={action.isPending || !actionable} onClick={() => action.mutate({ action: "apply", envelopeId: envelope.bulkMutationEnvelopeId })} title="Apply">✓</button><button aria-label={`Delete sequence ${envelope.sequence}`} className="button button--danger" disabled={action.isPending || !actionable} onClick={() => action.mutate({ action: "delete", envelopeId: envelope.bulkMutationEnvelopeId })} title="Delete">×</button></div></td></tr>; })}</tbody></table></div>{data.envelopes.length === 0 && <p className="empty-state">No mutation envelopes have been received.</p>}</section>
+    <section className="card"><div className="action-row action-row--between"><div><p className="kicker">RECEIVE ORDER</p><h2>Bulk Changes Queue</h2></div><span className="tag">{data.envelopes.length} envelopes</span></div><DataTable columns={envelopeColumns} data={data.envelopes} getRowId={(row) => row.bulkMutationEnvelopeId} preferenceKey="admin.bulk.envelopes" /></section>
     {action.error && <p className="notice notice--bad" role="alert">{action.error.message}</p>}
   </div>;
   const auditView = screen.screenId === "ADM022";
-  const filteredAudits = data.audits.filter((audit) => !search.trim() || JSON.stringify(audit).toLowerCase().includes(search.trim().toLowerCase()));
   if (auditView) return <section className="card">
     <div className="action-row action-row--between"><div><p className="kicker">APPEND-ONLY ACTIVITY</p><h2>Bulk Operations Audit</h2></div><span className="tag">{data.audits.length} recent events</span></div>
-    <input className="input" aria-label="Search bulk activity" placeholder="Search activity…" value={search} onChange={(event) => setSearch(event.target.value)} />
-    <div className="table-scroll"><table className="simple-table"><thead><tr><th>Time</th><th>Actor</th><th>Operation</th><th>Entity</th><th>Result</th><th>Records</th></tr></thead><tbody>{filteredAudits.map((audit) => <tr key={audit.bulkOperationAuditId}><td>{new Date(audit.occurredAt).toLocaleString()}</td><td>{audit.actor?.name ?? "Temporary API key"}</td><td>{audit.operation}</td><td>{audit.entityName}</td><td><span className="tag">{audit.result}</span></td><td>{audit.recordCount}</td></tr>)}</tbody></table></div>
-    {filteredAudits.length === 0 && <p className="empty-state">No bulk activity matches the current search.</p>}
+    <DataTable columns={auditColumns} data={data.audits} getRowId={(row) => row.bulkOperationAuditId} preferenceKey="admin.bulk.audits" />
   </section>;
   return <div className="stack">
     {rawKey && <section className="notice notice--good" role="status"><strong>Copy this temporary key now.</strong><p className="code-block">{rawKey}</p><p>It will not be shown again. Only its SHA-256 hash is retained.</p></section>}

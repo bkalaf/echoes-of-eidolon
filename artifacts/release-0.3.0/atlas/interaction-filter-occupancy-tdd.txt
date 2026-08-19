@@ -1,0 +1,35 @@
+Release 0.3.0 T301-T303 Atlas interaction, filtering, and occupancy evidence
+
+RED 1
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/atlas-map-viewport.test.tsx tests/unit/atlas-admin.test.tsx
+Exit: 1
+Result: 3 required contracts failed before implementation: clustering was absent, zoom controls were absent, and the exact classification presentation was absent.
+
+GREEN 1
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/atlas-map-viewport.test.tsx tests/unit/atlas-admin.test.tsx
+Exit: 0
+Result: Atlas map interaction and selected-world filter/occupancy coverage passed.
+
+RED 2
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/atlas-map-viewport.test.tsx -t "centers an externally selected Site"
+Exit: 1
+Result: table/search-driven selection did not center the Site at the retained 2x zoom.
+
+GREEN 2
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/atlas-map-viewport.test.tsx tests/unit/atlas-admin.test.tsx
+Exit: 0
+Result: 2 files / 12 tests passed. External selection centers the selected Site without changing the chosen zoom; all five classifications filter independently; World switching recomputes occupancy.
+
+TYPECHECK
+Command: pnpm --filter web typecheck
+Exit: 0
+
+BROWSER CONTRACT
+Command: pnpm --filter web exec playwright test tests/e2e/atlas-sites.spec.ts --list
+Exit: 0
+Result: the 400-Site Chromium scenario is discovered and compiles.
+
+BROWSER ATTEMPT
+Command: pnpm --filter web exec playwright test tests/e2e/atlas-sites.spec.ts --project=chromium
+Exit: 1
+Result: configured webServer could not start. Direct Vite start proved listen EPERM on 127.0.0.1:3000. No Chromium assertions or screenshot are reported as executed.

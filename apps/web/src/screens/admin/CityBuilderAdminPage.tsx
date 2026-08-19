@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface SettlementWorldSummary {
@@ -66,7 +67,33 @@ function CityProjectList() {
 
   if (projects.isPending) return <p className="notice">Loading City geometry projects…</p>;
   if (projects.isError) return <p className="notice notice--bad" role="alert">{projects.error.message}</p>;
-  return <div className="stack"><section className="card"><h2>Canonical City geometry projects</h2><p>Each project is owned by one persisted SettlementWorld. Parcel, street, and building edits share one City geometry version.</p>{projects.data.cities.length === 0 ? <p>No City geometry projects exist.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>City</th><th>World</th><th>Region</th><th>Version</th><th>Geometry records</th><th /></tr></thead><tbody>{projects.data.cities.map((city) => <tr key={city.cityId}><td>{city.name}</td><td>{city.settlementWorld.worldKey}</td><td>{city.settlementWorld.settlement.site.regionId}</td><td>{city.geometryVersion}</td><td>{city.parcels.length} parcels · {city.streets.length} streets · {city.buildings.length} buildings</td><td><a href={`/admin/cities/${encodeURIComponent(city.cityId)}/streets`}>Open</a></td></tr>)}</tbody></table></div>}</section><section className="card"><h2>Available named Settlements</h2><p>Create the single City project for a named SettlementWorld. The City name is copied from that canonical Settlement record.</p>{projects.data.availableSettlementWorlds.length === 0 ? <p>No eligible SettlementWorld records are available.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Settlement</th><th>World</th><th>Region</th><th /></tr></thead><tbody>{projects.data.availableSettlementWorlds.map((world) => <tr key={world.settlementWorldId}><td>{world.settlement.name ?? "Naming required"}</td><td>{world.worldKey}</td><td>{world.settlement.site.regionId}</td><td><button className="button" disabled={!world.settlement.name} onClick={() => void create(world.settlementWorldId)}>Create geometry project</button></td></tr>)}</tbody></table></div>}{message && <p className={`notice ${message.startsWith("City geometry") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section></div>;
+  const cityColumns: DataTableColumnDef<CityProject>[] = [
+    { accessorKey: "name", header: "City" },
+    { accessorKey: "cityId", header: "City ID" },
+    { accessorFn: (city) => city.settlementWorld.worldKey, header: "World", id: "worldKey" },
+    { accessorFn: (city) => city.settlementWorld.settlement.name ?? "—", header: "Settlement", id: "settlementName" },
+    { accessorFn: (city) => city.settlementWorld.settlement.settlementId, header: "Settlement ID", id: "settlementId" },
+    { accessorFn: (city) => city.settlementWorld.settlementWorldId, header: "SettlementWorld ID", id: "settlementWorldId" },
+    { accessorFn: (city) => city.settlementWorld.settlement.classification, header: "Classification", id: "classification" },
+    { accessorFn: (city) => city.settlementWorld.settlement.site.regionId, header: "Region ID", id: "regionId" },
+    { accessorFn: (city) => city.settlementWorld.settlement.site.siteId, header: "Site ID", id: "siteId" },
+    { accessorKey: "geometryVersion", header: "Geometry version" },
+    { accessorFn: (city) => JSON.stringify(city.parcels), header: "Parcels", id: "parcels" },
+    { accessorFn: (city) => JSON.stringify(city.streets), header: "Streets", id: "streets" },
+    { accessorFn: (city) => JSON.stringify(city.buildings), header: "Buildings", id: "buildings" },
+    { cell: ({ row }) => <a className="button" href={`/admin/cities/${encodeURIComponent(row.original.cityId)}/streets`}>Open city</a>, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
+  const availableColumns: DataTableColumnDef<SettlementWorldSummary>[] = [
+    { accessorFn: (world) => world.settlement.name ?? "Naming required", header: "Settlement", id: "settlementName" },
+    { accessorFn: (world) => world.settlement.settlementId, header: "Settlement ID", id: "settlementId" },
+    { accessorKey: "settlementWorldId", header: "SettlementWorld ID" },
+    { accessorKey: "worldKey", header: "World" },
+    { accessorFn: (world) => world.settlement.classification, header: "Classification", id: "classification" },
+    { accessorFn: (world) => world.settlement.site.siteId, header: "Site ID", id: "siteId" },
+    { accessorFn: (world) => world.settlement.site.regionId, header: "Region ID", id: "regionId" },
+    { cell: ({ row }) => <button className="button" disabled={!row.original.settlement.name} onClick={() => void create(row.original.settlementWorldId)}>Create geometry project</button>, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
+  return <div className="stack"><section className="card"><h2>Canonical City geometry projects</h2><p>Each project is owned by one persisted SettlementWorld. Parcel, street, and building edits share one City geometry version.</p><DataTable columns={cityColumns} data={projects.data.cities} getRowId={(city) => city.cityId} preferenceKey="admin.cities.projects" /></section><section className="card"><h2>Available named Settlements</h2><p>Create the single City project for a named SettlementWorld. The City name is copied from that canonical Settlement record.</p><DataTable columns={availableColumns} data={projects.data.availableSettlementWorlds} getRowId={(world) => world.settlementWorldId} preferenceKey="admin.cities.available-settlement-worlds" />{message && <p className={`notice ${message.startsWith("City geometry") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section></div>;
 }
 
 function GeometryEditor({ action, city, idLabel, idValue, parcelValue }: { action: "upsertBuilding" | "upsertParcel" | "upsertStreet"; city: CityProject; idLabel: string; idValue?: string; parcelValue?: string | null }) {
@@ -92,12 +119,17 @@ function GeometryEditor({ action, city, idLabel, idValue, parcelValue }: { actio
       setMessage(error instanceof Error ? error.message : "Geometry could not be saved.");
     }
   };
-  return <section className="card form-grid"><h3 className="span-2">Add or update {idLabel}</h3><label className="field">{idLabel} ID<input className="input" value={identifier} onChange={(event) => setIdentifier(event.target.value)} /></label>{action === "upsertBuilding" && <label className="field">Parcel<select className="input" value={parcelId} onChange={(event) => setParcelId(event.target.value)}><option value="">No parcel association</option>{city.parcels.map((parcel) => <option key={parcel.parcelId}>{parcel.parcelId}</option>)}</select></label>}<label className="field span-2">Canonical geometry JSON<textarea className="input code-input" rows={8} value={geometry} onChange={(event) => setGeometry(event.target.value)} /></label><p className="muted span-2">The repository defines the persisted geometry owner but no narrower coordinate/shape schema. This editor preserves authored JSON without inventing geometry fields.</p><button className="button button--gold" disabled={!identifier.trim()} onClick={() => void save()}>Save geometry</button>{message && <p className={`notice span-2 ${message.includes("saved") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section>;
+  return <section className="card form-grid"><h3 className="span-2">Add or update {idLabel}</h3><label className="field">{idLabel} ID<input className="input" value={identifier} onChange={(event) => setIdentifier(event.target.value)} /></label>{action === "upsertBuilding" && <label className="field">Parcel<select className="input" value={parcelId} onChange={(event) => setParcelId(event.target.value)}><option value="">No parcel association</option>{city.parcels.map((parcel) => <option key={parcel.parcelId} value={parcel.parcelId}>Parcel {parcel.parcelId} · {parcel.parcelId}</option>)}</select></label>}<label className="field span-2">Canonical geometry JSON<textarea className="input code-input" rows={8} value={geometry} onChange={(event) => setGeometry(event.target.value)} /></label><p className="muted span-2">The repository defines the persisted geometry owner but no narrower coordinate/shape schema. This editor preserves authored JSON without inventing geometry fields.</p><button className="button button--gold" disabled={!identifier.trim()} onClick={() => void save()}>Save geometry</button>{message && <p className={`notice span-2 ${message.includes("saved") ? "notice--good" : "notice--bad"}`} role="status">{message}</p>}</section>;
 }
 
 function GeometryTable({ records, type }: { records: Array<BuildingView | ParcelView | StreetView>; type: "Building" | "Parcel" | "Street" }) {
   const recordId = (record: BuildingView | ParcelView | StreetView) => type === "Building" ? (record as BuildingView).buildingId : type === "Parcel" ? (record as ParcelView).parcelId : (record as StreetView).streetId;
-  return <section className="card"><h3>{type}s</h3>{records.length === 0 ? <p>No {type.toLowerCase()} geometry is stored.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>ID</th>{type === "Building" && <th>Parcel</th>}<th>Geometry</th></tr></thead><tbody>{records.map((record) => <tr key={recordId(record)}><td>{recordId(record)}</td>{type === "Building" && <td>{(record as BuildingView).parcelId ?? "Unassigned"}</td>}<td><code>{JSON.stringify(record.geometry)}</code></td></tr>)}</tbody></table></div>}</section>;
+  const columns: DataTableColumnDef<BuildingView | ParcelView | StreetView>[] = [
+    { accessorFn: recordId, header: `${type} ID`, id: "id" },
+    ...(type === "Building" ? [{ accessorFn: (record: BuildingView | ParcelView | StreetView) => (record as BuildingView).parcelId ?? "Unassigned", header: "Parcel ID", id: "parcelId" }] satisfies DataTableColumnDef<BuildingView | ParcelView | StreetView>[] : []),
+    { accessorFn: (record) => JSON.stringify(record.geometry), header: "Geometry", id: "geometry" },
+  ];
+  return <section className="card"><h3>{type}s</h3><DataTable columns={columns} data={records} getRowId={recordId} preferenceKey={`admin.cities.geometry.${type.toLowerCase()}`} /></section>;
 }
 
 function CityProjectDetail({ pathname, screen }: { pathname: string; screen: PageManifestEntry }) {

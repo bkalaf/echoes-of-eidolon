@@ -1,0 +1,9 @@
+Release 0.3.0 T100 Taxonomy preflight
+
+- Current Prisma shape: Species.taxonomy Json?.
+- Required source: every current Species row in the configured local PostgreSQL database.
+- Read-only database attempt: connect EPERM 127.0.0.1:5432.
+- Historical 2026-08-15 validation snapshot: 1,124 Species rows.
+- Known current reference count in owner prompt: 1,131 Species.
+- Historical snapshot rejected as a current export substitute.
+- No node normalization, conflict resolution, schema mutation, migration, or legacy JSON removal occurred.

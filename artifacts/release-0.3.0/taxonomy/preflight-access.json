@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T14:26:00-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "BLOCKED",
+  "inputs": [
+    {"path": "apps/web/prisma/schema.prisma"},
+    {"path": "artifacts/taxonomy-json-preflight.json"},
+    {"path": "artifacts/taxonomy-normalization-plan.json"}
+  ],
+  "commands": [
+    {
+      "command": "read-only Prisma access to current Species taxonomy values",
+      "startedAt": "2026-08-18T14:06:45-07:00",
+      "finishedAt": "2026-08-18T14:06:47-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/taxonomy/preflight-access.txt"
+    }
+  ],
+  "assertions": [
+    {"name": "Current Species schema field", "expected": "taxonomy Json?", "observed": "taxonomy Json?", "pass": true},
+    {"name": "Current Species rows exported", "expected": "all current rows", "observed": "unavailable", "pass": false},
+    {"name": "Historical snapshot is complete enough to substitute", "expected": false, "observed": false, "pass": true},
+    {"name": "Schema mutation attempted before preflight", "expected": false, "observed": false, "pass": true}
+  ],
+  "artifacts": [
+    "artifacts/taxonomy-json-preflight.json",
+    "artifacts/taxonomy-normalization-plan.json",
+    "artifacts/release-0.3.0/taxonomy/preflight-access.txt"
+  ],
+  "blockers": [
+    {
+      "id": "B07-TAXONOMY-PREFLIGHT-DATABASE",
+      "condition": "Sandbox policy denies read-only access to the configured local PostgreSQL database.",
+      "requiredResolution": "Restore normal configured database access and regenerate both preflight artifacts from every current Species row."
+    }
+  ],
+  "notes": [
+    "T101 and T102 remain blocked; no historical snapshot is promoted into migration authority."
+  ]
+}

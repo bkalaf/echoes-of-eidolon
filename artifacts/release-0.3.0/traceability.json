@@ -1,0 +1,381 @@
+{
+  "schemaVersion": "echoes-release-traceability-v1",
+  "generatedAt": "2026-08-18T13:51:17-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "release": "0.3.0",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "status": "IN_PROGRESS",
+  "workItems": [
+    {
+      "id": "R030-Q01",
+      "title": "Fix the 2D Atlas map projection and show the entire world",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q01.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q02",
+      "title": "Add Atlas pan/zoom, clustering, spiderfy, and precise Site selection",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q02.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q03",
+      "title": "Color-code settlement-size targets and add Atlas filters/legend",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q03.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q04",
+      "title": "Materialize the 24 original founding Settlements and their world identities",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q04.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G03",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q05",
+      "title": "Author/implement the Breed-level INITIAL population event expansion without inventing data",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q05.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G03",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q06",
+      "title": "Overlay persisted Settlements on the Atlas and make occupancy/world context explicit",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q06.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q07",
+      "title": "Atlas Release 0.3.0 browser and data-integrity gate",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q07.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q08",
+      "title": "Rename Guide titles in application static authority and preserve underlying identities",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q08.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G03",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q09",
+      "title": "Fix Campaign Planner card movement controls and make reordering unmistakably usable",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q09.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q10",
+      "title": "Replace every raw foreign-key-only table cell with an explicit lookup display contract",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q10.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G03",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q11",
+      "title": "Rebuild EVERY owner/admin table to a usable data-grid standard",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q11.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q12",
+      "title": "Rebuild EVERY owner/admin form so no canonical field is omitted",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q12.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q13",
+      "title": "Add an exhaustive Release 0.3.0 table/form presentation audit so this cannot regress again",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q13.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q14U",
+      "title": "Campaign Planner viewport containment, readable controls, and card-density fix",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q14U.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q15",
+      "title": "Inline editable table rows with explicit Edit Row / Save interaction",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q15.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q16A",
+      "title": "Fix broken Data Admin record navigation and provide a real record-detail editor",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q16A.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G07",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q16B",
+      "title": "Normalize Taxonomy into a first-class TAX entity and migrate existing Species JSON",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q16B.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G04",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "R030-Q17",
+      "title": "Review and advance the Witness Puzzle Box 70 package",
+      "prompt": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/prompts/R030-Q17.md",
+      "canonicalSources": [
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/atlas-ui.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/initial-founding-settlements.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/lookup-presentation.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/owner-ui-data-contract.json",
+        "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/puzzle-package-lock.json"
+      ],
+      "implementationCommits": [],
+      "tests": [],
+      "audits": [],
+      "migrationsAndImporters": [],
+      "releaseNoteSection": "docs/release-notes/0_3_0.md",
+      "gate": "G08",
+      "status": "NOT_STARTED"
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "AGENTS.md",
+      "taskIds": [
+        "T002"
+      ],
+      "workItemIds": [],
+      "justification": "Align stale repository release guidance with the package-resolved 0.3.0 target."
+    }
+  ]
+}
+

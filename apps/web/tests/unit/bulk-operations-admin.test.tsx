@@ -32,7 +32,7 @@ describe("Bulk Operations administration", () => {
     expect(await screen.findByRole("heading", { name: "Bulk Operations Audit" })).toBeInTheDocument();
     expect(screen.getByText("Temporary API key")).toBeInTheDocument();
     expect(screen.getByText("Soul")).toBeInTheDocument();
-    expect(screen.getByText("CHANGED")).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "CHANGED" })).toBeInTheDocument();
   });
 
   it("exposes ordered rerun, apply, and delete actions on the envelope detail form", async () => {

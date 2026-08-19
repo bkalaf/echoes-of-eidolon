@@ -33,7 +33,7 @@ const placement = (campaignPlacementId: string, objectType: (typeof campaignObje
 
 function workspace(placements: ReturnType<typeof placement>[] = [], world: WorldKey = "RUIN") {
   return {
-    campaign: placements.length > 0 ? { name: `${world} Campaign`, placements } : null,
+    campaign: placements.length > 0 ? { name: `${world} Campaign`, placements: placements.map((value, index) => ({ ...value, ordinal: index + 1 })) } : null,
     unassigned: {},
     bookGroupings: {
       disjoint: validateDisjointTrilogy(defaultDisjointTrilogy(world), world),
@@ -139,9 +139,10 @@ describe("Campaign Manager structure", () => {
     renderCampaign("CAMPAIGN_RUIN");
     const segments = await screen.findAllByText("mirrored-companion");
     expect(segments).toHaveLength(2);
-    expect(segments.map((segment) => segment.getAttribute("data-start-book"))).toEqual(["4", "15"]);
-    expect(segments.every((segment) => segment.getAttribute("data-book-span") === "1")).toBe(true);
-    expect(segments.every((segment) => segment.getAttribute("data-logical-placement-id") === "mirrored-companion")).toBe(true);
+    const segmentCards = segments.map((segment) => segment.closest('[data-logical-placement-id="mirrored-companion"]'));
+    expect(segmentCards.map((segment) => segment?.getAttribute("data-start-book"))).toEqual(["4", "15"]);
+    expect(segmentCards.every((segment) => segment?.getAttribute("data-book-span") === "1")).toBe(true);
+    expect(segmentCards.every((segment) => segment?.getAttribute("data-logical-placement-id") === "mirrored-companion")).toBe(true);
   });
 
   it("keeps adjacent and overlapping placements visible in stable lanes", async () => {
@@ -160,6 +161,87 @@ describe("Campaign Manager structure", () => {
     expect(first).not.toHaveAttribute("data-lane", overlap.getAttribute("data-lane"));
     expect(adjacent).toHaveAttribute("data-lane-count", "2");
     expect(adjacent).toHaveStyle({ gridRow: "6 / span 1" });
+  });
+
+  it("reorders cards with exact controls while preserving identity, Books, focus, and announcement", async () => {
+    const placements = [
+      placement("witness-a", "WITNESS", [4]),
+      placement("witness-b", "WITNESS", [4]),
+      placement("witness-c", "WITNESS", [4]),
+      placement("witness-d", "WITNESS", [4]),
+    ];
+    const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      if (String(input) === "/api/admin/campaign/reorder") {
+        const body = JSON.parse(String(init?.body)) as { campaignPlacementId: string; direction: "UP" | "DOWN" };
+        const from = placements.findIndex((value) => value.campaignPlacementId === body.campaignPlacementId);
+        const to = from + (body.direction === "UP" ? -1 : 1);
+        [placements[from], placements[to]] = [placements[to]!, placements[from]!];
+        return { ok: true, json: async () => ({ placements: workspace(placements).campaign!.placements }) };
+      }
+      return { ok: true, json: async () => workspace(placements) };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    renderCampaign("CAMPAIGN_RUIN");
+
+    const first = await screen.findByTestId("campaign-placement-witness-a");
+    const middle = screen.getByTestId("campaign-placement-witness-b");
+    const last = screen.getByTestId("campaign-placement-witness-d");
+    expect(within(first).getByRole("button", { name: "↑ Move up" })).toBeDisabled();
+    expect(within(first).getByRole("button", { name: "↓ Move down" })).toBeEnabled();
+    expect(within(last).getByRole("button", { name: "↓ Move down" })).toBeDisabled();
+    fireEvent.click(within(middle).getByRole("button", { name: "↓ Move down" }));
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign/reorder", expect.objectContaining({
+      method: "POST",
+      body: JSON.stringify({ campaignPlacementId: "witness-b", direction: "DOWN", worldKey: "RUIN" }),
+    })));
+    const moved = await screen.findByTestId("campaign-placement-witness-b");
+    expect(moved).toHaveAttribute("data-logical-placement-id", "witness-b");
+    expect(moved).toHaveAttribute("data-start-book", "4");
+    expect(moved).toHaveAttribute("data-campaign-position", "3");
+    expect(screen.getByTestId("campaign-placement-witness-c")).toHaveAttribute("data-campaign-position", "2");
+    expect(within(moved).getByRole("button", { name: "↓ Move down" })).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("witness-b moved to position 3 of 4 in Witness.");
+
+    fireEvent.click(within(moved).getByRole("button", { name: "↑ Move up" }));
+    await waitFor(() => expect(screen.getByTestId("campaign-placement-witness-b")).toHaveAttribute("data-campaign-position", "2"));
+    expect(screen.getByTestId("campaign-placement-witness-c")).toHaveAttribute("data-campaign-position", "3");
+    expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign/reorder", expect.objectContaining({
+      method: "POST",
+      body: JSON.stringify({ campaignPlacementId: "witness-b", direction: "UP", worldKey: "RUIN" }),
+    }));
+    expect(within(screen.getByTestId("campaign-placement-witness-b")).getByRole("button", { name: "↑ Move up" })).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("witness-b moved to position 2 of 4 in Witness.");
+  });
+
+  it("uses the visible drag handle for the same persisted same-column reorder operation", async () => {
+    const placements = [placement("witness-a", "WITNESS", [2]), placement("witness-b", "WITNESS", [4]), placement("witness-c", "WITNESS", [6])];
+    const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      if (String(input) === "/api/admin/campaign/reorder") {
+        const body = JSON.parse(String(init?.body)) as { campaignPlacementId: string; beforeCampaignPlacementId: string };
+        const [moving] = placements.splice(placements.findIndex((value) => value.campaignPlacementId === body.campaignPlacementId), 1);
+        placements.splice(placements.findIndex((value) => value.campaignPlacementId === body.beforeCampaignPlacementId), 0, moving!);
+        return { ok: true, json: async () => ({ placements: workspace(placements).campaign!.placements }) };
+      }
+      return { ok: true, json: async () => workspace(placements) };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    renderCampaign("CAMPAIGN_RUIN");
+    const source = await screen.findByRole("button", { name: "Drag witness-c to reorder" });
+    const target = screen.getByTestId("campaign-placement-witness-a");
+    const values = new Map<string, string>();
+    const dataTransfer = { effectAllowed: "none", getData: (type: string) => values.get(type) ?? "", setData: (type: string, value: string) => values.set(type, value) };
+
+    fireEvent.dragStart(source, { dataTransfer });
+    fireEvent.dragOver(target, { dataTransfer });
+    fireEvent.drop(target, { dataTransfer });
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/campaign/reorder", expect.objectContaining({
+      body: JSON.stringify({ campaignPlacementId: "witness-c", beforeCampaignPlacementId: "witness-a", worldKey: "RUIN" }),
+      method: "POST",
+    })));
+    expect(screen.getByTestId("campaign-placement-witness-c")).toHaveAttribute("data-campaign-position", "1");
+    expect(screen.getByTestId("campaign-placement-witness-c")).toHaveAttribute("data-start-book", "6");
   });
 
   it("renders one logical Disjoint value as separate three-row segments and leaves the gap empty", async () => {

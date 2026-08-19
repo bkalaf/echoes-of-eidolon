@@ -18,6 +18,15 @@ interface AccountListRow {
   username: string | null;
 }
 
+interface AccountSession {
+  createdAt: string;
+  expiresAt: string;
+  ipAddress: string | null;
+  sessionId: string;
+  updatedAt: string;
+  userAgent: string | null;
+}
+
 interface AccountDetail extends AccountListRow {
   banExpires: string | null;
   banReason: string | null;
@@ -27,14 +36,7 @@ interface AccountDetail extends AccountListRow {
     active: boolean;
     effectiveEndAt: string | null;
   };
-  sessions: Array<{
-    createdAt: string;
-    expiresAt: string;
-    ipAddress: string | null;
-    sessionId: string;
-    updatedAt: string;
-    userAgent: string | null;
-  }>;
+  sessions: AccountSession[];
   updatedAt: string;
 }
 
@@ -49,11 +51,24 @@ function RoleBadge({ role }: { role: string }) {
 }
 
 const accountColumns: DataTableColumnDef<AccountListRow>[] = [
-  { accessorKey: "name", id: "account", header: "Account", cell: ({ row }) => <><a href={`/admin/access/${encodeURIComponent(row.original.userId)}`}>{row.original.name}</a><br /><span className="muted">@{row.original.username ?? "username unavailable"}</span></> },
+  { accessorKey: "name", id: "account", header: "Account", cell: ({ row }) => <a href={`/admin/access/${encodeURIComponent(row.original.userId)}`}>{row.original.name}</a> },
+  { accessorKey: "userId", header: "User ID" },
+  { accessorKey: "username", header: "Username" },
   { accessorKey: "email", header: "Email" },
   { accessorKey: "role", header: "Role", cell: ({ row }) => <RoleBadge role={row.original.role} /> },
   { accessorKey: "betaEligible", id: "betaEligibility", header: "Beta/player eligible", cell: ({ row }) => row.original.betaEligible ? "Yes" : "No" },
   { accessorKey: "banned", id: "accountState", header: "Account state", cell: ({ row }) => row.original.banned ? "Banned" : "Active" },
+  { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
+  { cell: ({ row }) => <a className="button" href={`/admin/access/${encodeURIComponent(row.original.userId)}`}>Open account</a>, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+];
+
+const sessionColumns: DataTableColumnDef<AccountSession>[] = [
+  { accessorKey: "userAgent", header: "Device", cell: ({ row }) => row.original.userAgent ?? "Unknown device" },
+  { accessorKey: "sessionId", header: "Session ID" },
+  { accessorKey: "ipAddress", header: "IP", cell: ({ row }) => row.original.ipAddress ?? "Unavailable" },
+  { accessorKey: "createdAt", header: "Created", cell: ({ row }) => new Date(row.original.createdAt).toLocaleString() },
+  { accessorKey: "updatedAt", header: "Last activity", cell: ({ row }) => new Date(row.original.updatedAt).toLocaleString() },
+  { accessorKey: "expiresAt", header: "Expires", cell: ({ row }) => new Date(row.original.expiresAt).toLocaleString() },
 ];
 
 function AccountsList() {
@@ -100,7 +115,7 @@ function AccountDetailView({ actorRole, userId }: { actorRole: "admin" | "owner"
   if (account.isPending) return <p className="notice">Loading account…</p>;
   if (account.isError) return <p className="notice notice--bad" role="alert">{account.error.message}</p>;
   const record = account.data.account;
-  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{record.name}</h2><p>@{record.username ?? "username unavailable"} · {record.email}</p></div><RoleBadge role={record.role} /></div><dl className="detail-list"><dt>Email verified</dt><dd>{record.emailVerified ? "Yes" : "No"}</dd><dt>Age eligibility</dt><dd>{record.eligibilityStatus}</dd><dt>Beta/player eligible</dt><dd>{record.betaEligible ? "Yes" : "No"}</dd><dt>Membership entitlement</dt><dd>{record.membership.active ? `Active through ${new Date(record.membership.effectiveEndAt!).toLocaleString()}` : "Inactive"}</dd><dt>Account state</dt><dd>{record.banned ? "Banned" : "Active"}</dd></dl></section><section className="card"><h2>Authorization role</h2>{actorRole === "owner" ? <div className="action-row" aria-label="Set authorization role">{storedRoles.map((role) => <button aria-pressed={record.role === role} className={`button ${record.role === role ? "button--gold" : ""}`} disabled={busy || record.role === role} key={role} onClick={() => changeRole(role)}>{role.toUpperCase()}</button>)}</div> : <p className="notice">Only an OWNER may change authorization roles.</p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section><section className="card"><h2>Authorized sessions</h2>{record.sessions.length === 0 ? <p>No active sessions.</p> : <div className="table-scroll"><table className="simple-table"><thead><tr><th>Device</th><th>IP</th><th>Last activity</th><th>Expires</th></tr></thead><tbody>{record.sessions.map((session) => <tr key={session.sessionId}><td>{session.userAgent ?? "Unknown device"}</td><td>{session.ipAddress ?? "Unavailable"}</td><td>{new Date(session.updatedAt).toLocaleString()}</td><td>{new Date(session.expiresAt).toLocaleString()}</td></tr>)}</tbody></table></div>}<p className="muted">Session bearer tokens are never returned by this administrative projection.</p></section></div>;
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><h2>{record.name}</h2><p>@{record.username ?? "username unavailable"} · {record.email}</p></div><RoleBadge role={record.role} /></div><dl className="detail-list"><dt>Email verified</dt><dd>{record.emailVerified ? "Yes" : "No"}</dd><dt>Age eligibility</dt><dd>{record.eligibilityStatus}</dd><dt>Beta/player eligible</dt><dd>{record.betaEligible ? "Yes" : "No"}</dd><dt>Membership entitlement</dt><dd>{record.membership.active ? `Active through ${new Date(record.membership.effectiveEndAt!).toLocaleString()}` : "Inactive"}</dd><dt>Account state</dt><dd>{record.banned ? "Banned" : "Active"}</dd></dl></section><section className="card"><h2>Authorization role</h2>{actorRole === "owner" ? <div className="action-row" aria-label="Set authorization role">{storedRoles.map((role) => <button aria-pressed={record.role === role} className={`button ${record.role === role ? "button--gold" : ""}`} disabled={busy || record.role === role} key={role} onClick={() => changeRole(role)}>{role.toUpperCase()}</button>)}</div> : <p className="notice">Only an OWNER may change authorization roles.</p>}{error && <p className="notice notice--bad" role="alert">{error}</p>}</section><section className="card"><h2>Authorized sessions</h2>{record.sessions.length === 0 ? <p>No active sessions.</p> : <DataTable columns={sessionColumns} data={record.sessions} getRowId={(session) => session.sessionId} preferenceKey="admin.accounts.sessions" />}<p className="muted">Session bearer tokens are never returned by this administrative projection.</p></section></div>;
 }
 
 export function AccountAdminPage({ pathname, role }: { pathname: string; role: "admin" | "owner" }) {

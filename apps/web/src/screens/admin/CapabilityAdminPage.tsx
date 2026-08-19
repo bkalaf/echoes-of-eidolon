@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface CapabilityParameterView {
@@ -65,11 +66,21 @@ function CapabilityTabs() {
 }
 
 function Registry({ definitions }: { definitions: CapabilityDefinitionView[] }) {
+  const columns: DataTableColumnDef<CapabilityDefinitionView>[] = [
+    { accessorKey: "code", header: "Code" },
+    { accessorKey: "capabilityDefinitionId", header: "Definition ID" },
+    { accessorFn: (definition) => {
+      const active = definition.versions.find((version) => version.status === "ACTIVE");
+      return active ? `v${active.version} · ${active.status}` : "—";
+    }, header: "Active version", id: "activeVersion" },
+    { accessorFn: (definition) => definition.versions.find((version) => version.status === "ACTIVE")?.valueKind ?? "—", header: "Value", id: "activeValueKind" },
+    { accessorFn: (definition) => definition.versions.find((version) => version.status === "ACTIVE")?.pathPattern ?? "—", header: "Path", id: "activePath" },
+    { accessorFn: (definition) => definition.versions.length, header: "Version count", id: "versionCount" },
+    { accessorFn: (definition) => JSON.stringify(definition.versions), header: "All versions", id: "versions" },
+    { cell: ({ row }) => <a className="button" href={`/admin/capabilities/${row.original.capabilityDefinitionId}`}>Edit / versions</a>, enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
   return <section className="card"><div className="action-row action-row--between"><div><h2>Capability Registry</h2><p>Stable definitions and immutable published versions.</p></div><a className="button button--gold" href="/admin/capabilities/new">New Definition</a></div>
-    {definitions.length === 0 ? <p className="notice">No capability definitions have been authored.</p> : <table className="simple-table"><thead><tr><th>Code</th><th>Active version</th><th>Value</th><th>Path</th><th>Actions</th></tr></thead><tbody>{definitions.map((definition) => {
-      const active = definition.versions.find((version) => version.status === "ACTIVE") ?? definition.versions[0];
-      return <tr key={definition.capabilityDefinitionId}><td><strong>{definition.code}</strong></td><td>{active ? `v${active.version} · ${active.status}` : "No version"}</td><td>{active?.valueKind ?? "—"}</td><td><code>{active?.pathPattern ?? "—"}</code></td><td><a href={`/admin/capabilities/${definition.capabilityDefinitionId}`}>Edit / versions</a></td></tr>;
-    })}</tbody></table>}
+    <DataTable columns={columns} data={definitions} getRowId={(definition) => definition.capabilityDefinitionId} preferenceKey="admin.capabilities.registry" />
     <p className="notice">DATA030 remains the canonical data-list integration. Definition schema editing is owned by this dedicated registry.</p>
   </section>;
 }
@@ -108,6 +119,22 @@ function VersionEditor({ definition, reload }: { definition?: CapabilityDefiniti
     if (!response.ok) { setError(body.error ?? "Activation failed."); return; }
     setMessage("Definition version activated."); reload();
   };
+  const versionColumns: DataTableColumnDef<CapabilityVersionView>[] = [
+    { accessorFn: (version) => `v${version.version}`, header: "Version", id: "version" },
+    { accessorKey: "capabilityDefinitionVersionId", header: "Version ID" },
+    { accessorKey: "status", header: "Status" },
+    { accessorKey: "valueKind", header: "Value kind" },
+    { accessorKey: "pathPattern", header: "Path" },
+    { accessorKey: "minValue", header: "Minimum" },
+    { accessorKey: "maxValue", header: "Maximum" },
+    { accessorFn: (version) => version.enumValues.join(", "), header: "Enum values", id: "enumValues" },
+    { accessorFn: (version) => version.allowedReferenceEntityTypes.join(", "), header: "Reference types", id: "allowedReferenceEntityTypes" },
+    { accessorFn: (version) => version.allowedOperations.join(", "), header: "Allowed operations", id: "allowedOperations" },
+    { accessorKey: "monotonicPolicy", header: "Monotonic policy" },
+    { accessorKey: "description", header: "Description" },
+    { accessorFn: (version) => JSON.stringify(version.parameters), header: "Parameters", id: "parameters" },
+    { cell: ({ row }) => row.original.status === "DRAFT" ? <button className="button" type="button" onClick={() => void activate(row.original.capabilityDefinitionVersionId)}>Activate</button> : "Immutable", enableColumnFilter: false, enableSorting: false, header: "Actions", id: "actions" },
+  ];
   return <div className="split"><form className="card" onSubmit={(event) => { event.preventDefault(); void submit(event.currentTarget); }}><h2>{definition ? `Create version for ${definition.code}` : "Create capability definition"}</h2>
     {definition ? <><div className="account-value"><span className="account-value__label">Stable code</span><span className="account-value__text">{definition.code}</span></div><input name="code" type="hidden" value={definition.code} /></> : <label>Stable code<input name="code" required pattern="[A-Z][A-Z0-9_]*" /></label>}
     <label>Path pattern<input name="pathPattern" required defaultValue={latest?.pathPattern ?? ""} placeholder="location.{SETTLEMENT}.{POINT_OF_INTEREST}.discovered" /></label>
@@ -120,7 +147,7 @@ function VersionEditor({ definition, reload }: { definition?: CapabilityDefiniti
     <label>Reference entity types (comma-separated)<input name="referenceTypes" defaultValue={latest?.allowedReferenceEntityTypes.join(", ") ?? ""} /></label>
     <label>Parameters (JSON array)<textarea name="parameters" rows={6} defaultValue={JSON.stringify(latest?.parameters.map(({ name, kind, entityType, allowedValues }) => ({ name, kind, entityType, allowedValues })) ?? [], null, 2)} /></label>
     <button className="button button--gold" type="submit">Create Draft Version</button>{message && <p className="notice notice--success">{message}</p>}{error && <p className="notice notice--warn">{error}</p>}
-  </form><section className="card"><h2>Version history</h2>{definition?.versions.length ? <table className="simple-table"><tbody>{definition.versions.map((version) => <tr key={version.capabilityDefinitionVersionId}><td>v{version.version}</td><td>{version.status}</td><td>{version.valueKind}</td><td>{version.status === "DRAFT" ? <button className="button" type="button" onClick={() => void activate(version.capabilityDefinitionVersionId)}>Activate</button> : "Immutable"}</td></tr>)}</tbody></table> : <p>No versions yet.</p>}</section></div>;
+  </form><section className="card"><h2>Version history</h2><DataTable columns={versionColumns} data={definition?.versions ?? []} getRowId={(version) => version.capabilityDefinitionVersionId} preferenceKey="admin.capabilities.versions" /></section></div>;
 }
 
 function ConditionBuilder({ definitions }: { definitions: CapabilityDefinitionView[] }) {
@@ -150,7 +177,14 @@ function Inspector() {
   const [result, setResult] = useState<{ comparison: { eventCount: number; persistedStateCount: number; rebuiltStateCount: number; mismatches: string[] }; events: Array<{ capabilityEventId: string; sequence: string; operation: string; scopeType: string; scopeId: string }> } | null>(null);
   const [error, setError] = useState("");
   const inspect = async (form?: HTMLFormElement) => { const values = form ? new FormData(form) : new FormData(); const query = new URLSearchParams(); for (const key of ["scopeId", "capabilityAddressId"]) { const value = String(values.get(key) ?? "").trim(); if (value) query.set(key, value); } const response = await fetch(`/api/admin/capabilities/inspector?${query}`); const body = await response.json() as typeof result & { error?: string }; if (!response.ok) { setError(body?.error ?? "Inspection failed."); return; } setResult(body); setError(""); };
-  return <section className="card"><h2>Event & Projection Inspector</h2><p>Read-only ledger ordering and projection rebuild comparison.</p><form className="form-grid" onSubmit={(event) => { event.preventDefault(); void inspect(event.currentTarget); }}><label>Scope ID<input name="scopeId" /></label><label>Address ID<input name="capabilityAddressId" /></label><button className="button button--gold">Compare Rebuild</button></form>{error && <p className="notice notice--warn">{error}</p>}{result && <><p className={result.comparison.mismatches.length ? "notice notice--warn" : "notice notice--success"}>Ledger {result.comparison.eventCount} · persisted {result.comparison.persistedStateCount} · rebuilt {result.comparison.rebuiltStateCount} · mismatches {result.comparison.mismatches.length}</p><table className="simple-table"><thead><tr><th>Sequence</th><th>Scope</th><th>Operation</th><th>Event</th></tr></thead><tbody>{result.events.map((event) => <tr key={event.capabilityEventId}><td>{event.sequence}</td><td>{event.scopeType}/{event.scopeId}</td><td>{event.operation}</td><td>{event.capabilityEventId}</td></tr>)}</tbody></table></>}</section>;
+  const eventColumns: DataTableColumnDef<NonNullable<typeof result>["events"][number]>[] = [
+    { accessorKey: "sequence", header: "Sequence" },
+    { accessorKey: "scopeType", header: "Scope type" },
+    { accessorKey: "scopeId", header: "Scope ID" },
+    { accessorKey: "operation", header: "Operation" },
+    { accessorKey: "capabilityEventId", header: "Event ID" },
+  ];
+  return <section className="card"><h2>Event & Projection Inspector</h2><p>Read-only ledger ordering and projection rebuild comparison.</p><form className="form-grid" onSubmit={(event) => { event.preventDefault(); void inspect(event.currentTarget); }}><label>Scope ID<input name="scopeId" /></label><label>Address ID<input name="capabilityAddressId" /></label><button className="button button--gold">Compare Rebuild</button></form>{error && <p className="notice notice--warn">{error}</p>}{result && <><p className={result.comparison.mismatches.length ? "notice notice--warn" : "notice notice--success"}>Ledger {result.comparison.eventCount} · persisted {result.comparison.persistedStateCount} · rebuilt {result.comparison.rebuiltStateCount} · mismatches {result.comparison.mismatches.length}</p><DataTable columns={eventColumns} data={result.events} getRowId={(event) => event.capabilityEventId} preferenceKey="admin.capabilities.events" /></>}</section>;
 }
 
 export function CapabilityAdminPage({ pathname, screen }: { pathname: string; screen: PageManifestEntry }) {

@@ -1,0 +1,1283 @@
+{
+  "schemaVersion": "eidolon-puzzle-generator-coverage-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "status": "PASS",
+  "summary": {
+    "blueprintCount": 70,
+    "productionGeneratorCount": 70,
+    "tierCounts": {
+      "TIER_1_INITIATE": 14,
+      "TIER_2_ADEPT": 14,
+      "TIER_3_EXPERT": 14,
+      "TIER_4_MASTER": 14,
+      "TIER_5_ORDEAL": 14
+    },
+    "familyCount": 9,
+    "answerLeaks": 0,
+    "ambiguousInstances": 0,
+    "missingAccessibilityEquivalents": 0
+  },
+  "blueprints": [
+    {
+      "puzzleBlueprintId": "PZB-001",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:737ece1a8d865165",
+      "instanceChecksum": "9e91b83a3bb8bc21b2075dc1d9b120005828e53f2efb4cd31014b6f30525b290",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-002",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:426e42b4701f187f",
+      "instanceChecksum": "e69a3889a7f08009abe0f8fccd7f01ac1b22b691492d2e3cf66f9171ac479f4f",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-003",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:24d4a99673dad73e",
+      "instanceChecksum": "29fac176464f346bfc77bfcb1bc5d8cef5025da7f230387794e9c97eaddbbfe3",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-004",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:9e37a4f7dfba3e87",
+      "instanceChecksum": "7e5132c2199d8091553f8b068791f8da32f402ea9402e4a6218cae3c7f72749c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-005",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:5c1592318bf62bd4",
+      "instanceChecksum": "2833ebd506907532ff1e1e26b824706b8ead85c237171ede444d2e8dfba5c1e9",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-006",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:ff7712de6096e10c",
+      "instanceChecksum": "290f6b0c00ce1ad4373df52e6bfae8bf773a9d2f88874ee66ca8d05d3581b49f",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-007",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:88f8b9fd038103c3",
+      "instanceChecksum": "833ef569841fd588b592c442caf11a555053a601673ecf34f0b9bfda9a1b8002",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-008",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:f492a079e778d819",
+      "instanceChecksum": "881150754885d7580a414e3bcc1591500cf441d3409ecce127e81bc996f2094a",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-009",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:bbe61712b60475d0",
+      "instanceChecksum": "6ca3b98266cd605fe0bb26af0af29aabd327651ad77f73875b1e2a9c239fb99c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-010",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:c72723320661b748",
+      "instanceChecksum": "90432af6e38d3d7fa01fff7df07c66d60b5e4ae541d8193dd1c319fd08f8da29",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-011",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:48fb86098c3cfd50",
+      "instanceChecksum": "a50c2aea81ed7086479db87b44027ddafd801804a8147209174f764d64f21fdf",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-012",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:fb1b8f9e698d17af",
+      "instanceChecksum": "0a1c2a80b2a91e7f2af155f7715cb1751fd87afa810ea4fc6e58c2cfb2291a28",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-013",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1abd35c1a262a486",
+      "instanceChecksum": "aaeacf60cbd8b0a0f0f0e362603460ddd542d2500f0b3ebd3d2b323a272992aa",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-014",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:eb8e472fedafa92f",
+      "instanceChecksum": "adae6c156d2384a059eef9835388d64e6bb5e408fd8a165a6885639c75c567d6",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-015",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:5052305764d8ea4b",
+      "instanceChecksum": "64b249c50bb762ebad7fe356da5b5cc11911101543bf4091716d25f80fd8d9a6",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-016",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:2214b4306517f546",
+      "instanceChecksum": "57bb06464ca1d070fcbca442eba0d9a9bb00b13315d76948820e878fd8530578",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-017",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:db9d24b1100d0368",
+      "instanceChecksum": "bea9143fe67e888119d96a16bc5c60b7ce8231e3eafbe3b0022d32c020d85580",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-018",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:27803db56cb86a48",
+      "instanceChecksum": "f0916853880f3fe771b94838fa525c7d83a549ba41c3fa65a1c9a826065ac32b",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-019",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:a89c80a7f6dee8dd",
+      "instanceChecksum": "134151e7cd9d35a2d5fdef2224ae4d7041bf77d69450bc89ee8e8de79838db2c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-020",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CRYPTO_NUMERIC_DATA",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#NUMERIC_LEDGER",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:2e865d8727c1f705",
+      "instanceChecksum": "72b4183f85380dbb5e404e21c071cc8b0acad94b52c4ff95077edd99ad5d9046",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-021",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:0be226011ebfa869",
+      "instanceChecksum": "ec9209f1c81275b82a4308fca9e20a493effb5a622339aa42df9ac02cbfafb64",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-022",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:e331f45c0b9ad061",
+      "instanceChecksum": "7feadb490c8f7c7edcdf85f7c94e516e455bab22277bccaee3338c59d45a71eb",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-023",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:5915ab77ea90b5a8",
+      "instanceChecksum": "16dd1bf6f5704087510106622b4ba99baa5e0a401f79452202c6678f5cf28144",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-024",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:f46346a88e1da5fb",
+      "instanceChecksum": "31d6387cd1e6b8b2ae70fad5e42555a4b4b3b647bc78fb0b8ada5cc1b604296c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-025",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1d5f3c12ed6f3a87",
+      "instanceChecksum": "5cd129c974b2d68d190a444a2e029ee8ec0141d353dc58727c2d9dcf71aed292",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-026",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:ff624bb656c3eeb7",
+      "instanceChecksum": "1faa2d6ef5286fc10bbdf9f003e2671c70fc78e3430efcf26b87ef28b38bc59c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-027",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:31eaad65395ca5f4",
+      "instanceChecksum": "30ad18d9e7ddbc8fbf153c2f2801f88655041e6b80caca992d8f0dca802ece3a",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-028",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "VISUAL_COLOR_OPTICAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#VISUAL_SHAPE_LAYERS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:fca45bbeef215637",
+      "instanceChecksum": "51e0371f87a8525e53a7513ae1283d4926e21288e95f739d653c4a6effab3deb",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-029",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:2e4ef7fea2ba57b0",
+      "instanceChecksum": "d4e76a5f74885fb4c508d993e2b687dcb4930140288d7bd12c5052e98df69e86",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-030",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:c0a1f60a25283c60",
+      "instanceChecksum": "eedf7d2588a6ebf52d64b72b97223a0ae92554405fc808d897b122af7bd1c043",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-031",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:7aaf05f23e30eb5b",
+      "instanceChecksum": "5a546135ff4eb685b700b869c416806d3067b7efdeb70c61b5abfa3ffb13ff68",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-032",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1a909ef8bf1ee774",
+      "instanceChecksum": "eea14159e700dcb044dbcd0ce321657cd71118e6ec214844aa9e71b17f07a242",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-033",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:df889b61e7434c4b",
+      "instanceChecksum": "f7ef1f1db75be42c1278056de41ca46c8de501b8a8ac920a00008325de0d9ce2",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-034",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:3b32b7dc54082e49",
+      "instanceChecksum": "d4e2e56fbabb9df993a38286ff65c4303fe65dc126d23c32a2958e2b86d378c7",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-035",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:dbdbe3afdd6ddccf",
+      "instanceChecksum": "d4c27b97939b49ed6d04e86e0e952eaa8bf12158c60415101fc646e966d3c76c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-036",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:45cc69182c998e4a",
+      "instanceChecksum": "2787bafc0e3f3a8fab0c62801ebe67225ff915c18333a27e3343ce79b76f84eb",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-037",
+      "tier": "TIER_1_INITIATE",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:ba36c533484a1656",
+      "instanceChecksum": "61111405d3bd0541b2e9888f5748e79f374a036a64d99fae46583929b2b2b33c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-038",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:2bb0b38c497babfd",
+      "instanceChecksum": "b230a3c8d5c147a88bbcd4f45f07008043bfc7bda848c88b92cf33d362767af4",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-039",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:c73203b61a52f7c5",
+      "instanceChecksum": "a25d50d5df440b0c2283b0b798aa0702b2036a9d8c5932d1e51de82997597104",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-040",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:ec954f6713af1dcd",
+      "instanceChecksum": "45be2b42494efff7e5bfc5208a7e508ed4974c023f9844774503ff3b9976aaf4",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-041",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:07afee11f585acbf",
+      "instanceChecksum": "25ade863b2227f715774f0296115f7c48b7d158b2e3a7cfba85cf5924d4b5c6c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-042",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1f55c3bd3abdf470",
+      "instanceChecksum": "504433020a9f651cfec4f4677e1b8e55afe8000fd447a370f83da3c43e28f3e8",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-043",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:376b88ee1c1020a6",
+      "instanceChecksum": "b0e5442aef4eb12c5641c9ac72db02c24f1554e823704a2da606cb47bea5aa84",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-044",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:f3f4c8e3c22ef4fe",
+      "instanceChecksum": "3d31c6b58651d534193b6c0abb2d3fc7ddc9f1a7c1dc68a7be71c6140ec714dc",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-045",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:98b45f9b4c068abe",
+      "instanceChecksum": "62cbe605ce3dad969c268aa937ad641ca32455ba089c288472e39428bda362a9",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-046",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:32a663e0a1e39c4f",
+      "instanceChecksum": "2ddb2adeed0b36d10df0e027f02133627cdbae3f6c3333e1e92266712dd40c3c",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-047",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:82a6c00287ede6c1",
+      "instanceChecksum": "f19bd72cd2dbc12bbe7a80e3b2317d2deee3e214002c84f97083fbd78d311228",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-048",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:a7ddfdf495595f28",
+      "instanceChecksum": "8594c6da143c60a1e26612e1583f15e892f6b4078f80e67dd2110d7f290cb606",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-049",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:48ff5d42992bc131",
+      "instanceChecksum": "3a48cdfdfe082277a13473e0813dbd1f5dded6e9afb339168c67f46d753e4d49",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-050",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:06ac0a7d6621c64b",
+      "instanceChecksum": "b3fdf5ad252b06a24a875b6159440dd19a7586748336591751f69e3043afffba",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-051",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:88f5a1fc99849069",
+      "instanceChecksum": "fa535ac905c2255dd7da33dd21f825c8728b033f70816bf33aa8c836a5ac3dc8",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-052",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "LOGIC_CONSTRAINT",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#LOGIC_CONSTRAINT_GRID",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:118a450d792a376e",
+      "instanceChecksum": "27411354da7332b41f40d7e16765ca474078e3c27f9bad2ca74a4f74618d20ec",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-053",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:59c53117a2c6f294",
+      "instanceChecksum": "aa980e811d974c912578e81045ef1e555522a9d6c0935ace63c0fc9dc7035c8e",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-054",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:891c99f4f8210ef9",
+      "instanceChecksum": "b11456fb750d231b462a160f4d868f0a9661b7afacebfc1567af1376a291a0a0",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-055",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:21d3bb51036fef47",
+      "instanceChecksum": "7cf11887212c61e12d234446e5d01afa8f512a2ae5dd3607e2158b6193d9faa6",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-056",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1992c1c164daac4c",
+      "instanceChecksum": "95753184da3850bc706673066c601f5314187e4b706198c7316526f92e456332",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-057",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:347125de3d423ba4",
+      "instanceChecksum": "76f7749d3c9887e6663a7f206af26bcef046ab22f64189204708ea4d82bad0a5",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-058",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "HISTORICAL_RESEARCH",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:6c18f08af94b7445",
+      "instanceChecksum": "fc5959a6bd96440befde2cc3528bee61c087279de1868a688bbcf7f20288b197",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-059",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:cdd6fe67ad0c9c55",
+      "instanceChecksum": "e90500941f55b1c9d31f2b3fd2fa91085666f26eb1b57bff2c7b11a95cbcb9b5",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-060",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:bfc16b8d15f92fb8",
+      "instanceChecksum": "77ee2395d1fc51284638ecd30951300139bd923213751c2251507d1f888bd059",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-061",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:66ca217a82ba1617",
+      "instanceChecksum": "7d00b7042374c5daaece36d45c9df50fa031c6636477f76214b97c443b9b15ca",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-062",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:61d99fa6cdcca723",
+      "instanceChecksum": "8fe79e8eca9fd922ee7822ca1a4eb16af8a2fe21cad1ab26c69678161c61a50f",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-063",
+      "tier": "TIER_3_EXPERT",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:0f5190ebd91521dc",
+      "instanceChecksum": "1f9d54391d8b4fc997db581c971d1d28d4cb509926e0aacdc3fb71c5e9ce14bb",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-064",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "CONSTRUCTION_SIMULATION",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#MECHANISM_REGISTER_BOARD",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:6312718ce29a437a",
+      "instanceChecksum": "0d0f9f7db3b1cb2c436bb50ad7edfa8baf684436673c09fae3ef9c1730d9bb2d",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-065",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:d50bd3ba40940efa",
+      "instanceChecksum": "49201c575f7c156bf8840b6e7b9613ae07bbd91df3d833f989ac719371245ca4",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-066",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:2ff23e7f56c50db1",
+      "instanceChecksum": "dd031da9ba5afeddb03d186034bf75edc438c6b43c19fbb0da7756042c4fd92d",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-067",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1f9e1a71f171dd90",
+      "instanceChecksum": "61421bb11c885445c4ea4641a9accb8c45821a2f5e4048d7c6852b59da38a9e1",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-068",
+      "tier": "TIER_2_ADEPT",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:1acdb48d32bd8078",
+      "instanceChecksum": "c3e553db56f4de7ae1632864bbfbce6f7563a3999afaa63a61cdbf87c4d59c03",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-069",
+      "tier": "TIER_5_ORDEAL",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:55502628ed5cfcfb",
+      "instanceChecksum": "f6428c4403fdd4289313b0527b643be4d486ad23c2856193dfac9f99d685544a",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    },
+    {
+      "puzzleBlueprintId": "PZB-070",
+      "tier": "TIER_4_MASTER",
+      "primaryFamily": "CROSS_MODAL",
+      "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+      "generatorVersion": "1.0.0",
+      "seedVector": "RELEASE_PROOF_VECTOR_01:7682639a5a50f229",
+      "instanceChecksum": "7702b1d82646abab756610e68de4fdaf6f74f896a609e3fc9f687be063cf8712",
+      "uniqueSolution": true,
+      "alternateSolutionsRejected": true,
+      "answerFreeClient": true,
+      "accessibilityEquivalent": true,
+      "focusedTests": [
+        "apps/web/tests/unit/puzzle-production-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "status": "PASS"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
       GET: async ({ request }) => {
         try {
           await requireAdministration(request);
-          const [products, orders, donations, subscriptions] = await Promise.all([
+          const [products, orders, donations, subscriptions, managedAssets] = await Promise.all([
             getDatabase().storeProduct.findMany({
               orderBy: { storeProductId: "asc" },
               select: {
@@ -103,6 +103,11 @@ export const Route = createFileRoute("/api/admin/commerce/")({
                 user: { select: { email: true, id: true } },
               },
             }),
+            getDatabase().managedAsset.findMany({
+              orderBy: { managedAssetId: "asc" },
+              select: { managedAssetId: true, objectKey: true },
+              where: { mediaKind: "IMAGE" },
+            }),
           ]);
           const categoryCounts = new Map(products.map((product) => [product.productType, product]));
           return Response.json({
@@ -120,6 +125,7 @@ export const Route = createFileRoute("/api/admin/commerce/")({
               ...donation,
               stripeConfigured: Boolean(stripeCheckoutReference),
             })),
+            managedAssets,
             orders: orders.map((order) => ({
               ...order,
               refundedAmountCents: order.refunds.reduce((sum, refund) => sum + refund.amountCents, 0),

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-005",
+  "tier": "TIER_1_INITIATE",
+  "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:5c1592318bf62bd4",
+  "instanceChecksum": "2833ebd506907532ff1e1e26b824706b8ead85c237171ede444d2e8dfba5c1e9",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "COORDINATE",
+    "concept": "A prose recital contains breath marks. Reading clauses forward and backward exposes marks that fail palindromic symmetry.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Tokenize clauses, reverse their normalized phoneme labels, and collect unmatched pause ordinals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Tokenize clauses, reverse their normalized phoneme labels, and collect unmatched pause ordinals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TEXT",
+      "AUDIO_CAPTION"
+    ],
+    "accessibilityModes": [
+      "CAPTIONS",
+      "TRANSCRIPT_WITH_PAUSE_MARKS",
+      "KEYBOARD_ONLY",
+      "DYSLEXIA_AWARE"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

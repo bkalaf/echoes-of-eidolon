@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "echoes-atlas-interaction-browser-matrix-v1",
+  "browser": "Chromium",
+  "route": "/admin/atlas/sites",
+  "spec": "apps/web/tests/e2e/atlas-sites.spec.ts",
+  "status": "BLOCKED",
+  "blocker": "B08-ATLAS-INTERACTION-CHROMIUM",
+  "expectedScreenshot": "artifacts/release-0.3.0/atlas/atlas-sites-1600x900.png",
+  "scenarios": [
+    "400 candidate Sites represented exactly by individual markers and cluster counts",
+    "keyboard cluster activation zooms and centers",
+    "wheel zoom and pointer pan operate with constrained stage movement",
+    "Reset restores the 1x full-world view",
+    "maximum-zoom coincident Sites spiderfy into separate accessible controls without coordinate mutation",
+    "partial Site ID search, table activation, and map selection resolve one Site identity",
+    "selected-world occupancy reports 24 founded INITIAL sites and leaves SITE-0243 unoccupied",
+    "occupied Site disables Found City",
+    "classification, Region, occupancy, and search filters compose across map and table"
+  ],
+  "observedFailure": "listen EPERM: operation not permitted 127.0.0.1:3000",
+  "note": "The compiled browser test exists, but this artifact does not claim Chromium execution."
+}

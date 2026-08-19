@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T14:25:00-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "BLOCKED",
+  "inputs": [
+    {"path": "apps/web/src/components/AtlasMapViewport.tsx", "sha256": "90ef494eac07fabab54cbb69126ccb12a7290268769420f48574d95c8424db8c"},
+    {"path": "apps/web/src/screens/admin/AtlasAdminPage.tsx", "sha256": "7c97af517f594bfa211089a1d6e872ac56cca7ffcd79f91fe15d2e0e56d94806"},
+    {"path": "apps/web/src/styles.css", "sha256": "72f69a271bd6c9d9a59d7cab81679076428db28d1ac01a8e603f1008ea53ee21"},
+    {"path": "apps/web/tests/unit/atlas-map-viewport.test.tsx", "sha256": "1335ffd262fa52c0ef594ab8826a27979c364c5a9029e39985f50358b4885146"}
+  ],
+  "commands": [
+    {"command": "pnpm --dir apps/web exec vitest run tests/unit/atlas-map-viewport.test.tsx --reporter=verbose", "startedAt": "2026-08-18T14:19:12-07:00", "finishedAt": "2026-08-18T14:19:14-07:00", "exitCode": 1, "logPath": "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt"},
+    {"command": "pnpm --dir apps/web exec vitest run tests/unit/atlas-map-viewport.test.tsx tests/unit/atlas-admin-dispatch.test.tsx tests/unit/found-city-ui.test.tsx --reporter=verbose", "startedAt": "2026-08-18T14:20:41-07:00", "finishedAt": "2026-08-18T14:20:45-07:00", "exitCode": 0, "logPath": "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt"},
+    {"command": "pnpm --dir apps/web typecheck", "startedAt": "2026-08-18T14:20:45-07:00", "finishedAt": "2026-08-18T14:21:09-07:00", "exitCode": 0, "logPath": "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt"},
+    {"command": "pnpm --dir apps/web exec playwright test tests/e2e/home.spec.ts --grep 'Atlas data is not disclosed' --project=chromium", "startedAt": "2026-08-18T14:21:30-07:00", "finishedAt": "2026-08-18T14:21:37-07:00", "exitCode": 1, "logPath": "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt"}
+  ],
+  "assertions": [
+    {"name": "Initial/reset stage represents -180..180 and -90..90", "expected": true, "observed": true, "pass": true},
+    {"name": "Map stage aspect ratio", "expected": "2 / 1", "observed": "2 / 1", "pass": true},
+    {"name": "Authoritative image object fit", "expected": "contain", "observed": "contain", "pass": true},
+    {"name": "Image and markers share one transformed stage", "expected": true, "observed": true, "pass": true},
+    {"name": "Site and POI workspaces share the viewport", "expected": 2, "observed": 2, "pass": true},
+    {
+      "name": "Ascendancy projection anchor",
+      "expected": {"latitude": 20.360822, "longitude": -32.076454, "leftPercent": 41.08987388888889, "topPercent": 38.688432222222224},
+      "observed": {"latitude": 20.360822, "longitude": -32.076454, "leftPercent": 41.08987388888888, "topPercent": 38.688432222222224},
+      "pass": true
+    },
+    {"name": "Focused unit/component tests", "expected": 6, "observed": 6, "pass": true},
+    {"name": "Required real Chromium reset and resize proof", "expected": "PASS", "observed": "NOT_RUN: Playwright webServer could not establish a reachable loopback server in this sandbox", "pass": false}
+  ],
+  "artifacts": [
+    "apps/web/src/components/AtlasMapViewport.tsx",
+    "apps/web/tests/unit/atlas-map-viewport.test.tsx",
+    "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt"
+  ],
+  "blockers": [
+    {
+      "id": "B08-ATLAS-CHROMIUM",
+      "condition": "The explicitly required real-Chromium reset/resize/screenshot test cannot run because Playwright cannot reach its isolated worktree webServer over loopback.",
+      "requiredResolution": "Run the Atlas browser test in the normal repository test environment with a reachable Playwright webServer and capture reset, anchor, and resize evidence."
+    }
+  ],
+  "notes": [
+    "The implementation is locally unit-green but T300 is not reported PASS because Prompt 01 explicitly says a projection unit test alone is insufficient.",
+    "No Site or Point of Interest coordinates were changed."
+  ]
+}

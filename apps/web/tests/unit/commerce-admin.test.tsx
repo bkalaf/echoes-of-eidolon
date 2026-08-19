@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { pageManifest } from "../../src/lib/page-manifest";
 import { CommerceAdminPage } from "../../src/screens/admin/CommerceAdminPage";
 
-const emptyProjection = { categories: [], donations: [], orders: [], products: [], subscriptions: [] };
+const emptyProjection = { categories: [], donations: [], managedAssets: [], orders: [], products: [], subscriptions: [] };
 
 function renderCommerce(screenId: string, pathname?: string) {
   const entry = pageManifest.find((candidate) => candidate.screenId === screenId)!;
@@ -51,6 +51,19 @@ describe("commerce administration projection", () => {
     })));
   });
 
+  it("selects managed artwork by object identity with the canonical ID secondary", async () => {
+    mockCommerce({
+      categories: [{ activeItems: 0, categoryPath: "/store/categories/mugs", items: 0, name: "Mug", productType: "MUG" }],
+      managedAssets: [{ managedAssetId: "ASSET-IMAGE-1", objectKey: "product-art.webp" }],
+    });
+    renderCommerce("ADM012");
+    fireEvent.click(await screen.findByRole("button", { name: "New item" }));
+
+    expect(screen.getByRole("combobox", { name: "Managed artwork" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "product-art.webp · ASSET-IMAGE-1" })).toBeInTheDocument();
+    expect(screen.queryByRole("textbox", { name: /Managed artwork/ })).not.toBeInTheDocument();
+  });
+
   it("edits exact product and provider variant configuration", async () => {
     const product = { active: false, artworkAssetId: "ASSET-1", name: "Owner item", productType: "MUG", storeProductId: "PRODUCT-1", variants: [{
       available: false, color: "Blue", priceCents: 2400, printfulConfigured: true, printfulVariantReference: "PF-1", size: "11 oz", storeVariantId: "VARIANT-1", stripeConfigured: true, stripePriceReference: "price_1",
@@ -60,7 +73,7 @@ describe("commerce administration projection", () => {
       : { json: async () => ({ ...emptyProjection, products: [product] }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
     renderCommerce("ADM013", "/admin/store/items/PRODUCT-1");
-    fireEvent.click(await screen.findByRole("button", { name: "Edit" }));
+    fireEvent.click(await screen.findByRole("button", { name: /Edit/ }));
     fireEvent.change(screen.getByLabelText("Price in cents"), { target: { value: "2600" } });
     fireEvent.click(screen.getByRole("button", { name: "Save variant" }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/commerce/products/PRODUCT-1/variants", expect.objectContaining({
@@ -77,9 +90,9 @@ describe("commerce administration projection", () => {
     ] });
     renderCommerce("ADM011");
     expect(await screen.findByText("Canonical Store categories")).toBeInTheDocument();
-    expect(screen.getByText("HOODIE")).toBeInTheDocument();
-    expect(screen.getByText("MUG")).toBeInTheDocument();
-    expect(screen.getByText("POSTER")).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /HOODIE/ })).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /MUG/ })).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /POSTER/ })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /new/i })).not.toBeInTheDocument();
   });
 
@@ -98,7 +111,7 @@ describe("commerce administration projection", () => {
       user: { email: "buyer@example.test", id: "USER-1" },
     }] });
     renderCommerce("ADM014");
-    expect(await screen.findByText("ORDER-1")).toBeInTheDocument();
+    expect(await screen.findByRole("row", { name: /ORDER-1/ })).toBeInTheDocument();
     expect(screen.getByText("Stripe confirmed")).toBeInTheDocument();
     expect(screen.getByText("Not submitted")).toBeInTheDocument();
   });
@@ -115,9 +128,10 @@ describe("commerce administration projection", () => {
       user: { email: "donor@example.test", id: "USER-1" },
     }] });
     renderCommerce("ADM017");
-    expect(await screen.findByText("DONATION-1")).toBeInTheDocument();
+    const donationRow = await screen.findByRole("row", { name: /DONATION-1/ });
+    expect(donationRow).toBeInTheDocument();
     expect(screen.getByText("donor@example.test")).toBeInTheDocument();
-    expect(screen.getByText("CONFIRMED")).toBeInTheDocument();
+    expect(donationRow).toHaveTextContent("CONFIRMED");
     expect(screen.getByRole("link", { name: "Donations" })).toHaveAttribute("aria-current", "page");
   });
 
@@ -138,7 +152,7 @@ describe("commerce administration projection", () => {
     renderCommerce("ADM018", "/admin/orders/ORDER-1");
     expect(await screen.findByRole("heading", { name: "Order ORDER-1" })).toBeInTheDocument();
     expect(screen.getByText("Configured item")).toBeInTheDocument();
-    expect(screen.getByText("TICKET-1")).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /TICKET-1/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Receipt delivery unavailable" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Refund requires signed Stripe operation" })).toBeDisabled();
   });
@@ -147,7 +161,7 @@ describe("commerce administration projection", () => {
     mockCommerce({ subscriptions: [{ cancelAtPeriodEnd: true, canceledAt: null, createdAt: "2026-08-10T00:00:00.000Z", currentPeriodEndAt: null, currentPeriodStartAt: null, events: [{ eventType: "invoice.paid", occurredAt: "2026-08-10T00:01:00.000Z", providerStatus: "ACTIVE" }], membershipSubscriptionId: "MEMSUB-1", providerStatus: "ACTIVE", updatedAt: "2026-08-10T00:01:00.000Z", user: { email: "member@example.test", id: "USER-1" } }] });
     renderCommerce("ADM016");
     expect(await screen.findByRole("heading", { name: "Subscription transactions" })).toBeInTheDocument();
-    expect(screen.getByText("MEMSUB-1")).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /MEMSUB-1/ })).toBeInTheDocument();
     expect(screen.getByText("Cancels at period end")).toBeInTheDocument();
   });
 

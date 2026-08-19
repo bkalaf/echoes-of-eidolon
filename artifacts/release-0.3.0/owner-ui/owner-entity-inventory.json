@@ -1,0 +1,2815 @@
+{
+  "schemaVersion": "echoes-release-owner-entity-inventory-v1",
+  "generatedAt": "2026-08-18T21:02:24.010Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "apps/web/src/data/entity-admin-contract.json",
+      "sha256": "a2647bb71b9d65159006ffea9faa38f7593b1d9e291e2f76e0abb36f1cfefdca"
+    }
+  ],
+  "commands": [
+    {
+      "command": "derive owner entity inventory from entity-admin-contract.json",
+      "startedAt": "2026-08-18T21:02:24.010Z",
+      "finishedAt": "2026-08-18T21:02:24.010Z",
+      "exitCode": 0,
+      "logPath": null
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Every registered entity inventoried",
+      "expected": 34,
+      "observed": 34,
+      "pass": true
+    }
+  ],
+  "artifacts": [],
+  "blockers": [],
+  "notes": [
+    "Baseline inventory only; it does not claim the current UI renders every field."
+  ],
+  "entityCount": 34,
+  "entities": [
+    {
+      "entity": "AchievementDefinition",
+      "delegate": "achievementDefinition",
+      "idField": "achievementDefinitionId",
+      "fields": [
+        {
+          "name": "achievementDefinitionId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "chainKey",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "rank",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "imageAssetId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "status",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "imageAsset",
+          "kind": "relation",
+          "type": "ManagedAsset",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Architect",
+      "delegate": "architect",
+      "idField": "characterId",
+      "fields": [
+        {
+          "name": "characterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "department",
+          "kind": "enum",
+          "type": "ArchitectDepartment",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "character",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "witnesses",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Ark",
+      "delegate": "ark",
+      "idField": "arkId",
+      "fields": [
+        {
+          "name": "arkId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "status",
+          "kind": "enum",
+          "type": "ArkStatus",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "Breed",
+      "delegate": "breed",
+      "idField": "breedId",
+      "fields": [
+        {
+          "name": "breedId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "speciesId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "cultureId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "parentBreedId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "populationKind",
+          "kind": "enum",
+          "type": "PopulationKind",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "groupId",
+          "kind": "enum",
+          "type": "BreedGroupId",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "personalityId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "traits",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "accent",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "appearance",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "clothing",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architecture",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "foodBroad",
+          "kind": "enum",
+          "type": "FoodBroadCategory",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "foodSpecific",
+          "kind": "enum",
+          "type": "FoodSpecific",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "terrainBroad",
+          "kind": "enum",
+          "type": "TerrainBroad",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "terrainSpecific",
+          "kind": "enum",
+          "type": "SpecificTerrain",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "motivation",
+          "kind": "enum",
+          "type": "Motivation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "operatingStyle",
+          "kind": "enum",
+          "type": "OperatingStyle",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "structureOrientation",
+          "kind": "enum",
+          "type": "StructureOrientation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "administrationMode",
+          "kind": "enum",
+          "type": "AdministrationMode",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "ownershipMode",
+          "kind": "enum",
+          "type": "OwnershipMode",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "allocationMode",
+          "kind": "enum",
+          "type": "AllocationMode",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "legitimacyBasis",
+          "kind": "enum",
+          "type": "LegitimacyBasis",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "authoritySource",
+          "kind": "enum",
+          "type": "AuthoritySource",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "loquacity",
+          "kind": "enum",
+          "type": "Loquacity",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "emotionalTemperature",
+          "kind": "enum",
+          "type": "EmotionalTemperature",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "outlookOrientation",
+          "kind": "enum",
+          "type": "OutlookOrientation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "collaborativePosture",
+          "kind": "enum",
+          "type": "CollaborativePosture",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "species",
+          "kind": "relation",
+          "type": "Species",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "culture",
+          "kind": "relation",
+          "type": "Culture",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "personality",
+          "kind": "relation",
+          "type": "PersonalityExpression",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "parentBreed",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "childBreeds",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "characters",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "populationEvents",
+          "kind": "relation",
+          "type": "SettlementPopulationEvent",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "dominantInWorlds",
+          "kind": "relation",
+          "type": "SettlementWorld",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "researchValues",
+          "kind": "relation",
+          "type": "BreedResearchValue",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Character",
+      "delegate": "character",
+      "idField": "characterId",
+      "fields": [
+        {
+          "name": "characterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "displayName",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breedId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "occupationId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "worldKey",
+          "kind": "enum",
+          "type": "WorldKey",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "soulId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "gender",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "age",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "skinScaleColor",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "hairFurColor",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "eyeColor",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "clothing",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "faction",
+          "kind": "enum",
+          "type": "Faction",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "primaryAttribute",
+          "kind": "enum",
+          "type": "AbilityType",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "secondaryAttribute",
+          "kind": "enum",
+          "type": "AbilityType",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breed",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "occupation",
+          "kind": "relation",
+          "type": "Occupation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "soul",
+          "kind": "relation",
+          "type": "Soul",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "architect",
+          "kind": "relation",
+          "type": "Architect",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "witness",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "companion",
+          "kind": "relation",
+          "type": "Companion",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "concordFor",
+          "kind": "relation",
+          "type": "CompanionDef",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "ruinFor",
+          "kind": "relation",
+          "type": "CompanionDef",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "schismFor",
+          "kind": "relation",
+          "type": "CompanionDef",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Citation",
+      "delegate": "citation",
+      "idField": "citationId",
+      "fields": [
+        {
+          "name": "citationId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "sourceId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "locator",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "rendering",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "quality",
+          "kind": "enum",
+          "type": "CitationQuality",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "source",
+          "kind": "relation",
+          "type": "Source",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "research",
+          "kind": "relation",
+          "type": "Research",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "knowledgeItems",
+          "kind": "relation",
+          "type": "KnowledgeBaseItemCitation",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "disclosureCitations",
+          "kind": "relation",
+          "type": "KnowledgeBaseDisclosureCitation",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Companion",
+      "delegate": "companion",
+      "idField": "characterId",
+      "fields": [
+        {
+          "name": "characterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "companionKey",
+          "kind": "enum",
+          "type": "CompanionKey",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "character",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "companionDef",
+          "kind": "relation",
+          "type": "CompanionDef",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "partyMemberships",
+          "kind": "relation",
+          "type": "PartyMember",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "CompanionDef",
+      "delegate": "companionDef",
+      "idField": "companionKey",
+      "fields": [
+        {
+          "name": "companionKey",
+          "kind": "enum",
+          "type": "CompanionKey",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "concordCharacterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "ruinCharacterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "schismCharacterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "soulId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "heirloom",
+          "kind": "enum",
+          "type": "Heirloom",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "knowledgeSkill",
+          "kind": "enum",
+          "type": "KnowledgeSkill",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "awarenessSkill",
+          "kind": "enum",
+          "type": "AwarenessSkill",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "concordCharacter",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "ruinCharacter",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "schismCharacter",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "soul",
+          "kind": "relation",
+          "type": "Soul",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "companions",
+          "kind": "relation",
+          "type": "Companion",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "transformationBinding",
+          "kind": "relation",
+          "type": "CompanionTransformationBinding",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Constellation",
+      "delegate": "constellation",
+      "idField": "constellationId",
+      "fields": [
+        {
+          "name": "constellationId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "rightAscension",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "declination",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "beforeWitnesses",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "afterWitnesses",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Culture",
+      "delegate": "culture",
+      "idField": "cultureId",
+      "fields": [
+        {
+          "name": "cultureId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "appearance",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "clothing",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architecture",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breeds",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "settlementWorlds",
+          "kind": "relation",
+          "type": "SettlementWorld",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Definition",
+      "delegate": "definition",
+      "idField": "definitionId",
+      "fields": [
+        {
+          "name": "definitionId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "term",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "definition",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "Interlude",
+      "delegate": "interlude",
+      "idField": "interludeId",
+      "fields": [
+        {
+          "name": "interludeId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "interludeType",
+          "kind": "enum",
+          "type": "InterludeType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "summary",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "substitutionsFrom",
+          "kind": "relation",
+          "type": "InterludeSubstitution",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "substitutionsTo",
+          "kind": "relation",
+          "type": "InterludeSubstitution",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "InterludeSubstitution",
+      "delegate": "interludeSubstitution",
+      "idField": "interludeSubstitutionId",
+      "fields": [
+        {
+          "name": "interludeSubstitutionId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "interludeId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "replacementInterludeId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "reason",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "interlude",
+          "kind": "relation",
+          "type": "Interlude",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "replacementInterlude",
+          "kind": "relation",
+          "type": "Interlude",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "KnowledgeBaseItem",
+      "delegate": "knowledgeBaseItem",
+      "idField": "knowledgeBaseItemId",
+      "fields": [
+        {
+          "name": "knowledgeBaseItemId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "entityType",
+          "kind": "enum",
+          "type": "EntityType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "entityId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "title",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "baseContent",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "citations",
+          "kind": "relation",
+          "type": "KnowledgeBaseItemCitation",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "blocks",
+          "kind": "relation",
+          "type": "KnowledgeBaseBlock",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "disclosures",
+          "kind": "relation",
+          "type": "KnowledgeBaseDisclosure",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Layette",
+      "delegate": "layette",
+      "idField": "layetteId",
+      "fields": [
+        {
+          "name": "layetteId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "description",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "transformationBindings",
+          "kind": "relation",
+          "type": "CompanionTransformationBinding",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "LegendaryReward",
+      "delegate": "legendaryReward",
+      "idField": "legendaryRewardId",
+      "fields": [
+        {
+          "name": "legendaryRewardId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "description",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "witnesses",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Lesson",
+      "delegate": "lesson",
+      "idField": "lessonId",
+      "fields": [
+        {
+          "name": "lessonId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "description",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "PersonalityExpression",
+      "delegate": "personalityExpression",
+      "idField": "personalityId",
+      "fields": [
+        {
+          "name": "personalityId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "family",
+          "kind": "enum",
+          "type": "PersonalityFamily",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "expression",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "dominantFaction",
+          "kind": "enum",
+          "type": "Faction",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breeds",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Pillar",
+      "delegate": "pillar",
+      "idField": "pillarId",
+      "fields": [
+        {
+          "name": "pillarId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "domain",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "PointOfInterest",
+      "delegate": "pointOfInterest",
+      "idField": "pointOfInterestId",
+      "fields": [
+        {
+          "name": "pointOfInterestId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "kind",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "regionId",
+          "kind": "enum",
+          "type": "RegionId",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "longitude",
+          "kind": "scalar",
+          "type": "Float",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "latitude",
+          "kind": "scalar",
+          "type": "Float",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "services",
+          "kind": "relation",
+          "type": "PointOfInterestServiceAssignment",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "gameSessions",
+          "kind": "relation",
+          "type": "GameSession",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "PuzzleBlueprint",
+      "delegate": "puzzleBlueprint",
+      "idField": "puzzleBlueprintId",
+      "fields": [
+        {
+          "name": "puzzleBlueprintId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "title",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "primaryFamily",
+          "kind": "enum",
+          "type": "PuzzleFamily",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "difficultyTier",
+          "kind": "enum",
+          "type": "PuzzleDifficultyTier",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "versions",
+          "kind": "relation",
+          "type": "PuzzleBlueprintVersion",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Research",
+      "delegate": "research",
+      "idField": "researchId",
+      "fields": [
+        {
+          "name": "researchId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "notes",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "citationId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "category",
+          "kind": "enum",
+          "type": "ResearchCategory",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "citation",
+          "kind": "relation",
+          "type": "Citation",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "breedEvidence",
+          "kind": "relation",
+          "type": "BreedResearchEvidence",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Settlement",
+      "delegate": "settlement",
+      "idField": "settlementId",
+      "fields": [
+        {
+          "name": "settlementId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "siteId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "classification",
+          "kind": "enum",
+          "type": "SettlementClassification",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "site",
+          "kind": "relation",
+          "type": "Site",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "worlds",
+          "kind": "relation",
+          "type": "SettlementWorld",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "soundtrackAssignments",
+          "kind": "relation",
+          "type": "SettlementSoundtrackAssignment",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "SettlementPopulationEvent",
+      "delegate": "settlementPopulationEvent",
+      "idField": "settlementPopulationEventId",
+      "fields": [
+        {
+          "name": "settlementPopulationEventId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "settlementWorldId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "year",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "sequence",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breedId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "eventType",
+          "kind": "enum",
+          "type": "SettlementPopulationEventType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "populationDelta",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "settlementWorld",
+          "kind": "relation",
+          "type": "SettlementWorld",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "breed",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "SettlementWorld",
+      "delegate": "settlementWorld",
+      "idField": "settlementWorldId",
+      "fields": [
+        {
+          "name": "settlementWorldId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "settlementId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "worldKey",
+          "kind": "enum",
+          "type": "WorldKey",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "totalPopulation",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "dominantBreedId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "cultureId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "settlement",
+          "kind": "relation",
+          "type": "Settlement",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "dominantBreed",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "culture",
+          "kind": "relation",
+          "type": "Culture",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "populationEvents",
+          "kind": "relation",
+          "type": "SettlementPopulationEvent",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "cities",
+          "kind": "relation",
+          "type": "City",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "gameSessions",
+          "kind": "relation",
+          "type": "GameSession",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Site",
+      "delegate": "site",
+      "idField": "siteId",
+      "fields": [
+        {
+          "name": "siteId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "regionId",
+          "kind": "enum",
+          "type": "RegionId",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "candidateType",
+          "kind": "enum",
+          "type": "SettlementClassification",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "longitude",
+          "kind": "scalar",
+          "type": "Float",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "latitude",
+          "kind": "scalar",
+          "type": "Float",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "namingContext",
+          "kind": "json",
+          "type": "Json",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Persisted field is audited but intentionally excluded from this generic form."
+        },
+        {
+          "name": "settlement",
+          "kind": "relation",
+          "type": "Settlement",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "namingEligibility",
+          "kind": "relation",
+          "type": "AtlasNamingEligibility",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Soul",
+      "delegate": "soul",
+      "idField": "soulId",
+      "fields": [
+        {
+          "name": "soulId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "characters",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "witnessDefs",
+          "kind": "relation",
+          "type": "WitnessDef",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "companionDefs",
+          "kind": "relation",
+          "type": "CompanionDef",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Source",
+      "delegate": "source",
+      "idField": "sourceId",
+      "fields": [
+        {
+          "name": "sourceId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "title",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "authors",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "publisher",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "publicationDate",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "sourceType",
+          "kind": "enum",
+          "type": "SourceType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "urlOrIdentifier",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "citations",
+          "kind": "relation",
+          "type": "Citation",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Species",
+      "delegate": "species",
+      "idField": "speciesId",
+      "fields": [
+        {
+          "name": "speciesId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "speciesKind",
+          "kind": "enum",
+          "type": "SpeciesKind",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "scientificName",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "taxonomy",
+          "kind": "json",
+          "type": "Json",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "traits",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "accent",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "anthropomorphization",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "appearance",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "clothing",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architecture",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "originMode",
+          "kind": "enum",
+          "type": "OriginMode",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "reproductiveMethod",
+          "kind": "enum",
+          "type": "ReproductionMethod",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "juvenileStages",
+          "kind": "enum",
+          "type": "JuvenileStage",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "nurseryMode",
+          "kind": "enum",
+          "type": "NurseryMode",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "longevityClass",
+          "kind": "enum",
+          "type": "LongevityClass",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "mortalityMode",
+          "kind": "enum",
+          "type": "NaturalMortalityMode",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "soulDisposition",
+          "kind": "enum",
+          "type": "SoulDisposition",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "continuityGroup",
+          "kind": "enum",
+          "type": "ContinuityGroupType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "continuityPropagationMode",
+          "kind": "enum",
+          "type": "ContinuityPropagationMode",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "breeds",
+          "kind": "relation",
+          "type": "Breed",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "TimelineEvent",
+      "delegate": "timelineEvent",
+      "idField": "timelineEventId",
+      "fields": [
+        {
+          "name": "timelineEventId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "timelineEventType",
+          "kind": "enum",
+          "type": "TimelineEventType",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "summary",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "Tome",
+      "delegate": "tome",
+      "idField": "tomeId",
+      "fields": [
+        {
+          "name": "tomeId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "title",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "author",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "Transition",
+      "delegate": "transition",
+      "idField": "transitionId",
+      "fields": [
+        {
+          "name": "transitionId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "bookA",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "bookB",
+          "kind": "scalar",
+          "type": "Int",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "summary",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        }
+      ]
+    },
+    {
+      "entity": "Witness",
+      "delegate": "witness",
+      "idField": "characterId",
+      "fields": [
+        {
+          "name": "characterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "witnessDefId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "trueFlawName",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architectCharacterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "legendaryRewardId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "constellationBeforeId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "constellationAfterId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "character",
+          "kind": "relation",
+          "type": "Character",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "witnessDef",
+          "kind": "relation",
+          "type": "WitnessDef",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "architect",
+          "kind": "relation",
+          "type": "Architect",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "legendaryReward",
+          "kind": "relation",
+          "type": "LegendaryReward",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "constellationBefore",
+          "kind": "relation",
+          "type": "Constellation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "constellationAfter",
+          "kind": "relation",
+          "type": "Constellation",
+          "isRequired": false,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "WitnessDef",
+      "delegate": "witnessDef",
+      "idField": "witnessDefId",
+      "fields": [
+        {
+          "name": "witnessDefId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "name",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "department",
+          "kind": "enum",
+          "type": "ArchitectDepartment",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "apparentDomain",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "realDomain",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "color",
+          "kind": "json",
+          "type": "Json",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architectSoulId",
+          "kind": "scalar",
+          "type": "String",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EDITABLE",
+          "exclusionReason": null
+        },
+        {
+          "name": "architectSoul",
+          "kind": "relation",
+          "type": "Soul",
+          "isRequired": true,
+          "isList": false,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "name": "witnesses",
+          "kind": "relation",
+          "type": "Witness",
+          "isRequired": true,
+          "isList": true,
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    }
+  ]
+}

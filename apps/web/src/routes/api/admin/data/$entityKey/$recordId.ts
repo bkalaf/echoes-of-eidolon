@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { requireAdministration } from "../../../../../server/access";
-import { deleteEntityRecord, EntityAdminValidationError, entityAdminContract, entityForAdminKey, getEntityRecord, updateEntityRecord } from "../../../../../server/entity-admin";
+import { deleteEntityRecord, EntityAdminValidationError, entityAdminContract, entityForAdminKey, getEntityRecord, updateEntityRecordComposition } from "../../../../../server/entity-admin";
 import { getDatabase } from "../../../../../server/database";
 import { UnsupportedImportEntityError } from "../../../../../server/import-errors";
 
-const bodySchema = z.object({ record: z.unknown() }).strict();
+const bodySchema = z.object({ parentCharacter: z.unknown().optional(), record: z.unknown() }).strict();
 
 function errorResponse(error: unknown): Response {
   if (error instanceof Response) return error;
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/api/admin/data/$entityKey/$recordId")({
           await requireAdministration(request);
           const entity = entityForAdminKey(params.entityKey);
           const body = bodySchema.parse(await request.json());
-          const record = await updateEntityRecord(getDatabase(), entity, params.recordId, body.record);
+          const record = await updateEntityRecordComposition(getDatabase(), entity, params.recordId, body.record, body.parentCharacter);
           return Response.json({ record });
         } catch (error) {
           return errorResponse(error);

@@ -1,0 +1,2579 @@
+{
+  "schemaVersion": "echoes-owner-form-inventory-v2",
+  "generatedAt": "2026-08-18T23:05:07.237Z",
+  "sharedContract": {
+    "deterministicOrder": true,
+    "everyWritableFieldHasInput": true,
+    "everyReadOnlyFieldVisible": true,
+    "nullableClear": true,
+    "relationSearchByLabelAndId": true,
+    "rawForeignKeyOnlyForbidden": true,
+    "subtypeParentCharacterVisible": true,
+    "witnessDefSpectralColor": [
+      "SPECTRAL_VIOLET",
+      "GREEN",
+      "WHITE",
+      "total"
+    ]
+  },
+  "genericForms": [
+    {
+      "route": "/admin/data/achievement-definition/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "AchievementDefinition",
+      "canonicalFields": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset"
+      ],
+      "writableFields": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status"
+      ],
+      "renderedInputs": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status"
+      ],
+      "renderedReadOnlyFields": [
+        "imageAsset"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "imageAssetId",
+          "relationField": "imageAsset",
+          "targetEntity": "ManagedAsset",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/architect/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Architect",
+      "canonicalFields": [
+        "characterId",
+        "department",
+        "character",
+        "witnesses"
+      ],
+      "writableFields": [
+        "characterId",
+        "department"
+      ],
+      "renderedInputs": [
+        "characterId",
+        "department"
+      ],
+      "renderedReadOnlyFields": [
+        "character",
+        "witnesses"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "characterId",
+          "relationField": "character",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": {
+        "entity": "Character",
+        "canonicalFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute",
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ]
+      }
+    },
+    {
+      "route": "/admin/data/ark/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Ark",
+      "canonicalFields": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "writableFields": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "renderedInputs": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/breed/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Breed",
+      "canonicalFields": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "writableFields": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture"
+      ],
+      "renderedInputs": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture"
+      ],
+      "renderedReadOnlyFields": [
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "speciesId",
+          "relationField": "species",
+          "targetEntity": "Species",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "cultureId",
+          "relationField": "culture",
+          "targetEntity": "Culture",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "personalityId",
+          "relationField": "personality",
+          "targetEntity": "PersonalityExpression",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "parentBreedId",
+          "relationField": "parentBreed",
+          "targetEntity": "Breed",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/character/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Character",
+      "canonicalFields": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "writableFields": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "renderedInputs": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "renderedReadOnlyFields": [
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "breedId",
+          "relationField": "breed",
+          "targetEntity": "Breed",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "occupationId",
+          "relationField": "occupation",
+          "targetEntity": "Occupation",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "soulId",
+          "relationField": "soul",
+          "targetEntity": "Soul",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/citation/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Citation",
+      "canonicalFields": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "writableFields": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality"
+      ],
+      "renderedInputs": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality"
+      ],
+      "renderedReadOnlyFields": [
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "sourceId",
+          "relationField": "source",
+          "targetEntity": "Source",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/companion/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Companion",
+      "canonicalFields": [
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "writableFields": [
+        "characterId",
+        "companionKey"
+      ],
+      "renderedInputs": [
+        "characterId",
+        "companionKey"
+      ],
+      "renderedReadOnlyFields": [
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "characterId",
+          "relationField": "character",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "companionKey",
+          "relationField": "companionDef",
+          "targetEntity": "CompanionDef",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": {
+        "entity": "Character",
+        "canonicalFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute",
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ]
+      }
+    },
+    {
+      "route": "/admin/data/companion-def/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "CompanionDef",
+      "canonicalFields": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "writableFields": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill"
+      ],
+      "renderedInputs": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill"
+      ],
+      "renderedReadOnlyFields": [
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "concordCharacterId",
+          "relationField": "concordCharacter",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "ruinCharacterId",
+          "relationField": "ruinCharacter",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "schismCharacterId",
+          "relationField": "schismCharacter",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "soulId",
+          "relationField": "soul",
+          "targetEntity": "Soul",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/constellation/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Constellation",
+      "canonicalFields": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "writableFields": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination"
+      ],
+      "renderedInputs": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination"
+      ],
+      "renderedReadOnlyFields": [
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/culture/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Culture",
+      "canonicalFields": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds"
+      ],
+      "writableFields": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture"
+      ],
+      "renderedInputs": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture"
+      ],
+      "renderedReadOnlyFields": [
+        "breeds",
+        "settlementWorlds"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/definition/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Definition",
+      "canonicalFields": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "writableFields": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "renderedInputs": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/interlude/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Interlude",
+      "canonicalFields": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "writableFields": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary"
+      ],
+      "renderedInputs": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary"
+      ],
+      "renderedReadOnlyFields": [
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/interlude-substitution/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "InterludeSubstitution",
+      "canonicalFields": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude"
+      ],
+      "writableFields": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason"
+      ],
+      "renderedInputs": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason"
+      ],
+      "renderedReadOnlyFields": [
+        "interlude",
+        "replacementInterlude"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "interludeId",
+          "relationField": "interlude",
+          "targetEntity": "Interlude",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "replacementInterludeId",
+          "relationField": "replacementInterlude",
+          "targetEntity": "Interlude",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/knowledge-base-item/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "KnowledgeBaseItem",
+      "canonicalFields": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "writableFields": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent"
+      ],
+      "renderedInputs": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent"
+      ],
+      "renderedReadOnlyFields": [
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/layette/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Layette",
+      "canonicalFields": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings"
+      ],
+      "writableFields": [
+        "layetteId",
+        "name",
+        "description"
+      ],
+      "renderedInputs": [
+        "layetteId",
+        "name",
+        "description"
+      ],
+      "renderedReadOnlyFields": [
+        "transformationBindings"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/legendary-reward/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "LegendaryReward",
+      "canonicalFields": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses"
+      ],
+      "writableFields": [
+        "legendaryRewardId",
+        "name",
+        "description"
+      ],
+      "renderedInputs": [
+        "legendaryRewardId",
+        "name",
+        "description"
+      ],
+      "renderedReadOnlyFields": [
+        "witnesses"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/lesson/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Lesson",
+      "canonicalFields": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "writableFields": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "renderedInputs": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/personality-expression/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "PersonalityExpression",
+      "canonicalFields": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds"
+      ],
+      "writableFields": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction"
+      ],
+      "renderedInputs": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction"
+      ],
+      "renderedReadOnlyFields": [
+        "breeds"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/pillar/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Pillar",
+      "canonicalFields": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "writableFields": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "renderedInputs": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/point-of-interest/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "PointOfInterest",
+      "canonicalFields": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions"
+      ],
+      "writableFields": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude"
+      ],
+      "renderedInputs": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude"
+      ],
+      "renderedReadOnlyFields": [
+        "services",
+        "gameSessions"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/puzzle-blueprint/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "PuzzleBlueprint",
+      "canonicalFields": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions"
+      ],
+      "writableFields": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier"
+      ],
+      "renderedInputs": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier"
+      ],
+      "renderedReadOnlyFields": [
+        "versions"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/research/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Research",
+      "canonicalFields": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence"
+      ],
+      "writableFields": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category"
+      ],
+      "renderedInputs": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category"
+      ],
+      "renderedReadOnlyFields": [
+        "citation",
+        "breedEvidence"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "citationId",
+          "relationField": "citation",
+          "targetEntity": "Citation",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/settlement/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Settlement",
+      "canonicalFields": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "writableFields": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification"
+      ],
+      "renderedInputs": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification"
+      ],
+      "renderedReadOnlyFields": [
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "siteId",
+          "relationField": "site",
+          "targetEntity": "Site",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/settlement-population-event/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "SettlementPopulationEvent",
+      "canonicalFields": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed"
+      ],
+      "writableFields": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta"
+      ],
+      "renderedInputs": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta"
+      ],
+      "renderedReadOnlyFields": [
+        "settlementWorld",
+        "breed"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "settlementWorldId",
+          "relationField": "settlementWorld",
+          "targetEntity": "SettlementWorld",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "breedId",
+          "relationField": "breed",
+          "targetEntity": "Breed",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/settlement-world/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "SettlementWorld",
+      "canonicalFields": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "writableFields": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId"
+      ],
+      "renderedInputs": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId"
+      ],
+      "renderedReadOnlyFields": [
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "settlementId",
+          "relationField": "settlement",
+          "targetEntity": "Settlement",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "dominantBreedId",
+          "relationField": "dominantBreed",
+          "targetEntity": "Breed",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "cultureId",
+          "relationField": "culture",
+          "targetEntity": "Culture",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/site/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Site",
+      "canonicalFields": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "writableFields": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude"
+      ],
+      "renderedInputs": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude"
+      ],
+      "renderedReadOnlyFields": [
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/soul/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Soul",
+      "canonicalFields": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "writableFields": [
+        "soulId",
+        "name"
+      ],
+      "renderedInputs": [
+        "soulId",
+        "name"
+      ],
+      "renderedReadOnlyFields": [
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/source/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Source",
+      "canonicalFields": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations"
+      ],
+      "writableFields": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier"
+      ],
+      "renderedInputs": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier"
+      ],
+      "renderedReadOnlyFields": [
+        "citations"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/species/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Species",
+      "canonicalFields": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds"
+      ],
+      "writableFields": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode"
+      ],
+      "renderedInputs": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode"
+      ],
+      "renderedReadOnlyFields": [
+        "breeds"
+      ],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/timeline-event/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "TimelineEvent",
+      "canonicalFields": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "writableFields": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "renderedInputs": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/tome/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Tome",
+      "canonicalFields": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "writableFields": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "renderedInputs": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/transition/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Transition",
+      "canonicalFields": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "writableFields": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "renderedInputs": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookups": [],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/witness/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Witness",
+      "canonicalFields": [
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "writableFields": [
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "renderedInputs": [
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "renderedReadOnlyFields": [
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "characterId",
+          "relationField": "character",
+          "targetEntity": "Character",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "witnessDefId",
+          "relationField": "witnessDef",
+          "targetEntity": "WitnessDef",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "architectCharacterId",
+          "relationField": "architect",
+          "targetEntity": "Architect",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "legendaryRewardId",
+          "relationField": "legendaryReward",
+          "targetEntity": "LegendaryReward",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "constellationBeforeId",
+          "relationField": "constellationBefore",
+          "targetEntity": "Constellation",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        },
+        {
+          "foreignKey": "constellationAfterId",
+          "relationField": "constellationAfter",
+          "targetEntity": "Constellation",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": {
+        "entity": "Character",
+        "canonicalFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute",
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ]
+      }
+    },
+    {
+      "route": "/admin/data/witness-def/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "WitnessDef",
+      "canonicalFields": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses"
+      ],
+      "writableFields": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId"
+      ],
+      "renderedInputs": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId"
+      ],
+      "renderedReadOnlyFields": [
+        "architectSoul",
+        "witnesses"
+      ],
+      "missingFields": [],
+      "relationLookups": [
+        {
+          "foreignKey": "architectSoulId",
+          "relationField": "architectSoul",
+          "targetEntity": "Soul",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    }
+  ],
+  "sourceEditors": [
+    {
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "component": "OccupationAdminPage",
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:33",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "key",
+        "name",
+        "description",
+        "active",
+        "affinity"
+      ],
+      "writableFields": [
+        "key",
+        "name",
+        "description",
+        "active",
+        "affinity"
+      ],
+      "renderedInputs": [
+        "key",
+        "name",
+        "description",
+        "active",
+        "affinity"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "component": "CompanionPlannerAttributesPage",
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:157",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "gender",
+        "age",
+        "faction",
+        "occupationId",
+        "primary",
+        "secondary",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "worldHeirloom"
+      ],
+      "writableFields": [
+        "gender",
+        "age",
+        "faction",
+        "occupationId",
+        "primary",
+        "secondary",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "worldHeirloom"
+      ],
+      "renderedInputs": [
+        "gender",
+        "age",
+        "faction",
+        "occupationId",
+        "primary",
+        "secondary",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "worldHeirloom"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "occupationId",
+          "targetEntity": "Occupation",
+          "presentationRule": "Occupation name + occupationId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "component": "TransformationAuthoringPage",
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:165",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "companionKey",
+        "layetteId"
+      ],
+      "writableFields": [
+        "companionKey",
+        "layetteId"
+      ],
+      "renderedInputs": [
+        "companionKey",
+        "layetteId"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "companionKey",
+          "targetEntity": "CompanionDef",
+          "presentationRule": "Soul name or derived Companion label + companionKey",
+          "reviewStatus": "PASS"
+        },
+        {
+          "field": "layetteId",
+          "targetEntity": "Layette",
+          "presentationRule": "Layette name + layetteId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/occupations",
+        "/admin/companion-planner",
+        "/admin/money",
+        "/admin/atlas/settlements/:id/soundtracks"
+      ],
+      "component": "SettlementSoundtracksPage",
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:208",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "soundtrackId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "writableFields": [
+        "soundtrackId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "renderedInputs": [
+        "soundtrackId",
+        "category",
+        "ordinal",
+        "active"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "soundtrackId",
+          "targetEntity": "Soundtrack",
+          "presentationRule": "Soundtrack displayName + soundtrackId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/assets",
+        "/admin/prompts"
+      ],
+      "component": "PromptManager",
+      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:147",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "family",
+        "status",
+        "purpose",
+        "targetType",
+        "targetId",
+        "promptText",
+        "responseContract",
+        "versionText",
+        "versionContract",
+        "resultVersionId",
+        "resultAssetId"
+      ],
+      "writableFields": [
+        "family",
+        "status",
+        "purpose",
+        "targetType",
+        "targetId",
+        "promptText",
+        "responseContract",
+        "versionText",
+        "versionContract",
+        "resultVersionId",
+        "resultAssetId"
+      ],
+      "renderedInputs": [
+        "family",
+        "status",
+        "purpose",
+        "targetType",
+        "targetId",
+        "promptText",
+        "responseContract",
+        "versionText",
+        "versionContract",
+        "resultVersionId",
+        "resultAssetId"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "resultAssetId",
+          "targetEntity": "ManagedAsset",
+          "presentationRule": "ManagedAsset objectKey + managedAssetId, filtered by Prompt family media kind",
+          "reviewStatus": "PASS"
+        },
+        {
+          "field": "resultVersionId",
+          "targetEntity": "PromptVersion",
+          "presentationRule": "Prompt version ordinal + promptVersionId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/atlas/pois",
+        "/admin/atlas/sites",
+        "/admin/atlas/sites/:siteId"
+      ],
+      "component": "FoundCity",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:141",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "year",
+        "originId",
+        "breedId",
+        "amount",
+        "rawResponse"
+      ],
+      "writableFields": [
+        "year",
+        "originId",
+        "breedId",
+        "amount",
+        "rawResponse"
+      ],
+      "renderedInputs": [
+        "year",
+        "originId",
+        "breedId",
+        "amount",
+        "rawResponse"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "breedId",
+          "targetEntity": "Breed",
+          "presentationRule": "Breed name + breedId + available population",
+          "reviewStatus": "PASS"
+        },
+        {
+          "field": "originId",
+          "targetEntity": "SettlementWorld",
+          "presentationRule": "Settlement name + settlementId + settlementWorldId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/access/approvals",
+        "/admin/beta-invitations",
+        "/admin/access/roles"
+      ],
+      "component": "BetaInvitationAdminPage",
+      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:95",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "invitationExpiry"
+      ],
+      "writableFields": [
+        "invitationExpiry"
+      ],
+      "renderedInputs": [
+        "invitationExpiry"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/campaign"
+      ],
+      "component": "CampaignCreatePanel",
+      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:209",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "objectType",
+        "payload"
+      ],
+      "writableFields": [
+        "objectType",
+        "payload"
+      ],
+      "renderedInputs": [
+        "objectType",
+        "payload"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "component": "VersionEditor",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:136",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "code",
+        "pathPattern",
+        "description",
+        "valueKind",
+        "monotonicPolicy",
+        "minValue",
+        "maxValue",
+        "allowedOperations",
+        "enumValues",
+        "referenceTypes",
+        "parameters"
+      ],
+      "writableFields": [
+        "code",
+        "pathPattern",
+        "description",
+        "valueKind",
+        "monotonicPolicy",
+        "minValue",
+        "maxValue",
+        "allowedOperations",
+        "enumValues",
+        "referenceTypes",
+        "parameters"
+      ],
+      "renderedInputs": [
+        "code",
+        "pathPattern",
+        "description",
+        "valueKind",
+        "monotonicPolicy",
+        "minValue",
+        "maxValue",
+        "allowedOperations",
+        "enumValues",
+        "referenceTypes",
+        "parameters"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "component": "ConditionBuilder",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:165",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "code",
+        "scopeType",
+        "scopeId",
+        "bindings",
+        "operator",
+        "value"
+      ],
+      "writableFields": [
+        "code",
+        "scopeType",
+        "scopeId",
+        "bindings",
+        "operator",
+        "value"
+      ],
+      "renderedInputs": [
+        "code",
+        "scopeType",
+        "scopeId",
+        "bindings",
+        "operator",
+        "value"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/capabilities",
+        "/admin/capabilities/:id",
+        "/admin/capabilities/inspector"
+      ],
+      "component": "Inspector",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:184",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "scopeId",
+        "capabilityAddressId"
+      ],
+      "writableFields": [
+        "scopeId",
+        "capabilityAddressId"
+      ],
+      "renderedInputs": [
+        "scopeId",
+        "capabilityAddressId"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/cities",
+        "/admin/cities/:id/:view"
+      ],
+      "component": "GeometryEditor",
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:122",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "identifier",
+        "parcelId",
+        "geometry"
+      ],
+      "writableFields": [
+        "identifier",
+        "parcelId",
+        "geometry"
+      ],
+      "renderedInputs": [
+        "identifier",
+        "parcelId",
+        "geometry"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "parcelId",
+          "targetEntity": "Parcel",
+          "presentationRule": "Derived Parcel label + parcelId; Parcel has no separate canonical name field",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "component": "ProductList",
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:209",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "storeProductId",
+        "name",
+        "productType",
+        "artworkAssetId"
+      ],
+      "writableFields": [
+        "storeProductId",
+        "name",
+        "productType",
+        "artworkAssetId"
+      ],
+      "renderedInputs": [
+        "storeProductId",
+        "name",
+        "productType",
+        "artworkAssetId"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "artworkAssetId",
+          "targetEntity": "ManagedAsset",
+          "presentationRule": "ManagedAsset objectKey + managedAssetId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/store",
+        "/admin/store/items",
+        "/admin/orders"
+      ],
+      "component": "ProductEditor",
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:263",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "name",
+        "productType",
+        "artworkAssetId",
+        "published",
+        "storeVariantId",
+        "priceInCents",
+        "size",
+        "color",
+        "stripePriceReference",
+        "printfulVariantReference",
+        "available"
+      ],
+      "writableFields": [
+        "name",
+        "productType",
+        "artworkAssetId",
+        "published",
+        "storeVariantId",
+        "priceInCents",
+        "size",
+        "color",
+        "stripePriceReference",
+        "printfulVariantReference",
+        "available"
+      ],
+      "renderedInputs": [
+        "name",
+        "productType",
+        "artworkAssetId",
+        "published",
+        "storeVariantId",
+        "priceInCents",
+        "size",
+        "color",
+        "stripePriceReference",
+        "printfulVariantReference",
+        "available"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "artworkAssetId",
+          "targetEntity": "ManagedAsset",
+          "presentationRule": "ManagedAsset objectKey + managedAssetId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/data/:entity/import"
+      ],
+      "component": "EntityImportPage",
+      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:98",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "format",
+        "source"
+      ],
+      "writableFields": [
+        "format",
+        "source"
+      ],
+      "renderedInputs": [
+        "format",
+        "source"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/perks/:id"
+      ],
+      "component": "PerkEditor",
+      "source": "apps/web/src/screens/admin/PerkAdminPage.tsx:86",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "name",
+        "description"
+      ],
+      "writableFields": [
+        "name",
+        "description"
+      ],
+      "renderedInputs": [
+        "name",
+        "description"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/puzzles/blueprints",
+        "/admin/puzzles/:id/test"
+      ],
+      "component": "BlueprintList",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:72",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "puzzleBlueprintId",
+        "generatorVersion",
+        "primaryFamily",
+        "difficultyTier",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "writableFields": [
+        "puzzleBlueprintId",
+        "generatorVersion",
+        "primaryFamily",
+        "difficultyTier",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "renderedInputs": [
+        "puzzleBlueprintId",
+        "generatorVersion",
+        "primaryFamily",
+        "difficultyTier",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/puzzles/blueprints",
+        "/admin/puzzles/:id/test"
+      ],
+      "component": "BlueprintEditor",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:107",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "nextVersion",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "writableFields": [
+        "nextVersion",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "renderedInputs": [
+        "nextVersion",
+        "directionalHint",
+        "guidedHint"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/puzzles/blueprints",
+        "/admin/puzzles/:id/test"
+      ],
+      "component": "PreviewIdentityLab",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:130",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "Id",
+        "generatorVersion",
+        "attempt",
+        "campaignId",
+        "playerId",
+        "seed"
+      ],
+      "writableFields": [
+        "Id",
+        "generatorVersion",
+        "attempt",
+        "campaignId",
+        "playerId",
+        "seed"
+      ],
+      "renderedInputs": [
+        "Id",
+        "generatorVersion",
+        "attempt",
+        "campaignId",
+        "playerId",
+        "seed"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    },
+    {
+      "routeOrState": [
+        "/admin/atlas/settlements",
+        "/admin/atlas/settlements/migrate"
+      ],
+      "component": "SettlementAdminPage",
+      "source": "apps/web/src/screens/admin/SettlementAdminPage.tsx:84",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [
+        "year",
+        "originId",
+        "destinationId",
+        "breedId",
+        "amount"
+      ],
+      "writableFields": [
+        "year",
+        "originId",
+        "destinationId",
+        "breedId",
+        "amount"
+      ],
+      "renderedInputs": [
+        "year",
+        "originId",
+        "destinationId",
+        "breedId",
+        "amount"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [
+        {
+          "field": "breedId",
+          "targetEntity": "Breed",
+          "presentationRule": "Breed name + breedId + available population",
+          "reviewStatus": "PASS"
+        },
+        {
+          "field": "destinationId",
+          "targetEntity": "SettlementWorld",
+          "presentationRule": "Settlement name + settlementId + settlementWorldId",
+          "reviewStatus": "PASS"
+        },
+        {
+          "field": "originId",
+          "targetEntity": "SettlementWorld",
+          "presentationRule": "Settlement name + settlementId + settlementWorldId",
+          "reviewStatus": "PASS"
+        }
+      ],
+      "auditStatus": "REVIEWED_COMPLETE",
+      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Every generic entity is inventoried",
+      "expected": 34,
+      "observed": 34,
+      "pass": true
+    },
+    {
+      "name": "Every generic canonical field is rendered",
+      "expected": 282,
+      "observed": 282,
+      "pass": true
+    },
+    {
+      "name": "Every owning relation uses a named lookup",
+      "expected": 32,
+      "observed": 32,
+      "pass": true
+    },
+    {
+      "name": "Every bespoke owner editor is reviewed with zero missing controls",
+      "expected": 20,
+      "observed": 20,
+      "pass": true
+    }
+  ],
+  "notes": [
+    "Generic canonical forms are contract-complete.",
+    "Bespoke operation editors are source-discovered and reviewed against their server write contracts; command identities and polymorphic locator values are not falsely classified as database relations."
+  ]
+}

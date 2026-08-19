@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-037",
+  "tier": "TIER_1_INITIATE",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:ba36c533484a1656",
+  "instanceChecksum": "61111405d3bd0541b2e9888f5748e79f374a036a64d99fae46583929b2b2b33c",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "SIX_CHARACTER_HEXADECIMAL",
+    "concept": "A coherent melody uses note names A-F as hexadecimal digits; G is only a control marker. Six-note groups form colors in a 32×4 grid whose repeated structures reveal a generated code.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Extract written note names A-F without requiring pitch recognition, group six at a time, render colors, and decode the 3×4 glyph field.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "The sounds matter less as music than as written note names."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Keep only note names A through F, group them six at a time, and render each group as a hexadecimal color in the stated grid."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "MUSIC_NOTATION",
+      "NOTE_EVENT_TABLE",
+      "COLOR_GRID"
+    ],
+    "accessibilityModes": [
+      "NOTATION",
+      "CAPTIONS",
+      "NOTE_EVENT_TABLE",
+      "COLOR_LABELS",
+      "TEXTURE_GRID"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

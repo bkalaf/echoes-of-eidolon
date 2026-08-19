@@ -1,0 +1,17 @@
+Release 0.3.0 T300 full-world 2D Atlas projection
+
+RED
+- Focused viewport suite failed because AtlasMapViewport did not exist.
+
+GREEN
+- Shared component/unit slice: 3 files passed, 6/6 tests passed.
+- TypeScript typecheck passed.
+- Site and POI screens both use the shared viewport.
+- The stage is responsive and 2:1; image and marker overlay share the same stage.
+- The image uses object-fit: contain; no authoritative Atlas map selector uses cover.
+- EPSG:4326 bounds and SITE-0401 / Ascendancy projection are verified.
+
+BLOCKED BROWSER CLASS
+- Playwright was attempted after constructing a proper local dependency tree.
+- The configured webServer process could start Vite, but the Playwright runner could not establish a reachable loopback server and exited 1.
+- Required real-Chromium reset, screenshot, and resize proof remains NOT_RUN.

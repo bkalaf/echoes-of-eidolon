@@ -1,0 +1,81 @@
+T203 universal owner/admin forms — active implementation evidence
+
+RED 1
+Command: pnpm --filter web exec vitest run tests/unit/owner-form-contract.test.ts
+Exit: 1
+Result: the universal owner-form presentation module did not exist.
+
+GREEN 1
+Exit: 0
+Result: all 34 canonical entity contracts retain every field exactly once; all owning foreign keys resolve a named lookup contract; Character subtypes declare parent composition; WitnessDef uses its exact sections and spectral control.
+
+RED 2
+Command: pnpm --filter web exec vitest run tests/unit/entity-data-admin.test.tsx
+Exit: 1
+Result: the WitnessDef Soul lookup exposed only a raw ID instead of the human-readable Soul name.
+
+GREEN 2
+Exit: 0
+Result: WitnessDef renders Identity, Source Architect / Soul, Domains, and Spectral Color sections; Soul lookup is name-first/ID-second; all three percentage inputs and total are visible; Witness renders every parent Character field.
+
+RED 3
+Command: pnpm --filter web exec vitest run tests/unit/entity-form-coverage.test.ts
+Exit: 1
+Result: WitnessDef color JSON could submit without totaling 100.
+
+GREEN 3
+Exit: 0
+Result: the exact three channels must be finite percentages from 0 through 100 and total 100 before submission.
+
+RED 4
+Command: pnpm --filter web exec vitest run tests/unit/owner-form-inventory.test.ts
+Exit: 1
+Result: the prior syntactic baseline lacked canonical form contracts and the required browser matrix.
+
+GREEN 4
+Command: pnpm --filter web owner-ui:forms && pnpm --filter web exec vitest run tests/unit/owner-form-inventory.test.ts
+Exit: 0
+Result: 34 generic canonical contracts inventoried with generic missingFields: []; mandatory Chromium scenarios recorded as BLOCKED, not executed.
+
+RED 5
+Command: pnpm --filter web exec vitest run tests/unit/owner-form-inventory.test.ts -t "records every"
+Exit: 1
+Result: bespoke editors were only source-discovered and had unresolved relation review status.
+
+GREEN 5
+Exit: 0
+Result: 20 operation-specific owner editors are reviewed against their server write contracts; actual relations have explicit label-plus-ID presentation rules, command identities are not falsely classified as foreign keys, and every reviewed editor has missingFields: [].
+
+RED 6
+Command: pnpm --filter web exec vitest run tests/unit/asset-prompt-admin.test.tsx -t "loads only matching"
+Exit: 1
+Result: Prompt result association fetched an unfiltered managed-asset collection.
+
+GREEN 6
+Exit: 0
+Result: IMAGE prompts load IMAGE assets and MUSIC prompts load AUDIO assets; result options render objectKey first and managedAssetId second.
+
+RED 7
+Command: pnpm --filter web exec vitest run tests/unit/commerce-admin.test.tsx -t "selects managed artwork"
+Exit: 1
+Result: Store product artwork was a raw identifier textbox.
+
+GREEN 7
+Exit: 0
+Result: Store product create/edit forms select only persisted IMAGE assets, rendering objectKey first and managedAssetId second with an explicit None option.
+
+RED 8
+Command: pnpm --filter web exec vitest run tests/unit/city-builder-admin.test.tsx -t "nameless Parcel"
+Exit: 1
+Result: the Building editor displayed only a raw Parcel ID.
+
+GREEN 8
+Exit: 0
+Result: Parcel, which has no separate canonical name field, uses an explicit derived human label with the canonical parcelId secondary.
+
+CUMULATIVE CURRENT SLICE
+15 focused files passed; 73 tests passed.
+Typecheck: PASS
+git diff --check: PASS
+
+T203 implementation and static/component verification are complete. The required real-Chromium form matrix remains BLOCKED under B08 and is not claimed as executed.

@@ -1,0 +1,17 @@
+Witness Puzzle Box 70 production-generator TDD
+2026-08-18 · local isolated release worktree · Node 22.22.0 · pnpm 10.33.2
+
+RED
+- puzzle-production-generators.test.ts failed because puzzle-production-generators.ts did not exist.
+- puzzle-prototype-lab.test.tsx failed because non-tutorial productionPuzzles were ignored and no Production generator surface rendered.
+
+GREEN
+- 2026-08-18T17:09:25-07:00: puzzle-production-generators.test.ts and puzzle-prototype-lab.test.tsx passed, 2 files / 10 tests.
+- 2026-08-18T17:11:40-07:00: focused Puzzle suite passed, 8 files / 28 tests.
+- Strict TypeScript passed.
+- Targeted ESLint passed.
+- Production build passed; client and server bundles completed.
+- Required coverage schema passed with exactly 70 PASS rows, five tiers of 14, and nine families.
+
+BOUNDARY
+- No database import, migration, live Puzzle runtime record, timer start, deployment, tag, publication, or GitHub mutation occurred.

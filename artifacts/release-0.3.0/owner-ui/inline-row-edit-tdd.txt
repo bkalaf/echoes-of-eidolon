@@ -1,0 +1,19 @@
+T204 inline owner row editing — active implementation evidence
+
+RED
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/entity-data-admin.test.tsx
+Exit: 1
+Result: 3 new tests failed because registry tables exposed only View Record/Delete, no explicit Edit Row or Save Row, no retained-error draft, and no Character/Witness composed PATCH.
+
+GREEN
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/entity-data-admin.test.tsx tests/unit/entity-admin.test.ts
+Exit: 0
+Result: explicit one-row Edit Row -> accessible checkmark Save passes; other rows remain read-only; IDs stay immutable; scalar, enum, and name-first relation editors persist exact values; server failures retain the row draft; Character and Witness values use one composed PATCH.
+
+CUMULATIVE LOCAL SLICE
+13 Entity Data Admin component tests pass.
+24 Entity Data Admin plus canonical server tests pass.
+Typecheck: PASS.
+Owner table inventory: 34/34 editable registry tables advertise the shared inline contract; Witness, Architect, and Companion include parent Character composition.
+
+Required real-Chromium interaction evidence remains BLOCKED under B08 and is not claimed as executed.

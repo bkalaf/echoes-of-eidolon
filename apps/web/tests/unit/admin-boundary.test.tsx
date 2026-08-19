@@ -107,7 +107,7 @@ describe("administrative authorization boundary", () => {
     fireEvent.click(screen.getByRole("button", { name: "Validate & Preview" }));
 
     expect(screen.getByRole("heading", { name: "Concrete preview" })).toBeInTheDocument();
-    expect(screen.getByText("SOUL-1")).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "SOUL-1" })).toBeInTheDocument();
     expect(screen.getByText("A supplied soul")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Apply Soul import" }));
     await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
@@ -185,8 +185,8 @@ describe("administrative authorization boundary", () => {
     const approve = await screen.findByRole("button", { name: "Approve & send" });
     expect(approve).toBeDisabled();
     fireEvent.change(screen.getByLabelText("Invitation expiry"), { target: { value: "2026-08-20T12:00" } });
-    expect(approve).toBeEnabled();
-    fireEvent.click(approve);
+    await vi.waitFor(() => expect(screen.getByRole("button", { name: "Approve & send" })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: "Approve & send" }));
 
     await vi.waitFor(() => expect(fetch).toHaveBeenCalledWith(
       "/api/admin/beta-invitations/request-1/approve",
@@ -217,7 +217,7 @@ describe("administrative authorization boundary", () => {
 
     expect(await screen.findByRole("link", { name: "Account Name" })).toHaveAttribute("href", "/admin/access/user-1");
     expect(screen.getByText("MEMBER")).toBeInTheDocument();
-    expect(screen.getByText("Yes")).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "Yes" })).toBeInTheDocument();
     expect(screen.queryByText(/session-token|bearer-token/)).not.toBeInTheDocument();
   });
 

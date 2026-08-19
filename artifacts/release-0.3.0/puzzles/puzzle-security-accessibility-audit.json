@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T17:13:00-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local isolated release worktree",
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+    },
+    {
+      "path": "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json",
+      "sha256": "bbe1cd0721a9d9af0017d4778dc85d8c7f07f6681a5578218b1dd460aeb754f7"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --filter web exec vitest run tests/unit/puzzle-blueprint-import.test.ts tests/unit/puzzle-blueprint-package.test.ts tests/unit/puzzle-component-reconciliation.test.ts tests/unit/puzzle-production-generators.test.ts tests/unit/puzzle-prototype-catalog.test.ts tests/unit/puzzle-prototype-lab.test.tsx tests/unit/puzzle-prototypes.test.ts tests/unit/puzzle-tutorial-generators.test.ts",
+      "startedAt": "2026-08-18T17:11:40-07:00",
+      "finishedAt": "2026-08-18T17:11:47-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-production-tdd.txt"
+    },
+    {
+      "command": "pnpm --filter web typecheck",
+      "startedAt": "2026-08-18T17:09:30-07:00",
+      "finishedAt": "2026-08-18T17:09:36-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-production-tdd.txt"
+    },
+    {
+      "command": "pnpm exec eslint <production puzzle implementation and focused tests>",
+      "startedAt": "2026-08-18T17:11:35-07:00",
+      "finishedAt": "2026-08-18T17:11:40-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-production-tdd.txt"
+    },
+    {
+      "command": "pnpm --filter web build",
+      "startedAt": "2026-08-18T17:11:47-07:00",
+      "finishedAt": "2026-08-18T17:11:54-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-production-tdd.txt"
+    },
+    {
+      "command": "rg protected answer/proof/seed/key fields in apps/web/.output/public",
+      "startedAt": "2026-08-18T17:12:08-07:00",
+      "finishedAt": "2026-08-18T17:12:08-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-production-tdd.txt",
+      "resultMeaning": "No prohibited match in client output"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Production generator inventory",
+      "expected": { "blueprints": 70, "tiers": 5, "perTier": 14, "families": 9 },
+      "observed": { "blueprints": 70, "tiers": 5, "perTier": 14, "families": 9 },
+      "pass": true
+    },
+    {
+      "name": "Deterministic replay and immutable versions",
+      "expected": "70 of 70",
+      "observed": "70 of 70",
+      "pass": true
+    },
+    {
+      "name": "Unique solution and authored decoy rejection",
+      "expected": "70 of 70",
+      "observed": "70 of 70",
+      "pass": true
+    },
+    {
+      "name": "Server-only validation",
+      "expected": "HMAC-keyed validation with constant-time digest comparison",
+      "observed": "node:crypto createHmac and timingSafeEqual in server module; client receives PublicProductionPuzzle only",
+      "pass": true
+    },
+    {
+      "name": "Client build leakage scan",
+      "expected": "zero canonicalSolution, proofDigest, validationToken, test secret, proof seed, or subjectKey matches",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "Source maps",
+      "expected": "no public source maps containing server generator internals",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "Nine semantic family surfaces",
+      "expected": "text list, numeric table, shape/texture list, keyboard route group, captioned audio list, constraint table, cited claim list, discrete mechanism group, equivalent cross-modal list",
+      "observed": "all nine rendered and queried by accessible role/name in focused tests",
+      "pass": true
+    },
+    {
+      "name": "Authored accessibility declarations",
+      "expected": "preserved exactly for every Blueprint with answer-free semantic carrier data",
+      "observed": "70 of 70",
+      "pass": true
+    },
+    {
+      "name": "Runtime boundary",
+      "expected": { "liveRuntimeRecordsCreated": 0, "timerStarted": false },
+      "observed": { "liveRuntimeRecordsCreated": 0, "timerStarted": false },
+      "pass": true
+    },
+    {
+      "name": "Real-browser keyboard, focus, screen-reader, high-contrast, reduced-motion, tactile/non-3D, and caption parity gate",
+      "expected": "PASS in supported Chromium environment with named accessibility review",
+      "observed": "not run; Chromium executable unavailable in this sandbox and named review not supplied",
+      "pass": false
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json",
+      "sha256": "bbe1cd0721a9d9af0017d4778dc85d8c7f07f6681a5578218b1dd460aeb754f7"
+    },
+    {
+      "path": "apps/web/src/server/puzzle-production-generators.ts",
+      "sha256": "065478dbfe7300038090607a03130b6fa2b6bb477b3726a6e782a1a74cfad962"
+    },
+    {
+      "path": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+      "sha256": "bf6bb411023cd516c70526490435ff269c35bfccbf06efb08efbe23d10aa4d61"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "B08-PUZZLE-PRODUCTION-CHROMIUM",
+      "condition": "A supported Chromium executable is unavailable, so real-browser accessibility and interaction evidence cannot be captured.",
+      "requiredResolution": "Run the exact worktree candidate in normal CI or an approved browser environment and capture the nine-family accessibility matrix."
+    },
+    {
+      "id": "B10-PUZZLE-PRODUCTION-REVIEW",
+      "condition": "Named Puzzle owner, security, and accessibility approval has not been supplied.",
+      "requiredResolution": "Obtain the required reviews before G08 or merge is marked PASS."
+    }
+  ],
+  "notes": [
+    "The report is BLOCKED only at the required real-browser and named-review gate; the deterministic 70-row generator coverage itself passes.",
+    "Generated client carriers are intentionally player-solvable but omit canonical answers, proof digests, validation tokens, server secrets, seed values, and subject keys.",
+    "No database import, migration, live Puzzle runtime record, timer start, deployment, tag, publication, or GitHub mutation occurred."
+  ]
+}

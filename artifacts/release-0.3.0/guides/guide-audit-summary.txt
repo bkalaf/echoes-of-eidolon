@@ -1,0 +1,17 @@
+Release 0.3.0 Guide mapping audit
+
+Static focused tests:
+- Exit 0
+- 2 files passed
+- 3 Guide-focused tests passed
+- 14 unrelated tests skipped by the Guide filter
+
+Superseded-title search:
+- No active occurrences of The Showman or The Mourner in apps/web/src, apps/web/tests, or docs.
+- rg exit 1 means no matches.
+
+Persisted-count audit:
+- Prisma client generation passed.
+- The read-only architect/witness hardening audit was attempted against the configured localhost database.
+- The sandbox denied 127.0.0.1:5432 with EPERM before rows could be read.
+- Required current persisted counts 58/112/56/54/54 remain unverified.

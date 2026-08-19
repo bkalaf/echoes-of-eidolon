@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T21:16:44.837Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree plus read-only historical local validation snapshots",
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "apps/web/src/data/initial-founding-settlements.json",
+      "sha256": "96b51f4f898f7a70df7bd63b2cbbcffb1eb60c03d6848c9e8ed770fa0e7462e4"
+    },
+    {
+      "path": "apps/web/src/data/breed-groups-v3.json",
+      "sha256": "5552bcbfac9bb4374443bb7191f8d31a584f0ea8302fc56474e452f5c8a3ba0d"
+    },
+    {
+      "path": "apps/web/src/domain/settlement-population.ts",
+      "sha256": "86273db8ef10e892a260a223d795fe4462e7a96248dca28dfcbe886688b444c2"
+    }
+  ],
+  "commands": [
+    {
+      "command": "repository and ignored local validation snapshot audit for exact founder mapping authority",
+      "startedAt": "2026-08-18T14:14:00-07:00",
+      "finishedAt": "2026-08-18T14:16:44-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-population-authority-audit.txt"
+    },
+    {
+      "command": "validate unresolved-founder-mapping.json against packaged JSON Schema",
+      "startedAt": "2026-08-18T14:16:44-07:00",
+      "finishedAt": "2026-08-18T14:16:45-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/data/founding-population-authority-audit.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Every Settlement represented",
+      "expected": 24,
+      "observed": 24,
+      "pass": true
+    },
+    {
+      "name": "Every INITIAL world represented",
+      "expected": ["CONCORD", "SCHISM", "RUIN"],
+      "observed": ["CONCORD", "SCHISM", "RUIN"],
+      "pass": true
+    },
+    {
+      "name": "Every broad founding group represented",
+      "expected": 72,
+      "observed": 72,
+      "pass": true
+    },
+    {
+      "name": "Complete Settlement/world/group unresolved rows",
+      "expected": 216,
+      "observed": 216,
+      "pass": true
+    },
+    {
+      "name": "All broad labels resolve to a controlled registry group",
+      "expected": 72,
+      "observed": 72,
+      "pass": true
+    },
+    {
+      "name": "Exact current founder Species/Breed/integer allocation authority exists",
+      "expected": true,
+      "observed": false,
+      "pass": false
+    }
+  ],
+  "artifacts": [
+    "artifacts/release-0.3.0/data/unresolved-founder-mapping.json",
+    "artifacts/release-0.3.0/data/founding-population-authority-audit.txt"
+  ],
+  "blockers": [
+    {
+      "id": "B01",
+      "condition": "No current owner-authored mapping selects exact founder Species, eligible Breed IDs, integer totals/weights, remainder behavior, culture projection, and dominance rule for all 72 broad groups.",
+      "requiredResolution": "Owner must supply the complete mapping and provenance; T112 must remain blocked and no population events may be created."
+    },
+    {
+      "id": "B07-LOCAL-DATABASE-ACCESS",
+      "condition": "The current canonical database could not be audited because sandbox policy denied the configured localhost connection.",
+      "requiredResolution": "Restore normal read-only local database access and compare any supplied mapping against current Species/Breed rows."
+    }
+  ],
+  "notes": [
+    "Historical local validation snapshots were used only to enumerate candidate ambiguity and were not treated as current authority.",
+    "Forty-six of the 72 controlled groups contain multiple candidate Species in the historical snapshot; every group contains at least two candidate Breeds.",
+    "No equal split, first match, all-group-members allocation, silent rounding, population event, database write, or Notion mutation occurred."
+  ]
+}

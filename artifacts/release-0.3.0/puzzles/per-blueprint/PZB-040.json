@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-040",
+  "tier": "TIER_2_ADEPT",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:ec954f6713af1dcd",
+  "instanceChecksum": "45be2b42494efff7e5bfc5208a7e508ed4974c023f9844774503ff3b9976aaf4",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "ORDERED_ROUTE",
+    "concept": "Chord labels and bass-note notation identify root, first, and second inversions that select branches on a route map.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Use notated bass relationships—not perfect pitch—to classify inversions and traverse the generated ternary route.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Use notated bass relationships—not perfect pitch—to classify inversions and traverse the generated ternary route. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "AUDIO",
+      "NOTATION",
+      "ROUTE_MAP"
+    ],
+    "accessibilityModes": [
+      "CHORD_SYMBOLS",
+      "BASS_NOTE_TABLE",
+      "TACTILE_ROUTE"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

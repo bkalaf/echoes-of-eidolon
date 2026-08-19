@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-066",
+  "tier": "TIER_4_MASTER",
+  "primaryFamily": "CROSS_MODAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#CROSS_MODAL_SIGNAL_PAIRS",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:2ff23e7f56c50db1",
+  "instanceChecksum": "dd031da9ba5afeddb03d186034bf75edc438c6b43c19fbb0da7756042c4fd92d",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "concept": "An original cross-modal design: star groups form Braille cells while inter-star tone intervals independently confirm dot order. Neither channel alone exposes the entire instance.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Order stars by captioned interval class, map lit positions to Braille dots, and read the generated short phrase.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the cross modal representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Order stars by captioned interval class, map lit positions to Braille dots, and read the generated short phrase. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "STAR_MAP",
+      "NON_PITCH_INTERVAL_LABELS",
+      "BRAILLE_CELLS",
+      "HAPTIC_DOTS"
+    ],
+    "accessibilityModes": [
+      "TACTILE_BRAILLE_MAP",
+      "INTERVAL_TABLE",
+      "CAPTIONS",
+      "HAPTIC_DOTS"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

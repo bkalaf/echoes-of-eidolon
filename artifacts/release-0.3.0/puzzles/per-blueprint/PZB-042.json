@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-042",
+  "tier": "TIER_5_ORDEAL",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:1f55c3bd3abdf470",
+  "instanceChecksum": "504433020a9f651cfec4f4677e1b8e55afe8000fd447a370f83da3c43e28f3e8",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
+    "concept": "Left and right channels mostly cancel; swapping selected phase blocks reveals spoken phonemes and a parallel waveform label stream.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Identify phase markers, invert the designated channel blocks, sum channels, and order recovered phoneme labels.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Identify phase markers, invert the designated channel blocks, sum channels, and order recovered phoneme labels. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "STEREO_AUDIO",
+      "WAVEFORM",
+      "PHONEME_TRANSCRIPT"
+    ],
+    "accessibilityModes": [
+      "PHASE_BLOCK_TABLE",
+      "PHONEME_TRANSCRIPT",
+      "MONO_EQUIVALENT"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

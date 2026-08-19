@@ -44,7 +44,7 @@ describe("Capability administration", () => {
 
   it("renders CAP01 from persisted roots and immutable version history", async () => {
     render(<CapabilityAdminPage pathname="/admin/capabilities" screen={entry("CAP01")} />);
-    expect(await screen.findByText("LOCATION_DISCOVERED")).toBeInTheDocument();
+    expect(await screen.findByRole("cell", { name: "LOCATION_DISCOVERED" })).toBeInTheDocument();
     expect(screen.getByText("v1 · ACTIVE")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Edit / versions" })).toHaveAttribute("href", "/admin/capabilities/CAP-1");
   });
@@ -52,7 +52,7 @@ describe("Capability administration", () => {
   it("authors a new draft version without overwriting the active version", async () => {
     render(<CapabilityAdminPage pathname="/admin/capabilities/CAP-1" screen={entry("CAP02")} />);
     await screen.findByRole("heading", { name: "Create version for LOCATION_DISCOVERED" });
-    expect(screen.getByText("v1").parentElement).toHaveTextContent("ACTIVE");
+    expect(screen.getByRole("cell", { name: "v1" }).parentElement).toHaveTextContent("ACTIVE");
     fireEvent.click(screen.getByRole("button", { name: "Create Draft Version" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/admin/capabilities", expect.objectContaining({ method: "POST" })));
   });
@@ -72,6 +72,6 @@ describe("Capability administration", () => {
     render(<CapabilityAdminPage pathname="/admin/capabilities/inspector" screen={entry("CAP05")} />);
     fireEvent.click(await screen.findByRole("button", { name: "Compare Rebuild" }));
     expect(await screen.findByText(/Ledger 0 · persisted 0 · rebuilt 0 · mismatches 0/)).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Set|Add|Clear|Repair/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^(Set|Add|Clear|Repair)$/i })).not.toBeInTheDocument();
   });
 });

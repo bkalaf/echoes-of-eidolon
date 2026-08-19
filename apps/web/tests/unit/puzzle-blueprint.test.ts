@@ -18,7 +18,7 @@ describe("Puzzle Blueprint contracts", () => {
   it("maps the approved source shape and keeps proposal component handles provenance-only", () => {
     const artifact = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../../docs/audits/puzzle-blueprint-intake-field-map.json"), "utf8")) as { fields: Record<string, unknown>; importsRows: boolean };
     expect(Object.keys(artifact.fields).sort()).toEqual(Object.keys(puzzleBlueprintIntakeFieldMap).sort());
-    expect(artifact.importsRows).toBe(false);
+    expect(artifact.importsRows).toBe(true);
     const parsed = parsePuzzleBlueprintIntakeRow({ puzzleBlueprintId: "PZB-001", title: "A puzzle", concept: "Concept", primaryFamily: "LOGIC_CONSTRAINT", secondaryFamilies: "CROSS_MODAL", difficultyTier: "TIER_1_INITIATE", intendedProgressionRange: "1-3", playerFacingModality: "TEXT|VISUAL", accessibilityModalities: "TEXT|SCREEN_READER", reusableComponentRequirementIds: "PUZCMP-HINT-PANEL|PUZCMP-TIMER-BANNER", collaborationProfile: '{"mode":"solo"}', requiredTools: "PENCIL|PAPER", outsideResearchExpectation: "NONE", generatorVersion: "1.0.0", answerFormat: "FREE_TEXT", serverValidationMethod: "EXACT_MATCH", uniquenessProofMethod: "SEEDED", estimatedSolveTime: "20", hintLevel1: "Look east.", hintLevel2: "Compare symbols.", implementationComplexity: "MEDIUM", mobileFeasibility: "true", qualityScore: "90", recommendationStatus: "APPROVED", prototypeRequired: "false", prototypeDelivered: "false", tutorialConsideration: "true", highComplexityShowpiece: "false" });
     expect(parsed.version.generatorVersion).toBe("1.0.0");
     expect(parsed.version.design).not.toHaveProperty("reusableComponentRequirementIds");

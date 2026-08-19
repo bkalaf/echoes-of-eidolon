@@ -1,0 +1,22 @@
+Release 0.3.0 T110 founding Settlement importer
+
+RED
+- Focused test file failed before implementation because src/server/initial-founding-settlements did not exist.
+- Exit 1; one failed suite.
+
+GREEN
+- Focused test file: 6/6 passed.
+- Cumulative Atlas/Settlement slice: 5 files passed, 19/19 tests passed.
+- TypeScript typecheck: exit 0.
+- git diff --check: exit 0.
+
+Verified behavior
+- Exact packaged canonical JSON hash preserved.
+- Exactly 24 physical Settlement authorities and 72 SettlementWorld pairs.
+- No R10 / SITE-0243 INITIAL Settlement.
+- Verify-only default; --apply required for writes.
+- Single transaction, Site-first validation, Site-owned classification.
+- Existing exact rows remain unchanged; compatible preexisting IDs are preserved.
+- Missing Sites and conflicting names/Site ownership/classification fail before writes.
+- Second exact apply changes zero rows.
+- No population allocation or SettlementPopulationEvent is created.

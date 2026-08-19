@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRef, useState, type ReactNode } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import type { PageManifestEntry } from "../../lib/page-manifest";
 
 interface GameplayParty {
@@ -49,7 +50,12 @@ export function InventoryOverlay() {
 
 export function WithdrawalLedgerOverlay() {
   const query = useGameplayParty();
-  return <Overlay title="Withdrawal Record"><LoadingParty query={query} />{query.data && <><p><strong>{query.data.currency.name}</strong> · purse {query.data.purse}</p>{query.data.withdrawal ? <><p>Rolling 7-day limit {query.data.withdrawal.limit} · remaining {query.data.withdrawal.remaining}</p>{query.data.withdrawal.nextLimitIncreaseAtGameMinute && <p>Next limit increase at game minute {query.data.withdrawal.nextLimitIncreaseAtGameMinute}</p>}</> : <p>No withdrawal policy is configured.</p>}<div className="table-scroll"><table className="simple-table"><thead><tr><th>Game time</th><th>Amount</th></tr></thead><tbody>{query.data.withdrawals.map((entry, index) => <tr key={`${entry.occurredAtGameMinute}-${index}`}><td>{entry.occurredAtGameMinute}</td><td>{entry.amount} {query.data!.currency.name}</td></tr>)}</tbody></table></div></>}</Overlay>;
+  const rows = query.data?.withdrawals.map((entry, index) => ({ ...entry, rowId: `${entry.occurredAtGameMinute}:${index}` })) ?? [];
+  const columns: DataTableColumnDef<(typeof rows)[number]>[] = [
+    { accessorKey: "occurredAtGameMinute", header: "Game time" },
+    { accessorKey: "amount", header: `Amount${query.data ? ` (${query.data.currency.name})` : ""}` },
+  ];
+  return <Overlay title="Withdrawal Record"><LoadingParty query={query} />{query.data && <><p><strong>{query.data.currency.name}</strong> · purse {query.data.purse}</p>{query.data.withdrawal ? <><p>Rolling 7-day limit {query.data.withdrawal.limit} · remaining {query.data.withdrawal.remaining}</p>{query.data.withdrawal.nextLimitIncreaseAtGameMinute && <p>Next limit increase at game minute {query.data.withdrawal.nextLimitIncreaseAtGameMinute}</p>}</> : <p>No withdrawal policy is configured.</p>}<DataTable columns={columns} data={rows} getRowId={(entry) => entry.rowId} preferenceKey="game.withdrawal-ledger" /></>}</Overlay>;
 }
 
 export function BankOverlay() {

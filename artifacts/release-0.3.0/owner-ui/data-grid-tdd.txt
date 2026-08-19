@@ -1,0 +1,79 @@
+T202 universal owner data-grid — active implementation evidence
+
+RED 1
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/data-table-contract.test.tsx
+Exit: 1
+Result: 3/3 tests failed for missing filters/counts/pagination, missing table state styling, and six-column Data Registry truncation.
+
+GREEN 1
+Exit: 0
+Result: 3/3 tests passed after shared grid and generic Data Registry remediation.
+
+RED 2
+Command: focused entity-admin relation metadata test
+Exit: 1
+Result: generated contract omitted Prisma relationFromFields ownership.
+
+GREEN 2
+Exit: 0
+Result: owning relation metadata generated for all Prisma relations.
+
+RED 3
+Command: focused server lookup projection test
+Exit: 1
+Result: owner reads did not include to-one relation records.
+
+GREEN 3
+Exit: 0
+Result: generic list/detail reads include every owning to-one relation.
+
+RED 4
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-table-field-order.test.ts
+Exit: 1
+Result: deterministic owner field ordering module did not exist.
+
+GREEN 4
+Exit: 0
+Result: 2/2 order and zero-omission tests passed across all 34 entities.
+
+RED 5
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-field-value.test.tsx
+Exit: 1
+Result: relation-aware owner field renderer did not exist.
+
+GREEN 5
+Exit: 0
+Result: 3/3 relation/scalar/null/fail-closed tests passed.
+
+CUMULATIVE CURRENT SLICE
+6 files passed; 27 tests passed.
+Typecheck: PASS
+git diff --check: PASS
+
+RED 6
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/data-table-contract.test.tsx
+Exit: 1
+Result: 2/4 tests failed because the shared grid still used text-only field filters and did not provide sticky identity/action cells.
+
+GREEN 6
+Exit: 0
+Result: 4/4 tests passed with typed enum, boolean, number, date, array, relation-text, and nullable controls plus sticky selection, identity, and Actions cells.
+
+RED 7
+Command: pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-table-inventory.test.ts
+Exit: 1
+Result: 2/2 tests failed because the required owner-table inventory and Chromium matrix artifacts did not exist.
+
+GREEN 7
+Command: pnpm --dir apps/web owner-ui:tables && pnpm --dir apps/web exec vitest run --config vitest.config.ts tests/unit/owner-table-inventory.test.ts
+Exit: 0
+Result: 48 live source surfaces expand to 81 rendered contracts, including all 34 generic entity tables; native table bypasses 0; missingFields 0; inventory tests 2/2 passed.
+
+CUMULATIVE IMPLEMENTATION GATE
+Command: focused owner table, lookup, order, and renderer suite
+Exit: 0
+Result: 6 files passed; 18 tests passed.
+Typecheck: PASS
+git diff --check: PASS
+
+Implementation is complete. Required real-Chromium narrow, wide, empty, populated, filtered, sorted, relation-heavy, Character, Witness, and WitnessDef scenarios remain BLOCKED under B08 and are not claimed as executed.

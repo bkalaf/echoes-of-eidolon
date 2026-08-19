@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T16:46:30-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "url": "https://github.com/bkalaf/echoes-of-eidolon/pull/2",
+      "headSha": "15ec82904fad909997d3881b7d3a39f7c1a16069"
+    },
+    {
+      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+    },
+    {
+      "path": "apps/web/data/puzzles/puzzle-prototype-catalog-70.json"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --filter web exec vitest run tests/unit/puzzle-component-reconciliation.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T16:45:50-07:00",
+      "finishedAt": "2026-08-18T16:45:52-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt"
+    },
+    {
+      "command": "pnpm --filter web test -- --run --reporter=dot",
+      "startedAt": "2026-08-18T16:42:09-07:00",
+      "finishedAt": "2026-08-18T16:43:19-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt"
+    },
+    {
+      "command": "pnpm --filter web exec vitest run tests/unit/companion-planner-ui.test.tsx --reporter=dot",
+      "startedAt": "2026-08-18T16:43:32-07:00",
+      "finishedAt": "2026-08-18T16:43:40-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt"
+    },
+    {
+      "command": "pnpm --filter web exec vitest run tests/unit/puzzle-component-reconciliation.test.ts tests/unit/puzzle-blueprint.test.ts tests/unit/puzzle-blueprint-package.test.ts tests/unit/puzzle-blueprint-import.test.ts tests/unit/puzzle-prototype-catalog.test.ts tests/unit/puzzle-prototypes.test.ts tests/unit/puzzle-prototype-lab.test.tsx --reporter=dot",
+      "startedAt": "2026-08-18T16:47:53-07:00",
+      "finishedAt": "2026-08-18T16:47:58-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Exact source checksum",
+      "expected": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+      "observed": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+      "pass": true
+    },
+    {
+      "name": "Blueprint inventory",
+      "expected": { "rows": 70, "tiers": 5, "perTier": 14, "families": 9 },
+      "observed": { "rows": 70, "tiers": 5, "perTier": 14, "families": 9 },
+      "pass": true
+    },
+    {
+      "name": "Importer safety",
+      "expected": "verify-only default, serializable transaction, idempotent rerun, conflict rejection, exact checksum before database access",
+      "observed": "implemented and covered by focused tests",
+      "pass": true
+    },
+    {
+      "name": "Runtime boundary",
+      "expected": "zero PuzzleInstance, PuzzleAssignment, PuzzleAttempt, runtime hint, validation, failure, Witness binding, or timer records",
+      "observed": "blueprint roots, immutable versions, and two hint templates only",
+      "pass": true
+    },
+    {
+      "name": "Answer boundary",
+      "expected": "server-keyed domain-separated derivation, constant-time comparison, answer-free browser projection",
+      "observed": "HMAC derivation and timingSafeEqual remain server-only; client projection has no answer, hash, key, seed, or validator token",
+      "pass": true
+    },
+    {
+      "name": "Prototype family surfaces",
+      "expected": 9,
+      "observed": 9,
+      "pass": true
+    },
+    {
+      "name": "PUZCMP handle reconciliation",
+      "expected": { "distinctHandles": 30, "sourceOccurrences": 552, "secondRegistry": false },
+      "observed": { "distinctHandles": 30, "sourceOccurrences": 552, "secondRegistry": false },
+      "pass": true
+    },
+    {
+      "name": "Full local repository unit suite",
+      "expected": "PASS on pinned Node 22.22.0",
+      "observed": "749 passed; 6 future-tranche RED assertions, 2 sandbox-denied Python child-process tests, and 2 parallel-load timeouts; timed-out file passed 3 of 3 alone",
+      "pass": false
+    },
+    {
+      "name": "Puzzle owner, security, and accessibility merge approval",
+      "expected": "approved",
+      "observed": "not supplied",
+      "pass": false
+    }
+  ],
+  "componentReconciliation": {
+    "source": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv#reusableComponentRequirementIds",
+    "distinctHandles": 30,
+    "sourceOccurrences": 552,
+    "masterAuthority": {
+      "source": "apps/web/src/screens/tools/ToolsPage.tsx#libraryComponents",
+      "components": ["Top Bar", "Data Table", "Lookup Control", "Modal", "Map View", "Globe View"]
+    },
+    "policy": "PUZCMP identifiers remain proposal provenance. Reuse is expressed through existing shared primitives or puzzle-local composition; no PUZCMP identifier becomes a permanent registry entry.",
+    "rows": [
+      { "handle": "PUZCMP-ACCESSIBILITY-MODE-SWITCHER", "occurrences": 70, "decision": "DEFER_PHASE_2", "owner": "Production generator accessibility adapter", "rationale": "The prototype exposes declared modes; equivalent selectable production modes require generator-specific proof." },
+      { "handle": "PUZCMP-ANSWER-SUBMISSION", "occurrences": 70, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab answer form", "rationale": "Native labeled input and server-owned validation satisfy the prototype need without a permanent shared entry." },
+      { "handle": "PUZCMP-DOCUMENT-COMPARE", "occurrences": 4, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab TEXT_COMPARE surface", "rationale": "Puzzle-specific semantic composition, not an application-wide primitive." },
+      { "handle": "PUZCMP-HINT-PANEL", "occurrences": 70, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab ordered hint controls", "rationale": "Uses immutable hint templates and local reveal state without runtime hint persistence." },
+      { "handle": "PUZCMP-PRINTABLE-WORKSHEET", "occurrences": 39, "decision": "DEFER_PHASE_2", "owner": "Production generator printable-equivalent adapter", "rationale": "Requires per-generator answer-safe printable content and parity proof." },
+      { "handle": "PUZCMP-TIMER-BANNER", "occurrences": 70, "decision": "REJECT_PHASE_BOUNDARY", "owner": "PuzzleChallengeAccepted runtime boundary", "rationale": "Prototype and preload flows must not create or start the live timer." },
+      { "handle": "PUZCMP-UNDO-RESET-HISTORY", "occurrences": 70, "decision": "DEFER_PHASE_2", "owner": "Production generator local interaction history", "rationale": "Prototype reset is local; production undo history must be generator-specific and answer-safe." },
+      { "handle": "PUZCMP-GRID-VIEWPORT", "occurrences": 25, "decision": "REUSE_MASTER_COMPONENT", "masterComponent": "Data Table", "owner": "Data Table plus puzzle-local grid adapter", "rationale": "Reuse the canonical tabular accessibility path while retaining puzzle-specific visual interaction locally." },
+      { "handle": "PUZCMP-AUDIO-TRANSPORT", "occurrences": 15, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab AUDIO_SEQUENCE surface", "rationale": "Captioned sample playback is local and does not establish an application-wide media registry entry." },
+      { "handle": "PUZCMP-COLLABORATION-PACKET", "occurrences": 23, "decision": "DEFER_PHASE_2", "owner": "Production generator collaboration adapter", "rationale": "Requires generator-specific packet parity and no-answer-leakage proof." },
+      { "handle": "PUZCMP-IMAGE-TRANSFORM", "occurrences": 8, "decision": "DEFER_PHASE_2", "owner": "VISUAL_COLOR_OPTICAL generator surface", "rationale": "Transformation semantics and accessible equivalent belong to the production family adapter." },
+      { "handle": "PUZCMP-MATRIX-LAB", "occurrences": 1, "decision": "REUSE_MASTER_COMPONENT", "masterComponent": "Data Table", "owner": "Data Table plus puzzle-local matrix interaction", "rationale": "The canonical table supplies the accessible matrix representation; puzzle operations remain local." },
+      { "handle": "PUZCMP-MUSIC-NOTATION-RAIL", "occurrences": 8, "decision": "DEFER_PHASE_2", "owner": "AUDIO_MUSIC_SPECTRAL generator surface", "rationale": "Requires captioned and non-audio solution-cardinality proof." },
+      { "handle": "PUZCMP-SET-WORKBENCH", "occurrences": 1, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab DATA_TRANSFORM surface", "rationale": "A puzzle-local discrete workbench composes standard controls." },
+      { "handle": "PUZCMP-NON3D-EQUIVALENT", "occurrences": 18, "decision": "DEFER_PHASE_2", "owner": "SPATIAL_FOLDING_GEOMETRY accessibility adapter", "rationale": "Each 3D production puzzle requires an equivalent discrete path with matching solution cardinality." },
+      { "handle": "PUZCMP-POLYHEDRON-VIEWER", "occurrences": 18, "decision": "DEFER_PHASE_2", "owner": "SPATIAL_FOLDING_GEOMETRY generator surface", "rationale": "Not equivalent to the locked Globe View and must remain a puzzle-family implementation." },
+      { "handle": "PUZCMP-QR-BOUND-ROUTE", "occurrences": 1, "decision": "REJECT_PHASE_BOUNDARY", "owner": "Future owner-reviewed puzzle runtime", "rationale": "A bound live route would cross the Phase 1 no-assignment/no-runtime boundary." },
+      { "handle": "PUZCMP-COLOR-CHANNEL-LAB", "occurrences": 2, "decision": "DEFER_PHASE_2", "owner": "VISUAL_COLOR_OPTICAL generator surface", "rationale": "Production implementation must include a non-color-only equivalent." },
+      { "handle": "PUZCMP-SHAPE-LAYER", "occurrences": 4, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab VISUAL_LAYER surface", "rationale": "The prototype uses color-independent local layer cues; production proof remains generator-owned." },
+      { "handle": "PUZCMP-TILE-SIGNAL", "occurrences": 4, "decision": "DEFER_PHASE_2", "owner": "CROSS_MODAL generator surface", "rationale": "Requires equivalent cross-modal signaling and deterministic proof." },
+      { "handle": "PUZCMP-RHYTHM-HAPTIC-TRACK", "occurrences": 4, "decision": "DEFER_PHASE_2", "owner": "AUDIO_MUSIC_SPECTRAL accessibility adapter", "rationale": "Requires non-audio/haptic equivalence testing on production instances." },
+      { "handle": "PUZCMP-SPECTROGRAM", "occurrences": 2, "decision": "DEFER_PHASE_2", "owner": "AUDIO_MUSIC_SPECTRAL generator surface", "rationale": "Generated spectral content and accessible equivalent are generator-specific." },
+      { "handle": "PUZCMP-DIRECTIONAL-AUDIO-HAPTIC", "occurrences": 1, "decision": "DEFER_PHASE_2", "owner": "CROSS_MODAL accessibility adapter", "rationale": "Requires directional-audio and discrete haptic parity proof." },
+      { "handle": "PUZCMP-EIGHT-NEIGHBOR-NAV", "occurrences": 1, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab SPATIAL_BOARD surface", "rationale": "Keyboard-operable puzzle navigation composes native controls locally." },
+      { "handle": "PUZCMP-LANTERN-LAYER-CONTROL", "occurrences": 1, "decision": "DEFER_PHASE_2", "owner": "VISUAL_COLOR_OPTICAL generator surface", "rationale": "Requires deterministic layer semantics and non-color cues." },
+      { "handle": "PUZCMP-LOGIC-GRID", "occurrences": 1, "decision": "REUSE_MASTER_COMPONENT", "masterComponent": "Data Table", "owner": "Data Table plus LOGIC_CONSTRAINT adapter", "rationale": "Reuse the canonical accessible table while keeping constraint operations puzzle-local." },
+      { "handle": "PUZCMP-DRAG-CONNECTOR-BOARD", "occurrences": 7, "decision": "DEFER_PHASE_2", "owner": "Production generator connection-board adapter", "rationale": "Must provide keyboard parity and preserve the same solution space." },
+      { "handle": "PUZCMP-MECHANISM-SIM", "occurrences": 7, "decision": "LOCAL_COMPOSITION", "owner": "PuzzlePrototypeLab MECHANISM_BOARD surface", "rationale": "Discrete local state avoids continuous-physics ambiguity; production mechanisms remain family-owned." },
+      { "handle": "PUZCMP-TIMELINE-RESEARCH", "occurrences": 6, "decision": "DEFER_PHASE_2", "owner": "HISTORICAL_RESEARCH generator surface", "rationale": "Requires declared corpora and claim-level citation handling." },
+      { "handle": "PUZCMP-CHESS-REPLAY", "occurrences": 1, "decision": "DEFER_PHASE_2", "owner": "LOGIC_CONSTRAINT generator surface", "rationale": "Requires deterministic replay and exhaustive alternate-line rejection." }
+    ]
+  },
+  "artifacts": [
+    "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+    "apps/web/src/server/puzzle-blueprint-import.ts",
+    "apps/web/src/server/puzzle-prototypes.ts",
+    "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+    "apps/web/tests/unit/puzzle-component-reconciliation.test.ts"
+  ],
+  "blockers": [
+    {
+      "id": "B08-PUZZLE-CI",
+      "condition": "The required full repository CI gate is not green in this sandbox and no CI check exists on draft PR #2.",
+      "requiredResolution": "Run the exact candidate in normal CI on pinned Node 22.22.0, including safe ZIP child-process tests and browser accessibility checks."
+    },
+    {
+      "id": "B10-PUZZLE-OWNER-APPROVAL",
+      "condition": "Puzzle owner, security, and accessibility merge approval has not been supplied.",
+      "requiredResolution": "Obtain the named reviews before merging PR #2."
+    }
+  ],
+  "notes": [
+    "PR #2 content was integrated into the isolated local release worktree for review; no GitHub merge, target-database import, migration, deployment, tag, or publication occurred.",
+    "The full-suite timeouts are load-sensitive: companion-planner-ui passed 3 of 3 when rerun alone.",
+    "No canonical answer, server key, seed, validator token, or reconstructive proof material is included in this report."
+  ]
+}

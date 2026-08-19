@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-004",
+  "tier": "TIER_1_INITIATE",
+  "primaryFamily": "TEXT_LANGUAGE_LITERARY",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#TEXT_DOCUMENT_PAIR",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:9e37a4f7dfba3e87",
+  "instanceChecksum": "7e5132c2199d8091553f8b068791f8da32f402ea9402e4a6218cae3c7f72749c",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "SHORT_PHRASE",
+    "concept": "Generated pangrams have apparently decorative margin numerals; only letters whose first occurrence lands on a numeral survive.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Track first occurrence of A-Z in each pangram and select positions listed by the alternating margin index.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the text language literary representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Track first occurrence of A-Z in each pangram and select positions listed by the alternating margin index. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "TEXT"
+    ],
+    "accessibilityModes": [
+      "SCREEN_READER_DATA",
+      "KEYBOARD_ONLY",
+      "HIGH_CONTRAST",
+      "PRINTABLE_WORKSHEET"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

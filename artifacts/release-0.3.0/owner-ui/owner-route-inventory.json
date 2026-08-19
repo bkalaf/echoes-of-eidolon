@@ -1,0 +1,2070 @@
+{
+  "schemaVersion": "echoes-release-owner-route-inventory-v1",
+  "generatedAt": "2026-08-18T21:02:40.738Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "apps/web/src/data/navigation-registry.generated.json",
+      "sha256": "045ec417ebad9b43f2b9cfe041aa95394136ed668784d4f3c23d4c0182fb51fe"
+    }
+  ],
+  "commands": [
+    {
+      "command": "inventory generated navigation registry and all /admin route/state rows",
+      "startedAt": "2026-08-18T21:02:40.738Z",
+      "finishedAt": "2026-08-18T21:02:40.738Z",
+      "exitCode": 0,
+      "logPath": null
+    }
+  ],
+  "assertions": [
+    {
+      "name": "All current generated navigation rows accounted for",
+      "expected": 292,
+      "observed": 292,
+      "pass": true
+    },
+    {
+      "name": "No broken, orphaned, or dead-end generated rows",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    }
+  ],
+  "artifacts": [],
+  "blockers": [],
+  "notes": [
+    "Current generated registry has 292 active rows; the package historical snapshot recorded 298 and is not substituted for live repository state.",
+    "Owner/admin baseline scope is every registry row whose routeOrState starts with /admin."
+  ],
+  "activeScreenCount": 292,
+  "statusCounts": {
+    "REACHABLE": 60,
+    "ROLE_GATED_REACHABLE": 194,
+    "STATE_TRIGGERED": 38,
+    "ORPHANED": 0,
+    "DEAD_END": 0,
+    "BROKEN_LINK": 0
+  },
+  "ownerAdminRowCount": 155,
+  "ownerAdminRows": [
+    {
+      "reviewOrder": 79,
+      "screenId": "ADM002",
+      "title": "Server Operations",
+      "routeOrState": "/admin/server",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 85,
+      "screenId": "ADM001",
+      "title": "Admin Dashboard",
+      "routeOrState": "/admin",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 86,
+      "screenId": "ADM002",
+      "title": "Accounts",
+      "routeOrState": "/admin/access",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 87,
+      "screenId": "ADM003",
+      "title": "Roles",
+      "routeOrState": "/admin/access/roles",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 88,
+      "screenId": "ADM004",
+      "title": "Invite/Access Approval Queue",
+      "routeOrState": "/admin/access/approvals",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 89,
+      "screenId": "ADM005",
+      "title": "Account Detail",
+      "routeOrState": "/admin/access/:id",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 90,
+      "screenId": "ADM006",
+      "title": "Invitation Codes",
+      "routeOrState": "/admin/access/invites",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 91,
+      "screenId": "ADM007",
+      "title": "Donation Perks",
+      "routeOrState": "/admin/perks",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 92,
+      "screenId": "ADM008",
+      "title": "Perk Detail/Edit",
+      "routeOrState": "/admin/perks/:id",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 93,
+      "screenId": "ADM010",
+      "title": "Store Management",
+      "routeOrState": "/admin/store",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 94,
+      "screenId": "ADM011",
+      "title": "Store Categories",
+      "routeOrState": "/admin/store/categories",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 95,
+      "screenId": "ADM012",
+      "title": "Store Items",
+      "routeOrState": "/admin/store/items",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 96,
+      "screenId": "ADM013",
+      "title": "Store Item Editor",
+      "routeOrState": "/admin/store/items/:id",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 97,
+      "screenId": "ADM014",
+      "title": "Order Management",
+      "routeOrState": "/admin/orders",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 98,
+      "screenId": "ADM015",
+      "title": "Order Management - Merchandise",
+      "routeOrState": "/admin/orders?tab=merchandise",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 99,
+      "screenId": "ADM016",
+      "title": "Order Management - Subscriptions",
+      "routeOrState": "/admin/orders?tab=subscriptions",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 100,
+      "screenId": "ADM017",
+      "title": "Order Management - Donations",
+      "routeOrState": "/admin/orders?tab=donations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 101,
+      "screenId": "ADM018",
+      "title": "Order Detail/Admin Actions",
+      "routeOrState": "/admin/orders/:id",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 102,
+      "screenId": "ADM020",
+      "title": "Bulk Operations & External API",
+      "routeOrState": "/admin/data/bulk-operations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 103,
+      "screenId": "ADM021",
+      "title": "Bulk API - Enabled Key",
+      "routeOrState": "/admin/data/bulk-operations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 104,
+      "screenId": "ADM022",
+      "title": "Bulk Operations - Audit / Recent Activity",
+      "routeOrState": "/admin/data/bulk-operations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 106,
+      "screenId": "ADM031",
+      "title": "Asset Manager - Audio",
+      "routeOrState": "/admin/assets/audio",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 107,
+      "screenId": "ADM032",
+      "title": "Asset Manager - Video",
+      "routeOrState": "/admin/assets/video",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 108,
+      "screenId": "ADM033",
+      "title": "Prompt Manager",
+      "routeOrState": "/admin/prompts",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 109,
+      "screenId": "ADM034",
+      "title": "Prompt Manager - Outstanding Only",
+      "routeOrState": "/admin/prompts",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 110,
+      "screenId": "DATA000",
+      "title": "Data - Object Types",
+      "routeOrState": "/admin/data",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 112,
+      "screenId": "DATA002",
+      "title": "Data - Culture",
+      "routeOrState": "/admin/data/culture",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 113,
+      "screenId": "DATA003",
+      "title": "Data - Character",
+      "routeOrState": "/admin/data/character",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 114,
+      "screenId": "DATA004",
+      "title": "Data - Witness",
+      "routeOrState": "/admin/data/witness",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 115,
+      "screenId": "DATA005",
+      "title": "Data - Architect",
+      "routeOrState": "/admin/data/architect",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 117,
+      "screenId": "DATA007",
+      "title": "Data - Species",
+      "routeOrState": "/admin/data/species",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 118,
+      "screenId": "DATA008",
+      "title": "Data - PersonalityExpression",
+      "routeOrState": "/admin/data/personality-expression",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 119,
+      "screenId": "DATA009",
+      "title": "Data - TimelineEvent",
+      "routeOrState": "/admin/data/timeline-event",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 120,
+      "screenId": "DATA010",
+      "title": "Data - Interlude",
+      "routeOrState": "/admin/data/interlude",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 121,
+      "screenId": "DATA011",
+      "title": "Data - Pillar",
+      "routeOrState": "/admin/data/pillar",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 122,
+      "screenId": "DATA012",
+      "title": "Data - Ark",
+      "routeOrState": "/admin/data/ark",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 123,
+      "screenId": "DATA013",
+      "title": "Data - Constellation",
+      "routeOrState": "/admin/data/constellation",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 124,
+      "screenId": "DATA014",
+      "title": "Data - Reward",
+      "routeOrState": "/admin/data/reward",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 125,
+      "screenId": "DATA015",
+      "title": "Data - Soul",
+      "routeOrState": "/admin/data/soul",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 126,
+      "screenId": "DATA016",
+      "title": "Data - PointOfInterest",
+      "routeOrState": "/admin/data/point-of-interest",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 127,
+      "screenId": "DATA017",
+      "title": "Data - Site",
+      "routeOrState": "/admin/data/site",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 128,
+      "screenId": "DATA018",
+      "title": "Data - Settlement",
+      "routeOrState": "/admin/data/settlement",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 129,
+      "screenId": "DATA019",
+      "title": "Data - Breed",
+      "routeOrState": "/admin/data/breed",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 130,
+      "screenId": "DATA020",
+      "title": "Data - Tome",
+      "routeOrState": "/admin/data/tome",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 131,
+      "screenId": "DATA021",
+      "title": "Data - Lesson",
+      "routeOrState": "/admin/data/lesson",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 132,
+      "screenId": "DATA022",
+      "title": "Data - Companion",
+      "routeOrState": "/admin/data/companion",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 133,
+      "screenId": "DATA100",
+      "title": "Data - Research",
+      "routeOrState": "/admin/data/research",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 134,
+      "screenId": "DATA101",
+      "title": "Data - MLA Sources",
+      "routeOrState": "/admin/data/sources",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 135,
+      "screenId": "DATA102",
+      "title": "Data - Citations",
+      "routeOrState": "/admin/data/citations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 136,
+      "screenId": "PZ001",
+      "title": "Puzzle Designer - Blueprints",
+      "routeOrState": "/admin/puzzles",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 137,
+      "screenId": "PZ002",
+      "title": "Puzzle Blueprint Editor",
+      "routeOrState": "/admin/puzzles/:id",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 138,
+      "screenId": "PZ003",
+      "title": "Puzzle Test/Preview",
+      "routeOrState": "/admin/puzzles/:id/test",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 140,
+      "screenId": "AT002",
+      "title": "Points of Interest - 2D Map",
+      "routeOrState": "/admin/atlas/poi",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 141,
+      "screenId": "AT003",
+      "title": "Points of Interest - 3D Globe",
+      "routeOrState": "/admin/atlas/poi",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 142,
+      "screenId": "AT004",
+      "title": "Sites",
+      "routeOrState": "/admin/atlas/sites",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 143,
+      "screenId": "AT005",
+      "title": "Settlements",
+      "routeOrState": "/admin/atlas/settlements",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 144,
+      "screenId": "DATA_CHARACTER_NEW",
+      "title": "Create Character",
+      "routeOrState": "/admin/data/character/new",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 145,
+      "screenId": "CITY01",
+      "title": "City Builder - Cities",
+      "routeOrState": "/admin/cities",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 146,
+      "screenId": "CITY02",
+      "title": "City Builder - Parcels & Street Graph",
+      "routeOrState": "/admin/cities/:id/streets",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 147,
+      "screenId": "CITY03",
+      "title": "City Builder - Buildings & Exteriors",
+      "routeOrState": "/admin/cities/:id/exteriors",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 148,
+      "screenId": "CITY04",
+      "title": "City Builder - Interiors",
+      "routeOrState": "/admin/cities/:id/interiors",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 149,
+      "screenId": "CITY05",
+      "title": "City Builder - Preview / District Overlays",
+      "routeOrState": "/admin/cities/:id/preview",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 150,
+      "screenId": "CAM001",
+      "title": "Campaign Builder - Landing",
+      "routeOrState": "/admin/campaign",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 151,
+      "screenId": "CAM002",
+      "title": "Campaign Planner",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 152,
+      "screenId": "CAM003",
+      "title": "Campaign Planner - Witness Drop",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 153,
+      "screenId": "CAM004",
+      "title": "Campaign Planner - Invalid Architect Drop",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 154,
+      "screenId": "CAM005",
+      "title": "Campaign Planner - Reward Binding",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 155,
+      "screenId": "OPS001",
+      "title": "Operations",
+      "routeOrState": "/admin/operations",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 156,
+      "screenId": "OPS002",
+      "title": "Release Management",
+      "routeOrState": "/admin/operations/releases",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 158,
+      "screenId": "DATA024",
+      "title": "Data - InterludeSubstitution",
+      "routeOrState": "/admin/data/interlude-substitution",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 159,
+      "screenId": "DATA025",
+      "title": "Data - Definition",
+      "routeOrState": "/admin/data/definition",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 160,
+      "screenId": "DATA026",
+      "title": "Data - KnowledgeBaseItem",
+      "routeOrState": "/admin/data/knowledge-base-item",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 162,
+      "screenId": "DATA028",
+      "title": "Data - Layette",
+      "routeOrState": "/admin/data/layette",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 163,
+      "screenId": "DATA029",
+      "title": "Data - Transition",
+      "routeOrState": "/admin/data/transition",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 164,
+      "screenId": "DATA030",
+      "title": "Data - CapabilityDefinition",
+      "routeOrState": "/admin/data/capability-definition",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 165,
+      "screenId": "DATA031",
+      "title": "Data - AchievementDefinition",
+      "routeOrState": "/admin/data/achievement-definition",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 188,
+      "screenId": "DATA_LEGENDARYREWARD_EDIT",
+      "title": "Edit LegendaryReward",
+      "routeOrState": "/admin/data/legendaryreward/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 189,
+      "screenId": "DATA_LESSON_EDIT",
+      "title": "Edit Lesson",
+      "routeOrState": "/admin/data/lesson/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 191,
+      "screenId": "DATA_PERSONALITYEXPRESSION_EDIT",
+      "title": "Edit PersonalityExpression",
+      "routeOrState": "/admin/data/personalityexpression/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 192,
+      "screenId": "DATA_PILLAR_EDIT",
+      "title": "Edit Pillar",
+      "routeOrState": "/admin/data/pillar/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 193,
+      "screenId": "DATA_POINTOFINTEREST_EDIT",
+      "title": "Edit PointOfInterest",
+      "routeOrState": "/admin/data/pointofinterest/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 195,
+      "screenId": "DATA_RESEARCH_EDIT",
+      "title": "Edit Research",
+      "routeOrState": "/admin/data/research/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 196,
+      "screenId": "DATA_SETTLEMENT_EDIT",
+      "title": "Edit Settlement",
+      "routeOrState": "/admin/data/settlement/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 197,
+      "screenId": "DATA_SITE_EDIT",
+      "title": "Edit Site",
+      "routeOrState": "/admin/data/site/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 198,
+      "screenId": "DATA_SOUL_EDIT",
+      "title": "Edit Soul",
+      "routeOrState": "/admin/data/soul/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 199,
+      "screenId": "DATA_SOURCE_EDIT",
+      "title": "Edit Source",
+      "routeOrState": "/admin/data/source/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 201,
+      "screenId": "DATA_SPECIES_EDIT",
+      "title": "Edit Species",
+      "routeOrState": "/admin/data/species/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 202,
+      "screenId": "DATA_TIMELINEEVENT_EDIT",
+      "title": "Edit TimelineEvent",
+      "routeOrState": "/admin/data/timelineevent/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 203,
+      "screenId": "DATA_TOME_EDIT",
+      "title": "Edit Tome",
+      "routeOrState": "/admin/data/tome/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 204,
+      "screenId": "DATA_TRANSITION_EDIT",
+      "title": "Edit Transition",
+      "routeOrState": "/admin/data/transition/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 205,
+      "screenId": "DATA_WITNESS_EDIT",
+      "title": "Edit Witness",
+      "routeOrState": "/admin/data/witness/sample-record",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 206,
+      "screenId": "DATA_ACHIEVEMENTDEFINITION_IMPORT",
+      "title": "Bulk Import AchievementDefinition",
+      "routeOrState": "/admin/data/achievementdefinition/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 208,
+      "screenId": "DATA_ARCHITECT_IMPORT",
+      "title": "Bulk Import Architect",
+      "routeOrState": "/admin/data/architect/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 209,
+      "screenId": "DATA_ARK_IMPORT",
+      "title": "Bulk Import Ark",
+      "routeOrState": "/admin/data/ark/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 210,
+      "screenId": "DATA_BREED_IMPORT",
+      "title": "Bulk Import Breed",
+      "routeOrState": "/admin/data/breed/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 211,
+      "screenId": "DATA_CAPABILITYDEFINITION_IMPORT",
+      "title": "Bulk Import CapabilityDefinition",
+      "routeOrState": "/admin/data/capabilitydefinition/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 212,
+      "screenId": "DATA_CHARACTER_IMPORT",
+      "title": "Bulk Import Character",
+      "routeOrState": "/admin/data/character/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 213,
+      "screenId": "DATA_CITATION_IMPORT",
+      "title": "Bulk Import Citation",
+      "routeOrState": "/admin/data/citation/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 214,
+      "screenId": "DATA_COMPANION_IMPORT",
+      "title": "Bulk Import Companion",
+      "routeOrState": "/admin/data/companion/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 215,
+      "screenId": "DATA_CONSTELLATION_IMPORT",
+      "title": "Bulk Import Constellation",
+      "routeOrState": "/admin/data/constellation/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 216,
+      "screenId": "DATA_CULTURE_IMPORT",
+      "title": "Bulk Import Culture",
+      "routeOrState": "/admin/data/culture/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 217,
+      "screenId": "DATA_DEFINITION_IMPORT",
+      "title": "Bulk Import Definition",
+      "routeOrState": "/admin/data/definition/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 218,
+      "screenId": "DATA_INTERLUDESUBSTITUTION_IMPORT",
+      "title": "Bulk Import InterludeSubstitution",
+      "routeOrState": "/admin/data/interludesubstitution/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 219,
+      "screenId": "DATA_INTERLUDE_IMPORT",
+      "title": "Bulk Import Interlude",
+      "routeOrState": "/admin/data/interlude/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 220,
+      "screenId": "DATA_KNOWLEDGEBASEITEM_IMPORT",
+      "title": "Bulk Import KnowledgeBaseItem",
+      "routeOrState": "/admin/data/knowledgebaseitem/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 221,
+      "screenId": "DATA_LAYETTE_IMPORT",
+      "title": "Bulk Import Layette",
+      "routeOrState": "/admin/data/layette/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 222,
+      "screenId": "DATA_LEGENDARYREWARD_IMPORT",
+      "title": "Bulk Import LegendaryReward",
+      "routeOrState": "/admin/data/legendaryreward/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 223,
+      "screenId": "DATA_LESSON_IMPORT",
+      "title": "Bulk Import Lesson",
+      "routeOrState": "/admin/data/lesson/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 225,
+      "screenId": "DATA_PERSONALITYEXPRESSION_IMPORT",
+      "title": "Bulk Import PersonalityExpression",
+      "routeOrState": "/admin/data/personalityexpression/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 226,
+      "screenId": "DATA_PILLAR_IMPORT",
+      "title": "Bulk Import Pillar",
+      "routeOrState": "/admin/data/pillar/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 227,
+      "screenId": "DATA_POINTOFINTEREST_IMPORT",
+      "title": "Bulk Import PointOfInterest",
+      "routeOrState": "/admin/data/pointofinterest/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 229,
+      "screenId": "DATA_RESEARCH_IMPORT",
+      "title": "Bulk Import Research",
+      "routeOrState": "/admin/data/research/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 230,
+      "screenId": "DATA_SETTLEMENT_IMPORT",
+      "title": "Bulk Import Settlement",
+      "routeOrState": "/admin/data/settlement/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 231,
+      "screenId": "DATA_SITE_IMPORT",
+      "title": "Bulk Import Site",
+      "routeOrState": "/admin/data/site/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 232,
+      "screenId": "DATA_SOUL_IMPORT",
+      "title": "Bulk Import Soul",
+      "routeOrState": "/admin/data/soul/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 233,
+      "screenId": "DATA_SOURCE_IMPORT",
+      "title": "Bulk Import Source",
+      "routeOrState": "/admin/data/source/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 235,
+      "screenId": "DATA_SPECIES_IMPORT",
+      "title": "Bulk Import Species",
+      "routeOrState": "/admin/data/species/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 236,
+      "screenId": "DATA_TIMELINEEVENT_IMPORT",
+      "title": "Bulk Import TimelineEvent",
+      "routeOrState": "/admin/data/timelineevent/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 237,
+      "screenId": "DATA_TOME_IMPORT",
+      "title": "Bulk Import Tome",
+      "routeOrState": "/admin/data/tome/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 238,
+      "screenId": "DATA_TRANSITION_IMPORT",
+      "title": "Bulk Import Transition",
+      "routeOrState": "/admin/data/transition/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 239,
+      "screenId": "DATA_WITNESS_IMPORT",
+      "title": "Bulk Import Witness",
+      "routeOrState": "/admin/data/witness/import",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 240,
+      "screenId": "ADM027",
+      "title": "Puzzle Designer",
+      "routeOrState": "/admin/puzzles",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 241,
+      "screenId": "ADM028",
+      "title": "Puzzle Blueprints",
+      "routeOrState": "/admin/puzzles/blueprints",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 242,
+      "screenId": "ADM029",
+      "title": "Reusable Puzzle Components",
+      "routeOrState": "/admin/puzzles/components",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 243,
+      "screenId": "ADM030",
+      "title": "Puzzle Test & Validation Lab",
+      "routeOrState": "/admin/puzzles/test-lab",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 244,
+      "screenId": "ADM031",
+      "title": "Atlas Manager",
+      "routeOrState": "/admin/atlas",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 245,
+      "screenId": "ADM032",
+      "title": "Points of Interest — View Selector",
+      "routeOrState": "/admin/atlas/pois",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 246,
+      "screenId": "ATLAS_POI_2D",
+      "title": "Points of Interest — 2D View",
+      "routeOrState": "/admin/atlas/pois",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 247,
+      "screenId": "ATLAS_POI_3D",
+      "title": "Points of Interest — 3D View",
+      "routeOrState": "/admin/atlas/pois",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 248,
+      "screenId": "ADM033",
+      "title": "Sites",
+      "routeOrState": "/admin/atlas/sites",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 249,
+      "screenId": "AT004_FOUND_CITY",
+      "title": "Found City — SITE-0081",
+      "routeOrState": "/admin/atlas/sites/SITE-0081",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 250,
+      "screenId": "ADM034",
+      "title": "Settlements",
+      "routeOrState": "/admin/atlas/settlements",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 251,
+      "screenId": "AT005_SETTLEMENT_DETAIL",
+      "title": "Migrate — SET-0001",
+      "routeOrState": "/admin/atlas/settlements/SET-0001/migrate",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 252,
+      "screenId": "ADM035",
+      "title": "Campaign Manager",
+      "routeOrState": "/admin/campaign",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 253,
+      "screenId": "CAMPAIGN_CONCORD",
+      "title": "Main 18-Book Planner — Concord",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 254,
+      "screenId": "CAMPAIGN_RUIN",
+      "title": "Main 18-Book Planner — Ruin",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 255,
+      "screenId": "CAMPAIGN_SCHISM",
+      "title": "Main 18-Book Planner — Schism",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 256,
+      "screenId": "ADM037",
+      "title": "City Builder",
+      "routeOrState": "/admin/city-builder",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 270,
+      "screenId": "CAP01",
+      "title": "Capability Registry",
+      "routeOrState": "/admin/capabilities",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 271,
+      "screenId": "CAP02",
+      "title": "Capability Definition Editor",
+      "routeOrState": "/admin/capabilities/:capabilityDefinitionId",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 272,
+      "screenId": "CAP03",
+      "title": "Address and Condition Builder",
+      "routeOrState": "/admin/capabilities/condition-builder",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 273,
+      "screenId": "CAP04",
+      "title": "Evidence Scoring Policies",
+      "routeOrState": "/admin/capabilities/scoring",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 274,
+      "screenId": "CAP05",
+      "title": "Event and Projection Inspector",
+      "routeOrState": "/admin/capabilities/inspector",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 276,
+      "screenId": "CAM007",
+      "title": "Campaign Planner — Custom Column View",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 279,
+      "screenId": "ADM_MONEY01_TRANSACTION_LEDGER",
+      "title": "World Transaction Ledger",
+      "routeOrState": "/admin/money",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 280,
+      "screenId": "ADM_TRANS01_TRANSFORMATION_AUTHORING",
+      "title": "Transformation Authoring",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 281,
+      "screenId": "BULK01_BULK_CHANGES_QUEUE_V2",
+      "title": "Bulk Changes Queue",
+      "routeOrState": "/admin/bulk-changes",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 282,
+      "screenId": "CMP53_COMPANION_PLANNER_ATTRIBUTES_V2",
+      "title": "Companion Planner Attributes",
+      "routeOrState": "/admin/campaign/planner",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 283,
+      "screenId": "DATA_OCC01_OCCUPATION_DETAIL_ATTRIBUTES",
+      "title": "Occupation Detail Attributes",
+      "routeOrState": "/admin/data/occupations/:occupationId",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 300,
+      "screenId": "BULK02_BULK_CHANGE_DETAIL_V2",
+      "title": "Bulk Change Detail",
+      "routeOrState": "/admin/bulk-changes/:envelopeId",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 301,
+      "screenId": "ADM_AUDIO01_SETTLEMENT_SOUNDTRACKS",
+      "title": "Settlement Soundtracks",
+      "routeOrState": "/admin/atlas/settlements/:settlementId/soundtracks",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 302,
+      "screenId": "DATA_WITNESS_DEF",
+      "title": "Data - WitnessDef",
+      "routeOrState": "/admin/data/witness-def",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 303,
+      "screenId": "DATA_COMPANION_DEF",
+      "title": "Data - CompanionDef",
+      "routeOrState": "/admin/data/companion-def",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 304,
+      "screenId": "CAMPAIGN_DOCUMENT_CORPUS",
+      "title": "Historical Document Corpus",
+      "routeOrState": "/admin/campaigns/:campaignId/documents",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    },
+    {
+      "reviewOrder": 305,
+      "screenId": "CAMPAIGN_DOCUMENT_QUESTS",
+      "title": "Document Quest and Research Planner",
+      "routeOrState": "/admin/campaigns/:campaignId/document-quests",
+      "kind": "route",
+      "shell": "admin",
+      "authorization": "administration",
+      "status": "ROLE_GATED_REACHABLE",
+      "automatedCoverage": [
+        "tests/e2e/navigation-reachability.spec.ts"
+      ]
+    }
+  ]
+}

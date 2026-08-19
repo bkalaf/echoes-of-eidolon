@@ -1,0 +1,15 @@
+T132 four tutorial production generators
+
+RED 2026-08-18T16:50:40-07:00
+The focused generator test failed because the production generator module did not exist.
+
+RED 2026-08-18T16:52:32-07:00
+Three generator behaviors passed; the initial leakage assertion incorrectly treated a coordinate appearing as derivable row/column carrier text as an explicit answer leak. The assertion was narrowed to prohibited answer-bearing keys and secret/seed values.
+
+RED 2026-08-18T16:55:15-07:00
+The admin-preview helper and production tutorial UI surface were absent. This preserved RED before adding route and component integration.
+
+GREEN 2026-08-18T16:57:25-07:00
+Four focused files and 16 tests passed. The exact tutorial four now have deterministic production carriers, immutable 1.0.0 versioning, exhaustive one-solution solvers, constant-time validation, decoy rejection, answer-free projections, declared accessibility surfaces, and zero runtime/timer mutation.
+
+TypeScript and ESLint passed after integration.

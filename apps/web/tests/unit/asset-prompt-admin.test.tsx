@@ -36,12 +36,13 @@ describe("managed asset and prompt administration", () => {
       ok: true,
     }));
     renderAdminState("ADM031");
-    expect(await screen.findByText("ASSET-1")).toBeInTheDocument();
-    expect(screen.getByText(objectKey)).toBeInTheDocument();
-    expect(screen.getByText("login.soundtrack")).toBeInTheDocument();
+    const assetRow = await screen.findByRole("row", { name: /ASSET-1/ });
+    expect(assetRow).toBeInTheDocument();
+    expect(screen.getAllByText(objectKey).length).toBeGreaterThan(0);
+    expect(assetRow).toHaveTextContent("login.soundtrack");
     expect(fetch).toHaveBeenCalledWith("/api/admin/assets/?mediaKind=AUDIO");
     expect(screen.getByText(/Storage credentials and workstation paths are not returned/)).toBeInTheDocument();
-    fireEvent.click(screen.getByText("ASSET-1"));
+    fireEvent.click(assetRow);
     expect(screen.getByRole("heading", { name: "Managed asset detail" })).toBeInTheDocument();
     expect(screen.getByText(/"durationSeconds": 120/)).toBeInTheDocument();
     expect(screen.getByText(/must use the existing sanitized managed-asset import pipeline/)).toBeInTheDocument();
@@ -64,10 +65,25 @@ describe("managed asset and prompt administration", () => {
       ok: true,
     }));
     renderAdminState("ADM034");
-    expect(await screen.findByText("PROMPT-1")).toBeInTheDocument();
-    expect(screen.getByText("SUPPLIED_PURPOSE")).toBeInTheDocument();
-    expect(screen.getByText("SettlementWorld · SW-1")).toBeInTheDocument();
+    expect(await screen.findByRole("row", { name: /PROMPT-1/ })).toBeInTheDocument();
+    const promptRow = screen.getByRole("row", { name: /PROMPT-1/ });
+    expect(promptRow).toHaveTextContent("SUPPLIED_PURPOSE");
+    expect(promptRow).toHaveTextContent("SettlementWorld");
+    expect(promptRow).toHaveTextContent("SW-1");
     expect(fetch).toHaveBeenCalledWith("/api/admin/prompts/?status=OUTSTANDING");
+  });
+
+  it("loads only matching managed assets and presents object identity before association", async () => {
+    const objectKey = "sha256-image.webp";
+    const fetchMock = vi.fn().mockImplementation(async (request: RequestInfo | URL) => String(request).includes("/api/admin/assets/")
+      ? { json: async () => ({ assets: [{ byteSize: "123", managedAssetId: "ASSET-IMAGE-1", mediaKind: "IMAGE", mimeType: "image/webp", objectKey, purposeLinks: [], sha256: "a".repeat(64), technicalMetadata: {} }], total: 1 }), ok: true }
+      : { json: async () => ({ prompts: [{ family: "IMAGE", promptRecordId: "PROMPT-IMAGE", purpose: "Portrait", status: "OUTSTANDING", targetId: "SOUL-1", targetType: "Soul", versions: [{ generatedManagedAssetId: null, promptText: "Portrait", promptVersionId: "PV-IMAGE-1", responseContract: {}, version: 1 }] }], total: 1 }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderAdminState("ADM033");
+
+    fireEvent.click(await screen.findByRole("row", { name: /PROMPT-IMAGE/ }));
+    expect(await screen.findByRole("option", { name: `${objectKey} · ASSET-IMAGE-1` })).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledWith("/api/admin/assets/?mediaKind=IMAGE");
   });
 
   it("creates a prompt only from explicit authored fields and JSON contract", async () => {

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T14:07:14-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/canonical/guide-mappings.json"
+    },
+    {
+      "path": "apps/web/src/data/architect-witness-guide/guides.json"
+    },
+    {
+      "path": "apps/web/tests/unit/architect-witness-roster.test.ts"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/architect-witness-roster.test.ts tests/unit/release-0.3.0-red-baseline.test.ts -t Guide --reporter=verbose",
+      "startedAt": "2026-08-18T14:07:11-07:00",
+      "finishedAt": "2026-08-18T14:07:14-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/guides/guide-audit-summary.txt"
+    },
+    {
+      "command": "rg -n 'The Showman|The Mourner' apps/web/src apps/web/tests docs",
+      "startedAt": "2026-08-18T14:07:14-07:00",
+      "finishedAt": "2026-08-18T14:07:14-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/guides/guide-audit-summary.txt"
+    },
+    {
+      "command": "node --import tsx scripts/audit-architect-witness-guide-hardening.mts",
+      "startedAt": "2026-08-18T14:06:45-07:00",
+      "finishedAt": "2026-08-18T14:06:47-07:00",
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/guides/guide-audit-summary.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Exactly three static mappings",
+      "expected": 3,
+      "observed": 3,
+      "pass": true
+    },
+    {
+      "name": "Canonical Guide title and identity tuples",
+      "expected": [
+        {
+          "worldKey": "CONCORD",
+          "title": "The Overseer",
+          "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+          "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN"
+        },
+        {
+          "worldKey": "SCHISM",
+          "title": "The Herald",
+          "characterId": "CHA_FRANK_ADRIAN_VOSS",
+          "soulId": "SOUL_FRANK_ADRIAN_VOSS"
+        },
+        {
+          "worldKey": "RUIN",
+          "title": "The Steward",
+          "characterId": "CHA_MOTHER",
+          "soulId": "SOUL_MOTHER"
+        }
+      ],
+      "observed": [
+        {
+          "worldKey": "CONCORD",
+          "title": "The Overseer",
+          "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+          "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN"
+        },
+        {
+          "worldKey": "SCHISM",
+          "title": "The Herald",
+          "characterId": "CHA_FRANK_ADRIAN_VOSS",
+          "soulId": "SOUL_FRANK_ADRIAN_VOSS"
+        },
+        {
+          "worldKey": "RUIN",
+          "title": "The Steward",
+          "characterId": "CHA_MOTHER",
+          "soulId": "SOUL_MOTHER"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "Static mappings create no Guide identities",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "No active current-authority superseded Guide titles",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "Current persisted counts verified",
+      "expected": {
+        "Soul": 58,
+        "Character": 112,
+        "Architect": 56,
+        "WitnessDef": 54,
+        "Witness": 54
+      },
+      "observed": "unavailable: sandbox denied the configured local PostgreSQL connection with EPERM",
+      "pass": false
+    }
+  ],
+  "artifacts": [
+    "artifacts/release-0.3.0/guides/guide-audit-summary.txt"
+  ],
+  "blockers": [
+    {
+      "id": "B07-LOCAL-DATABASE-ACCESS",
+      "condition": "The configured local PostgreSQL audit connection is blocked by the execution sandbox.",
+      "requiredResolution": "Run the existing read-only hardening audit with normal local database access and capture the exact 58/112/56/54/54 persisted counts."
+    }
+  ],
+  "notes": [
+    "The repository already contains the exact owner-approved static Guide mappings, so no application file needed a title change.",
+    "Historical persisted counts are not substituted for the required current database audit."
+  ]
+}

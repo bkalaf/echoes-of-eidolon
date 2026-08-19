@@ -18,9 +18,9 @@ describe("City Builder administration", () => {
   it("lists canonical projects and eligible SettlementWorld records", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ availableSettlementWorlds: [settlementWorld], cities: [city] }), ok: true }));
     renderCity("CITY01", "/admin/cities");
-    expect(await screen.findAllByText("Anchor")).toHaveLength(2);
-    expect(screen.getByText("1 parcels · 0 streets · 0 buildings")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Open" })).toHaveAttribute("href", "/admin/cities/CITY-1/streets");
+    expect(await screen.findAllByRole("row", { name: /Anchor/ })).toHaveLength(2);
+    expect(screen.getByRole("row", { name: /CITY-1/ })).toHaveTextContent("PARCEL-1");
+    expect(screen.getByRole("link", { name: "Open city" })).toHaveAttribute("href", "/admin/cities/CITY-1/streets");
     expect(screen.getByRole("button", { name: "Create geometry project" })).toBeEnabled();
   });
 
@@ -30,7 +30,7 @@ describe("City Builder administration", () => {
       : { json: async () => ({ city }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
     renderCity("CITY02", "/admin/cities/:id/streets", "/admin/cities/CITY-1/streets");
-    expect(await screen.findByText("PARCEL-1")).toBeInTheDocument();
+    expect(await screen.findByRole("row", { name: /PARCEL-1/ })).toBeInTheDocument();
     const parcelIdInputs = screen.getAllByLabelText("Parcel ID");
     fireEvent.change(parcelIdInputs[0]!, { target: { value: "PARCEL-2" } });
     fireEvent.click(screen.getAllByRole("button", { name: "Save geometry" })[0]!);
@@ -44,5 +44,12 @@ describe("City Builder administration", () => {
     renderCity("CITY04", "/admin/cities/:id/interiors", "/admin/cities/CITY-1/interiors");
     expect(await screen.findByText(/No canonical Interior, Room, Passage/)).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Save interior/ })).not.toBeInTheDocument();
+  });
+
+  it("presents the nameless Parcel relation with a derived human label and canonical ID", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ city }), ok: true }));
+    renderCity("CITY03", "/admin/cities/:id/exteriors", "/admin/cities/CITY-1/exteriors");
+
+    expect(await screen.findByRole("option", { name: "Parcel PARCEL-1 · PARCEL-1" })).toBeInTheDocument();
   });
 });

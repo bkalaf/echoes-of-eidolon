@@ -5,8 +5,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SettlementAdminPage } from "../../src/screens/admin/SettlementAdminPage";
 
 const settlements = [
-  { culture: { cultureId: "CULTURE-1", name: "Origin Culture" }, dominantBreed: { breedId: "BREED-1", name: "Origin Breed" }, latestYear: 10, populations: [{ breedId: "BREED-1", population: 1000 }], settlement: { classification: "CITY", name: "Origin", settlementId: "SET-1", site: { latitude: 1, longitude: 2, regionId: "R01", siteId: "SITE-1" } }, settlementWorldId: "SW-1", totalPopulation: 1000, worldKey: "CONCORD" },
-  { culture: null, dominantBreed: null, latestYear: 8, populations: [{ breedId: "BREED-1", population: 250 }], settlement: { classification: "TOWN", name: "Destination", settlementId: "SET-2", site: { latitude: 3, longitude: 4, regionId: "R02", siteId: "SITE-2" } }, settlementWorldId: "SW-2", totalPopulation: 250, worldKey: "CONCORD" },
+  { culture: { cultureId: "CULTURE-1", name: "Origin Culture" }, dominantBreed: { breedId: "BREED-1", name: "Origin Breed" }, latestYear: 10, populations: [{ breedId: "BREED-1", name: "Origin Breed", population: 1000 }], settlement: { classification: "CITY", name: "Origin", settlementId: "SET-1", site: { latitude: 1, longitude: 2, regionId: "R01", siteId: "SITE-1" } }, settlementWorldId: "SW-1", totalPopulation: 1000, worldKey: "CONCORD" },
+  { culture: null, dominantBreed: null, latestYear: 8, populations: [{ breedId: "BREED-1", name: "Origin Breed", population: 250 }], settlement: { classification: "TOWN", name: "Destination", settlementId: "SET-2", site: { latitude: 3, longitude: 4, regionId: "R02", siteId: "SITE-2" } }, settlementWorldId: "SW-2", totalPopulation: 250, worldKey: "CONCORD" },
 ];
 
 function renderPage(migrate: boolean) {
@@ -36,6 +36,7 @@ describe("Settlement administration", () => {
     await vi.waitFor(() => expect(screen.getByRole("combobox", { name: "To" })).toBeEnabled());
     fireEvent.change(screen.getByRole("combobox", { name: "To" }), { target: { value: "SET-2" } });
     await vi.waitFor(() => expect(screen.getByRole("combobox", { name: "Breed" })).toBeEnabled());
+    expect(screen.getByRole("option", { name: "Origin Breed · BREED-1 · 1,000 available" })).toBeInTheDocument();
     fireEvent.change(screen.getByRole("combobox", { name: "Breed" }), { target: { value: "BREED-1" } });
     fireEvent.change(screen.getByRole("spinbutton", { name: "Population" }), { target: { value: "100" } });
     expect(screen.getByText(/Total BREED-1 population is conserved/)).toBeInTheDocument();

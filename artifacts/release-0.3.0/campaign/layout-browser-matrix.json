@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "echoes-campaign-layout-browser-matrix-v1",
+  "browser": "Chromium",
+  "viewport": { "width": 1600, "height": 900 },
+  "route": "/admin/campaign/planner?state=CAMPAIGN_CONCORD",
+  "spec": "apps/web/tests/e2e/campaign-planner.spec.ts",
+  "status": "BLOCKED",
+  "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
+  "expectedScreenshot": "artifacts/release-0.3.0/campaign/campaign-planner-1600x900.png",
+  "scenarios": [
+    "board scrollLeft changes while document scrollLeft remains zero",
+    "page title x position remains unchanged after board scroll",
+    "visible readable Move up and Move down controls including disabled boundary",
+    "Witness and Architect unassigned rows show human-readable names",
+    "normal hover focus active and disabled contrast",
+    "1600x900 screenshot capture"
+  ],
+  "note": "Focused component, domain, static layout, typecheck, and build gates are separate; this artifact does not claim browser execution."
+}

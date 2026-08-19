@@ -1,0 +1,19 @@
+T205 registry-backed record detail/edit route — active implementation evidence
+
+RED
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/record-detail-route.test.ts tests/unit/entity-data-admin.test.tsx
+Exit: 1
+Result: the owner-facing /admin/data/$entityKey/$recordId route module did not exist.
+
+GREEN
+Command: pnpm --filter web exec vitest run --config vitest.config.ts tests/unit/record-detail-route.test.ts tests/unit/entity-data-admin.test.tsx
+Exit: 0
+Result: the generated dynamic route resolves all 34 active entities through entityForPath; valid encoded IDs round-trip; record detail is read-only first, field-complete, name-first, and has explicit Edit Record/Save/Cancel. Character subtypes edit parent and subtype fields through the same composed PATCH authority as inline rows.
+
+CUMULATIVE LOCAL SLICE
+3 focused files / 26 tests: PASS.
+Typecheck: PASS.
+Production build: PASS; routeTree.gen.ts contains /admin/data/$entityKey/$recordId.
+Machine-readable route audit: 34 entities checked, 34 generated detail routes, zero static missing layouts/editable fields/raw-FK-only fields.
+
+Required real-Chromium and PostgreSQL-backed reachability/mutation evidence remains BLOCKED under B08 and is not claimed as executed.

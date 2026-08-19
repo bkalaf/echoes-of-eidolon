@@ -64,13 +64,13 @@ export async function listSettlementWorlds(worldKey: WorldKey, database: Databas
       settlementWorldId: true,
       totalPopulation: true,
       worldKey: true,
-      populationEvents: { orderBy: [{ year: "asc" }, { sequence: "asc" }], select: { breedId: true, populationDelta: true, year: true } },
+      populationEvents: { orderBy: [{ year: "asc" }, { sequence: "asc" }], select: { breed: { select: { name: true } }, breedId: true, populationDelta: true, year: true } },
     },
   });
   return worlds.map((world) => {
-    const populationByBreed = new Map<string, number>();
-    for (const event of world.populationEvents) populationByBreed.set(event.breedId, (populationByBreed.get(event.breedId) ?? 0) + event.populationDelta);
-    const populations = [...populationByBreed].map(([breedId, population]) => ({ breedId, population })).filter((row) => row.population > 0).sort((left, right) => left.breedId.localeCompare(right.breedId));
+    const populationByBreed = new Map<string, { name: string; population: number }>();
+    for (const event of world.populationEvents) populationByBreed.set(event.breedId, { name: event.breed.name, population: (populationByBreed.get(event.breedId)?.population ?? 0) + event.populationDelta });
+    const populations = [...populationByBreed].map(([breedId, value]) => ({ breedId, name: value.name, population: value.population })).filter((row) => row.population > 0).sort((left, right) => left.breedId.localeCompare(right.breedId));
     const eventTotal = populations.reduce((sum, row) => sum + row.population, 0);
     if (eventTotal !== world.totalPopulation) throw new Error(`SettlementWorld ${world.settlementWorldId} population projection has drifted from its event ledger.`);
     return {

@@ -4,9 +4,9 @@ The current `bkalaf/echoes-of-eidolon` repository is the sole application author
 
 ## Release authority
 
-- Current target: `0.2.0`.
+- Current target: `0.3.0`.
 - Read `docs/RELEASES.md` and `docs/COMMITS_AND_RELEASE_NOTES.md` before implementation or release work.
-- The canonical reviewed note is `docs/release-notes/0_2_0.md`.
+- The canonical reviewed note is `docs/release-notes/0_3_0.md`.
 - Package versions and the canonical current note must remain synchronized.
 - Update release notes for every player-visible or operator-visible change.
 - Generated notes are drafts only. Owner review is required before publication.

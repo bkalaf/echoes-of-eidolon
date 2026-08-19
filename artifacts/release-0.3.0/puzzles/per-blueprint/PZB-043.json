@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
+  "release": "0.3.0",
+  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "puzzleBlueprintId": "PZB-043",
+  "tier": "TIER_3_EXPERT",
+  "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
+  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#AUDIO_CAPTION_SEQUENCE",
+  "generatorVersion": "1.0.0",
+  "seedVector": "RELEASE_PROOF_VECTOR_01:376b88ee1c1020a6",
+  "instanceChecksum": "b0e5442aef4eb12c5641c9ac72db02c24f1554e823704a2da606cb47bea5aa84",
+  "uniqueSolution": true,
+  "alternateSolutionsRejected": true,
+  "answerFreeClient": true,
+  "accessibilityEquivalent": true,
+  "focusedTests": [
+    "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "status": "PASS",
+  "authoredContract": {
+    "answerFormat": "SIX_DIGIT_CODE",
+    "concept": "Three non-pitched rhythms repeat at coprime lengths. Coincidences at generated checkpoints select symbols.",
+    "expectedSolvePath": [
+      "Recognize the authored control evidence.",
+      "Apply: Represent hits as modular residue sets, intersect the cycles, and map coincidence ordinals.",
+      "Separate constrained signal from generated noise.",
+      "Derive the instance-specific answer format.",
+      "Submit to server validation before the deadline."
+    ],
+    "hints": [
+      {
+        "kind": "DIRECTIONAL",
+        "level": 1,
+        "text": "Bobalus points toward the audio music spectral representation and suggests the first useful tool without naming an intermediate value."
+      },
+      {
+        "kind": "GUIDED",
+        "level": 2,
+        "text": "Bobalus identifies this operation: Represent hits as modular residue sets, intersect the cycles, and map coincidence ordinals. He injects one instance-specific control label, never the final answer."
+      }
+    ],
+    "playerFacingModalities": [
+      "PERCUSSION_AUDIO",
+      "RHYTHM_GRID"
+    ],
+    "accessibilityModes": [
+      "RHYTHM_GRID",
+      "HAPTIC_TRACKS",
+      "CAPTIONS"
+    ]
+  },
+  "assertions": {
+    "authoredContractPreserved": true,
+    "deterministicReplay": true,
+    "noLiveRuntimeRecords": true,
+    "timerStarted": false
+  }
+}

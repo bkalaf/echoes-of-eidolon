@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T16:58:30-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    { "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv", "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419" },
+    { "path": "apps/web/src/server/puzzle-tutorial-generators.ts" }
+  ],
+  "commands": [
+    { "command": "pnpm --filter web exec vitest run tests/unit/puzzle-tutorial-generators.test.ts --reporter=verbose", "startedAt": "2026-08-18T16:50:40-07:00", "finishedAt": "2026-08-18T16:50:42-07:00", "exitCode": 1, "logPath": "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt" },
+    { "command": "pnpm --filter web exec vitest run tests/unit/puzzle-tutorial-generators.test.ts tests/unit/puzzle-prototype-lab.test.tsx --reporter=dot", "startedAt": "2026-08-18T16:55:15-07:00", "finishedAt": "2026-08-18T16:55:19-07:00", "exitCode": 1, "logPath": "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt" },
+    { "command": "pnpm --filter web exec vitest run tests/unit/puzzle-tutorial-generators.test.ts tests/unit/puzzle-prototype-lab.test.tsx tests/unit/puzzle-prototypes.test.ts tests/unit/puzzle-admin.test.tsx --reporter=dot", "startedAt": "2026-08-18T16:57:25-07:00", "finishedAt": "2026-08-18T16:57:29-07:00", "exitCode": 0, "logPath": "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt" },
+    { "command": "pnpm --filter web typecheck", "startedAt": "2026-08-18T16:56:38-07:00", "finishedAt": "2026-08-18T16:57:04-07:00", "exitCode": 0, "logPath": "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt" },
+    { "command": "pnpm lint", "startedAt": "2026-08-18T16:53:20-07:00", "finishedAt": "2026-08-18T16:53:44-07:00", "exitCode": 0, "logPath": "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt" }
+  ],
+  "assertions": [
+    { "name": "Exact tutorial IDs", "expected": ["PZB-011", "PZB-012", "PZB-037", "PZB-021"], "observed": ["PZB-011", "PZB-012", "PZB-037", "PZB-021"], "pass": true },
+    { "name": "Deterministic replay and seed divergence", "expected": true, "observed": true, "pass": true },
+    { "name": "Exactly one solution per proof vector", "expected": 4, "observed": 4, "pass": true },
+    { "name": "Alternate and decoy submissions rejected", "expected": 4, "observed": 4, "pass": true },
+    { "name": "Answer-free public projection", "expected": "no canonicalSolution, proofDigest, seed, subjectKey, validationToken, or server secret field", "observed": "8 allowlisted public keys; no prohibited field", "pass": true },
+    { "name": "Runtime boundary", "expected": { "records": 0, "timerStarted": false }, "observed": { "records": 0, "timerStarted": false }, "pass": true },
+    { "name": "Focused server and UI tests", "expected": 16, "observed": 16, "pass": true }
+  ],
+  "blueprints": [
+    { "puzzleBlueprintId": "PZB-011", "tier": "TIER_1_INITIATE", "primaryFamily": "CRYPTO_NUMERIC_DATA", "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#cancellationPuzzle", "generatorVersion": "1.0.0", "seedVector": "release-proof-vector-01", "instanceChecksum": "6b75c024576dd5367dcaba2cb39c4277e77c77406525d3a396948bec6f893030", "carrierKind": "ORDINAL_CANCELLATION_MATRIX", "uniqueSolution": true, "alternateSolutionsRejected": true, "answerFreeClient": true, "accessibilityEquivalent": true, "status": "PASS" },
+    { "puzzleBlueprintId": "PZB-012", "tier": "TIER_1_INITIATE", "primaryFamily": "CRYPTO_NUMERIC_DATA", "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#setAmbigramPuzzle", "generatorVersion": "1.0.0", "seedVector": "release-proof-vector-01", "instanceChecksum": "d347ac5bc47aaa7ce212b11c2cb92c371efd03192c4e1017a67af3cc243c0a2b", "carrierKind": "SET_AMBIGRAM", "uniqueSolution": true, "alternateSolutionsRejected": true, "answerFreeClient": true, "accessibilityEquivalent": true, "status": "PASS" },
+    { "puzzleBlueprintId": "PZB-037", "tier": "TIER_1_INITIATE", "primaryFamily": "AUDIO_MUSIC_SPECTRAL", "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#musicalHexPuzzle", "generatorVersion": "1.0.0", "seedVector": "release-proof-vector-01", "instanceChecksum": "2a319ab2d1db8b843542b02fd35e32aa4115fa682f43b57f9838bc447ef2d522", "carrierKind": "MUSICAL_HEX_GRID", "uniqueSolution": true, "alternateSolutionsRejected": true, "answerFreeClient": true, "accessibilityEquivalent": true, "status": "PASS" },
+    { "puzzleBlueprintId": "PZB-021", "tier": "TIER_1_INITIATE", "primaryFamily": "VISUAL_COLOR_OPTICAL", "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#typographicQrPuzzle", "generatorVersion": "1.0.0", "seedVector": "release-proof-vector-01", "instanceChecksum": "655db0a4747261c0878da21b34f839aafe346ee3b0ebad19563a3d3084740bb2", "carrierKind": "TYPOGRAPHIC_QR_THRESHOLD", "uniqueSolution": true, "alternateSolutionsRejected": true, "answerFreeClient": true, "accessibilityEquivalent": true, "status": "PASS" }
+  ],
+  "artifacts": [
+    "apps/web/src/server/puzzle-tutorial-generators.ts",
+    "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+    "apps/web/src/routes/api/admin/puzzles/preview.ts",
+    "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
+    "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+  ],
+  "blockers": [],
+  "notes": [
+    "Proof-vector secrets are test-only non-production strings and are not included in this report.",
+    "The PZB-021 signed route returns an answer-free shuffled symbol-card stage; ordering remains a player task.",
+    "No database mutation, live assignment, timer start, deployment, tag, or publication occurred."
+  ]
+}

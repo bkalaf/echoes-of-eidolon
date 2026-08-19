@@ -1,0 +1,273 @@
+{
+  "schemaVersion": "echoes-record-detail-route-audit-v1",
+  "generatedAt": "2026-08-19T01:08:09.485Z",
+  "status": "LOCAL_PASS_BROWSER_DATABASE_BLOCKED",
+  "entitiesChecked": 34,
+  "existingRecordDetailRoutes": 34,
+  "entities": [
+    {
+      "entity": "AchievementDefinition",
+      "entityKey": "achievementdefinition",
+      "routePattern": "/admin/data/achievementdefinition/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Architect",
+      "entityKey": "architect",
+      "routePattern": "/admin/data/architect/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Ark",
+      "entityKey": "ark",
+      "routePattern": "/admin/data/ark/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Breed",
+      "entityKey": "breed",
+      "routePattern": "/admin/data/breed/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Character",
+      "entityKey": "character",
+      "routePattern": "/admin/data/character/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Citation",
+      "entityKey": "citation",
+      "routePattern": "/admin/data/citation/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Companion",
+      "entityKey": "companion",
+      "routePattern": "/admin/data/companion/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "CompanionDef",
+      "entityKey": "companiondef",
+      "routePattern": "/admin/data/companiondef/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Constellation",
+      "entityKey": "constellation",
+      "routePattern": "/admin/data/constellation/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Culture",
+      "entityKey": "culture",
+      "routePattern": "/admin/data/culture/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Definition",
+      "entityKey": "definition",
+      "routePattern": "/admin/data/definition/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Interlude",
+      "entityKey": "interlude",
+      "routePattern": "/admin/data/interlude/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "InterludeSubstitution",
+      "entityKey": "interludesubstitution",
+      "routePattern": "/admin/data/interludesubstitution/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "KnowledgeBaseItem",
+      "entityKey": "knowledgebaseitem",
+      "routePattern": "/admin/data/knowledgebaseitem/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Layette",
+      "entityKey": "layette",
+      "routePattern": "/admin/data/layette/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "LegendaryReward",
+      "entityKey": "legendaryreward",
+      "routePattern": "/admin/data/legendaryreward/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Lesson",
+      "entityKey": "lesson",
+      "routePattern": "/admin/data/lesson/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "PersonalityExpression",
+      "entityKey": "personalityexpression",
+      "routePattern": "/admin/data/personalityexpression/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Pillar",
+      "entityKey": "pillar",
+      "routePattern": "/admin/data/pillar/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "PointOfInterest",
+      "entityKey": "pointofinterest",
+      "routePattern": "/admin/data/pointofinterest/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "PuzzleBlueprint",
+      "entityKey": "puzzleblueprint",
+      "routePattern": "/admin/data/puzzleblueprint/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Research",
+      "entityKey": "research",
+      "routePattern": "/admin/data/research/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Settlement",
+      "entityKey": "settlement",
+      "routePattern": "/admin/data/settlement/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "SettlementPopulationEvent",
+      "entityKey": "settlementpopulationevent",
+      "routePattern": "/admin/data/settlementpopulationevent/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "SettlementWorld",
+      "entityKey": "settlementworld",
+      "routePattern": "/admin/data/settlementworld/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Site",
+      "entityKey": "site",
+      "routePattern": "/admin/data/site/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Soul",
+      "entityKey": "soul",
+      "routePattern": "/admin/data/soul/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Source",
+      "entityKey": "source",
+      "routePattern": "/admin/data/source/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Species",
+      "entityKey": "species",
+      "routePattern": "/admin/data/species/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "TimelineEvent",
+      "entityKey": "timelineevent",
+      "routePattern": "/admin/data/timelineevent/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Tome",
+      "entityKey": "tome",
+      "routePattern": "/admin/data/tome/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Transition",
+      "entityKey": "transition",
+      "routePattern": "/admin/data/transition/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Witness",
+      "entityKey": "witness",
+      "routePattern": "/admin/data/witness/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "WitnessDef",
+      "entityKey": "witnessdef",
+      "routePattern": "/admin/data/witnessdef/$recordId",
+      "registryBacked": true,
+      "generated": true
+    }
+  ],
+  "unexpected404s": [],
+  "missingDetailLayouts": [],
+  "missingEditableFields": [],
+  "rawForeignKeyOnlyFields": [],
+  "localEvidence": {
+    "focusedTests": "apps/web/tests/unit/record-detail-route.test.ts and apps/web/tests/unit/entity-data-admin.test.tsx",
+    "productionBuild": "PASS",
+    "encodedIdRoundTrip": [
+      "BRD_AARDVARK",
+      "ID-with-hyphen",
+      "ÉIDOLON 名"
+    ]
+  },
+  "browserDatabaseEvidence": {
+    "status": "BLOCKED",
+    "blocker": "B08_REQUIRED_CHROMIUM_AND_POSTGRES_RUNTIME_UNAVAILABLE",
+    "requiredEntities": [
+      "Breed",
+      "Character",
+      "WitnessDef",
+      "Witness",
+      "Architect",
+      "Species",
+      "Culture"
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T14:03:02-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "artifacts/release-0.3.0/traceability.json"
+    },
+    {
+      "path": "artifacts/release-0.3.0/execution-state.json"
+    },
+    {
+      "path": "apps/web/tests/unit/release-0.3.0-prompt-coverage.test.ts",
+      "sha256": "bbfbd1bc94ab7faba6012cbd869c548142a57a617429169192701fcd5789974d"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-prompt-coverage.test.ts --reporter=verbose",
+      "startedAt": "2026-08-18T14:01:06-07:00",
+      "finishedAt": "2026-08-18T14:01:09-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/tests/red-baseline/vitest-summary.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "All append-only queue entries represented in source order",
+      "expected": 18,
+      "observed": 18,
+      "pass": true
+    },
+    {
+      "name": "Unnumbered queue item preserved",
+      "expected": "R030-Q14U",
+      "observed": "R030-Q14U",
+      "pass": true
+    },
+    {
+      "name": "Both source Prompt 16 entries preserved",
+      "expected": [
+        "R030-Q16A",
+        "R030-Q16B"
+      ],
+      "observed": [
+        "R030-Q16A",
+        "R030-Q16B"
+      ],
+      "pass": true
+    }
+  ],
+  "artifacts": [
+    "artifacts/release-0.3.0/traceability.json",
+    "artifacts/release-0.3.0/owner-ui/owner-entity-inventory.json",
+    "artifacts/release-0.3.0/owner-ui/owner-route-inventory.json",
+    "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
+    "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json"
+  ],
+  "blockers": [],
+  "notes": [],
+  "promptIds": [
+    "R030-Q01",
+    "R030-Q02",
+    "R030-Q03",
+    "R030-Q04",
+    "R030-Q05",
+    "R030-Q06",
+    "R030-Q07",
+    "R030-Q08",
+    "R030-Q09",
+    "R030-Q10",
+    "R030-Q11",
+    "R030-Q12",
+    "R030-Q13",
+    "R030-Q14U",
+    "R030-Q15",
+    "R030-Q16A",
+    "R030-Q16B",
+    "R030-Q17"
+  ]
+}

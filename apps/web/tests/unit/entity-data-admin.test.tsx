@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
 import { EntityDataAdminPage } from "../../src/screens/admin/EntityDataAdminPage";
+import contractData from "../../src/data/entity-admin-contract.json";
 
 const collection = {
   contract: {
@@ -43,6 +44,9 @@ describe("persisted Data administration", () => {
       .mockResolvedValueOnce({ json: async () => ({ record: { soulId: "SOUL-2", name: "Renamed Soul" } }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
     renderPage("/admin/data/soul/SOUL-2", "DATA_SOUL_EDIT");
+    expect(await screen.findByRole("heading", { name: "Second Soul" })).toBeInTheDocument();
+    expect(screen.getAllByText("SOUL-2").length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
     expect(await screen.findByRole("heading", { name: "Edit Soul" })).toBeInTheDocument();
     const name = screen.getByLabelText("name *");
     expect(name).toHaveValue("Second Soul");
@@ -89,6 +93,8 @@ describe("persisted Data administration", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => speciesCollection, ok: true }));
     renderPage("/admin/data/species/SPC_HUMAN", "DATA_SPECIES_EDIT");
 
+    await screen.findByRole("heading", { name: "Human" });
+    fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
     expect(await screen.findByLabelText("speciesId *")).toBeDisabled();
     expect(screen.getByLabelText("name *")).toBeDisabled();
     expect(screen.getByText(/Canonical WorldBuilding names and persistence IDs are immutable/)).toBeInTheDocument();
@@ -147,5 +153,136 @@ describe("persisted Data administration", () => {
     expect(screen.getByLabelText("motivation")).toBeDisabled();
     expect(screen.getByLabelText("appearance")).not.toBeDisabled();
     expect(screen.getByText(/PET population invariant: Culture, Personality, sapient presentation, and governance dimensions remain null/)).toBeInTheDocument();
+  });
+
+  it("renders WitnessDef as named sections, a searchable Soul relation, and three spectral percentages", async () => {
+    const witnessDefCollection = { entity: "WitnessDef", records: [], contract: contractData.entities.WitnessDef };
+    const soulCollection = { entity: "Soul", records: [{ soulId: "SOUL_HANS", name: "Hans Halycon Hohenzollern" }], contract: contractData.entities.Soul };
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => ({
+      json: async () => String(input).includes("/soul") ? soulCollection : witnessDefCollection,
+      ok: true,
+    })));
+    renderPage("/admin/data/witness-def", "DATA_WITNESS_DEF");
+    await screen.findByRole("heading", { name: "WitnessDef" });
+    fireEvent.click(screen.getByRole("button", { name: "New" }));
+
+    expect(screen.getByRole("group", { name: "Identity" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Source Architect / Soul" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Domains" })).toBeInTheDocument();
+    const color = screen.getByRole("group", { name: "Spectral Color" });
+    expect(within(color).getByLabelText("SPECTRAL_VIOLET %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("GREEN %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("WHITE %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("Spectral color total")).toHaveTextContent("must equal 100%");
+    expect(await screen.findByRole("button", { name: "Select Hans Halycon Hohenzollern" })).toBeInTheDocument();
+  });
+
+  it("shows every parent Character field inside a Witness subtype editor", async () => {
+    const character = { characterId: "CHA_MARA", displayName: "Mara Vale", breedId: null, occupationId: null, worldKey: "CONCORD", soulId: "SOUL_HANS", gender: "Woman", age: "Adult", skinScaleColor: "Brown", hairFurColor: "Black", eyeColor: "Green", clothing: "Civilian: coat", faction: "CONCORD", primaryAttribute: "WISDOM", secondaryAttribute: "CHARISMA" };
+    const witnessCollection = { entity: "Witness", records: [{ characterId: "CHA_MARA", witnessDefId: "WDF_EMBERS", trueFlawName: null, architectCharacterId: "CHA_HANS", legendaryRewardId: null, constellationBeforeId: null, constellationAfterId: null, character }], contract: contractData.entities.Witness };
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => ({
+      json: async () => String(input).endsWith("/witness") ? witnessCollection : { entity: "Character", records: [], contract: contractData.entities.Character },
+      ok: true,
+    })));
+    renderPage("/admin/data/witness/CHA_MARA", "DATA_WITNESS_EDIT");
+    const parent = await screen.findByRole("group", { name: "Character identity" });
+    expect(within(parent).getAllByText("Mara Vale").length).toBeGreaterThan(0);
+    for (const field of contractData.entities.Character.auditFields) expect(within(parent).getAllByText(field.name).length, field.name).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
+    expect(await screen.findByLabelText("Character.displayName *")).toHaveValue("Mara Vale");
+  });
+
+  it("edits exactly one table row, keeps immutable identity read-only, and saves explicitly", async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({ json: async () => collection, ok: true })
+      .mockResolvedValueOnce({ json: async () => ({ record: { soulId: "SOUL-1", name: "Renamed inline" } }), ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+    renderPage("/admin/data/soul", "DATA015");
+    await screen.findByText("First Soul");
+
+    const editActions = screen.getAllByRole("button", { name: "Edit Row" });
+    fireEvent.click(editActions[0]!);
+    expect(screen.getByLabelText("name *")).toHaveValue("First Soul");
+    expect(screen.queryByLabelText("soulId *")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Edit Row" })[0]).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Renamed inline" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save Row SOUL-1" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/soul/SOUL-1", expect.objectContaining({
+      body: JSON.stringify({ record: { soulId: "SOUL-1", name: "Renamed inline" } }),
+      method: "PATCH",
+    })));
+    expect(await screen.findByText("Renamed inline")).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Edit Row" })).toHaveLength(2);
+  });
+
+  it("preserves unsaved row values and edit mode after a server validation failure", async () => {
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce({ json: async () => collection, ok: true })
+      .mockResolvedValueOnce({ json: async () => ({ error: "Name violates the canonical contract." }), ok: false }));
+    renderPage("/admin/data/soul", "DATA015");
+    await screen.findByText("First Soul");
+    fireEvent.click(screen.getAllByRole("button", { name: "Edit Row" })[0]!);
+    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Unsaved owner value" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save Row SOUL-1" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Name violates the canonical contract.");
+    expect(screen.getByLabelText("name *")).toHaveValue("Unsaved owner value");
+    expect(screen.getByRole("button", { name: "Save Row SOUL-1" })).toBeInTheDocument();
+  });
+
+  it("uses an exact enum select and a name-first relation lookup in inline mode", async () => {
+    const character = { characterId: "CHA_MARA", displayName: "Mara Vale", breedId: null, occupationId: null, worldKey: "CONCORD", soulId: null, gender: "Woman", age: "Adult", skinScaleColor: "Brown", hairFurColor: "Black", eyeColor: "Green", clothing: "Civilian: coat", faction: "CONCORD", primaryAttribute: "WISDOM", secondaryAttribute: "CHARISMA" };
+    const characterCollection = { entity: "Character", records: [character], contract: contractData.entities.Character };
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.method === "PATCH") return { json: async () => ({ record: { ...character, breedId: "BRD_AARDVARK", worldKey: "RUIN" } }), ok: true };
+      if (String(input).endsWith("/character")) return { json: async () => characterCollection, ok: true };
+      if (String(input).endsWith("/breed")) return { json: async () => ({ contract: contractData.entities.Breed, entity: "Breed", records: [{ breedId: "BRD_AARDVARK", name: "Aardvark" }] }), ok: true };
+      const lookupEntity = String(input).split("/").at(-1) ?? "Soul";
+      const entityName = Object.keys(contractData.entities).find((candidate) => candidate.toLowerCase() === lookupEntity) as keyof typeof contractData.entities | undefined;
+      return { json: async () => ({ contract: contractData.entities[entityName ?? "Soul"], entity: entityName ?? "Soul", records: [] }), ok: true };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    renderPage("/admin/data/character", "DATA003");
+    await screen.findByText("Mara Vale");
+    fireEvent.click(screen.getByRole("button", { name: "Edit Row" }));
+    fireEvent.change(screen.getByLabelText("worldKey"), { target: { value: "RUIN" } });
+    expect(await screen.findByRole("button", { name: "Select Aardvark" })).toHaveTextContent("Aardvark");
+    expect(screen.getByRole("button", { name: "Select Aardvark" })).toHaveTextContent("BRD_AARDVARK");
+    fireEvent.click(screen.getByRole("button", { name: "Select Aardvark" }));
+    fireEvent.click(screen.getByRole("button", { name: "Save Row CHA_MARA" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/data/character/CHA_MARA", expect.objectContaining({ method: "PATCH" })));
+    const patchCall = fetchMock.mock.calls.find((call) => (call[1] as RequestInit | undefined)?.method === "PATCH")!;
+    const request = JSON.parse(String((patchCall[1] as RequestInit).body)) as { record: Record<string, unknown> };
+    expect(request.record).toMatchObject({ breedId: "BRD_AARDVARK", worldKey: "RUIN" });
+  });
+
+  it("composes Character-owned and Witness-owned changes into one canonical row PATCH", async () => {
+    const character = { characterId: "CHA_MARA", displayName: "Mara Vale", breedId: null, occupationId: null, worldKey: "CONCORD", soulId: "SOUL_HANS", gender: "Woman", age: "Adult", skinScaleColor: "Brown", hairFurColor: "Black", eyeColor: "Green", clothing: "Civilian: coat", faction: "CONCORD", primaryAttribute: "WISDOM", secondaryAttribute: "CHARISMA" };
+    const witness = { characterId: "CHA_MARA", witnessDefId: "WDF_EMBERS", trueFlawName: null, architectCharacterId: "CHA_HANS", legendaryRewardId: null, constellationBeforeId: null, constellationAfterId: null, character };
+    const witnessCollection = { entity: "Witness", records: [witness], contract: contractData.entities.Witness };
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.method === "PATCH") return { json: async () => ({ record: { ...witness, trueFlawName: "Pride", character: { ...character, displayName: "Mara Vela" } } }), ok: true };
+      if (String(input).endsWith("/witness")) return { json: async () => witnessCollection, ok: true };
+      const lookupEntity = String(input).split("/").at(-1) ?? "Character";
+      const entityName = Object.keys(contractData.entities).find((candidate) => candidate.toLowerCase() === lookupEntity) as keyof typeof contractData.entities | undefined;
+      return { json: async () => ({ contract: contractData.entities[entityName ?? "Character"], entity: entityName ?? "Character", records: [] }), ok: true };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    renderPage("/admin/data/witness", "DATA004");
+    expect((await screen.findAllByText("Mara Vale")).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Edit Row" }));
+    fireEvent.change(screen.getByLabelText("Character.displayName *"), { target: { value: "Mara Vela" } });
+    fireEvent.change(screen.getByLabelText("trueFlawName"), { target: { value: "Pride" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save Row CHA_MARA" }));
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/data/witness/CHA_MARA", expect.objectContaining({
+      body: expect.stringContaining('"parentCharacter"'),
+      method: "PATCH",
+    })));
+    const patchCall = fetchMock.mock.calls.find((call) => (call[1] as RequestInit | undefined)?.method === "PATCH")!;
+    const request = JSON.parse(String((patchCall[1] as RequestInit).body)) as { parentCharacter: Record<string, unknown>; record: Record<string, unknown> };
+    expect(request.parentCharacter.displayName).toBe("Mara Vela");
+    expect(request.record.trueFlawName).toBe("Pride");
   });
 });

@@ -1,0 +1,52 @@
+T400 Campaign Planner movement controls and persistence — implementation evidence
+
+RED 1
+Command: pnpm vitest run tests/unit/campaigns.test.ts
+Exit: 1
+Result: reorderCampaignPlacement was not implemented.
+
+GREEN 1
+Exit: 0
+Result: persisted ordinal reorder updates existing CampaignPlacement rows in a Serializable transaction without create/recreate or Book mutation.
+
+RED 2
+Command: pnpm vitest run tests/unit/campaign-admin.test.tsx -t "reorders cards with exact controls"
+Exit: 1
+Result: Campaign cards exposed no accessible buttons named exactly ↑ Move up and ↓ Move down.
+
+GREEN 2
+Exit: 0
+Result: exact visible buttons, disabled boundaries, persisted Move down/Move up, focus retention, live announcement, visible selection, and same-column drag parity are covered.
+
+FOCUSED CUMULATIVE
+Command: pnpm vitest run tests/unit/campaign-admin.test.tsx
+Exit: 0
+Result: 21 tests passed.
+
+Command: pnpm vitest run tests/unit/campaigns.test.ts
+Exit: 0
+Result: 12 tests passed, including identity-preserving direction and move-before operations plus cross-column rejection.
+
+Command: pnpm vitest run tests/unit/release-0.3.0-red-baseline.test.ts -t "R030-Q09"
+Exit: 0
+Result: the package Q09 source-level release baseline passes.
+
+CONTRAST
+Normal: 11.32:1
+Hover: 6.98:1
+Active: 14.74:1
+Disabled: 8.15:1
+Result: all movement-label states exceed WCAG AA text contrast.
+
+STATIC GATES
+Typecheck: PASS
+Production build and route generation: PASS
+Chromium spec discovery: PASS (2 tests listed in campaign-planner.spec.ts)
+
+MANDATORY CHROMIUM EXECUTION
+Command: pnpm exec playwright test tests/e2e/campaign-planner.spec.ts --grep "reorders persistent" --project=chromium
+Exit: 1
+Result: BLOCKED before browser launch because the configured webServer cannot bind loopback.
+Observed error: listen EPERM: operation not permitted 127.0.0.1:3000
+
+T400 implementation and static/component verification are complete. Required actual-route Chromium execution remains BLOCKED under B08 and is not claimed as executed.

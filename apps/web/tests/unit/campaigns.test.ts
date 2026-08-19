@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { PrismaClient } from "../../src/generated/prisma/client";
 import { defaultDisjointTrilogy } from "../../src/domain/campaign-planner";
-import { createCampaignCatalogItem, saveDisjointTrilogy, saveLinkedCampaignPlacements } from "../../src/server/campaigns";
+import { createCampaignCatalogItem, reorderCampaignPlacement, saveDisjointTrilogy, saveLinkedCampaignPlacements } from "../../src/server/campaigns";
 
 const linkedPlacements = [
   { bookNumbers: [1, 18], name: "CONCORD Campaign", objectId: "A", objectType: "COMPANION" as const, worldKey: "CONCORD" as const },
@@ -33,6 +33,62 @@ function linkedDatabase(options: { missingDeja?: boolean } = {}) {
 }
 
 describe("campaign transaction service", () => {
+  it("reorders persisted placement ordinals without recreating identity or changing Books", async () => {
+    const placements = [
+      { bookNumbers: [1], campaignPlacementId: "PLACEMENT-A", objectId: "A", objectType: "WITNESS", ordinal: 1 },
+      { bookNumbers: [4], campaignPlacementId: "PLACEMENT-B", objectId: "B", objectType: "WITNESS", ordinal: 2 },
+      { bookNumbers: [8], campaignPlacementId: "PLACEMENT-C", objectId: "C", objectType: "WITNESS", ordinal: 3 },
+    ];
+    const update = vi.fn(async ({ data, where: { campaignPlacementId } }) => ({ ...placements.find((row) => row.campaignPlacementId === campaignPlacementId), ...data }));
+    const transaction = {
+      campaign: { findUnique: vi.fn().mockResolvedValue({ campaignId: "CAMPAIGN-1", placements }) },
+      campaignPlacement: { update },
+    };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+
+    await reorderCampaignPlacement({ campaignPlacementId: "PLACEMENT-B", direction: "DOWN", worldKey: "RUIN" }, database);
+
+    expect(update).toHaveBeenCalledWith({ data: { ordinal: 2 }, where: { campaignPlacementId: "PLACEMENT-C" } });
+    expect(update).toHaveBeenCalledWith({ data: { ordinal: 3 }, where: { campaignPlacementId: "PLACEMENT-B" } });
+    expect(transaction).not.toHaveProperty("campaignPlacement.create");
+    expect(placements[1]!.bookNumbers).toEqual([4]);
+  });
+
+  it("supports drag-style move-before ordering while keeping every placement identity and Book span", async () => {
+    const placements = [
+      { bookNumbers: [1], campaignPlacementId: "PLACEMENT-A", objectId: "A", objectType: "WITNESS", ordinal: 1 },
+      { bookNumbers: [4], campaignPlacementId: "PLACEMENT-B", objectId: "B", objectType: "WITNESS", ordinal: 2 },
+      { bookNumbers: [8], campaignPlacementId: "PLACEMENT-C", objectId: "C", objectType: "WITNESS", ordinal: 3 },
+    ];
+    const update = vi.fn(async ({ data, where: { campaignPlacementId } }) => ({ ...placements.find((row) => row.campaignPlacementId === campaignPlacementId), ...data }));
+    const transaction = { campaign: { findUnique: vi.fn().mockResolvedValue({ campaignId: "CAMPAIGN-1", placements }) }, campaignPlacement: { update } };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+
+    await reorderCampaignPlacement({ beforeCampaignPlacementId: "PLACEMENT-A", campaignPlacementId: "PLACEMENT-C", worldKey: "RUIN" }, database);
+
+    expect(update).toHaveBeenCalledWith({ data: { ordinal: 1 }, where: { campaignPlacementId: "PLACEMENT-C" } });
+    expect(update).toHaveBeenCalledWith({ data: { ordinal: 2 }, where: { campaignPlacementId: "PLACEMENT-A" } });
+    expect(update).toHaveBeenCalledWith({ data: { ordinal: 3 }, where: { campaignPlacementId: "PLACEMENT-B" } });
+    expect(placements.map(({ bookNumbers, campaignPlacementId }) => ({ bookNumbers, campaignPlacementId }))).toEqual([
+      { bookNumbers: [1], campaignPlacementId: "PLACEMENT-A" },
+      { bookNumbers: [4], campaignPlacementId: "PLACEMENT-B" },
+      { bookNumbers: [8], campaignPlacementId: "PLACEMENT-C" },
+    ]);
+  });
+
+  it("rejects an implicit cross-column drag before making any update", async () => {
+    const placements = [
+      { bookNumbers: [1], campaignPlacementId: "PLACEMENT-A", objectId: "A", objectType: "WITNESS", ordinal: 1 },
+      { bookNumbers: [4, 5, 6, 7, 8, 9, 10, 11, 12], campaignPlacementId: "PLACEMENT-P", objectId: "P", objectType: "PILLAR", ordinal: 2 },
+    ];
+    const update = vi.fn();
+    const transaction = { campaign: { findUnique: vi.fn().mockResolvedValue({ campaignId: "CAMPAIGN-1", placements }) }, campaignPlacement: { update } };
+    const database = { $transaction: vi.fn((work: (value: typeof transaction) => Promise<unknown>) => work(transaction)) } as unknown as PrismaClient;
+
+    await expect(reorderCampaignPlacement({ beforeCampaignPlacementId: "PLACEMENT-P", campaignPlacementId: "PLACEMENT-A", worldKey: "RUIN" }, database)).rejects.toThrow(/cannot move/);
+    expect(update).not.toHaveBeenCalled();
+  });
+
   it("creates only the minimal canonical LegendaryReward record", async () => {
     const create = vi.fn(async ({ data }) => data);
     const transaction = { legendaryReward: { create } };

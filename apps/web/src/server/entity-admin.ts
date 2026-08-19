@@ -19,7 +19,7 @@ export interface EntityAdminField {
 }
 
 export interface EntityAdminContract {
-  auditFields: Array<{ editability: "EDITABLE" | "EXCLUDED"; exclusionReason: string | null; enumName: string | null; isList: boolean; isRequired: boolean; kind: "enum" | "json" | "relation" | "scalar"; name: string; type: string }>;
+  auditFields: Array<{ editability: "EDITABLE" | "EXCLUDED"; exclusionReason: string | null; enumName: string | null; isList: boolean; isRequired: boolean; kind: "enum" | "json" | "relation" | "scalar"; name: string; relationFromFields?: string[]; type: string }>;
   delegate: string;
   fields: EntityAdminField[];
   idField: string;
@@ -28,8 +28,8 @@ export interface EntityAdminContract {
 interface EntityDelegate {
   create(args: { data: Record<string, unknown> }): Promise<Record<string, unknown>>;
   delete(args: { where: Record<string, unknown> }): Promise<Record<string, unknown>>;
-  findMany(args: { orderBy: Record<string, "asc">; take: number }): Promise<Record<string, unknown>[]>;
-  findUnique(args: { where: Record<string, unknown> }): Promise<Record<string, unknown> | null>;
+  findMany(args: { include?: Record<string, unknown>; orderBy: Record<string, "asc">; take: number }): Promise<Record<string, unknown>[]>;
+  findUnique(args: { include?: Record<string, unknown>; where: Record<string, unknown> }): Promise<Record<string, unknown> | null>;
   update(args: { data: Record<string, unknown>; where: Record<string, unknown> }): Promise<Record<string, unknown>>;
 }
 
@@ -271,14 +271,33 @@ function whereFor(contract: EntityAdminContract, recordId: string): Record<strin
   return { [contract.idField]: recordId };
 }
 
+function presentationIncludeFor(entity: EntityName, contract: EntityAdminContract): Record<string, unknown> | undefined {
+  const include = contract.auditFields.reduce<Record<string, unknown>>((relations, field) => {
+    if (field.kind === "relation" && (field.relationFromFields?.length ?? 0) > 0) relations[field.name] = true;
+    return relations;
+  }, {});
+  const characterContext = { include: { breed: true, occupation: true, soul: true } };
+  if (entity === "Architect" || entity === "Companion") include.character = characterContext;
+  if (entity === "Companion") include.companionDef = { include: { concordCharacter: true, ruinCharacter: true, schismCharacter: true, soul: true } };
+  if (entity === "WitnessDef") include.architectSoul = { include: { characters: { include: { architect: true } } } };
+  if (entity === "Witness") {
+    include.character = characterContext;
+    include.witnessDef = { include: { architectSoul: true } };
+    include.architect = { include: { character: characterContext } };
+  }
+  return Object.keys(include).length ? include : undefined;
+}
+
 export async function listEntityRecords(database: PrismaClient, entity: EntityName): Promise<Record<string, unknown>[]> {
   const contract = entityAdminContract(entity);
-  return delegateFor(database, contract).findMany({ orderBy: { [contract.idField]: "asc" }, take: 500 });
+  const include = presentationIncludeFor(entity, contract);
+  return delegateFor(database, contract).findMany({ ...(include ? { include } : {}), orderBy: { [contract.idField]: "asc" }, take: 500 });
 }
 
 export async function getEntityRecord(database: PrismaClient, entity: EntityName, recordId: string): Promise<Record<string, unknown> | null> {
   const contract = entityAdminContract(entity);
-  return delegateFor(database, contract).findUnique({ where: whereFor(contract, recordId) });
+  const include = presentationIncludeFor(entity, contract);
+  return delegateFor(database, contract).findUnique({ ...(include ? { include } : {}), where: whereFor(contract, recordId) });
 }
 
 export async function createEntityRecord(database: PrismaClient, entity: EntityName, input: unknown): Promise<Record<string, unknown>> {
@@ -305,6 +324,25 @@ export async function updateEntityRecord(database: PrismaClient, entity: EntityN
     await validateCharacterSubtypeWrite(database, entity, { ...existing, ...data, [contract.idField]: recordId });
   }
   return delegateFor(database, contract).update({ data, where: whereFor(contract, recordId) });
+}
+
+export async function updateEntityRecordComposition(database: PrismaClient, entity: EntityName, recordId: string, input: unknown, parentCharacter?: unknown): Promise<Record<string, unknown>> {
+  const characterSubtype = entity === "Architect" || entity === "Companion" || entity === "Witness";
+  if (parentCharacter !== undefined && !characterSubtype) throw new EntityAdminValidationError(`${entity} does not own a parent Character composition.`);
+  if (parentCharacter === undefined) {
+    await updateEntityRecord(database, entity, recordId, input);
+    const record = await getEntityRecord(database, entity, recordId);
+    if (!record) throw new EntityAdminValidationError(`${entity} record not found after update.`);
+    return record;
+  }
+  return database.$transaction(async (transaction) => {
+    const transactionalDatabase = transaction as unknown as PrismaClient;
+    await updateEntityRecord(transactionalDatabase, "Character", recordId, parentCharacter);
+    await updateEntityRecord(transactionalDatabase, entity, recordId, input);
+    const record = await getEntityRecord(transactionalDatabase, entity, recordId);
+    if (!record) throw new EntityAdminValidationError(`${entity} record not found after update.`);
+    return record;
+  });
 }
 
 export async function deleteEntityRecord(database: PrismaClient, entity: EntityName, recordId: string): Promise<Record<string, unknown>> {

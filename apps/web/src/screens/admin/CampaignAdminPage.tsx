@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type DragEvent } from "react";
 
+import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import {
   campaignBookSegments,
   campaignBooksForDrop,
@@ -29,8 +30,10 @@ const campaignWorldScreens = {
 interface CampaignPlacementView {
   bookNumbers: number[];
   campaignPlacementId: string;
+  label?: string;
   objectId: string;
   objectType: CampaignObjectType;
+  ordinal: number;
 }
 
 interface CampaignCatalogItem {
@@ -56,6 +59,11 @@ interface PositionedCampaignPlacement extends CampaignPlacementView {
 }
 
 const emptyUnassigned: Partial<Record<CampaignObjectType, CampaignCatalogItem[]>> = {};
+const widePlannerColumns = new Set<CampaignPlannerColumnId>(["COMPANION", "WITNESS", "ARCHITECT", "LEGENDARY_REWARD", "INTERLUDES"]);
+
+export function plannerColumnWidth(columnId: CampaignPlannerColumnId): number {
+  return widePlannerColumns.has(columnId) ? (columnId === "INTERLUDES" ? 220 : 210) : 168;
+}
 
 function campaignWorld(screenId: string): WorldKey | null {
   const owned = Object.entries(campaignWorldScreens).find(([, state]) => state === screenId)?.[0] as WorldKey | undefined;
@@ -96,7 +104,7 @@ export function positionCampaignPlacements(placements: readonly CampaignPlacemen
   const positioned: PositionedCampaignPlacement[] = [];
   for (const column of campaignPlannerColumns) {
     const placementsForColumn = (byColumn.get(column.id) ?? []).sort((left, right) =>
-      left.segments[0]!.startBook - right.segments[0]!.startBook || left.campaignPlacementId.localeCompare(right.campaignPlacementId));
+      left.ordinal - right.ordinal || left.segments[0]!.startBook - right.segments[0]!.startBook || left.campaignPlacementId.localeCompare(right.campaignPlacementId));
     const lanes: CampaignBookRange[][] = [];
     const allocated = placementsForColumn.map((placement) => {
       let lane = lanes.findIndex((occupied) => placement.segments.every((segment) => occupied.every((range) => !rangesOverlap(segment, range))));
@@ -165,6 +173,40 @@ function ColumnUnassignedListbox({ columnId, items, selected, toggle }: {
   return <div aria-label={`${column.label} Unassigned`} className="campaign-unassigned" role="listbox" tabIndex={0}><small>Unassigned · {items.length}</small>{items.length === 0 ? <span>No unassigned records</span> : items.map((item) => <button aria-selected={selected.has(`${item.objectType}:${item.objectId}`)} className={selected.has(`${item.objectType}:${item.objectId}`) ? "selected" : ""} draggable key={`${item.objectType}:${item.objectId}`} onClick={() => toggle(item)} onDragStart={(event) => { event.dataTransfer.setData("application/x-eidolon-campaign", JSON.stringify(item)); event.dataTransfer.effectAllowed = "move"; }} role="option" type="button">{columnId === "INTERLUDES" ? `${item.objectType}: ` : ""}{item.label}</button>)}</div>;
 }
 
+type CampaignMoveDirection = "UP" | "DOWN";
+type CampaignReorderOperation = { beforeCampaignPlacementId: string } | { direction: CampaignMoveDirection };
+
+function CampaignPlacementCard({ canMoveDown, canMoveUp, focusTarget, onDropPlacement, onFocusRestored, onReorder, placement, position, segment, segmentIndex, selected, select, siblingCount, style }: {
+  canMoveDown: boolean;
+  canMoveUp: boolean;
+  focusTarget?: { campaignPlacementId: string; direction: CampaignMoveDirection };
+  onDropPlacement: (event: DragEvent<HTMLElement>, target: PositionedCampaignPlacement) => void;
+  onFocusRestored: () => void;
+  onReorder: (placement: PositionedCampaignPlacement, operation: CampaignReorderOperation) => void;
+  placement: PositionedCampaignPlacement;
+  position: number;
+  segment: CampaignBookRange;
+  segmentIndex: number;
+  selected: boolean;
+  select: () => void;
+  siblingCount: number;
+  style: CSSProperties;
+}) {
+  const upRef = useRef<HTMLButtonElement>(null);
+  const downRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (segmentIndex !== 0 || focusTarget?.campaignPlacementId !== placement.campaignPlacementId) return;
+    (focusTarget.direction === "UP" ? upRef : downRef).current?.focus();
+    onFocusRestored();
+  }, [focusTarget, onFocusRestored, placement.campaignPlacementId, segmentIndex]);
+  const label = `${placement.objectId}, ${placement.objectType}, Book segment ${segmentIndex + 1} of ${placement.segments.length}, Books ${segment.startBook} through ${segment.endBook}`;
+  return <div aria-label={label} aria-rowspan={segment.rowSpan} className={`tag campaign-placement-card${selected ? " selected" : ""}`} data-book-span={segment.rowSpan} data-campaign-position={position} data-category={placement.objectType} data-lane={placement.lane} data-lane-count={placement.laneCount} data-logical-placement-id={placement.campaignPlacementId} data-segment-index={segmentIndex} data-start-book={segment.startBook} data-testid={`campaign-placement-${placement.campaignPlacementId}${placement.segments.length > 1 ? `-segment-${segmentIndex}` : ""}`} draggable onClick={select} onDragStart={(event) => { event.dataTransfer.setData("application/x-eidolon-campaign-placement", placement.campaignPlacementId); event.dataTransfer.effectAllowed = "move"; select(); }} onDragOver={(event) => event.preventDefault()} onDrop={(event) => onDropPlacement(event, placement)} onFocusCapture={select} key={`${placement.campaignPlacementId}:${segmentIndex}`} role="cell" style={style}>
+    <strong className="campaign-placement-name">{placement.label ?? placement.objectId}</strong>
+    {placement.label && placement.label !== placement.objectId && <small className="campaign-placement-id">{placement.objectId}</small>}
+    {segmentIndex === 0 && <><button aria-label={`Drag ${placement.objectId} to reorder`} className="campaign-drag-handle" draggable onClick={select} type="button">⠿ Drag</button><div aria-label={`${placement.objectId} movement controls`} className="campaign-placement-controls"><button aria-label="↑ Move up" className="campaign-move-button" disabled={!canMoveUp} onClick={(event) => { event.stopPropagation(); onReorder(placement, { direction: "UP" }); }} ref={upRef} type="button">↑ Move up</button><button aria-label="↓ Move down" className="campaign-move-button" disabled={!canMoveDown} onClick={(event) => { event.stopPropagation(); onReorder(placement, { direction: "DOWN" }); }} ref={downRef} type="button">↓ Move down</button></div><small className="campaign-placement-position">{position} of {siblingCount}</small></>}
+  </div>;
+}
+
 function stateNotice(screenId: string) {
   if (screenId === "CAM003") return <p className="notice notice--good">Witness drop preview: the required linked group is validated and committed as one transaction.</p>;
   if (screenId === "CAM004") return <p className="notice notice--bad">Invalid Architect drop preview: an incomplete linked group mutates nothing.</p>;
@@ -173,14 +215,19 @@ function stateNotice(screenId: string) {
   return null;
 }
 
-function PlannerGrid({ columns, groupings, moveColumn, onCreate, onDropItem, placements, selected, toggle, unassigned, world }: {
+function PlannerGrid({ columns, focusTarget, groupings, moveColumn, onCreate, onDropItem, onFocusRestored, onReorder, placements, selected, selectedPlacementId, selectPlacement, toggle, unassigned, world }: {
   columns: typeof campaignPlannerColumns[number][];
+  focusTarget?: { campaignPlacementId: string; direction: CampaignMoveDirection };
   groupings: CampaignWorkspace["bookGroupings"];
   moveColumn: (moving: CampaignPlannerColumnId, target: CampaignPlannerColumnId) => void;
   onCreate: (objectTypes: readonly CampaignObjectType[]) => void;
   onDropItem: (item: CampaignCatalogItem, book: number) => void;
+  onFocusRestored: () => void;
+  onReorder: (placement: PositionedCampaignPlacement, operation: CampaignReorderOperation) => void;
   placements: CampaignPlacementView[];
   selected: ReadonlySet<string>;
+  selectedPlacementId?: string;
+  selectPlacement: (campaignPlacementId: string) => void;
   toggle: (item: CampaignCatalogItem) => void;
   unassigned: Partial<Record<CampaignObjectType, CampaignCatalogItem[]>>;
   world: WorldKey;
@@ -197,7 +244,18 @@ function PlannerGrid({ columns, groupings, moveColumn, onCreate, onDropItem, pla
   });
   const occupied = (columnId: CampaignPlannerColumnId, book: number) => positioned.some((placement) => placement.columnId === columnId && placement.segments.some((segment) => segment.startBook <= book && segment.endBook >= book))
     || groupingItems.some((grouping) => grouping.groupingType === columnId && grouping.segments.some((segment) => segment.startBook <= book && segment.endBook >= book));
-  return <>{invalid.length > 0 && <div className="notice notice--bad" role="alert"><strong>{invalid.length} campaign placement{invalid.length === 1 ? "" : "s"} could not be rendered.</strong><span>{invalid.map((placement) => `${placement.campaignPlacementId}: ${placement.reason}`).join(" · ")}</span></div>}<div className="table-scroll"><div aria-label={`${world} 18-Book campaign planner`} className="campaign-planner-grid" role="table" style={{ gridTemplateColumns: `58px repeat(${columns.length}, minmax(118px, 1fr))`, gridTemplateRows: "126px repeat(18, 44px)", minWidth: `${58 + columns.length * 118}px` }}><div className="campaign-planner-row" role="row"><div className="campaign-planner-header" role="columnheader" style={{ gridColumn: 1, gridRow: 1 }}>Book</div>{columns.map((column, index) => { const items = column.objectTypes.flatMap((objectType) => unassigned[objectType] ?? []); const authorable = column.objectTypes.filter((objectType) => objectType !== "HOLIDAY"); return <div className="campaign-planner-header campaign-column-header" draggable key={column.id} onDragStart={(event) => event.dataTransfer.setData("application/x-eidolon-column", column.id)} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const moving = event.dataTransfer.getData("application/x-eidolon-column") as CampaignPlannerColumnId; if (moving) moveColumn(moving, column.id); }} role="columnheader" style={{ gridColumn: index + 2, gridRow: 1 }}><div className="action-row action-row--between"><strong>{column.label}</strong>{authorable.length > 0 && <button aria-label={`Create ${column.label}`} className="button button--small" onClick={() => onCreate(authorable)} type="button">+</button>}</div><ColumnUnassignedListbox columnId={column.id} items={items} selected={selected} toggle={toggle} /></div>; })}</div>{books.map((book) => <div className="campaign-planner-row" key={book} role="row"><div className="campaign-planner-book" role="rowheader" style={{ gridColumn: 1, gridRow: book + 1 }}>{book}</div>{columns.map((column, index) => { const locked = column.id === "OPPOSING_FACTION" || column.id === "DISJOINT_TRILOGY"; return <div aria-label={`Book ${book} ${column.label}: ${locked ? "grouping-owned" : occupied(column.id, book) ? "assigned" : "drop target"}`} className="campaign-planner-cell" key={column.id} role="cell" style={{ gridColumn: index + 2, gridRow: book + 1 }}>{!locked && !occupied(column.id, book) && <button aria-label={`Book ${book} ${column.label}: empty assignment cell`} className="campaign-drop-target" data-book={book} data-column={column.id} onClick={() => { const item = column.objectTypes.flatMap((objectType) => unassigned[objectType] ?? []).find((candidate) => selected.has(`${candidate.objectType}:${candidate.objectId}`)); if (item) onDropItem(item, book); }} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const raw = event.dataTransfer.getData("application/x-eidolon-campaign"); if (raw) onDropItem(JSON.parse(raw) as CampaignCatalogItem, book); }} type="button">Drop</button>}</div>; })}{positioned.flatMap((placement) => placement.segments.map((segment, segmentIndex) => segment.startBook === book && columnIndex.has(placement.columnId) ? <span aria-label={`${placement.objectId}, ${placement.objectType}, Book segment ${segmentIndex + 1} of ${placement.segments.length}, Books ${segment.startBook} through ${segment.endBook}`} aria-rowspan={segment.rowSpan} className="tag campaign-placement-card" data-book-span={segment.rowSpan} data-category={placement.objectType} data-lane={placement.lane} data-lane-count={placement.laneCount} data-logical-placement-id={placement.campaignPlacementId} data-segment-index={segmentIndex} data-start-book={segment.startBook} data-testid={`campaign-placement-${placement.campaignPlacementId}${placement.segments.length > 1 ? `-segment-${segmentIndex}` : ""}`} draggable key={`${placement.campaignPlacementId}:${segmentIndex}`} role="cell" style={styleFor(placement.columnId, segment, placement.lane, placement.laneCount)}>{placement.objectId}</span> : []))}{groupingItems.flatMap((grouping) => grouping.segments.map((segment, segmentIndex) => segment.startBook === book && columnIndex.has(grouping.groupingType) ? <span aria-label={`${grouping.logicalKey}, ${grouping.groupingType}, segment ${segmentIndex + 1} of ${grouping.segments.length}`} aria-rowspan={segment.rowSpan} className={`tag campaign-placement-card ${grouping.editability === "LOCKED" ? "locked" : "grouping"}`} data-book-span={segment.rowSpan} data-grouping-value-id={grouping.bookGroupingValueId} data-segment-index={segmentIndex} data-start-book={segment.startBook} data-testid={`book-grouping-${grouping.bookGroupingValueId}-segment-${segmentIndex}`} key={`${grouping.bookGroupingValueId}:${segmentIndex}`} role="cell" style={styleFor(grouping.groupingType, segment)}>{grouping.logicalKey}</span> : []))}</div>)}</div></div></>;
+  const placementPosition = new Map(positioned.map((placement) => {
+    const siblings = positioned.filter((candidate) => candidate.columnId === placement.columnId);
+    return [placement.campaignPlacementId, { position: siblings.findIndex((candidate) => candidate.campaignPlacementId === placement.campaignPlacementId) + 1, siblingCount: siblings.length }] as const;
+  }));
+  const dropPlacement = (event: DragEvent<HTMLElement>, target: PositionedCampaignPlacement) => {
+    event.preventDefault();
+    const movingId = event.dataTransfer.getData("application/x-eidolon-campaign-placement");
+    const moving = positioned.find((placement) => placement.campaignPlacementId === movingId);
+    if (moving && moving.campaignPlacementId !== target.campaignPlacementId && moving.columnId === target.columnId) onReorder(moving, { beforeCampaignPlacementId: target.campaignPlacementId });
+  };
+  const columnWidths = columns.map((column) => plannerColumnWidth(column.id));
+  return <>{invalid.length > 0 && <div className="notice notice--bad" role="alert"><strong>{invalid.length} campaign placement{invalid.length === 1 ? "" : "s"} could not be rendered.</strong><span>{invalid.map((placement) => `${placement.campaignPlacementId}: ${placement.reason}`).join(" · ")}</span></div>}<div className="campaign-board-viewport" data-testid="campaign-board-viewport"><div aria-label={`${world} 18-Book campaign planner`} className="campaign-planner-grid" role="table" style={{ gridTemplateColumns: `58px ${columnWidths.map((width) => `minmax(${width}px, ${width}px)`).join(" ")}`, gridTemplateRows: "164px repeat(18, 96px)", minWidth: `${58 + columnWidths.reduce((sum, width) => sum + width, 0)}px` }}><div className="campaign-planner-row" role="row"><div className="campaign-planner-header" role="columnheader" style={{ gridColumn: 1, gridRow: 1 }}>Book</div>{columns.map((column, index) => { const items = column.objectTypes.flatMap((objectType) => unassigned[objectType] ?? []); const authorable = column.objectTypes.filter((objectType) => objectType !== "HOLIDAY"); return <div className="campaign-planner-header campaign-column-header" draggable key={column.id} onDragStart={(event) => event.dataTransfer.setData("application/x-eidolon-column", column.id)} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const moving = event.dataTransfer.getData("application/x-eidolon-column") as CampaignPlannerColumnId; if (moving) moveColumn(moving, column.id); }} role="columnheader" style={{ gridColumn: index + 2, gridRow: 1 }}><div className="action-row action-row--between"><strong>{column.label}</strong>{authorable.length > 0 && <button aria-label={`Create ${column.label}`} className="button button--small" onClick={() => onCreate(authorable)} type="button">+</button>}</div><ColumnUnassignedListbox columnId={column.id} items={items} selected={selected} toggle={toggle} /></div>; })}</div>{books.map((book) => <div className="campaign-planner-row" key={book} role="row"><div className="campaign-planner-book" role="rowheader" style={{ gridColumn: 1, gridRow: book + 1 }}>{book}</div>{columns.map((column, index) => { const locked = column.id === "OPPOSING_FACTION" || column.id === "DISJOINT_TRILOGY"; return <div aria-label={`Book ${book} ${column.label}: ${locked ? "grouping-owned" : occupied(column.id, book) ? "assigned" : "drop target"}`} className="campaign-planner-cell" key={column.id} role="cell" style={{ gridColumn: index + 2, gridRow: book + 1 }}>{!locked && !occupied(column.id, book) && <button aria-label={`Book ${book} ${column.label}: empty assignment cell`} className="campaign-drop-target" data-book={book} data-column={column.id} onClick={() => { const item = column.objectTypes.flatMap((objectType) => unassigned[objectType] ?? []).find((candidate) => selected.has(`${candidate.objectType}:${candidate.objectId}`)); if (item) onDropItem(item, book); }} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const raw = event.dataTransfer.getData("application/x-eidolon-campaign"); if (raw) onDropItem(JSON.parse(raw) as CampaignCatalogItem, book); }} type="button">Drop</button>}</div>; })}{positioned.flatMap((placement) => placement.segments.map((segment, segmentIndex) => { const order = placementPosition.get(placement.campaignPlacementId)!; return segment.startBook === book && columnIndex.has(placement.columnId) ? <CampaignPlacementCard canMoveDown={order.position < order.siblingCount} canMoveUp={order.position > 1} focusTarget={focusTarget} key={`${placement.campaignPlacementId}:${segmentIndex}`} onDropPlacement={dropPlacement} onFocusRestored={onFocusRestored} onReorder={onReorder} placement={placement} position={order.position} segment={segment} segmentIndex={segmentIndex} selected={selectedPlacementId === placement.campaignPlacementId} select={() => selectPlacement(placement.campaignPlacementId)} siblingCount={order.siblingCount} style={styleFor(placement.columnId, segment, placement.lane, placement.laneCount)} /> : []; }))}{groupingItems.flatMap((grouping) => grouping.segments.map((segment, segmentIndex) => segment.startBook === book && columnIndex.has(grouping.groupingType) ? <span aria-label={`${grouping.logicalKey}, ${grouping.groupingType}, segment ${segmentIndex + 1} of ${grouping.segments.length}`} aria-rowspan={segment.rowSpan} className={`tag campaign-placement-card ${grouping.editability === "LOCKED" ? "locked" : "grouping"}`} data-book-span={segment.rowSpan} data-grouping-value-id={grouping.bookGroupingValueId} data-segment-index={segmentIndex} data-start-book={segment.startBook} data-testid={`book-grouping-${grouping.bookGroupingValueId}-segment-${segmentIndex}`} key={`${grouping.bookGroupingValueId}:${segmentIndex}`} role="cell" style={styleFor(grouping.groupingType, segment)}>{grouping.logicalKey}</span> : []))}</div>)}</div></div></>;
 }
 
 function CampaignCreatePanel({ objectTypes, close, created }: { objectTypes: readonly CampaignObjectType[]; close: () => void; created: () => Promise<unknown> }) {
@@ -213,6 +271,8 @@ function Planner({ screen, world }: { screen: PageManifestEntry; world: WorldKey
   const preferences = useCampaignColumnPreferences(world);
   const visibleColumns = preferences.order.filter((id) => preferences.visibility[id] !== false).map((id) => campaignPlannerColumns.find((column) => column.id === id)!);
   const [selectedItems, setSelectedItems] = useState<CampaignCatalogItem[]>([]);
+  const [selectedPlacementId, setSelectedPlacementId] = useState<string>();
+  const [focusTarget, setFocusTarget] = useState<{ campaignPlacementId: string; direction: CampaignMoveDirection }>();
   const [message, setMessage] = useState("");
   const [createTypes, setCreateTypes] = useState<readonly CampaignObjectType[]>();
   const selected = useMemo(() => new Set(selectedItems.map((item) => `${item.objectType}:${item.objectId}`)), [selectedItems]);
@@ -252,9 +312,33 @@ function Planner({ screen, world }: { screen: PageManifestEntry; world: WorldKey
       setMessage(error instanceof Error ? error.message : "Campaign placement was not changed.");
     }
   };
+  const commitReorder = async (placement: PositionedCampaignPlacement, operation: CampaignReorderOperation) => {
+    try {
+      const current = [...(campaign.data?.campaign?.placements ?? [])].sort((left, right) => left.ordinal - right.ordinal);
+      const siblings = current.filter((candidate) => plannerColumnForObjectType(candidate.objectType) === placement.columnId);
+      const from = siblings.findIndex((candidate) => candidate.campaignPlacementId === placement.campaignPlacementId);
+      let nextPosition = from + 1;
+      if ("direction" in operation) nextPosition += operation.direction === "UP" ? -1 : 1;
+      else {
+        const target = siblings.findIndex((candidate) => candidate.campaignPlacementId === operation.beforeCampaignPlacementId);
+        nextPosition = from < target ? target : target + 1;
+      }
+      const response = await fetch("/api/admin/campaign/reorder", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ campaignPlacementId: placement.campaignPlacementId, ...operation, worldKey: world }) });
+      const result = await response.json() as { error?: string };
+      if (!response.ok) { setMessage(result.error ?? "Campaign placement order was not changed."); return; }
+      setSelectedPlacementId(placement.campaignPlacementId);
+      await campaign.refetch();
+      const direction = "direction" in operation ? operation.direction : "UP";
+      setFocusTarget({ campaignPlacementId: placement.campaignPlacementId, direction });
+      const columnLabel = campaignPlannerColumns.find((column) => column.id === placement.columnId)!.label;
+      setMessage(`${placement.objectId} moved to position ${nextPosition} of ${siblings.length} in ${columnLabel}.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Campaign placement order was not changed.");
+    }
+  };
   const fallbackGroupings = { disjoint: validateDisjointTrilogy(defaultDisjointTrilogy(world), world), opposingFaction: opposingFactionGrouping(world) };
   const workspace = campaign.data;
-  return <div className="stack">{worldTabs(world)}<div className="toolbar" aria-label="Campaign planner filters"><span className="button" aria-label={`World filter: ${world}`}>{world}</span><span className="button" aria-label="Book filter: Books 1 through 18">Books 1–18</span><span className="button" aria-label="Linked-type filter: All linked types">All linked types</span><ColumnLayoutManager preferences={preferences} /></div>{stateNotice(screen.screenId)}<section className="card campaign-planner-card"><PlannerGrid columns={visibleColumns} groupings={workspace?.bookGroupings ?? fallbackGroupings} moveColumn={preferences.moveBefore} onCreate={setCreateTypes} onDropItem={(item, book) => void commitDrop(item, book)} placements={workspace?.campaign?.placements ?? []} selected={selected} toggle={toggle} unassigned={workspace?.unassigned ?? emptyUnassigned} world={world} /></section>{createTypes && <CampaignCreatePanel close={() => setCreateTypes(undefined)} created={() => campaign.refetch()} objectTypes={createTypes} />}{campaign.isPending && <p className="notice">Loading campaign assignments…</p>}{campaign.isError && <p className="notice notice--bad">{campaign.error.message}</p>}{message && <p className="notice" role="status">{message}</p>}<section className="card"><h2>Linked drag groups</h2><p>{linkedGroupSummary()}</p><p>Choose required records in their typed Unassigned listboxes, then drop once. The server commits the complete group or nothing.</p></section></div>;
+  return <div className="stack">{worldTabs(world)}<div className="toolbar" aria-label="Campaign planner filters"><span className="button" aria-label={`World filter: ${world}`}>{world}</span><span className="button" aria-label="Book filter: Books 1 through 18">Books 1–18</span><span className="button" aria-label="Linked-type filter: All linked types">All linked types</span><ColumnLayoutManager preferences={preferences} /></div>{stateNotice(screen.screenId)}<section className="card campaign-planner-card"><PlannerGrid columns={visibleColumns} focusTarget={focusTarget} groupings={workspace?.bookGroupings ?? fallbackGroupings} moveColumn={preferences.moveBefore} onCreate={setCreateTypes} onDropItem={(item, book) => void commitDrop(item, book)} onFocusRestored={() => setFocusTarget(undefined)} onReorder={(placement, operation) => void commitReorder(placement, operation)} placements={workspace?.campaign?.placements ?? []} selected={selected} selectedPlacementId={selectedPlacementId} selectPlacement={setSelectedPlacementId} toggle={toggle} unassigned={workspace?.unassigned ?? emptyUnassigned} world={world} /></section>{createTypes && <CampaignCreatePanel close={() => setCreateTypes(undefined)} created={() => campaign.refetch()} objectTypes={createTypes} />}{campaign.isPending && <p className="notice">Loading campaign assignments…</p>}{campaign.isError && <p className="notice notice--bad">{campaign.error.message}</p>}{message && <p aria-live="polite" className="notice" role="status">{message}</p>}<section className="card"><h2>Linked drag groups</h2><p>{linkedGroupSummary()}</p><p>Choose required records in their typed Unassigned listboxes, then drop once. The server commits the complete group or nothing.</p></section></div>;
 }
 
 function GroupingEditorForm({ initial, world, refetch }: { initial: ProjectedBookGroupingValue[]; world: WorldKey; refetch: () => Promise<unknown> }) {
@@ -289,12 +373,22 @@ function GroupingEditor({ world }: { world: WorldKey }) {
 }
 
 function CampaignManagerLanding() {
+  const overlays = [
+    { editability: "Editable", grouping: "Disjoint Trilogy", shape: "two disconnected segments" },
+    { editability: "Locked · derived", grouping: "Opposing Faction", shape: "Books 1–6 + 13–18" },
+    { editability: "Canonical", grouping: "Mirrored Duology", shape: "partner = 19 − Book" },
+  ];
+  const overlayColumns: DataTableColumnDef<(typeof overlays)[number]>[] = [
+    { accessorKey: "grouping", header: "Grouping" },
+    { accessorKey: "shape", header: "Shape" },
+    { accessorKey: "editability", header: "Editability" },
+  ];
   return <div className="stack"><div className="workspace-page-head"><h2>Campaign Manager</h2><p>Author one 18-Book world spine at a time. Group membership may be contiguous, mirrored, or disjoint.</p></div><section className="service-grid" aria-label="Campaign authority summary">{[
     ["Books", "18", "per internal world campaign"],
     ["Book grouping types", "8", "six canonical groupings plus two overlays"],
     ["Disjoint overlays", "2", "editable 3+3 and locked opposing faction"],
     ["World spines", "3", "Concord, Ruin, and Schism"],
-  ].map(([label, value, detail]) => <article className="card" key={label}><p className="kicker">{label}</p><p className="stat">{value}</p><p>{detail}</p></article>)}</section><div className="split"><section className="card"><h2>Continue authoring</h2><p>Planner cards span the exact Book rows they own. Each authorable campaign column has its own typed Unassigned listbox.</p><div className="action-row">{Object.entries(campaignWorldScreens).map(([world, state]) => <a className="button button--gold" href={`/admin/campaign/planner?state=${state}`} key={world}>Open {world} planner</a>)}</div></section><section className="card"><h2>Current Book-grouping overlays</h2><table className="data-table"><thead><tr><th>Grouping</th><th>Shape</th><th>Editability</th></tr></thead><tbody><tr><td>Disjoint Trilogy</td><td>two disconnected segments</td><td>Editable</td></tr><tr><td>Opposing Faction</td><td>Books 1–6 + 13–18</td><td>Locked · derived</td></tr><tr><td>Mirrored Duology</td><td>partner = 19 − Book</td><td>Canonical</td></tr></tbody></table></section></div></div>;
+  ].map(([label, value, detail]) => <article className="card" key={label}><p className="kicker">{label}</p><p className="stat">{value}</p><p>{detail}</p></article>)}</section><div className="split"><section className="card"><h2>Continue authoring</h2><p>Planner cards span the exact Book rows they own. Each authorable campaign column has its own typed Unassigned listbox.</p><div className="action-row">{Object.entries(campaignWorldScreens).map(([world, state]) => <a className="button button--gold" href={`/admin/campaign/planner?state=${state}`} key={world}>Open {world} planner</a>)}</div></section><section className="card"><h2>Current Book-grouping overlays</h2><DataTable columns={overlayColumns} data={overlays} getRowId={(row) => row.grouping} preferenceKey="admin.campaign.overlays" /></section></div></div>;
 }
 
 function CampaignDocumentWorkflow({ screen }: { screen: PageManifestEntry }) {

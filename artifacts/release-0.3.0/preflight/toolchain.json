@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "echoes-release-evidence-v1",
+  "generatedAt": "2026-08-18T13:51:17-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
+  "environment": "local release worktree",
+  "status": "PASS",
+  "inputs": [
+    {
+      "path": "package.json"
+    },
+    {
+      "path": "apps/web/package.json"
+    },
+    {
+      "path": "pnpm-lock.yaml"
+    }
+  ],
+  "commands": [
+    {
+      "command": "node --version",
+      "startedAt": "2026-08-18T13:51:17-07:00",
+      "finishedAt": "2026-08-18T13:51:17-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log"
+    },
+    {
+      "command": "pnpm --version",
+      "startedAt": "2026-08-18T13:51:17-07:00",
+      "finishedAt": "2026-08-18T13:51:17-07:00",
+      "exitCode": 0,
+      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Node version",
+      "expected": "22.22.0",
+      "observed": "22.22.0",
+      "pass": true
+    },
+    {
+      "name": "pnpm version",
+      "expected": "10.33.2",
+      "observed": "10.33.2",
+      "pass": true
+    },
+    {
+      "name": "root package version",
+      "expected": "0.3.0",
+      "observed": "0.3.0",
+      "pass": true
+    },
+    {
+      "name": "web package version",
+      "expected": "0.3.0",
+      "observed": "0.3.0",
+      "pass": true
+    }
+  ],
+  "artifacts": [],
+  "blockers": [],
+  "notes": []
+}
+

@@ -1,0 +1,1858 @@
+{
+  "schemaVersion": "echoes-release-execution-state-v1",
+  "release": "0.3.0",
+  "packageSnapshotDate": "2026-08-18",
+  "status": "BLOCKED",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "observed": {
+    "githubMain": "53a8f480690ad481997d415127c04369982b13c9",
+    "notionProductionSha": "64881efb67067dfb40427d1575671e35b31e70ec",
+    "puzzlePr": 2,
+    "puzzlePrHead": "15ec82904fad909997d3881b7d3a39f7c1a16069",
+    "canonicalNoteStatus": "DRAFT"
+  },
+  "tasks": [
+    {
+      "id": "T000",
+      "phase": "W0",
+      "title": "Refresh live authority and freeze observed baselines",
+      "promptIds": [],
+      "dependsOn": [],
+      "priority": "P0",
+      "objective": "Fetch latest main, open PRs, production /api/version and /api/health, current Notion authority, and record immutable baseline SHAs before editing.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T001",
+      "phase": "W0",
+      "title": "Create clean Release 0.3.0 integration branch",
+      "promptIds": [],
+      "dependsOn": [
+        "T000"
+      ],
+      "priority": "P0",
+      "objective": "Work from latest main in a clean checkout using Node 22.22.0 and pnpm 10.33.2; preserve unrelated work.",
+      "status": "PASS"
+    },
+    {
+      "id": "T002",
+      "phase": "W0",
+      "title": "Align stale repository release guidance with canonical 0.3.0 target",
+      "promptIds": [],
+      "dependsOn": [
+        "T001"
+      ],
+      "priority": "P0",
+      "objective": "Resolve AGENTS.md target 0.2.0 conflict in favor of the newest owner request and docs/RELEASES.md target 0.3.0; preserve all other repository rules.",
+      "status": "PASS"
+    },
+    {
+      "id": "T010",
+      "phase": "W1",
+      "title": "Generate prompt coverage and baseline failure artifacts",
+      "promptIds": [
+        "R030-Q01",
+        "R030-Q02",
+        "R030-Q03",
+        "R030-Q04",
+        "R030-Q05",
+        "R030-Q06",
+        "R030-Q07",
+        "R030-Q08",
+        "R030-Q09",
+        "R030-Q10",
+        "R030-Q11",
+        "R030-Q12",
+        "R030-Q13",
+        "R030-Q14U",
+        "R030-Q15",
+        "R030-Q16A",
+        "R030-Q16B",
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T002"
+      ],
+      "priority": "P0",
+      "objective": "Create failing tests/audits first and prove all 18 queue entries are represented, including the unnumbered item and both source Prompt 16 entries.",
+      "status": "PASS"
+    },
+    {
+      "id": "T100",
+      "phase": "W2",
+      "title": "Export and analyze existing Species taxonomy before mutation",
+      "promptIds": [
+        "R030-Q16B"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P0",
+      "objective": "Produce taxonomy-json-preflight.json and taxonomy-normalization-plan.json; stop if canonical-node conflicts exist.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T101",
+      "phase": "W2",
+      "title": "Implement first-class Taxonomy schema and forward-only migration",
+      "promptIds": [
+        "R030-Q16B"
+      ],
+      "dependsOn": [
+        "T100"
+      ],
+      "priority": "P0",
+      "objective": "Add TAX-keyed hierarchy and Species FK while preserving exact IDs and a tested recovery path.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T102",
+      "phase": "W2",
+      "title": "Normalize, backfill, audit, then remove superseded Species taxonomy JSON",
+      "promptIds": [
+        "R030-Q16B"
+      ],
+      "dependsOn": [
+        "T101"
+      ],
+      "priority": "P0",
+      "objective": "Deduplicate nodes, backfill Species, compare lineages field-for-field, and only remove JSON after zero-loss audit.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T110",
+      "phase": "W2",
+      "title": "Implement canonical INITIAL founding Settlement importer",
+      "promptIds": [
+        "R030-Q04"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P0",
+      "objective": "Import exactly 24 Settlement roots and 72 INITIAL SettlementWorld identities; exclude R10; fail closed on conflicts and prove zero-change rerun.",
+      "status": "PASS"
+    },
+    {
+      "id": "T111",
+      "phase": "W2",
+      "title": "Resolve founding groups to exact Species and Breed allocations",
+      "promptIds": [
+        "R030-Q05"
+      ],
+      "dependsOn": [
+        "T110"
+      ],
+      "priority": "P0",
+      "objective": "Use authored mappings only. Produce deterministic exact integer population JSON or a complete unresolved-authority report; never infer allocation weights.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T112",
+      "phase": "W2",
+      "title": "Persist and replay INITIAL population events",
+      "promptIds": [
+        "R030-Q05"
+      ],
+      "dependsOn": [
+        "T111"
+      ],
+      "priority": "P0",
+      "objective": "Only when T111 produces a complete authorized mapping, persist FOUNDING events and verify totals/dominance/culture projections across all 72 identities.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T120",
+      "phase": "W2",
+      "title": "Update static Guide titles without identity or persistence drift",
+      "promptIds": [
+        "R030-Q08"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P1",
+      "objective": "Apply Overseer, Herald, Steward mappings; retain exact Character/Soul identities and canonical entity counts.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T130",
+      "phase": "W2",
+      "title": "Review and integrate Puzzle Phase 1 draft PR",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P0",
+      "objective": "Rebase/review PR #2, run full pinned-toolchain gates, security/accessibility review, and integrate only after exact source/checksum/idempotency validation.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T131",
+      "phase": "W2",
+      "title": "Reconcile PUZCMP handles with master component authority",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T130"
+      ],
+      "priority": "P0",
+      "objective": "Map, alias, rename, or reject proposal handles; do not create a second permanent component registry.",
+      "status": "PASS"
+    },
+    {
+      "id": "T132",
+      "phase": "W2",
+      "title": "Implement four tutorial production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T131"
+      ],
+      "priority": "P0",
+      "objective": "Implement PZB-011, PZB-012, PZB-037, and PZB-021 with deterministic regeneration, unique-solution proof, accessibility equivalents, and server-only validation.",
+      "status": "PASS"
+    },
+    {
+      "id": "T133",
+      "phase": "W2",
+      "title": "Implement text/language/literary production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry in this family without changing authored answer formats, hints, IDs, or immutable generator versions.",
+      "status": "PASS"
+    },
+    {
+      "id": "T134",
+      "phase": "W2",
+      "title": "Implement crypto/numeric/data production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry in this family with exhaustive alternate-solution and decoy rejection evidence.",
+      "status": "PASS"
+    },
+    {
+      "id": "T135",
+      "phase": "W2",
+      "title": "Implement visual/color/optical production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with non-color-only equivalents and deterministic geometry/content.",
+      "status": "PASS"
+    },
+    {
+      "id": "T136",
+      "phase": "W2",
+      "title": "Implement spatial/folding/geometry production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with keyboard and non-3D equivalents where declared.",
+      "status": "PASS"
+    },
+    {
+      "id": "T137",
+      "phase": "W2",
+      "title": "Implement audio/music/spectral production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with captioned/equivalent non-audio reasoning paths.",
+      "status": "PASS"
+    },
+    {
+      "id": "T138",
+      "phase": "W2",
+      "title": "Implement logic/constraint production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with CSP/SAT-equivalent uniqueness proofs.",
+      "status": "PASS"
+    },
+    {
+      "id": "T139",
+      "phase": "W2",
+      "title": "Implement historical/research production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry using declared corpora and claim-level citations, never difficulty-by-obscurity.",
+      "status": "PASS"
+    },
+    {
+      "id": "T140",
+      "phase": "W2",
+      "title": "Implement construction/simulation production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with deterministic mechanisms and accessible discrete controls.",
+      "status": "PASS"
+    },
+    {
+      "id": "T141",
+      "phase": "W2",
+      "title": "Implement cross-modal production generators",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T132"
+      ],
+      "priority": "P1",
+      "objective": "Complete every catalog entry with equivalent cross-modal paths and matching solution cardinality.",
+      "status": "PASS"
+    },
+    {
+      "id": "T200",
+      "phase": "W3",
+      "title": "Inventory canonical owner entities, fields, tables, forms, routes, and write owners",
+      "promptIds": [
+        "R030-Q10",
+        "R030-Q11",
+        "R030-Q12",
+        "R030-Q13",
+        "R030-Q15",
+        "R030-Q16A"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P0",
+      "objective": "Derive live contracts from canonical domain authority plus repository registry; never use a convenient renderer subset as authority.",
+      "status": "PASS"
+    },
+    {
+      "id": "T201",
+      "phase": "W3",
+      "title": "Implement explicit human-readable lookup presentation registry",
+      "promptIds": [
+        "R030-Q10"
+      ],
+      "dependsOn": [
+        "T200"
+      ],
+      "priority": "P0",
+      "objective": "Apply the exact name-first/ID-second rules and full Witness/WitnessDef identity chains.",
+      "status": "PASS"
+    },
+    {
+      "id": "T202",
+      "phase": "W3",
+      "title": "Rebuild universal owner/admin data-grid behavior",
+      "promptIds": [
+        "R030-Q11"
+      ],
+      "dependsOn": [
+        "T201"
+      ],
+      "priority": "P0",
+      "objective": "Represent all canonical fields with deterministic order, filters, sorts, counts, zebra rows, sticky headers, width handling, pagination/virtualization, and accessible actions.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T203",
+      "phase": "W3",
+      "title": "Rebuild universal owner/admin form behavior",
+      "promptIds": [
+        "R030-Q12"
+      ],
+      "dependsOn": [
+        "T201"
+      ],
+      "priority": "P0",
+      "objective": "Expose every writable/read-only canonical field with field-appropriate controls and parent Character composition for subtypes.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T204",
+      "phase": "W3",
+      "title": "Implement explicit inline Edit Row and Save Row interaction",
+      "promptIds": [
+        "R030-Q15"
+      ],
+      "dependsOn": [
+        "T202",
+        "T203"
+      ],
+      "priority": "P0",
+      "objective": "Edit exactly one row, preserve unsaved values/errors, persist through canonical write owners, and keep immutable fields read-only.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T205",
+      "phase": "W3",
+      "title": "Implement registry-backed record detail/edit route",
+      "promptIds": [
+        "R030-Q16A"
+      ],
+      "dependsOn": [
+        "T201",
+        "T203"
+      ],
+      "priority": "P0",
+      "objective": "Make /admin/data/$entityKey/$recordId resolve every active entity through the real registry and shared validation/write authority.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T206",
+      "phase": "W3",
+      "title": "Integrate Taxonomy into Data Admin and Wiki/reference projection",
+      "promptIds": [
+        "R030-Q16B"
+      ],
+      "dependsOn": [
+        "T102",
+        "T202",
+        "T203",
+        "T204",
+        "T205"
+      ],
+      "priority": "P0",
+      "objective": "Provide complete table/form/detail/relation behavior and shared Taxonomy reference pages without duplicate slugs or nodes.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T207",
+      "phase": "W3",
+      "title": "Generate exhaustive owner UI release audit",
+      "promptIds": [
+        "R030-Q13"
+      ],
+      "dependsOn": [
+        "T202",
+        "T203",
+        "T204",
+        "T205",
+        "T206"
+      ],
+      "priority": "P0",
+      "objective": "Fail release on any missing field/column, raw-FK-only relation, missing sort/filter, missing inline edit, missing detail route, or unreadable control.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T300",
+      "phase": "W4",
+      "title": "Correct Atlas projection and full-world stage",
+      "promptIds": [
+        "R030-Q01"
+      ],
+      "dependsOn": [
+        "T010"
+      ],
+      "priority": "P0",
+      "objective": "Use one 2:1 EPSG:4326 stage for image and overlays; never mutate coordinates to compensate for rendering.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T301",
+      "phase": "W4",
+      "title": "Add Atlas pan, zoom, clustering, spiderfy, search, and synchronized selection",
+      "promptIds": [
+        "R030-Q02"
+      ],
+      "dependsOn": [
+        "T300"
+      ],
+      "priority": "P0",
+      "objective": "Make all 400 candidate sites precisely keyboard/pointer selectable without coordinate mutation.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T302",
+      "phase": "W4",
+      "title": "Add Atlas classification presentation, filters, and legend",
+      "promptIds": [
+        "R030-Q03"
+      ],
+      "dependsOn": [
+        "T301"
+      ],
+      "priority": "P0",
+      "objective": "Apply the exact color/size map and approved baseMorphology vocabulary; keep filters synchronized across map/table/clusters.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T303",
+      "phase": "W4",
+      "title": "Overlay world-specific persisted Settlement occupancy",
+      "promptIds": [
+        "R030-Q06"
+      ],
+      "dependsOn": [
+        "T110",
+        "T302"
+      ],
+      "priority": "P0",
+      "objective": "Distinguish world-independent geography from selected-world occupancy and prohibit Found City on occupied pairs.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T304",
+      "phase": "W4",
+      "title": "Complete Atlas integrated data/browser gate",
+      "promptIds": [
+        "R030-Q07"
+      ],
+      "dependsOn": [
+        "T112",
+        "T303"
+      ],
+      "priority": "P0",
+      "objective": "Verify exact persisted counts, idempotency, event replay, complete browser interaction, screenshot geometry, and zero console/server errors.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T400",
+      "phase": "W5",
+      "title": "Fix Campaign Planner movement controls and persistence",
+      "promptIds": [
+        "R030-Q09"
+      ],
+      "dependsOn": [
+        "T201"
+      ],
+      "priority": "P0",
+      "objective": "Provide exact visible Move up/Move down labels, keyboard/drag parity, focus retention, live announcement, and identity-preserving reorder.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T401",
+      "phase": "W5",
+      "title": "Contain Campaign Planner board scrolling and restore card readability",
+      "promptIds": [
+        "R030-Q14U"
+      ],
+      "dependsOn": [
+        "T400"
+      ],
+      "priority": "P0",
+      "objective": "Keep shell/header fixed, contain horizontal scroll to board, set usable column/card widths, and pass the exact 1600x900 Chromium regression.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T500",
+      "phase": "W6",
+      "title": "Run puzzle security, uniqueness, accessibility, and complete coverage audit",
+      "promptIds": [
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T133",
+        "T134",
+        "T135",
+        "T136",
+        "T137",
+        "T138",
+        "T139",
+        "T140",
+        "T141"
+      ],
+      "priority": "P0",
+      "objective": "Prove 70/70 production generator coverage while preserving the no-live-runtime/no-timer boundary.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T501",
+      "phase": "W6",
+      "title": "Run cumulative migration, unit, integration, E2E, accessibility, build, release, and diff gates",
+      "promptIds": [
+        "R030-Q07",
+        "R030-Q13",
+        "R030-Q17"
+      ],
+      "dependsOn": [
+        "T120",
+        "T207",
+        "T304",
+        "T401",
+        "T500"
+      ],
+      "priority": "P0",
+      "objective": "Run every repository and package gate on the exact candidate commit and collect machine-readable evidence.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "T600",
+      "phase": "W7",
+      "title": "Verify release candidate on production-shaped staging",
+      "promptIds": [],
+      "dependsOn": [
+        "T501"
+      ],
+      "priority": "P0",
+      "objective": "Restore a production backup into isolated staging, apply migrations/imports, run smoke/audits, and prove rollback/recovery before production.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T601",
+      "phase": "W7",
+      "title": "Finalize canonical 0.3.0 note and publication candidate commit",
+      "promptIds": [],
+      "dependsOn": [
+        "T600"
+      ],
+      "priority": "P0",
+      "objective": "Update complete player/operator notes, set PUBLISHED only for the publication candidate with actual release date, regenerate public artifact, and pass release checks.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T602",
+      "phase": "W8",
+      "title": "Dry-run and deploy exact publication candidate SHA",
+      "promptIds": [],
+      "dependsOn": [
+        "T601"
+      ],
+      "priority": "P0",
+      "objective": "Use infra/scripts/deploy-production.sh with exact 40-character SHA and /etc/eidolon/deployment.env; retain backup and verify migrated production.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T603",
+      "phase": "W8",
+      "title": "Verify production and promote exact deployed SHA to main",
+      "promptIds": [],
+      "dependsOn": [
+        "T602"
+      ],
+      "priority": "P0",
+      "objective": "Verify /api/version, /api/health, owner flows, Atlas, Campaign, Data Admin, Taxonomy, and Puzzle admin surfaces; fast-forward main only to the exact deployed SHA if the recorded base has not moved.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T604",
+      "phase": "W8",
+      "title": "Create tag v0.3.0 and GitHub Release from canonical note",
+      "promptIds": [],
+      "dependsOn": [
+        "T603"
+      ],
+      "priority": "P0",
+      "objective": "Tag the exact deployed/main SHA as v0.3.0, publish the GitHub Release using reviewed canonical note content, and verify tag/release/source/prod SHA alignment.",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "T605",
+      "phase": "W8",
+      "title": "Write final release evidence and closeout report",
+      "promptIds": [],
+      "dependsOn": [
+        "T604"
+      ],
+      "priority": "P0",
+      "objective": "Record exact commits, counts, migrations, backups, tests, production checks, release URLs, unresolved deferrals, and rollback retention.",
+      "status": "NOT_STARTED"
+    }
+  ],
+  "transitions": [
+    {
+      "taskId": "T000",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T13:51:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/authority-snapshot.json"
+      ],
+      "reason": "Started live authority refresh."
+    },
+    {
+      "taskId": "T000",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T13:51:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/production-baseline.json"
+      ],
+      "reason": "Current production health and version cannot be observed because the execution environment cannot resolve the production host and no browser surface is available."
+    },
+    {
+      "taskId": "T001",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T13:45:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/repository-baseline.json"
+      ],
+      "reason": "Created isolated release worktree and branch from observed main."
+    },
+    {
+      "taskId": "T001",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T13:51:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/repository-baseline.json",
+        "artifacts/release-0.3.0/preflight/toolchain.json"
+      ],
+      "reason": "Clean isolated branch and exact toolchain verified; work may continue independently without satisfying G00."
+    },
+    {
+      "taskId": "T002",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T13:51:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "AGENTS.md",
+        "artifacts/release-0.3.0/preflight/authority-snapshot.json"
+      ],
+      "reason": "Applied package-resolved release guidance conflict."
+    },
+    {
+      "taskId": "T002",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T13:51:17-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "reason": "AGENTS.md now targets 0.3.0 and its canonical draft note while preserving all delivery rules."
+    },
+    {
+      "taskId": "T010",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:01:06-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/release-0.3.0-prompt-coverage.test.ts",
+        "apps/web/tests/unit/release-0.3.0-red-baseline.test.ts"
+      ],
+      "reason": "Started test-first prompt coverage, repository inventory, and intentional failure capture."
+    },
+    {
+      "taskId": "T010",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T14:03:02-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/tests/red-baseline/prompt-coverage.json",
+        "artifacts/release-0.3.0/tests/red-baseline/behavior-gap-summary.json",
+        "artifacts/release-0.3.0/owner-ui/owner-entity-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-route-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json"
+      ],
+      "reason": "All 18 prompts are mapped, the intentional RED suite records eight missing behavior groups, the existing Guide mapping remains green, and owner entity/route/table/form baseline inventories are captured."
+    },
+    {
+      "taskId": "T120",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:06:45-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/src/data/architect-witness-guide/guides.json",
+        "apps/web/tests/unit/architect-witness-roster.test.ts"
+      ],
+      "reason": "Started exact static mapping and persisted-count verification."
+    },
+    {
+      "taskId": "T120",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:07:14-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/guides/static-guide-mapping-audit.json",
+        "artifacts/release-0.3.0/guides/guide-audit-summary.txt"
+      ],
+      "reason": "Static Guide titles and identities pass, but the current persisted 58/112/56/54/54 counts cannot be read because sandbox network controls deny the configured local PostgreSQL connection."
+    },
+    {
+      "taskId": "T110",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:10:43-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/initial-founding-settlements.test.ts"
+      ],
+      "reason": "Added the focused failing importer contract before implementation."
+    },
+    {
+      "taskId": "T110",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T14:13:31-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/data/founding-settlement-import.json",
+        "artifacts/release-0.3.0/data/founding-settlement-tdd.txt",
+        "apps/web/src/server/initial-founding-settlements.ts",
+        "apps/web/scripts/import-initial-settlements.mts",
+        "apps/web/tests/unit/initial-founding-settlements.test.ts"
+      ],
+      "reason": "The verify-only-by-default importer preserves the exact 24/72/R10 authority, uses one transaction, fails before writes on conflict, preserves compatible persisted identities, and proves a zero-change rerun."
+    },
+    {
+      "taskId": "T111",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:14:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/src/data/initial-founding-settlements.json",
+        "apps/web/src/data/breed-groups-v3.json",
+        "apps/web/src/domain/settlement-population.ts"
+      ],
+      "reason": "Started the required no-invention current-authority and candidate-data audit."
+    },
+    {
+      "taskId": "T111",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:16:44-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/data/unresolved-founder-mapping.json",
+        "artifacts/release-0.3.0/data/founding-population-authority-audit.json"
+      ],
+      "reason": "All 216 Settlement/world/group cases are inventoried, but exact current Species, eligible Breed, integer allocation, remainder, culture, dominance, and provenance authority is absent."
+    },
+    {
+      "taskId": "T112",
+      "from": "NOT_STARTED",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:16:44-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/data/unresolved-founder-mapping.json"
+      ],
+      "reason": "B01 forbids population persistence until T111 receives complete owner-authored allocation authority."
+    },
+    {
+      "taskId": "T300",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:19:12-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/atlas-map-viewport.test.tsx"
+      ],
+      "reason": "Added a focused failing contract for the shared full-world EPSG:4326 viewport before implementation."
+    },
+    {
+      "taskId": "T300",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:25:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/atlas/full-world-projection.json",
+        "artifacts/release-0.3.0/atlas/full-world-projection-tdd.txt",
+        "apps/web/src/components/AtlasMapViewport.tsx",
+        "apps/web/tests/unit/atlas-map-viewport.test.tsx"
+      ],
+      "reason": "The shared projection implementation and focused tests pass, but the explicitly mandatory real-Chromium reset/resize proof could not run because Playwright could not reach its webServer in this sandbox."
+    },
+    {
+      "taskId": "T100",
+      "from": "NOT_STARTED",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:26:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/taxonomy-json-preflight.json",
+        "artifacts/taxonomy-normalization-plan.json",
+        "artifacts/release-0.3.0/taxonomy/preflight-access.json"
+      ],
+      "reason": "Current Species taxonomy JSON cannot be exported because database access is denied; the incomplete 1,124-row historical snapshot is not substituted for current authority."
+    },
+    {
+      "taskId": "T101",
+      "from": "NOT_STARTED",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:26:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/taxonomy-json-preflight.json"
+      ],
+      "reason": "T100 is blocked; B02 forbids schema/backfill implementation before a complete current export and conflict analysis."
+    },
+    {
+      "taskId": "T102",
+      "from": "NOT_STARTED",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T14:26:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/taxonomy-normalization-plan.json"
+      ],
+      "reason": "T100/T101 are blocked; no legacy Species taxonomy JSON may be removed without a zero-loss relational comparison."
+    },
+    {
+      "taskId": "T200",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:33:21-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/owner-ui-live-inventory.test.ts"
+      ],
+      "reason": "Added and ran the failing live-contract inventory test before implementation."
+    },
+    {
+      "taskId": "T200",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T14:36:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-live-contract-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-live-contract-tdd.txt",
+        "apps/web/src/domain/owner-ui-live-inventory.ts",
+        "apps/web/scripts/generate-owner-ui-live-inventory.mts"
+      ],
+      "reason": "The live generated contracts now inventory all 34 active entities, all 124 persisted Prisma models, all 282 active canonical fields and write owners, current owner data routes, and every current admin table/form source."
+    },
+    {
+      "taskId": "T201",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:38:03-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/lookup-presentation.test.ts",
+        "apps/web/tests/unit/lookup-display.test.tsx"
+      ],
+      "reason": "Added and ran failing contracts for the owner-authored lookup registry and reusable relation renderer before implementation."
+    },
+    {
+      "taskId": "T201",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T14:41:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/lookup-presentation-audit.json",
+        "artifacts/release-0.3.0/owner-ui/lookup-presentation-tdd.txt",
+        "apps/web/src/data/lookup-presentation.json",
+        "apps/web/src/domain/lookup-presentation.ts",
+        "apps/web/src/components/LookupDisplay.tsx"
+      ],
+      "reason": "The exact 16-rule package registry is installed byte-for-byte, every rule resolves in tests, name-first/ID-second rendering and search are reusable, null is explicit, and missing human identity fails closed."
+    },
+    {
+      "taskId": "T202",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T14:43:39-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/data-grid-tdd.txt",
+        "apps/web/tests/unit/data-table-contract.test.tsx",
+        "apps/web/tests/unit/owner-table-field-order.test.ts",
+        "apps/web/tests/unit/owner-field-value.test.tsx"
+      ],
+      "reason": "Started the shared grid and generic Data Registry remediation with failing coverage for the six-column truncation and missing grid behaviors."
+    },
+    {
+      "taskId": "T202",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T15:27:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-table-browser-matrix.json",
+        "artifacts/release-0.3.0/owner-ui/data-grid-tdd.txt",
+        "apps/web/tests/unit/owner-table-inventory.test.ts",
+        "apps/web/tests/unit/data-table-contract.test.tsx"
+      ],
+      "reason": "Implementation and static/component gates are complete across 48 source surfaces and 81 rendered table contracts with missingFields: []; B08 remains open because the required real-Chromium scenario matrix cannot execute in this environment."
+    },
+    {
+      "taskId": "T203",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T15:47:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-browser-matrix.json",
+        "apps/web/tests/unit/owner-form-contract.test.ts",
+        "apps/web/tests/unit/entity-data-admin.test.tsx",
+        "apps/web/tests/unit/owner-form-inventory.test.ts"
+      ],
+      "reason": "All 34 generic entity forms now represent every canonical field with typed inputs or visible read-only values, named relation lookup controls, exact WitnessDef spectral controls, and Character parent composition; the 28 bespoke source editors remain explicitly inventoried for operation-specific contract review."
+    },
+    {
+      "taskId": "T203",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T16:06:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-browser-matrix.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-tdd.txt",
+        "apps/web/tests/unit/owner-form-inventory.test.ts",
+        "apps/web/tests/unit/entity-data-admin.test.tsx"
+      ],
+      "reason": "Implementation and static/component verification are complete for all 34 generic canonical forms and 20 reviewed operation-specific editors with missingFields: []; B08 remains open because the mandatory real-Chromium form scenarios cannot execute in this environment."
+    },
+    {
+      "taskId": "T400",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T16:11:14-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/campaigns.test.ts",
+        "apps/web/tests/unit/campaign-admin.test.tsx"
+      ],
+      "reason": "Added and ran failing service and component coverage before implementing persisted placement reorder and exact movement controls."
+    },
+    {
+      "taskId": "T400",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T16:20:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/campaign/reorder-browser-matrix.json",
+        "artifacts/release-0.3.0/campaign/reorder-tdd.txt",
+        "apps/web/tests/e2e/campaign-planner.spec.ts",
+        "apps/web/tests/unit/campaign-admin.test.tsx",
+        "apps/web/tests/unit/campaigns.test.ts"
+      ],
+      "reason": "Identity-preserving ordinal reorder, exact high-contrast controls, focus/announcement behavior, drag parity, focused tests, typecheck, and build pass; B08 remains open because actual-route Chromium cannot start when loopback binding returns EPERM."
+    },
+    {
+      "taskId": "T130",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T16:21:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/pr-2-review.json",
+        "apps/web/tests/unit/puzzle-blueprint-import.test.ts",
+        "apps/web/tests/unit/puzzle-prototypes.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "reason": "Integrated the exact PR #2 head into the isolated release worktree and began source, importer, security, accessibility, and cumulative-gate review."
+    },
+    {
+      "taskId": "T130",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T16:48:15-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-review.json",
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt",
+        "apps/web/tests/unit/puzzle-component-reconciliation.test.ts"
+      ],
+      "reason": "Exact source, importer idempotency/conflicts/transaction/checksum, server-keyed constant-time validation, answer-free browser projection, and nine prototype surfaces are locally verified; external merge remains blocked on normal CI plus named Puzzle owner, security, and accessibility approval."
+    },
+    {
+      "taskId": "T131",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T16:45:50-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/puzzle-component-reconciliation.test.ts"
+      ],
+      "reason": "Started a source-derived handle reconciliation with a failing test requiring complete normalized coverage."
+    },
+    {
+      "taskId": "T131",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T16:47:58-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-review.json",
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt",
+        "apps/web/tests/unit/puzzle-component-reconciliation.test.ts"
+      ],
+      "reason": "All 30 normalized PUZCMP handles and 552 occurrences are mapped to the locked six-item master authority through reuse, puzzle-local composition, Phase 2 deferral, or explicit phase-boundary rejection; no second registry was created."
+    },
+    {
+      "taskId": "T132",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T16:50:40-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "apps/web/tests/unit/puzzle-tutorial-generators.test.ts"
+      ],
+      "reason": "Added and ran the failing exact tutorial-four production generator contract before implementation."
+    },
+    {
+      "taskId": "T132",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T16:58:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/tutorial-generator-coverage.json",
+        "artifacts/release-0.3.0/puzzles/tutorial-generator-tdd.txt",
+        "apps/web/src/server/puzzle-tutorial-generators.ts",
+        "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+        "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+      ],
+      "reason": "The exact four tutorials provide deterministic immutable production carriers, exhaustive single-solution proof, alternate/decoy rejection, server-only constant-time validation, signed-route handling, declared accessibility equivalents, and answer-free admin projections with no runtime records or timer start."
+    },
+    {
+      "taskId": "T133",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Started the test-first all-family production generator contract with text/language/literary coverage."
+    },
+    {
+      "taskId": "T133",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 10 authored text/language/literary Blueprints pass immutable-version, deterministic replay, authored contract, unique-solution, decoy rejection, accessibility projection, and answer-free client checks."
+    },
+    {
+      "taskId": "T134",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:01-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to crypto/numeric/data generators."
+    },
+    {
+      "taskId": "T134",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:01-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 10 authored crypto/numeric/data Blueprints, including the two custom tutorials, pass deterministic unique-solution and alternate/decoy rejection proofs."
+    },
+    {
+      "taskId": "T135",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:02-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to visual/color/optical generators."
+    },
+    {
+      "taskId": "T135",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:02-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 8 authored visual/color/optical Blueprints pass deterministic shape/texture semantic carrier, non-color projection, unique-solution, and answer-leakage checks."
+    },
+    {
+      "taskId": "T136",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:03-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to spatial/folding/geometry generators."
+    },
+    {
+      "taskId": "T136",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:03-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 8 authored spatial/folding/geometry Blueprints pass keyboard-operable discrete carrier, non-3D semantic projection, deterministic solution, and decoy rejection checks."
+    },
+    {
+      "taskId": "T137",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:04-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to audio/music/spectral generators."
+    },
+    {
+      "taskId": "T137",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:04-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 8 authored audio/music/spectral Blueprints pass captioned/non-audio semantic carrier, deterministic replay, unique-solution, and answer-free projection checks."
+    },
+    {
+      "taskId": "T138",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:05-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to logic/constraint generators."
+    },
+    {
+      "taskId": "T138",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:05-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 8 authored logic/constraint Blueprints pass exhaustive bijective solution-cardinality proof, constraint-table projection, and alternate rejection checks."
+    },
+    {
+      "taskId": "T139",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:06-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to historical/research generators."
+    },
+    {
+      "taskId": "T139",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:06-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 6 authored historical/research Blueprints use only declared corpora, expose claim-level HTTPS citations, and pass deterministic unique-solution and answer-leakage checks."
+    },
+    {
+      "taskId": "T140",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:07-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to construction/simulation generators."
+    },
+    {
+      "taskId": "T140",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:07-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 6 authored construction/simulation Blueprints pass deterministic discrete-control carrier, accessibility projection, unique-solution, and decoy rejection checks."
+    },
+    {
+      "taskId": "T141",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:00:08-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/puzzle-production-generators.test.ts"],
+      "reason": "Extended the failing all-family contract to cross-modal generators."
+    },
+    {
+      "taskId": "T141",
+      "from": "IN_PROGRESS",
+      "to": "PASS",
+      "timestamp": "2026-08-18T17:13:08-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/server/puzzle-production-generators.ts", "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx", "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json"],
+      "reason": "All 6 authored cross-modal Blueprints pass paired caption/visual semantic projection with matching solution cardinality, deterministic replay, and answer-free client checks."
+    },
+    {
+      "taskId": "T500",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:10:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json", "apps/web/tests/unit/puzzle-production-generators.test.ts", "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"],
+      "reason": "Started the complete 70-row security, uniqueness, accessibility, and runtime-boundary audit."
+    },
+    {
+      "taskId": "T500",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T17:13:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json", "artifacts/release-0.3.0/puzzles/puzzle-security-accessibility-audit.json", "artifacts/release-0.3.0/gates/G08.json"],
+      "reason": "All 70 local generator proofs, client-bundle leakage checks, focused tests, typecheck, lint, and build pass; T500 remains blocked on required real-browser accessibility evidence and named Puzzle owner/security/accessibility review."
+    },
+    {
+      "taskId": "T204",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:25:52-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/entity-data-admin.test.tsx", "artifacts/release-0.3.0/owner-ui/inline-row-edit-tdd.txt"],
+      "reason": "Recorded the failing inline row contract before implementation: no Edit Row, Save Row, retained-error draft, or subtype-composed save existed."
+    },
+    {
+      "taskId": "T204",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T17:32:30-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/screens/admin/EntityDataAdminPage.tsx", "apps/web/src/server/entity-admin.ts", "artifacts/release-0.3.0/owner-ui/owner-row-edit-audit.json"],
+      "reason": "All 34 registry tables pass local one-row editing, typed editor, immutable identity, failed-draft retention, and canonical composed-PATCH tests; required Chromium scenarios remain unavailable."
+    },
+    {
+      "taskId": "T205",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:20:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/record-detail-route.test.ts", "artifacts/release-0.3.0/owner-ui/record-detail-route-tdd.txt"],
+      "reason": "Recorded the missing owner-facing dynamic record route before implementation."
+    },
+    {
+      "taskId": "T205",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T17:32:31-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/routes/admin/data/$entityKey/$recordId.tsx", "apps/web/src/routeTree.gen.ts", "artifacts/release-0.3.0/owner-ui/record-detail-route-audit.json"],
+      "reason": "All 34 active entities resolve through the generated registry-backed route with field-complete read/edit composition and focused tests/build pass; required real Chromium and PostgreSQL reachability evidence remains unavailable."
+    },
+    {
+      "taskId": "T401",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:37:38-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/campaign-layout-contract.test.ts", "artifacts/release-0.3.0/campaign/layout-tdd.txt"],
+      "reason": "Recorded three failing layout-contract tests for missing board containment, column-specific widths, and readable control/list text."
+    },
+    {
+      "taskId": "T401",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T17:41:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/screens/admin/CampaignAdminPage.tsx", "apps/web/src/styles.css", "artifacts/release-0.3.0/campaign/layout-browser-matrix.json"],
+      "reason": "Board-only horizontal scrolling, readable type-specific columns/pools/actions, and name-first placed cards pass 36 focused tests and typecheck; exact 1600x900 Chromium screenshot evidence remains unavailable."
+    },
+    {
+      "taskId": "T301",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:45:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/atlas-map-viewport.test.tsx", "artifacts/release-0.3.0/atlas/interaction-filter-occupancy-tdd.txt"],
+      "reason": "Recorded failing clustering, zoom-control, and externally selected Site-centering contracts before implementation."
+    },
+    {
+      "taskId": "T301",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T18:00:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/components/AtlasMapViewport.tsx", "apps/web/tests/e2e/atlas-sites.spec.ts", "artifacts/release-0.3.0/atlas/interaction-browser-matrix.json"],
+      "reason": "Zoom, wheel, bounded pan, reset, screen-space clustering, maximum-zoom spiderfy, keyboard targets, coordinate preservation, search/table/map synchronization, and retained-zoom centering pass local tests; mandatory Chromium execution is unavailable."
+    },
+    {
+      "taskId": "T302",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:46:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/atlas-map-viewport.test.tsx", "apps/web/tests/unit/atlas-admin.test.tsx"],
+      "reason": "Recorded failing exact classification-presentation and composed filter contracts before implementation."
+    },
+    {
+      "taskId": "T302",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T18:00:01-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/screens/admin/AtlasAdminPage.tsx", "artifacts/release-0.3.0/atlas/classification-occupancy-audit.json"],
+      "reason": "Exact color/size mapping, text labels, R01-R25, classification, occupancy, partial-ID, clear filters, and filtered selection/cluster synchronization pass locally. baseMorphology correctly remains disabled because the canonical read model does not expose it; mandatory Chromium execution remains unavailable."
+    },
+    {
+      "taskId": "T303",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T17:47:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/atlas-admin.test.tsx"],
+      "reason": "Started test-first selected-world occupancy overlay and occupied Found City prevention."
+    },
+    {
+      "taskId": "T303",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T18:00:02-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/src/screens/admin/AtlasAdminPage.tsx", "artifacts/release-0.3.0/atlas/classification-occupancy-audit.json", "apps/web/tests/e2e/atlas-sites.spec.ts"],
+      "reason": "World-independent Sites, world-specific persisted Settlement projection, distinct founded state, name-first detail, and occupied Found City prevention pass local component tests. Required persisted 24-per-world/SITE-0243 proof needs the unavailable PostgreSQL integration environment, and Chromium execution is unavailable."
+    },
+    {
+      "taskId": "T207",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T18:06:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["apps/web/tests/unit/release-0.3.0-red-baseline.test.ts", "apps/web/scripts/generate-owner-ui-live-inventory.mts"],
+      "reason": "Used the failing required-output baseline to implement a live-inventory aggregate audit generator."
+    },
+    {
+      "taskId": "T207",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T18:08:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["artifacts/release-0.3.0-owner-data-ui-audit.json", "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json", "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json"],
+      "reason": "The generated live audit inventories 81 tables and 54 forms with zero current missing columns, missing fields, or raw-FK-only presentations; T207 cannot pass until blocked Taxonomy owner surfaces exist and the required Chromium readability matrices run."
+    },
+    {
+      "taskId": "T501",
+      "from": "NOT_STARTED",
+      "to": "IN_PROGRESS",
+      "timestamp": "2026-08-18T18:01:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["artifacts/release-0.3.0/gates/G07.json"],
+      "reason": "Started the full repository lint, typecheck, unit, integration, navigation, browser, build, release, and diff gate sequence on the working candidate."
+    },
+    {
+      "taskId": "T501",
+      "from": "IN_PROGRESS",
+      "to": "BLOCKED",
+      "timestamp": "2026-08-18T18:10:00-07:00",
+      "actor": "Codex",
+      "commit": "53a8f480690ad481997d415127c04369982b13c9",
+      "evidence": ["artifacts/release-0.3.0/gates/G07.json"],
+      "reason": "Lint, typecheck, navigation, Atlas R09 fixture, build, and diff gates pass. G07 remains blocked by intentional pending tranches, unavailable database/browser execution, sandbox child-process denial, and required named review."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "B01",
+      "sourceRule": "B01",
+      "taskIds": [
+        "T111",
+        "T112",
+        "T304"
+      ],
+      "gateIds": [
+        "G07",
+        "G10"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T14:16:44-07:00",
+      "condition": "Exact founding group to Species to eligible Breed integer allocation authority is not authored in current repository/package sources, and current database access is unavailable.",
+      "evidence": [
+        "artifacts/release-0.3.0/data/unresolved-founder-mapping.json",
+        "artifacts/release-0.3.0/data/founding-population-authority-audit.json"
+      ],
+      "requiredResolution": "Provide owner-authored exact mappings, totals/weights, remainder rule, culture projection, dominance rule, and provenance for all 24 Settlements across all three INITIAL worlds."
+    },
+    {
+      "id": "B07-PRODUCTION-BASELINE-ACCESS",
+      "sourceRule": "B07",
+      "taskIds": [
+        "T000"
+      ],
+      "gateIds": [
+        "G00"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T13:51:17-07:00",
+      "condition": "Fresh production /api/version and /api/health evidence is unavailable from this execution environment.",
+      "attempts": [
+        {
+          "method": "curl",
+          "result": "DNS resolution failed for app.eidolon-gaming.com"
+        },
+        {
+          "method": "web fetch",
+          "result": "Direct endpoint URL rejected by safe-URL controls"
+        },
+        {
+          "method": "in-app browser",
+          "result": "No browser is available"
+        }
+      ],
+      "requiredResolution": "Restore normal network/browser access and capture both production endpoints without mutating production."
+    },
+    {
+      "id": "B07-LOCAL-DATABASE-ACCESS",
+      "sourceRule": "B07",
+      "taskIds": [
+        "T120"
+      ],
+      "gateIds": [
+        "G02"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T14:07:14-07:00",
+      "condition": "The configured local PostgreSQL audit connection is denied by sandbox network policy.",
+      "attempts": [
+        {
+          "method": "read-only Prisma hardening audit",
+          "result": "connect EPERM 127.0.0.1:5432"
+        }
+      ],
+      "requiredResolution": "Run the existing read-only hardening audit with normal local database access and capture exact persisted counts."
+    },
+    {
+      "id": "B08-ATLAS-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": [
+        "T300",
+        "T301",
+        "T302",
+        "T303"
+      ],
+      "gateIds": [
+        "G05",
+        "G09"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T14:25:00-07:00",
+      "condition": "Required real-Chromium full-world, interaction, filter, occupancy, reset, resize, and screenshot proof is unavailable because the isolated worktree webServer cannot bind loopback.",
+      "attempts": [
+        {
+          "method": "Playwright Chromium with configured webServer",
+          "result": "webServer process was not reachable; Playwright exited 1"
+        },
+        {
+          "method": "direct Vite start on configured host and port",
+          "result": "listen EPERM: operation not permitted 127.0.0.1:3000"
+        }
+      ],
+      "requiredResolution": "Run the compiled 400-Site Atlas browser gate in the normal repository test environment and capture all interaction, filtering, occupancy, reset, anchor, screenshot, and resize assertions."
+    },
+    {
+      "id": "B07-ATLAS-DATABASE",
+      "sourceRule": "B07",
+      "taskIds": [
+        "T303",
+        "T304"
+      ],
+      "gateIds": [
+        "G05",
+        "G09"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T18:00:02-07:00",
+      "condition": "The required persisted INITIAL occupancy audit cannot run because the configured local PostgreSQL connection is denied by sandbox policy.",
+      "attempts": [
+        {
+          "method": "configured local PostgreSQL integration environment",
+          "result": "connect EPERM 127.0.0.1:5432"
+        }
+      ],
+      "evidence": [
+        "artifacts/release-0.3.0/atlas/classification-occupancy-audit.json",
+        "artifacts/release-0.3.0/data/founding-settlement-import.json"
+      ],
+      "requiredResolution": "Run the rollback-safe integration gate against the exact candidate and prove 24 occupied INITIAL Sites per World, SITE-0243 unoccupied in all three Worlds, and world-switch coordinate invariance."
+    },
+    {
+      "id": "B07-TAXONOMY-PREFLIGHT-DATABASE",
+      "sourceRule": "B07",
+      "taskIds": [
+        "T100",
+        "T101",
+        "T102"
+      ],
+      "gateIds": [
+        "G02",
+        "G03",
+        "G10"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T14:26:00-07:00",
+      "condition": "Current Species taxonomy JSON cannot be exported because sandbox policy denies the configured local PostgreSQL connection.",
+      "attempts": [
+        {
+          "method": "read-only Prisma Species query",
+          "result": "connect EPERM 127.0.0.1:5432"
+        },
+        {
+          "method": "historical local validation snapshot review",
+          "result": "1,124 rows; rejected as incomplete and stale versus the known 1,131 reference"
+        }
+      ],
+      "requiredResolution": "Restore normal read-only database access, export every current Species taxonomy, and run lossless node conflict analysis before any schema mutation."
+    },
+    {
+      "id": "B08-OWNER-TABLE-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": [
+        "T202"
+      ],
+      "gateIds": [
+        "G07"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T15:27:00-07:00",
+      "condition": "The mandatory real-Chromium table matrix cannot execute because the isolated worktree webServer is unreachable over loopback in this environment.",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-table-browser-matrix.json",
+        "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json"
+      ],
+      "requiredResolution": "Run the recorded narrow, wide, empty, populated, filtered, sorted, relation-heavy, Character, Witness, and WitnessDef scenarios in the normal Chromium test environment and capture browser artifacts."
+    },
+    {
+      "id": "B08-OWNER-FORM-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": [
+        "T203"
+      ],
+      "gateIds": [
+        "G07"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T16:06:00-07:00",
+      "condition": "The mandatory real-Chromium form matrix cannot execute because the isolated worktree webServer is unreachable over loopback in this environment.",
+      "evidence": [
+        "artifacts/release-0.3.0/owner-ui/owner-form-browser-matrix.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
+        "artifacts/release-0.3.0/owner-ui/owner-form-tdd.txt"
+      ],
+      "requiredResolution": "Run the recorded Character, Architect, WitnessDef, Witness, CompanionDef, Companion, Breed, Species, Culture, and unrelated generic entity form scenarios in the normal Chromium test environment and capture browser artifacts."
+    },
+    {
+      "id": "B08-OWNER-INLINE-EDIT-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": ["T204"],
+      "gateIds": ["G07"],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T17:32:30-07:00",
+      "condition": "The mandatory real-Chromium Edit Row, Save Row, validation retention, filter/sort retention, Witness composition, and WitnessDef source-identity matrix cannot execute because the isolated worktree webServer is unreachable over loopback in this environment.",
+      "evidence": ["artifacts/release-0.3.0/owner-ui/owner-row-edit-audit.json", "artifacts/release-0.3.0/owner-ui/inline-row-edit-tdd.txt", "apps/web/tests/unit/entity-data-admin.test.tsx"],
+      "requiredResolution": "Run the exact recorded row-edit scenarios against the candidate in the normal Chromium and PostgreSQL-backed environment and capture persistence/reload evidence."
+    },
+    {
+      "id": "B08-OWNER-DETAIL-CHROMIUM-DATABASE",
+      "sourceRule": "B08",
+      "taskIds": ["T205"],
+      "gateIds": ["G07"],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T17:32:31-07:00",
+      "condition": "The required real-Chromium and PostgreSQL-backed detail-route reachability and safe edit/reload matrix cannot execute in this environment.",
+      "evidence": ["artifacts/release-0.3.0/owner-ui/record-detail-route-audit.json", "artifacts/release-0.3.0/owner-ui/record-detail-route-tdd.txt", "apps/web/tests/unit/record-detail-route.test.ts"],
+      "requiredResolution": "Run Breed, Character, WitnessDef, Witness, Architect, Species, and Culture detail routes against real persisted records, including BRD_AARDVARK when present, and capture reload/restoration evidence."
+    },
+    {
+      "id": "B08-CAMPAIGN-REORDER-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": [
+        "T400"
+      ],
+      "gateIds": [
+        "G07"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T16:20:00-07:00",
+      "condition": "The mandatory actual-route Chromium Campaign Planner reorder matrix cannot execute because the isolated worktree webServer cannot bind 127.0.0.1:3000 (listen EPERM).",
+      "evidence": [
+        "artifacts/release-0.3.0/campaign/reorder-browser-matrix.json",
+        "artifacts/release-0.3.0/campaign/reorder-tdd.txt",
+        "apps/web/tests/e2e/campaign-planner.spec.ts"
+      ],
+      "requiredResolution": "Run the recorded exact-label, Move down/reload, keyboard Move up, disabled-boundary, focus, announcement, drag-parity, identity, and Book-continuity scenarios in the normal Chromium test environment and capture browser artifacts."
+    },
+    {
+      "id": "B08-CAMPAIGN-LAYOUT-CHROMIUM",
+      "sourceRule": "B08",
+      "taskIds": ["T401"],
+      "gateIds": ["G07"],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T17:41:00-07:00",
+      "condition": "The required 1600x900 actual-route Chromium containment, readable-control, unassigned-name, contrast, and screenshot regression cannot execute because the isolated worktree webServer cannot bind loopback.",
+      "evidence": ["artifacts/release-0.3.0/campaign/layout-browser-matrix.json", "artifacts/release-0.3.0/campaign/layout-tdd.txt", "apps/web/tests/e2e/campaign-planner.spec.ts"],
+      "requiredResolution": "Run the exact 1600x900 Campaign Planner layout test in normal Chromium and capture artifacts/release-0.3.0/campaign/campaign-planner-1600x900.png."
+    },
+    {
+      "id": "B08-PUZZLE-CI",
+      "sourceRule": "B08",
+      "taskIds": [
+        "T130"
+      ],
+      "gateIds": [
+        "G08"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T16:43:19-07:00",
+      "condition": "The full pinned-toolchain gate cannot be reported green locally because Node child-process creation is denied for the two safe ZIP extraction fixture tests. The previously load-sensitive Companion tests now use a bounded 15-second budget and pass in the full suite.",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-review.json",
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-tdd.txt"
+      ],
+      "requiredResolution": "Run the exact candidate in normal CI on pinned Node 22.22.0 where the safe ZIP fixture process is permitted, and capture a clean full repository gate after the two intentional pending tranches are complete."
+    },
+    {
+      "id": "B10-PUZZLE-OWNER-APPROVAL",
+      "sourceRule": "R030-Q17 REQUIRED REVIEW GATE 6",
+      "taskIds": [
+        "T130"
+      ],
+      "gateIds": [
+        "G08"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T16:48:15-07:00",
+      "condition": "The package requires Puzzle owner, security, and accessibility approval before PR #2 merge; no such approval is recorded.",
+      "evidence": [
+        "artifacts/release-0.3.0/preflight/pr-2-review.json",
+        "artifacts/release-0.3.0/puzzles/puzzle-phase1-review.json"
+      ],
+      "requiredResolution": "Record the named approvals after normal CI passes, then merge PR #2 without changing the reviewed head."
+    },
+    {
+      "id": "B08-PUZZLE-PRODUCTION-CHROMIUM",
+      "sourceRule": "B04",
+      "taskIds": [
+        "T500"
+      ],
+      "gateIds": [
+        "G08"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T17:13:30-07:00",
+      "condition": "Required real-browser keyboard, focus, screen-reader, high-contrast, reduced-motion, tactile/non-3D, and caption parity evidence cannot be captured because Chromium is unavailable in this sandbox.",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/puzzle-security-accessibility-audit.json",
+        "artifacts/release-0.3.0/gates/G08.json"
+      ],
+      "requiredResolution": "Run the exact candidate in a supported Chromium environment and capture the nine-family accessibility matrix."
+    },
+    {
+      "id": "B10-PUZZLE-PRODUCTION-REVIEW",
+      "sourceRule": "R030-Q17 REQUIRED REVIEW GATE 6",
+      "taskIds": [
+        "T500"
+      ],
+      "gateIds": [
+        "G08"
+      ],
+      "status": "OPEN",
+      "observedAt": "2026-08-18T17:13:30-07:00",
+      "condition": "Named Puzzle owner, security, and accessibility approval for the production-generator tranche has not been supplied.",
+      "evidence": [
+        "artifacts/release-0.3.0/puzzles/puzzle-security-accessibility-audit.json",
+        "artifacts/release-0.3.0/gates/G08.json"
+      ],
+      "requiredResolution": "Obtain and record the required named approvals after normal browser and CI evidence passes."
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "echoes-owner-row-edit-audit-v1",
+  "generatedAt": "2026-08-19T00:34:00.034Z",
+  "status": "LOCAL_PASS_BROWSER_BLOCKED",
+  "editableRegistryTableCount": 34,
+  "inlineRowContract": {
+    "editRowLabel": true,
+    "explicitSave": true,
+    "immutableIdentity": true,
+    "preservesFailedDraft": true,
+    "subtypeCharacterComposition": true
+  },
+  "entities": [
+    {
+      "entity": "AchievementDefinition",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Architect",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": true
+    },
+    {
+      "entity": "Ark",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Breed",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Character",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Citation",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Companion",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": true
+    },
+    {
+      "entity": "CompanionDef",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Constellation",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Culture",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Definition",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Interlude",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "InterludeSubstitution",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "KnowledgeBaseItem",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Layette",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "LegendaryReward",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Lesson",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "PersonalityExpression",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Pillar",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "PointOfInterest",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "PuzzleBlueprint",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Research",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Settlement",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "SettlementPopulationEvent",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "SettlementWorld",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Site",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Soul",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Source",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Species",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "TimelineEvent",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Tome",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Transition",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    },
+    {
+      "entity": "Witness",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": true
+    },
+    {
+      "entity": "WitnessDef",
+      "editRow": true,
+      "saveRow": true,
+      "canonicalPatch": true,
+      "parentCharacterComposition": null
+    }
+  ],
+  "browserEvidence": {
+    "status": "BLOCKED",
+    "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+  }
+}

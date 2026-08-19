@@ -1,0 +1,5452 @@
+{
+  "schemaVersion": "echoes-owner-ui-live-inventory-v1",
+  "generatedFrom": [
+    "prisma/schema.prisma",
+    "src/content/entities.ts"
+  ],
+  "sourcePolicy": "Prisma supplies complete persisted field discovery; content/entities.ts supplies generic-form editability only.",
+  "activeEntityCount": 34,
+  "persistedModelCount": 124,
+  "unregisteredPersistedModels": [
+    "Account",
+    "AssetPurposeLink",
+    "AtlasConnection",
+    "AtlasNameableFeature",
+    "AtlasNamingEligibility",
+    "BetaInvitationCode",
+    "BetaInviteRequest",
+    "BookGroupingDefinition",
+    "BookGroupingValue",
+    "BreedResearchEvidence",
+    "BreedResearchValue",
+    "Building",
+    "BulkMutationEnvelope",
+    "BulkOperationAudit",
+    "CalendarOrdinal",
+    "Campaign",
+    "CampaignPlacement",
+    "CapabilityAddress",
+    "CapabilityDefinition",
+    "CapabilityDefinitionVersion",
+    "CapabilityEvent",
+    "CapabilityParameterDefinition",
+    "CapabilityState",
+    "City",
+    "CompanionTransformationBinding",
+    "ContactRequest",
+    "DeploymentRecord",
+    "DonationCheckout",
+    "ExternalBulkApiSession",
+    "FactionStandingEvidenceEvent",
+    "FactionStandingScoringPolicy",
+    "FactionStandingScoringWeight",
+    "GameSession",
+    "GameTurn",
+    "GuardianConsentRecord",
+    "HelpTicket",
+    "HelpTicketAttachment",
+    "HelpTicketMessage",
+    "Invitation",
+    "KnowledgeBaseBlock",
+    "KnowledgeBaseDisclosure",
+    "KnowledgeBaseDisclosureBlock",
+    "KnowledgeBaseDisclosureCitation",
+    "KnowledgeBaseItemCitation",
+    "ManagedAsset",
+    "Member",
+    "MembershipGrant",
+    "MembershipRevocation",
+    "MembershipSubscription",
+    "MembershipSubscriptionEvent",
+    "MoneyTransaction",
+    "Occupation",
+    "OccupationAttributeAffinity",
+    "Order",
+    "OrderLine",
+    "OrderPaymentConfirmation",
+    "OrderPublicAccessToken",
+    "OrderRefund",
+    "OrderReturnEligibility",
+    "OrderReturnRequest",
+    "Organization",
+    "Parcel",
+    "Party",
+    "PartyMember",
+    "Passkey",
+    "Perk",
+    "PointOfInterestServiceAssignment",
+    "PrintfulFulfillmentSubmission",
+    "PromptRecord",
+    "PromptTextResult",
+    "PromptVersion",
+    "PuzzleBlueprintVersion",
+    "PuzzleChallengeAccepted",
+    "PuzzleHintTemplate",
+    "RecoveryPolicy",
+    "RegionLatticeMapping",
+    "Release",
+    "ReleaseNoteItem",
+    "Session",
+    "SettlementSoundtrackAssignment",
+    "Soundtrack",
+    "StoreProduct",
+    "StoreVariant",
+    "Street",
+    "StripeWebhookEvent",
+    "TwoFactor",
+    "User",
+    "UserSettings",
+    "Verification",
+    "WorldInstance"
+  ],
+  "entities": [
+    {
+      "entity": "AchievementDefinition",
+      "delegate": "achievementDefinition",
+      "idField": "achievementDefinitionId",
+      "canonicalFields": [
+        "achievementDefinitionId",
+        "name",
+        "chainKey",
+        "rank",
+        "imageAssetId",
+        "status",
+        "imageAsset"
+      ],
+      "relationFields": [
+        {
+          "name": "imageAsset",
+          "type": "ManagedAsset",
+          "isList": false,
+          "isRequired": false
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/achievement-definition",
+        "create": "/admin/data/achievement-definition/new",
+        "detailPattern": "/admin/data/achievement-definition/$recordId",
+        "apiCollection": "/api/admin/data/achievementdefinition",
+        "apiRecord": "/api/admin/data/achievementdefinition/$recordId",
+        "apiImport": "/api/admin/data/achievementdefinition/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "achievementDefinitionId",
+          "name",
+          "chainKey",
+          "rank",
+          "imageAssetId",
+          "status",
+          "imageAsset"
+        ],
+        "readOwner": "PrismaClient.achievementDefinition.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "achievementDefinitionId",
+          "name",
+          "chainKey",
+          "rank",
+          "imageAssetId",
+          "status",
+          "imageAsset"
+        ],
+        "writableFields": [
+          "achievementDefinitionId",
+          "name",
+          "chainKey",
+          "rank",
+          "imageAssetId",
+          "status"
+        ],
+        "readOnlyFields": [
+          "imageAsset"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "achievementDefinitionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.achievementDefinitionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "chainKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.chainKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "rank",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.rank",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "imageAssetId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.imageAssetId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "status",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "AchievementDefinition.status",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.achievementDefinition",
+          "reason": null
+        },
+        {
+          "field": "imageAsset",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "AchievementDefinition.imageAsset",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Architect",
+      "delegate": "architect",
+      "idField": "characterId",
+      "canonicalFields": [
+        "characterId",
+        "department",
+        "character",
+        "witnesses"
+      ],
+      "relationFields": [
+        {
+          "name": "character",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "witnesses",
+          "type": "Witness",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/architect",
+        "create": "/admin/data/architect/new",
+        "detailPattern": "/admin/data/architect/$recordId",
+        "apiCollection": "/api/admin/data/architect",
+        "apiRecord": "/api/admin/data/architect/$recordId",
+        "apiImport": "/api/admin/data/architect/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "characterId",
+          "department",
+          "character",
+          "witnesses"
+        ],
+        "readOwner": "PrismaClient.architect.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "characterId",
+          "department",
+          "character",
+          "witnesses"
+        ],
+        "writableFields": [
+          "characterId",
+          "department"
+        ],
+        "readOnlyFields": [
+          "character",
+          "witnesses"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "characterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Architect.characterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.architect",
+          "reason": null
+        },
+        {
+          "field": "department",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Architect.department",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.architect",
+          "reason": null
+        },
+        {
+          "field": "character",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Architect.character",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "witnesses",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Architect.witnesses",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Ark",
+      "delegate": "ark",
+      "idField": "arkId",
+      "canonicalFields": [
+        "arkId",
+        "name",
+        "status"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/ark",
+        "create": "/admin/data/ark/new",
+        "detailPattern": "/admin/data/ark/$recordId",
+        "apiCollection": "/api/admin/data/ark",
+        "apiRecord": "/api/admin/data/ark/$recordId",
+        "apiImport": "/api/admin/data/ark/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "arkId",
+          "name",
+          "status"
+        ],
+        "readOwner": "PrismaClient.ark.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "arkId",
+          "name",
+          "status"
+        ],
+        "writableFields": [
+          "arkId",
+          "name",
+          "status"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "arkId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Ark.arkId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.ark",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Ark.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.ark",
+          "reason": null
+        },
+        {
+          "field": "status",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Ark.status",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.ark",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "Breed",
+      "delegate": "breed",
+      "idField": "breedId",
+      "canonicalFields": [
+        "breedId",
+        "name",
+        "speciesId",
+        "cultureId",
+        "parentBreedId",
+        "populationKind",
+        "groupId",
+        "personalityId",
+        "traits",
+        "accent",
+        "appearance",
+        "clothing",
+        "architecture",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
+        "motivation",
+        "operatingStyle",
+        "structureOrientation",
+        "administrationMode",
+        "ownershipMode",
+        "allocationMode",
+        "legitimacyBasis",
+        "authoritySource",
+        "loquacity",
+        "emotionalTemperature",
+        "outlookOrientation",
+        "collaborativePosture",
+        "species",
+        "culture",
+        "personality",
+        "parentBreed",
+        "childBreeds",
+        "characters",
+        "populationEvents",
+        "dominantInWorlds",
+        "researchValues"
+      ],
+      "relationFields": [
+        {
+          "name": "species",
+          "type": "Species",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "culture",
+          "type": "Culture",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "personality",
+          "type": "PersonalityExpression",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "parentBreed",
+          "type": "Breed",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "childBreeds",
+          "type": "Breed",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "characters",
+          "type": "Character",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "populationEvents",
+          "type": "SettlementPopulationEvent",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "dominantInWorlds",
+          "type": "SettlementWorld",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "researchValues",
+          "type": "BreedResearchValue",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/breed",
+        "create": "/admin/data/breed/new",
+        "detailPattern": "/admin/data/breed/$recordId",
+        "apiCollection": "/api/admin/data/breed",
+        "apiRecord": "/api/admin/data/breed/$recordId",
+        "apiImport": "/api/admin/data/breed/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "breedId",
+          "name",
+          "speciesId",
+          "cultureId",
+          "parentBreedId",
+          "populationKind",
+          "groupId",
+          "personalityId",
+          "traits",
+          "accent",
+          "appearance",
+          "clothing",
+          "architecture",
+          "foodBroad",
+          "foodSpecific",
+          "terrainBroad",
+          "terrainSpecific",
+          "motivation",
+          "operatingStyle",
+          "structureOrientation",
+          "administrationMode",
+          "ownershipMode",
+          "allocationMode",
+          "legitimacyBasis",
+          "authoritySource",
+          "loquacity",
+          "emotionalTemperature",
+          "outlookOrientation",
+          "collaborativePosture",
+          "species",
+          "culture",
+          "personality",
+          "parentBreed",
+          "childBreeds",
+          "characters",
+          "populationEvents",
+          "dominantInWorlds",
+          "researchValues"
+        ],
+        "readOwner": "PrismaClient.breed.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "breedId",
+          "name",
+          "speciesId",
+          "cultureId",
+          "parentBreedId",
+          "populationKind",
+          "groupId",
+          "personalityId",
+          "traits",
+          "accent",
+          "appearance",
+          "clothing",
+          "architecture",
+          "foodBroad",
+          "foodSpecific",
+          "terrainBroad",
+          "terrainSpecific",
+          "motivation",
+          "operatingStyle",
+          "structureOrientation",
+          "administrationMode",
+          "ownershipMode",
+          "allocationMode",
+          "legitimacyBasis",
+          "authoritySource",
+          "loquacity",
+          "emotionalTemperature",
+          "outlookOrientation",
+          "collaborativePosture",
+          "species",
+          "culture",
+          "personality",
+          "parentBreed",
+          "childBreeds",
+          "characters",
+          "populationEvents",
+          "dominantInWorlds",
+          "researchValues"
+        ],
+        "writableFields": [
+          "breedId",
+          "name",
+          "speciesId",
+          "cultureId",
+          "parentBreedId",
+          "populationKind",
+          "groupId",
+          "personalityId",
+          "traits",
+          "accent",
+          "appearance",
+          "clothing",
+          "architecture",
+          "foodBroad",
+          "foodSpecific",
+          "terrainBroad",
+          "terrainSpecific",
+          "motivation",
+          "operatingStyle",
+          "structureOrientation",
+          "administrationMode",
+          "ownershipMode",
+          "allocationMode",
+          "legitimacyBasis",
+          "authoritySource",
+          "loquacity",
+          "emotionalTemperature",
+          "outlookOrientation",
+          "collaborativePosture"
+        ],
+        "readOnlyFields": [
+          "species",
+          "culture",
+          "personality",
+          "parentBreed",
+          "childBreeds",
+          "characters",
+          "populationEvents",
+          "dominantInWorlds",
+          "researchValues"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "breedId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.breedId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "speciesId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.speciesId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "cultureId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.cultureId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "parentBreedId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.parentBreedId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "populationKind",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.populationKind",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "groupId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.groupId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "personalityId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.personalityId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "traits",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.traits",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "accent",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.accent",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "appearance",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.appearance",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "clothing",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.clothing",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "architecture",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.architecture",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "foodBroad",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.foodBroad",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "foodSpecific",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.foodSpecific",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "terrainBroad",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.terrainBroad",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "terrainSpecific",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.terrainSpecific",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "motivation",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.motivation",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "operatingStyle",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.operatingStyle",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "structureOrientation",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.structureOrientation",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "administrationMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.administrationMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "ownershipMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.ownershipMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "allocationMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.allocationMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "legitimacyBasis",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.legitimacyBasis",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "authoritySource",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.authoritySource",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "loquacity",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.loquacity",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "emotionalTemperature",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.emotionalTemperature",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "outlookOrientation",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.outlookOrientation",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "collaborativePosture",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Breed.collaborativePosture",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.breed",
+          "reason": null
+        },
+        {
+          "field": "species",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.species",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "culture",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.culture",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "personality",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.personality",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "parentBreed",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.parentBreed",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "childBreeds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.childBreeds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "characters",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.characters",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "populationEvents",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.populationEvents",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "dominantInWorlds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.dominantInWorlds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "researchValues",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Breed.researchValues",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Character",
+      "delegate": "character",
+      "idField": "characterId",
+      "canonicalFields": [
+        "characterId",
+        "displayName",
+        "breedId",
+        "occupationId",
+        "worldKey",
+        "soulId",
+        "gender",
+        "age",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute",
+        "breed",
+        "occupation",
+        "soul",
+        "architect",
+        "witness",
+        "companion",
+        "concordFor",
+        "ruinFor",
+        "schismFor"
+      ],
+      "relationFields": [
+        {
+          "name": "breed",
+          "type": "Breed",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "occupation",
+          "type": "Occupation",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "soul",
+          "type": "Soul",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "architect",
+          "type": "Architect",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "witness",
+          "type": "Witness",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "companion",
+          "type": "Companion",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "concordFor",
+          "type": "CompanionDef",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "ruinFor",
+          "type": "CompanionDef",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "schismFor",
+          "type": "CompanionDef",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/character",
+        "create": "/admin/data/character/new",
+        "detailPattern": "/admin/data/character/$recordId",
+        "apiCollection": "/api/admin/data/character",
+        "apiRecord": "/api/admin/data/character/$recordId",
+        "apiImport": "/api/admin/data/character/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute",
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ],
+        "readOwner": "PrismaClient.character.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute",
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ],
+        "writableFields": [
+          "characterId",
+          "displayName",
+          "breedId",
+          "occupationId",
+          "worldKey",
+          "soulId",
+          "gender",
+          "age",
+          "skinScaleColor",
+          "hairFurColor",
+          "eyeColor",
+          "clothing",
+          "faction",
+          "primaryAttribute",
+          "secondaryAttribute"
+        ],
+        "readOnlyFields": [
+          "breed",
+          "occupation",
+          "soul",
+          "architect",
+          "witness",
+          "companion",
+          "concordFor",
+          "ruinFor",
+          "schismFor"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "characterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.characterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "displayName",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.displayName",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "breedId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.breedId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "occupationId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.occupationId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "worldKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.worldKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "soulId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.soulId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "gender",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.gender",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "age",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.age",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "skinScaleColor",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.skinScaleColor",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "hairFurColor",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.hairFurColor",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "eyeColor",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.eyeColor",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "clothing",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.clothing",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "faction",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.faction",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "primaryAttribute",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.primaryAttribute",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "secondaryAttribute",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Character.secondaryAttribute",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.character",
+          "reason": null
+        },
+        {
+          "field": "breed",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.breed",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "occupation",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.occupation",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "soul",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.soul",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "architect",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.architect",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "witness",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.witness",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "companion",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.companion",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "concordFor",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.concordFor",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "ruinFor",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.ruinFor",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "schismFor",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Character.schismFor",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Citation",
+      "delegate": "citation",
+      "idField": "citationId",
+      "canonicalFields": [
+        "citationId",
+        "sourceId",
+        "locator",
+        "rendering",
+        "quality",
+        "source",
+        "research",
+        "knowledgeItems",
+        "disclosureCitations"
+      ],
+      "relationFields": [
+        {
+          "name": "source",
+          "type": "Source",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "research",
+          "type": "Research",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "knowledgeItems",
+          "type": "KnowledgeBaseItemCitation",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "disclosureCitations",
+          "type": "KnowledgeBaseDisclosureCitation",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/citation",
+        "create": "/admin/data/citation/new",
+        "detailPattern": "/admin/data/citation/$recordId",
+        "apiCollection": "/api/admin/data/citation",
+        "apiRecord": "/api/admin/data/citation/$recordId",
+        "apiImport": "/api/admin/data/citation/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "citationId",
+          "sourceId",
+          "locator",
+          "rendering",
+          "quality",
+          "source",
+          "research",
+          "knowledgeItems",
+          "disclosureCitations"
+        ],
+        "readOwner": "PrismaClient.citation.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "citationId",
+          "sourceId",
+          "locator",
+          "rendering",
+          "quality",
+          "source",
+          "research",
+          "knowledgeItems",
+          "disclosureCitations"
+        ],
+        "writableFields": [
+          "citationId",
+          "sourceId",
+          "locator",
+          "rendering",
+          "quality"
+        ],
+        "readOnlyFields": [
+          "source",
+          "research",
+          "knowledgeItems",
+          "disclosureCitations"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "citationId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Citation.citationId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.citation",
+          "reason": null
+        },
+        {
+          "field": "sourceId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Citation.sourceId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.citation",
+          "reason": null
+        },
+        {
+          "field": "locator",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Citation.locator",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.citation",
+          "reason": null
+        },
+        {
+          "field": "rendering",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Citation.rendering",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.citation",
+          "reason": null
+        },
+        {
+          "field": "quality",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Citation.quality",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.citation",
+          "reason": null
+        },
+        {
+          "field": "source",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Citation.source",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "research",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Citation.research",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "knowledgeItems",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Citation.knowledgeItems",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "disclosureCitations",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Citation.disclosureCitations",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Companion",
+      "delegate": "companion",
+      "idField": "characterId",
+      "canonicalFields": [
+        "characterId",
+        "companionKey",
+        "character",
+        "companionDef",
+        "partyMemberships"
+      ],
+      "relationFields": [
+        {
+          "name": "character",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "companionDef",
+          "type": "CompanionDef",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "partyMemberships",
+          "type": "PartyMember",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/companion",
+        "create": "/admin/data/companion/new",
+        "detailPattern": "/admin/data/companion/$recordId",
+        "apiCollection": "/api/admin/data/companion",
+        "apiRecord": "/api/admin/data/companion/$recordId",
+        "apiImport": "/api/admin/data/companion/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "characterId",
+          "companionKey",
+          "character",
+          "companionDef",
+          "partyMemberships"
+        ],
+        "readOwner": "PrismaClient.companion.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "characterId",
+          "companionKey",
+          "character",
+          "companionDef",
+          "partyMemberships"
+        ],
+        "writableFields": [
+          "characterId",
+          "companionKey"
+        ],
+        "readOnlyFields": [
+          "character",
+          "companionDef",
+          "partyMemberships"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "characterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Companion.characterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companion",
+          "reason": null
+        },
+        {
+          "field": "companionKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Companion.companionKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companion",
+          "reason": null
+        },
+        {
+          "field": "character",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Companion.character",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "companionDef",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Companion.companionDef",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "partyMemberships",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Companion.partyMemberships",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "CompanionDef",
+      "delegate": "companionDef",
+      "idField": "companionKey",
+      "canonicalFields": [
+        "companionKey",
+        "concordCharacterId",
+        "ruinCharacterId",
+        "schismCharacterId",
+        "soulId",
+        "heirloom",
+        "knowledgeSkill",
+        "awarenessSkill",
+        "concordCharacter",
+        "ruinCharacter",
+        "schismCharacter",
+        "soul",
+        "companions",
+        "transformationBinding"
+      ],
+      "relationFields": [
+        {
+          "name": "concordCharacter",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "ruinCharacter",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "schismCharacter",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "soul",
+          "type": "Soul",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "companions",
+          "type": "Companion",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "transformationBinding",
+          "type": "CompanionTransformationBinding",
+          "isList": false,
+          "isRequired": false
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/companion-def",
+        "create": "/admin/data/companion-def/new",
+        "detailPattern": "/admin/data/companion-def/$recordId",
+        "apiCollection": "/api/admin/data/companiondef",
+        "apiRecord": "/api/admin/data/companiondef/$recordId",
+        "apiImport": "/api/admin/data/companiondef/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "companionKey",
+          "concordCharacterId",
+          "ruinCharacterId",
+          "schismCharacterId",
+          "soulId",
+          "heirloom",
+          "knowledgeSkill",
+          "awarenessSkill",
+          "concordCharacter",
+          "ruinCharacter",
+          "schismCharacter",
+          "soul",
+          "companions",
+          "transformationBinding"
+        ],
+        "readOwner": "PrismaClient.companionDef.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "companionKey",
+          "concordCharacterId",
+          "ruinCharacterId",
+          "schismCharacterId",
+          "soulId",
+          "heirloom",
+          "knowledgeSkill",
+          "awarenessSkill",
+          "concordCharacter",
+          "ruinCharacter",
+          "schismCharacter",
+          "soul",
+          "companions",
+          "transformationBinding"
+        ],
+        "writableFields": [
+          "companionKey",
+          "concordCharacterId",
+          "ruinCharacterId",
+          "schismCharacterId",
+          "soulId",
+          "heirloom",
+          "knowledgeSkill",
+          "awarenessSkill"
+        ],
+        "readOnlyFields": [
+          "concordCharacter",
+          "ruinCharacter",
+          "schismCharacter",
+          "soul",
+          "companions",
+          "transformationBinding"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "companionKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.companionKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "concordCharacterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.concordCharacterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "ruinCharacterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.ruinCharacterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "schismCharacterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.schismCharacterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "soulId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.soulId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "heirloom",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.heirloom",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "knowledgeSkill",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.knowledgeSkill",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "awarenessSkill",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "CompanionDef.awarenessSkill",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.companionDef",
+          "reason": null
+        },
+        {
+          "field": "concordCharacter",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.concordCharacter",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "ruinCharacter",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.ruinCharacter",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "schismCharacter",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.schismCharacter",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "soul",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.soul",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "companions",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.companions",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "transformationBinding",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "CompanionDef.transformationBinding",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Constellation",
+      "delegate": "constellation",
+      "idField": "constellationId",
+      "canonicalFields": [
+        "constellationId",
+        "name",
+        "rightAscension",
+        "declination",
+        "beforeWitnesses",
+        "afterWitnesses"
+      ],
+      "relationFields": [
+        {
+          "name": "beforeWitnesses",
+          "type": "Witness",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "afterWitnesses",
+          "type": "Witness",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/constellation",
+        "create": "/admin/data/constellation/new",
+        "detailPattern": "/admin/data/constellation/$recordId",
+        "apiCollection": "/api/admin/data/constellation",
+        "apiRecord": "/api/admin/data/constellation/$recordId",
+        "apiImport": "/api/admin/data/constellation/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "constellationId",
+          "name",
+          "rightAscension",
+          "declination",
+          "beforeWitnesses",
+          "afterWitnesses"
+        ],
+        "readOwner": "PrismaClient.constellation.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "constellationId",
+          "name",
+          "rightAscension",
+          "declination",
+          "beforeWitnesses",
+          "afterWitnesses"
+        ],
+        "writableFields": [
+          "constellationId",
+          "name",
+          "rightAscension",
+          "declination"
+        ],
+        "readOnlyFields": [
+          "beforeWitnesses",
+          "afterWitnesses"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "constellationId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Constellation.constellationId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.constellation",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Constellation.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.constellation",
+          "reason": null
+        },
+        {
+          "field": "rightAscension",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Constellation.rightAscension",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.constellation",
+          "reason": null
+        },
+        {
+          "field": "declination",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Constellation.declination",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.constellation",
+          "reason": null
+        },
+        {
+          "field": "beforeWitnesses",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Constellation.beforeWitnesses",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "afterWitnesses",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Constellation.afterWitnesses",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Culture",
+      "delegate": "culture",
+      "idField": "cultureId",
+      "canonicalFields": [
+        "cultureId",
+        "name",
+        "appearance",
+        "clothing",
+        "architecture",
+        "breeds",
+        "settlementWorlds"
+      ],
+      "relationFields": [
+        {
+          "name": "breeds",
+          "type": "Breed",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "settlementWorlds",
+          "type": "SettlementWorld",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/culture",
+        "create": "/admin/data/culture/new",
+        "detailPattern": "/admin/data/culture/$recordId",
+        "apiCollection": "/api/admin/data/culture",
+        "apiRecord": "/api/admin/data/culture/$recordId",
+        "apiImport": "/api/admin/data/culture/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "cultureId",
+          "name",
+          "appearance",
+          "clothing",
+          "architecture",
+          "breeds",
+          "settlementWorlds"
+        ],
+        "readOwner": "PrismaClient.culture.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "cultureId",
+          "name",
+          "appearance",
+          "clothing",
+          "architecture",
+          "breeds",
+          "settlementWorlds"
+        ],
+        "writableFields": [
+          "cultureId",
+          "name",
+          "appearance",
+          "clothing",
+          "architecture"
+        ],
+        "readOnlyFields": [
+          "breeds",
+          "settlementWorlds"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "cultureId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Culture.cultureId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.culture",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Culture.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.culture",
+          "reason": null
+        },
+        {
+          "field": "appearance",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Culture.appearance",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.culture",
+          "reason": null
+        },
+        {
+          "field": "clothing",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Culture.clothing",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.culture",
+          "reason": null
+        },
+        {
+          "field": "architecture",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Culture.architecture",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.culture",
+          "reason": null
+        },
+        {
+          "field": "breeds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Culture.breeds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "settlementWorlds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Culture.settlementWorlds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Definition",
+      "delegate": "definition",
+      "idField": "definitionId",
+      "canonicalFields": [
+        "definitionId",
+        "term",
+        "definition"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/definition",
+        "create": "/admin/data/definition/new",
+        "detailPattern": "/admin/data/definition/$recordId",
+        "apiCollection": "/api/admin/data/definition",
+        "apiRecord": "/api/admin/data/definition/$recordId",
+        "apiImport": "/api/admin/data/definition/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "definitionId",
+          "term",
+          "definition"
+        ],
+        "readOwner": "PrismaClient.definition.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "definitionId",
+          "term",
+          "definition"
+        ],
+        "writableFields": [
+          "definitionId",
+          "term",
+          "definition"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "definitionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Definition.definitionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.definition",
+          "reason": null
+        },
+        {
+          "field": "term",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Definition.term",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.definition",
+          "reason": null
+        },
+        {
+          "field": "definition",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Definition.definition",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.definition",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "Interlude",
+      "delegate": "interlude",
+      "idField": "interludeId",
+      "canonicalFields": [
+        "interludeId",
+        "name",
+        "interludeType",
+        "summary",
+        "substitutionsFrom",
+        "substitutionsTo"
+      ],
+      "relationFields": [
+        {
+          "name": "substitutionsFrom",
+          "type": "InterludeSubstitution",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "substitutionsTo",
+          "type": "InterludeSubstitution",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/interlude",
+        "create": "/admin/data/interlude/new",
+        "detailPattern": "/admin/data/interlude/$recordId",
+        "apiCollection": "/api/admin/data/interlude",
+        "apiRecord": "/api/admin/data/interlude/$recordId",
+        "apiImport": "/api/admin/data/interlude/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "interludeId",
+          "name",
+          "interludeType",
+          "summary",
+          "substitutionsFrom",
+          "substitutionsTo"
+        ],
+        "readOwner": "PrismaClient.interlude.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "interludeId",
+          "name",
+          "interludeType",
+          "summary",
+          "substitutionsFrom",
+          "substitutionsTo"
+        ],
+        "writableFields": [
+          "interludeId",
+          "name",
+          "interludeType",
+          "summary"
+        ],
+        "readOnlyFields": [
+          "substitutionsFrom",
+          "substitutionsTo"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "interludeId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Interlude.interludeId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interlude",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Interlude.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interlude",
+          "reason": null
+        },
+        {
+          "field": "interludeType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Interlude.interludeType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interlude",
+          "reason": null
+        },
+        {
+          "field": "summary",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Interlude.summary",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interlude",
+          "reason": null
+        },
+        {
+          "field": "substitutionsFrom",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Interlude.substitutionsFrom",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "substitutionsTo",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Interlude.substitutionsTo",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "InterludeSubstitution",
+      "delegate": "interludeSubstitution",
+      "idField": "interludeSubstitutionId",
+      "canonicalFields": [
+        "interludeSubstitutionId",
+        "interludeId",
+        "replacementInterludeId",
+        "reason",
+        "interlude",
+        "replacementInterlude"
+      ],
+      "relationFields": [
+        {
+          "name": "interlude",
+          "type": "Interlude",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "replacementInterlude",
+          "type": "Interlude",
+          "isList": false,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/interlude-substitution",
+        "create": "/admin/data/interlude-substitution/new",
+        "detailPattern": "/admin/data/interlude-substitution/$recordId",
+        "apiCollection": "/api/admin/data/interludesubstitution",
+        "apiRecord": "/api/admin/data/interludesubstitution/$recordId",
+        "apiImport": "/api/admin/data/interludesubstitution/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "interludeSubstitutionId",
+          "interludeId",
+          "replacementInterludeId",
+          "reason",
+          "interlude",
+          "replacementInterlude"
+        ],
+        "readOwner": "PrismaClient.interludeSubstitution.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "interludeSubstitutionId",
+          "interludeId",
+          "replacementInterludeId",
+          "reason",
+          "interlude",
+          "replacementInterlude"
+        ],
+        "writableFields": [
+          "interludeSubstitutionId",
+          "interludeId",
+          "replacementInterludeId",
+          "reason"
+        ],
+        "readOnlyFields": [
+          "interlude",
+          "replacementInterlude"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "interludeSubstitutionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "InterludeSubstitution.interludeSubstitutionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interludeSubstitution",
+          "reason": null
+        },
+        {
+          "field": "interludeId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "InterludeSubstitution.interludeId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interludeSubstitution",
+          "reason": null
+        },
+        {
+          "field": "replacementInterludeId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "InterludeSubstitution.replacementInterludeId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interludeSubstitution",
+          "reason": null
+        },
+        {
+          "field": "reason",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "InterludeSubstitution.reason",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.interludeSubstitution",
+          "reason": null
+        },
+        {
+          "field": "interlude",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "InterludeSubstitution.interlude",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "replacementInterlude",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "InterludeSubstitution.replacementInterlude",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "KnowledgeBaseItem",
+      "delegate": "knowledgeBaseItem",
+      "idField": "knowledgeBaseItemId",
+      "canonicalFields": [
+        "knowledgeBaseItemId",
+        "entityType",
+        "entityId",
+        "title",
+        "baseContent",
+        "citations",
+        "blocks",
+        "disclosures"
+      ],
+      "relationFields": [
+        {
+          "name": "citations",
+          "type": "KnowledgeBaseItemCitation",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "blocks",
+          "type": "KnowledgeBaseBlock",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "disclosures",
+          "type": "KnowledgeBaseDisclosure",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/knowledge-base-item",
+        "create": "/admin/data/knowledge-base-item/new",
+        "detailPattern": "/admin/data/knowledge-base-item/$recordId",
+        "apiCollection": "/api/admin/data/knowledgebaseitem",
+        "apiRecord": "/api/admin/data/knowledgebaseitem/$recordId",
+        "apiImport": "/api/admin/data/knowledgebaseitem/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "knowledgeBaseItemId",
+          "entityType",
+          "entityId",
+          "title",
+          "baseContent",
+          "citations",
+          "blocks",
+          "disclosures"
+        ],
+        "readOwner": "PrismaClient.knowledgeBaseItem.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "knowledgeBaseItemId",
+          "entityType",
+          "entityId",
+          "title",
+          "baseContent",
+          "citations",
+          "blocks",
+          "disclosures"
+        ],
+        "writableFields": [
+          "knowledgeBaseItemId",
+          "entityType",
+          "entityId",
+          "title",
+          "baseContent"
+        ],
+        "readOnlyFields": [
+          "citations",
+          "blocks",
+          "disclosures"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "knowledgeBaseItemId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "KnowledgeBaseItem.knowledgeBaseItemId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.knowledgeBaseItem",
+          "reason": null
+        },
+        {
+          "field": "entityType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "KnowledgeBaseItem.entityType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.knowledgeBaseItem",
+          "reason": null
+        },
+        {
+          "field": "entityId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "KnowledgeBaseItem.entityId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.knowledgeBaseItem",
+          "reason": null
+        },
+        {
+          "field": "title",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "KnowledgeBaseItem.title",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.knowledgeBaseItem",
+          "reason": null
+        },
+        {
+          "field": "baseContent",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "KnowledgeBaseItem.baseContent",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.knowledgeBaseItem",
+          "reason": null
+        },
+        {
+          "field": "citations",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "KnowledgeBaseItem.citations",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "blocks",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "KnowledgeBaseItem.blocks",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "disclosures",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "KnowledgeBaseItem.disclosures",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Layette",
+      "delegate": "layette",
+      "idField": "layetteId",
+      "canonicalFields": [
+        "layetteId",
+        "name",
+        "description",
+        "transformationBindings"
+      ],
+      "relationFields": [
+        {
+          "name": "transformationBindings",
+          "type": "CompanionTransformationBinding",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/layette",
+        "create": "/admin/data/layette/new",
+        "detailPattern": "/admin/data/layette/$recordId",
+        "apiCollection": "/api/admin/data/layette",
+        "apiRecord": "/api/admin/data/layette/$recordId",
+        "apiImport": "/api/admin/data/layette/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "layetteId",
+          "name",
+          "description",
+          "transformationBindings"
+        ],
+        "readOwner": "PrismaClient.layette.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "layetteId",
+          "name",
+          "description",
+          "transformationBindings"
+        ],
+        "writableFields": [
+          "layetteId",
+          "name",
+          "description"
+        ],
+        "readOnlyFields": [
+          "transformationBindings"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "layetteId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Layette.layetteId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.layette",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Layette.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.layette",
+          "reason": null
+        },
+        {
+          "field": "description",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Layette.description",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.layette",
+          "reason": null
+        },
+        {
+          "field": "transformationBindings",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Layette.transformationBindings",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "LegendaryReward",
+      "delegate": "legendaryReward",
+      "idField": "legendaryRewardId",
+      "canonicalFields": [
+        "legendaryRewardId",
+        "name",
+        "description",
+        "witnesses"
+      ],
+      "relationFields": [
+        {
+          "name": "witnesses",
+          "type": "Witness",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/reward",
+        "create": "/admin/data/reward/new",
+        "detailPattern": "/admin/data/reward/$recordId",
+        "apiCollection": "/api/admin/data/legendaryreward",
+        "apiRecord": "/api/admin/data/legendaryreward/$recordId",
+        "apiImport": "/api/admin/data/legendaryreward/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "legendaryRewardId",
+          "name",
+          "description",
+          "witnesses"
+        ],
+        "readOwner": "PrismaClient.legendaryReward.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "legendaryRewardId",
+          "name",
+          "description",
+          "witnesses"
+        ],
+        "writableFields": [
+          "legendaryRewardId",
+          "name",
+          "description"
+        ],
+        "readOnlyFields": [
+          "witnesses"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "legendaryRewardId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "LegendaryReward.legendaryRewardId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.legendaryReward",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "LegendaryReward.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.legendaryReward",
+          "reason": null
+        },
+        {
+          "field": "description",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "LegendaryReward.description",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.legendaryReward",
+          "reason": null
+        },
+        {
+          "field": "witnesses",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "LegendaryReward.witnesses",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Lesson",
+      "delegate": "lesson",
+      "idField": "lessonId",
+      "canonicalFields": [
+        "lessonId",
+        "name",
+        "description"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/lesson",
+        "create": "/admin/data/lesson/new",
+        "detailPattern": "/admin/data/lesson/$recordId",
+        "apiCollection": "/api/admin/data/lesson",
+        "apiRecord": "/api/admin/data/lesson/$recordId",
+        "apiImport": "/api/admin/data/lesson/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "lessonId",
+          "name",
+          "description"
+        ],
+        "readOwner": "PrismaClient.lesson.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "lessonId",
+          "name",
+          "description"
+        ],
+        "writableFields": [
+          "lessonId",
+          "name",
+          "description"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "lessonId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Lesson.lessonId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.lesson",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Lesson.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.lesson",
+          "reason": null
+        },
+        {
+          "field": "description",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Lesson.description",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.lesson",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "PersonalityExpression",
+      "delegate": "personalityExpression",
+      "idField": "personalityId",
+      "canonicalFields": [
+        "personalityId",
+        "family",
+        "expression",
+        "dominantFaction",
+        "breeds"
+      ],
+      "relationFields": [
+        {
+          "name": "breeds",
+          "type": "Breed",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/personality-expression",
+        "create": "/admin/data/personality-expression/new",
+        "detailPattern": "/admin/data/personality-expression/$recordId",
+        "apiCollection": "/api/admin/data/personalityexpression",
+        "apiRecord": "/api/admin/data/personalityexpression/$recordId",
+        "apiImport": "/api/admin/data/personalityexpression/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "personalityId",
+          "family",
+          "expression",
+          "dominantFaction",
+          "breeds"
+        ],
+        "readOwner": "PrismaClient.personalityExpression.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "personalityId",
+          "family",
+          "expression",
+          "dominantFaction",
+          "breeds"
+        ],
+        "writableFields": [
+          "personalityId",
+          "family",
+          "expression",
+          "dominantFaction"
+        ],
+        "readOnlyFields": [
+          "breeds"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "personalityId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PersonalityExpression.personalityId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.personalityExpression",
+          "reason": null
+        },
+        {
+          "field": "family",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PersonalityExpression.family",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.personalityExpression",
+          "reason": null
+        },
+        {
+          "field": "expression",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PersonalityExpression.expression",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.personalityExpression",
+          "reason": null
+        },
+        {
+          "field": "dominantFaction",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PersonalityExpression.dominantFaction",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.personalityExpression",
+          "reason": null
+        },
+        {
+          "field": "breeds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "PersonalityExpression.breeds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Pillar",
+      "delegate": "pillar",
+      "idField": "pillarId",
+      "canonicalFields": [
+        "pillarId",
+        "name",
+        "domain"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/pillar",
+        "create": "/admin/data/pillar/new",
+        "detailPattern": "/admin/data/pillar/$recordId",
+        "apiCollection": "/api/admin/data/pillar",
+        "apiRecord": "/api/admin/data/pillar/$recordId",
+        "apiImport": "/api/admin/data/pillar/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "pillarId",
+          "name",
+          "domain"
+        ],
+        "readOwner": "PrismaClient.pillar.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "pillarId",
+          "name",
+          "domain"
+        ],
+        "writableFields": [
+          "pillarId",
+          "name",
+          "domain"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "pillarId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Pillar.pillarId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pillar",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Pillar.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pillar",
+          "reason": null
+        },
+        {
+          "field": "domain",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Pillar.domain",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pillar",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "PointOfInterest",
+      "delegate": "pointOfInterest",
+      "idField": "pointOfInterestId",
+      "canonicalFields": [
+        "pointOfInterestId",
+        "name",
+        "kind",
+        "regionId",
+        "longitude",
+        "latitude",
+        "services",
+        "gameSessions"
+      ],
+      "relationFields": [
+        {
+          "name": "services",
+          "type": "PointOfInterestServiceAssignment",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "gameSessions",
+          "type": "GameSession",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/point-of-interest",
+        "create": "/admin/data/point-of-interest/new",
+        "detailPattern": "/admin/data/point-of-interest/$recordId",
+        "apiCollection": "/api/admin/data/pointofinterest",
+        "apiRecord": "/api/admin/data/pointofinterest/$recordId",
+        "apiImport": "/api/admin/data/pointofinterest/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "pointOfInterestId",
+          "name",
+          "kind",
+          "regionId",
+          "longitude",
+          "latitude",
+          "services",
+          "gameSessions"
+        ],
+        "readOwner": "PrismaClient.pointOfInterest.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "pointOfInterestId",
+          "name",
+          "kind",
+          "regionId",
+          "longitude",
+          "latitude",
+          "services",
+          "gameSessions"
+        ],
+        "writableFields": [
+          "pointOfInterestId",
+          "name",
+          "kind",
+          "regionId",
+          "longitude",
+          "latitude"
+        ],
+        "readOnlyFields": [
+          "services",
+          "gameSessions"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "pointOfInterestId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.pointOfInterestId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "kind",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.kind",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "regionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.regionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "longitude",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.longitude",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "latitude",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PointOfInterest.latitude",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.pointOfInterest",
+          "reason": null
+        },
+        {
+          "field": "services",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "PointOfInterest.services",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "gameSessions",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "PointOfInterest.gameSessions",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "PuzzleBlueprint",
+      "delegate": "puzzleBlueprint",
+      "idField": "puzzleBlueprintId",
+      "canonicalFields": [
+        "puzzleBlueprintId",
+        "title",
+        "primaryFamily",
+        "difficultyTier",
+        "versions"
+      ],
+      "relationFields": [
+        {
+          "name": "versions",
+          "type": "PuzzleBlueprintVersion",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/puzzle-blueprint",
+        "create": "/admin/data/puzzle-blueprint/new",
+        "detailPattern": "/admin/data/puzzle-blueprint/$recordId",
+        "apiCollection": "/api/admin/data/puzzleblueprint",
+        "apiRecord": "/api/admin/data/puzzleblueprint/$recordId",
+        "apiImport": "/api/admin/data/puzzleblueprint/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "puzzleBlueprintId",
+          "title",
+          "primaryFamily",
+          "difficultyTier",
+          "versions"
+        ],
+        "readOwner": "PrismaClient.puzzleBlueprint.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "puzzleBlueprintId",
+          "title",
+          "primaryFamily",
+          "difficultyTier",
+          "versions"
+        ],
+        "writableFields": [
+          "puzzleBlueprintId",
+          "title",
+          "primaryFamily",
+          "difficultyTier"
+        ],
+        "readOnlyFields": [
+          "versions"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "puzzleBlueprintId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PuzzleBlueprint.puzzleBlueprintId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.puzzleBlueprint",
+          "reason": null
+        },
+        {
+          "field": "title",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PuzzleBlueprint.title",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.puzzleBlueprint",
+          "reason": null
+        },
+        {
+          "field": "primaryFamily",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PuzzleBlueprint.primaryFamily",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.puzzleBlueprint",
+          "reason": null
+        },
+        {
+          "field": "difficultyTier",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "PuzzleBlueprint.difficultyTier",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.puzzleBlueprint",
+          "reason": null
+        },
+        {
+          "field": "versions",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "PuzzleBlueprint.versions",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Research",
+      "delegate": "research",
+      "idField": "researchId",
+      "canonicalFields": [
+        "researchId",
+        "notes",
+        "citationId",
+        "category",
+        "citation",
+        "breedEvidence"
+      ],
+      "relationFields": [
+        {
+          "name": "citation",
+          "type": "Citation",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "breedEvidence",
+          "type": "BreedResearchEvidence",
+          "isList": false,
+          "isRequired": false
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/research",
+        "create": "/admin/data/research/new",
+        "detailPattern": "/admin/data/research/$recordId",
+        "apiCollection": "/api/admin/data/research",
+        "apiRecord": "/api/admin/data/research/$recordId",
+        "apiImport": "/api/admin/data/research/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "researchId",
+          "notes",
+          "citationId",
+          "category",
+          "citation",
+          "breedEvidence"
+        ],
+        "readOwner": "PrismaClient.research.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "researchId",
+          "notes",
+          "citationId",
+          "category",
+          "citation",
+          "breedEvidence"
+        ],
+        "writableFields": [
+          "researchId",
+          "notes",
+          "citationId",
+          "category"
+        ],
+        "readOnlyFields": [
+          "citation",
+          "breedEvidence"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "researchId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Research.researchId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.research",
+          "reason": null
+        },
+        {
+          "field": "notes",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Research.notes",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.research",
+          "reason": null
+        },
+        {
+          "field": "citationId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Research.citationId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.research",
+          "reason": null
+        },
+        {
+          "field": "category",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Research.category",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.research",
+          "reason": null
+        },
+        {
+          "field": "citation",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Research.citation",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "breedEvidence",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Research.breedEvidence",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Settlement",
+      "delegate": "settlement",
+      "idField": "settlementId",
+      "canonicalFields": [
+        "settlementId",
+        "siteId",
+        "name",
+        "classification",
+        "site",
+        "worlds",
+        "soundtrackAssignments"
+      ],
+      "relationFields": [
+        {
+          "name": "site",
+          "type": "Site",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "worlds",
+          "type": "SettlementWorld",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "soundtrackAssignments",
+          "type": "SettlementSoundtrackAssignment",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/settlement",
+        "create": "/admin/data/settlement/new",
+        "detailPattern": "/admin/data/settlement/$recordId",
+        "apiCollection": "/api/admin/data/settlement",
+        "apiRecord": "/api/admin/data/settlement/$recordId",
+        "apiImport": "/api/admin/data/settlement/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "settlementId",
+          "siteId",
+          "name",
+          "classification",
+          "site",
+          "worlds",
+          "soundtrackAssignments"
+        ],
+        "readOwner": "PrismaClient.settlement.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "settlementId",
+          "siteId",
+          "name",
+          "classification",
+          "site",
+          "worlds",
+          "soundtrackAssignments"
+        ],
+        "writableFields": [
+          "settlementId",
+          "siteId",
+          "name",
+          "classification"
+        ],
+        "readOnlyFields": [
+          "site",
+          "worlds",
+          "soundtrackAssignments"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "settlementId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Settlement.settlementId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlement",
+          "reason": null
+        },
+        {
+          "field": "siteId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Settlement.siteId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlement",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Settlement.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlement",
+          "reason": null
+        },
+        {
+          "field": "classification",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Settlement.classification",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlement",
+          "reason": null
+        },
+        {
+          "field": "site",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Settlement.site",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "worlds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Settlement.worlds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "soundtrackAssignments",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Settlement.soundtrackAssignments",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "SettlementPopulationEvent",
+      "delegate": "settlementPopulationEvent",
+      "idField": "settlementPopulationEventId",
+      "canonicalFields": [
+        "settlementPopulationEventId",
+        "settlementWorldId",
+        "year",
+        "sequence",
+        "breedId",
+        "eventType",
+        "populationDelta",
+        "settlementWorld",
+        "breed"
+      ],
+      "relationFields": [
+        {
+          "name": "settlementWorld",
+          "type": "SettlementWorld",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "breed",
+          "type": "Breed",
+          "isList": false,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/settlement-population-event",
+        "create": "/admin/data/settlement-population-event/new",
+        "detailPattern": "/admin/data/settlement-population-event/$recordId",
+        "apiCollection": "/api/admin/data/settlementpopulationevent",
+        "apiRecord": "/api/admin/data/settlementpopulationevent/$recordId",
+        "apiImport": "/api/admin/data/settlementpopulationevent/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "settlementPopulationEventId",
+          "settlementWorldId",
+          "year",
+          "sequence",
+          "breedId",
+          "eventType",
+          "populationDelta",
+          "settlementWorld",
+          "breed"
+        ],
+        "readOwner": "PrismaClient.settlementPopulationEvent.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "settlementPopulationEventId",
+          "settlementWorldId",
+          "year",
+          "sequence",
+          "breedId",
+          "eventType",
+          "populationDelta",
+          "settlementWorld",
+          "breed"
+        ],
+        "writableFields": [
+          "settlementPopulationEventId",
+          "settlementWorldId",
+          "year",
+          "sequence",
+          "breedId",
+          "eventType",
+          "populationDelta"
+        ],
+        "readOnlyFields": [
+          "settlementWorld",
+          "breed"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "settlementPopulationEventId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.settlementPopulationEventId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "settlementWorldId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.settlementWorldId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "year",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.year",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "sequence",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.sequence",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "breedId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.breedId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "eventType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.eventType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "populationDelta",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementPopulationEvent.populationDelta",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementPopulationEvent",
+          "reason": null
+        },
+        {
+          "field": "settlementWorld",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementPopulationEvent.settlementWorld",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "breed",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementPopulationEvent.breed",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "SettlementWorld",
+      "delegate": "settlementWorld",
+      "idField": "settlementWorldId",
+      "canonicalFields": [
+        "settlementWorldId",
+        "settlementId",
+        "worldKey",
+        "totalPopulation",
+        "dominantBreedId",
+        "cultureId",
+        "settlement",
+        "dominantBreed",
+        "culture",
+        "populationEvents",
+        "cities",
+        "gameSessions"
+      ],
+      "relationFields": [
+        {
+          "name": "settlement",
+          "type": "Settlement",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "dominantBreed",
+          "type": "Breed",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "culture",
+          "type": "Culture",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "populationEvents",
+          "type": "SettlementPopulationEvent",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "cities",
+          "type": "City",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "gameSessions",
+          "type": "GameSession",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/settlement-world",
+        "create": "/admin/data/settlement-world/new",
+        "detailPattern": "/admin/data/settlement-world/$recordId",
+        "apiCollection": "/api/admin/data/settlementworld",
+        "apiRecord": "/api/admin/data/settlementworld/$recordId",
+        "apiImport": "/api/admin/data/settlementworld/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "settlementWorldId",
+          "settlementId",
+          "worldKey",
+          "totalPopulation",
+          "dominantBreedId",
+          "cultureId",
+          "settlement",
+          "dominantBreed",
+          "culture",
+          "populationEvents",
+          "cities",
+          "gameSessions"
+        ],
+        "readOwner": "PrismaClient.settlementWorld.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "settlementWorldId",
+          "settlementId",
+          "worldKey",
+          "totalPopulation",
+          "dominantBreedId",
+          "cultureId",
+          "settlement",
+          "dominantBreed",
+          "culture",
+          "populationEvents",
+          "cities",
+          "gameSessions"
+        ],
+        "writableFields": [
+          "settlementWorldId",
+          "settlementId",
+          "worldKey",
+          "totalPopulation",
+          "dominantBreedId",
+          "cultureId"
+        ],
+        "readOnlyFields": [
+          "settlement",
+          "dominantBreed",
+          "culture",
+          "populationEvents",
+          "cities",
+          "gameSessions"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "settlementWorldId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.settlementWorldId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "settlementId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.settlementId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "worldKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.worldKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "totalPopulation",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.totalPopulation",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "dominantBreedId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.dominantBreedId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "cultureId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "SettlementWorld.cultureId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.settlementWorld",
+          "reason": null
+        },
+        {
+          "field": "settlement",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.settlement",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "dominantBreed",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.dominantBreed",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "culture",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.culture",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "populationEvents",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.populationEvents",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "cities",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.cities",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "gameSessions",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "SettlementWorld.gameSessions",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Site",
+      "delegate": "site",
+      "idField": "siteId",
+      "canonicalFields": [
+        "siteId",
+        "regionId",
+        "candidateType",
+        "longitude",
+        "latitude",
+        "namingContext",
+        "settlement",
+        "namingEligibility"
+      ],
+      "relationFields": [
+        {
+          "name": "settlement",
+          "type": "Settlement",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "namingEligibility",
+          "type": "AtlasNamingEligibility",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/site",
+        "create": "/admin/data/site/new",
+        "detailPattern": "/admin/data/site/$recordId",
+        "apiCollection": "/api/admin/data/site",
+        "apiRecord": "/api/admin/data/site/$recordId",
+        "apiImport": "/api/admin/data/site/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "siteId",
+          "regionId",
+          "candidateType",
+          "longitude",
+          "latitude",
+          "namingContext",
+          "settlement",
+          "namingEligibility"
+        ],
+        "readOwner": "PrismaClient.site.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "siteId",
+          "regionId",
+          "candidateType",
+          "longitude",
+          "latitude",
+          "namingContext",
+          "settlement",
+          "namingEligibility"
+        ],
+        "writableFields": [
+          "siteId",
+          "regionId",
+          "candidateType",
+          "longitude",
+          "latitude"
+        ],
+        "readOnlyFields": [
+          "namingContext",
+          "settlement",
+          "namingEligibility"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "siteId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Site.siteId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.site",
+          "reason": null
+        },
+        {
+          "field": "regionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Site.regionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.site",
+          "reason": null
+        },
+        {
+          "field": "candidateType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Site.candidateType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.site",
+          "reason": null
+        },
+        {
+          "field": "longitude",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Site.longitude",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.site",
+          "reason": null
+        },
+        {
+          "field": "latitude",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Site.latitude",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.site",
+          "reason": null
+        },
+        {
+          "field": "namingContext",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Site.namingContext",
+          "writePath": null,
+          "reason": "Persisted field is audited but intentionally excluded from this generic form."
+        },
+        {
+          "field": "settlement",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Site.settlement",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "namingEligibility",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Site.namingEligibility",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Soul",
+      "delegate": "soul",
+      "idField": "soulId",
+      "canonicalFields": [
+        "soulId",
+        "name",
+        "characters",
+        "witnessDefs",
+        "companionDefs"
+      ],
+      "relationFields": [
+        {
+          "name": "characters",
+          "type": "Character",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "witnessDefs",
+          "type": "WitnessDef",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "companionDefs",
+          "type": "CompanionDef",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/soul",
+        "create": "/admin/data/soul/new",
+        "detailPattern": "/admin/data/soul/$recordId",
+        "apiCollection": "/api/admin/data/soul",
+        "apiRecord": "/api/admin/data/soul/$recordId",
+        "apiImport": "/api/admin/data/soul/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "soulId",
+          "name",
+          "characters",
+          "witnessDefs",
+          "companionDefs"
+        ],
+        "readOwner": "PrismaClient.soul.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "soulId",
+          "name",
+          "characters",
+          "witnessDefs",
+          "companionDefs"
+        ],
+        "writableFields": [
+          "soulId",
+          "name"
+        ],
+        "readOnlyFields": [
+          "characters",
+          "witnessDefs",
+          "companionDefs"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "soulId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Soul.soulId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.soul",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Soul.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.soul",
+          "reason": null
+        },
+        {
+          "field": "characters",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Soul.characters",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "witnessDefs",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Soul.witnessDefs",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "companionDefs",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Soul.companionDefs",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Source",
+      "delegate": "source",
+      "idField": "sourceId",
+      "canonicalFields": [
+        "sourceId",
+        "title",
+        "authors",
+        "publisher",
+        "publicationDate",
+        "sourceType",
+        "urlOrIdentifier",
+        "citations"
+      ],
+      "relationFields": [
+        {
+          "name": "citations",
+          "type": "Citation",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/sources",
+        "create": "/admin/data/sources/new",
+        "detailPattern": "/admin/data/sources/$recordId",
+        "apiCollection": "/api/admin/data/source",
+        "apiRecord": "/api/admin/data/source/$recordId",
+        "apiImport": "/api/admin/data/source/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "sourceId",
+          "title",
+          "authors",
+          "publisher",
+          "publicationDate",
+          "sourceType",
+          "urlOrIdentifier",
+          "citations"
+        ],
+        "readOwner": "PrismaClient.source.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "sourceId",
+          "title",
+          "authors",
+          "publisher",
+          "publicationDate",
+          "sourceType",
+          "urlOrIdentifier",
+          "citations"
+        ],
+        "writableFields": [
+          "sourceId",
+          "title",
+          "authors",
+          "publisher",
+          "publicationDate",
+          "sourceType",
+          "urlOrIdentifier"
+        ],
+        "readOnlyFields": [
+          "citations"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "sourceId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.sourceId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "title",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.title",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "authors",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.authors",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "publisher",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.publisher",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "publicationDate",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.publicationDate",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "sourceType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.sourceType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "urlOrIdentifier",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Source.urlOrIdentifier",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.source",
+          "reason": null
+        },
+        {
+          "field": "citations",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Source.citations",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Species",
+      "delegate": "species",
+      "idField": "speciesId",
+      "canonicalFields": [
+        "speciesId",
+        "name",
+        "speciesKind",
+        "scientificName",
+        "taxonomy",
+        "traits",
+        "accent",
+        "anthropomorphization",
+        "appearance",
+        "clothing",
+        "architecture",
+        "originMode",
+        "reproductiveMethod",
+        "juvenileStages",
+        "nurseryMode",
+        "longevityClass",
+        "mortalityMode",
+        "soulDisposition",
+        "continuityGroup",
+        "continuityPropagationMode",
+        "breeds"
+      ],
+      "relationFields": [
+        {
+          "name": "breeds",
+          "type": "Breed",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/species",
+        "create": "/admin/data/species/new",
+        "detailPattern": "/admin/data/species/$recordId",
+        "apiCollection": "/api/admin/data/species",
+        "apiRecord": "/api/admin/data/species/$recordId",
+        "apiImport": "/api/admin/data/species/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "speciesId",
+          "name",
+          "speciesKind",
+          "scientificName",
+          "taxonomy",
+          "traits",
+          "accent",
+          "anthropomorphization",
+          "appearance",
+          "clothing",
+          "architecture",
+          "originMode",
+          "reproductiveMethod",
+          "juvenileStages",
+          "nurseryMode",
+          "longevityClass",
+          "mortalityMode",
+          "soulDisposition",
+          "continuityGroup",
+          "continuityPropagationMode",
+          "breeds"
+        ],
+        "readOwner": "PrismaClient.species.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "speciesId",
+          "name",
+          "speciesKind",
+          "scientificName",
+          "taxonomy",
+          "traits",
+          "accent",
+          "anthropomorphization",
+          "appearance",
+          "clothing",
+          "architecture",
+          "originMode",
+          "reproductiveMethod",
+          "juvenileStages",
+          "nurseryMode",
+          "longevityClass",
+          "mortalityMode",
+          "soulDisposition",
+          "continuityGroup",
+          "continuityPropagationMode",
+          "breeds"
+        ],
+        "writableFields": [
+          "speciesId",
+          "name",
+          "speciesKind",
+          "scientificName",
+          "taxonomy",
+          "traits",
+          "accent",
+          "anthropomorphization",
+          "appearance",
+          "clothing",
+          "architecture",
+          "originMode",
+          "reproductiveMethod",
+          "juvenileStages",
+          "nurseryMode",
+          "longevityClass",
+          "mortalityMode",
+          "soulDisposition",
+          "continuityGroup",
+          "continuityPropagationMode"
+        ],
+        "readOnlyFields": [
+          "breeds"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "speciesId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.speciesId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "speciesKind",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.speciesKind",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "scientificName",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.scientificName",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "taxonomy",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.taxonomy",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "traits",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.traits",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "accent",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.accent",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "anthropomorphization",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.anthropomorphization",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "appearance",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.appearance",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "clothing",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.clothing",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "architecture",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.architecture",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "originMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.originMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "reproductiveMethod",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.reproductiveMethod",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "juvenileStages",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.juvenileStages",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "nurseryMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.nurseryMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "longevityClass",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.longevityClass",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "mortalityMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.mortalityMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "soulDisposition",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.soulDisposition",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "continuityGroup",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.continuityGroup",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "continuityPropagationMode",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Species.continuityPropagationMode",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
+          "reason": null
+        },
+        {
+          "field": "breeds",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Species.breeds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "TimelineEvent",
+      "delegate": "timelineEvent",
+      "idField": "timelineEventId",
+      "canonicalFields": [
+        "timelineEventId",
+        "name",
+        "timelineEventType",
+        "summary"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/timeline-event",
+        "create": "/admin/data/timeline-event/new",
+        "detailPattern": "/admin/data/timeline-event/$recordId",
+        "apiCollection": "/api/admin/data/timelineevent",
+        "apiRecord": "/api/admin/data/timelineevent/$recordId",
+        "apiImport": "/api/admin/data/timelineevent/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "timelineEventId",
+          "name",
+          "timelineEventType",
+          "summary"
+        ],
+        "readOwner": "PrismaClient.timelineEvent.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "timelineEventId",
+          "name",
+          "timelineEventType",
+          "summary"
+        ],
+        "writableFields": [
+          "timelineEventId",
+          "name",
+          "timelineEventType",
+          "summary"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "timelineEventId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "TimelineEvent.timelineEventId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.timelineEvent",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "TimelineEvent.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.timelineEvent",
+          "reason": null
+        },
+        {
+          "field": "timelineEventType",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "TimelineEvent.timelineEventType",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.timelineEvent",
+          "reason": null
+        },
+        {
+          "field": "summary",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "TimelineEvent.summary",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.timelineEvent",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "Tome",
+      "delegate": "tome",
+      "idField": "tomeId",
+      "canonicalFields": [
+        "tomeId",
+        "title",
+        "author"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/tome",
+        "create": "/admin/data/tome/new",
+        "detailPattern": "/admin/data/tome/$recordId",
+        "apiCollection": "/api/admin/data/tome",
+        "apiRecord": "/api/admin/data/tome/$recordId",
+        "apiImport": "/api/admin/data/tome/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "tomeId",
+          "title",
+          "author"
+        ],
+        "readOwner": "PrismaClient.tome.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "tomeId",
+          "title",
+          "author"
+        ],
+        "writableFields": [
+          "tomeId",
+          "title",
+          "author"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "tomeId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Tome.tomeId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.tome",
+          "reason": null
+        },
+        {
+          "field": "title",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Tome.title",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.tome",
+          "reason": null
+        },
+        {
+          "field": "author",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Tome.author",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.tome",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "Transition",
+      "delegate": "transition",
+      "idField": "transitionId",
+      "canonicalFields": [
+        "transitionId",
+        "name",
+        "bookA",
+        "bookB",
+        "summary"
+      ],
+      "relationFields": [],
+      "routes": {
+        "collection": "/admin/data/transition",
+        "create": "/admin/data/transition/new",
+        "detailPattern": "/admin/data/transition/$recordId",
+        "apiCollection": "/api/admin/data/transition",
+        "apiRecord": "/api/admin/data/transition/$recordId",
+        "apiImport": "/api/admin/data/transition/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "transitionId",
+          "name",
+          "bookA",
+          "bookB",
+          "summary"
+        ],
+        "readOwner": "PrismaClient.transition.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "transitionId",
+          "name",
+          "bookA",
+          "bookB",
+          "summary"
+        ],
+        "writableFields": [
+          "transitionId",
+          "name",
+          "bookA",
+          "bookB",
+          "summary"
+        ],
+        "readOnlyFields": []
+      },
+      "writeOwners": [
+        {
+          "field": "transitionId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Transition.transitionId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.transition",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Transition.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.transition",
+          "reason": null
+        },
+        {
+          "field": "bookA",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Transition.bookA",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.transition",
+          "reason": null
+        },
+        {
+          "field": "bookB",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Transition.bookB",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.transition",
+          "reason": null
+        },
+        {
+          "field": "summary",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Transition.summary",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.transition",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "entity": "Witness",
+      "delegate": "witness",
+      "idField": "characterId",
+      "canonicalFields": [
+        "characterId",
+        "witnessDefId",
+        "trueFlawName",
+        "architectCharacterId",
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId",
+        "character",
+        "witnessDef",
+        "architect",
+        "legendaryReward",
+        "constellationBefore",
+        "constellationAfter"
+      ],
+      "relationFields": [
+        {
+          "name": "character",
+          "type": "Character",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "witnessDef",
+          "type": "WitnessDef",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "architect",
+          "type": "Architect",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "legendaryReward",
+          "type": "LegendaryReward",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "constellationBefore",
+          "type": "Constellation",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "constellationAfter",
+          "type": "Constellation",
+          "isList": false,
+          "isRequired": false
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/witness",
+        "create": "/admin/data/witness/new",
+        "detailPattern": "/admin/data/witness/$recordId",
+        "apiCollection": "/api/admin/data/witness",
+        "apiRecord": "/api/admin/data/witness/$recordId",
+        "apiImport": "/api/admin/data/witness/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "characterId",
+          "witnessDefId",
+          "trueFlawName",
+          "architectCharacterId",
+          "legendaryRewardId",
+          "constellationBeforeId",
+          "constellationAfterId",
+          "character",
+          "witnessDef",
+          "architect",
+          "legendaryReward",
+          "constellationBefore",
+          "constellationAfter"
+        ],
+        "readOwner": "PrismaClient.witness.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "characterId",
+          "witnessDefId",
+          "trueFlawName",
+          "architectCharacterId",
+          "legendaryRewardId",
+          "constellationBeforeId",
+          "constellationAfterId",
+          "character",
+          "witnessDef",
+          "architect",
+          "legendaryReward",
+          "constellationBefore",
+          "constellationAfter"
+        ],
+        "writableFields": [
+          "characterId",
+          "witnessDefId",
+          "trueFlawName",
+          "architectCharacterId",
+          "legendaryRewardId",
+          "constellationBeforeId",
+          "constellationAfterId"
+        ],
+        "readOnlyFields": [
+          "character",
+          "witnessDef",
+          "architect",
+          "legendaryReward",
+          "constellationBefore",
+          "constellationAfter"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "characterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.characterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "witnessDefId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.witnessDefId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "trueFlawName",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.trueFlawName",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "architectCharacterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.architectCharacterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "legendaryRewardId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.legendaryRewardId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "constellationBeforeId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.constellationBeforeId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "constellationAfterId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Witness.constellationAfterId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witness",
+          "reason": null
+        },
+        {
+          "field": "character",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.character",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "witnessDef",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.witnessDef",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "architect",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.architect",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "legendaryReward",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.legendaryReward",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "constellationBefore",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.constellationBefore",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "constellationAfter",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Witness.constellationAfter",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "WitnessDef",
+      "delegate": "witnessDef",
+      "idField": "witnessDefId",
+      "canonicalFields": [
+        "witnessDefId",
+        "name",
+        "department",
+        "apparentDomain",
+        "realDomain",
+        "color",
+        "architectSoulId",
+        "architectSoul",
+        "witnesses"
+      ],
+      "relationFields": [
+        {
+          "name": "architectSoul",
+          "type": "Soul",
+          "isList": false,
+          "isRequired": true
+        },
+        {
+          "name": "witnesses",
+          "type": "Witness",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/witness-def",
+        "create": "/admin/data/witness-def/new",
+        "detailPattern": "/admin/data/witness-def/$recordId",
+        "apiCollection": "/api/admin/data/witnessdef",
+        "apiRecord": "/api/admin/data/witnessdef/$recordId",
+        "apiImport": "/api/admin/data/witnessdef/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "witnessDefId",
+          "name",
+          "department",
+          "apparentDomain",
+          "realDomain",
+          "color",
+          "architectSoulId",
+          "architectSoul",
+          "witnesses"
+        ],
+        "readOwner": "PrismaClient.witnessDef.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "witnessDefId",
+          "name",
+          "department",
+          "apparentDomain",
+          "realDomain",
+          "color",
+          "architectSoulId",
+          "architectSoul",
+          "witnesses"
+        ],
+        "writableFields": [
+          "witnessDefId",
+          "name",
+          "department",
+          "apparentDomain",
+          "realDomain",
+          "color",
+          "architectSoulId"
+        ],
+        "readOnlyFields": [
+          "architectSoul",
+          "witnesses"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "witnessDefId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.witnessDefId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "department",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.department",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "apparentDomain",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.apparentDomain",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "realDomain",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.realDomain",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "color",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.color",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "architectSoulId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.architectSoulId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "architectSoul",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "WitnessDef.architectSoul",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "witnesses",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "WitnessDef.witnesses",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    }
+  ],
+  "generatedAt": "2026-08-19T01:08:09.479Z",
+  "status": "PASS",
+  "scope": {
+    "activeRegistryEntities": "apps/web/src/content/entities.ts joined to generated Prisma entity-admin contract",
+    "allPersistedModels": "apps/web/prisma/schema.prisma through entity-admin-contract.auditModels",
+    "genericOwnerTable": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+    "genericOwnerForm": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+    "bespokeSourceDiscovery": "all current apps/web/src/screens/admin/*.tsx plus DataTable.tsx"
+  },
+  "liveSourceEvidence": [
+    {
+      "path": "apps/web/src/data/entity-admin-contract.json",
+      "sha256": "59824a188cbfc93bebd7d7913e05ae22ce83377a5d98690cafba857a3e09bc97"
+    },
+    {
+      "path": "apps/web/src/server/entity-admin.ts",
+      "sha256": "f4ecec4cc614367bb7648cffc25b82fe548abb224e4f91b9b0192f82429367e0"
+    },
+    {
+      "path": "apps/web/src/data/navigation-registry.generated.json",
+      "sha256": "045ec417ebad9b43f2b9cfe041aa95394136ed668784d4f3c23d4c0182fb51fe"
+    }
+  ],
+  "routeInventory": {
+    "ownerDataRouteCount": 83,
+    "ownerDataRoutes": [
+      "/admin/data/bulk-operations",
+      "/admin/data/bulk-operations",
+      "/admin/data/bulk-operations",
+      "/admin/data",
+      "/admin/data/culture",
+      "/admin/data/character",
+      "/admin/data/witness",
+      "/admin/data/architect",
+      "/admin/data/species",
+      "/admin/data/personality-expression",
+      "/admin/data/timeline-event",
+      "/admin/data/interlude",
+      "/admin/data/pillar",
+      "/admin/data/ark",
+      "/admin/data/constellation",
+      "/admin/data/reward",
+      "/admin/data/soul",
+      "/admin/data/point-of-interest",
+      "/admin/data/site",
+      "/admin/data/settlement",
+      "/admin/data/breed",
+      "/admin/data/tome",
+      "/admin/data/lesson",
+      "/admin/data/companion",
+      "/admin/data/research",
+      "/admin/data/sources",
+      "/admin/data/citations",
+      "/admin/data/character/new",
+      "/admin/data/interlude-substitution",
+      "/admin/data/definition",
+      "/admin/data/knowledge-base-item",
+      "/admin/data/layette",
+      "/admin/data/transition",
+      "/admin/data/capability-definition",
+      "/admin/data/achievement-definition",
+      "/admin/data/legendaryreward/sample-record",
+      "/admin/data/lesson/sample-record",
+      "/admin/data/personalityexpression/sample-record",
+      "/admin/data/pillar/sample-record",
+      "/admin/data/pointofinterest/sample-record",
+      "/admin/data/research/sample-record",
+      "/admin/data/settlement/sample-record",
+      "/admin/data/site/sample-record",
+      "/admin/data/soul/sample-record",
+      "/admin/data/source/sample-record",
+      "/admin/data/species/sample-record",
+      "/admin/data/timelineevent/sample-record",
+      "/admin/data/tome/sample-record",
+      "/admin/data/transition/sample-record",
+      "/admin/data/witness/sample-record",
+      "/admin/data/achievementdefinition/import",
+      "/admin/data/architect/import",
+      "/admin/data/ark/import",
+      "/admin/data/breed/import",
+      "/admin/data/capabilitydefinition/import",
+      "/admin/data/character/import",
+      "/admin/data/citation/import",
+      "/admin/data/companion/import",
+      "/admin/data/constellation/import",
+      "/admin/data/culture/import",
+      "/admin/data/definition/import",
+      "/admin/data/interludesubstitution/import",
+      "/admin/data/interlude/import",
+      "/admin/data/knowledgebaseitem/import",
+      "/admin/data/layette/import",
+      "/admin/data/legendaryreward/import",
+      "/admin/data/lesson/import",
+      "/admin/data/personalityexpression/import",
+      "/admin/data/pillar/import",
+      "/admin/data/pointofinterest/import",
+      "/admin/data/research/import",
+      "/admin/data/settlement/import",
+      "/admin/data/site/import",
+      "/admin/data/soul/import",
+      "/admin/data/source/import",
+      "/admin/data/species/import",
+      "/admin/data/timelineevent/import",
+      "/admin/data/tome/import",
+      "/admin/data/transition/import",
+      "/admin/data/witness/import",
+      "/admin/data/occupations/:occupationId",
+      "/admin/data/witness-def",
+      "/admin/data/companion-def"
+    ],
+    "requiredDetailRouteModule": "apps/web/src/routes/admin/data/$entityKey/$recordId.tsx"
+  },
+  "sourceSurfaceInventory": [
+    {
+      "path": "apps/web/src/components/DataTable.tsx",
+      "sha256": "29810a7ecf34d0b4fb1c60954a84ee1d859d8ab323542eba3d3871ad0a7a7ef6",
+      "tableLines": [
+        226,
+        227,
+        228
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/AccountAdminPage.tsx",
+      "sha256": "2bf6119d2323a46f7785f4dc32296efc4865195cdc107b64e69ea89e1e7f7359",
+      "tableLines": [
+        85,
+        118
+      ],
+      "formLines": [
+        85
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/AdminDashboardPage.tsx",
+      "sha256": "e8ffb690df2fd3ccf6e1edf91a3c432e065e7794977cd2e45f8bd3d6bbeacc45",
+      "tableLines": [
+        32
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/AdminV4Pages.tsx",
+      "sha256": "d93519094a336b98d77406975abd399b84970009689e222fcc1616de753f4a91",
+      "tableLines": [
+        33,
+        112,
+        185,
+        208
+      ],
+      "formLines": [
+        165,
+        208
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx",
+      "sha256": "1819a090ee73ce6fe30925a12f0fb5f78594913fb21db44920595d547118c916",
+      "tableLines": [
+        77,
+        147
+      ],
+      "formLines": [
+        147
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/AtlasAdminPage.tsx",
+      "sha256": "1668ef01c13ebbec8b17a52711f8de304eded0464a4f389b0bbbcc2c483cb93c",
+      "tableLines": [
+        65,
+        104,
+        175
+      ],
+      "formLines": [
+        104
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx",
+      "sha256": "e75773f8b9ab5d226c6195a35cba37e188869ea00f314f4fd91a24d28fe61154",
+      "tableLines": [
+        55,
+        102
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx",
+      "sha256": "22e4b16023f0c229e680b25c5a9db9b7176993b9c4a29f997b8fcb17f5c55401",
+      "tableLines": [
+        85,
+        91
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/CampaignAdminPage.tsx",
+      "sha256": "05003c8751a1546ba043006c73e059ff13be0c77480151b3b7d845ecc485125f",
+      "tableLines": [
+        391
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/CapabilityAdminPage.tsx",
+      "sha256": "9f4c6fde5b17fdaeeb138a818f4ccf8fae2273733df7c20d8ab2c9078a5de17f",
+      "tableLines": [
+        83,
+        150,
+        187
+      ],
+      "formLines": [
+        138,
+        142,
+        168,
+        187
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx",
+      "sha256": "f8876459b32fb964808bea59f5f3c39de225d2d334c6c5b6d51957ca98b7e5b4",
+      "tableLines": [
+        96,
+        132
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/CommerceAdminPage.tsx",
+      "sha256": "54e0045f124d3d8d9164232bd44fa00c47e6fd36038e3ad5c7dcc31aa3a23cc5",
+      "tableLines": [
+        182,
+        186,
+        209,
+        263,
+        277,
+        281,
+        285,
+        321
+      ],
+      "formLines": [
+        209,
+        263
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "sha256": "781146cac051281126a84f1a7139289c9cd98576fcce290388cfc477fec6ace8",
+      "tableLines": [
+        368,
+        523
+      ],
+      "formLines": [
+        108,
+        130,
+        217,
+        250,
+        324,
+        329,
+        429,
+        430,
+        529
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/EntityImportPage.tsx",
+      "sha256": "e85f6c881b741b49216997ab8162f6c2c802ffc10a7ae39d85e8aebbb4c3dc46",
+      "tableLines": [
+        125,
+        131
+      ],
+      "formLines": [
+        114
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/OperationsAdminPage.tsx",
+      "sha256": "36e5855361fc24800c28d210cafb66f31637b85f512d9179101eb294821cf075",
+      "tableLines": [
+        20
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/PerkAdminPage.tsx",
+      "sha256": "0e29fa7f2fda8b63499d29718326b3909ce19c28511ca8b42749e861443646bd",
+      "tableLines": [
+        39
+      ],
+      "formLines": [
+        86
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/PuzzleAdminPage.tsx",
+      "sha256": "b03c447b43df564d776d3b487b8a4f1ae94b4f540285e6079f3a35e32fcc5de1",
+      "tableLines": [
+        73
+      ],
+      "formLines": []
+    },
+    {
+      "path": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+      "sha256": "bf6bb411023cd516c70526490435ff269c35bfccbf06efb08efbe23d10aa4d61",
+      "tableLines": [
+        35,
+        43,
+        86
+      ],
+      "formLines": [
+        144
+      ]
+    },
+    {
+      "path": "apps/web/src/screens/admin/SettlementAdminPage.tsx",
+      "sha256": "5b2320745cc6f223884ae21986d99fd389b835d9eeba7b80c0b4b659b242f7c7",
+      "tableLines": [
+        74
+      ],
+      "formLines": []
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Every active entity has a canonical field inventory",
+      "expected": 34,
+      "observed": 34,
+      "pass": true
+    },
+    {
+      "name": "Every persisted Prisma model is classified",
+      "expected": 124,
+      "observed": 124,
+      "pass": true
+    },
+    {
+      "name": "Every active canonical field has a write owner",
+      "expected": 282,
+      "observed": 282,
+      "pass": true
+    }
+  ],
+  "notes": [
+    "PASS means the live inventory is exhaustive for the active generic entity registry; it does not claim the current owner UI satisfies later T201-T207 presentation requirements.",
+    "Unregistered persisted models are retained explicitly so renderer scope cannot be mistaken for complete persistence authority."
+  ]
+}
