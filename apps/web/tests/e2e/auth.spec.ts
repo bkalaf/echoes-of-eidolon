@@ -95,6 +95,7 @@ async function signIn(page: Page, email: string, password: string, returnTo = "/
 }
 
 async function expectAuthenticated(page: Page) {
+  await page.waitForURL((url) => url.pathname === "/account/profile");
   await expect.poll(async () => (await page.request.get("/api/player/access")).status()).toBe(200);
 }
 
