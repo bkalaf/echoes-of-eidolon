@@ -1,23 +1,67 @@
 {
-  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
-  "release": "0.3.0",
-  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v2",
+  "generatedAt": "2026-08-20T17:14:49.657Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "UNCOMMITTED_WORKTREE",
+  "environment": {
+    "name": "local-repair",
+    "node": "v22.22.0",
+    "database": "NOT_USED",
+    "browser": "NOT_RUN"
+  },
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm puzzles:production-audit",
+      "startedAt": "2026-08-20T17:14:49.657Z",
+      "completedAt": "2026-08-20T17:14:49.657Z",
+      "exitCode": 0,
+      "logPath": null
+    }
+  ],
+  "artifacts": [],
+  "blockers": [
+    "No authored production generator exists; the former generic Unicode carrier is prototype-only."
+  ],
+  "notes": [
+    "Local deterministic checks are implementation evidence only; they are not named review or real-browser acceptance."
+  ],
   "puzzleBlueprintId": "PZB-053",
   "tier": "TIER_5_ORDEAL",
   "primaryFamily": "HISTORICAL_RESEARCH",
-  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#RESEARCH_CLAIM_CHAIN",
+  "generatorPath": null,
   "generatorVersion": "1.0.0",
-  "seedVector": "RELEASE_PROOF_VECTOR_01:59c53117a2c6f294",
-  "instanceChecksum": "aa980e811d974c912578e81045ef1e555522a9d6c0935ace63c0fc9dc7035c8e",
-  "uniqueSolution": true,
-  "alternateSolutionsRejected": true,
-  "answerFreeClient": true,
-  "accessibilityEquivalent": true,
+  "productionStatus": "PROTOTYPE_ONLY",
+  "localDeterministicReplay": "NOT_RUN",
+  "localSingleSolutionCheck": "NOT_RUN",
+  "answerFreeClient": "NOT_RUN",
+  "accessibilityEquivalent": "NOT_PROVEN",
+  "independentAuthoredContractProof": "NOT_IMPLEMENTED",
   "focusedTests": [
     "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
   ],
-  "status": "PASS",
+  "assertions": [
+    {
+      "name": "Authored production generator exists",
+      "expected": true,
+      "observed": false,
+      "pass": false
+    },
+    {
+      "name": "Generic carrier excluded from production coverage",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    }
+  ],
   "authoredContract": {
     "answerFormat": "TWENTY_DIGIT_YEAR_SEQUENCE",
     "concept": "Five researched clues each have multiple plausible four-digit years because names repeat or dates are commonly conflated. Cross-clues select a unique 20-digit sequence.",
@@ -51,11 +95,5 @@
       "HIGH_CONTRAST",
       "PRINTABLE_WORKSHEET"
     ]
-  },
-  "assertions": {
-    "authoredContractPreserved": true,
-    "deterministicReplay": true,
-    "noLiveRuntimeRecords": true,
-    "timerStarted": false
   }
 }

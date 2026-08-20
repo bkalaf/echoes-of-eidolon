@@ -9,7 +9,7 @@ import {
 
 describe("owner-authored lookup presentation", () => {
   it("retains every owner-locked entity rule and the exact Witness identity chain", () => {
-    expect(Object.keys(lookupData.lookupPresentation)).toHaveLength(16);
+    expect(Object.keys(lookupData.lookupPresentation)).toHaveLength(17);
     expect(lookupData.lookupPresentation.Character).toEqual({ primary: "displayName", secondary: "characterId" });
     expect(lookupData.lookupPresentation.Witness).toEqual({
       primary: "character.displayName",
@@ -32,6 +32,7 @@ describe("owner-authored lookup presentation", () => {
       Companion: { record: { characterId: "CHA_COMP", companionKey: "FOX", character: { displayName: "Fox", worldKey: "CONCORD" } }, primary: "Fox", secondary: "CHA_COMP" },
       CompanionDef: { record: { companionKey: "FOX", concordCharacter: { displayName: "Concord Fox" }, ruinCharacter: { displayName: "Ruin Fox" }, schismCharacter: { displayName: "Schism Fox" } }, primary: "Companion FOX", secondary: "FOX" },
       Species: { record: { speciesId: "SPC_HUMAN", name: "Human" }, primary: "Human", secondary: "SPC_HUMAN" },
+      Taxonomy: { record: { taxonomyLevelId: "TAX_GENUS_HOMO", name: "Homo", commonName: "humans" }, primary: "Homo", secondary: "TAX_GENUS_HOMO" },
       Culture: { record: { cultureId: "CUL_NORTH", name: "North" }, primary: "North", secondary: "CUL_NORTH" },
       Breed: { record: { breedId: "BRD_NORTH", name: "Northerner", species: { name: "Human" }, culture: { name: "North" } }, primary: "Northerner", secondary: "BRD_NORTH" },
       Occupation: { record: { occupationId: "OCC_SMITH", name: "Smith" }, primary: "Smith", secondary: "OCC_SMITH" },

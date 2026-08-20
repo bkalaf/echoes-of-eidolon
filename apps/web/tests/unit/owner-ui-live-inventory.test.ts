@@ -7,8 +7,8 @@ describe("owner UI live inventory", () => {
   const inventory = buildOwnerUiLiveInventory(contractData);
 
   it("inventories every active entity and every persisted model from live generated authority", () => {
-    expect(inventory.activeEntityCount).toBe(34);
-    expect(inventory.persistedModelCount).toBe(124);
+    expect(inventory.activeEntityCount).toBe(35);
+    expect(inventory.persistedModelCount).toBe(125);
     expect(inventory.entities).toHaveLength(inventory.activeEntityCount);
     expect(new Set(inventory.entities.map(({ entity }) => entity)).size).toBe(inventory.activeEntityCount);
     expect(inventory.unregisteredPersistedModels).toHaveLength(

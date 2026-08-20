@@ -1,6 +1,7 @@
 {
-  "schemaVersion": "echoes-owner-table-inventory-v1",
-  "generatedAt": "2026-08-19T00:34:00.034Z",
+  "schemaVersion": "echoes-owner-table-inventory-v2",
+  "generatedAt": "2026-08-20T17:14:36.507Z",
+  "status": "BLOCKED",
   "sharedContract": {
     "clearFilters": true,
     "columnResizing": true,
@@ -37,7 +38,7 @@
     }
   },
   "sourceSurfaceCount": 48,
-  "renderedTableCount": 81,
+  "renderedTableCount": 82,
   "nativeTableElementsOutsideSharedGrid": [],
   "nativeTableExemptions": [
     {
@@ -47,6 +48,10 @@
   ],
   "tables": [
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "byteSize",
         "managedAssetId",
@@ -84,7 +89,7 @@
       "relationFields": [
         {
           "field": "managedAssetId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -101,9 +106,12 @@
         "sha256",
         "technicalMetadata"
       ],
-      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:77"
+      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:77",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "FAIL",
       "canonicalFieldsExpected": [
         "createdAt",
         "email",
@@ -138,7 +146,9 @@
         "expiresAt",
         "lifecycle"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "invitation"
+      ],
       "preferenceKey": "`admin.beta-invitations.${showCodes ? \"codes\" : \"requests\"}`",
       "relationFields": [],
       "routeOrState": [
@@ -157,14 +167,17 @@
         "expiresAt",
         "lifecycle"
       ],
-      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:102"
+      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:102",
+      "violations": [
+        "MISSING_COLUMN:invitation"
+      ]
     },
     {
-      "canonicalFieldsExpected": [
-        "id",
-        "parcelId",
-        "geometry"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "id",
         "parcelId",
@@ -179,12 +192,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "`admin.cities.geometry.${type.toLowerCase()}`",
-      "relationFields": [
-        {
-          "field": "parcelId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/cities",
         "/admin/cities/:id/:view"
@@ -194,13 +202,15 @@
         "parcelId",
         "geometry"
       ],
-      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:132"
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:132",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "rowLabel",
-        "dynamic[headings]"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "rowLabel",
         "dynamic[headings]"
@@ -224,20 +234,15 @@
         "rowLabel",
         "dynamic[headings]"
       ],
-      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:112"
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:112",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "entity",
-        "name",
-        "kind",
-        "type",
-        "nullable",
-        "isList",
-        "enumName",
-        "editability",
-        "exclusionReason"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "entity",
         "name",
@@ -280,13 +285,15 @@
         "editability",
         "exclusionReason"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx:368"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx:340",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "sourceField",
-        "targetField"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "sourceField",
         "targetField"
@@ -307,12 +314,15 @@
         "sourceField",
         "targetField"
       ],
-      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:125"
+      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:125",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "dynamic[entityFields[entity]]"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "dynamic[entityFields[entity]]"
       ],
@@ -330,9 +340,14 @@
       "sortableFields": [
         "dynamic[entityFields[entity]]"
       ],
-      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:131"
+      "source": "apps/web/src/screens/admin/EntityImportPage.tsx:131",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "family",
         "promptRecordId",
@@ -371,11 +386,11 @@
       "relationFields": [
         {
           "field": "promptRecordId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "targetId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -393,9 +408,14 @@
         "result",
         "versions"
       ],
-      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:147"
+      "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:147",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "culture",
         "dominantBreed",
@@ -445,24 +465,28 @@
         "cultureId",
         "populations"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "culture",
+        "dominantBreed",
+        "settlement"
+      ],
       "preferenceKey": "`admin.settlements.${worldKey}`",
       "relationFields": [
         {
           "field": "culture",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "dominantBreed",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "settlement",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "settlementWorldId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -486,16 +510,19 @@
         "cultureId",
         "populations"
       ],
-      "source": "apps/web/src/screens/admin/SettlementAdminPage.tsx:74"
+      "source": "apps/web/src/screens/admin/SettlementAdminPage.tsx:74",
+      "violations": [
+        "MISSING_COLUMN:culture",
+        "MISSING_COLUMN:dominantBreed",
+        "MISSING_COLUMN:settlement"
+      ]
     },
     {
-      "canonicalFieldsExpected": [
-        "source",
-        "membershipGrantId",
-        "monthsGranted",
-        "effectiveStartAt",
-        "effectiveEndAt"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "source",
         "membershipGrantId",
@@ -514,12 +541,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "account.membership-grants",
-      "relationFields": [
-        {
-          "field": "membershipGrantId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/account/subscription",
         "/account/orders"
@@ -531,18 +553,15 @@
         "effectiveStartAt",
         "effectiveEndAt"
       ],
-      "source": "apps/web/src/screens/account/AccountPage.tsx:320"
+      "source": "apps/web/src/screens/account/AccountPage.tsx:320",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "name",
-        "orderLineId",
-        "storeVariantId",
-        "size",
-        "color",
-        "quantity",
-        "unitPriceCents"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "name",
         "orderLineId",
@@ -565,16 +584,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "account.order-lines",
-      "relationFields": [
-        {
-          "field": "orderLineId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "storeVariantId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/account/subscription",
         "/account/orders"
@@ -588,9 +598,14 @@
         "quantity",
         "unitPriceCents"
       ],
-      "source": "apps/web/src/screens/account/AccountPage.tsx:406"
+      "source": "apps/web/src/screens/account/AccountPage.tsx:406",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "createdAt",
         "lines",
@@ -628,7 +643,7 @@
       "relationFields": [
         {
           "field": "orderId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -646,14 +661,15 @@
         "refunds",
         "returnEligibleAt"
       ],
-      "source": "apps/web/src/screens/account/AccountPage.tsx:403"
+      "source": "apps/web/src/screens/account/AccountPage.tsx:403",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "eventType",
-        "providerStatus",
-        "occurredAt"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "eventType",
         "providerStatus",
@@ -678,15 +694,15 @@
         "providerStatus",
         "occurredAt"
       ],
-      "source": "apps/web/src/screens/account/AccountPage.tsx:320"
+      "source": "apps/web/src/screens/account/AccountPage.tsx:320",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "accessLevel",
-        "administration",
-        "memberBenefits",
-        "play"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "accessLevel",
         "administration",
@@ -715,9 +731,14 @@
         "memberBenefits",
         "play"
       ],
-      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:55"
+      "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:55",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "banned",
         "betaEligible",
@@ -756,7 +777,7 @@
       "relationFields": [
         {
           "field": "userId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -773,9 +794,14 @@
         "banned",
         "createdAt"
       ],
-      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:85"
+      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:85",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "createdAt",
         "expiresAt",
@@ -807,7 +833,7 @@
       "relationFields": [
         {
           "field": "sessionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -822,15 +848,15 @@
         "updatedAt",
         "expiresAt"
       ],
-      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:118"
+      "source": "apps/web/src/screens/admin/AccountAdminPage.tsx:118",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "originName",
-        "originSettlementWorldId",
-        "breedId",
-        "amount"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "originName",
         "originSettlementWorldId",
@@ -847,16 +873,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.atlas.founding-departures",
-      "relationFields": [
-        {
-          "field": "originSettlementWorldId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "breedId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/atlas/pois",
         "/admin/atlas/sites",
@@ -868,21 +885,15 @@
         "breedId",
         "amount"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:141"
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:175",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "name",
-        "poiId",
-        "displayName",
-        "workingLabel",
-        "nameStatus",
-        "category",
-        "regionId",
-        "latticeId",
-        "longitude",
-        "latitude"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "name",
         "poiId",
@@ -911,20 +922,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.atlas.points-of-interest",
-      "relationFields": [
-        {
-          "field": "poiId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "regionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "latticeId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/atlas/pois",
         "/admin/atlas/sites",
@@ -942,51 +940,42 @@
         "longitude",
         "latitude"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:62"
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:65",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "siteId",
-        "regionId",
-        "latticeId",
-        "classification",
-        "longitude",
-        "latitude"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "siteId",
         "regionId",
         "latticeId",
         "classification",
+        "occupancy",
+        "settlementName",
+        "settlementId",
         "longitude",
         "latitude"
       ],
       "component": "Sites",
-      "dataExpression": "atlas.settlementSites",
+      "dataExpression": "filtered",
       "filterableFields": [
         "siteId",
         "regionId",
         "latticeId",
         "classification",
+        "occupancy",
+        "settlementName",
+        "settlementId",
         "longitude",
         "latitude"
       ],
       "missingFields": [],
       "preferenceKey": "admin.atlas.sites",
-      "relationFields": [
-        {
-          "field": "siteId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "regionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "latticeId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/atlas/pois",
         "/admin/atlas/sites",
@@ -997,23 +986,21 @@
         "regionId",
         "latticeId",
         "classification",
+        "occupancy",
+        "settlementName",
+        "settlementId",
         "longitude",
         "latitude"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:70"
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:104",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "actorName",
-        "actorEmail",
-        "bulkOperationAuditId",
-        "operation",
-        "entityName",
-        "result",
-        "recordCount",
-        "detail",
-        "occurredAt"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "actorName",
         "actorEmail",
@@ -1040,12 +1027,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.bulk.audits",
-      "relationFields": [
-        {
-          "field": "bulkOperationAuditId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/bulk-changes",
         "/admin/data/bulk-operations"
@@ -1061,22 +1043,15 @@
         "detail",
         "occurredAt"
       ],
-      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:91"
+      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:91",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "sequence",
-        "bulkMutationEnvelopeId",
-        "entityCode",
-        "operation",
-        "status",
-        "recordCount",
-        "notes",
-        "receivedAt",
-        "decidedAt",
-        "dryRunResult",
-        "revalidationResult"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "sequence",
         "bulkMutationEnvelopeId",
@@ -1108,12 +1083,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.bulk.envelopes",
-      "relationFields": [
-        {
-          "field": "bulkMutationEnvelopeId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/bulk-changes",
         "/admin/data/bulk-operations"
@@ -1131,14 +1101,15 @@
         "dryRunResult",
         "revalidationResult"
       ],
-      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:85"
+      "source": "apps/web/src/screens/admin/BulkOperationsAdminPage.tsx:85",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "grouping",
-        "shape",
-        "editability"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "grouping",
         "shape",
@@ -1162,16 +1133,15 @@
         "shape",
         "editability"
       ],
-      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:383"
+      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:391",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "sequence",
-        "scopeType",
-        "scopeId",
-        "operation",
-        "capabilityEventId"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "sequence",
         "scopeType",
@@ -1190,16 +1160,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.capabilities.events",
-      "relationFields": [
-        {
-          "field": "scopeId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "capabilityEventId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/capabilities",
         "/admin/capabilities/:id",
@@ -1212,9 +1173,14 @@
         "operation",
         "capabilityEventId"
       ],
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:187"
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:187",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "capabilityDefinitionId",
         "code",
@@ -1246,7 +1212,7 @@
       "relationFields": [
         {
           "field": "capabilityDefinitionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1263,9 +1229,14 @@
         "versionCount",
         "versions"
       ],
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:83"
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:83",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "capabilityDefinitionVersionId",
         "version",
@@ -1319,7 +1290,7 @@
       "relationFields": [
         {
           "field": "capabilityDefinitionVersionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1342,9 +1313,14 @@
         "description",
         "parameters"
       ],
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:150"
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:150",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "settlement",
         "settlementWorldId",
@@ -1371,16 +1347,18 @@
         "siteId",
         "regionId"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "settlement"
+      ],
       "preferenceKey": "admin.cities.available-settlement-worlds",
       "relationFields": [
         {
           "field": "settlement",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "settlementWorldId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1396,9 +1374,16 @@
         "siteId",
         "regionId"
       ],
-      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96"
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96",
+      "violations": [
+        "MISSING_COLUMN:settlement"
+      ]
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "buildings",
         "cityId",
@@ -1441,12 +1426,14 @@
         "streets",
         "buildings"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "settlementWorld"
+      ],
       "preferenceKey": "admin.cities.projects",
       "relationFields": [
         {
           "field": "cityId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1468,9 +1455,14 @@
         "streets",
         "buildings"
       ],
-      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96"
+      "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:96",
+      "violations": [
+        "MISSING_COLUMN:settlementWorld"
+      ]
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "activeItems",
         "categoryPath",
@@ -1509,9 +1501,14 @@
         "activeItems",
         "categoryPath"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:186"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:186",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "amountCents",
         "confirmedAt",
@@ -1546,16 +1543,18 @@
         "confirmedAt",
         "stripeConfigured"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "user"
+      ],
       "preferenceKey": "admin.commerce.donations",
       "relationFields": [
         {
           "field": "donationCheckoutId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "user",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1574,20 +1573,17 @@
         "confirmedAt",
         "stripeConfigured"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:281"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:281",
+      "violations": [
+        "MISSING_COLUMN:user"
+      ]
     },
     {
-      "canonicalFieldsExpected": [
-        "productName",
-        "orderLineId",
-        "variantLabel",
-        "storeVariantId",
-        "size",
-        "color",
-        "quantity",
-        "unitPriceCents",
-        "lineTotal"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "productName",
         "orderLineId",
@@ -1614,16 +1610,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.commerce.order-lines",
-      "relationFields": [
-        {
-          "field": "orderLineId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "storeVariantId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/store",
         "/admin/store/items",
@@ -1640,17 +1627,15 @@
         "unitPriceCents",
         "lineTotal"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "subject",
-        "helpTicketId",
-        "channel",
-        "categoryKey",
-        "status",
-        "updatedAt"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "subject",
         "helpTicketId",
@@ -1671,12 +1656,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.commerce.order-tickets",
-      "relationFields": [
-        {
-          "field": "helpTicketId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/store",
         "/admin/store/items",
@@ -1690,9 +1670,14 @@
         "status",
         "updatedAt"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:321",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "contactEmail",
         "createdAt",
@@ -1742,16 +1727,18 @@
         "returnRequest",
         "helpTickets"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "user"
+      ],
       "preferenceKey": "admin.commerce.orders",
       "relationFields": [
         {
           "field": "orderId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "user",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1776,9 +1763,16 @@
         "returnRequest",
         "helpTickets"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:277"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:277",
+      "violations": [
+        "MISSING_COLUMN:user"
+      ]
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "active",
         "artworkAssetId",
@@ -1814,11 +1808,11 @@
       "relationFields": [
         {
           "field": "artworkAssetId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "storeProductId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1836,9 +1830,14 @@
         "available",
         "variantRecords"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:182"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:182",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "active",
         "artworkAssetId",
@@ -1874,11 +1873,11 @@
       "relationFields": [
         {
           "field": "artworkAssetId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "storeProductId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1896,9 +1895,14 @@
         "available",
         "variantRecords"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:209"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:209",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "cancelAtPeriodEnd",
         "canceledAt",
@@ -1941,16 +1945,18 @@
         "updatedAt",
         "events"
       ],
-      "missingFields": [],
+      "missingFields": [
+        "user"
+      ],
       "preferenceKey": "admin.commerce.subscriptions",
       "relationFields": [
         {
           "field": "membershipSubscriptionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "user",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -1972,9 +1978,16 @@
         "updatedAt",
         "events"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:285"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:285",
+      "violations": [
+        "MISSING_COLUMN:user"
+      ]
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "available",
         "color",
@@ -2016,7 +2029,7 @@
       "relationFields": [
         {
           "field": "storeVariantId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -2035,15 +2048,15 @@
         "printfulConfigured",
         "available"
       ],
-      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:263"
+      "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:263",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "label",
-        "key",
-        "count",
-        "state"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "label",
         "key",
@@ -2071,9 +2084,14 @@
         "count",
         "state"
       ],
-      "source": "apps/web/src/screens/admin/AdminDashboardPage.tsx:32"
+      "source": "apps/web/src/screens/admin/AdminDashboardPage.tsx:32",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "moneyTransactionId",
         "occurredAtGameMinute",
@@ -2115,15 +2133,15 @@
       "relationFields": [
         {
           "field": "moneyTransactionId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "worldInstance",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         },
         {
           "field": "party",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -2145,9 +2163,14 @@
         "recordedAt",
         "context"
       ],
-      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:185"
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:185",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "occupationId",
         "name",
@@ -2177,7 +2200,7 @@
       "relationFields": [
         {
           "field": "occupationId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -2193,20 +2216,15 @@
         "description",
         "affinities"
       ],
-      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:33"
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:33",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "version",
-        "status",
-        "title",
-        "summary",
-        "releaseDate",
-        "previousVersion",
-        "items",
-        "publication",
-        "deployment"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "version",
         "status",
@@ -2244,9 +2262,14 @@
         "previousVersion",
         "items"
       ],
-      "source": "apps/web/src/screens/admin/OperationsAdminPage.tsx:20"
+      "source": "apps/web/src/screens/admin/OperationsAdminPage.tsx:20",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "description",
         "name",
@@ -2272,7 +2295,7 @@
       "relationFields": [
         {
           "field": "perkId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -2284,9 +2307,14 @@
         "description",
         "status"
       ],
-      "source": "apps/web/src/screens/admin/PerkAdminPage.tsx:39"
+      "source": "apps/web/src/screens/admin/PerkAdminPage.tsx:39",
+      "violations": []
     },
     {
+      "auditBlockers": [
+        "Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."
+      ],
+      "auditStatus": "BLOCKED_UNVERIFIED_RELATION_LABELS",
       "canonicalFieldsExpected": [
         "difficultyTier",
         "primaryFamily",
@@ -2320,7 +2348,7 @@
       "relationFields": [
         {
           "field": "puzzleBlueprintId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
+          "resolver": null
         }
       ],
       "routeOrState": [
@@ -2335,17 +2363,15 @@
         "hintContract",
         "versions"
       ],
-      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:73"
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:73",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "soundtrackName",
-        "soundtrackId",
-        "settlementSoundtrackAssignmentId",
-        "category",
-        "ordinal",
-        "active"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "soundtrackName",
         "soundtrackId",
@@ -2367,16 +2393,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "admin.settlement-soundtracks",
-      "relationFields": [
-        {
-          "field": "soundtrackId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        },
-        {
-          "field": "settlementSoundtrackAssignmentId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/admin/occupations",
         "/admin/companion-planner",
@@ -2391,9 +2408,12 @@
         "ordinal",
         "active"
       ],
-      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:208"
+      "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:208",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "achievementDefinitionId",
         "name",
@@ -2404,13 +2424,13 @@
         "imageAsset"
       ],
       "columnsRendered": [
-        "achievementDefinitionId",
         "name",
-        "chainKey",
-        "rank",
-        "imageAssetId",
+        "achievementDefinitionId",
         "status",
         "imageAsset",
+        "imageAssetId",
+        "chainKey",
+        "rank",
         "actions"
       ],
       "component": "EntityRecordsAdminPage",
@@ -2451,14 +2471,20 @@
         "status",
         "imageAsset"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2469,9 +2495,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -2485,9 +2508,12 @@
       ],
       "columnsRendered": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2498,18 +2524,15 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
+        "character",
         "characterId",
         "department",
-        "character",
         "witnesses",
         "actions"
       ],
@@ -2517,9 +2540,12 @@
       "dataExpression": "Architect persisted records",
       "filterableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2530,9 +2556,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -2568,9 +2591,12 @@
       ],
       "sortableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2581,9 +2607,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -2595,17 +2618,20 @@
         "character",
         "witnesses"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "arkId",
         "name",
         "status"
       ],
       "columnsRendered": [
-        "arkId",
         "name",
+        "arkId",
         "status",
         "actions"
       ],
@@ -2634,9 +2660,12 @@
         "name",
         "status"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "breedId",
         "name",
@@ -2678,23 +2707,22 @@
         "researchValues"
       ],
       "columnsRendered": [
-        "breedId",
         "name",
+        "breedId",
+        "species",
         "speciesId",
-        "cultureId",
+        "parentBreed",
         "parentBreedId",
+        "culture",
+        "cultureId",
         "populationKind",
         "groupId",
+        "personality",
         "personalityId",
-        "traits",
         "accent",
         "appearance",
         "clothing",
         "architecture",
-        "foodBroad",
-        "foodSpecific",
-        "terrainBroad",
-        "terrainSpecific",
         "motivation",
         "operatingStyle",
         "structureOrientation",
@@ -2707,10 +2735,11 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
+        "traits",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -2850,9 +2879,12 @@
         "dominantInWorlds",
         "researchValues"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "characterId",
         "displayName",
@@ -2880,11 +2912,14 @@
         "schismFor"
       ],
       "columnsRendered": [
-        "characterId",
         "displayName",
+        "characterId",
+        "breed",
         "breedId",
+        "occupation",
         "occupationId",
         "worldKey",
+        "soul",
         "soulId",
         "gender",
         "age",
@@ -2895,9 +2930,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -3010,9 +3042,12 @@
         "ruinFor",
         "schismFor"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "citationId",
         "sourceId",
@@ -3026,11 +3061,11 @@
       ],
       "columnsRendered": [
         "citationId",
+        "source",
         "sourceId",
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations",
@@ -3090,14 +3125,20 @@
         "knowledgeItems",
         "disclosureCitations"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3108,9 +3149,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -3125,9 +3163,12 @@
       ],
       "columnsRendered": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3138,19 +3179,16 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
-        "characterId",
-        "companionKey",
         "character",
+        "characterId",
         "companionDef",
+        "companionKey",
         "partyMemberships",
         "actions"
       ],
@@ -3158,9 +3196,12 @@
       "dataExpression": "Companion persisted records",
       "filterableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3171,9 +3212,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -3214,9 +3252,12 @@
       ],
       "sortableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3227,9 +3268,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -3242,9 +3280,12 @@
         "companionDef",
         "partyMemberships"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "companionKey",
         "concordCharacterId",
@@ -3263,19 +3304,19 @@
       ],
       "columnsRendered": [
         "companionKey",
+        "concordCharacter",
         "concordCharacterId",
+        "ruinCharacter",
         "ruinCharacterId",
+        "schismCharacter",
         "schismCharacterId",
+        "soul",
         "soulId",
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
-        "companions",
         "transformationBinding",
+        "companions",
         "actions"
       ],
       "component": "EntityRecordsAdminPage",
@@ -3350,9 +3391,12 @@
         "companions",
         "transformationBinding"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "constellationId",
         "name",
@@ -3362,8 +3406,8 @@
         "afterWitnesses"
       ],
       "columnsRendered": [
-        "constellationId",
         "name",
+        "constellationId",
         "rightAscension",
         "declination",
         "beforeWitnesses",
@@ -3410,9 +3454,12 @@
         "beforeWitnesses",
         "afterWitnesses"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "cultureId",
         "name",
@@ -3423,8 +3470,8 @@
         "settlementWorlds"
       ],
       "columnsRendered": [
-        "cultureId",
         "name",
+        "cultureId",
         "appearance",
         "clothing",
         "architecture",
@@ -3474,17 +3521,20 @@
         "breeds",
         "settlementWorlds"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "definitionId",
         "term",
         "definition"
       ],
       "columnsRendered": [
-        "definitionId",
         "term",
+        "definitionId",
         "definition",
         "actions"
       ],
@@ -3513,9 +3563,12 @@
         "term",
         "definition"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "interludeId",
         "name",
@@ -3525,8 +3578,8 @@
         "substitutionsTo"
       ],
       "columnsRendered": [
-        "interludeId",
         "name",
+        "interludeId",
         "interludeType",
         "summary",
         "substitutionsFrom",
@@ -3573,9 +3626,12 @@
         "substitutionsFrom",
         "substitutionsTo"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "interludeSubstitutionId",
         "interludeId",
@@ -3586,11 +3642,11 @@
       ],
       "columnsRendered": [
         "interludeSubstitutionId",
+        "interlude",
         "interludeId",
+        "replacementInterlude",
         "replacementInterludeId",
         "reason",
-        "interlude",
-        "replacementInterlude",
         "actions"
       ],
       "component": "EntityRecordsAdminPage",
@@ -3633,9 +3689,12 @@
         "interlude",
         "replacementInterlude"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "knowledgeBaseItemId",
         "entityType",
@@ -3647,10 +3706,10 @@
         "disclosures"
       ],
       "columnsRendered": [
+        "title",
         "knowledgeBaseItemId",
         "entityType",
         "entityId",
-        "title",
         "baseContent",
         "citations",
         "blocks",
@@ -3705,9 +3764,12 @@
         "blocks",
         "disclosures"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "layetteId",
         "name",
@@ -3715,8 +3777,8 @@
         "transformationBindings"
       ],
       "columnsRendered": [
-        "layetteId",
         "name",
+        "layetteId",
         "description",
         "transformationBindings",
         "actions"
@@ -3753,9 +3815,12 @@
         "description",
         "transformationBindings"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "legendaryRewardId",
         "name",
@@ -3763,8 +3828,8 @@
         "witnesses"
       ],
       "columnsRendered": [
-        "legendaryRewardId",
         "name",
+        "legendaryRewardId",
         "description",
         "witnesses",
         "actions"
@@ -3801,17 +3866,20 @@
         "description",
         "witnesses"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "lessonId",
         "name",
         "description"
       ],
       "columnsRendered": [
-        "lessonId",
         "name",
+        "lessonId",
         "description",
         "actions"
       ],
@@ -3840,9 +3908,12 @@
         "name",
         "description"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "personalityId",
         "family",
@@ -3892,17 +3963,20 @@
         "dominantFaction",
         "breeds"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "pillarId",
         "name",
         "domain"
       ],
       "columnsRendered": [
-        "pillarId",
         "name",
+        "pillarId",
         "domain",
         "actions"
       ],
@@ -3931,9 +4005,12 @@
         "name",
         "domain"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "pointOfInterestId",
         "name",
@@ -3945,8 +4022,8 @@
         "gameSessions"
       ],
       "columnsRendered": [
-        "pointOfInterestId",
         "name",
+        "pointOfInterestId",
         "kind",
         "regionId",
         "longitude",
@@ -3999,9 +4076,12 @@
         "services",
         "gameSessions"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "puzzleBlueprintId",
         "title",
@@ -4010,8 +4090,8 @@
         "versions"
       ],
       "columnsRendered": [
-        "puzzleBlueprintId",
         "title",
+        "puzzleBlueprintId",
         "primaryFamily",
         "difficultyTier",
         "versions",
@@ -4051,9 +4131,12 @@
         "difficultyTier",
         "versions"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "researchId",
         "notes",
@@ -4064,10 +4147,10 @@
       ],
       "columnsRendered": [
         "researchId",
-        "notes",
-        "citationId",
-        "category",
         "citation",
+        "citationId",
+        "notes",
+        "category",
         "breedEvidence",
         "actions"
       ],
@@ -4111,9 +4194,12 @@
         "citation",
         "breedEvidence"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "settlementId",
         "siteId",
@@ -4124,11 +4210,11 @@
         "soundtrackAssignments"
       ],
       "columnsRendered": [
-        "settlementId",
-        "siteId",
         "name",
-        "classification",
+        "settlementId",
         "site",
+        "siteId",
+        "classification",
         "worlds",
         "soundtrackAssignments",
         "actions"
@@ -4179,9 +4265,12 @@
         "worlds",
         "soundtrackAssignments"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "settlementPopulationEventId",
         "settlementWorldId",
@@ -4195,14 +4284,14 @@
       ],
       "columnsRendered": [
         "settlementPopulationEventId",
+        "settlementWorld",
         "settlementWorldId",
+        "breed",
+        "breedId",
         "year",
         "sequence",
-        "breedId",
         "eventType",
         "populationDelta",
-        "settlementWorld",
-        "breed",
         "actions"
       ],
       "component": "EntityRecordsAdminPage",
@@ -4251,9 +4340,12 @@
         "settlementWorld",
         "breed"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "settlementWorldId",
         "settlementId",
@@ -4270,14 +4362,14 @@
       ],
       "columnsRendered": [
         "settlementWorldId",
-        "settlementId",
         "worldKey",
-        "totalPopulation",
-        "dominantBreedId",
-        "cultureId",
         "settlement",
+        "settlementId",
         "dominantBreed",
+        "dominantBreedId",
         "culture",
+        "cultureId",
+        "totalPopulation",
         "populationEvents",
         "cities",
         "gameSessions",
@@ -4351,9 +4443,12 @@
         "cities",
         "gameSessions"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "siteId",
         "regionId",
@@ -4370,8 +4465,8 @@
         "candidateType",
         "longitude",
         "latitude",
-        "namingContext",
         "settlement",
+        "namingContext",
         "namingEligibility",
         "actions"
       ],
@@ -4419,9 +4514,12 @@
         "settlement",
         "namingEligibility"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "soulId",
         "name",
@@ -4430,8 +4528,8 @@
         "companionDefs"
       ],
       "columnsRendered": [
-        "soulId",
         "name",
+        "soulId",
         "characters",
         "witnessDefs",
         "companionDefs",
@@ -4479,9 +4577,12 @@
         "witnessDefs",
         "companionDefs"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "sourceId",
         "title",
@@ -4493,13 +4594,13 @@
         "citations"
       ],
       "columnsRendered": [
-        "sourceId",
         "title",
-        "authors",
+        "sourceId",
         "publisher",
         "publicationDate",
         "sourceType",
         "urlOrIdentifier",
+        "authors",
         "citations",
         "actions"
       ],
@@ -4543,15 +4644,18 @@
         "urlOrIdentifier",
         "citations"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "speciesId",
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -4567,15 +4671,16 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "taxonomy",
         "breeds"
       ],
       "columnsRendered": [
-        "speciesId",
         "name",
+        "speciesId",
+        "taxonomy",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
-        "taxonomy",
-        "traits",
         "accent",
         "anthropomorphization",
         "appearance",
@@ -4583,13 +4688,14 @@
         "architecture",
         "originMode",
         "reproductiveMethod",
-        "juvenileStages",
-        "nurseryMode",
         "longevityClass",
         "mortalityMode",
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "traits",
+        "juvenileStages",
+        "nurseryMode",
         "breeds",
         "actions"
       ],
@@ -4600,7 +4706,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -4616,6 +4722,7 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "taxonomy",
         "breeds"
       ],
       "missingFields": [],
@@ -4629,6 +4736,10 @@
       "preferenceKey": "entity-species",
       "relationFields": [
         {
+          "field": "taxonomy",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw taxonomyLevelId"
+        },
+        {
           "field": "breeds",
           "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
         }
@@ -4641,7 +4752,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -4657,11 +4768,98 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "taxonomy",
         "breeds"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
+      "canonicalFieldsExpected": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "parent",
+        "children",
+        "species"
+      ],
+      "columnsRendered": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parent",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text",
+        "children",
+        "species",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Taxonomy persisted records",
+      "filterableFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "parent",
+        "children",
+        "species"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-taxonomy",
+      "relationFields": [
+        {
+          "field": "parent",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw parentTaxonomyLevelId"
+        },
+        {
+          "field": "children",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw relation identity"
+        },
+        {
+          "field": "species",
+          "resolver": "lookupPresentationFor(Species) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/taxonomy"
+      ],
+      "sortableFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "parent",
+        "children",
+        "species"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
+    },
+    {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "timelineEventId",
         "name",
@@ -4669,8 +4867,8 @@
         "summary"
       ],
       "columnsRendered": [
-        "timelineEventId",
         "name",
+        "timelineEventId",
         "timelineEventType",
         "summary",
         "actions"
@@ -4702,17 +4900,20 @@
         "timelineEventType",
         "summary"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "tomeId",
         "title",
         "author"
       ],
       "columnsRendered": [
-        "tomeId",
         "title",
+        "tomeId",
         "author",
         "actions"
       ],
@@ -4741,9 +4942,12 @@
         "title",
         "author"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "transitionId",
         "name",
@@ -4752,8 +4956,8 @@
         "summary"
       ],
       "columnsRendered": [
-        "transitionId",
         "name",
+        "transitionId",
         "bookA",
         "bookB",
         "summary",
@@ -4788,14 +4992,20 @@
         "bookB",
         "summary"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -4806,9 +5016,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -4831,9 +5038,12 @@
       ],
       "columnsRendered": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -4844,37 +5054,37 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
-        "characterId",
-        "witnessDefId",
-        "trueFlawName",
-        "architectCharacterId",
-        "legendaryRewardId",
-        "constellationBeforeId",
-        "constellationAfterId",
         "character",
+        "characterId",
         "witnessDef",
+        "witnessDefId",
         "architect",
+        "architectCharacterId",
         "legendaryReward",
+        "legendaryRewardId",
         "constellationBefore",
+        "constellationBeforeId",
         "constellationAfter",
+        "constellationAfterId",
+        "trueFlawName",
         "actions"
       ],
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Witness persisted records",
       "filterableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -4885,9 +5095,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -4948,9 +5155,12 @@
       ],
       "sortableFields": [
         "Character.displayName",
+        "Character.breed",
         "Character.breedId",
+        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
+        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -4961,9 +5171,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -4984,9 +5191,12 @@
         "constellationBefore",
         "constellationAfter"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "witnessDefId",
         "name",
@@ -4999,14 +5209,14 @@
         "witnesses"
       ],
       "columnsRendered": [
-        "witnessDefId",
         "name",
+        "witnessDefId",
         "department",
+        "architectSoul",
+        "architectSoulId",
         "apparentDomain",
         "realDomain",
         "color",
-        "architectSoulId",
-        "architectSoul",
         "witnesses",
         "actions"
       ],
@@ -5056,13 +5266,15 @@
         "architectSoul",
         "witnesses"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx"
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "occurredAtGameMinute",
-        "amount"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "occurredAtGameMinute",
         "amount"
@@ -5083,14 +5295,15 @@
         "occurredAtGameMinute",
         "amount"
       ],
-      "source": "apps/web/src/screens/game/GameplayOverlays.tsx:58"
+      "source": "apps/web/src/screens/game/GameplayOverlays.tsx:58",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "label",
-        "token",
-        "responseTarget"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "label",
         "token",
@@ -5114,17 +5327,15 @@
         "token",
         "responseTarget"
       ],
-      "source": "apps/web/src/screens/public/PublicPage.tsx:149"
+      "source": "apps/web/src/screens/public/PublicPage.tsx:149",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "capability",
-        "guest",
-        "user",
-        "member",
-        "admin",
-        "owner"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "capability",
         "guest",
@@ -5145,12 +5356,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "tools.navigation-states",
-      "relationFields": [
-        {
-          "field": "user",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/tools/wireframe-review",
         "/tools/navigation-states"
@@ -5163,18 +5369,15 @@
         "admin",
         "owner"
       ],
-      "source": "apps/web/src/screens/tools/ToolsPage.tsx:96"
+      "source": "apps/web/src/screens/tools/ToolsPage.tsx:96",
+      "violations": []
     },
     {
-      "canonicalFieldsExpected": [
-        "title",
-        "screenId",
-        "reviewOrder",
-        "page",
-        "originalPage",
-        "path",
-        "source"
+      "auditBlockers": [
+        "No independent owning row/read-model contract was resolved for this rendered DataTable."
       ],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT",
+      "canonicalFieldsExpected": [],
       "columnsRendered": [
         "title",
         "screenId",
@@ -5198,12 +5401,7 @@
       ],
       "missingFields": [],
       "preferenceKey": "tools.review-queue",
-      "relationFields": [
-        {
-          "field": "screenId",
-          "resolver": "explicit display label plus canonical ID or complete JSON projection"
-        }
-      ],
+      "relationFields": [],
       "routeOrState": [
         "/tools/wireframe-review",
         "/tools/navigation-states"
@@ -5217,7 +5415,8 @@
         "path",
         "source"
       ],
-      "source": "apps/web/src/screens/tools/ToolsPage.tsx:63"
+      "source": "apps/web/src/screens/tools/ToolsPage.tsx:63",
+      "violations": []
     }
   ]
 }

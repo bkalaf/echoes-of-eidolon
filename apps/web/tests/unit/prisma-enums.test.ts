@@ -39,6 +39,7 @@ const suppliedEnumNames = [
   "BreedResearchReviewStatus", "BreedResearchProvenanceKind", "BreedDimensionValue",
   "ContactTopic", "ContactRequestStatus", "GameTurnStatus", "DeploymentStatus", "CampaignObjectType",
   "DonationCheckoutStatus", "StoreProductType", "HelpTicketStatus", "HelpTicketChannel", "HelpTicketAuthorKind",
+  "TaxonomyType",
 ] as const;
 
 describe("Prisma finite enum authority", () => {

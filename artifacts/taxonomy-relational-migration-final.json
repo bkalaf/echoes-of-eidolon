@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "eidolon-taxonomy-relational-migration-final-v1",
+  "verifiedAt": "2026-08-20T17:15:00Z",
+  "environment": "isolated local PostgreSQL 17 restore of the current production database",
+  "sourcePreflightSha256": "8657425bf8f469ee6d5281f9e3d17be752c0ddc1c57fdc53e73045e27227df58",
+  "sourceDatabaseDumpSha256": "bcda5052d4205dc0780e79fe1379f56edcb491bf557ede4268d7c9c323fadc3b",
+  "migration": "apps/web/prisma/migrations/20260820101500_taxonomy_relational_normalization/migration.sql",
+  "species": {
+    "before": 1131,
+    "after": 1131,
+    "missingSpecies": [],
+    "unexpectedSpecies": []
+  },
+  "taxonomy": {
+    "uniqueSourceNodesAfterDocumentedResolution": 2616,
+    "persistedNodes": 2616,
+    "sourceConflictIds": 25,
+    "unresolvedConflicts": 0,
+    "missingTaxonomyIds": [],
+    "unexpectedTaxonomyIds": [],
+    "fieldMismatches": [],
+    "parentMismatches": [],
+    "missingParents": [],
+    "cycles": []
+  },
+  "speciesReferences": {
+    "expectedReferences": 1131,
+    "matchingReferences": 1131,
+    "missingReferences": [],
+    "mismatchedReferences": []
+  },
+  "legacyJson": {
+    "fieldRemovedAfterSuccessfulAudit": true,
+    "dataLossDetected": false
+  },
+  "identityCollisionResolution": {
+    "official": "TAX_GENUS_DRACO",
+    "manufactured": "TAX_GENUS_DRACO_MYTHOS"
+  }
+}

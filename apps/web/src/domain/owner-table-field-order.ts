@@ -14,7 +14,8 @@ const ownerLockedPrefixes: Record<string, string[]> = {
   CompanionDef: ["companionKey", "concordCharacter", "concordCharacterId", "ruinCharacter", "ruinCharacterId", "schismCharacter", "schismCharacterId", "soul", "soulId"],
   Culture: ["name", "cultureId"],
   Settlement: ["name", "settlementId", "site", "siteId"],
-  Species: ["name", "speciesId"],
+  Species: ["name", "speciesId", "taxonomy", "taxonomyLevelId"],
+  Taxonomy: ["name", "taxonomyLevelId", "type", "commonName", "parent", "parentTaxonomyLevelId", "isOfficial", "text"],
   Witness: ["character", "characterId", "witnessDef", "witnessDefId", "architect", "architectCharacterId", "legendaryReward", "legendaryRewardId", "constellationBefore", "constellationBeforeId", "constellationAfter", "constellationAfterId"],
   WitnessDef: ["name", "witnessDefId", "department", "architectSoul", "architectSoulId", "apparentDomain", "realDomain", "color"],
 };
@@ -45,4 +46,3 @@ export function orderOwnerTableFields<T extends OwnerTableField>(entity: string,
   for (const field of fields) if (metadataNames.has(field.name)) add(field.name);
   return ordered;
 }
-

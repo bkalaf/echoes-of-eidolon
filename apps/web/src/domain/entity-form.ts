@@ -23,7 +23,6 @@ export type AdminFieldControl =
   | "ENUM_LIST"
   | "STRING_LIST"
   | "JSON"
-  | "TAXONOMY"
   | "CLOTHING"
   | "UNSUPPORTED";
 
@@ -33,7 +32,6 @@ const longTextFields = new Set([
 ]);
 
 export function adminFieldControl(entity: string, idField: string, field: EntityFormField): AdminFieldControl {
-  if (field.name === "taxonomy" && entity === "Species") return "TAXONOMY";
   if (field.name === "clothing" && ["Species", "Culture", "Breed"].includes(entity)) return "CLOTHING";
   if (field.name === idField) return "IDENTITY";
   if (field.kind === "enum") return field.isList ? "ENUM_LIST" : "ENUM";
@@ -80,7 +78,7 @@ export function validateAdminEntityDraft(
         if (control === "ENUM_LIST" && list.some((entry) => typeof entry !== "string" || !field.enumValues.includes(entry))) errors.push(`${field.name} contains an uncontrolled value.`);
       }
     }
-    if (control === "JSON" || control === "TAXONOMY") {
+    if (control === "JSON") {
       try { JSON.parse(value); } catch { errors.push(`${field.name} must contain valid JSON.`); }
     }
     if (entity === "WitnessDef" && field.name === "color") {

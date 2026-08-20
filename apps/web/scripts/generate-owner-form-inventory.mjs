@@ -4,6 +4,9 @@ import console from "node:console";
 import process from "node:process";
 import ts from "typescript";
 
+import { buildOwnerFormPlan, subtypeParentEntity } from "../src/domain/owner-form-contract.ts";
+import { auditOwnerFormContract } from "../src/domain/owner-ui-independent-audit.ts";
+
 const webRoot = resolve(import.meta.dirname, "..");
 const repositoryRoot = resolve(webRoot, "../..");
 const screenRoot = resolve(webRoot, "src/screens/admin");
@@ -143,25 +146,54 @@ for (const name of screenNames) {
       component: entry.component,
       source: `${relative(repositoryRoot, path)}:${Math.min(...entry.lines)}`,
       entityOrReadModel: "operation-specific owner write contract",
-      canonicalFields: renderedInputs,
-      writableFields: renderedInputs,
+      canonicalFields: [],
+      writableFields: [],
       renderedInputs,
       renderedReadOnlyFields: [],
       missingFields: [],
       relationLookupPresentation: Object.entries(relations).flatMap(([field, rule]) => renderedInputs.includes(field)
-        ? [{ field, ...rule, reviewStatus: "PASS" }]
+        ? [{ field, ...rule, reviewStatus: "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT" }]
         : []),
-      auditStatus: "REVIEWED_COMPLETE",
-      contractEvidence: "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys.",
+      auditStatus: "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      auditBlockers: ["Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."],
+      contractEvidence: null,
     });
   }
 }
 
-const subtypeParents = { Architect: "Character", Companion: "Character", Witness: "Character" };
 const genericForms = Object.entries(contract.entities).map(([entity, entityContract]) => {
-  const canonicalFields = entityContract.auditFields.map(({ name }) => name);
-  const writableFields = entityContract.fields.map(({ name }) => name);
-  const writable = new Set(writableFields);
+  const expected = entityContract.auditFields.map((field) => ({
+    name: field.name,
+    nullable: !field.isRequired,
+    relation: entityContract.auditFields.some((relation) => relation.kind === "relation" && relation.relationFromFields?.includes(field.name)),
+    treatment: field.editability === "EDITABLE" ? "INPUT" : "READ_ONLY",
+  }));
+  const observed = buildOwnerFormPlan(entity, entityContract).map((field) => ({
+    hasHumanReadableRelationLabel: field.control === "RELATION_LOOKUP",
+    name: field.name,
+    supportsNullClear: field.treatment === "INPUT" && !field.isRequired,
+    treatment: field.treatment,
+  }));
+  const parentEntity = subtypeParentEntity(entity);
+  if (parentEntity) {
+    const parentContract = contract.entities[parentEntity];
+    expected.push(...parentContract.auditFields.map((field) => ({
+      name: `${parentEntity}.${field.name}`,
+      nullable: !field.isRequired,
+      parentField: true,
+      relation: parentContract.auditFields.some((relation) => relation.kind === "relation" && relation.relationFromFields?.includes(field.name)),
+      treatment: field.editability === "EDITABLE" ? "INPUT" : "READ_ONLY",
+    })));
+    observed.push(...buildOwnerFormPlan(parentEntity, parentContract).map((field) => ({
+      hasHumanReadableRelationLabel: field.control === "RELATION_LOOKUP",
+      name: `${parentEntity}.${field.name}`,
+      supportsNullClear: field.treatment === "INPUT" && !field.isRequired,
+      treatment: field.treatment,
+    })));
+  }
+  const audit = auditOwnerFormContract(expected, observed);
+  const canonicalFields = expected.map(({ name }) => name);
+  const writableFields = expected.filter(({ treatment }) => treatment === "INPUT").map(({ name }) => name);
   const relationLookups = entityContract.auditFields.flatMap((field) => field.kind === "relation" && field.relationFromFields?.length
     ? field.relationFromFields.map((foreignKey) => ({ foreignKey, relationField: field.name, targetEntity: field.type, presentationRule: "human-readable label + canonical ID", searchableBy: ["label", "canonical ID"] }))
     : []);
@@ -171,17 +203,20 @@ const genericForms = Object.entries(contract.entities).map(([entity, entityContr
     entityOrReadModel: entity,
     canonicalFields,
     writableFields,
-    renderedInputs: writableFields,
-    renderedReadOnlyFields: canonicalFields.filter((field) => !writable.has(field)),
-    missingFields: [],
+    renderedInputs: observed.filter(({ treatment }) => treatment === "INPUT").map(({ name }) => name),
+    renderedReadOnlyFields: observed.filter(({ treatment }) => treatment === "READ_ONLY").map(({ name }) => name),
+    missingFields: audit.missing,
+    violations: audit.violations,
+    auditStatus: audit.pass ? "LOCAL_INDEPENDENT_CONTRACT_PASS" : "FAIL",
     relationLookups,
-    parentComposition: subtypeParents[entity] ? { entity: subtypeParents[entity], canonicalFields: contract.entities[subtypeParents[entity]].auditFields.map(({ name }) => name) } : null,
+    parentComposition: parentEntity ? { entity: parentEntity, canonicalFields: contract.entities[parentEntity].auditFields.map(({ name }) => name) } : null,
   };
 });
 
 const inventory = {
-  schemaVersion: "echoes-owner-form-inventory-v2",
+  schemaVersion: "echoes-owner-form-inventory-v3",
   generatedAt: new Date().toISOString(),
+  status: "BLOCKED",
   sharedContract: {
     deterministicOrder: true,
     everyWritableFieldHasInput: true,
@@ -196,13 +231,13 @@ const inventory = {
   sourceEditors,
   assertions: [
     { name: "Every generic entity is inventoried", expected: 34, observed: genericForms.length, pass: genericForms.length === 34 },
-    { name: "Every generic canonical field is rendered", expected: genericForms.reduce((sum, form) => sum + form.canonicalFields.length, 0), observed: genericForms.reduce((sum, form) => sum + form.renderedInputs.length + form.renderedReadOnlyFields.length, 0), pass: genericForms.every((form) => form.missingFields.length === 0) },
+    { name: "Every generic canonical field is independently compared with the rendered form plan", expected: genericForms.reduce((sum, form) => sum + form.canonicalFields.length, 0), observed: genericForms.reduce((sum, form) => sum + form.renderedInputs.length + form.renderedReadOnlyFields.length, 0), pass: genericForms.every((form) => form.auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS") },
     { name: "Every owning relation uses a named lookup", expected: genericForms.reduce((sum, form) => sum + form.relationLookups.length, 0), observed: genericForms.reduce((sum, form) => sum + form.relationLookups.filter((lookup) => lookup.presentationRule === "human-readable label + canonical ID").length, 0), pass: true },
-    { name: "Every bespoke owner editor is reviewed with zero missing controls", expected: sourceEditors.length, observed: sourceEditors.filter((form) => form.auditStatus === "REVIEWED_COMPLETE" && form.missingFields.length === 0).length, pass: sourceEditors.every((form) => form.auditStatus === "REVIEWED_COMPLETE" && form.missingFields.length === 0) },
+    { name: "Every bespoke owner editor has an independent server write contract", expected: sourceEditors.length, observed: sourceEditors.filter((form) => form.auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS").length, pass: sourceEditors.every((form) => form.auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS") },
   ],
   notes: [
     "Generic canonical forms are contract-complete.",
-    "Bespoke operation editors are source-discovered and reviewed against their server write contracts; command identities and polymorphic locator values are not falsely classified as database relations.",
+    "Bespoke operation editors remain blocked until expected fields are derived from independent server input/write contracts.",
   ],
 };
 
@@ -217,5 +252,5 @@ await mkdir(artifactRoot, { recursive: true });
 await writeFile(resolve(artifactRoot, "owner-form-inventory.json"), `${JSON.stringify(inventory, null, 2)}\n`);
 await writeFile(resolve(artifactRoot, "owner-form-browser-matrix.json"), `${JSON.stringify(browserMatrix, null, 2)}\n`);
 
-if (genericForms.length !== 34 || genericForms.some((form) => form.missingFields.length) || sourceEditors.length < 10) process.exitCode = 1;
-else console.log(`owner-form inventory PASS: ${genericForms.length} generic contracts, ${sourceEditors.length} bespoke source editors, zero generic missing fields`);
+if (genericForms.length !== 34 || genericForms.some((form) => form.auditStatus !== "LOCAL_INDEPENDENT_CONTRACT_PASS") || sourceEditors.length < 10) process.exitCode = 1;
+else console.log(`owner-form inventory BLOCKED: ${genericForms.length} independently checked generic contracts; ${sourceEditors.length} bespoke editors require independent write contracts`);

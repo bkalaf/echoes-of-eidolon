@@ -5,8 +5,8 @@
     "src/content/entities.ts"
   ],
   "sourcePolicy": "Prisma supplies complete persisted field discovery; content/entities.ts supplies generic-form editability only.",
-  "activeEntityCount": 34,
-  "persistedModelCount": 124,
+  "activeEntityCount": 35,
+  "persistedModelCount": 125,
   "unregisteredPersistedModels": [
     "Account",
     "AssetPurposeLink",
@@ -4197,7 +4197,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -4213,9 +4213,16 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "taxonomy",
         "breeds"
       ],
       "relationFields": [
+        {
+          "name": "taxonomy",
+          "type": "Taxonomy",
+          "isList": false,
+          "isRequired": false
+        },
         {
           "name": "breeds",
           "type": "Breed",
@@ -4238,7 +4245,7 @@
           "name",
           "speciesKind",
           "scientificName",
-          "taxonomy",
+          "taxonomyLevelId",
           "traits",
           "accent",
           "anthropomorphization",
@@ -4254,6 +4261,7 @@
           "soulDisposition",
           "continuityGroup",
           "continuityPropagationMode",
+          "taxonomy",
           "breeds"
         ],
         "readOwner": "PrismaClient.species.findMany"
@@ -4265,7 +4273,7 @@
           "name",
           "speciesKind",
           "scientificName",
-          "taxonomy",
+          "taxonomyLevelId",
           "traits",
           "accent",
           "anthropomorphization",
@@ -4281,6 +4289,7 @@
           "soulDisposition",
           "continuityGroup",
           "continuityPropagationMode",
+          "taxonomy",
           "breeds"
         ],
         "writableFields": [
@@ -4288,7 +4297,7 @@
           "name",
           "speciesKind",
           "scientificName",
-          "taxonomy",
+          "taxonomyLevelId",
           "traits",
           "accent",
           "anthropomorphization",
@@ -4306,6 +4315,7 @@
           "continuityPropagationMode"
         ],
         "readOnlyFields": [
+          "taxonomy",
           "breeds"
         ]
       },
@@ -4343,10 +4353,10 @@
           "reason": null
         },
         {
-          "field": "taxonomy",
+          "field": "taxonomyLevelId",
           "editable": true,
           "owner": "GENERIC_ENTITY_ADMIN",
-          "persistenceOwner": "Species.taxonomy",
+          "persistenceOwner": "Species.taxonomyLevelId",
           "writePath": "normalizeEntityData -> entity validators -> PrismaClient.species",
           "reason": null
         },
@@ -4471,10 +4481,190 @@
           "reason": null
         },
         {
+          "field": "taxonomy",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Species.taxonomy",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
           "field": "breeds",
           "editable": false,
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Species.breeds",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        }
+      ]
+    },
+    {
+      "entity": "Taxonomy",
+      "delegate": "taxonomy",
+      "idField": "taxonomyLevelId",
+      "canonicalFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "parent",
+        "children",
+        "species"
+      ],
+      "relationFields": [
+        {
+          "name": "parent",
+          "type": "Taxonomy",
+          "isList": false,
+          "isRequired": false
+        },
+        {
+          "name": "children",
+          "type": "Taxonomy",
+          "isList": true,
+          "isRequired": true
+        },
+        {
+          "name": "species",
+          "type": "Species",
+          "isList": true,
+          "isRequired": true
+        }
+      ],
+      "routes": {
+        "collection": "/admin/data/taxonomy",
+        "create": "/admin/data/taxonomy/new",
+        "detailPattern": "/admin/data/taxonomy/$recordId",
+        "apiCollection": "/api/admin/data/taxonomy",
+        "apiRecord": "/api/admin/data/taxonomy/$recordId",
+        "apiImport": "/api/admin/data/taxonomy/import"
+      },
+      "table": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityRecordsAdminPage",
+        "expectedCanonicalFields": [
+          "taxonomyLevelId",
+          "type",
+          "name",
+          "isOfficial",
+          "text",
+          "commonName",
+          "parentTaxonomyLevelId",
+          "parent",
+          "children",
+          "species"
+        ],
+        "readOwner": "PrismaClient.taxonomy.findMany"
+      },
+      "form": {
+        "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+        "expectedCanonicalFields": [
+          "taxonomyLevelId",
+          "type",
+          "name",
+          "isOfficial",
+          "text",
+          "commonName",
+          "parentTaxonomyLevelId",
+          "parent",
+          "children",
+          "species"
+        ],
+        "writableFields": [
+          "taxonomyLevelId",
+          "type",
+          "name",
+          "isOfficial",
+          "text",
+          "commonName",
+          "parentTaxonomyLevelId"
+        ],
+        "readOnlyFields": [
+          "parent",
+          "children",
+          "species"
+        ]
+      },
+      "writeOwners": [
+        {
+          "field": "taxonomyLevelId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.taxonomyLevelId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "type",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.type",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "name",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.name",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "isOfficial",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.isOfficial",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "text",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.text",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "commonName",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.commonName",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "parentTaxonomyLevelId",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "Taxonomy.parentTaxonomyLevelId",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.taxonomy",
+          "reason": null
+        },
+        {
+          "field": "parent",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Taxonomy.parent",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "children",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Taxonomy.children",
+          "writePath": null,
+          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+        },
+        {
+          "field": "species",
+          "editable": false,
+          "owner": "WORKFLOW_OR_RELATION_OWNER",
+          "persistenceOwner": "Taxonomy.species",
           "writePath": null,
           "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
         }
@@ -5101,7 +5291,7 @@
       ]
     }
   ],
-  "generatedAt": "2026-08-19T01:08:09.479Z",
+  "generatedAt": "2026-08-20T17:14:33.098Z",
   "status": "PASS",
   "scope": {
     "activeRegistryEntities": "apps/web/src/content/entities.ts joined to generated Prisma entity-admin contract",
@@ -5113,11 +5303,11 @@
   "liveSourceEvidence": [
     {
       "path": "apps/web/src/data/entity-admin-contract.json",
-      "sha256": "59824a188cbfc93bebd7d7913e05ae22ce83377a5d98690cafba857a3e09bc97"
+      "sha256": "7aff856c2cd2aa5a0c4b205a2ae4482f493d7e745f97fb4d2dd4ef4106c9f2a2"
     },
     {
       "path": "apps/web/src/server/entity-admin.ts",
-      "sha256": "f4ecec4cc614367bb7648cffc25b82fe548abb224e4f91b9b0192f82429367e0"
+      "sha256": "d59ce1900bd9c2f07b51f7d1a06c1bb1f7546f302800d11d44ada19768137ed8"
     },
     {
       "path": "apps/web/src/data/navigation-registry.generated.json",
@@ -5350,21 +5540,20 @@
     },
     {
       "path": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
-      "sha256": "781146cac051281126a84f1a7139289c9cd98576fcce290388cfc477fec6ace8",
+      "sha256": "308237a183b7c1328e62d555d2a1127a3d7d2826208947cbe9fbf6ffa6074cb3",
       "tableLines": [
-        368,
-        523
+        340,
+        495
       ],
       "formLines": [
-        108,
-        130,
-        217,
-        250,
-        324,
-        329,
-        429,
-        430,
-        529
+        103,
+        189,
+        222,
+        296,
+        301,
+        401,
+        402,
+        501
       ]
     },
     {
@@ -5429,19 +5618,19 @@
     {
       "name": "Every active entity has a canonical field inventory",
       "expected": 34,
-      "observed": 34,
-      "pass": true
+      "observed": 35,
+      "pass": false
     },
     {
       "name": "Every persisted Prisma model is classified",
-      "expected": 124,
-      "observed": 124,
+      "expected": 125,
+      "observed": 125,
       "pass": true
     },
     {
       "name": "Every active canonical field has a write owner",
-      "expected": 282,
-      "observed": 282,
+      "expected": 293,
+      "observed": 293,
       "pass": true
     }
   ],

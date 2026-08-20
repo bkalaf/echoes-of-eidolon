@@ -3,181 +3,37 @@
   "gateId": "G00",
   "status": "BLOCKED",
   "release": "0.3.0",
-  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
-  "environment": "local release worktree with live GitHub and Notion connectors",
-  "startedAt": "2026-08-18T13:45:17-07:00",
-  "finishedAt": "2026-08-18T13:51:17-07:00",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree",
+  "startedAt": "2026-08-20T17:14:50.735Z",
+  "finishedAt": "2026-08-20T17:14:50.735Z",
   "dependencies": [],
-  "commands": [
-    {
-      "command": "python3 checks/validate_package.py .",
-      "exitCode": 0,
-      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "startedAt": "2026-08-18T13:45:17-07:00",
-      "finishedAt": "2026-08-18T13:46:00-07:00"
-    },
-    {
-      "command": "git status --porcelain=v1 -uall",
-      "exitCode": 0,
-      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "startedAt": "2026-08-18T13:45:17-07:00",
-      "finishedAt": "2026-08-18T13:45:17-07:00"
-    },
-    {
-      "command": "node --version && pnpm --version",
-      "exitCode": 0,
-      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "startedAt": "2026-08-18T13:51:17-07:00",
-      "finishedAt": "2026-08-18T13:51:17-07:00"
-    },
-    {
-      "command": "curl --fail --silent --show-error --max-time 20 --location https://app.eidolon-gaming.com/api/version",
-      "exitCode": 6,
-      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "startedAt": "2026-08-18T13:49:00-07:00",
-      "finishedAt": "2026-08-18T13:49:00-07:00"
-    },
-    {
-      "command": "curl --fail --silent --show-error --max-time 20 --location https://app.eidolon-gaming.com/api/health",
-      "exitCode": 6,
-      "logPath": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "startedAt": "2026-08-18T13:49:00-07:00",
-      "finishedAt": "2026-08-18T13:49:00-07:00"
-    }
-  ],
+  "commands": [],
   "assertions": [
     {
-      "name": "Package validator passes",
-      "expected": {
-        "checks": 1005,
-        "errors": 0
-      },
-      "observed": {
-        "checks": 1005,
-        "errors": 0
-      },
-      "pass": true
-    },
-    {
-      "name": "Clean checkout and immutable main baseline recorded",
-      "expected": "clean branch at observed origin/main",
-      "observed": {
-        "branch": "codex/release-0.3.0-execution",
-        "sha": "53a8f480690ad481997d415127c04369982b13c9",
-        "cleanBeforeEdits": true
-      },
-      "pass": true
-    },
-    {
-      "name": "PR #2 baseline recorded",
-      "expected": "fresh metadata",
-      "observed": {
-        "state": "OPEN_DRAFT",
-        "baseSha": "53a8f480690ad481997d415127c04369982b13c9",
-        "headSha": "15ec82904fad909997d3881b7d3a39f7c1a16069",
-        "changedFiles": 22,
-        "reviews": 0,
-        "statusChecks": 0
-      },
-      "pass": true
-    },
-    {
-      "name": "Current Notion authority refreshed",
-      "expected": "current queue and START HERE pages fetched",
-      "observed": {
-        "queueWorkItems": 18,
-        "startHereFetched": true
-      },
-      "pass": true
-    },
-    {
-      "name": "Applicable AGENTS and release authority read",
-      "expected": true,
-      "observed": true,
-      "pass": true
-    },
-    {
-      "name": "Toolchain exact",
-      "expected": {
-        "node": "22.22.0",
-        "pnpm": "10.33.2"
-      },
-      "observed": {
-        "node": "22.22.0",
-        "pnpm": "10.33.2"
-      },
-      "pass": true
-    },
-    {
-      "name": "Fresh production baseline recorded",
-      "expected": {
-        "versionEndpoint": "reachable",
-        "healthEndpoint": "reachable"
-      },
-      "observed": {
-        "versionEndpoint": "DNS unavailable",
-        "healthEndpoint": "DNS unavailable",
-        "browser": "unavailable"
-      },
+      "name": "Immutable candidate evidence",
+      "expected": "40-character candidate SHA",
+      "observed": "UNCOMMITTED_WORKTREE",
       "pass": false
-    },
-    {
-      "name": "No unresolved authority conflict affecting planning",
-      "expected": true,
-      "observed": true,
-      "pass": true
     }
   ],
   "artifacts": [
     {
-      "path": "artifacts/release-0.3.0/execution-state.json",
-      "sha256": "9b20dbcd40809b2ee9f0879b182aefe25fbb038b13c42bb6dddd2d1f98f40e4e"
-    },
-    {
-      "path": "artifacts/release-0.3.0/traceability.json",
-      "sha256": "76795926be9c8d37ab23c004719724f01bccf0aad0a981909699adb854d121a9"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/authority-snapshot.json",
-      "sha256": "c781685c5dcbb965bc7338e587a6de73c63308871db3d27fa311c6ce2d8b9a87"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/pr-2-review.json",
-      "sha256": "3d3a849bf9397bb3ae0374e98c411cdc4065a3eb59f390eadacb4ac619e31892"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/preflight-commands.log",
-      "sha256": "6202b24b85ae5cacddd78a82063e2fb996ea197461463abaea8bddd7e75aa58b"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/production-baseline.json",
-      "sha256": "ef46928b83aeabc127794f975187805974e72478a6ada7a7f4c118e8fd8a3149"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/repository-baseline.json",
-      "sha256": "602dfbd1a6d1a45a9e58db8adcc50921c104aa6875d25c02a9054713032f3838"
-    },
-    {
-      "path": "artifacts/release-0.3.0/preflight/toolchain.json",
-      "sha256": "fdb0dc7aac512afe21768df6dc4d8f69ec16e26be9595efb7ffb1d237211b49c"
-    },
-    {
-      "path": "AGENTS.md",
-      "sha256": "2b53bfd5bf80837331bc824baf00dd04bc446c6408526a2594b05056ba9abc1e"
+      "path": "artifacts/release-0.3.0/preflight/release-history-decision.json",
+      "sha256": "6f84bca7f7bab36cfa6525beadc0d8bc4fca0cb8d060104f191509f5b3d5d4dd"
     }
   ],
   "blockers": [
     {
-      "id": "B07-PRODUCTION-BASELINE-ACCESS",
-      "taskId": "T000",
-      "condition": "Current production version and health cannot be observed from this execution environment.",
-      "requiredResolution": "Restore network or browser access and capture both endpoints without mutation."
+      "id": "CANDIDATE-NOT-FROZEN",
+      "condition": "The remediation is an uncommitted working tree and has no immutable candidate SHA."
+    },
+    {
+      "id": "RELEASE-HISTORY-OWNER-DECISION",
+      "condition": "Commit c1f6b137 violates the configured release commit-subject gate; the documented disposition requires owner approval."
     }
   ],
   "notes": [
-    "G00 is BLOCKED, not PARTIAL or PASS.",
-    "T001 and T002 were completed as independent reversible work; no downstream gate is passed.",
-    "No deployment, migration, production mutation, push, tag, or release publication occurred."
+    "This report supersedes stale base-SHA evidence. It does not claim candidate-bound execution before the repair is committed and frozen."
   ]
 }
-

@@ -1,23 +1,67 @@
 {
-  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
-  "release": "0.3.0",
-  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v2",
+  "generatedAt": "2026-08-20T17:14:49.657Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "UNCOMMITTED_WORKTREE",
+  "environment": {
+    "name": "local-repair",
+    "node": "v22.22.0",
+    "database": "NOT_USED",
+    "browser": "NOT_RUN"
+  },
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm puzzles:production-audit",
+      "startedAt": "2026-08-20T17:14:49.657Z",
+      "completedAt": "2026-08-20T17:14:49.657Z",
+      "exitCode": 0,
+      "logPath": null
+    }
+  ],
+  "artifacts": [],
+  "blockers": [
+    "No authored production generator exists; the former generic Unicode carrier is prototype-only."
+  ],
+  "notes": [
+    "Local deterministic checks are implementation evidence only; they are not named review or real-browser acceptance."
+  ],
   "puzzleBlueprintId": "PZB-029",
   "tier": "TIER_5_ORDEAL",
   "primaryFamily": "SPATIAL_FOLDING_GEOMETRY",
-  "generatorPath": "apps/web/src/server/puzzle-production-generators.ts#SPATIAL_ROUTE_BOARD",
+  "generatorPath": null,
   "generatorVersion": "1.0.0",
-  "seedVector": "RELEASE_PROOF_VECTOR_01:2e4ef7fea2ba57b0",
-  "instanceChecksum": "d4e76a5f74885fb4c508d993e2b687dcb4930140288d7bd12c5052e98df69e86",
-  "uniqueSolution": true,
-  "alternateSolutionsRejected": true,
-  "answerFreeClient": true,
-  "accessibilityEquivalent": true,
+  "productionStatus": "PROTOTYPE_ONLY",
+  "localDeterministicReplay": "NOT_RUN",
+  "localSingleSolutionCheck": "NOT_RUN",
+  "answerFreeClient": "NOT_RUN",
+  "accessibilityEquivalent": "NOT_PROVEN",
+  "independentAuthoredContractProof": "NOT_IMPLEMENTED",
   "focusedTests": [
     "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
   ],
-  "status": "PASS",
+  "assertions": [
+    {
+      "name": "Authored production generator exists",
+      "expected": true,
+      "observed": false,
+      "pass": false
+    },
+    {
+      "name": "Generic carrier excluded from production coverage",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    }
+  ],
   "authoredContract": {
     "answerFormat": "SIXTEEN_CHARACTER_SEQUENCE",
     "concept": "A deterministic 320-face polyhedral puzzle box can rotate and unfold. Exactly one 16-face path shares color, orientation, and adjacency properties.",
@@ -52,11 +96,5 @@
       "REDUCED_MOTION",
       "SCREEN_READER_FACE_LIST"
     ]
-  },
-  "assertions": {
-    "authoredContractPreserved": true,
-    "deterministicReplay": true,
-    "noLiveRuntimeRecords": true,
-    "timerStarted": false
   }
 }

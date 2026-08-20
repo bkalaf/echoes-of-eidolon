@@ -27,4 +27,3 @@ describe("Puzzle Blueprint package", () => {
     expect(() => parsePuzzleBlueprintPackageCsv(source.replace("puzzleBlueprintId,title", "title,puzzleBlueprintId"))).toThrow(/column 1/);
   });
 });
-

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "echoes-release-history-decision-v1",
+  "generatedAt": "2026-08-20T10:41:56-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "status": "RESOLVED_OWNER_AUTHORIZED_BASELINE_EXCEPTION",
+  "candidate": "STAGED_REMEDIATION_ON_b503f48a39c6be823fa295c8f2bfb305107e25ef",
+  "validatedRange": {
+    "configuredBaseline": "c1f6b137bae6877617689e59be0727c353dfef36",
+    "candidateBase": "b503f48a39c6be823fa295c8f2bfb305107e25ef",
+    "command": "git log c1f6b137bae6877617689e59be0727c353dfef36..HEAD",
+    "failure": null
+  },
+  "offendingCommit": {
+    "sha": "c1f6b137bae6877617689e59be0727c353dfef36",
+    "parent": "53a8f480690ad481997d415127c04369982b13c9",
+    "subject": "gitignore changes",
+    "change": "Adds ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18/*.log to .gitignore",
+    "semanticAssessment": "The file change is narrow, but the public commit subject violates the configured conventional-commit release gate. A later conforming commit cannot remove this failure from the validated range."
+  },
+  "options": [
+    {
+      "id": "GOVERNANCE_BASELINE_EXCEPTION",
+      "destructive": false,
+      "requiredOwnerDecision": "Explicitly accept the exact c1f6b137 commit and authorize moving footerRequiredAfter to c1f6b137bae6877617689e59be0727c353dfef36.",
+      "consequences": [
+        "The nonconforming subject is retained in public history as an explicit exception.",
+        "Every implementation commit after c1f6b137, including b503f48a and the future repair candidate, remains inside the validated range.",
+        "The governance file and release note must record the exception rationale before the release gate can pass."
+      ]
+    },
+    {
+      "id": "CLEAN_HISTORY_RECONSTRUCTION",
+      "destructive": true,
+      "requiredOwnerDecision": "Explicitly authorize reconstruction from an accepted base and replacement of the affected public main history.",
+      "consequences": [
+        "All intended changes must be reconstructed into conventional, reviewable commits.",
+        "Published commit identities after the reconstruction base change.",
+        "Replacing public main requires coordinated destructive-history authorization and is not part of this repair run."
+      ]
+    }
+  ],
+  "recommendation": {
+    "option": "GOVERNANCE_BASELINE_EXCEPTION",
+    "reason": "The offending commit changes only one ignore rule; an explicit, documented exception avoids destructive public-history replacement while keeping all substantive implementation commits subject to validation."
+  },
+  "ownerAuthorization": {
+    "authorizedAt": "2026-08-20T10:41:56-07:00",
+    "decision": "GOVERNANCE_BASELINE_EXCEPTION",
+    "scope": "Accept c1f6b137bae6877617689e59be0727c353dfef36 and move footerRequiredAfter to that exact commit without rewriting history."
+  },
+  "actionsNotAuthorized": [
+    "Rewrite or force-push main",
+    "Create a release tag or GitHub Release"
+  ]
+}

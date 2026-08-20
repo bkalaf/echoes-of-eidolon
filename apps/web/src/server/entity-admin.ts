@@ -2,7 +2,7 @@ import contractData from "../data/entity-admin-contract.json";
 import { entityForPath, type EntityName } from "../content/entities";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
 import { CanonicalImportDriftError, UnsupportedImportEntityError } from "./import-errors";
-import { validateBreed, validateBreedHierarchy, validateCanonicalPersistenceId, validateSpecies, validateTaxonomy, type BreedHierarchyNode } from "../domain/worldbuilding";
+import { canonicalTaxonomyLevelId, validateBreed, validateBreedHierarchy, validateCanonicalPersistenceId, validateSpecies, type BreedHierarchyNode, type TaxonomyType } from "../domain/worldbuilding";
 import { staticPresentationQa, type PresentationField } from "../domain/presentation-audit";
 import { assertCanonicalCharacterBreedPolicy, canonicalCharacterId } from "../domain/architect-witness";
 import { assertWitnessArchitectSoulContinuity, witnessDefSchema } from "../domain/invariants";
@@ -133,11 +133,37 @@ async function validateWorldbuildingWrite(database: PrismaClient, entity: Entity
     if (presentationErrors.length) throw new EntityAdminValidationError(presentationErrors.join(" "));
   }
   if (entity === "Species") {
-    const errors = [
-      ...(data.taxonomy != null ? validateTaxonomy(data.taxonomy) : []),
-      ...validateSpecies(data as unknown as Parameters<typeof validateSpecies>[0]),
-    ];
+    const errors = validateSpecies(data as unknown as Parameters<typeof validateSpecies>[0]);
+    const taxonomyLevelId = typeof data.taxonomyLevelId === "string" && data.taxonomyLevelId.trim() ? data.taxonomyLevelId : null;
+    if (taxonomyLevelId && !await database.taxonomy.findUnique({ select: { taxonomyLevelId: true }, where: { taxonomyLevelId } })) errors.push(`Taxonomy ${taxonomyLevelId} does not exist.`);
     if (errors.length) throw new EntityAdminValidationError(errors.join(" "));
+    return;
+  }
+  if (entity === "Taxonomy") {
+    const taxonomyLevelId = typeof data.taxonomyLevelId === "string" ? data.taxonomyLevelId : "";
+    const name = typeof data.name === "string" ? data.name : "";
+    const type = typeof data.type === "string" ? data.type as TaxonomyType : undefined;
+    if (!taxonomyLevelId || !name.trim() || !type) throw new EntityAdminValidationError("Taxonomy identity, type, and name are required.");
+    if (taxonomyLevelId !== canonicalTaxonomyLevelId(type, name)) throw new EntityAdminValidationError(`${type} ${name} must use taxonomyLevelId ${canonicalTaxonomyLevelId(type, name)}.`);
+    if (typeof data.isOfficial !== "boolean") throw new EntityAdminValidationError("Taxonomy isOfficial must be boolean.");
+    const rankOrder: TaxonomyType[] = ["KINGDOM", "PHYLUM", "CLASS", "ORDER", "FAMILY", "GENUS", "SPECIES"];
+    const parentTaxonomyLevelId = typeof data.parentTaxonomyLevelId === "string" && data.parentTaxonomyLevelId.trim() ? data.parentTaxonomyLevelId : null;
+    if (parentTaxonomyLevelId === taxonomyLevelId) throw new EntityAdminValidationError("Taxonomy cannot parent itself.");
+    let parent = parentTaxonomyLevelId
+      ? await database.taxonomy.findUnique({ select: { taxonomyLevelId: true, type: true, parentTaxonomyLevelId: true }, where: { taxonomyLevelId: parentTaxonomyLevelId } })
+      : null;
+    if (parentTaxonomyLevelId && !parent) throw new EntityAdminValidationError(`Parent Taxonomy ${parentTaxonomyLevelId} does not exist.`);
+    if (parent && rankOrder.indexOf(parent.type) >= rankOrder.indexOf(type)) throw new EntityAdminValidationError(`Taxonomy parent of ${type} must be a higher rank.`);
+    const visited = new Set([taxonomyLevelId]);
+    while (parent) {
+      if (visited.has(parent.taxonomyLevelId)) throw new EntityAdminValidationError(`Taxonomy hierarchy cycle detected for ${taxonomyLevelId}.`);
+      visited.add(parent.taxonomyLevelId);
+      parent = parent.parentTaxonomyLevelId
+        ? await database.taxonomy.findUnique({ select: { taxonomyLevelId: true, type: true, parentTaxonomyLevelId: true }, where: { taxonomyLevelId: parent.parentTaxonomyLevelId } })
+        : null;
+    }
+    const children = await database.taxonomy.findMany({ select: { taxonomyLevelId: true, type: true }, where: { parentTaxonomyLevelId: taxonomyLevelId } });
+    if (children.some((child) => rankOrder.indexOf(type) >= rankOrder.indexOf(child.type))) throw new EntityAdminValidationError(`${type} cannot be the canonical parent of an equal or higher Taxonomy rank.`);
     return;
   }
   if (entity === "Culture") return;
@@ -313,7 +339,7 @@ export async function updateEntityRecord(database: PrismaClient, entity: EntityN
   const data = normalizeEntityData(entity, input, "update");
   if (data[contract.idField] !== undefined && data[contract.idField] !== recordId) throw new EntityAdminValidationError(`${contract.idField} is immutable.`);
   delete data[contract.idField];
-  if (entity === "Species" || entity === "Culture" || entity === "Breed") {
+  if (entity === "Species" || entity === "Culture" || entity === "Breed" || entity === "Taxonomy") {
     const existing = await getEntityRecord(database, entity, recordId);
     if (!existing) throw new EntityAdminValidationError(`${entity} record not found.`);
     await validateWorldbuildingWrite(database, entity, { ...existing, ...data });

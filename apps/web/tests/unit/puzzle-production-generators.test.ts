@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   generateProductionPuzzle,
   getProductionGeneratorCatalog,
+  getPuzzleGeneratorReadinessCatalog,
   getProductionPreviews,
   getPublicProductionPuzzle,
   productionFamilyKinds,
@@ -14,17 +15,20 @@ import {
 const secret = "all-production-generator-test-secret-00000000000000000000";
 
 describe("Witness Puzzle Box 70 production generators", () => {
-  it("covers the exact 70 IDs, five tiers, and nine authored families", () => {
-    const catalog = getProductionGeneratorCatalog();
-    expect(catalog).toHaveLength(70);
-    expect(catalog.map((entry) => entry.puzzleBlueprintId)).toEqual(Array.from({ length: 70 }, (_, index) => `PZB-${String(index + 1).padStart(3, "0")}`));
-    expect(new Set(catalog.map((entry) => entry.primaryFamily))).toEqual(new Set(Object.keys(productionFamilyKinds)));
+  it("classifies all 70 Blueprints without counting generic carriers as production", () => {
+    const readiness = getPuzzleGeneratorReadinessCatalog();
+    expect(readiness).toHaveLength(70);
+    expect(readiness.map((entry) => entry.puzzleBlueprintId)).toEqual(Array.from({ length: 70 }, (_, index) => `PZB-${String(index + 1).padStart(3, "0")}`));
+    expect(new Set(readiness.map((entry) => entry.primaryFamily))).toEqual(new Set(Object.keys(productionFamilyKinds)));
     for (const tier of ["TIER_1_INITIATE", "TIER_2_ADEPT", "TIER_3_EXPERT", "TIER_4_MASTER", "TIER_5_ORDEAL"]) {
-      expect(catalog.filter((entry) => entry.difficultyTier === tier)).toHaveLength(14);
+      expect(readiness.filter((entry) => entry.difficultyTier === tier)).toHaveLength(14);
     }
+    expect(readiness.filter((entry) => entry.productionStatus === "PRODUCTION").map((entry) => entry.puzzleBlueprintId).sort()).toEqual(["PZB-011", "PZB-012", "PZB-021", "PZB-037"]);
+    expect(readiness.filter((entry) => entry.productionStatus === "PROTOTYPE_ONLY")).toHaveLength(66);
   });
 
-  it("deterministically generates, solves, and rejects decoys for all 70", () => {
+  it("deterministically generates, solves, and rejects decoys for the four authored tutorials", () => {
+    expect(getProductionGeneratorCatalog()).toHaveLength(4);
     for (const entry of getProductionGeneratorCatalog()) {
       const input = { generatorVersion: entry.generatorVersion, puzzleBlueprintId: entry.puzzleBlueprintId, seed: "coverage-seed-01", subjectKey: "PLAYER-COVERAGE" };
       const generated = generateProductionPuzzle(input, secret);
@@ -42,6 +46,10 @@ describe("Witness Puzzle Box 70 production generators", () => {
       expect(generated.uniqueSolution).toBe(true);
       expect(generated.alternateSolutionsRejected).toBe(true);
     }
+  });
+
+  it("rejects a generic Blueprint that has no authored production generator", () => {
+    expect(() => generateProductionPuzzle({ generatorVersion: "1.0.0", puzzleBlueprintId: "PZB-001", seed: "coverage-seed-01", subjectKey: "PLAYER-COVERAGE" }, secret)).toThrow(/no authored production generator/i);
   });
 
   it("returns only answer-free client projections with complete accessibility and hints", () => {
@@ -63,28 +71,22 @@ describe("Witness Puzzle Box 70 production generators", () => {
     }
   });
 
-  it("uses nine distinct family carriers and claim-level declared citations for research", () => {
+  it("uses only the authored tutorial carriers in the production catalog", () => {
     const observed = new Set<string>();
     for (const entry of getProductionGeneratorCatalog()) {
       const generated = generateProductionPuzzle({ generatorVersion: entry.generatorVersion, puzzleBlueprintId: entry.puzzleBlueprintId, seed: "family-seed", subjectKey: "PLAYER-FAMILY" }, secret);
       observed.add(generated.familyKind);
-      if (entry.primaryFamily === "HISTORICAL_RESEARCH") {
-        expect(generated.carrier.kind).toBe("RESEARCH_CLAIM_CHAIN");
-        if (generated.carrier.kind === "RESEARCH_CLAIM_CHAIN") {
-          expect(generated.carrier.claims.length).toBeGreaterThan(0);
-          expect(generated.carrier.claims.every((claim) => /^https:\/\//.test(claim.citation))).toBe(true);
-        }
-      }
     }
-    expect(observed).toEqual(new Set(Object.values(productionFamilyKinds)));
+    expect(observed).toEqual(new Set(["NUMERIC_LEDGER", "VISUAL_SHAPE_LAYERS", "AUDIO_CAPTION_SEQUENCE"]));
   });
 
-  it("serves all 70 answer-free administrator previews and validates them server-side", () => {
+  it("serves only the four authored production previews and validates them server-side", () => {
     const previews = getProductionPreviews(secret);
-    expect(previews).toHaveLength(70);
+    expect(previews).toHaveLength(4);
     expect(previews.map((preview) => preview.puzzleBlueprintId)).toEqual(getProductionGeneratorCatalog().map((entry) => entry.puzzleBlueprintId));
     expect(previews.every((preview) => preview.timerStarted === false && preview.liveRuntimeRecordsCreated === 0)).toBe(true);
-    expect(validateProductionPreview("PZB-001", "DECLARED-DECOY", secret)).toEqual({ correct: false, puzzleBlueprintId: "PZB-001", timerStarted: false });
+    expect(validateProductionPreview("PZB-011", "DECLARED-DECOY", secret)).toEqual({ correct: false, puzzleBlueprintId: "PZB-011", timerStarted: false });
+    expect(() => validateProductionPreview("PZB-001", "anything", secret)).toThrow(/no authored production generator/i);
     expect(() => validateProductionPreview("PZB-999", "anything", secret)).toThrow("Unknown production Puzzle Blueprint: PZB-999");
   });
 });

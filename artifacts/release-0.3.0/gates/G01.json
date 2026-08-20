@@ -3,121 +3,46 @@
   "gateId": "G01",
   "status": "BLOCKED",
   "release": "0.3.0",
-  "commitSha": "53a8f480690ad481997d415127c04369982b13c9",
-  "environment": "local release worktree",
-  "startedAt": "2026-08-18T14:01:06-07:00",
-  "finishedAt": "2026-08-18T14:03:02-07:00",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree",
+  "startedAt": "2026-08-20T17:14:50.735Z",
+  "finishedAt": "2026-08-20T17:14:50.735Z",
   "dependencies": [
     {
       "gateId": "G00",
       "status": "BLOCKED"
     }
   ],
-  "commands": [
-    {
-      "command": "pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-prompt-coverage.test.ts --reporter=verbose",
-      "exitCode": 0,
-      "logPath": "artifacts/release-0.3.0/tests/red-baseline/vitest-summary.txt",
-      "startedAt": "2026-08-18T14:01:06-07:00",
-      "finishedAt": "2026-08-18T14:01:09-07:00"
-    },
-    {
-      "command": "pnpm --dir apps/web exec vitest run tests/unit/release-0.3.0-red-baseline.test.ts --reporter=verbose",
-      "exitCode": 1,
-      "logPath": "artifacts/release-0.3.0/tests/red-baseline/vitest-summary.txt",
-      "startedAt": "2026-08-18T14:01:10-07:00",
-      "finishedAt": "2026-08-18T14:01:12-07:00"
-    }
-  ],
+  "commands": [],
   "assertions": [
     {
-      "name": "All 18 work items mapped to tests and audits",
-      "expected": 18,
-      "observed": 18,
-      "pass": true
-    },
-    {
-      "name": "Focused failures reproduce missing behavior",
-      "expected": "intentional scoped failures",
-      "observed": {
-        "failed": 8,
-        "passedExisting": 1
-      },
-      "pass": true
-    },
-    {
-      "name": "Complete owner UI and route baseline inventories exist",
-      "expected": [
-        "entities",
-        "routes",
-        "tables",
-        "forms"
-      ],
-      "observed": [
-        "entities",
-        "routes",
-        "tables",
-        "forms"
-      ],
-      "pass": true
-    },
-    {
-      "name": "No duplicate or unnumbered prompt omitted",
-      "expected": [
-        "R030-Q14U",
-        "R030-Q16A",
-        "R030-Q16B"
-      ],
-      "observed": [
-        "R030-Q14U",
-        "R030-Q16A",
-        "R030-Q16B"
-      ],
-      "pass": true
-    },
-    {
-      "name": "Dependency G00 passed",
-      "expected": "PASS",
-      "observed": "BLOCKED",
+      "name": "Immutable candidate evidence",
+      "expected": "40-character candidate SHA",
+      "observed": "UNCOMMITTED_WORKTREE",
       "pass": false
     }
   ],
   "artifacts": [
     {
-      "path": "artifacts/release-0.3.0/tests/red-baseline/prompt-coverage.json",
-      "sha256": "0fe4d7403200163c7340864bc73cbeca486f24eb917b86f12103dfca3eb13e86"
-    },
-    {
-      "path": "artifacts/release-0.3.0/tests/red-baseline/behavior-gap-summary.json",
-      "sha256": "550e5a62689d8b873c7f44689bf854c832cf03309ce10cbe67c50bd651c0cfb2"
-    },
-    {
-      "path": "artifacts/release-0.3.0/owner-ui/owner-entity-inventory.json",
-      "sha256": "208252255fff4de0fee2240f931e20e18916e41d9a3b6b82f3adfc4b3a8ad66b"
-    },
-    {
-      "path": "artifacts/release-0.3.0/owner-ui/owner-route-inventory.json",
-      "sha256": "f3146419ce13cf04fc3df226d9ae914f54ccac01677e7b84fd448fa01b8d2e06"
-    },
-    {
       "path": "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
-      "sha256": "97b39852a8a7c1222493d6310b61dbd471b7d069a39b1c798e3d925a808210f3"
+      "sha256": "0733c1ea06c8133e4b2d8bf219aef7de4d0394b6cbf76375e84550e1a03e2f66"
     },
     {
       "path": "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
-      "sha256": "a6f53d72da2f02840fcf31747884908072d4e8e0ea80204b894861d2fd96c1db"
+      "sha256": "7454a449b9545ef38e49f2cf246f0034c10a6b8ba6b5bb8ff2461619d226cd81"
     }
   ],
   "blockers": [
     {
-      "id": "B07-PRODUCTION-BASELINE-ACCESS",
-      "taskId": "T000",
-      "condition": "Dependency G00 is blocked because fresh production health/version evidence is unavailable.",
-      "requiredResolution": "Restore network or browser access, capture production /api/version and /api/health, and re-evaluate G00 before G01 can pass."
+      "id": "G00-NOT-PASS",
+      "condition": "G00 is not PASS."
+    },
+    {
+      "id": "OWNER-UI-BESPOKE-CONTRACTS",
+      "condition": "Bespoke owner tables and forms do not all have independent owning read/write contracts."
     }
   ],
   "notes": [
-    "All G01-local acceptance conditions pass.",
-    "G01 is BLOCKED solely because its canonical dependency G00 is BLOCKED; it is not reported as PASS or PARTIAL."
+    "This report supersedes stale base-SHA evidence. It does not claim candidate-bound execution before the repair is committed and frozen."
   ]
 }

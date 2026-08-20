@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "echoes-release-0.3.0-final-report-v1",
+  "generatedAt": "2026-08-18T22:35:54-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "Existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree",
+  "status": "BLOCKED",
+  "title": "Release 0.3.0 Blocked",
+  "inputs": [
+    {
+      "path": "/home/bobby/Downloads/ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18.zip",
+      "sha256": "c6af5370fe29113594e61a9ac13db3180aaf3401740784bc9a1417eeaf817c34"
+    },
+    {
+      "path": "/home/bobby/Downloads/ECHOES_OF_EIDOLON_0_3_0_PUSHED_IMPLEMENTATION_AUDIT_2026-08-18/MANIFEST.sha256",
+      "sha256": "23b52edc23433edf7c20ca6359afa524d86a32069897c292050e93444cef7d89"
+    }
+  ],
+  "sourceIdentity": {
+    "checkout": "/home/bobby/echoes-of-eidolon",
+    "branch": "main",
+    "headBeforeRepair": "b503f48a39c6be823fa295c8f2bfb305107e25ef",
+    "originMainBeforeRepair": "b503f48a39c6be823fa295c8f2bfb305107e25ef",
+    "candidate": null,
+    "reasonCandidateAbsent": "Local repairs are not committed; .git is read-only to this execution environment."
+  },
+  "remediationCompleted": [
+    "Puzzle Blueprint library and CLI default to verify-only; apply requires explicit mode and target; conflicting/unknown flags fail closed.",
+    "Only PZB-011, PZB-012, PZB-021, and PZB-037 are classified as authored production generators; the other 66 are PROTOTYPE_ONLY.",
+    "Production generation and preview APIs reject prototype-only generic carriers.",
+    "Puzzle coverage evidence no longer hard-codes authored/accessibility PASS claims.",
+    "Generic owner forms and tables are independently compared against generated contracts.",
+    "Negative controls prove missing fields, identity, relation labels, null clearing, subtype parent fields, and table columns fail the audit.",
+    "Bespoke owner surfaces without independent contracts or rendered relation evidence are explicitly blocked.",
+    "All G00-G12 reports now exist with BLOCKED or NOT_RUN state and no stale candidate claim.",
+    "The 16 cumulative diff whitespace defects are removed.",
+    "The release-history disposition report records the governance-exception and clean-reconstruction options without changing history.",
+    "The canonical 0.3.0 draft note removes false production/completeness claims."
+  ],
+  "gateStatuses": {
+    "G00": "BLOCKED",
+    "G01": "BLOCKED",
+    "G02": "BLOCKED",
+    "G03": "BLOCKED",
+    "G04": "BLOCKED",
+    "G05": "BLOCKED",
+    "G06": "BLOCKED",
+    "G07": "BLOCKED",
+    "G08": "BLOCKED",
+    "G09": "NOT_RUN",
+    "G10": "NOT_RUN",
+    "G11": "NOT_RUN",
+    "G12": "NOT_RUN"
+  },
+  "testResults": {
+    "frozenInstall": "PASS",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "prismaValidate": "PASS",
+    "navigation": "PASS: 292 active, 0 blocking defects",
+    "build": "PASS",
+    "focusedRemediation": "PASS: importer/Puzzle 14/14; owner UI 12/12; gate completeness 1/1",
+    "isolatedContentionReruns": "PASS: 40/40",
+    "fullUnit": "FAIL: 145/148 files and 795/801 tests passed; three intentional release gaps, two sandbox subprocess failures that pass isolated, one timeout that passes isolated",
+    "integration": "FAIL: 13/14 files and 58/59 tests passed; sole failure is release-history subject c1f6b137",
+    "cumulativeDiffCheck": "PASS",
+    "playwright": "BLOCKED: local webServer listen returns EPERM",
+    "releaseCheck": "FAIL: configured range includes nonconforming c1f6b137 subject gitignore changes"
+  },
+  "changedFiles": {
+    "sourceAndScripts": [
+      "apps/web/package.json",
+      "apps/web/scripts/generate-owner-form-inventory.mjs",
+      "apps/web/scripts/generate-owner-table-inventory.mjs",
+      "apps/web/scripts/generate-owner-ui-live-inventory.mts",
+      "apps/web/scripts/generate-puzzle-production-audit.mts",
+      "apps/web/scripts/generate-release-remediation-reports.mts",
+      "apps/web/scripts/import-puzzle-blueprints.mts",
+      "apps/web/src/domain/owner-ui-independent-audit.ts",
+      "apps/web/src/server/puzzle-blueprint-import.ts",
+      "apps/web/src/server/puzzle-production-generators.ts"
+    ],
+    "tests": [
+      "apps/web/tests/unit/owner-form-inventory.test.ts",
+      "apps/web/tests/unit/owner-table-inventory.test.ts",
+      "apps/web/tests/unit/owner-ui-independent-audit.test.ts",
+      "apps/web/tests/unit/puzzle-blueprint-import.test.ts",
+      "apps/web/tests/unit/puzzle-production-generators.test.ts",
+      "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+      "apps/web/tests/unit/release-gate-report-completeness.test.ts",
+      "apps/web/tests/unit/release-owner-ui-audit.test.ts"
+    ],
+    "releaseDocumentation": [
+      "docs/release-notes/0_3_0.md"
+    ],
+    "generatedEvidence": [
+      "artifacts/release-0.3.0-owner-data-ui-audit.json",
+      "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
+      "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
+      "artifacts/release-0.3.0/owner-ui/owner-live-contract-inventory.json",
+      "artifacts/release-0.3.0/owner-ui/owner-row-edit-audit.json",
+      "artifacts/release-0.3.0/owner-ui/inline-row-edit-audit.json",
+      "artifacts/release-0.3.0/owner-ui/record-detail-route-audit.json",
+      "artifacts/release-0.3.0/owner-ui/release-0.3.0-owner-data-ui-audit.json",
+      "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json",
+      "artifacts/release-0.3.0/puzzles/per-blueprint/PZB-001.json through PZB-070.json",
+      "artifacts/release-0.3.0/gates/G00.json through G12.json",
+      "artifacts/release-0.3.0/preflight/release-history-decision.json",
+      "artifacts/release-0.3.0/tests/cumulative/remediation-run-summary.json",
+      "artifacts/release-0.3.0/final/final-release-report.json",
+      "artifacts/release-0.3.0/final/final-release-report.md"
+    ],
+    "cumulativeWhitespaceRepairs": [
+      "apps/web/data/puzzles/puzzle-prototype-catalog-70.json",
+      "apps/web/src/components/LookupDisplay.tsx",
+      "apps/web/src/domain/owner-table-field-order.ts",
+      "apps/web/src/domain/owner-ui-live-inventory.ts",
+      "apps/web/src/server/puzzle-prototypes.ts",
+      "apps/web/tests/unit/puzzle-blueprint-package.test.ts",
+      "apps/web/tests/unit/puzzle-prototypes.test.ts",
+      "apps/web/tests/unit/release-0.3.0-prompt-coverage.test.ts",
+      "artifacts/release-0.3.0/preflight/authority-snapshot.json",
+      "artifacts/release-0.3.0/preflight/pr-2-review.json",
+      "artifacts/release-0.3.0/preflight/production-baseline.json",
+      "artifacts/release-0.3.0/preflight/repository-baseline.json",
+      "artifacts/release-0.3.0/preflight/toolchain.json",
+      "artifacts/release-0.3.0/traceability.json"
+    ]
+  },
+  "commands": [
+    {
+      "command": "See artifacts/release-0.3.0/tests/cumulative/remediation-run-summary.json",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 1,
+      "logPath": "artifacts/release-0.3.0/tests/cumulative/remediation-run-summary.json"
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Release 0.3.0 is releasable",
+      "expected": "all G00-G12 PASS on one immutable candidate",
+      "observed": "G00-G08 BLOCKED; G09-G12 NOT_RUN; no candidate SHA",
+      "pass": false
+    },
+    {
+      "name": "Locally authorized audit remediation is truthful",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/release-0.3.0/tests/cumulative/remediation-run-summary.json",
+      "sha256": "8dbd163859340c2842a11a271e87d7fbdcd3759e24442547339f29fc79d7959c"
+    },
+    {
+      "path": "artifacts/release-0.3.0/preflight/release-history-decision.json",
+      "sha256": "6f84bca7f7bab36cfa6525beadc0d8bc4fca0cb8d060104f191509f5b3d5d4dd"
+    },
+    {
+      "path": "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json",
+      "sha256": "00b696b704eecb8bb3b3e880eefcfd5354f4d175c5a8e7b65a5927ced05eaf1b"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "CANDIDATE-NOT-FROZEN",
+      "condition": "The remediation must be committed before candidate-bound gates can run."
+    },
+    {
+      "id": "RELEASE-HISTORY-OWNER-DECISION",
+      "condition": "Owner must choose the documented governance exception or separately authorize clean-history reconstruction."
+    },
+    {
+      "id": "FOUNDING-POPULATION-AUTHORITY",
+      "condition": "Exact owner-authored mappings and allocation rules are missing."
+    },
+    {
+      "id": "TAXONOMY-AUTHORITY",
+      "condition": "Live export and owner conflict decisions are missing."
+    },
+    {
+      "id": "PUZZLE-AUTHORING-AND-REVIEW",
+      "condition": "66 authored generators plus accessibility/security/browser/owner review are missing."
+    },
+    {
+      "id": "OWNER-UI-BESPOKE-CONTRACTS-AND-BROWSER",
+      "condition": "Independent bespoke contracts and rendered browser evidence are incomplete."
+    },
+    {
+      "id": "CHROMIUM-RUNTIME",
+      "condition": "This sandbox cannot bind the required local test server."
+    }
+  ],
+  "actionsNotPerformed": [
+    "No commit was created.",
+    "No push, merge, PR mutation, or GitHub API action was performed.",
+    "No database apply, import, migration, or production mutation was performed.",
+    "No deployment, service restart, tag, GitHub Release, or release-note publication was performed.",
+    "No extra worktree or branch was created.",
+    "The unrelated next_implementation_codex_package_v1 directory was not modified."
+  ],
+  "notes": [
+    "This is a remediation blocker report, not a release acceptance report.",
+    "A new immutable candidate requires regeneration of every affected report and rerun of all cumulative gates."
+  ]
+}

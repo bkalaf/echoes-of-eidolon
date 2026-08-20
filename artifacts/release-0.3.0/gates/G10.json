@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "echoes-release-gate-report-v1",
+  "gateId": "G10",
+  "status": "NOT_RUN",
+  "release": "0.3.0",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree",
+  "startedAt": "2026-08-20T17:14:50.735Z",
+  "finishedAt": "2026-08-20T17:14:50.735Z",
+  "dependencies": [
+    {
+      "gateId": "G09",
+      "status": "NOT_RUN"
+    }
+  ],
+  "commands": [],
+  "assertions": [
+    {
+      "name": "Immutable candidate evidence",
+      "expected": "40-character candidate SHA",
+      "observed": "UNCOMMITTED_WORKTREE",
+      "pass": false
+    }
+  ],
+  "artifacts": [],
+  "blockers": [
+    {
+      "id": "G09-NOT-PASS",
+      "condition": "G09 is not PASS."
+    },
+    {
+      "id": "RELEASE-NOTE-DRAFT",
+      "condition": "The canonical release note remains DRAFT and has no release date."
+    }
+  ],
+  "notes": [
+    "This report supersedes stale base-SHA evidence. It does not claim candidate-bound execution before the repair is committed and frozen."
+  ]
+}

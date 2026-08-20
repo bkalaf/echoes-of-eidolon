@@ -274,7 +274,7 @@ test("packet routes expose public, auth, account, and store tasks", async ({ pag
 
 test("administration routes expose canonical editor, import, atlas, and campaign tasks", async ({ page }) => {
   for (const [path, heading] of [
-    ["/admin/data/witness/sample-record", "Edit Witness"],
+    ["/admin/data/witness/sample-record", "Witness Record"],
     ["/admin/data/breed/import", "Bulk Import Breed"],
     ["/admin/atlas/pois?state=ATLAS_POI_3D", "Points of Interest — 3D View"],
     ["/admin/campaign/planner?state=CAMPAIGN_CONCORD", "Main 18-Book Planner — Concord"],
@@ -298,7 +298,7 @@ test("game routes require an authenticated eligible player", async ({ page }) =>
 test("review routes expose routed and state-only tasks", async ({ page }) => {
   for (const [path, text] of [
     ["/review/controls/lookups?state=TOOL003", "Control Gallery - Enum Selects"],
-    ["/tools/wireframe-builder", "Wireframe Builder"],
+    ["/tools/wireframe-builder", "Wireframe Review Queue"],
   ] as const) {
     await page.goto(path);
     await expect(page.getByText(text, { exact: true }).first()).toBeVisible();

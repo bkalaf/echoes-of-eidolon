@@ -12,7 +12,7 @@ import { lookupSearchText, LookupPresentationError, ownerFormLookupPresentationF
 import { buildOwnerFormPlan, ownerFormSections, subtypeParentEntity, type OwnerFormFieldPlan } from "../../domain/owner-form-contract";
 import { clothingSections, formatClothingSections, parseClothingSections } from "../../domain/presentation-audit";
 import { orderOwnerTableFields } from "../../domain/owner-table-field-order";
-import { canonicalEntityId, canonicalTaxonomyLevelId, type CanonicalWorldbuildingEntityKind, type TaxonomyType } from "../../domain/worldbuilding";
+import { canonicalEntityId, type CanonicalWorldbuildingEntityKind } from "../../domain/worldbuilding";
 import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
 
 interface AdminField {
@@ -81,33 +81,6 @@ function canonicalKindForEntity(entity: EntityName): CanonicalWorldbuildingEntit
   return entity === "Species" ? "SPECIES" : entity === "Culture" ? "CULTURE" : entity === "Breed" ? "BREED" : undefined;
 }
 
-function TaxonomyEditor({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  const ranks = ["KINGDOM", "PHYLUM", "CLASS", "ORDER", "FAMILY", "GENUS", "SPECIES"] as const;
-  type Node = { taxonomyLevelId: string; type: typeof ranks[number]; name: string; isOfficial: boolean; text?: string; commonName?: string; parent?: Node };
-  let parsed: Node | undefined;
-  try { const valueParsed = JSON.parse(value) as Node; if (valueParsed && typeof valueParsed === "object") parsed = valueParsed; } catch { /* editor starts blank */ }
-  const nodes: Node[] = [];
-  for (let current = parsed; current; current = current.parent) nodes.push(current);
-  const update = (index: number, changes: Partial<Omit<Node, "parent">>) => {
-    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "", isOfficial: false });
-    let current = cloned; for (let cursor = 0; cursor < index; cursor += 1) current = current.parent!;
-    Object.assign(current, changes);
-    if (changes.text === "") delete current.text;
-    if (changes.commonName === "") delete current.commonName;
-    if (current.name.trim()) current.taxonomyLevelId = canonicalTaxonomyLevelId(current.type as TaxonomyType, current.name);
-    onChange(JSON.stringify(cloned, null, 2));
-  };
-  const addParent = () => {
-    const cloned: Node = structuredClone(parsed ?? { taxonomyLevelId: "", type: "SPECIES" as const, name: "", isOfficial: false });
-    let current = cloned; while (current.parent) current = current.parent;
-    const index = ranks.indexOf(current.type); if (index <= 0) return;
-    current.parent = { taxonomyLevelId: "", type: ranks[index - 1], name: "", isOfficial: false };
-    onChange(JSON.stringify(cloned, null, 2));
-  };
-  if (!parsed) return <div className="span-2"><button className="button" type="button" onClick={() => onChange(JSON.stringify({ taxonomyLevelId: "", type: "SPECIES", name: "", isOfficial: false }, null, 2))}>Add taxonomy</button></div>;
-  return <fieldset className="span-2"><legend>taxonomy</legend>{nodes.map((node, index) => <div className="form-grid" key={index}><label className="field">rank<select className="select" value={node.type} onChange={(event) => update(index, { type: event.target.value as TaxonomyType })}>{ranks.map((rank) => <option key={rank}>{rank}</option>)}</select></label><label className="field">taxonomyLevelId<input className="input" readOnly value={node.taxonomyLevelId} /></label><label className="field">name<input className="input" value={node.name} onChange={(event) => update(index, { name: event.target.value })} /></label><label className="field">commonName<input className="input" value={node.commonName ?? ""} onChange={(event) => update(index, { commonName: event.target.value })} /></label><label className="field"><input checked={node.isOfficial === true} type="checkbox" onChange={(event) => update(index, { isOfficial: event.target.checked })} /> Recognized by authoritative real-world taxonomy</label><label className="field span-2">text<input className="input" value={node.text ?? ""} onChange={(event) => update(index, { text: event.target.value })} /></label></div>)}<div className="action-row"><button className="button" type="button" onClick={addParent}>Add parent rank</button><button className="button button--danger" type="button" onClick={() => onChange("{}")}>Clear taxonomy</button></div></fieldset>;
-}
-
 function StringListEditor({ disabled, label, value, onChange }: { disabled: boolean; label: string; value: string; onChange: (value: string) => void }) {
   const values = selectedList(value);
   const update = (next: string[]) => onChange(JSON.stringify(next));
@@ -174,7 +147,6 @@ function AdminFieldEditor({ contract, controlOverride, disabled, entity, field, 
   const control = controlOverride ?? adminFieldControl(entity, contract.idField, field);
   if (control === "RELATION_LOOKUP" && relationType) return <RelationLookupEditor disabled={disabled} initialRecord={initialRelation} label={label} nullable={!field.isRequired} relationType={relationType} value={value} onChange={onChange} />;
   if (control === "SPECTRAL_COLOR") return <SpectralColorEditor disabled={disabled} value={value} onChange={onChange} />;
-  if (control === "TAXONOMY") return <TaxonomyEditor value={value || "{}"} onChange={onChange} />;
   if (control === "ENUM_LIST") return <div className="field span-2"><FiniteChipSelection allowedTokens={field.enumValues} label={label} multiple selectedTokens={selectedList(value || "[]")} onChange={(tokens) => onChange(JSON.stringify(tokens))} /></div>;
   if (control === "STRING_LIST") return <StringListEditor disabled={disabled} label={label} value={value || "[]"} onChange={onChange} />;
   if (control === "CLOTHING") return <ClothingEditor disabled={disabled} label={label} value={value} onChange={onChange} />;

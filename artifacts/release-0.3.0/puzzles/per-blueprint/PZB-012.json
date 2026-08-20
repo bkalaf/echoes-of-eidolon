@@ -1,23 +1,82 @@
 {
-  "schemaVersion": "eidolon-puzzle-blueprint-proof-v1",
-  "release": "0.3.0",
-  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "schemaVersion": "eidolon-puzzle-blueprint-proof-v2",
+  "generatedAt": "2026-08-20T17:14:49.657Z",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "UNCOMMITTED_WORKTREE",
+  "environment": {
+    "name": "local-repair",
+    "node": "v22.22.0",
+    "database": "NOT_USED",
+    "browser": "NOT_RUN"
+  },
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
+      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm puzzles:production-audit",
+      "startedAt": "2026-08-20T17:14:49.657Z",
+      "completedAt": "2026-08-20T17:14:49.657Z",
+      "exitCode": 0,
+      "logPath": null
+    }
+  ],
+  "artifacts": [],
+  "blockers": [
+    "Real accessibility-equivalence, browser, security, and named owner review remain outstanding."
+  ],
+  "notes": [
+    "Local deterministic checks are implementation evidence only; they are not named review or real-browser acceptance."
+  ],
   "puzzleBlueprintId": "PZB-012",
   "tier": "TIER_1_INITIATE",
   "primaryFamily": "CRYPTO_NUMERIC_DATA",
-  "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts#NUMERIC_LEDGER",
+  "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts",
   "generatorVersion": "1.0.0",
+  "productionStatus": "PRODUCTION",
   "seedVector": "RELEASE_PROOF_VECTOR_01:fb1b8f9e698d17af",
   "instanceChecksum": "0a1c2a80b2a91e7f2af155f7715cb1751fd87afa810ea4fc6e58c2cfb2291a28",
-  "uniqueSolution": true,
-  "alternateSolutionsRejected": true,
+  "localDeterministicReplay": true,
+  "localSingleSolutionCheck": true,
+  "localAlternateRejection": true,
   "answerFreeClient": true,
-  "accessibilityEquivalent": true,
+  "accessibilityEquivalent": "NOT_PROVEN",
+  "independentAuthoredContractProof": "REVIEW_REQUIRED",
   "focusedTests": [
     "apps/web/tests/unit/puzzle-production-generators.test.ts",
+    "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
   ],
-  "status": "PASS",
+  "assertions": [
+    {
+      "name": "Authored production generator exists",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Deterministic local replay",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Answer-free public projection",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Independent accessibility equivalence",
+      "expected": true,
+      "observed": "NOT_RUN",
+      "pass": false
+    }
+  ],
   "authoredContract": {
     "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
     "concept": "U and I act as both literal characters and formally scoped union/intersection operators. Generated set cards have exactly one parse that satisfies the checksum.",
@@ -50,11 +109,5 @@
       "HIGH_CONTRAST",
       "PRINTABLE_WORKSHEET"
     ]
-  },
-  "assertions": {
-    "authoredContractPreserved": true,
-    "deterministicReplay": true,
-    "noLiveRuntimeRecords": true,
-    "timerStarted": false
   }
 }

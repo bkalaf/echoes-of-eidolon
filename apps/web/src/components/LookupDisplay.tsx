@@ -8,4 +8,3 @@ export function LookupDisplay({ presentation }: { presentation: LookupPresentati
     {presentation.context.length > 0 && <span className="lookup-display__context">{presentation.context.join(" · ")}</span>}
   </span>;
 }
-

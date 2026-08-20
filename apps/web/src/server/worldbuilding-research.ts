@@ -310,9 +310,32 @@ interface WorldbuildingResearchDelegate {
   create(input: { data: Record<string, unknown> }): Promise<unknown>;
 }
 interface WorldbuildingResearchTransaction {
+  taxonomy: WorldbuildingResearchDelegate;
   species: WorldbuildingResearchDelegate;
   culture: WorldbuildingResearchDelegate;
   breed: WorldbuildingResearchDelegate;
+}
+
+function taxonomyPersistenceRows(value: unknown): Record<string, unknown>[] {
+  if (value === null || value === undefined) return [];
+  const errors = validateTaxonomy(value);
+  if (errors.length) throw new Error(errors.join(" "));
+  const lineage: Record<string, unknown>[] = [];
+  let current = value as Record<string, unknown> | null;
+  while (current) {
+    const parent = current.parent && typeof current.parent === "object" && !Array.isArray(current.parent) ? current.parent as Record<string, unknown> : null;
+    lineage.push({
+      taxonomyLevelId: current.taxonomyLevelId,
+      type: current.type,
+      name: current.name,
+      isOfficial: current.isOfficial,
+      text: current.text ?? null,
+      commonName: current.commonName ?? null,
+      parentTaxonomyLevelId: parent?.taxonomyLevelId ?? null,
+    });
+    current = parent;
+  }
+  return lineage.reverse();
 }
 export interface WorldbuildingResearchDatabase {
   $transaction<Result>(work: (transaction: WorldbuildingResearchTransaction) => Promise<Result>): Promise<Result>;
@@ -329,7 +352,9 @@ function persistenceData(row: ReturnType<typeof classifyWorldbuildingResearch>["
     name: data.name,
     speciesKind: data.speciesKind,
     scientificName: data.scientificName ?? null,
-    taxonomy: data.taxonomy ?? undefined,
+    taxonomyLevelId: data.taxonomy && typeof data.taxonomy === "object" && !Array.isArray(data.taxonomy)
+      ? (data.taxonomy as Record<string, unknown>).taxonomyLevelId
+      : null,
     traits: data.traits ?? [],
     accent: data.accent ?? null,
     anthropomorphization: data.anthropomorphization ?? null,
@@ -407,6 +432,16 @@ export async function applyWorldbuildingResearchReview(
       for (const canonicalId of classified.importableClosure) {
         const row = classified.canonicalRows.find((candidate) => ownedId(candidate) === canonicalId && candidate.kind === kind);
         if (!row) continue;
+        if (kind === "SPECIES") {
+          for (const taxonomyData of taxonomyPersistenceRows(row.data.taxonomy)) {
+            const taxonomyLevelId = String(taxonomyData.taxonomyLevelId);
+            const existingTaxonomy = await transaction.taxonomy.findUnique({ where: { taxonomyLevelId } });
+            if (!existingTaxonomy) await transaction.taxonomy.create({ data: taxonomyData });
+            else if (canonical(Object.fromEntries(Object.keys(taxonomyData).map((key) => [key, existingTaxonomy[key]]))) !== canonical(taxonomyData)) {
+              throw new Error(`TAXONOMY ${taxonomyLevelId} conflicts with persisted canonical data.`);
+            }
+          }
+        }
         const data = persistenceData(row, review.idMap);
         const idField = kind === "SPECIES" ? "speciesId" : kind === "CULTURE" ? "cultureId" : "breedId";
         const delegate = kind === "SPECIES" ? transaction.species : kind === "CULTURE" ? transaction.culture : transaction.breed;

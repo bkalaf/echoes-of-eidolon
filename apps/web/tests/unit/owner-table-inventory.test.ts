@@ -3,6 +3,8 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 interface TableAuditRow {
+  auditBlockers: string[];
+  auditStatus: string;
   canonicalFieldsExpected: string[];
   columnsRendered: string[];
   component: string;
@@ -12,21 +14,30 @@ interface TableAuditRow {
   relationFields: Array<{ field: string; resolver: string }>;
   routeOrState: string[];
   sortableFields: string[];
+  violations: string[];
 }
 
 interface TableInventory {
   nativeTableElementsOutsideSharedGrid: string[];
+  schemaVersion: string;
   sourceSurfaceCount: number;
+  status: string;
   tables: TableAuditRow[];
 }
 
 describe("Release 0.3.0 owner table inventory", () => {
-  it("covers every live grid and reports no omitted read-model fields", () => {
+  it("independently audits generic grids and blocks source grids without read contracts", () => {
     const inventory = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../../artifacts/release-0.3.0/owner-ui/owner-table-inventory.json"), "utf8")) as TableInventory;
+    expect(inventory.schemaVersion).toBe("echoes-owner-table-inventory-v2");
+    expect(inventory.status).toBe("BLOCKED");
     expect(inventory.sourceSurfaceCount).toBeGreaterThanOrEqual(46);
     expect(inventory.nativeTableElementsOutsideSharedGrid).toEqual([]);
     expect(inventory.tables.length).toBeGreaterThan(inventory.sourceSurfaceCount);
-    for (const table of inventory.tables) {
+    const genericTables = inventory.tables.filter(({ component }) => component === "EntityRecordsAdminPage");
+    expect(genericTables).toHaveLength(35);
+    for (const table of genericTables) {
+      expect(table.auditStatus).toBe("LOCAL_INDEPENDENT_CONTRACT_PASS");
+      expect(table.auditBlockers).toEqual([]);
       expect(table.preferenceKey).not.toBe("");
       expect(table.component).not.toBe("");
       expect(table.routeOrState.length).toBeGreaterThan(0);
@@ -35,8 +46,13 @@ describe("Release 0.3.0 owner table inventory", () => {
       expect(table.missingFields).toEqual([]);
       expect(table.sortableFields.length).toBeGreaterThan(0);
       expect(table.filterableFields.length).toBeGreaterThan(0);
+      expect(table.violations).toEqual([]);
       for (const relation of table.relationFields) expect(relation.resolver).not.toBe("");
     }
+    const sourceTables = inventory.tables.filter(({ component }) => component !== "EntityRecordsAdminPage");
+    expect(sourceTables.length).toBeGreaterThan(0);
+    expect(sourceTables.every(({ auditBlockers, auditStatus }) => auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS" || auditStatus === "FAIL" || auditStatus.startsWith("BLOCKED_") && auditBlockers.length > 0)).toBe(true);
+    expect(sourceTables.some(({ auditStatus }) => auditStatus === "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT")).toBe(true);
   });
 
   it("records the required Chromium coverage matrix even when execution evidence is unavailable", () => {

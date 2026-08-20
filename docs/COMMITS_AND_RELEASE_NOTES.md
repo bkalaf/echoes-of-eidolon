@@ -23,6 +23,8 @@ Release-Audience: PLAYERS|OPERATORS|BOTH
 
 Use `Release-Note: none` when no public or operator note is warranted. Old history is not rewritten to add footers; the `0.2.0` traceability audit validates historical work directly.
 
+For 0.3.0, the owner explicitly accepted `c1f6b137bae6877617689e59be0727c353dfef36` as a narrow, non-destructive historical exception because it only added the execution package log path to `.gitignore`. Prospective commit validation begins after that commit; the exception does not waive validation for any later commit.
+
 ## Draft mapping
 
 - `feat` -> Added

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "echoes-record-detail-route-audit-v1",
-  "generatedAt": "2026-08-19T01:08:09.485Z",
+  "generatedAt": "2026-08-20T17:14:33.103Z",
   "status": "LOCAL_PASS_BROWSER_DATABASE_BLOCKED",
-  "entitiesChecked": 34,
-  "existingRecordDetailRoutes": 34,
+  "entitiesChecked": 35,
+  "existingRecordDetailRoutes": 35,
   "entities": [
     {
       "entity": "AchievementDefinition",
@@ -205,6 +205,13 @@
       "entity": "Species",
       "entityKey": "species",
       "routePattern": "/admin/data/species/$recordId",
+      "registryBacked": true,
+      "generated": true
+    },
+    {
+      "entity": "Taxonomy",
+      "entityKey": "taxonomy",
+      "routePattern": "/admin/data/taxonomy/$recordId",
       "registryBacked": true,
       "generated": true
     },

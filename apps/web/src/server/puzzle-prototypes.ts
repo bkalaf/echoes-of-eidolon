@@ -114,4 +114,3 @@ export function validatePuzzlePrototype(
     timerStarted: false as const,
   };
 }
-

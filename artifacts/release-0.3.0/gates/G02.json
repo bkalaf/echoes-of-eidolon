@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "echoes-release-gate-report-v1",
+  "gateId": "G02",
+  "status": "BLOCKED",
+  "release": "0.3.0",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree",
+  "startedAt": "2026-08-20T17:14:50.735Z",
+  "finishedAt": "2026-08-20T17:14:50.735Z",
+  "dependencies": [
+    {
+      "gateId": "G01",
+      "status": "BLOCKED"
+    }
+  ],
+  "commands": [],
+  "assertions": [
+    {
+      "name": "Immutable candidate evidence",
+      "expected": "40-character candidate SHA",
+      "observed": "UNCOMMITTED_WORKTREE",
+      "pass": false
+    }
+  ],
+  "artifacts": [],
+  "blockers": [
+    {
+      "id": "G01-NOT-PASS",
+      "condition": "G01 is not PASS."
+    },
+    {
+      "id": "TAXONOMY-AUTHORITY",
+      "condition": "Live read-only taxonomy export and owner conflict decisions are unavailable."
+    },
+    {
+      "id": "FOUNDING-POPULATION-AUTHORITY",
+      "condition": "Exact owner-authored founding population allocations are unavailable."
+    }
+  ],
+  "notes": [
+    "This report supersedes stale base-SHA evidence. It does not claim candidate-bound execution before the repair is committed and frozen."
+  ]
+}

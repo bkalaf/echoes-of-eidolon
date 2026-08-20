@@ -8293,9 +8293,9 @@
           "enumName": null,
           "isList": false,
           "isRequired": false,
-          "kind": "json",
-          "name": "taxonomy",
-          "type": "Json"
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
         },
         {
           "enumName": null,
@@ -8416,6 +8416,17 @@
           "kind": "enum",
           "name": "continuityPropagationMode",
           "type": "ContinuityPropagationMode"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "taxonomy",
+          "relationFromFields": [
+            "taxonomyLevelId"
+          ],
+          "type": "Taxonomy"
         },
         {
           "enumName": null,
@@ -8678,6 +8689,95 @@
           "name": "refunds",
           "relationFromFields": [],
           "type": "OrderRefund"
+        }
+      ]
+    },
+    "Taxonomy": {
+      "fields": [
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
+        },
+        {
+          "enumName": "TaxonomyType",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "type",
+          "type": "TaxonomyType"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "isOfficial",
+          "type": "Boolean"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "text",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "commonName",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentTaxonomyLevelId",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "parent",
+          "relationFromFields": [
+            "parentTaxonomyLevelId"
+          ],
+          "type": "Taxonomy"
+        },
+        {
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "children",
+          "relationFromFields": [],
+          "type": "Taxonomy"
+        },
+        {
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "species",
+          "relationFromFields": [],
+          "type": "Species"
         }
       ]
     },
@@ -12509,6 +12609,7 @@
         {
           "enumValues": [
             "CULTURE",
+            "TAXONOMY",
             "CHARACTER",
             "WITNESS",
             "ARCHITECT",
@@ -14400,9 +14501,9 @@
           "enumName": null,
           "isList": false,
           "isRequired": false,
-          "kind": "json",
-          "name": "taxonomy",
-          "type": "Json"
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
         },
         {
           "editability": "EDITABLE",
@@ -14558,6 +14659,19 @@
           "editability": "EXCLUDED",
           "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
           "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "taxonomy",
+          "relationFromFields": [
+            "taxonomyLevelId"
+          ],
+          "type": "Taxonomy"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
           "isList": true,
           "isRequired": true,
           "kind": "relation",
@@ -14614,9 +14728,9 @@
           "hasDefault": false,
           "isList": false,
           "isRequired": false,
-          "kind": "json",
-          "name": "taxonomy",
-          "type": "Json"
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
         },
         {
           "enumValues": [],
@@ -14868,6 +14982,190 @@
         }
       ],
       "idField": "speciesId"
+    },
+    "Taxonomy": {
+      "auditFields": [
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "TaxonomyType",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "type",
+          "type": "TaxonomyType"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "isOfficial",
+          "type": "Boolean"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "text",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "commonName",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentTaxonomyLevelId",
+          "type": "String"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": false,
+          "isRequired": false,
+          "kind": "relation",
+          "name": "parent",
+          "relationFromFields": [
+            "parentTaxonomyLevelId"
+          ],
+          "type": "Taxonomy"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "children",
+          "relationFromFields": [],
+          "type": "Taxonomy"
+        },
+        {
+          "editability": "EXCLUDED",
+          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "enumName": null,
+          "isList": true,
+          "isRequired": true,
+          "kind": "relation",
+          "name": "species",
+          "relationFromFields": [],
+          "type": "Species"
+        }
+      ],
+      "delegate": "taxonomy",
+      "fields": [
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "taxonomyLevelId",
+          "type": "String"
+        },
+        {
+          "enumValues": [
+            "KINGDOM",
+            "PHYLUM",
+            "CLASS",
+            "ORDER",
+            "FAMILY",
+            "GENUS",
+            "SPECIES"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "type",
+          "type": "TaxonomyType"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "isOfficial",
+          "type": "Boolean"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "text",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "commonName",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": false,
+          "kind": "scalar",
+          "name": "parentTaxonomyLevelId",
+          "type": "String"
+        }
+      ],
+      "idField": "taxonomyLevelId"
     },
     "TimelineEvent": {
       "auditFields": [

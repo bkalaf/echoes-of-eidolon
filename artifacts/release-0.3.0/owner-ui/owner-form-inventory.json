@@ -1,6 +1,7 @@
 {
-  "schemaVersion": "echoes-owner-form-inventory-v2",
-  "generatedAt": "2026-08-18T23:05:07.237Z",
+  "schemaVersion": "echoes-owner-form-inventory-v3",
+  "generatedAt": "2026-08-20T17:14:48.463Z",
+  "status": "BLOCKED",
   "sharedContract": {
     "deterministicOrder": true,
     "everyWritableFieldHasInput": true,
@@ -39,17 +40,19 @@
         "status"
       ],
       "renderedInputs": [
-        "achievementDefinitionId",
         "name",
-        "chainKey",
-        "rank",
+        "achievementDefinitionId",
+        "status",
         "imageAssetId",
-        "status"
+        "chainKey",
+        "rank"
       ],
       "renderedReadOnlyFields": [
         "imageAsset"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "imageAssetId",
@@ -72,21 +75,86 @@
         "characterId",
         "department",
         "character",
-        "witnesses"
+        "witnesses",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "writableFields": [
         "characterId",
-        "department"
+        "department",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedInputs": [
         "characterId",
-        "department"
+        "department",
+        "Character.displayName",
+        "Character.characterId",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
         "character",
-        "witnesses"
+        "witnesses",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "characterId",
@@ -144,12 +212,14 @@
         "status"
       ],
       "renderedInputs": [
-        "arkId",
         "name",
+        "arkId",
         "status"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -229,23 +299,18 @@
         "collaborativePosture"
       ],
       "renderedInputs": [
-        "breedId",
         "name",
+        "breedId",
         "speciesId",
-        "cultureId",
         "parentBreedId",
+        "cultureId",
         "populationKind",
         "groupId",
         "personalityId",
-        "traits",
         "accent",
         "appearance",
         "clothing",
         "architecture",
-        "foodBroad",
-        "foodSpecific",
-        "terrainBroad",
-        "terrainSpecific",
         "motivation",
         "operatingStyle",
         "structureOrientation",
@@ -257,13 +322,18 @@
         "loquacity",
         "emotionalTemperature",
         "outlookOrientation",
-        "collaborativePosture"
+        "collaborativePosture",
+        "traits",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific"
       ],
       "renderedReadOnlyFields": [
         "species",
+        "parentBreed",
         "culture",
         "personality",
-        "parentBreed",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -271,6 +341,8 @@
         "researchValues"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "speciesId",
@@ -363,8 +435,8 @@
         "secondaryAttribute"
       ],
       "renderedInputs": [
-        "characterId",
         "displayName",
+        "characterId",
         "breedId",
         "occupationId",
         "worldKey",
@@ -391,6 +463,8 @@
         "schismFor"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "breedId",
@@ -461,6 +535,8 @@
         "disclosureCitations"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "sourceId",
@@ -484,22 +560,87 @@
         "companionKey",
         "character",
         "companionDef",
-        "partyMemberships"
+        "partyMemberships",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "writableFields": [
         "characterId",
-        "companionKey"
+        "companionKey",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedInputs": [
         "characterId",
-        "companionKey"
+        "companionKey",
+        "Character.displayName",
+        "Character.characterId",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
         "character",
         "companionDef",
-        "partyMemberships"
+        "partyMemberships",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "characterId",
@@ -597,10 +738,12 @@
         "ruinCharacter",
         "schismCharacter",
         "soul",
-        "companions",
-        "transformationBinding"
+        "transformationBinding",
+        "companions"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "concordCharacterId",
@@ -664,8 +807,8 @@
         "declination"
       ],
       "renderedInputs": [
-        "constellationId",
         "name",
+        "constellationId",
         "rightAscension",
         "declination"
       ],
@@ -674,6 +817,8 @@
         "afterWitnesses"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -698,8 +843,8 @@
         "architecture"
       ],
       "renderedInputs": [
-        "cultureId",
         "name",
+        "cultureId",
         "appearance",
         "clothing",
         "architecture"
@@ -709,6 +854,8 @@
         "settlementWorlds"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -727,12 +874,14 @@
         "definition"
       ],
       "renderedInputs": [
-        "definitionId",
         "term",
+        "definitionId",
         "definition"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -755,8 +904,8 @@
         "summary"
       ],
       "renderedInputs": [
-        "interludeId",
         "name",
+        "interludeId",
         "interludeType",
         "summary"
       ],
@@ -765,6 +914,8 @@
         "substitutionsTo"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -797,6 +948,8 @@
         "replacementInterlude"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "interludeId",
@@ -843,10 +996,10 @@
         "baseContent"
       ],
       "renderedInputs": [
+        "title",
         "knowledgeBaseItemId",
         "entityType",
         "entityId",
-        "title",
         "baseContent"
       ],
       "renderedReadOnlyFields": [
@@ -855,6 +1008,8 @@
         "disclosures"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -874,14 +1029,16 @@
         "description"
       ],
       "renderedInputs": [
-        "layetteId",
         "name",
+        "layetteId",
         "description"
       ],
       "renderedReadOnlyFields": [
         "transformationBindings"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -901,14 +1058,16 @@
         "description"
       ],
       "renderedInputs": [
-        "legendaryRewardId",
         "name",
+        "legendaryRewardId",
         "description"
       ],
       "renderedReadOnlyFields": [
         "witnesses"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -927,12 +1086,14 @@
         "description"
       ],
       "renderedInputs": [
-        "lessonId",
         "name",
+        "lessonId",
         "description"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -963,6 +1124,8 @@
         "breeds"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -981,12 +1144,14 @@
         "domain"
       ],
       "renderedInputs": [
-        "pillarId",
         "name",
+        "pillarId",
         "domain"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1013,8 +1178,8 @@
         "latitude"
       ],
       "renderedInputs": [
-        "pointOfInterestId",
         "name",
+        "pointOfInterestId",
         "kind",
         "regionId",
         "longitude",
@@ -1025,6 +1190,8 @@
         "gameSessions"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1046,8 +1213,8 @@
         "difficultyTier"
       ],
       "renderedInputs": [
-        "puzzleBlueprintId",
         "title",
+        "puzzleBlueprintId",
         "primaryFamily",
         "difficultyTier"
       ],
@@ -1055,6 +1222,8 @@
         "versions"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1078,8 +1247,8 @@
       ],
       "renderedInputs": [
         "researchId",
-        "notes",
         "citationId",
+        "notes",
         "category"
       ],
       "renderedReadOnlyFields": [
@@ -1087,6 +1256,8 @@
         "breedEvidence"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "citationId",
@@ -1121,9 +1292,9 @@
         "classification"
       ],
       "renderedInputs": [
+        "name",
         "settlementId",
         "siteId",
-        "name",
         "classification"
       ],
       "renderedReadOnlyFields": [
@@ -1132,6 +1303,8 @@
         "soundtrackAssignments"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "siteId",
@@ -1173,9 +1346,9 @@
       "renderedInputs": [
         "settlementPopulationEventId",
         "settlementWorldId",
+        "breedId",
         "year",
         "sequence",
-        "breedId",
         "eventType",
         "populationDelta"
       ],
@@ -1184,6 +1357,8 @@
         "breed"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "settlementWorldId",
@@ -1236,11 +1411,11 @@
       ],
       "renderedInputs": [
         "settlementWorldId",
-        "settlementId",
         "worldKey",
-        "totalPopulation",
+        "settlementId",
         "dominantBreedId",
-        "cultureId"
+        "cultureId",
+        "totalPopulation"
       ],
       "renderedReadOnlyFields": [
         "settlement",
@@ -1251,6 +1426,8 @@
         "gameSessions"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "settlementId",
@@ -1314,11 +1491,13 @@
         "latitude"
       ],
       "renderedReadOnlyFields": [
-        "namingContext",
         "settlement",
+        "namingContext",
         "namingEligibility"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1338,8 +1517,8 @@
         "name"
       ],
       "renderedInputs": [
-        "soulId",
-        "name"
+        "name",
+        "soulId"
       ],
       "renderedReadOnlyFields": [
         "characters",
@@ -1347,6 +1526,8 @@
         "companionDefs"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1374,18 +1555,20 @@
         "urlOrIdentifier"
       ],
       "renderedInputs": [
-        "sourceId",
         "title",
-        "authors",
+        "sourceId",
         "publisher",
         "publicationDate",
         "sourceType",
-        "urlOrIdentifier"
+        "urlOrIdentifier",
+        "authors"
       ],
       "renderedReadOnlyFields": [
         "citations"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1398,7 +1581,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -1414,6 +1597,7 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "taxonomy",
         "breeds"
       ],
       "writableFields": [
@@ -1421,7 +1605,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -1439,12 +1623,11 @@
         "continuityPropagationMode"
       ],
       "renderedInputs": [
-        "speciesId",
         "name",
+        "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
-        "taxonomy",
-        "traits",
         "accent",
         "anthropomorphization",
         "appearance",
@@ -1452,19 +1635,90 @@
         "architecture",
         "originMode",
         "reproductiveMethod",
-        "juvenileStages",
-        "nurseryMode",
         "longevityClass",
         "mortalityMode",
         "soulDisposition",
         "continuityGroup",
-        "continuityPropagationMode"
+        "continuityPropagationMode",
+        "traits",
+        "juvenileStages",
+        "nurseryMode"
       ],
       "renderedReadOnlyFields": [
+        "taxonomy",
         "breeds"
       ],
       "missingFields": [],
-      "relationLookups": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
+      "relationLookups": [
+        {
+          "foreignKey": "taxonomyLevelId",
+          "relationField": "taxonomy",
+          "targetEntity": "Taxonomy",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null
+    },
+    {
+      "route": "/admin/data/taxonomy/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Taxonomy",
+      "canonicalFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "parent",
+        "children",
+        "species"
+      ],
+      "writableFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId"
+      ],
+      "renderedInputs": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text"
+      ],
+      "renderedReadOnlyFields": [
+        "parent",
+        "children",
+        "species"
+      ],
+      "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
+      "relationLookups": [
+        {
+          "foreignKey": "parentTaxonomyLevelId",
+          "relationField": "parent",
+          "targetEntity": "Taxonomy",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
       "parentComposition": null
     },
     {
@@ -1484,13 +1738,15 @@
         "summary"
       ],
       "renderedInputs": [
-        "timelineEventId",
         "name",
+        "timelineEventId",
         "timelineEventType",
         "summary"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1509,12 +1765,14 @@
         "author"
       ],
       "renderedInputs": [
-        "tomeId",
         "title",
+        "tomeId",
         "author"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1537,14 +1795,16 @@
         "summary"
       ],
       "renderedInputs": [
-        "transitionId",
         "name",
+        "transitionId",
         "bookA",
         "bookB",
         "summary"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [],
       "parentComposition": null
     },
@@ -1565,7 +1825,31 @@
         "architect",
         "legendaryReward",
         "constellationBefore",
-        "constellationAfter"
+        "constellationAfter",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "writableFields": [
         "characterId",
@@ -1574,16 +1858,46 @@
         "architectCharacterId",
         "legendaryRewardId",
         "constellationBeforeId",
-        "constellationAfterId"
+        "constellationAfterId",
+        "Character.characterId",
+        "Character.displayName",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedInputs": [
         "characterId",
         "witnessDefId",
-        "trueFlawName",
         "architectCharacterId",
         "legendaryRewardId",
         "constellationBeforeId",
-        "constellationAfterId"
+        "constellationAfterId",
+        "trueFlawName",
+        "Character.displayName",
+        "Character.characterId",
+        "Character.breedId",
+        "Character.occupationId",
+        "Character.worldKey",
+        "Character.soulId",
+        "Character.gender",
+        "Character.age",
+        "Character.skinScaleColor",
+        "Character.hairFurColor",
+        "Character.eyeColor",
+        "Character.clothing",
+        "Character.faction",
+        "Character.primaryAttribute",
+        "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
         "character",
@@ -1591,9 +1905,20 @@
         "architect",
         "legendaryReward",
         "constellationBefore",
-        "constellationAfter"
+        "constellationAfter",
+        "Character.breed",
+        "Character.occupation",
+        "Character.soul",
+        "Character.architect",
+        "Character.witness",
+        "Character.companion",
+        "Character.concordFor",
+        "Character.ruinFor",
+        "Character.schismFor"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "characterId",
@@ -1711,19 +2036,21 @@
         "architectSoulId"
       ],
       "renderedInputs": [
-        "witnessDefId",
         "name",
+        "witnessDefId",
         "department",
+        "architectSoulId",
         "apparentDomain",
         "realDomain",
-        "color",
-        "architectSoulId"
+        "color"
       ],
       "renderedReadOnlyFields": [
         "architectSoul",
         "witnesses"
       ],
       "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "relationLookups": [
         {
           "foreignKey": "architectSoulId",
@@ -1750,20 +2077,8 @@
       "component": "OccupationAdminPage",
       "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:33",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "key",
-        "name",
-        "description",
-        "active",
-        "affinity"
-      ],
-      "writableFields": [
-        "key",
-        "name",
-        "description",
-        "active",
-        "affinity"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "key",
         "name",
@@ -1774,8 +2089,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -1787,28 +2105,8 @@
       "component": "CompanionPlannerAttributesPage",
       "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:157",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "gender",
-        "age",
-        "faction",
-        "occupationId",
-        "primary",
-        "secondary",
-        "knowledgeSkill",
-        "awarenessSkill",
-        "worldHeirloom"
-      ],
-      "writableFields": [
-        "gender",
-        "age",
-        "faction",
-        "occupationId",
-        "primary",
-        "secondary",
-        "knowledgeSkill",
-        "awarenessSkill",
-        "worldHeirloom"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "gender",
         "age",
@@ -1827,11 +2125,14 @@
           "field": "occupationId",
           "targetEntity": "Occupation",
           "presentationRule": "Occupation name + occupationId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -1843,14 +2144,8 @@
       "component": "TransformationAuthoringPage",
       "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:165",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "companionKey",
-        "layetteId"
-      ],
-      "writableFields": [
-        "companionKey",
-        "layetteId"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "companionKey",
         "layetteId"
@@ -1862,17 +2157,20 @@
           "field": "companionKey",
           "targetEntity": "CompanionDef",
           "presentationRule": "Soul name or derived Companion label + companionKey",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         },
         {
           "field": "layetteId",
           "targetEntity": "Layette",
           "presentationRule": "Layette name + layetteId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -1884,18 +2182,8 @@
       "component": "SettlementSoundtracksPage",
       "source": "apps/web/src/screens/admin/AdminV4Pages.tsx:208",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "soundtrackId",
-        "category",
-        "ordinal",
-        "active"
-      ],
-      "writableFields": [
-        "soundtrackId",
-        "category",
-        "ordinal",
-        "active"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "soundtrackId",
         "category",
@@ -1909,11 +2197,14 @@
           "field": "soundtrackId",
           "targetEntity": "Soundtrack",
           "presentationRule": "Soundtrack displayName + soundtrackId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -1923,32 +2214,8 @@
       "component": "PromptManager",
       "source": "apps/web/src/screens/admin/AssetPromptAdminPage.tsx:147",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "family",
-        "status",
-        "purpose",
-        "targetType",
-        "targetId",
-        "promptText",
-        "responseContract",
-        "versionText",
-        "versionContract",
-        "resultVersionId",
-        "resultAssetId"
-      ],
-      "writableFields": [
-        "family",
-        "status",
-        "purpose",
-        "targetType",
-        "targetId",
-        "promptText",
-        "responseContract",
-        "versionText",
-        "versionContract",
-        "resultVersionId",
-        "resultAssetId"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "family",
         "status",
@@ -1969,17 +2236,20 @@
           "field": "resultAssetId",
           "targetEntity": "ManagedAsset",
           "presentationRule": "ManagedAsset objectKey + managedAssetId, filtered by Prompt family media kind",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         },
         {
           "field": "resultVersionId",
           "targetEntity": "PromptVersion",
           "presentationRule": "Prompt version ordinal + promptVersionId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -1988,22 +2258,10 @@
         "/admin/atlas/sites/:siteId"
       ],
       "component": "FoundCity",
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:141",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:175",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "year",
-        "originId",
-        "breedId",
-        "amount",
-        "rawResponse"
-      ],
-      "writableFields": [
-        "year",
-        "originId",
-        "breedId",
-        "amount",
-        "rawResponse"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "year",
         "originId",
@@ -2018,17 +2276,20 @@
           "field": "breedId",
           "targetEntity": "Breed",
           "presentationRule": "Breed name + breedId + available population",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         },
         {
           "field": "originId",
           "targetEntity": "SettlementWorld",
           "presentationRule": "Settlement name + settlementId + settlementWorldId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2039,36 +2300,29 @@
       "component": "BetaInvitationAdminPage",
       "source": "apps/web/src/screens/admin/BetaInvitationAdminPage.tsx:95",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "invitationExpiry"
-      ],
-      "writableFields": [
-        "invitationExpiry"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "invitationExpiry"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
         "/admin/campaign"
       ],
       "component": "CampaignCreatePanel",
-      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:209",
+      "source": "apps/web/src/screens/admin/CampaignAdminPage.tsx:266",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "objectType",
-        "payload"
-      ],
-      "writableFields": [
-        "objectType",
-        "payload"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "objectType",
         "payload"
@@ -2076,8 +2330,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2086,34 +2343,10 @@
         "/admin/capabilities/inspector"
       ],
       "component": "VersionEditor",
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:136",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:139",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "code",
-        "pathPattern",
-        "description",
-        "valueKind",
-        "monotonicPolicy",
-        "minValue",
-        "maxValue",
-        "allowedOperations",
-        "enumValues",
-        "referenceTypes",
-        "parameters"
-      ],
-      "writableFields": [
-        "code",
-        "pathPattern",
-        "description",
-        "valueKind",
-        "monotonicPolicy",
-        "minValue",
-        "maxValue",
-        "allowedOperations",
-        "enumValues",
-        "referenceTypes",
-        "parameters"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "code",
         "pathPattern",
@@ -2130,8 +2363,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2140,24 +2376,10 @@
         "/admin/capabilities/inspector"
       ],
       "component": "ConditionBuilder",
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:165",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:168",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "code",
-        "scopeType",
-        "scopeId",
-        "bindings",
-        "operator",
-        "value"
-      ],
-      "writableFields": [
-        "code",
-        "scopeType",
-        "scopeId",
-        "bindings",
-        "operator",
-        "value"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "code",
         "scopeType",
@@ -2169,8 +2391,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2179,16 +2404,10 @@
         "/admin/capabilities/inspector"
       ],
       "component": "Inspector",
-      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:184",
+      "source": "apps/web/src/screens/admin/CapabilityAdminPage.tsx:187",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "scopeId",
-        "capabilityAddressId"
-      ],
-      "writableFields": [
-        "scopeId",
-        "capabilityAddressId"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "scopeId",
         "capabilityAddressId"
@@ -2196,8 +2415,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2207,16 +2429,8 @@
       "component": "GeometryEditor",
       "source": "apps/web/src/screens/admin/CityBuilderAdminPage.tsx:122",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "identifier",
-        "parcelId",
-        "geometry"
-      ],
-      "writableFields": [
-        "identifier",
-        "parcelId",
-        "geometry"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "identifier",
         "parcelId",
@@ -2229,11 +2443,14 @@
           "field": "parcelId",
           "targetEntity": "Parcel",
           "presentationRule": "Derived Parcel label + parcelId; Parcel has no separate canonical name field",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2244,18 +2461,8 @@
       "component": "ProductList",
       "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:209",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "storeProductId",
-        "name",
-        "productType",
-        "artworkAssetId"
-      ],
-      "writableFields": [
-        "storeProductId",
-        "name",
-        "productType",
-        "artworkAssetId"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "storeProductId",
         "name",
@@ -2269,11 +2476,14 @@
           "field": "artworkAssetId",
           "targetEntity": "ManagedAsset",
           "presentationRule": "ManagedAsset objectKey + managedAssetId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2284,32 +2494,8 @@
       "component": "ProductEditor",
       "source": "apps/web/src/screens/admin/CommerceAdminPage.tsx:263",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "name",
-        "productType",
-        "artworkAssetId",
-        "published",
-        "storeVariantId",
-        "priceInCents",
-        "size",
-        "color",
-        "stripePriceReference",
-        "printfulVariantReference",
-        "available"
-      ],
-      "writableFields": [
-        "name",
-        "productType",
-        "artworkAssetId",
-        "published",
-        "storeVariantId",
-        "priceInCents",
-        "size",
-        "color",
-        "stripePriceReference",
-        "printfulVariantReference",
-        "available"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "name",
         "productType",
@@ -2330,11 +2516,14 @@
           "field": "artworkAssetId",
           "targetEntity": "ManagedAsset",
           "presentationRule": "ManagedAsset objectKey + managedAssetId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2343,14 +2532,8 @@
       "component": "EntityImportPage",
       "source": "apps/web/src/screens/admin/EntityImportPage.tsx:98",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "format",
-        "source"
-      ],
-      "writableFields": [
-        "format",
-        "source"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "format",
         "source"
@@ -2358,8 +2541,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2368,14 +2554,8 @@
       "component": "PerkEditor",
       "source": "apps/web/src/screens/admin/PerkAdminPage.tsx:86",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "name",
-        "description"
-      ],
-      "writableFields": [
-        "name",
-        "description"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "name",
         "description"
@@ -2383,8 +2563,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2392,24 +2575,10 @@
         "/admin/puzzles/:id/test"
       ],
       "component": "BlueprintList",
-      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:72",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:73",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "puzzleBlueprintId",
-        "generatorVersion",
-        "primaryFamily",
-        "difficultyTier",
-        "directionalHint",
-        "guidedHint"
-      ],
-      "writableFields": [
-        "puzzleBlueprintId",
-        "generatorVersion",
-        "primaryFamily",
-        "difficultyTier",
-        "directionalHint",
-        "guidedHint"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "puzzleBlueprintId",
         "generatorVersion",
@@ -2421,8 +2590,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2430,18 +2602,10 @@
         "/admin/puzzles/:id/test"
       ],
       "component": "BlueprintEditor",
-      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:107",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:108",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "nextVersion",
-        "directionalHint",
-        "guidedHint"
-      ],
-      "writableFields": [
-        "nextVersion",
-        "directionalHint",
-        "guidedHint"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "nextVersion",
         "directionalHint",
@@ -2450,8 +2614,11 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2459,24 +2626,10 @@
         "/admin/puzzles/:id/test"
       ],
       "component": "PreviewIdentityLab",
-      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:130",
+      "source": "apps/web/src/screens/admin/PuzzleAdminPage.tsx:131",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "Id",
-        "generatorVersion",
-        "attempt",
-        "campaignId",
-        "playerId",
-        "seed"
-      ],
-      "writableFields": [
-        "Id",
-        "generatorVersion",
-        "attempt",
-        "campaignId",
-        "playerId",
-        "seed"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "Id",
         "generatorVersion",
@@ -2488,8 +2641,33 @@
       "renderedReadOnlyFields": [],
       "missingFields": [],
       "relationLookupPresentation": [],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
+    },
+    {
+      "routeOrState": [
+        "component:PuzzlePrototypeLab"
+      ],
+      "component": "PuzzlePrototypeLab",
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:205",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [],
+      "writableFields": [],
+      "renderedInputs": [
+        "activeId",
+        "answer"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     },
     {
       "routeOrState": [
@@ -2499,20 +2677,8 @@
       "component": "SettlementAdminPage",
       "source": "apps/web/src/screens/admin/SettlementAdminPage.tsx:84",
       "entityOrReadModel": "operation-specific owner write contract",
-      "canonicalFields": [
-        "year",
-        "originId",
-        "destinationId",
-        "breedId",
-        "amount"
-      ],
-      "writableFields": [
-        "year",
-        "originId",
-        "destinationId",
-        "breedId",
-        "amount"
-      ],
+      "canonicalFields": [],
+      "writableFields": [],
       "renderedInputs": [
         "year",
         "originId",
@@ -2527,53 +2693,56 @@
           "field": "breedId",
           "targetEntity": "Breed",
           "presentationRule": "Breed name + breedId + available population",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         },
         {
           "field": "destinationId",
           "targetEntity": "SettlementWorld",
           "presentationRule": "Settlement name + settlementId + settlementWorldId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         },
         {
           "field": "originId",
           "targetEntity": "SettlementWorld",
           "presentationRule": "Settlement name + settlementId + settlementWorldId",
-          "reviewStatus": "PASS"
+          "reviewStatus": "UNVERIFIED_WITHOUT_INDEPENDENT_WRITE_CONTRACT"
         }
       ],
-      "auditStatus": "REVIEWED_COMPLETE",
-      "contractEvidence": "Rendered controls reviewed against the operation-specific server write contract; identifier fields that are command identities rather than relations are not reclassified as foreign keys."
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
     }
   ],
   "assertions": [
     {
       "name": "Every generic entity is inventoried",
       "expected": 34,
-      "observed": 34,
-      "pass": true
+      "observed": 35,
+      "pass": false
     },
     {
-      "name": "Every generic canonical field is rendered",
-      "expected": 282,
-      "observed": 282,
+      "name": "Every generic canonical field is independently compared with the rendered form plan",
+      "expected": 365,
+      "observed": 365,
       "pass": true
     },
     {
       "name": "Every owning relation uses a named lookup",
-      "expected": 32,
-      "observed": 32,
+      "expected": 34,
+      "observed": 34,
       "pass": true
     },
     {
-      "name": "Every bespoke owner editor is reviewed with zero missing controls",
-      "expected": 20,
-      "observed": 20,
-      "pass": true
+      "name": "Every bespoke owner editor has an independent server write contract",
+      "expected": 21,
+      "observed": 0,
+      "pass": false
     }
   ],
   "notes": [
     "Generic canonical forms are contract-complete.",
-    "Bespoke operation editors are source-discovered and reviewed against their server write contracts; command identities and polymorphic locator values are not falsely classified as database relations."
+    "Bespoke operation editors remain blocked until expected fields are derived from independent server input/write contracts."
   ]
 }

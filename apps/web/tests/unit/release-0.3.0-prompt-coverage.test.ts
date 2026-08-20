@@ -61,4 +61,3 @@ describe("Release 0.3.0 prompt coverage", () => {
     expect(new Set(task?.promptIds).size).toBe(expectedPromptIds.length);
   });
 });
-

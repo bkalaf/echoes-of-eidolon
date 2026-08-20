@@ -54,11 +54,12 @@ test("400 Atlas Sites remain selectable through clustering, zoom, spiderfy, sear
   await expect(cluster).toBeVisible();
   await cluster.focus();
   await cluster.press("Enter");
-  await expect(page.getByLabel("Map zoom")).toHaveText("2x");
+  const zoomStatus = page.getByRole("status", { name: "Map zoom" });
+  await expect(zoomStatus).toHaveText("2x");
 
   const viewport = page.getByTestId("atlas-map-viewport");
   await viewport.dispatchEvent("wheel", { deltaY: -100 });
-  await expect(page.getByLabel("Map zoom")).toHaveText("3x");
+  await expect(zoomStatus).toHaveText("3x");
   const box = await viewport.boundingBox();
   expect(box).not.toBeNull();
   await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
@@ -68,7 +69,7 @@ test("400 Atlas Sites remain selectable through clustering, zoom, spiderfy, sear
   await expect(page.getByTestId("atlas-map-stage")).not.toHaveCSS("transform", "matrix(3, 0, 0, 3, 0, 0)");
 
   await page.getByRole("button", { name: "Reset map" }).click();
-  await expect(page.getByLabel("Map zoom")).toHaveText("1x");
+  await expect(zoomStatus).toHaveText("1x");
   for (let zoom = 2; zoom <= 6; zoom += 1) await page.getByRole("button", { name: "Zoom in" }).click();
   const coincidentCluster = page.getByRole("button", { name: "Cluster containing 2 Sites" });
   await expect(coincidentCluster).toBeVisible();
@@ -82,12 +83,14 @@ test("400 Atlas Sites remain selectable through clustering, zoom, spiderfy, sear
   await page.getByLabel("Search Site ID").fill("0243");
   await page.getByLabel("Site search results").getByRole("button", { name: /SITE-0243/ }).click();
   await expect(page.getByRole("definition").filter({ hasText: "SITE-0243" })).toBeVisible();
-  await page.getByRole("row", { name: /SITE-0243/ }).press("Enter");
-  await expect(page.getByRole("row", { name: /SITE-0243/ })).toHaveClass(/selected-row/);
+  const siteRow = page.getByRole("row", { name: /Select row SITE-0243/ });
+  await siteRow.press("Enter");
+  await expect(siteRow).toHaveClass(/selected-row/);
 
+  await page.getByRole("button", { name: "Clear Atlas filters" }).click();
   await page.getByLabel("Current World context").selectOption("CONCORD");
   await expect(page.getByText(/24 founded in CONCORD/)).toBeVisible();
-  await page.getByLabel("Occupancy").selectOption("FOUNDED");
+  await page.getByRole("combobox", { name: "Occupancy", exact: true }).selectOption("FOUNDED");
   await expect(page.getByText("24 of 400 Sites")).toBeVisible();
   await page.getByRole("button", { name: "Clear Atlas filters" }).click();
   await page.getByLabel("Search Site ID").fill("SITE-0001");

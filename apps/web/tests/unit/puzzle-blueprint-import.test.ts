@@ -6,7 +6,11 @@ import { describe, expect, it, vi } from "vitest";
 import type { PrismaClient } from "../../src/generated/prisma/client";
 import { parsePuzzleBlueprintIntakeRow } from "../../src/domain/puzzle-blueprint";
 import { parsePuzzleBlueprintPackageCsv } from "../../src/domain/puzzle-blueprint-package";
-import { importPuzzleBlueprintPackage, PuzzleBlueprintImportConflictError } from "../../src/server/puzzle-blueprint-import";
+import {
+  importPuzzleBlueprintPackage,
+  parsePuzzleBlueprintImportArguments,
+  PuzzleBlueprintImportConflictError,
+} from "../../src/server/puzzle-blueprint-import";
 
 const source = readFileSync(resolve(import.meta.dirname, "../../data/puzzles/puzzle-blueprint-bank-70.csv"), "utf8");
 
@@ -31,12 +35,27 @@ describe("Puzzle Blueprint package import", () => {
     expect(database.$transaction).not.toHaveBeenCalled();
   });
 
-  it("plans and creates all 70 roots and immutable versions in one serializable transaction", async () => {
+  it("defaults to a read-only plan and performs zero writes", async () => {
     const { database, transaction } = importDatabase();
     const result = await importPuzzleBlueprintPackage(source, {}, database);
-    expect(result).toMatchObject({ applied: true, packageBlueprints: 70, missingRoots: 70, missingVersions: 70 });
+    expect(result).toMatchObject({ applied: false, mode: "verify", packageBlueprints: 70, missingRoots: 70, missingVersions: 70 });
+    expect(transaction.puzzleBlueprint.create).not.toHaveBeenCalled();
+    expect(transaction.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
+    expect(database.$transaction).toHaveBeenCalledWith(expect.any(Function), { isolationLevel: "Serializable" });
+  });
+
+  it("creates all 70 roots and immutable versions only in explicit apply mode with a named target", async () => {
+    const { database, transaction } = importDatabase();
+    const result = await importPuzzleBlueprintPackage(source, { mode: "apply", targetEnvironment: "disposable-test" }, database);
+    expect(result).toMatchObject({ applied: true, mode: "apply", targetEnvironment: "disposable-test", packageBlueprints: 70, missingRoots: 70, missingVersions: 70 });
     expect(transaction.puzzleBlueprint.create).toHaveBeenCalledTimes(70);
     expect(database.$transaction).toHaveBeenCalledWith(expect.any(Function), { isolationLevel: "Serializable" });
+  });
+
+  it("rejects apply mode without an explicit target before database access", async () => {
+    const { database } = importDatabase();
+    await expect(importPuzzleBlueprintPackage(source, { mode: "apply" }, database)).rejects.toThrow(/target environment/i);
+    expect(database.$transaction).not.toHaveBeenCalled();
   });
 
   it("fails closed on an existing root conflict before overwriting anything", async () => {
@@ -51,10 +70,10 @@ describe("Puzzle Blueprint package import", () => {
     expect(transaction.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
   });
 
-  it("supports a read-only verification pass", async () => {
+  it("supports an explicit read-only verification pass", async () => {
     const { database, transaction } = importDatabase();
-    const result = await importPuzzleBlueprintPackage(source, { verifyOnly: true }, database);
-    expect(result).toMatchObject({ applied: false, missingRoots: 70, missingVersions: 70 });
+    const result = await importPuzzleBlueprintPackage(source, { mode: "verify" }, database);
+    expect(result).toMatchObject({ applied: false, mode: "verify", missingRoots: 70, missingVersions: 70 });
     expect(transaction.puzzleBlueprint.create).not.toHaveBeenCalled();
   });
 
@@ -72,10 +91,19 @@ describe("Puzzle Blueprint package import", () => {
     });
     const { database, transaction } = importDatabase(existing);
 
-    const result = await importPuzzleBlueprintPackage(source, {}, database);
+    const result = await importPuzzleBlueprintPackage(source, { mode: "apply", targetEnvironment: "disposable-test" }, database);
 
-    expect(result).toMatchObject({ applied: true, missingRoots: 0, missingVersions: 0, unchangedVersions: 70 });
+    expect(result).toMatchObject({ applied: true, mode: "apply", missingRoots: 0, missingVersions: 0, unchangedVersions: 70 });
     expect(transaction.puzzleBlueprint.create).not.toHaveBeenCalled();
     expect(transaction.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
+  });
+
+  it("parses CLI mode fail-closed and requires an explicit apply target", () => {
+    expect(parsePuzzleBlueprintImportArguments([])).toEqual({ mode: "verify" });
+    expect(parsePuzzleBlueprintImportArguments(["--verify-only"])).toEqual({ mode: "verify" });
+    expect(parsePuzzleBlueprintImportArguments(["--apply", "--target=staging"])).toEqual({ mode: "apply", targetEnvironment: "staging" });
+    expect(() => parsePuzzleBlueprintImportArguments(["--apply"])).toThrow(/target environment/i);
+    expect(() => parsePuzzleBlueprintImportArguments(["--apply", "--verify-only", "--target=staging"])).toThrow(/conflicting/i);
+    expect(() => parsePuzzleBlueprintImportArguments(["--unknown"])).toThrow(/unknown/i);
   });
 });

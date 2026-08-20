@@ -27,7 +27,8 @@ export interface Species {
   name: string;
   speciesKind: SpeciesKind;
   scientificName?: string | null;
-  taxonomy?: Taxonomy;
+  taxonomyLevelId?: Taxonomy['taxonomyLevelId'] | null;
+  taxonomy?: Taxonomy | null;
   traits: string[];
   accent?: string | null;
   anthropomorphization?: string | null;
@@ -45,7 +46,7 @@ export interface Species {
   continuityPropagationMode: ContinuityPropagationMode;
 }
 export type TaxonomyType = "KINGDOM" | "PHYLUM" | "CLASS" | "ORDER" | "FAMILY" | "GENUS" | "SPECIES";
-export interface Taxonomy { taxonomyLevelId: string; type: TaxonomyType; name: string; text?: string; commonName?: string; parent?: Taxonomy; }
+export interface Taxonomy { taxonomyLevelId: string; type: TaxonomyType; name: string; isOfficial: boolean; text?: string | null; commonName?: string | null; parentTaxonomyLevelId?: string | null; parent?: Taxonomy | null; }
 export interface Breed {
   breedId: string;
   name: string;

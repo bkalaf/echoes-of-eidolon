@@ -11,6 +11,7 @@ const repositoryRoot = resolve(webRoot, "../..");
 const outputPath = resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/owner-live-contract-inventory.json");
 const recordDetailOutputPath = resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/record-detail-route-audit.json");
 const releaseAuditOutputPath = resolve(repositoryRoot, "artifacts/release-0.3.0-owner-data-ui-audit.json");
+const releaseAuditContractPath = resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/release-0.3.0-owner-data-ui-audit.json");
 const adminScreensRoot = resolve(webRoot, "src/screens/admin");
 
 function sha256(value: string): string {
@@ -108,11 +109,11 @@ await writeFile(recordDetailOutputPath, `${JSON.stringify(recordDetailAudit, nul
 const tableInventory = JSON.parse(await readFile(resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json"), "utf8")) as {
   renderedTableCount: number;
   sharedContract: Record<string, unknown>;
-  tables: Array<Record<string, unknown> & { missingFields?: string[]; relationFields?: Array<{ field: string; resolver?: string }> }>;
+  tables: Array<Record<string, unknown> & { auditBlockers?: string[]; auditStatus?: string; component?: string; missingFields?: string[]; preferenceKey?: string; relationFields?: Array<{ field: string; resolver?: string | null }>; source?: string }>;
 };
 const formInventory = JSON.parse(await readFile(resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json"), "utf8")) as {
-  genericForms: Array<Record<string, unknown> & { missingFields?: string[]; relationLookups?: Array<{ foreignKey: string; presentationRule?: string }> }>;
-  sourceEditors: Array<Record<string, unknown> & { missingFields?: string[]; relationLookupPresentation?: Array<{ field?: string; foreignKey?: string; presentationRule?: string }> }>;
+  genericForms: Array<Record<string, unknown> & { auditBlockers?: string[]; auditStatus?: string; entityOrReadModel?: string; missingFields?: string[]; relationLookups?: Array<{ foreignKey: string; presentationRule?: string }> }>;
+  sourceEditors: Array<Record<string, unknown> & { auditBlockers?: string[]; auditStatus?: string; component?: string; missingFields?: string[]; relationLookupPresentation?: Array<{ field?: string; foreignKey?: string; presentationRule?: string }> }>;
 };
 const rowEditAudit = JSON.parse(await readFile(resolve(repositoryRoot, "artifacts/release-0.3.0/owner-ui/owner-row-edit-audit.json"), "utf8")) as { editableRegistryTableCount: number; status: string };
 const tables = tableInventory.tables.map((table) => ({
@@ -134,8 +135,16 @@ const missingColumns = tables.flatMap((table) => table.missingColumns);
 const missingFields = forms.flatMap((form) => form.missingFields);
 const rawForeignKeys = tables.flatMap((table) => table.rawForeignKeysWithoutLookupLabels);
 const rawRelationControls = forms.flatMap((form) => form.relationsShowingIdWithoutHumanLabel);
+const blockedTableAudits = tableInventory.tables.filter(({ auditStatus }) => auditStatus?.startsWith("BLOCKED_"));
+const failedTableAudits = tableInventory.tables.filter(({ auditStatus }) => auditStatus === "FAIL");
+const blockedFormAudits = formInventory.sourceEditors.filter(({ auditStatus }) => auditStatus?.startsWith("BLOCKED_"));
+const failedFormAudits = [...formInventory.genericForms, ...formInventory.sourceEditors].filter(({ auditStatus }) => auditStatus === "FAIL");
+const independentlyPassingGenericTables = tableInventory.tables.filter(({ auditStatus, component }) => component === "EntityRecordsAdminPage" && auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS");
+const independentlyPassingGenericForms = formInventory.genericForms.filter(({ auditStatus }) => auditStatus === "LOCAL_INDEPENDENT_CONTRACT_PASS");
+const tableIdentity = (table: typeof tableInventory.tables[number]) => String(table.preferenceKey ?? table.source ?? table.component ?? "unknown table");
+const formIdentity = (form: typeof formInventory.sourceEditors[number]) => String(form.component ?? "unknown form");
 const releaseAudit = {
-  schemaVersion: "echoes-release-0.3.0-owner-data-ui-audit-v1",
+  schemaVersion: "echoes-release-0.3.0-owner-data-ui-audit-v2",
   generatedAt: new Date().toISOString(),
   repository: "bkalaf/echoes-of-eidolon",
   status: "BLOCKED",
@@ -155,6 +164,12 @@ const releaseAudit = {
     missingFieldCount: missingFields.length,
     rawForeignKeyOnlyCount: rawForeignKeys.length + rawRelationControls.length,
     recordDetailRouteCount: recordDetailAudit.existingRecordDetailRoutes,
+    independentlyPassingGenericTableCount: independentlyPassingGenericTables.length,
+    independentlyPassingGenericFormCount: independentlyPassingGenericForms.length,
+    blockedTableAuditCount: blockedTableAudits.length,
+    failedTableAuditCount: failedTableAudits.length,
+    blockedFormAuditCount: blockedFormAudits.length,
+    failedFormAuditCount: failedFormAudits.length,
   },
   tables,
   forms,
@@ -163,9 +178,14 @@ const releaseAudit = {
     missingFields,
     rawForeignKeysWithoutLookupLabels: rawForeignKeys,
     relationsShowingIdWithoutHumanLabel: rawRelationControls,
-    witnessRequiredPresentation: "LOCAL_PASS",
-    witnessDefRequiredPresentation: "LOCAL_PASS",
-    tableFilterSortSearchZebraContract: "LOCAL_PASS",
+    missingIndependentTableContracts: blockedTableAudits.filter(({ auditStatus }) => auditStatus === "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT").map(tableIdentity),
+    missingIndependentFormContracts: blockedFormAudits.filter(({ auditStatus }) => auditStatus === "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT").map(formIdentity),
+    unverifiedRelationPresentation: blockedTableAudits.filter(({ auditStatus }) => auditStatus === "BLOCKED_UNVERIFIED_RELATION_LABELS").map(tableIdentity),
+    failedIndependentTableAudits: failedTableAudits.map(tableIdentity),
+    failedIndependentFormAudits: failedFormAudits.map((form) => String("component" in form ? form.component : form.entityOrReadModel)),
+    witnessRequiredPresentation: "BLOCKED_RENDERED_OUTPUT_EVIDENCE_REQUIRED",
+    witnessDefRequiredPresentation: "BLOCKED_RENDERED_OUTPUT_EVIDENCE_REQUIRED",
+    tableFilterSortSearchZebraContract: "LOCAL_STATIC_ONLY_BROWSER_BLOCKED",
     inlineRowEditing: rowEditAudit.status,
     recordDetailRoutes: recordDetailAudit.status,
     taxonomyOwnerSurfaces: "BLOCKED_PENDING_LOSSLESS_TAXONOMY_PREFLIGHT_AND_AUTHORIZED_SCHEMA_MIGRATION",
@@ -177,11 +197,14 @@ const releaseAudit = {
     "B08-OWNER-FORM-CHROMIUM",
     "B08-OWNER-INLINE-EDIT-CHROMIUM",
     "B08-OWNER-DETAIL-CHROMIUM-DATABASE",
+    "B08-OWNER-INDEPENDENT-BESPOKE-CONTRACTS",
+    "B08-OWNER-RELATION-RENDERING-EVIDENCE",
   ],
   notes: [
-    "Every current live owner/admin table and form is inventoried; the audit remains BLOCKED because future Taxonomy owner surfaces cannot be truthfully inventoried before the lossless taxonomy tranche exists.",
+    "The 34 generic table and form contracts are independently compared. Bespoke surfaces without owning read/write contracts remain explicitly blocked and are not counted as complete.",
     "No browser contrast/readability claim is made from component or static analysis alone.",
   ],
 };
 await writeFile(releaseAuditOutputPath, `${JSON.stringify(releaseAudit, null, 2)}\n`);
+await writeFile(releaseAuditContractPath, `${JSON.stringify(releaseAudit, null, 2)}\n`);
 console.log(`owner-ui live inventory ${inventory.activeEntityCount} active entities / ${inventory.persistedModelCount} persisted models`);

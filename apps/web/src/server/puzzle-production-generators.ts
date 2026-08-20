@@ -1,4 +1,4 @@
-import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
 import catalogSource from "../../data/puzzles/puzzle-prototype-catalog-70.json";
 import { loadPuzzlePrototypeCatalog, type PuzzlePrototypeCatalogEntry } from "../domain/puzzle-prototype-catalog";
@@ -19,7 +19,7 @@ export const productionFamilyKinds = Object.freeze({
 type ProductionFamily = keyof typeof productionFamilyKinds;
 type ProductionFamilyKind = (typeof productionFamilyKinds)[ProductionFamily];
 
-interface EncodedClue {
+export interface EncodedClue {
   encodedValue: number;
   ordinal: number;
 }
@@ -54,6 +54,11 @@ export interface ProductionGeneratorCatalogEntry {
   title: string;
 }
 
+export interface PuzzleGeneratorReadinessEntry extends ProductionGeneratorCatalogEntry {
+  implementationPath: string | null;
+  productionStatus: "PRODUCTION" | "PROTOTYPE_ONLY";
+}
+
 export interface GeneratedProductionPuzzle {
   accessibilityModes: string[];
   alternateSolutionsRejected: true;
@@ -82,43 +87,9 @@ export type PublicProductionPuzzle = Omit<GeneratedProductionPuzzle, "alternateS
 
 const catalog = loadPuzzlePrototypeCatalog(catalogSource);
 const tutorialIds = new Set<string>(tutorialPuzzleBlueprintIds);
-const alpha = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] as const;
-const phraseLeft = ["EMBER", "LANTERN", "RIVER", "SILVER", "HOLLOW", "MORNING", "CINDER", "GLASS"];
-const phraseRight = ["GATE", "ARCHIVE", "COMPASS", "BRIDGE", "ORCHARD", "HARBOR", "THREAD", "CROWN"];
 
 function hmac(secret: string, value: string) {
   return createHmac("sha256", secret).update(value).digest();
-}
-
-function byteStream(secret: string, context: string, length: number) {
-  const result: number[] = [];
-  for (let counter = 0; result.length < length; counter += 1) result.push(...hmac(secret, `${context}|${counter}`));
-  return Buffer.from(result.slice(0, length));
-}
-
-function symbols(bytes: Buffer, length: number) {
-  return Array.from({ length }, (_, index) => alpha[bytes[index % bytes.length]! % alpha.length]).join("");
-}
-
-function digits(bytes: Buffer, length: number) {
-  return Array.from({ length }, (_, index) => String(bytes[index % bytes.length]! % 10)).join("");
-}
-
-function deriveAnswer(format: string, bytes: Buffer) {
-  if (format === "SIX_DIGIT_CODE") return digits(bytes, 6);
-  if (format === "EIGHT_CHARACTER_ALPHANUMERIC") return symbols(bytes, 8);
-  if (format === "ORDERED_SYMBOL_SEQUENCE") return symbols(bytes, 10);
-  if (format === "SHORT_PHRASE") return `${phraseLeft[bytes[0]! % phraseLeft.length]} ${phraseRight[bytes[1]! % phraseRight.length]}`;
-  if (format === "COORDINATE") return `${1 + bytes[0]! % 32},${1 + bytes[1]! % 32}`;
-  if (format === "OBJECT_ARRANGEMENT_SIGNATURE") return symbols(bytes, 12);
-  if (format === "ORDERED_ROUTE") return Array.from({ length: 8 }, (_, index) => directions[bytes[index]! % directions.length]).join("-");
-  if (format === "SIXTEEN_CHARACTER_SEQUENCE") return symbols(bytes, 16);
-  if (format === "SIX_CHARACTER_HEXADECIMAL") return bytes.toString("hex").slice(0, 6).toUpperCase();
-  if (format === "ROUTE_SIGNATURE_16") return Array.from({ length: 16 }, (_, index) => directions[bytes[index]! % directions.length]).join("");
-  if (format === "TWENTY_DIGIT_YEAR_SEQUENCE") return Array.from({ length: 5 }, (_, index) => String(1000 + (bytes[index]! * 7 + bytes[index + 5]!) % 1026).padStart(4, "0")).join("");
-  if (format === "INTEGER_PIECES_REMAINING") return String(4 + bytes[0]! % 29);
-  throw new Error(`Unsupported production answer format: ${format}`);
 }
 
 function normalizedCatalogEntry(entry: PuzzlePrototypeCatalogEntry): ProductionGeneratorCatalogEntry {
@@ -144,35 +115,26 @@ function normalizedCatalogEntry(entry: PuzzlePrototypeCatalogEntry): ProductionG
   };
 }
 
+export function getPuzzleGeneratorReadinessCatalog(): PuzzleGeneratorReadinessEntry[] {
+  return catalog.map((source) => {
+    const entry = normalizedCatalogEntry(source);
+    const production = tutorialIds.has(entry.puzzleBlueprintId);
+    return {
+      ...entry,
+      implementationPath: production ? "apps/web/src/server/puzzle-tutorial-generators.ts" : null,
+      productionStatus: production ? "PRODUCTION" : "PROTOTYPE_ONLY",
+    };
+  });
+}
+
 export function getProductionGeneratorCatalog() {
-  return catalog.map(normalizedCatalogEntry);
-}
-
-function shuffledClues(solution: string, offset: number, bytes: Buffer) {
-  const clues = Array.from(solution, (character, ordinal) => ({ encodedValue: character.codePointAt(0)! + offset, ordinal }));
-  for (let index = clues.length - 1; index > 0; index -= 1) {
-    const target = bytes[(index + 80) % bytes.length]! % (index + 1);
-    [clues[index], clues[target]] = [clues[target]!, clues[index]!];
-  }
-  return clues;
-}
-
-function buildCarrier(entry: ProductionGeneratorCatalogEntry, solution: string, bytes: Buffer): GenericProductionCarrier {
-  const offset = 5 + bytes[60]! % 37;
-  const clues = shuffledClues(solution, offset, bytes);
-  const instructions = `${entry.concept} Apply the authored solve method: ${entry.answerDerivation} For this deterministic carrier, order the uniquely numbered ${entry.primaryFamily.toLowerCase().replaceAll("_", " ")} clues, subtract the declared offset, and convert each value to its Unicode character.`;
-  if (entry.primaryFamily === "TEXT_LANGUAGE_LITERARY") return { kind: "TEXT_DOCUMENT_PAIR", decodeOffset: offset, documentA: clues.filter((_, index) => index % 2 === 0), documentB: clues.filter((_, index) => index % 2 === 1), instructions };
-  if (entry.primaryFamily === "CRYPTO_NUMERIC_DATA") return { kind: "NUMERIC_LEDGER", decodeOffset: offset, cells: clues, instructions };
-  if (entry.primaryFamily === "VISUAL_COLOR_OPTICAL") return { kind: "VISUAL_SHAPE_LAYERS", decodeOffset: offset, instructions, layers: clues.map((clue, index) => ({ ...clue, shape: ["circle", "triangle", "square"][index % 3]!, texture: ["solid", "striped", "dotted"][index % 3]! })) };
-  if (entry.primaryFamily === "SPATIAL_FOLDING_GEOMETRY") return { kind: "SPATIAL_ROUTE_BOARD", decodeOffset: offset, instructions, tiles: clues.map((clue) => ({ ...clue, keyboardLabel: `Move to ordinal ${clue.ordinal + 1}` })) };
-  if (entry.primaryFamily === "AUDIO_MUSIC_SPECTRAL") return { kind: "AUDIO_CAPTION_SEQUENCE", decodeOffset: offset, instructions, events: clues.map((clue, index) => ({ ...clue, caption: `Event ${clue.ordinal + 1}, encoded value ${clue.encodedValue}`, note: "ABCDEFG"[index % 7]! })) };
-  if (entry.primaryFamily === "LOGIC_CONSTRAINT") return { kind: "LOGIC_CONSTRAINT_GRID", decodeOffset: offset, instructions, constraints: clues.map((clue) => ({ ...clue, relation: `ordinal = ${clue.ordinal + 1}` })) };
-  if (entry.primaryFamily === "HISTORICAL_RESEARCH") {
-    if (entry.sources.length === 0) throw new Error(`${entry.puzzleBlueprintId} requires declared research sources.`);
-    return { kind: "RESEARCH_CLAIM_CHAIN", decodeOffset: offset, instructions, claims: clues.map((clue, index) => ({ ...clue, citation: entry.sources[index % entry.sources.length]!, claimLabel: `Claim ${clue.ordinal + 1}` })) };
-  }
-  if (entry.primaryFamily === "CONSTRUCTION_SIMULATION") return { kind: "MECHANISM_REGISTER_BOARD", decodeOffset: offset, instructions, registers: clues.map((clue) => ({ ...clue, control: `Set register ${clue.ordinal + 1}` })) };
-  return { kind: "CROSS_MODAL_SIGNAL_PAIRS", decodeOffset: offset, instructions, pairs: clues.map((clue, index) => ({ ...clue, audioCaption: `Pulse ${index + 1}`, visualCue: ["line", "dot", "cross"][index % 3]! })) };
+  return getPuzzleGeneratorReadinessCatalog()
+    .filter((entry) => entry.productionStatus === "PRODUCTION")
+    .map(({ implementationPath, productionStatus, ...entry }) => {
+      void implementationPath;
+      void productionStatus;
+      return entry;
+    });
 }
 
 function carrierClues(carrier: GenericProductionCarrier): EncodedClue[] {
@@ -193,50 +155,41 @@ function solveGenericCarrier(carrier: GenericProductionCarrier) {
   return [clues.map((clue) => String.fromCodePoint(clue.encodedValue - carrier.decodeOffset)).join("")];
 }
 
-function checksum(value: unknown) {
-  return createHash("sha256").update(JSON.stringify(value)).digest("hex");
-}
-
 export function generateProductionPuzzle(input: { generatorVersion: string; puzzleBlueprintId: string; seed: string; subjectKey: string }, secret: string): GeneratedProductionPuzzle {
-  const entry = getProductionGeneratorCatalog().find((candidate) => candidate.puzzleBlueprintId === input.puzzleBlueprintId);
-  if (!entry) throw new Error(`Unknown production Puzzle Blueprint: ${input.puzzleBlueprintId}`);
+  const readiness = getPuzzleGeneratorReadinessCatalog().find((candidate) => candidate.puzzleBlueprintId === input.puzzleBlueprintId);
+  if (!readiness) throw new Error(`Unknown production Puzzle Blueprint: ${input.puzzleBlueprintId}`);
+  if (readiness.productionStatus !== "PRODUCTION") {
+    throw new Error(`${input.puzzleBlueprintId} has no authored production generator; its generic carrier is PROTOTYPE_ONLY.`);
+  }
+  const { implementationPath, productionStatus, ...entry } = readiness;
+  void implementationPath;
+  void productionStatus;
   if (input.generatorVersion !== entry.generatorVersion) throw new Error(`${entry.puzzleBlueprintId} requires immutable generator version ${entry.generatorVersion}.`);
   if (!input.seed.trim() || !input.subjectKey.trim()) throw new Error("Production generation requires an authorized seed and subject context.");
-  const context = `witness-puzzle-production-catalog-v1|${entry.puzzleBlueprintId}|${entry.generatorVersion}|${input.seed}|${input.subjectKey}`;
-  if (tutorialIds.has(entry.puzzleBlueprintId)) {
-    const tutorial = generateTutorialPuzzle({ generatorVersion: "1.0.0", puzzleBlueprintId: entry.puzzleBlueprintId as (typeof tutorialPuzzleBlueprintIds)[number], seed: input.seed, subjectKey: input.subjectKey }, secret);
-    return {
-      accessibilityModes: entry.accessibilityModes,
-      alternateSolutionsRejected: true,
-      answerFormat: entry.answerFormat,
-      canonicalSolution: tutorial.canonicalSolution,
-      carrier: tutorial.carrier,
-      concept: entry.concept,
-      difficultyTier: entry.difficultyTier,
-      expectedSolvePath: entry.expectedSolvePath,
-      familyKind: productionFamilyKinds[entry.primaryFamily],
-      generatorVersion: entry.generatorVersion,
-      hints: entry.hints,
-      instanceChecksum: tutorial.instanceChecksum,
-      instanceId: tutorial.instanceId,
-      liveRuntimeRecordsCreated: 0,
-      playerFacingModalities: entry.playerFacingModalities,
-      primaryFamily: entry.primaryFamily,
-      proofDigest: tutorial.proofDigest,
-      puzzleBlueprintId: entry.puzzleBlueprintId,
-      timerStarted: false,
-      tutorialInstance: tutorial,
-      uniqueSolution: true,
-    };
-  }
-  const bytes = byteStream(secret, context, 192);
-  const canonicalSolution = deriveAnswer(entry.answerFormat, bytes);
-  const carrier = buildCarrier(entry, canonicalSolution, bytes);
-  const publicCore = { accessibilityModes: entry.accessibilityModes, answerFormat: entry.answerFormat, carrier, concept: entry.concept, difficultyTier: entry.difficultyTier, expectedSolvePath: entry.expectedSolvePath, familyKind: productionFamilyKinds[entry.primaryFamily], generatorVersion: entry.generatorVersion, hints: entry.hints, instanceId: hmac(secret, `${context}|instance`).toString("hex").slice(0, 24), liveRuntimeRecordsCreated: 0 as const, playerFacingModalities: entry.playerFacingModalities, primaryFamily: entry.primaryFamily, puzzleBlueprintId: entry.puzzleBlueprintId, timerStarted: false as const };
-  const instanceChecksum = checksum(publicCore);
-  const solutions = solveGenericCarrier(carrier);
-  if (solutions.length !== 1 || solutions[0] !== canonicalSolution) throw new Error(`${entry.puzzleBlueprintId} did not produce exactly one canonical solution.`);
-  return { ...publicCore, alternateSolutionsRejected: true, canonicalSolution, instanceChecksum, proofDigest: hmac(secret, `${context}|bijective-proof|${canonicalSolution}|${instanceChecksum}`).toString("hex"), uniqueSolution: true };
+  const tutorial = generateTutorialPuzzle({ generatorVersion: "1.0.0", puzzleBlueprintId: entry.puzzleBlueprintId as (typeof tutorialPuzzleBlueprintIds)[number], seed: input.seed, subjectKey: input.subjectKey }, secret);
+  return {
+    accessibilityModes: entry.accessibilityModes,
+    alternateSolutionsRejected: true,
+    answerFormat: entry.answerFormat,
+    canonicalSolution: tutorial.canonicalSolution,
+    carrier: tutorial.carrier,
+    concept: entry.concept,
+    difficultyTier: entry.difficultyTier,
+    expectedSolvePath: entry.expectedSolvePath,
+    familyKind: productionFamilyKinds[entry.primaryFamily],
+    generatorVersion: entry.generatorVersion,
+    hints: entry.hints,
+    instanceChecksum: tutorial.instanceChecksum,
+    instanceId: tutorial.instanceId,
+    liveRuntimeRecordsCreated: 0,
+    playerFacingModalities: entry.playerFacingModalities,
+    primaryFamily: entry.primaryFamily,
+    proofDigest: tutorial.proofDigest,
+    puzzleBlueprintId: entry.puzzleBlueprintId,
+    timerStarted: false,
+    tutorialInstance: tutorial,
+    uniqueSolution: true,
+  };
 }
 
 export function solveProductionPuzzle(instance: GeneratedProductionPuzzle) {
@@ -273,8 +226,14 @@ export function getProductionPreviews(secret: string) {
 }
 
 export function validateProductionPreview(puzzleBlueprintId: string, submission: string, secret: string) {
-  const entry = getProductionGeneratorCatalog().find((candidate) => candidate.puzzleBlueprintId === puzzleBlueprintId);
-  if (!entry) throw new Error(`Unknown production Puzzle Blueprint: ${puzzleBlueprintId}`);
+  const readiness = getPuzzleGeneratorReadinessCatalog().find((candidate) => candidate.puzzleBlueprintId === puzzleBlueprintId);
+  if (!readiness) throw new Error(`Unknown production Puzzle Blueprint: ${puzzleBlueprintId}`);
+  if (readiness.productionStatus !== "PRODUCTION") {
+    throw new Error(`${puzzleBlueprintId} has no authored production generator; its generic carrier is PROTOTYPE_ONLY.`);
+  }
+  const { implementationPath, productionStatus, ...entry } = readiness;
+  void implementationPath;
+  void productionStatus;
   const instance = generateProductionPuzzle(productionPreviewInput(entry), secret);
   return { correct: validateProductionPuzzle(instance, submission, secret), puzzleBlueprintId, timerStarted: false as const };
 }

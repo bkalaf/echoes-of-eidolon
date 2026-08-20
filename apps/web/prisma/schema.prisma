@@ -159,6 +159,16 @@ enum SpeciesKind {
   PET
 }
 
+enum TaxonomyType {
+  KINGDOM
+  PHYLUM
+  CLASS
+  ORDER
+  FAMILY
+  GENUS
+  SPECIES
+}
+
 enum PopulationKind {
   HUMAN
   BEAST
@@ -1088,6 +1098,7 @@ enum Holiday {
 
 enum EntityType {
   CULTURE
+  TAXONOMY
   CHARACTER
   WITNESS
   ARCHITECT
@@ -1676,12 +1687,29 @@ model Passkey {
   @@index([userId])
 }
 
+model Taxonomy {
+  taxonomyLevelId       String       @id
+  type                  TaxonomyType
+  name                  String
+  isOfficial            Boolean
+  text                  String?
+  commonName            String?
+  parentTaxonomyLevelId String?
+  parent                Taxonomy?    @relation("TaxonomyHierarchy", fields: [parentTaxonomyLevelId], references: [taxonomyLevelId], onDelete: Restrict)
+  children              Taxonomy[]   @relation("TaxonomyHierarchy")
+  species               Species[]
+
+  @@index([type])
+  @@index([name])
+  @@index([parentTaxonomyLevelId])
+}
+
 model Species {
   speciesId                 String                    @id
   name                      String
   speciesKind               SpeciesKind
   scientificName            String?
-  taxonomy                  Json?
+  taxonomyLevelId           String?
   traits                    String[]                  @default([])
   accent                    String?
   anthropomorphization      String?
@@ -1697,7 +1725,10 @@ model Species {
   soulDisposition           SoulDisposition
   continuityGroup           ContinuityGroupType
   continuityPropagationMode ContinuityPropagationMode
+  taxonomy                  Taxonomy?                 @relation(fields: [taxonomyLevelId], references: [taxonomyLevelId], onDelete: SetNull)
   breeds                    Breed[]
+
+  @@index([taxonomyLevelId])
 }
 
 model Breed {

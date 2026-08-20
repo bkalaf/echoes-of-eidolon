@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "echoes-release-0.3.0-remediation-run-v1",
+  "generatedAt": "2026-08-18T22:35:54-07:00",
+  "repository": "bkalaf/echoes-of-eidolon",
+  "commitSha": "NOT_APPLICABLE",
+  "environment": "Existing /home/bobby/echoes-of-eidolon main checkout; uncommitted remediation working tree; managed sandbox without TCP listen permission",
+  "status": "BLOCKED",
+  "inputs": [
+    {
+      "path": "/home/bobby/Downloads/ECHOES_OF_EIDOLON_0_3_0_CODEX_EXECUTION_PACKAGE_2026-08-18.zip",
+      "sha256": "c6af5370fe29113594e61a9ac13db3180aaf3401740784bc9a1417eeaf817c34"
+    },
+    {
+      "path": "/home/bobby/Downloads/ECHOES_OF_EIDOLON_0_3_0_PUSHED_IMPLEMENTATION_AUDIT_2026-08-18/MANIFEST.sha256",
+      "sha256": "23b52edc23433edf7c20ca6359afa524d86a32069897c292050e93444cef7d89"
+    },
+    {
+      "path": "docs/release-notes/0_3_0.md",
+      "role": "canonical current draft release note"
+    }
+  ],
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null,
+      "result": "Frozen dependency installation passed before remediation."
+    },
+    {
+      "command": "pnpm lint",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null
+    },
+    {
+      "command": "pnpm typecheck",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null
+    },
+    {
+      "command": "pnpm test",
+      "startedAt": "2026-08-18T22:32:41-07:00",
+      "finishedAt": "2026-08-18T22:33:55-07:00",
+      "exitCode": 1,
+      "logPath": null,
+      "result": "145/148 files and 795/801 tests passed. Three failures are intentional authority/implementation blockers; two safe-ZIP subprocess cases and one entity UI timeout passed in isolated reruns."
+    },
+    {
+      "command": "pnpm --filter @echoes/web exec vitest run tests/unit/admin-v4-authoring-forms.test.tsx tests/unit/campaign-admin.test.tsx tests/unit/safe-zip-extraction.test.ts tests/unit/entity-data-admin.test.tsx --config vitest.config.ts",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null,
+      "result": "40/40 isolated rerun tests passed; this separates worker-contention/sandbox subprocess symptoms from source failures."
+    },
+    {
+      "command": "pnpm --filter @echoes/web exec vitest run focused remediation suites --config vitest.config.ts",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null,
+      "result": "Importer/Puzzle 14/14; owner UI 12/12; gate completeness 1/1."
+    },
+    {
+      "command": "pnpm test:integration",
+      "startedAt": "2026-08-18T22:34:32-07:00",
+      "finishedAt": "2026-08-18T22:34:37-07:00",
+      "exitCode": 1,
+      "logPath": null,
+      "result": "13/14 files and 58/59 tests passed. Sole failure: release gate rejects commit c1f6b137 subject gitignore changes."
+    },
+    {
+      "command": "pnpm navigation:check",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null,
+      "result": "292 active routes; zero blocking defects."
+    },
+    {
+      "command": "pnpm build",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null
+    },
+    {
+      "command": "pnpm --filter @echoes/web exec prisma validate",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 0,
+      "logPath": null
+    },
+    {
+      "command": "pnpm test:e2e",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 1,
+      "logPath": null,
+      "result": "Playwright webServer could not start because listen 127.0.0.1:3000 returns EPERM in this sandbox."
+    },
+    {
+      "command": "git diff --check 53a8f480690ad481997d415127c04369982b13c9",
+      "startedAt": null,
+      "finishedAt": "2026-08-18T22:35:54-07:00",
+      "exitCode": 0,
+      "logPath": null
+    },
+    {
+      "command": "pnpm release:check",
+      "startedAt": null,
+      "finishedAt": null,
+      "exitCode": 1,
+      "logPath": null,
+      "result": "The CLI wrapper hits sandbox IPC EPERM; the integration release gate executes the same semantic check and rejects c1f6b137."
+    }
+  ],
+  "assertions": [
+    {
+      "name": "Puzzle importer is verify-only unless apply and target are explicit",
+      "expected": true,
+      "observed": true,
+      "pass": true
+    },
+    {
+      "name": "Authored production Puzzle generators",
+      "expected": 70,
+      "observed": 4,
+      "pass": false
+    },
+    {
+      "name": "Prototype-only Puzzle entries excluded from production",
+      "expected": 66,
+      "observed": 66,
+      "pass": true
+    },
+    {
+      "name": "Generic Data Registry forms independently audited",
+      "expected": 34,
+      "observed": 34,
+      "pass": true
+    },
+    {
+      "name": "Generic Data Registry tables independently audited",
+      "expected": 34,
+      "observed": 34,
+      "pass": true
+    },
+    {
+      "name": "Bespoke owner surfaces have independent read/write and rendered relation evidence",
+      "expected": "complete",
+      "observed": "blocked",
+      "pass": false
+    },
+    {
+      "name": "Cumulative diff check",
+      "expected": "zero whitespace errors",
+      "observed": "zero whitespace errors",
+      "pass": true
+    },
+    {
+      "name": "Release history satisfies configured commit contract",
+      "expected": "PASS",
+      "observed": "FAIL: c1f6b137 gitignore changes",
+      "pass": false
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/release-0.3.0/preflight/release-history-decision.json",
+      "sha256": "6f84bca7f7bab36cfa6525beadc0d8bc4fca0cb8d060104f191509f5b3d5d4dd"
+    },
+    {
+      "path": "artifacts/release-0.3.0-owner-data-ui-audit.json",
+      "sha256": "3ad97e3e09639b51a833c3c7bddcbd0d2c0834afd9e90a1de9c9d76603ac527d"
+    },
+    {
+      "path": "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json",
+      "sha256": "00b696b704eecb8bb3b3e880eefcfd5354f4d175c5a8e7b65a5927ced05eaf1b"
+    },
+    {
+      "path": "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
+      "sha256": "13da799c8c03f0f175774fc87de820175a9ae6b7e182522d25f7f59e347b01b8"
+    },
+    {
+      "path": "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
+      "sha256": "f82d5d81b386b909e01aa6d69e81af8087478164c1b96683755af0f9f0dabb98"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "CANDIDATE-NOT-FROZEN",
+      "condition": "The repaired working tree has not been committed, so no candidate-bound cumulative gate can be claimed."
+    },
+    {
+      "id": "RELEASE-HISTORY-OWNER-DECISION",
+      "condition": "The configured release range contains nonconforming commit c1f6b137; changing the governance baseline or reconstructing history requires owner authorization."
+    },
+    {
+      "id": "FOUNDING-POPULATION-AUTHORITY",
+      "condition": "Exact owner-authored mappings and allocation/remainder rules are unavailable."
+    },
+    {
+      "id": "TAXONOMY-AUTHORITY",
+      "condition": "Live read-only taxonomy export and owner conflict decisions are unavailable."
+    },
+    {
+      "id": "PUZZLE-AUTHORING",
+      "condition": "66 of 70 Blueprints lack authored production generators and required review/browser evidence."
+    },
+    {
+      "id": "OWNER-UI-BESPOKE-CONTRACTS",
+      "condition": "Bespoke owner surfaces lack complete independent read/write contracts and rendered relation evidence."
+    },
+    {
+      "id": "CHROMIUM-RUNTIME",
+      "condition": "The managed sandbox rejects the required local TCP listener with EPERM."
+    }
+  ],
+  "notes": [
+    "No database import, migration, deployment, production mutation, push, merge, tag, GitHub Release, or public release-note publication was performed.",
+    "The unrelated untracked next_implementation_codex_package_v1 directory was preserved."
+  ]
+}

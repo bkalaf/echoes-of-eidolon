@@ -28,7 +28,8 @@ export const entityFields = {
   Site: ["siteId", "regionId", "candidateType", "longitude", "latitude"],
   Soul: ["soulId", "name"],
   Source: ["sourceId", "title", "authors", "publisher", "publicationDate", "sourceType", "urlOrIdentifier"],
-  Species: ["speciesId", "name", "speciesKind", "scientificName", "taxonomy", "traits", "accent", "anthropomorphization", "appearance", "clothing", "architecture", "originMode", "reproductiveMethod", "juvenileStages", "nurseryMode", "longevityClass", "mortalityMode", "soulDisposition", "continuityGroup", "continuityPropagationMode"],
+  Species: ["speciesId", "name", "speciesKind", "scientificName", "taxonomyLevelId", "traits", "accent", "anthropomorphization", "appearance", "clothing", "architecture", "originMode", "reproductiveMethod", "juvenileStages", "nurseryMode", "longevityClass", "mortalityMode", "soulDisposition", "continuityGroup", "continuityPropagationMode"],
+  Taxonomy: ["taxonomyLevelId", "type", "name", "isOfficial", "text", "commonName", "parentTaxonomyLevelId"],
   TimelineEvent: ["timelineEventId", "name", "timelineEventType", "summary"],
   Tome: ["tomeId", "title", "author"],
   Transition: ["transitionId", "name", "bookA", "bookB", "summary"],
@@ -54,7 +55,7 @@ const pathEntityAliases: Record<string, EntityName> = {
   "settlement-population-event": "SettlementPopulationEvent", settlementpopulationevent: "SettlementPopulationEvent",
   "settlement-world": "SettlementWorld", settlementworld: "SettlementWorld", site: "Site", soul: "Soul",
   source: "Source", sources: "Source",
-  species: "Species", "timeline-event": "TimelineEvent", timelineevent: "TimelineEvent", tome: "Tome",
+  species: "Species", taxonomy: "Taxonomy", "timeline-event": "TimelineEvent", timelineevent: "TimelineEvent", tome: "Tome",
   transition: "Transition", witness: "Witness", witnessdef: "WitnessDef", "witness-def": "WitnessDef", reward: "LegendaryReward",
 };
 

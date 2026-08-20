@@ -4,6 +4,9 @@ import console from "node:console";
 import process from "node:process";
 import ts from "typescript";
 
+import { orderOwnerTableFields } from "../src/domain/owner-table-field-order.ts";
+import { auditOwnerTableContract } from "../src/domain/owner-ui-independent-audit.ts";
+
 const webRoot = resolve(import.meta.dirname, "..");
 const repositoryRoot = resolve(webRoot, "../..");
 const sourceRoot = resolve(webRoot, "src");
@@ -131,15 +134,6 @@ function preferenceText(node) {
   return ts.isStringLiteralLike(expression) ? expression.text : expression.getText();
 }
 
-function normalized(value) { return value.toLocaleLowerCase().replaceAll(/[^a-z0-9]/g, ""); }
-function represented(field, columns) {
-  const expected = normalized(field);
-  return columns.some((column) => {
-    const actual = normalized(column);
-    return actual === expected || actual.startsWith(expected) || expected.startsWith(actual) && actual.length >= 4;
-  });
-}
-
 const sourceFiles = await filesBelow(sourceRoot);
 const tables = [];
 const nativeTableElementsOutsideSharedGrid = [];
@@ -160,22 +154,38 @@ for (const path of sourceFiles) {
       const declaration = columnExpression ? resolveColumnDeclaration(sourceFile, node, columnExpression) : undefined;
       const columnsRendered = columnsFromExpression(declaration?.initializer ?? columnExpression).filter((column) => !column.startsWith("runtime:"));
       const inferredExpected = interfaceFields(sourceFile, declaration);
-      const canonicalFieldsExpected = inferredExpected.length ? inferredExpected : columnsRendered.filter((column) => column !== "actions");
-      const missingFields = canonicalFieldsExpected.filter((field) => !represented(field, columnsRendered));
+      const canonicalFieldsExpected = inferredExpected;
+      const observedColumns = columnsRendered.map((name) => ({ name }));
+      const audit = inferredExpected.length
+        ? auditOwnerTableContract(inferredExpected.map((name) => ({ name })), observedColumns)
+        : null;
+      const relationCandidates = inferredExpected.filter((field) => /(?:Id|Ids|relation|user|actor|settlement|breed|culture|species|soundtrack|variant|party|worldInstance)$/i.test(field) && !/(?:^|_)id$/i.test(field));
+      const auditBlockers = [
+        ...(!inferredExpected.length ? ["No independent owning row/read-model contract was resolved for this rendered DataTable."] : []),
+        ...(relationCandidates.length ? ["Relation-label behavior requires rendered-output evidence; column names alone cannot prove human-readable lookup presentation."] : []),
+      ];
+      const auditStatus = !inferredExpected.length
+        ? "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT"
+        : relationCandidates.length
+          ? "BLOCKED_UNVERIFIED_RELATION_LABELS"
+          : audit?.pass ? "LOCAL_INDEPENDENT_CONTRACT_PASS" : "FAIL";
       const fileKey = basename(path, ".tsx");
       const usableColumns = columnsRendered.filter((column) => !["actions", "publication", "deployment"].includes(column));
       tables.push({
+        auditBlockers,
+        auditStatus,
         canonicalFieldsExpected,
         columnsRendered,
         component,
         dataExpression: attributeExpression(node, "data")?.getText() ?? "",
         filterableFields: usableColumns,
-        missingFields,
+        missingFields: audit?.missing ?? [],
         preferenceKey: preferenceText(node),
-        relationFields: canonicalFieldsExpected.filter((field) => /(?:Id|Ids|relation|user|actor|settlement|breed|culture|species|soundtrack|variant|party|worldInstance)$/i.test(field) && !/(?:^|_)id$/i.test(field)).map((field) => ({ field, resolver: "explicit display label plus canonical ID or complete JSON projection" })),
+        relationFields: relationCandidates.map((field) => ({ field, resolver: null })),
         routeOrState: routeHints[fileKey] ?? [`component:${fileKey}`],
         sortableFields: usableColumns,
         source: `${relative(repositoryRoot, path)}:${sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1}`,
+        violations: audit?.violations ?? [],
       });
     }
     ts.forEachChild(node, visit);
@@ -187,31 +197,46 @@ const genericIndex = tables.findIndex((table) => table.preferenceKey.includes("e
 if (genericIndex >= 0) {
   tables.splice(genericIndex, 1);
   for (const [entity, entityContract] of Object.entries(contract.entities)) {
-    const parentFields = ["Architect", "Companion", "Witness"].includes(entity)
-      ? contract.entities.Character.auditFields.filter((field) => field.name !== contract.entities.Character.idField).map((field) => `Character.${field.name}`)
+    const parentAuditFields = ["Architect", "Companion", "Witness"].includes(entity)
+      ? orderOwnerTableFields("Character", contract.entities.Character.idField, contract.entities.Character.auditFields).filter((field) => field.name !== contract.entities.Character.idField)
       : [];
-    const fields = [...parentFields, ...entityContract.auditFields.map((field) => field.name)];
+    const orderedEntityFields = orderOwnerTableFields(entity, entityContract.idField, entityContract.auditFields);
+    const expected = [
+      ...parentAuditFields.map((field) => ({ name: `Character.${field.name}`, relation: field.kind === "relation" })),
+      ...entityContract.auditFields.map((field) => ({ name: field.name, relation: field.kind === "relation" })),
+    ];
+    const observed = [
+      ...parentAuditFields.map((field) => ({ hasHumanReadableRelationLabel: field.kind === "relation", name: `Character.${field.name}` })),
+      ...orderedEntityFields.map((field) => ({ hasHumanReadableRelationLabel: field.kind === "relation", name: field.name })),
+      { name: "actions" },
+    ];
+    const audit = auditOwnerTableContract(expected, observed);
+    const fields = expected.map(({ name }) => name);
     tables.push({
+      auditBlockers: [],
+      auditStatus: audit.pass ? "LOCAL_INDEPENDENT_CONTRACT_PASS" : "FAIL",
       canonicalFieldsExpected: fields,
-      columnsRendered: [...fields, "actions"],
+      columnsRendered: observed.map(({ name }) => name),
       component: "EntityRecordsAdminPage",
       dataExpression: `${entity} persisted records`,
       filterableFields: fields,
-      missingFields: [],
+      missingFields: audit.missing,
       inlineRowEditing: inlineRowContract,
       preferenceKey: `entity-${entity.toLocaleLowerCase()}`,
       relationFields: entityContract.auditFields.filter((field) => field.kind === "relation").map((field) => ({ field: field.name, resolver: `lookupPresentationFor(${field.type}) plus raw ${field.relationFromFields?.join(", ") || "relation identity"}` })),
       routeOrState: [`/admin/data/${entity.replace(/([a-z])([A-Z])/g, "$1-$2").toLocaleLowerCase()}`],
       sortableFields: fields,
       source: "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      violations: audit.violations,
     });
   }
 }
 
 tables.sort((left, right) => left.preferenceKey.localeCompare(right.preferenceKey));
 const inventory = {
-  schemaVersion: "echoes-owner-table-inventory-v1",
+  schemaVersion: "echoes-owner-table-inventory-v2",
   generatedAt: new Date().toISOString(),
+  status: "BLOCKED",
   sharedContract: {
     clearFilters: true,
     columnResizing: true,
@@ -266,10 +291,12 @@ await mkdir(artifactRoot, { recursive: true });
 await writeFile(resolve(artifactRoot, "owner-table-inventory.json"), `${JSON.stringify(inventory, null, 2)}\n`);
 await writeFile(resolve(artifactRoot, "owner-table-browser-matrix.json"), `${JSON.stringify(browserMatrix, null, 2)}\n`);
 await writeFile(resolve(artifactRoot, "owner-row-edit-audit.json"), `${JSON.stringify(rowEditAudit, null, 2)}\n`);
+await writeFile(resolve(artifactRoot, "inline-row-edit-audit.json"), `${JSON.stringify(rowEditAudit, null, 2)}\n`);
 
-if (nativeTableElementsOutsideSharedGrid.length || Object.values(inlineRowContract).some((value) => !value) || tables.some((table) => table.missingFields.length || !table.preferenceKey || !table.canonicalFieldsExpected.length)) {
-  console.error(JSON.stringify({ nativeTableElementsOutsideSharedGrid, incomplete: tables.filter((table) => table.missingFields.length || !table.preferenceKey || !table.canonicalFieldsExpected.length).map((table) => ({ preferenceKey: table.preferenceKey, missingFields: table.missingFields, source: table.source })) }, null, 2));
+const genericTables = tables.filter(({ component }) => component === "EntityRecordsAdminPage");
+if (nativeTableElementsOutsideSharedGrid.length || Object.values(inlineRowContract).some((value) => !value) || genericTables.some((table) => table.auditStatus !== "LOCAL_INDEPENDENT_CONTRACT_PASS")) {
+  console.error(JSON.stringify({ nativeTableElementsOutsideSharedGrid, incompleteGenericTables: genericTables.filter((table) => table.auditStatus !== "LOCAL_INDEPENDENT_CONTRACT_PASS").map((table) => ({ preferenceKey: table.preferenceKey, missingFields: table.missingFields, source: table.source, violations: table.violations })) }, null, 2));
   process.exitCode = 1;
 } else {
-  console.log(`owner-table inventory PASS: ${sourceSurfaceCount} source surfaces, ${tables.length} rendered tables, zero missing fields`);
+  console.log(`owner-table inventory BLOCKED: ${genericTables.length} independently checked generic contracts; ${tables.length - genericTables.length} source tables require independent read-model/relation completion`);
 }

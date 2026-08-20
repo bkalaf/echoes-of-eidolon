@@ -44,4 +44,3 @@ describe("server-keyed Puzzle prototypes", () => {
     );
   });
 });
-

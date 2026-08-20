@@ -52,6 +52,7 @@ import { Route as ApiStoreOrderLookupRouteImport } from './routes/api/store/orde
 import { Route as ApiStoreSupportRouteImport } from './routes/api/store/support'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as AdminDataEntityKeyRecordIdRouteImport } from './routes/admin/data/$entityKey/$recordId'
+import { Route as AdminDataEntityKeyImportRouteImport } from './routes/admin/data/$entityKey/import'
 import { Route as ApiAccountOrdersIndexRouteImport } from './routes/api/account/orders/index'
 import { Route as ApiAccountOrdersOrderIdRouteImport } from './routes/api/account/orders/$orderId'
 import { Route as ApiAccountSessionsIndexRouteImport } from './routes/api/account/sessions/index'
@@ -324,6 +325,12 @@ const AdminDataEntityKeyRecordIdRoute =
   AdminDataEntityKeyRecordIdRouteImport.update({
     id: '/admin/data/$entityKey/$recordId',
     path: '/admin/data/$entityKey/$recordId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AdminDataEntityKeyImportRoute =
+  AdminDataEntityKeyImportRouteImport.update({
+    id: '/admin/data/$entityKey/import',
+    path: '/admin/data/$entityKey/import',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiAccountOrdersIndexRoute = ApiAccountOrdersIndexRouteImport.update({
@@ -671,6 +678,7 @@ export interface FileRoutesByFullPath {
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
+  '/admin/data/$entityKey/import': typeof AdminDataEntityKeyImportRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -769,6 +777,7 @@ export interface FileRoutesByTo {
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
+  '/admin/data/$entityKey/import': typeof AdminDataEntityKeyImportRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -868,6 +877,7 @@ export interface FileRoutesById {
   '/api/store/support': typeof ApiStoreSupportRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/admin/data/$entityKey/$recordId': typeof AdminDataEntityKeyRecordIdRoute
+  '/admin/data/$entityKey/import': typeof AdminDataEntityKeyImportRoute
   '/api/account/orders/$orderId': typeof ApiAccountOrdersOrderIdRouteWithChildren
   '/api/account/sessions/revoke-all-other': typeof ApiAccountSessionsRevokeAllOtherRoute
   '/api/account/sessions/revoke-other': typeof ApiAccountSessionsRevokeOtherRoute
@@ -968,6 +978,7 @@ export interface FileRouteTypes {
     | '/api/store/support'
     | '/api/stripe/webhook'
     | '/admin/data/$entityKey/$recordId'
+    | '/admin/data/$entityKey/import'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -1066,6 +1077,7 @@ export interface FileRouteTypes {
     | '/api/store/support'
     | '/api/stripe/webhook'
     | '/admin/data/$entityKey/$recordId'
+    | '/admin/data/$entityKey/import'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -1164,6 +1176,7 @@ export interface FileRouteTypes {
     | '/api/store/support'
     | '/api/stripe/webhook'
     | '/admin/data/$entityKey/$recordId'
+    | '/admin/data/$entityKey/import'
     | '/api/account/orders/$orderId'
     | '/api/account/sessions/revoke-all-other'
     | '/api/account/sessions/revoke-other'
@@ -1262,6 +1275,7 @@ export interface RootRouteChildren {
   ApiStoreSupportRoute: typeof ApiStoreSupportRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
   AdminDataEntityKeyRecordIdRoute: typeof AdminDataEntityKeyRecordIdRoute
+  AdminDataEntityKeyImportRoute: typeof AdminDataEntityKeyImportRoute
   ApiAccountOrdersOrderIdRoute: typeof ApiAccountOrdersOrderIdRouteWithChildren
   ApiAccountSessionsRevokeAllOtherRoute: typeof ApiAccountSessionsRevokeAllOtherRoute
   ApiAccountSessionsRevokeOtherRoute: typeof ApiAccountSessionsRevokeOtherRoute
@@ -1601,6 +1615,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/data/$entityKey/$recordId'
       fullPath: '/admin/data/$entityKey/$recordId'
       preLoaderRoute: typeof AdminDataEntityKeyRecordIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/data/$entityKey/import': {
+      id: '/admin/data/$entityKey/import'
+      path: '/admin/data/$entityKey/import'
+      fullPath: '/admin/data/$entityKey/import'
+      preLoaderRoute: typeof AdminDataEntityKeyImportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/account/orders/': {
@@ -2177,6 +2198,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiStoreSupportRoute: ApiStoreSupportRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
   AdminDataEntityKeyRecordIdRoute: AdminDataEntityKeyRecordIdRoute,
+  AdminDataEntityKeyImportRoute: AdminDataEntityKeyImportRoute,
   ApiAccountOrdersOrderIdRoute: ApiAccountOrdersOrderIdRouteWithChildren,
   ApiAccountSessionsRevokeAllOtherRoute: ApiAccountSessionsRevokeAllOtherRoute,
   ApiAccountSessionsRevokeOtherRoute: ApiAccountSessionsRevokeOtherRoute,

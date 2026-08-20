@@ -117,4 +117,3 @@ export function buildOwnerUiLiveInventory(contractData: GeneratedEntityAdminCont
     entities,
   };
 }
-

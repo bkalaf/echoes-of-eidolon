@@ -13,9 +13,13 @@ describe("Release 0.3.0 intentional red baseline", () => {
     expect(styles).not.toMatch(/\.map img\s*\{[^}]*object-fit:\s*cover/s);
   });
 
-  it("R030-Q04 and Q05: deterministic founding Settlement and population importers exist", () => {
+  it("R030-Q04: the deterministic founding Settlement importer exists", () => {
     expect(existsSync(resolve(webRoot, "scripts/import-initial-settlements.mts"))).toBe(true);
-    expect(existsSync(resolve(webRoot, "scripts/import-initial-settlement-populations.mts"))).toBe(true);
+  });
+
+  it("R030-Q05: founding population authority is represented without inventing an importer", () => {
+    expect(existsSync(resolve(repositoryRoot, "artifacts/release-0.3.0/data/unresolved-founder-mapping.json"))).toBe(true);
+    expect(existsSync(resolve(webRoot, "scripts/import-initial-settlement-populations.mts"))).toBe(false);
   });
 
   it("R030-Q06 and Q07: Atlas Sites resolve selected-world occupancy instead of exposing every Site as foundable", () => {
@@ -58,10 +62,10 @@ describe("Release 0.3.0 intentional red baseline", () => {
     expect(schema).toMatch(/taxonomyLevelId\s+String\s+@id/);
   });
 
-  it("R030-Q17: production generator evidence covers all 70 blueprints", () => {
+  it("R030-Q17: production generator evidence does not count prototype-only blueprints", () => {
     const path = resolve(repositoryRoot, "artifacts/release-0.3.0/puzzles/puzzle-generator-coverage.json");
     expect(existsSync(path)).toBe(true);
     const coverage = JSON.parse(readFileSync(path, "utf8")) as { summary?: { productionGeneratorCount?: number } };
-    expect(coverage.summary?.productionGeneratorCount).toBe(70);
+    expect(coverage.summary?.productionGeneratorCount).toBe(4);
   });
 });

@@ -11,6 +11,43 @@ import { getDatabase } from "./database";
 
 export class PuzzleBlueprintImportConflictError extends Error {}
 
+export type PuzzleBlueprintImportMode = "apply" | "verify";
+
+export interface PuzzleBlueprintImportOptions {
+  mode?: PuzzleBlueprintImportMode;
+  targetEnvironment?: string;
+}
+
+function normalizedImportOptions(options: PuzzleBlueprintImportOptions = {}) {
+  const mode = options.mode ?? "verify";
+  if (mode !== "apply" && mode !== "verify") throw new Error(`Unknown Puzzle Blueprint import mode: ${String(mode)}`);
+  const targetEnvironment = options.targetEnvironment?.trim();
+  if (mode === "apply" && !targetEnvironment) {
+    throw new Error("Puzzle Blueprint apply mode requires an explicit target environment.");
+  }
+  return targetEnvironment ? { mode, targetEnvironment } : { mode };
+}
+
+export function parsePuzzleBlueprintImportArguments(arguments_: string[]): PuzzleBlueprintImportOptions {
+  const applyArguments = arguments_.filter((argument) => argument === "--apply");
+  const verifyArguments = arguments_.filter((argument) => argument === "--verify-only");
+  const targetArguments = arguments_.filter((argument) => argument.startsWith("--target="));
+  const unknownArgument = arguments_.find((argument) => argument !== "--apply" && argument !== "--verify-only" && !argument.startsWith("--target="));
+  if (unknownArgument) throw new Error(`Unknown Puzzle Blueprint import argument: ${unknownArgument}`);
+  if (applyArguments.length > 1 || verifyArguments.length > 1 || targetArguments.length > 1) {
+    throw new Error("Duplicate Puzzle Blueprint import mode or target argument.");
+  }
+  if (applyArguments.length && verifyArguments.length) {
+    throw new Error("Conflicting Puzzle Blueprint import modes: choose verify-only or apply.");
+  }
+  const targetEnvironment = targetArguments[0]?.slice("--target=".length).trim();
+  if (targetArguments.length && !targetEnvironment) throw new Error("Puzzle Blueprint target environment must not be empty.");
+  return normalizedImportOptions({
+    mode: applyArguments.length ? "apply" : "verify",
+    ...(targetEnvironment ? { targetEnvironment } : {}),
+  });
+}
+
 function stableJson(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
   if (value && typeof value === "object") {
@@ -37,9 +74,11 @@ function assertRootMatches(
 
 export async function importPuzzleBlueprintPackage(
   csv: string,
-  options: { verifyOnly?: boolean } = {},
+  options: PuzzleBlueprintImportOptions = {},
   database: PrismaClient = getDatabase(),
 ) {
+  const importOptions = normalizedImportOptions(options);
+  const apply = importOptions.mode === "apply";
   const checksum = createHash("sha256").update(csv).digest("hex");
   if (checksum !== PUZZLE_BLUEPRINT_PACKAGE_SHA256) {
     throw new Error(`Puzzle Blueprint package checksum mismatch: expected ${PUZZLE_BLUEPRINT_PACKAGE_SHA256}, received ${checksum}.`);
@@ -83,7 +122,7 @@ export async function importPuzzleBlueprintPackage(
       if (!current) {
         missingRoots += 1;
         missingVersions += 1;
-        if (!options.verifyOnly) {
+        if (apply) {
           await transaction.puzzleBlueprint.create({
             data: {
               ...entry.root,
@@ -104,7 +143,7 @@ export async function importPuzzleBlueprintPackage(
       const currentVersion = current.versions.find((version) => version.generatorVersion === entry.version.generatorVersion);
       if (!currentVersion) {
         missingVersions += 1;
-        if (!options.verifyOnly) {
+        if (apply) {
           await transaction.puzzleBlueprintVersion.create({
             data: {
               design,
@@ -126,7 +165,9 @@ export async function importPuzzleBlueprintPackage(
     }
 
     return {
-      applied: !options.verifyOnly,
+      applied: apply,
+      mode: importOptions.mode,
+      ...("targetEnvironment" in importOptions ? { targetEnvironment: importOptions.targetEnvironment } : {}),
       packageBlueprints: parsed.length,
       missingRoots,
       missingVersions,

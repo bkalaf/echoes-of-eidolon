@@ -48,6 +48,14 @@
       "primary": "name",
       "secondary": "speciesId"
     },
+    "Taxonomy": {
+      "primary": "name",
+      "secondary": "taxonomyLevelId",
+      "context": [
+        "type",
+        "commonName"
+      ]
+    },
     "Culture": {
       "primary": "name",
       "secondary": "cultureId"

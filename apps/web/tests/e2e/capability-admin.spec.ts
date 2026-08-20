@@ -41,7 +41,7 @@ test("Capability Registry renders the persisted versioned authority", async ({ p
 
   await page.goto("/admin/capabilities");
   await expect(page.getByRole("heading", { level: 1, name: "Capability Registry" })).toBeVisible();
-  await expect(page.getByText("LOCATION_DISCOVERED")).toBeVisible();
+  await expect(page.getByRole("cell", { name: "LOCATION_DISCOVERED" })).toBeVisible();
   await expect(page.getByText("v1 · ACTIVE")).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Capability administration" })).toContainText("Condition Builder");
   await expect(page.getByRole("link", { name: "Edit / versions" })).toHaveAttribute("href", "/admin/capabilities/CAP-LOCATION-DISCOVERED");

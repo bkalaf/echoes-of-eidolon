@@ -81,4 +81,3 @@
     "The user's dirty primary checkout remains untouched; implementation uses the isolated /tmp worktree."
   ]
 }
-

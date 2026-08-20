@@ -10,7 +10,7 @@ import {
 describe("all canonical entity forms", () => {
   it("assigns a concrete typed control to every editable field on every registered entity", () => {
     const entities = contractData.entities as Record<string, { fields: EntityFormField[]; idField: string }>;
-    expect(Object.keys(entities)).toHaveLength(34);
+    expect(Object.keys(entities)).toHaveLength(35);
     for (const [entity, contract] of Object.entries(entities)) {
       expect(contract.fields.length, `${entity} must have editable fields`).toBeGreaterThan(0);
       for (const field of contract.fields) {

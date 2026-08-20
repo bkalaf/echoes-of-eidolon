@@ -9,28 +9,13 @@ import { getPuzzlePrototypeCatalog } from "../../src/server/puzzle-prototypes";
 afterEach(() => vi.unstubAllGlobals());
 
 describe("Puzzle Prototype Lab", () => {
-  it("renders an answer-free production family carrier for a non-tutorial blueprint", async () => {
+  it("does not present a non-tutorial prototype as a production generator", async () => {
     const prototype = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000").prototypes.find((entry) => entry.puzzleBlueprintId === "PZB-001")!;
-    const productionPuzzle = {
-      accessibilityModes: ["SCREEN_READER_DATA"],
-      carrier: { kind: "TEXT_DOCUMENT_PAIR", decodeOffset: 7, documentA: [{ encodedValue: 72, ordinal: 0 }], documentB: [{ encodedValue: 73, ordinal: 1 }], instructions: "Order and decode." },
-      familyKind: "TEXT_DOCUMENT_PAIR",
-      generatorVersion: "1.0.0",
-      hints: prototype.hints,
-      instanceChecksum: "b".repeat(64),
-      instanceId: "production-instance",
-      liveRuntimeRecordsCreated: 0,
-      primaryFamily: "TEXT_LANGUAGE_LITERARY",
-      puzzleBlueprintId: "PZB-001",
-      timerStarted: false,
-    };
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ productionPuzzles: [productionPuzzle], prototypes: [prototype], total: 70, timerStarted: false }), ok: true }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ productionPuzzles: [], prototypes: [prototype], total: 70, timerStarted: false }), ok: true }));
     render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab fixedBlueprintId="PZB-001" /></QueryClientProvider>);
-    const heading = await screen.findByRole("heading", { name: "Production generator 1.0.0" });
-    const production = heading.closest("section")!;
-    expect(within(production).getByText("TEXT_DOCUMENT_PAIR")).toBeInTheDocument();
-    expect(within(production).getByRole("list", { name: "Text document pair carrier" })).toBeInTheDocument();
-    expect(within(production).getByText("Runtime records: 0 · Timer started: no")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: prototype.title })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: /Production generator/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Document comparison surface" })).toBeInTheDocument();
   });
 
   it("renders the production tutorial carrier and accessibility surface without runtime state", async () => {
@@ -54,31 +39,18 @@ describe("Puzzle Prototype Lab", () => {
     expect(within(production).getByText("Runtime records: 0 · Timer started: no")).toBeInTheDocument();
   });
 
-  it("renders accessible production carriers for all nine method families", async () => {
+  it("exposes only the four authored tutorial carriers as production previews", async () => {
     const response = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000");
     const productionPuzzles = getProductionPreviews("test-only-production-lab-secret-00000000000000000000000");
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionPuzzles }), ok: true }));
     render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab /></QueryClientProvider>);
     const select = await screen.findByLabelText("Prototype");
-    const expectedRoles = new Map([
-      ["TEXT_DOCUMENT_PAIR", ["list", "Text document pair carrier"]],
-      ["NUMERIC_LEDGER", ["table", "Numeric ledger carrier"]],
-      ["VISUAL_SHAPE_LAYERS", ["list", "Color-independent shape layer carrier"]],
-      ["SPATIAL_ROUTE_BOARD", ["group", "Keyboard-operable spatial route carrier"]],
-      ["AUDIO_CAPTION_SEQUENCE", ["list", "Captioned audio sequence carrier"]],
-      ["LOGIC_CONSTRAINT_GRID", ["table", "Logic constraint carrier"]],
-      ["RESEARCH_CLAIM_CHAIN", ["list", "Research claim and citation carrier"]],
-      ["MECHANISM_REGISTER_BOARD", ["group", "Discrete mechanism register carrier"]],
-      ["CROSS_MODAL_SIGNAL_PAIRS", ["list", "Equivalent cross-modal signal carrier"]],
-    ] as const);
-    const representatives = [...new Map(productionPuzzles.filter((puzzle) => expectedRoles.has(puzzle.carrier.kind as never)).map((puzzle) => [puzzle.carrier.kind, puzzle])).values()];
-    expect(representatives).toHaveLength(9);
-    for (const production of representatives) {
+    expect(productionPuzzles.map((puzzle) => puzzle.puzzleBlueprintId).sort()).toEqual(["PZB-011", "PZB-012", "PZB-021", "PZB-037"]);
+    expect(productionPuzzles.every((puzzle) => ["ORDINAL_CANCELLATION_MATRIX", "SET_AMBIGRAM", "MUSICAL_HEX_GRID", "TYPOGRAPHIC_QR_THRESHOLD"].includes(puzzle.carrier.kind))).toBe(true);
+    for (const production of productionPuzzles) {
       fireEvent.change(select, { target: { value: production.puzzleBlueprintId } });
-      const [role, name] = expectedRoles.get(production.carrier.kind as never)!;
-      const carrier = await screen.findByRole(role, { name });
-      expect(carrier).toBeInTheDocument();
-      expect(within(carrier.closest("section")!).getByText(production.accessibilityModes.join(" · "))).toBeInTheDocument();
+      const heading = await screen.findByRole("heading", { name: "Production tutorial generator 1.0.0" });
+      expect(within(heading.closest("section")!).getByText(production.accessibilityModes.join(" · "))).toBeInTheDocument();
     }
   });
 

@@ -54,7 +54,7 @@ describe("closed-world generic entity administration", () => {
 
   it("normalizes scalar, list, JSON, enum, and optional values while rejecting unknown fields", () => {
     expect(normalizeEntityData("Transition", { transitionId: "TR-1", name: "Bridge", bookA: "1", bookB: 18, summary: "Mirror" }, "create")).toEqual({ transitionId: "TR-1", name: "Bridge", bookA: 1, bookB: 18, summary: "Mirror" });
-    expect(normalizeEntityData("Species", { speciesId: "SP-1", name: "Otter", speciesKind: "BEAST", scientificName: "", taxonomy: { taxonomyLevelId: "family", type: "FAMILY", name: "Mustelidae" }, traits: [], appearance: "brown", originMode: "UNKNOWN", reproductiveMethod: "UNKNOWN", juvenileStages: [], nurseryMode: [], longevityClass: "UNKNOWN", mortalityMode: "UNKNOWN", soulDisposition: "UNKNOWN", continuityGroup: "UNKNOWN", continuityPropagationMode: "UNKNOWN" }, "create")).toMatchObject({ scientificName: null, appearance: "brown", taxonomy: { taxonomyLevelId: "family", type: "FAMILY", name: "Mustelidae" } });
+    expect(normalizeEntityData("Species", { speciesId: "SP-1", name: "Otter", speciesKind: "BEAST", scientificName: "", taxonomyLevelId: "TAX_SPECIES_LUTRA_LUTRA", traits: [], appearance: "brown", originMode: "UNKNOWN", reproductiveMethod: "UNKNOWN", juvenileStages: [], nurseryMode: [], longevityClass: "UNKNOWN", mortalityMode: "UNKNOWN", soulDisposition: "UNKNOWN", continuityGroup: "UNKNOWN", continuityPropagationMode: "UNKNOWN" }, "create")).toMatchObject({ scientificName: null, appearance: "brown", taxonomyLevelId: "TAX_SPECIES_LUTRA_LUTRA" });
     expect(() => normalizeEntityData("Soul", { soulId: "S-1", name: "Soul", invented: true }, "create")).toThrow(EntityAdminValidationError);
   });
 
@@ -93,7 +93,7 @@ describe("closed-world generic entity administration", () => {
     await expect(applyGenericEntityImport([{ soulId: "SOUL-1", name: "Changed" }], "Soul", drift.database as never)).rejects.toThrow(/conflicts with authoritative persisted data/);
   });
 
-  it("accepts an explicit canonical Species ID when optional taxonomy is JSON null", async () => {
+  it("accepts an explicit canonical Species ID when its optional Taxonomy reference is null", async () => {
     const species = {
       create: vi.fn(async ({ data }) => data),
       findUnique: vi.fn().mockResolvedValue(null),
@@ -105,7 +105,7 @@ describe("closed-world generic entity administration", () => {
       name: "Human",
       speciesKind: "HUMAN",
       scientificName: "Homo sapiens",
-      taxonomy: null,
+      taxonomyLevelId: null,
       traits: [],
       accent: null,
       anthropomorphization: null,
