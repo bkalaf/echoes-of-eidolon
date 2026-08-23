@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 
 import catalogSource from "../../data/puzzles/puzzle-prototype-catalog-70.json";
 import { loadPuzzlePrototypeCatalog, type PuzzlePrototypeCatalogEntry } from "../domain/puzzle-prototype-catalog";
-import { generateTutorialPuzzle, getPublicTutorialPuzzle, solveTutorialPuzzle, tutorialPuzzleBlueprintIds, type GeneratedTutorialPuzzle, type TutorialCarrier } from "./puzzle-tutorial-generators";
+import { generateTutorialPuzzle, getPublicTutorialPuzzle, solveTutorialPuzzle, tutorialPuzzleBlueprintIds, type GeneratedTutorialPuzzle, type PublicTutorialCarrier, type TutorialCarrier } from "./puzzle-tutorial-generators";
 
 export const productionFamilyKinds = Object.freeze({
   TEXT_LANGUAGE_LITERARY: "TEXT_DOCUMENT_PAIR",
@@ -79,11 +79,23 @@ export interface GeneratedProductionPuzzle {
   proofDigest: string;
   puzzleBlueprintId: string;
   timerStarted: false;
+  title: string;
   tutorialInstance?: GeneratedTutorialPuzzle;
   uniqueSolution: true;
 }
 
-export type PublicProductionPuzzle = Omit<GeneratedProductionPuzzle, "alternateSolutionsRejected" | "canonicalSolution" | "proofDigest" | "tutorialInstance" | "uniqueSolution">;
+export interface PublicProductionPuzzle {
+  accessibilityModes: string[];
+  answerFormat: string;
+  carrier: GenericProductionCarrier | PublicTutorialCarrier;
+  hints: Array<{ kind: string; level: number; text: string }>;
+  instanceId: string;
+  liveRuntimeRecordsCreated: 0;
+  playerFacingModalities: string[];
+  puzzleBlueprintId: string;
+  timerStarted: false;
+  title: string;
+}
 
 const catalog = loadPuzzlePrototypeCatalog(catalogSource);
 const tutorialIds = new Set<string>(tutorialPuzzleBlueprintIds);
@@ -187,6 +199,7 @@ export function generateProductionPuzzle(input: { generatorVersion: string; puzz
     proofDigest: tutorial.proofDigest,
     puzzleBlueprintId: entry.puzzleBlueprintId,
     timerStarted: false,
+    title: entry.title,
     tutorialInstance: tutorial,
     uniqueSolution: true,
   };
@@ -197,11 +210,19 @@ export function solveProductionPuzzle(instance: GeneratedProductionPuzzle) {
 }
 
 export function getPublicProductionPuzzle(instance: GeneratedProductionPuzzle): PublicProductionPuzzle {
-  if (instance.tutorialInstance) {
-    const tutorial = getPublicTutorialPuzzle(instance.tutorialInstance);
-    return { accessibilityModes: instance.accessibilityModes, answerFormat: instance.answerFormat, carrier: tutorial.carrier, concept: instance.concept, difficultyTier: instance.difficultyTier, expectedSolvePath: instance.expectedSolvePath, familyKind: instance.familyKind, generatorVersion: instance.generatorVersion, hints: instance.hints, instanceChecksum: tutorial.instanceChecksum, instanceId: tutorial.instanceId, liveRuntimeRecordsCreated: 0, playerFacingModalities: instance.playerFacingModalities, primaryFamily: instance.primaryFamily, puzzleBlueprintId: instance.puzzleBlueprintId, timerStarted: false };
-  }
-  return { accessibilityModes: [...instance.accessibilityModes], answerFormat: instance.answerFormat, carrier: instance.carrier, concept: instance.concept, difficultyTier: instance.difficultyTier, expectedSolvePath: [...instance.expectedSolvePath], familyKind: instance.familyKind, generatorVersion: instance.generatorVersion, hints: instance.hints.map((hint) => ({ ...hint })), instanceChecksum: instance.instanceChecksum, instanceId: instance.instanceId, liveRuntimeRecordsCreated: 0, playerFacingModalities: [...instance.playerFacingModalities], primaryFamily: instance.primaryFamily, puzzleBlueprintId: instance.puzzleBlueprintId, timerStarted: false };
+  const carrier = instance.tutorialInstance ? getPublicTutorialPuzzle(instance.tutorialInstance).carrier : instance.carrier as GenericProductionCarrier;
+  return {
+    accessibilityModes: [...instance.accessibilityModes],
+    answerFormat: instance.answerFormat,
+    carrier,
+    hints: instance.hints.map((hint) => ({ ...hint })),
+    instanceId: instance.instanceId,
+    liveRuntimeRecordsCreated: 0,
+    playerFacingModalities: [...instance.playerFacingModalities],
+    puzzleBlueprintId: instance.puzzleBlueprintId,
+    timerStarted: false,
+    title: instance.title,
+  };
 }
 
 function normalize(value: string) {
@@ -214,15 +235,15 @@ export function validateProductionPuzzle(instance: GeneratedProductionPuzzle, su
   return timingSafeEqual(left, right);
 }
 
-const productionPreviewInput = (entry: ProductionGeneratorCatalogEntry) => ({
+export const productionPreviewInput = (entry: ProductionGeneratorCatalogEntry, generation = 0) => ({
   generatorVersion: entry.generatorVersion,
   puzzleBlueprintId: entry.puzzleBlueprintId,
-  seed: "admin-production-preview-v1",
+  seed: `admin-production-preview-v2:${generation}`,
   subjectKey: "ADMIN-PREVIEW",
 });
 
-export function getProductionPreviews(secret: string) {
-  return getProductionGeneratorCatalog().map((entry) => getPublicProductionPuzzle(generateProductionPuzzle(productionPreviewInput(entry), secret)));
+export function getProductionPreviews(secret: string, generation = 0) {
+  return getProductionGeneratorCatalog().map((entry) => getPublicProductionPuzzle(generateProductionPuzzle(productionPreviewInput(entry, generation), secret)));
 }
 
 export function validateProductionPreview(puzzleBlueprintId: string, submission: string, secret: string) {

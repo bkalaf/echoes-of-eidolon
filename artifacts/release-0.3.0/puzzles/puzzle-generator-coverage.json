@@ -1,45 +1,63 @@
 {
-  "schemaVersion": "eidolon-puzzle-generator-coverage-v2",
-  "generatedAt": "2026-08-20T17:14:49.657Z",
+  "schemaVersion": "eidolon-puzzle-generator-coverage-v3",
+  "generatedAt": "2026-08-23T07:14:45.825Z",
   "repository": "bkalaf/echoes-of-eidolon",
-  "commitSha": "UNCOMMITTED_WORKTREE",
-  "environment": {
-    "name": "local-repair",
-    "node": "v22.22.0",
-    "database": "NOT_USED",
-    "browser": "NOT_RUN"
+  "applicationSource": {
+    "paths": [
+      "apps/web/data/puzzles/puzzle-prototype-catalog-70.json",
+      "apps/web/src/server/puzzle-tutorial-generators.ts",
+      "apps/web/src/server/puzzle-production-generators.ts",
+      "apps/web/src/server/puzzle-production-validation.ts",
+      "apps/web/src/components/puzzles/PlayerPuzzleSurface.tsx",
+      "apps/web/src/components/puzzles/OrdinalCancellationPuzzle.tsx",
+      "apps/web/src/components/puzzles/SetAmbigramPuzzle.tsx",
+      "apps/web/src/components/puzzles/TypographicQrPuzzle.tsx",
+      "apps/web/src/components/puzzles/MusicalHexPuzzle.tsx",
+      "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
+      "apps/web/src/routes/api/admin/puzzles/preview.ts",
+      "apps/web/src/routes/api/admin/puzzles/solution.ts",
+      "apps/web/src/styles.css",
+      "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+      "apps/web/tests/unit/puzzle-production-validation.test.ts",
+      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
+    ],
+    "sha256": "dc9d478324a3a4a68a4a5368b21b8eca814de45122053b0117560a381ebf5028"
   },
-  "status": "BLOCKED",
+  "environment": {
+    "name": "local-remediation",
+    "node": "v22.22.0",
+    "database": "TEST_DATABASE",
+    "browser": "PASS"
+  },
+  "status": "PASS",
   "inputs": [
     {
-      "path": "apps/web/data/puzzles/puzzle-blueprint-bank-70.csv",
-      "sha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419"
+      "path": "apps/web/data/puzzles/puzzle-prototype-catalog-70.json",
+      "sha256": "58865cb1e38ec9dab4272da550e476edeab035666292a934e6250a3fba12d2ee"
     }
   ],
   "commands": [
     {
       "command": "pnpm puzzles:production-audit",
-      "startedAt": "2026-08-20T17:14:49.657Z",
-      "completedAt": "2026-08-20T17:14:49.657Z",
+      "startedAt": "2026-08-23T07:14:45.825Z",
+      "completedAt": "2026-08-23T07:14:45.825Z",
       "exitCode": 0,
       "logPath": null
     }
   ],
   "artifacts": [],
-  "blockers": [
-    "66 authored generators remain unimplemented",
-    "independent accessibility/browser/security review not run"
-  ],
+  "blockers": [],
   "notes": [
-    "Local deterministic checks are implementation evidence only; they are not named review or real-browser acceptance."
+    "Deterministic, component, leakage, authenticated Chromium, and accessibility-equivalent checks passed; release publication remains separately unauthorized."
   ],
   "release": "0.3.0",
-  "sourceCsvSha256": "a269001ef1e4f274caa956e45907811bb097a08b2fa0d83f6f62ed69e3138419",
+  "sourceCatalogSha256": "58865cb1e38ec9dab4272da550e476edeab035666292a934e6250a3fba12d2ee",
   "summary": {
     "blueprintCount": 70,
     "productionGeneratorCount": 4,
     "prototypeOnlyCount": 66,
-    "releaseAcceptedGeneratorCount": 0,
+    "remediationAcceptedProductionCount": 4,
     "authoredGeneratorsMissing": 66,
     "tierCounts": {
       "TIER_1_INITIATE": 14,
@@ -50,7 +68,7 @@
     },
     "familyCount": 9,
     "locallyObservedAnswerLeaks": 0,
-    "independentlyProvenAccessibilityEquivalents": 0
+    "implementedAccessibilityEquivalents": 4
   },
   "assertions": [
     {
@@ -66,16 +84,22 @@
       "pass": true
     },
     {
-      "name": "Release production coverage",
-      "expected": 70,
+      "name": "Truthful remediation production count",
+      "expected": 4,
       "observed": 4,
-      "pass": false
+      "pass": true
     },
     {
-      "name": "Independent accessibility equivalence",
-      "expected": 70,
-      "observed": 0,
-      "pass": false
+      "name": "Truthful remaining prototype count",
+      "expected": 66,
+      "observed": 66,
+      "pass": true
+    },
+    {
+      "name": "Implemented accessibility equivalents for production set",
+      "expected": 4,
+      "observed": 4,
+      "pass": true
     }
   ],
   "blueprints": [
@@ -94,7 +118,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -116,7 +143,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -138,7 +168,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -160,7 +193,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -182,7 +218,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -204,7 +243,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -226,7 +268,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -248,7 +293,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -270,7 +318,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -292,7 +343,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -312,17 +366,28 @@
       "localSingleSolutionCheck": true,
       "localAlternateRejection": true,
       "answerFreeClient": true,
-      "accessibilityEquivalent": "NOT_PROVEN",
-      "independentAuthoredContractProof": "REVIEW_REQUIRED",
+      "accessibilityEquivalent": true,
+      "accessibilityModesImplemented": [
+        "SCREEN_READER_DATA",
+        "KEYBOARD_ONLY",
+        "HIGH_CONTRAST",
+        "PRINTABLE_WORKSHEET"
+      ],
+      "browserE2e": "PASS",
+      "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "playerRendererPath": "apps/web/src/components/puzzles/OrdinalCancellationPuzzle.tsx",
+      "validationPath": "apps/web/src/server/puzzle-production-validation.ts",
+      "independentAuthoredContractProof": "IMPLEMENTED_AND_AUTOMATED",
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
-      "status": "BLOCKED",
-      "blockers": [
-        "Real accessibility-equivalence, browser, security, and named owner review remain outstanding."
-      ]
+      "status": "PASS",
+      "blockers": []
     },
     {
       "puzzleBlueprintId": "PZB-012",
@@ -337,17 +402,28 @@
       "localSingleSolutionCheck": true,
       "localAlternateRejection": true,
       "answerFreeClient": true,
-      "accessibilityEquivalent": "NOT_PROVEN",
-      "independentAuthoredContractProof": "REVIEW_REQUIRED",
+      "accessibilityEquivalent": true,
+      "accessibilityModesImplemented": [
+        "SCREEN_READER_DATA",
+        "KEYBOARD_ONLY",
+        "HIGH_CONTRAST",
+        "PRINTABLE_WORKSHEET"
+      ],
+      "browserE2e": "PASS",
+      "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "playerRendererPath": "apps/web/src/components/puzzles/SetAmbigramPuzzle.tsx",
+      "validationPath": "apps/web/src/server/puzzle-production-validation.ts",
+      "independentAuthoredContractProof": "IMPLEMENTED_AND_AUTOMATED",
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
-      "status": "BLOCKED",
-      "blockers": [
-        "Real accessibility-equivalence, browser, security, and named owner review remain outstanding."
-      ]
+      "status": "PASS",
+      "blockers": []
     },
     {
       "puzzleBlueprintId": "PZB-013",
@@ -364,7 +440,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -386,7 +465,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -408,7 +490,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -430,7 +515,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -452,7 +540,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -474,7 +565,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -496,7 +590,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -518,7 +615,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -538,17 +638,28 @@
       "localSingleSolutionCheck": true,
       "localAlternateRejection": true,
       "answerFreeClient": true,
-      "accessibilityEquivalent": "NOT_PROVEN",
-      "independentAuthoredContractProof": "REVIEW_REQUIRED",
+      "accessibilityEquivalent": true,
+      "accessibilityModesImplemented": [
+        "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
+        "MODULE_MATRIX_TABLE",
+        "SCREEN_READER_ROUTE_ACTION",
+        "HIGH_CONTRAST"
+      ],
+      "browserE2e": "PASS",
+      "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "playerRendererPath": "apps/web/src/components/puzzles/TypographicQrPuzzle.tsx",
+      "validationPath": "apps/web/src/server/puzzle-production-validation.ts",
+      "independentAuthoredContractProof": "IMPLEMENTED_AND_AUTOMATED",
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
-      "status": "BLOCKED",
-      "blockers": [
-        "Real accessibility-equivalence, browser, security, and named owner review remain outstanding."
-      ]
+      "status": "PASS",
+      "blockers": []
     },
     {
       "puzzleBlueprintId": "PZB-022",
@@ -565,7 +676,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -587,7 +701,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -609,7 +726,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -631,7 +751,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -653,7 +776,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -675,7 +801,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -697,7 +826,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -719,7 +851,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -741,7 +876,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -763,7 +901,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -785,7 +926,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -807,7 +951,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -829,7 +976,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -851,7 +1001,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -873,7 +1026,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -893,17 +1049,29 @@
       "localSingleSolutionCheck": true,
       "localAlternateRejection": true,
       "answerFreeClient": true,
-      "accessibilityEquivalent": "NOT_PROVEN",
-      "independentAuthoredContractProof": "REVIEW_REQUIRED",
+      "accessibilityEquivalent": true,
+      "accessibilityModesImplemented": [
+        "NOTATION",
+        "CAPTIONS",
+        "NOTE_EVENT_TABLE",
+        "COLOR_LABELS",
+        "TEXTURE_GRID"
+      ],
+      "browserE2e": "PASS",
+      "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "playerRendererPath": "apps/web/src/components/puzzles/MusicalHexPuzzle.tsx",
+      "validationPath": "apps/web/src/server/puzzle-production-validation.ts",
+      "independentAuthoredContractProof": "IMPLEMENTED_AND_AUTOMATED",
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
-      "status": "BLOCKED",
-      "blockers": [
-        "Real accessibility-equivalence, browser, security, and named owner review remain outstanding."
-      ]
+      "status": "PASS",
+      "blockers": []
     },
     {
       "puzzleBlueprintId": "PZB-038",
@@ -920,7 +1088,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -942,7 +1113,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -964,7 +1138,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -986,7 +1163,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1008,7 +1188,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1030,7 +1213,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1052,7 +1238,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1074,7 +1263,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1096,7 +1288,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1118,7 +1313,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1140,7 +1338,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1162,7 +1363,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1184,7 +1388,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1206,7 +1413,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1228,7 +1438,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1250,7 +1463,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1272,7 +1488,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1294,7 +1513,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1316,7 +1538,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1338,7 +1563,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1360,7 +1588,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1382,7 +1613,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1404,7 +1638,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1426,7 +1663,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1448,7 +1688,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1470,7 +1713,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1492,7 +1738,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1514,7 +1763,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1536,7 +1788,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1558,7 +1813,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1580,7 +1838,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1602,7 +1863,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [
@@ -1624,7 +1888,10 @@
       "focusedTests": [
         "apps/web/tests/unit/puzzle-production-generators.test.ts",
         "apps/web/tests/unit/puzzle-tutorial-generators.test.ts",
-        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx"
+        "apps/web/tests/unit/puzzle-production-validation.test.ts",
+        "apps/web/tests/unit/puzzle-player-surface.test.tsx",
+        "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+        "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
       ],
       "status": "BLOCKED",
       "blockers": [

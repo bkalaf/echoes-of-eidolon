@@ -82,6 +82,7 @@ import { Route as ApiAdminPerksPerkIdRouteImport } from './routes/api/admin/perk
 import { Route as ApiAdminPromptsIndexRouteImport } from './routes/api/admin/prompts/index'
 import { Route as ApiAdminPuzzlesBlueprintsRouteImport } from './routes/api/admin/puzzles/blueprints'
 import { Route as ApiAdminPuzzlesPreviewRouteImport } from './routes/api/admin/puzzles/preview'
+import { Route as ApiAdminPuzzlesSolutionRouteImport } from './routes/api/admin/puzzles/solution'
 import { Route as ApiAdminSettlementsIndexRouteImport } from './routes/api/admin/settlements/index'
 import { Route as ApiAdminSettlementsApplyNamingRouteImport } from './routes/api/admin/settlements/apply-naming'
 import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/api/admin/settlements/complete-naming'
@@ -490,6 +491,11 @@ const ApiAdminPuzzlesPreviewRoute = ApiAdminPuzzlesPreviewRouteImport.update({
   path: '/api/admin/puzzles/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminPuzzlesSolutionRoute = ApiAdminPuzzlesSolutionRouteImport.update({
+  id: '/api/admin/puzzles/solution',
+  path: '/api/admin/puzzles/solution',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminSettlementsIndexRoute =
   ApiAdminSettlementsIndexRouteImport.update({
     id: '/api/admin/settlements/',
@@ -698,6 +704,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/puzzles/solution': typeof ApiAdminPuzzlesSolutionRoute
   '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
@@ -797,6 +804,7 @@ export interface FileRoutesByTo {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/puzzles/solution': typeof ApiAdminPuzzlesSolutionRoute
   '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
@@ -897,6 +905,7 @@ export interface FileRoutesById {
   '/api/admin/perks/$perkId': typeof ApiAdminPerksPerkIdRoute
   '/api/admin/puzzles/blueprints': typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   '/api/admin/puzzles/preview': typeof ApiAdminPuzzlesPreviewRoute
+  '/api/admin/puzzles/solution': typeof ApiAdminPuzzlesSolutionRoute
   '/api/admin/settlements/apply-naming': typeof ApiAdminSettlementsApplyNamingRoute
   '/api/admin/settlements/complete-naming': typeof ApiAdminSettlementsCompleteNamingRoute
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
@@ -998,6 +1007,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/puzzles/solution'
     | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
@@ -1097,6 +1107,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/puzzles/solution'
     | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
@@ -1196,6 +1207,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/$perkId'
     | '/api/admin/puzzles/blueprints'
     | '/api/admin/puzzles/preview'
+    | '/api/admin/puzzles/solution'
     | '/api/admin/settlements/apply-naming'
     | '/api/admin/settlements/complete-naming'
     | '/api/admin/settlements/found-city'
@@ -1289,6 +1301,7 @@ export interface RootRouteChildren {
   ApiAdminPerksPerkIdRoute: typeof ApiAdminPerksPerkIdRoute
   ApiAdminPuzzlesBlueprintsRoute: typeof ApiAdminPuzzlesBlueprintsRouteWithChildren
   ApiAdminPuzzlesPreviewRoute: typeof ApiAdminPuzzlesPreviewRoute
+  ApiAdminPuzzlesSolutionRoute: typeof ApiAdminPuzzlesSolutionRoute
   ApiAdminSettlementsApplyNamingRoute: typeof ApiAdminSettlementsApplyNamingRoute
   ApiAdminSettlementsCompleteNamingRoute: typeof ApiAdminSettlementsCompleteNamingRoute
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
@@ -1827,6 +1840,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminPuzzlesPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/puzzles/solution': {
+      id: '/api/admin/puzzles/solution'
+      path: '/api/admin/puzzles/solution'
+      fullPath: '/api/admin/puzzles/solution'
+      preLoaderRoute: typeof ApiAdminPuzzlesSolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/settlements/': {
       id: '/api/admin/settlements/'
       path: '/api/admin/settlements'
@@ -2212,6 +2232,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminPerksPerkIdRoute: ApiAdminPerksPerkIdRoute,
   ApiAdminPuzzlesBlueprintsRoute: ApiAdminPuzzlesBlueprintsRouteWithChildren,
   ApiAdminPuzzlesPreviewRoute: ApiAdminPuzzlesPreviewRoute,
+  ApiAdminPuzzlesSolutionRoute: ApiAdminPuzzlesSolutionRoute,
   ApiAdminSettlementsApplyNamingRoute: ApiAdminSettlementsApplyNamingRoute,
   ApiAdminSettlementsCompleteNamingRoute:
     ApiAdminSettlementsCompleteNamingRoute,

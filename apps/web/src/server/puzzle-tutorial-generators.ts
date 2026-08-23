@@ -3,7 +3,7 @@ import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 export const tutorialPuzzleBlueprintIds = ["PZB-011", "PZB-012", "PZB-037", "PZB-021"] as const;
 export type TutorialPuzzleBlueprintId = (typeof tutorialPuzzleBlueprintIds)[number];
 
-interface TutorialGenerationInput {
+export interface TutorialGenerationInput {
   generatorVersion: "1.0.0";
   puzzleBlueprintId: TutorialPuzzleBlueprintId;
   seed: string;
@@ -43,6 +43,7 @@ interface TypographicQrCarrier {
 }
 
 export type TutorialCarrier = OrdinalCancellationCarrier | SetAmbigramCarrier | MusicalHexCarrier | TypographicQrCarrier;
+export type PublicTutorialCarrier = Exclude<TutorialCarrier, TypographicQrCarrier> | Pick<TypographicQrCarrier, "instructions" | "kind" | "luminanceRows">;
 
 interface SymbolCard {
   ordinal: number;
@@ -68,7 +69,7 @@ export interface GeneratedTutorialPuzzle {
 
 export interface PublicTutorialPuzzle {
   accessibilityModes: string[];
-  carrier: TutorialCarrier;
+  carrier: PublicTutorialCarrier;
   generatorVersion: "1.0.0";
   instanceChecksum: string;
   instanceId: string;
@@ -314,9 +315,16 @@ export function solveTutorialPuzzle(instance: GeneratedTutorialPuzzle) {
 }
 
 export function getPublicTutorialPuzzle(instance: GeneratedTutorialPuzzle): PublicTutorialPuzzle {
+  const carrier: PublicTutorialCarrier = instance.carrier.kind === "TYPOGRAPHIC_QR_THRESHOLD"
+    ? {
+        instructions: instance.carrier.instructions,
+        kind: instance.carrier.kind,
+        luminanceRows: instance.carrier.luminanceRows.map((row) => [...row]),
+      }
+    : instance.carrier;
   return {
     accessibilityModes: [...instance.accessibilityModes],
-    carrier: instance.carrier,
+    carrier,
     generatorVersion: instance.generatorVersion,
     instanceChecksum: instance.instanceChecksum,
     instanceId: instance.instanceId,

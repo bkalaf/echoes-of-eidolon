@@ -3,62 +3,68 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { PuzzlePrototypeLab } from "../../src/screens/admin/PuzzlePrototypeLab";
-import { getProductionPreviews } from "../../src/server/puzzle-production-generators";
+import { createProductionQaSandbox, revealProductionPreviewSolution } from "../../src/server/puzzle-production-validation";
 import { getPuzzlePrototypeCatalog } from "../../src/server/puzzle-prototypes";
 
-afterEach(() => vi.unstubAllGlobals());
+const prototypeSecret = "test-only-prototype-lab-secret-000000000000000000000000";
+const productionSecret = "test-only-production-lab-secret-00000000000000000000000";
+
+function renderLab(fixedBlueprintId?: string) {
+  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab fixedBlueprintId={fixedBlueprintId} /></QueryClientProvider>);
+}
+
+afterEach(() => vi.restoreAllMocks());
 
 describe("Puzzle Prototype Lab", () => {
-  it("does not present a non-tutorial prototype as a production generator", async () => {
-    const prototype = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000").prototypes.find((entry) => entry.puzzleBlueprintId === "PZB-001")!;
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ productionPuzzles: [], prototypes: [prototype], total: 70, timerStarted: false }), ok: true }));
-    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab fixedBlueprintId="PZB-001" /></QueryClientProvider>);
+  it("keeps non-production Blueprints truthfully prototype-only", async () => {
+    const response = getPuzzlePrototypeCatalog(prototypeSecret);
+    const prototype = response.prototypes.find((entry) => entry.puzzleBlueprintId === "PZB-001")!;
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionSandboxes: [] }), ok: true }));
+    renderLab("PZB-001");
     expect(await screen.findByRole("heading", { name: prototype.title })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: /Production generator/ })).not.toBeInTheDocument();
+    expect(screen.getByText("PROTOTYPE_ONLY")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Owner puzzle QA panel")).not.toBeInTheDocument();
     expect(screen.getByRole("group", { name: "Document comparison surface" })).toBeInTheDocument();
   });
 
-  it("renders the production tutorial carrier and accessibility surface without runtime state", async () => {
-    const prototype = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000").prototypes.find((entry) => entry.puzzleBlueprintId === "PZB-011")!;
-    const productionTutorial = {
-      accessibilityModes: ["SCREEN_READER_DATA", "KEYBOARD_ONLY", "HIGH_CONTRAST", "PRINTABLE_WORKSHEET"],
-      carrier: { kind: "ORDINAL_CANCELLATION_MATRIX", instructions: "Add corresponding cells.", matrixA: [[1, 2], [3, 4]], matrixB: [[5, 6], [7, -4]], screenReaderRows: ["row 1", "row 2"] },
-      generatorVersion: "1.0.0",
-      instanceChecksum: "a".repeat(64),
-      instanceId: "tutorial-instance",
-      liveRuntimeRecordsCreated: 0,
-      puzzleBlueprintId: "PZB-011",
-      timerStarted: false,
-    };
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ productionTutorials: [productionTutorial], prototypes: [prototype], total: 70, timerStarted: false }), ok: true }));
-    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab fixedBlueprintId="PZB-011" /></QueryClientProvider>);
-    const heading = await screen.findByRole("heading", { name: "Production tutorial generator 1.0.0" });
-    const production = heading.closest("section")!;
-    expect(within(production).getByRole("table", { name: "Ordinal cancellation matrices" })).toBeInTheDocument();
-    expect(within(production).getByText("SCREEN_READER_DATA · KEYBOARD_ONLY · HIGH_CONTRAST · PRINTABLE_WORKSHEET")).toBeInTheDocument();
-    expect(within(production).getByText("Runtime records: 0 · Timer started: no")).toBeInTheDocument();
+  it("mounts the canonical production renderer inside the complete owner QA shell", async () => {
+    const response = getPuzzlePrototypeCatalog(prototypeSecret);
+    const sandbox = createProductionQaSandbox("PZB-011", 0, productionSecret);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionSandboxes: [sandbox] }), ok: true }));
+    renderLab("PZB-011");
+    const ownerPanel = await screen.findByLabelText("Owner puzzle QA panel");
+    expect(within(ownerPanel).getByRole("heading", { name: /PZB-011 · Ordinal Cancellation Files/ })).toBeInTheDocument();
+    expect(within(ownerPanel).getByText("Generator version")).toBeInTheDocument();
+    expect(within(ownerPanel).getByRole("button", { name: "Regenerate instance" })).toBeInTheDocument();
+    expect(within(ownerPanel).getByRole("button", { name: "Reset player surface" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Ordinal Cancellation Files player puzzle")).toBeInTheDocument();
+    expect(screen.queryByRole("columnheader", { name: "Sum" })).not.toBeInTheDocument();
   });
 
-  it("exposes only the four authored tutorial carriers as production previews", async () => {
-    const response = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000");
-    const productionPuzzles = getProductionPreviews("test-only-production-lab-secret-00000000000000000000000");
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionPuzzles }), ok: true }));
-    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab /></QueryClientProvider>);
-    const select = await screen.findByLabelText("Prototype");
-    expect(productionPuzzles.map((puzzle) => puzzle.puzzleBlueprintId).sort()).toEqual(["PZB-011", "PZB-012", "PZB-021", "PZB-037"]);
-    expect(productionPuzzles.every((puzzle) => ["ORDINAL_CANCELLATION_MATRIX", "SET_AMBIGRAM", "MUSICAL_HEX_GRID", "TYPOGRAPHIC_QR_THRESHOLD"].includes(puzzle.carrier.kind))).toBe(true);
-    for (const production of productionPuzzles) {
-      fireEvent.change(select, { target: { value: production.puzzleBlueprintId } });
-      const heading = await screen.findByRole("heading", { name: "Production tutorial generator 1.0.0" });
-      expect(within(heading.closest("section")!).getByText(production.accessibilityModes.join(" · "))).toBeInTheDocument();
-    }
+  it("fetches the expected answer separately and records player validation history", async () => {
+    const response = getPuzzlePrototypeCatalog(prototypeSecret);
+    const sandbox = createProductionQaSandbox("PZB-011", 0, productionSecret);
+    const reveal = revealProductionPreviewSolution("PZB-011", 0, productionSecret);
+    const fetchMock = vi.fn(async (request: RequestInfo | URL, init?: RequestInit) => {
+      if (String(request) === "/api/admin/puzzles/solution") return { json: async () => reveal, ok: true };
+      if (init?.method === "POST") return { json: async () => ({ correct: false }), ok: true };
+      return { json: async () => ({ ...response, productionSandboxes: [sandbox] }), ok: true };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    renderLab("PZB-011");
+    fireEvent.click(await screen.findByRole("button", { name: "Reveal expected solution" }));
+    expect(await screen.findByLabelText("Privileged expected solution")).toHaveTextContent(reveal.expectedSolution);
+    expect(fetchMock).toHaveBeenCalledWith("/api/admin/puzzles/solution", expect.objectContaining({ method: "POST" }));
+    fireEvent.click(screen.getAllByRole("button", { name: /Matrix A, row 1, column 1, value/ })[0]!);
+    fireEvent.click(screen.getByRole("button", { name: "Check coordinate" }));
+    await waitFor(() => expect(screen.getByRole("heading", { name: "Validation history" }).parentElement).toHaveTextContent("Incorrect"));
   });
 
-  it("exercises every family surface and exposes its declared accessibility equivalents", async () => {
-    const response = getPuzzlePrototypeCatalog("test-only-prototype-lab-secret-000000000000000000000000");
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => response, ok: true }));
-    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab /></QueryClientProvider>);
-    const select = await screen.findByLabelText("Prototype");
+  it("retains all nine interactive prototype family surfaces for the remaining 66", async () => {
+    const response = getPuzzlePrototypeCatalog(prototypeSecret);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionSandboxes: [] }), ok: true }));
+    renderLab();
+    const select = await screen.findByLabelText("Puzzle Blueprint");
     const surfaceNames = {
       TEXT_COMPARE: "Document comparison surface",
       DATA_TRANSFORM: "Data transformation surface",
@@ -70,59 +76,26 @@ describe("Puzzle Prototype Lab", () => {
       MECHANISM_BOARD: "Discrete mechanism board",
       CROSS_MODAL: "Equivalent cross-modal surface",
     } as const;
-    const representatives = [...new Map(response.prototypes.map((prototype) => [prototype.prototypeKind, prototype])).values()];
+    const representatives = [...new Map(response.prototypes.filter((prototype) => !["PZB-011", "PZB-012", "PZB-021", "PZB-037"].includes(prototype.puzzleBlueprintId)).map((prototype) => [prototype.prototypeKind, prototype])).values()];
     expect(representatives).toHaveLength(9);
     for (const prototype of representatives) {
       fireEvent.change(select, { target: { value: prototype.puzzleBlueprintId } });
-      expect(await screen.findByRole("heading", { name: prototype.title })).toBeInTheDocument();
-      expect(screen.getByText(prototype.accessibilityModalities.join(" · "))).toBeInTheDocument();
-      const surface = screen.getByRole("group", { name: surfaceNames[prototype.prototypeKind] });
+      const surface = await screen.findByRole("group", { name: surfaceNames[prototype.prototypeKind] });
       const control = within(surface).getAllByRole("button")[0]!;
       fireEvent.click(control);
       expect(control).toHaveAttribute("aria-pressed", "true");
     }
   });
 
-  it("runs an answer-safe interactive sample without starting a timer", async () => {
-    const prototype = {
-      puzzleBlueprintId: "PZB-001",
-      title: "Missing Commas Almanac",
-      concept: "Compare two records and align their omissions.",
-      primaryFamily: "TEXT_LANGUAGE_LITERARY",
-      secondaryFamilies: ["CRYPTO_NUMERIC_DATA"],
-      difficultyTier: "TIER_1_INITIATE",
-      generatorVersion: "1.0.0",
-      answerFormat: "SIX_DIGIT_CODE",
-      answerDerivation: "Align omissions.",
-      estimatedSolveTime: "10–30 minutes",
-      playerFacingModalities: ["TEXT"],
-      accessibilityModalities: ["SCREEN_READER_DATA"],
-      prototypeKind: "TEXT_COMPARE",
-      controls: ["RESET"],
-      cues: ["ALMANAC", "MARGIN", "SEAL-001"],
-      decoys: ["123456"],
-      hints: [
-        { level: 1, kind: "DIRECTIONAL", text: "Compare the records." },
-        { level: 2, kind: "GUIDED", text: "Align by token ordinal." },
-      ],
-      expectedSolvePath: ["Compare", "Align", "Submit"],
-      sources: [],
-      challenge: {
-        instanceId: "sample-001",
-        instructions: "Subtract 7 from each margin ordinal.",
-        clues: ["margin ordinal 01 · 61", "margin ordinal 02 · 63"],
-      },
-    };
-    const fetchMock = vi.fn().mockImplementation(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
-      ? { json: async () => ({ correct: true, puzzleBlueprintId: "PZB-001", timerStarted: false }), ok: true }
-      : { json: async () => ({ prototypes: [prototype], total: 70, timerStarted: false }), ok: true });
+  it("validates an answer-safe prototype sample without starting a timer", async () => {
+    const response = getPuzzlePrototypeCatalog(prototypeSecret);
+    const fetchMock = vi.fn(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
+      ? { json: async () => ({ correct: true }), ok: true }
+      : { json: async () => ({ ...response, productionSandboxes: [] }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
-    render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><PuzzlePrototypeLab /></QueryClientProvider>);
-    expect(await screen.findByRole("heading", { name: "Missing Commas Almanac" })).toBeInTheDocument();
-    expect(screen.getByText("70 prototypes")).toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText("Sample answer"), { target: { value: "TEST-SUBMISSION" } });
+    renderLab("PZB-001");
+    fireEvent.change(await screen.findByLabelText("Sample answer"), { target: { value: "TEST-SUBMISSION" } });
     fireEvent.click(screen.getByRole("button", { name: "Validate sample answer" }));
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Timer started: no"));
-    expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/puzzles/preview", expect.objectContaining({ method: "POST" }));
   });
 });

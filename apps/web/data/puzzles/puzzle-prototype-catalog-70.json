@@ -610,7 +610,7 @@
   {
     "puzzleBlueprintId": "PZB-011",
     "title": "Ordinal Cancellation Files",
-    "concept": "Two independently plausible text matrices use signed alphabet offsets. Corresponding values that sum to zero form a generated six-character bitmap.",
+    "concept": "Two signed numeric matrices share one coordinate where corresponding values cancel exactly to zero.",
     "primaryFamily": "CRYPTO_NUMERIC_DATA",
     "secondaryFamilies": [
       "TEXT_LANGUAGE_LITERARY",
@@ -619,12 +619,11 @@
     "difficultyTier": "TIER_1_INITIATE",
     "generatorVersion": "1.0.0",
     "answerFormat": "COORDINATE",
-    "answerDerivation": "Map A-Z to -13..12, add corresponding cells, and plot exact zeros; nonzero results are deterministic noise.",
+    "answerDerivation": "Add corresponding signed cells and submit the unique row and column whose total is exactly zero.",
     "estimatedSolveTime": "10–30 minutes",
     "playerFacingModalities": [
-      "TWO_TEXT_FILES",
-      "MATRIX",
-      "BITMAP"
+      "TWO_SIGNED_MATRICES",
+      "COORDINATE_SELECTOR"
     ],
     "accessibilityModalities": [
       "SCREEN_READER_DATA",
@@ -658,15 +657,13 @@
       {
         "level": 2,
         "kind": "GUIDED",
-        "text": "Map A through Z symmetrically around zero, add corresponding cells, and plot only exact cancellations."
+        "text": "Add each signed value to the value at the same row and column in the other matrix. Only one pair totals zero."
       }
     ],
     "expectedSolvePath": [
-      "Recognize the authored control evidence.",
-      "Apply: Map A-Z to -13..12, add corresponding cells, and plot exact zeros; nonzero results are deterministic noise.",
-      "Separate constrained signal from generated noise.",
-      "Derive the instance-specific answer format.",
-      "Submit to server validation before the deadline."
+      "Compare the same row and column in Matrix A and Matrix B.",
+      "Add each corresponding signed pair without a precomputed sum column.",
+      "Select and submit the sole coordinate whose values cancel exactly."
     ],
     "sources": []
   },
@@ -1262,12 +1259,12 @@
       {
         "level": 1,
         "kind": "DIRECTIONAL",
-        "text": "Bobalus points toward the visual color optical representation and suggests the first useful tool without naming an intermediate value."
+        "text": "Do not read the tiny letterforms as prose. Compare how much light each tile carries."
       },
       {
         "level": 2,
         "kind": "GUIDED",
-        "text": "Bobalus identifies this operation: Downsample or blur to recover modules, scan the QR, authenticate, and complete the route's next generated stage. He injects one instance-specific control label, never the final answer."
+        "text": "Place the threshold between the dark and light clusters until three corner finders and a complete square resolve. Then follow the mark and order the cards from the fewest notches upward."
       }
     ],
     "expectedSolvePath": [
@@ -2207,7 +2204,7 @@
     "difficultyTier": "TIER_1_INITIATE",
     "generatorVersion": "1.0.0",
     "answerFormat": "SIX_CHARACTER_HEXADECIMAL",
-    "answerDerivation": "Extract written note names A-F without requiring pitch recognition, group six at a time, render colors, and decode the 3×4 glyph field.",
+    "answerDerivation": "Keep note names A-F, discard G control markers, group six at a time, and submit the sole six-note hexadecimal group that recurs in the 32×4 field.",
     "estimatedSolveTime": "10–30 minutes",
     "playerFacingModalities": [
       "AUDIO",
@@ -2248,15 +2245,13 @@
       {
         "level": 2,
         "kind": "GUIDED",
-        "text": "Keep only note names A through F, group them six at a time, and render each group as a hexadecimal color in the stated grid."
+        "text": "Keep only note names A through F, discard each G marker, group six at a time, and find the only six-character group that occurs more than once."
       }
     ],
     "expectedSolvePath": [
-      "Recognize the authored control evidence.",
-      "Apply: Extract written note names A-F without requiring pitch recognition, group six at a time, render colors, and decode the 3×4 glyph field.",
-      "Separate constrained signal from generated noise.",
-      "Derive the instance-specific answer format.",
-      "Submit to server validation before the deadline."
+      "Play the melody or inspect its equivalent notation and retain note names A through F.",
+      "Discard G control markers and group the retained notes six at a time.",
+      "Find and submit the sole repeated six-character hexadecimal group in the 32×4 field."
     ],
     "sources": [
       "https://www.w3.org/2021/06/musicxml40/tutorial/notation-basics/"

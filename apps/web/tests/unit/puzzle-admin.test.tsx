@@ -56,7 +56,7 @@ describe("Puzzle Designer persistence projection", () => {
   it("validates deterministic preview identity without starting a timer or fabricating puzzle content", async () => {
     const fetchMock = vi.fn().mockImplementation(async (request: RequestInfo | URL, init?: RequestInit) => {
       if (init?.method === "POST") return { json: async () => ({ key: "deterministic-key", timerStarted: false }), ok: true };
-      if (String(request) === "/api/admin/puzzles/preview") return { json: async () => ({ prototypes: [], total: 70, timerStarted: false }), ok: true };
+      if (String(request) === "/api/admin/puzzles/preview") return { json: async () => ({ productionSandboxes: [], prototypes: [], total: 70, timerStarted: false }), ok: true };
       return { json: async () => ({ blueprints: [{ difficultyTier: "TIER_1_INITIATE", primaryFamily: "LOGIC_CONSTRAINT", title: "Supplied Puzzle", puzzleBlueprintId: "PUZZLE-SUPPLIED", versions: [{ createdAt: "2026-08-10T00:00:00.000Z", generatorVersion: "4.0.0", hints: [] }] }], total: 1 }), ok: true };
     });
     vi.stubGlobal("fetch", fetchMock);
@@ -111,11 +111,11 @@ describe("Puzzle Designer persistence projection", () => {
     };
     const fetchMock = vi.fn().mockImplementation(async (_request: RequestInfo | URL, init?: RequestInit) => init?.method === "POST"
       ? { json: async () => ({ correct: true, puzzleBlueprintId: "PZB-001", timerStarted: false }), ok: true }
-      : { json: async () => ({ prototypes: [prototype], total: 70, timerStarted: false }), ok: true });
+      : { json: async () => ({ productionSandboxes: [], prototypes: [prototype], total: 70, timerStarted: false }), ok: true });
     vi.stubGlobal("fetch", fetchMock);
     renderPuzzle("ADM030");
     expect(await screen.findByRole("heading", { name: "Missing Commas Almanac" })).toBeInTheDocument();
-    expect(screen.getByText("70 prototypes")).toBeInTheDocument();
+    expect(screen.getByText("4 production · 66 prototype")).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Sample answer"), { target: { value: "TEST-SUBMISSION" } });
     fireEvent.click(screen.getByRole("button", { name: "Validate sample answer" }));
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Timer started: no"));

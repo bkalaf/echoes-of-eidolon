@@ -34,6 +34,7 @@ describe("Witness Puzzle Box 70 production generators", () => {
       const generated = generateProductionPuzzle(input, secret);
       expect(generateProductionPuzzle(input, secret)).toEqual(generated);
       expect(generateProductionPuzzle({ ...input, seed: "coverage-seed-02" }, secret).instanceChecksum).not.toBe(generated.instanceChecksum);
+      expect(generateProductionPuzzle({ ...input, subjectKey: "PLAYER-COVERAGE-ALTERNATE" }, secret).instanceChecksum).not.toBe(generated.instanceChecksum);
       expect(solveProductionPuzzle(generated)).toEqual([generated.canonicalSolution]);
       expect(validateProductionPuzzle(generated, generated.canonicalSolution, secret)).toBe(true);
       expect(validateProductionPuzzle(generated, `${generated.canonicalSolution}DECOY`, secret)).toBe(false);
@@ -62,10 +63,13 @@ describe("Witness Puzzle Box 70 production generators", () => {
       expect(serialized).not.toMatch(/"(?:canonicalSolution|proofDigest|seed|subjectKey|validationToken)"\s*:/i);
       expect(projection.accessibilityModes).toEqual(entry.accessibilityModes);
       expect(projection.answerFormat).toBe(entry.answerFormat);
-      expect(projection.concept).toBe(entry.concept);
       expect(projection.playerFacingModalities).toEqual(entry.playerFacingModalities);
-      expect(projection.expectedSolvePath).toEqual(entry.expectedSolvePath);
       expect(projection.hints).toHaveLength(2);
+      expect(projection.title).toBe(entry.title);
+      expect(projection).not.toHaveProperty("concept");
+      expect(projection).not.toHaveProperty("expectedSolvePath");
+      expect(projection).not.toHaveProperty("generatorVersion");
+      expect(projection).not.toHaveProperty("instanceChecksum");
       expect(projection.timerStarted).toBe(false);
       expect(projection.liveRuntimeRecordsCreated).toBe(0);
     }
