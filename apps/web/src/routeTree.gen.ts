@@ -35,6 +35,7 @@ import { Route as ApiAdminReleasesRouteImport } from './routes/api/admin/release
 import { Route as ApiAdminSettlementSoundtracksRouteImport } from './routes/api/admin/settlement-soundtracks'
 import { Route as ApiAtlasCatalogRouteImport } from './routes/api/atlas/catalog'
 import { Route as ApiAtlasPublicRouteImport } from './routes/api/atlas/public'
+import { Route as ApiAtlasTextureRouteImport } from './routes/api/atlas/texture'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiBetaInvitationsRedeemRouteImport } from './routes/api/beta-invitations/redeem'
 import { Route as ApiBetaInvitationsRequestRouteImport } from './routes/api/beta-invitations/request'
@@ -242,6 +243,11 @@ const ApiAtlasCatalogRoute = ApiAtlasCatalogRouteImport.update({
 const ApiAtlasPublicRoute = ApiAtlasPublicRouteImport.update({
   id: '/api/atlas/public',
   path: '/api/atlas/public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAtlasTextureRoute = ApiAtlasTextureRouteImport.update({
+  id: '/api/atlas/texture',
+  path: '/api/atlas/texture',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -692,6 +698,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/atlas/public': typeof ApiAtlasPublicRoute
+  '/api/atlas/texture': typeof ApiAtlasTextureRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
@@ -796,6 +803,7 @@ export interface FileRoutesByTo {
   '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/atlas/public': typeof ApiAtlasPublicRoute
+  '/api/atlas/texture': typeof ApiAtlasTextureRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
@@ -901,6 +909,7 @@ export interface FileRoutesById {
   '/api/admin/settlement-soundtracks': typeof ApiAdminSettlementSoundtracksRoute
   '/api/atlas/catalog': typeof ApiAtlasCatalogRoute
   '/api/atlas/public': typeof ApiAtlasPublicRoute
+  '/api/atlas/texture': typeof ApiAtlasTextureRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/beta-invitations/redeem': typeof ApiBetaInvitationsRedeemRoute
   '/api/beta-invitations/request': typeof ApiBetaInvitationsRequestRoute
@@ -1007,6 +1016,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
     | '/api/atlas/public'
+    | '/api/atlas/texture'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
@@ -1111,6 +1121,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
     | '/api/atlas/public'
+    | '/api/atlas/texture'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
@@ -1215,6 +1226,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlement-soundtracks'
     | '/api/atlas/catalog'
     | '/api/atlas/public'
+    | '/api/atlas/texture'
     | '/api/auth/$'
     | '/api/beta-invitations/redeem'
     | '/api/beta-invitations/request'
@@ -1320,6 +1332,7 @@ export interface RootRouteChildren {
   ApiAdminSettlementSoundtracksRoute: typeof ApiAdminSettlementSoundtracksRoute
   ApiAtlasCatalogRoute: typeof ApiAtlasCatalogRoute
   ApiAtlasPublicRoute: typeof ApiAtlasPublicRoute
+  ApiAtlasTextureRoute: typeof ApiAtlasTextureRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiBetaInvitationsRedeemRoute: typeof ApiBetaInvitationsRedeemRoute
   ApiBetaInvitationsRequestRoute: typeof ApiBetaInvitationsRequestRoute
@@ -1562,6 +1575,13 @@ declare module '@tanstack/react-router' {
       path: '/api/atlas/public'
       fullPath: '/api/atlas/public'
       preLoaderRoute: typeof ApiAtlasPublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/atlas/texture': {
+      id: '/api/atlas/texture'
+      path: '/api/atlas/texture'
+      fullPath: '/api/atlas/texture'
+      preLoaderRoute: typeof ApiAtlasTextureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -2283,6 +2303,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementSoundtracksRoute: ApiAdminSettlementSoundtracksRoute,
   ApiAtlasCatalogRoute: ApiAtlasCatalogRoute,
   ApiAtlasPublicRoute: ApiAtlasPublicRoute,
+  ApiAtlasTextureRoute: ApiAtlasTextureRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiBetaInvitationsRedeemRoute: ApiBetaInvitationsRedeemRoute,
   ApiBetaInvitationsRequestRoute: ApiBetaInvitationsRequestRoute,

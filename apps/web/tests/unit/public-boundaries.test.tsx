@@ -30,6 +30,45 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("public mutation boundaries", () => {
+  it("renders and selects exactly 24 original founding cities with truthful detail", async () => {
+    const regionIds = Array.from({ length: 25 }, (_, index) => `R${String(index + 1).padStart(2, "0")}`);
+    const regions = regionIds.map((regionId) => ({ color: regionId === "R10" ? "#E66A00" : "#00796B", name: regionId === "R10" ? "Innerwood" : `Region ${regionId}`, regionId }));
+    const foundingCities = regionIds.filter((regionId) => regionId !== "R10").map((regionId, index) => ({
+      latitude: index,
+      longitude: index * 2,
+      name: index === 0 ? "Anseris" : index === 1 ? "Lupin-Ghar" : `Founding City ${regionId}`,
+      regionColor: index === 1 ? "#E66A00" : "#00796B",
+      regionId,
+      siteId: `SITE-${String(index + 1).padStart(4, "0")}`,
+    }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      json: async () => ({ connections: [], foundingCities, regionMappings: [], regions }),
+      ok: true,
+    }));
+    const { container } = renderWithQuery("PUB_GAME02_WORLD_ATLAS");
+
+    expect(await screen.findByText("24 original founding cities")).toBeInTheDocument();
+    await screen.findByRole("button", { name: "Select Anseris" });
+    expect(container.querySelectorAll("[data-atlas-founding-city]")).toHaveLength(24);
+    expect(container.querySelector('[data-region-id="R10"]')).toBeNull();
+    expect(screen.getByRole("heading", { name: "Select a founding city" })).toBeInTheDocument();
+
+    const anseris = screen.getByRole("button", { name: "Select Anseris" });
+    fireEvent.click(anseris);
+    expect(anseris).toHaveClass("selected");
+    expect(screen.getByRole("heading", { name: "Anseris" })).toBeInTheDocument();
+    expect(screen.getByText("Original Founding City")).toBeInTheDocument();
+    expect(screen.getByText("R01 · Region R01")).toBeInTheDocument();
+    expect(screen.getByText("0, 0")).toBeInTheDocument();
+
+    const lupinGhar = screen.getByRole("button", { name: "Select Lupin-Ghar" });
+    fireEvent.click(lupinGhar);
+    expect(lupinGhar).toHaveClass("selected");
+    expect(screen.getByRole("heading", { name: "Lupin-Ghar" })).toBeInTheDocument();
+    expect(screen.getByText("R02 · Region R02")).toBeInTheDocument();
+    expect(screen.getByText("1, 2")).toBeInTheDocument();
+  });
+
   it("uses the captioned Power of Three video in the responsive features panel", () => {
     const { container } = renderWithQuery("PUB002");
 

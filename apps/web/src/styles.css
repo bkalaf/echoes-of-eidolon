@@ -409,13 +409,20 @@ button, input, select, textarea { font: inherit; }
 .atlas-globe-connections { z-index: 1; pointer-events: none; }
 .atlas-globe-connections line { stroke: rgb(111 211 255 / 55%); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
 .atlas-globe-markers { z-index: 2; pointer-events: none; }
-.atlas-globe-markers .map-data-pin { pointer-events: auto; }
+.atlas-globe-markers .map-data-pin, .atlas-globe-markers .atlas-founding-city-control { pointer-events: auto; }
+.atlas-founding-city-control { min-width: 44px; min-height: 44px; width: max-content; max-width: 180px; display: flex; align-items: center; gap: 5px; position: absolute; padding: 6px; border: 0; border-radius: 999px; background: transparent; color: #fff; transform: translate(-13px, -50%); cursor: pointer; }
+.atlas-founding-city-control[data-label-side="left"] { flex-direction: row-reverse; transform: translate(calc(-100% + 13px), -50%); }
+.atlas-founding-city-marker { width: 14px; height: 14px; flex: 0 0 14px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+.atlas-founding-city-name { display: block; overflow: hidden; padding: 3px 7px; border: 1px solid rgb(255 255 255 / 34%); border-radius: 999px; background: rgb(1 10 17 / 86%); font-size: 11px; font-weight: 800; line-height: 1.15; text-align: left; text-overflow: ellipsis; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+.atlas-founding-city-control.selected .atlas-founding-city-marker { outline: 3px solid #fff09a; outline-offset: 3px; }
+.atlas-founding-city-control.selected .atlas-founding-city-name { border-color: #fff09a; box-shadow: 0 0 0 1px rgb(255 240 154 / 45%); }
+.atlas-founding-city-control:focus-visible { outline: 3px solid #fff09a; outline-offset: 2px; }
 .atlas-globe-message { position: absolute; z-index: 3; inset: 0; display: grid; place-items: center; margin: 0; padding: 20%; background: rgb(2 11 20 / 72%); color: #b9d6ed; text-align: center; }
 .atlas-globe-message--error { color: #ffb9b2; }
 .atlas-globe-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
 .atlas-globe-controls label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
 @media (prefers-reduced-motion: reduce) {
-  .atlas-globe, .map-data-pin { scroll-behavior: auto; transition: none !important; }
+  .atlas-globe, .map-data-pin, .atlas-founding-city-control { scroll-behavior: auto; transition: none !important; }
 }
 
 html[data-reduced-motion="true"] *,

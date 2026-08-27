@@ -22,7 +22,8 @@ describe("current authority integration", () => {
   it("ports the supplied globe renderer without its removed inspection overlays", () => {
     const source = readFileSync(resolve(import.meta.dirname, "../../src/components/AtlasGlobe.tsx"), "utf8");
     expect(source).toContain("makeSphere(latitudeSegments = 256, longitudeSegments = 512)");
-    expect(source).toContain('managedAssetUrl("atlas.nimbus.globe-albedo")');
+    expect(source).toContain('atlasTextureUrl("albedo")');
+    expect(source).toContain("uniform sampler2D uBaseTexture; uniform sampler2D uRegionTexture;");
     expect(source).toContain("#version 300 es");
     expect(source).not.toContain("Eidolon — Globe Inspection");
     expect(source).not.toContain("Official founding-cities world map wrapped directly");

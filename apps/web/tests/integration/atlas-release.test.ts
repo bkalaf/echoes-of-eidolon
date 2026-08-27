@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import { loadAtlasReleaseBundle } from "../../src/server/atlas";
 import { importCanonicalSites } from "../../src/server/atlas-sites";
+import { atlasConnections, atlasRegionMappings } from "../../src/data/atlas-topology";
+import { projectPublicAtlas } from "../../src/domain/public-atlas";
 
 const releaseRoot = process.env.EIDOLON_ATLAS_RELEASE_ROOT ?? resolve(
   import.meta.dirname,
@@ -42,6 +44,15 @@ describe("canonical Atlas release", () => {
     });
     expect(catalog.pointsOfInterest.every((point) => !("latticeId" in point))).toBe(true);
     expect(catalog.settlementSites.every((site) => !("latticeId" in site))).toBe(true);
+
+    const publicAtlas = projectPublicAtlas(release, { connections: atlasConnections, mappings: atlasRegionMappings });
+    expect(publicAtlas.foundingCities).toHaveLength(24);
+    expect(publicAtlas.foundingCities.map(({ regionId }) => regionId)).toEqual([
+      "R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09",
+      "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19",
+      "R20", "R21", "R22", "R23", "R24", "R25",
+    ]);
+    expect(publicAtlas.regions).toContainEqual({ color: "#E66A00", name: "Innerwood", regionId: "R10" });
 
     const created: unknown[] = [];
     const transaction = { site: { findUnique: async () => null, create: async (input: unknown) => { created.push(input); } } };

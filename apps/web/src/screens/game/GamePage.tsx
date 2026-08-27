@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { AtlasGlobe } from "../../components/AtlasGlobe";
 import { SettingsPanel } from "../../components/SettingsPanel";
@@ -76,9 +76,10 @@ function Maps({ screen }: { screen: PageManifestEntry }) {
     retry: false,
   });
   const selected = atlas.data?.pointsOfInterest.find((point) => point.poiId === selectedId);
+  const globeLocations = useMemo(() => (atlas.data?.pointsOfInterest ?? []).map((point) => ({ id: point.poiId, label: point.displayName ?? point.workingLabel, latticeId: point.latticeId, latitude: point.latitude, longitude: point.longitude, regionId: point.regionId })), [atlas.data?.pointsOfInterest]);
   if (city || sky) return <><GameHead title={screen.title} description={city ? "Street-level city map for the current player location." : "Player-visible constellation and sky view."} /><div className="player-map player-map--empty"><DeferredRuntime>{city ? "The current City street, parcel, landmark, and player-discovery projection is not owned by the player runtime." : "Constellation visibility and the player sky timeline have no supplied disclosure contract."}</DeferredRuntime></div></>;
   return <><GameHead title={screen.title} description={timeline ? "Inspect the verified globe while temporal disclosure remains fail-closed." : `Navigate the verified player-accessible Atlas ${globe ? "globe" : regional ? "region view" : "map"}.`} /><div className="player-map"><section>{atlas.isPending && <p className="notice">Loading verified Atlas catalog…</p>}{atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}{atlas.data && (globe
-      ? <AtlasGlobe onSelect={setSelectedId} points={atlas.data.pointsOfInterest} selectedId={selectedId} />
+      ? <AtlasGlobe locations={globeLocations} onSelect={setSelectedId} selectedId={selectedId} />
       : <div className="map player-atlas-map"><img alt="Eidolon world map" src={managedAssetUrl("atlas.official-world-founding-cities")} />{atlas.data.pointsOfInterest.map((point) => <button aria-label={`Select ${point.displayName ?? point.workingLabel}`} className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`} key={point.poiId} onClick={() => setSelectedId(point.poiId)} style={{ left: `${((point.longitude + 180) / 360) * 100}%`, top: `${((90 - point.latitude) / 180) * 100}%` }} />)}</div>)}</section><aside><h2>{timeline ? "Timeline" : regional ? "Region view" : "Atlas locations"}</h2>{atlas.data && <><p>{atlas.data.pointsOfInterest.length} canonical Points of Interest · {atlas.data.coordinateReferenceSystem}</p>{selected ? <dl className="detail-list"><dt>Name</dt><dd>{selected.displayName ?? selected.workingLabel}</dd><dt>Region</dt><dd>{selected.regionId}</dd><dt>Category</dt><dd>{selected.category}</dd><dt>Coordinates</dt><dd>{selected.latitude}, {selected.longitude}</dd></dl> : <p>Select a catalog marker for its physical Atlas record.</p>}</>}{timeline && <p className="notice notice--warn">No player-visible historical-year projection is persisted, so the present catalog is not relabeled as historical.</p>}<p className="muted">Atlas access is authoritative. Discovery status, routes, politics, and historical visibility are not inferred from physical catalog membership.</p><button className="button" disabled>Discovery overlays unavailable</button></aside></div></>;
 }
 

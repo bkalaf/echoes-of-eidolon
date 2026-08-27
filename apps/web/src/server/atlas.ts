@@ -75,6 +75,11 @@ export interface CanonicalFoundingCitySite extends CanonicalSettlementSite {
   surfaceType: string;
 }
 
+export interface CanonicalAtlasRegion {
+  displayName: string;
+  regionId: RegionId;
+}
+
 export type ProjectedPointOfInterest = CanonicalPointOfInterest & { latticeId: LatticeId };
 export type ProjectedSettlementSite = CanonicalSettlementSite & { latticeId: LatticeId };
 
@@ -127,6 +132,7 @@ export interface AtlasReleaseBundle {
   authority: AtlasAuthoritySummary;
   catalog: AtlasCatalog;
   foundingCitySites: CanonicalFoundingCitySite[];
+  regions: CanonicalAtlasRegion[];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -263,6 +269,11 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
   assertR09Authority(Array.isArray(foundingRecords) && foundingValue.recordCount === 25 && foundingRecords.length === 25, "founding city Site count");
   assertR09Authority(foundingRecords.filter(({ isOriginalFoundingCity }) => isOriginalFoundingCity).length === 24, "original founding city count");
   assertR09Authority(Array.isArray(regionRecords) && regionRecords.length === release.invariants.physicalRegions && regionRecords.length === 25, "physical Region count");
+  const regions = regionRecords.map((entry, index) => {
+    const expectedRegionId = `R${String(index + 1).padStart(2, "0")}`;
+    assertR09Authority(entry.regionId === expectedRegionId && typeof entry.displayName === "string" && entry.displayName.trim().length > 0, `Region identity ${expectedRegionId}`);
+    return { displayName: entry.displayName, regionId: entry.regionId as RegionId };
+  });
   assertR09Authority(Array.isArray(continentRecords) && continentRecords.length === 3, "continent count");
   assertR09Authority(Array.isArray(connections) && connectionsValue.count === 44 && connections.length === release.invariants.connections, "Lattice connection count");
   assertR09Authority(isRecord(connectionsValue.counts) && connectionsValue.counts.POLE_CROSSOVER === 0 && release.invariants.poleCrossovers === 0, "pole crossover count");
@@ -324,6 +335,7 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
       settlementSites,
     },
     foundingCitySites: foundingRecords.map((site) => omitCopiedLatticeId(site)) as CanonicalFoundingCitySite[],
+    regions,
   };
 }
 

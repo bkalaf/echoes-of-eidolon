@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
 import { AtlasGlobe } from "../../components/AtlasGlobe";
+import { atlasTextureUrl } from "../../content/atlas-textures";
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { MarkdownDocument } from "../../components/MarkdownDocument";
 import { RegionCrest } from "../../components/RegionCrest";
@@ -68,8 +69,10 @@ function PublicWorldAtlasPage() {
     if (!response.ok) throw new Error("The public World Atlas could not be loaded.");
     return response.json() as Promise<PublicAtlasProjection>;
   } });
-  const selected = atlas.data?.pointsOfInterest.find((point) => point.poiId === selectedId);
-  return <><a className="back-link" href="/gameplay">← Gameplay</a><PageHead eyebrow="Gameplay" title="World Atlas" description="Explore public geography, settlements, and connections without revealing player state." />{atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}<section className="atlas-layout"><AtlasGlobe connections={atlas.data?.connections ?? []} onSelect={setSelectedId} points={atlas.data?.pointsOfInterest ?? []} regionMappings={atlas.data?.regionMappings ?? []} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} /><aside className="card"><h2>{selected?.displayName ?? selected?.workingLabel ?? "Select a location"}</h2>{selected ? <><p>{selected.category}</p><p>{selected.regionId}</p></> : <p>Rotate the globe or use its accessible location controls.</p>}<p>{atlas.data?.connections.length ?? 0} public map connections</p></aside></section></>;
+  const selected = atlas.data?.foundingCities.find((city) => city.siteId === selectedId);
+  const selectedRegion = selected ? atlas.data?.regions.find((region) => region.regionId === selected.regionId) : undefined;
+  const locations = useMemo(() => (atlas.data?.foundingCities ?? []).map((city) => ({ color: city.regionColor, id: city.siteId, label: city.name, latitude: city.latitude, longitude: city.longitude, regionId: city.regionId })), [atlas.data?.foundingCities]);
+  return <><a className="back-link" href="/gameplay">← Gameplay</a><PageHead eyebrow="Gameplay" title="World Atlas" description="Explore the original Year-0 founding geography of Eidolon." />{atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}<p className="notice"><strong>{atlas.data?.foundingCities.length ?? 24} original founding cities</strong> across 25 physical Regions.</p><section className="atlas-layout"><AtlasGlobe connections={atlas.data?.connections ?? []} labelMode="visible" locations={locations} onSelect={setSelectedId} regionMappings={atlas.data?.regionMappings ?? []} regionTintUrl={atlasTextureUrl("region-tint")} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} /><aside className="card"><h2>{selected?.name ?? "Select a founding city"}</h2>{selected ? <><p><strong>Original Founding City</strong></p><p>{selected.regionId} · {selectedRegion?.name ?? "Region unavailable"}</p><p>{selected.latitude}, {selected.longitude}</p></> : <p>Rotate the globe or use its accessible founding-city controls.</p>}<p>{atlas.data?.connections.length ?? 0} public map connections</p></aside></section></>;
 }
 
 async function fetchHealth(): Promise<PublicHealthReport> {

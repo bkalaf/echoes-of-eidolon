@@ -2759,5 +2759,21 @@
       "meanVolumeDb": -15.4,
       "peakVolumeDb": 0
     }
+  },
+  "atlas.nimbus.region-tint": {
+    "byteSize": 613056,
+    "mimeType": "image/png",
+    "objectKey": "assets/b68590ab914433592d963951a7d413351f41bc21d4c6bdf814335a7128b6077b.png",
+    "publicUrl": "https://echoes-of-eidolon.sfo3.digitaloceanspaces.com/assets/b68590ab914433592d963951a7d413351f41bc21d4c6bdf814335a7128b6077b.png",
+    "sha256": "b68590ab914433592d963951a7d413351f41bc21d4c6bdf814335a7128b6077b",
+    "technicalMetadata": {
+      "kind": "image",
+      "format": "PNG",
+      "width": 8192,
+      "height": 4096,
+      "channels": "srgba 4.0",
+      "bitDepth": 8,
+      "colorProfile": null
+    }
   }
 }

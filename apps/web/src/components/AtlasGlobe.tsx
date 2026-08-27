@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-import { managedAssetUrl } from "../content/managed-assets";
+import { atlasTextureUrl } from "../content/atlas-textures";
 
-interface AtlasGlobePoint {
-  category: string;
-  displayName: string | null;
+export interface AtlasGlobeLocation {
+  color?: string;
+  id: string;
+  label: string;
   latticeId?: string;
   latitude: number;
   longitude: number;
-  poiId: string;
   regionId: string;
-  workingLabel: string;
 }
 
 const vertexShaderSource = `#version 300 es
@@ -23,9 +22,9 @@ void main(){vec4 w=uModel*vec4(aPosition,1.0);vWorld=w.xyz;vNormal=mat3(uModel)*
 const fragmentShaderSource = `#version 300 es
 precision highp float;
 in vec3 vNormal; in vec3 vWorld; in vec2 vUv;
-uniform sampler2D uTexture; uniform vec3 uCamera; uniform float uLight;
+uniform sampler2D uBaseTexture; uniform sampler2D uRegionTexture; uniform vec3 uCamera; uniform float uLight; uniform float uRegionTintStrength;
 out vec4 outColor;
-void main(){vec3 tex=texture(uTexture,vUv).rgb;vec3 n=normalize(vNormal);vec3 V=normalize(uCamera-vWorld);vec3 L=normalize(vec3(-0.48,0.58,0.82));float diff=max(dot(n,L),0.0);vec3 H=normalize(L+V);float spec=pow(max(dot(n,H),0.0),72.0)*0.10;float rim=pow(1.0-max(dot(n,V),0.0),3.0);vec3 c=tex*(0.79+0.29*diff)*uLight;c+=vec3(spec);c+=vec3(0.018,0.075,0.12)*rim*0.48;c=pow(max(c,vec3(0.0)),vec3(0.98));outColor=vec4(c,1.0);}`;
+void main(){vec3 base=texture(uBaseTexture,vUv).rgb;vec4 region=texture(uRegionTexture,vUv);vec3 tex=mix(base,region.rgb,region.a*uRegionTintStrength);vec3 n=normalize(vNormal);vec3 V=normalize(uCamera-vWorld);vec3 L=normalize(vec3(-0.48,0.58,0.82));float diff=max(dot(n,L),0.0);vec3 H=normalize(L+V);float spec=pow(max(dot(n,H),0.0),72.0)*0.10;float rim=pow(1.0-max(dot(n,V),0.0),3.0);vec3 c=tex*(0.79+0.29*diff)*uLight;c+=vec3(spec);c+=vec3(0.018,0.075,0.12)*rim*0.48;c=pow(max(c,vec3(0.0)),vec3(0.98));outColor=vec4(c,1.0);}`;
 
 function makeSphere(latitudeSegments = 256, longitudeSegments = 512) {
   const vertexCount = (latitudeSegments + 1) * (longitudeSegments + 1);
@@ -101,18 +100,51 @@ function multiply(left: Float32Array, right: Float32Array) {
 const clamp = (value: number, minimum: number, maximum: number) => Math.max(minimum, Math.min(maximum, value));
 const fieldOfView = 41 * Math.PI / 180;
 
+export function projectGlobeLocation(
+  location: Pick<AtlasGlobeLocation, "latitude" | "longitude">,
+  state: { distance: number; pitch: number; yaw: number },
+  aspect: number,
+) {
+  const latitude = location.latitude * Math.PI / 180;
+  const longitude = location.longitude * Math.PI / 180;
+  const sourceX = Math.cos(latitude) * Math.sin(longitude);
+  const sourceY = Math.sin(latitude);
+  const sourceZ = Math.cos(latitude) * Math.cos(longitude);
+  const pitchCosine = Math.cos(state.pitch);
+  const pitchSine = Math.sin(state.pitch);
+  const pitchedY = pitchCosine * sourceY - pitchSine * sourceZ;
+  const pitchedZ = pitchSine * sourceY + pitchCosine * sourceZ;
+  const yawCosine = Math.cos(state.yaw);
+  const yawSine = Math.sin(state.yaw);
+  const worldX = yawCosine * sourceX + yawSine * pitchedZ;
+  const worldZ = -yawSine * sourceX + yawCosine * pitchedZ;
+  const denominator = state.distance - worldZ;
+  const x = 50 + ((1 / Math.tan(fieldOfView / 2)) / aspect * worldX / denominator) * 50;
+  const y = 50 - ((1 / Math.tan(fieldOfView / 2)) * pitchedY / denominator) * 50;
+  const viewportRadiusSquared = ((x - 50) / 50) ** 2 + ((y - 50) / 50) ** 2;
+  return {
+    visible: worldZ > 1 / state.distance && viewportRadiusSquared <= 1,
+    x,
+    y,
+  };
+}
+
 export function AtlasGlobe({
   connections = [],
+  labelMode = "hidden",
+  locations,
   onSelect,
-  points,
   regionMappings = [],
+  regionTintUrl,
   selectedId,
   unavailableMessage,
 }: {
   connections?: ReadonlyArray<{ atlasConnectionId: string; fromLatticeId: string; toLatticeId: string }>;
-  onSelect: (poiId: string) => void;
-  points: AtlasGlobePoint[];
+  labelMode?: "hidden" | "visible";
+  locations: AtlasGlobeLocation[];
+  onSelect: (locationId: string) => void;
   regionMappings?: ReadonlyArray<{ latticeId: string; regionId: string }>;
+  regionTintUrl?: string;
   selectedId?: string;
   unavailableMessage?: string;
 }) {
@@ -156,8 +188,12 @@ export function AtlasGlobe({
     let animationFrame = 0;
     let observer: ResizeObserver | undefined;
     const allocatedBuffers: WebGLBuffer[] = [];
+    const textureAbort = new AbortController();
+    const textureObjectUrls: string[] = [];
+    let disposed = false;
     let program: WebGLProgram | undefined;
-    let texture: WebGLTexture | undefined;
+    let baseTexture: WebGLTexture | undefined;
+    let regionTexture: WebGLTexture | undefined;
     try {
       const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource);
       const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
@@ -186,26 +222,62 @@ export function AtlasGlobe({
       const uniforms = {
         projection: gl.getUniformLocation(program, "uProjection"), view: gl.getUniformLocation(program, "uView"),
         model: gl.getUniformLocation(program, "uModel"), camera: gl.getUniformLocation(program, "uCamera"),
-        texture: gl.getUniformLocation(program, "uTexture"), light: gl.getUniformLocation(program, "uLight"),
+        baseTexture: gl.getUniformLocation(program, "uBaseTexture"), regionTexture: gl.getUniformLocation(program, "uRegionTexture"),
+        light: gl.getUniformLocation(program, "uLight"), regionTintStrength: gl.getUniformLocation(program, "uRegionTintStrength"),
       };
-      texture = gl.createTexture() ?? undefined;
-      if (!texture) throw new Error("WebGL texture allocation failed.");
-      gl.bindTexture(gl.TEXTURE_2D, texture); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      const createTexture = () => {
+        const allocated = gl.createTexture() ?? undefined;
+        if (!allocated) throw new Error("WebGL texture allocation failed.");
+        gl.bindTexture(gl.TEXTURE_2D, allocated);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        return allocated;
+      };
+      baseTexture = createTexture();
+      regionTexture = createTexture();
       const anisotropy = gl.getExtension("EXT_texture_filter_anisotropic");
+      gl.bindTexture(gl.TEXTURE_2D, baseTexture);
       if (anisotropy) gl.texParameterf(gl.TEXTURE_2D, anisotropy.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));
 
-      let textureReady = false;
-      const image = new Image(); image.crossOrigin = "anonymous";
-      image.onload = () => {
-        gl.bindTexture(gl.TEXTURE_2D, texture!); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image); gl.generateMipmap(gl.TEXTURE_2D);
-        textureReady = true; setLoading(false);
+      let baseTextureReady = false;
+      let regionTextureReady = !regionTintUrl;
+      const ready = () => {
+        if (baseTextureReady && regionTextureReady) setLoading(false);
       };
-      image.onerror = () => { setLoading(false); setError("The verified managed globe texture could not be loaded."); };
-      image.src = managedAssetUrl("atlas.nimbus.globe-albedo");
+      const loadTexture = (source: string, target: WebGLTexture, onLoad: () => void, failure: string) => {
+        const image = new Image();
+        image.onload = () => {
+          if (disposed) return;
+          gl.bindTexture(gl.TEXTURE_2D, target); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image); gl.generateMipmap(gl.TEXTURE_2D);
+          onLoad(); ready();
+        };
+        image.onerror = () => { if (!disposed) { setLoading(false); setError(failure); } };
+        void fetch(source, { signal: textureAbort.signal })
+          .then((response) => {
+            if (!response.ok) throw new Error(`Atlas texture request failed with ${response.status}.`);
+            return response.blob();
+          })
+          .then((blob) => {
+            if (disposed) return;
+            const objectUrl = URL.createObjectURL(blob);
+            textureObjectUrls.push(objectUrl);
+            image.src = objectUrl;
+          })
+          .catch((caught) => {
+            if (!disposed && !(caught instanceof DOMException && caught.name === "AbortError")) {
+              setLoading(false); setError(failure);
+            }
+          });
+      };
+      if (!regionTintUrl) {
+        gl.bindTexture(gl.TEXTURE_2D, regionTexture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      } else loadTexture(regionTintUrl, regionTexture, () => { regionTextureReady = true; }, "The verified managed Atlas Region tint could not be loaded.");
+      loadTexture(atlasTextureUrl("albedo"), baseTexture, () => { baseTextureReady = true; }, "The verified managed globe texture could not be loaded.");
 
       const resize = () => {
         const rectangle = canvas.getBoundingClientRect(); const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -225,38 +297,34 @@ export function AtlasGlobe({
         const aspect = canvas.width / canvas.height; const projection = perspective(fieldOfView, aspect, 0.1, 50);
         const view = identity(); view[14] = -state.distance; const model = multiply(rotateY(state.yaw), rotateX(state.pitch));
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        if (textureReady) {
+        if (baseTextureReady && regionTextureReady) {
           gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); gl.useProgram(program!);
           gl.uniformMatrix4fv(uniforms.projection, false, projection); gl.uniformMatrix4fv(uniforms.view, false, view);
           gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, state.distance);
-          gl.uniform1f(uniforms.light, state.light); gl.uniform1i(uniforms.texture, 0); gl.activeTexture(gl.TEXTURE0);
-          gl.bindTexture(gl.TEXTURE_2D, texture!); gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_INT, 0);
+          gl.uniform1f(uniforms.light, state.light); gl.uniform1f(uniforms.regionTintStrength, regionTintUrl ? 0.5 : 0);
+          gl.uniform1i(uniforms.baseTexture, 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, baseTexture!);
+          gl.uniform1i(uniforms.regionTexture, 1); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, regionTexture!);
+          gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_INT, 0);
         }
         const projected = new Map<string, { visible: boolean; x: number; y: number }>();
         const markerElements = markerLayer.querySelectorAll<HTMLElement>("[data-globe-marker]");
         markerElements.forEach((marker) => {
-          const latitude = Number(marker.dataset.latitude) * Math.PI / 180;
-          const longitude = Number(marker.dataset.longitude) * Math.PI / 180;
-          const sourceX = Math.cos(latitude) * Math.sin(longitude); const sourceY = Math.sin(latitude); const sourceZ = Math.cos(latitude) * Math.cos(longitude);
-          const pitchCosine = Math.cos(state.pitch); const pitchSine = Math.sin(state.pitch);
-          const pitchedY = pitchCosine * sourceY - pitchSine * sourceZ; const pitchedZ = pitchSine * sourceY + pitchCosine * sourceZ;
-          const yawCosine = Math.cos(state.yaw); const yawSine = Math.sin(state.yaw);
-          const worldX = yawCosine * sourceX + yawSine * pitchedZ; const worldZ = -yawSine * sourceX + yawCosine * pitchedZ;
-          const denominator = state.distance - worldZ; const visible = worldZ > 0;
-          const x = 50 + ((1 / Math.tan(fieldOfView / 2)) / aspect * worldX / denominator) * 50;
-          const y = 50 - ((1 / Math.tan(fieldOfView / 2)) * pitchedY / denominator) * 50;
-          if (marker.dataset.poiId) projected.set(marker.dataset.poiId, { visible, x, y });
-          marker.hidden = !visible;
-          if (visible) {
-            marker.style.left = `${x}%`;
-            marker.style.top = `${y}%`;
+          const position = projectGlobeLocation({ latitude: Number(marker.dataset.latitude), longitude: Number(marker.dataset.longitude) }, state, aspect);
+          if (marker.dataset.locationId) projected.set(marker.dataset.locationId, position);
+          marker.hidden = !position.visible;
+          marker.tabIndex = position.visible ? 0 : -1;
+          marker.setAttribute("aria-hidden", String(!position.visible));
+          if (position.visible) {
+            marker.dataset.labelSide = position.x > 50 ? "left" : "right";
+            marker.style.left = `${position.x}%`;
+            marker.style.top = `${position.y}%`;
           }
         });
         const latticeByRegion = new Map(regionMappings.map((mapping) => [mapping.regionId, mapping.latticeId]));
         const pointByLattice = new Map<string, string>();
-        for (const point of points) {
-          const latticeId = point.latticeId ?? latticeByRegion.get(point.regionId);
-          if (latticeId && !pointByLattice.has(latticeId)) pointByLattice.set(latticeId, point.poiId);
+        for (const location of locations) {
+          const latticeId = location.latticeId ?? latticeByRegion.get(location.regionId);
+          if (latticeId && !pointByLattice.has(latticeId)) pointByLattice.set(latticeId, location.id);
         }
         connectionLayer.querySelectorAll<SVGLineElement>("[data-atlas-connection]").forEach((line) => {
           const from = projected.get(pointByLattice.get(line.dataset.fromLattice ?? "") ?? "");
@@ -276,11 +344,12 @@ export function AtlasGlobe({
       setLoading(false); setError(caught instanceof Error ? caught.message : "The WebGL globe could not start.");
     }
     return () => {
+      disposed = true; textureAbort.abort(); textureObjectUrls.forEach((url) => URL.revokeObjectURL(url));
       cancelAnimationFrame(animationFrame); observer?.disconnect();
       allocatedBuffers.forEach((buffer) => gl.deleteBuffer(buffer));
-      if (texture) gl.deleteTexture(texture); if (program) gl.deleteProgram(program);
+      if (baseTexture) gl.deleteTexture(baseTexture); if (regionTexture) gl.deleteTexture(regionTexture); if (program) gl.deleteProgram(program);
     };
-  }, [connections, points, regionMappings]);
+  }, [connections, locations, regionMappings, regionTintUrl]);
 
   const activePointers = useRef(new Map<number, { x: number; y: number }>());
   const dragState = useRef<{ distance?: number; separation?: number; x: number; y: number } | undefined>(undefined);
@@ -303,6 +372,7 @@ export function AtlasGlobe({
         event.preventDefault();
       }}
       onPointerDown={(event) => {
+        if ((event.target as HTMLElement).closest("button, a, [role='button']")) return;
         event.currentTarget.setPointerCapture(event.pointerId); activePointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
         const pointers = [...activePointers.current.values()];
         dragState.current = pointers.length === 2
@@ -334,16 +404,21 @@ export function AtlasGlobe({
         {connections.map((connection) => <line data-atlas-connection data-from-lattice={connection.fromLatticeId} data-to-lattice={connection.toLatticeId} key={connection.atlasConnectionId} />)}
       </svg>
       <div className="atlas-globe-markers" ref={markerLayerRef}>
-        {points.map((point) => <button
-          aria-label={`Select ${point.displayName ?? point.workingLabel}`}
-          className={`map-data-pin ${point.poiId === selectedId ? "selected" : ""}`}
+        {locations.map((location) => <button
+          aria-label={`Select ${location.label}`}
+          className={`${labelMode === "visible" ? "atlas-founding-city-control" : "map-data-pin"} ${location.id === selectedId ? "selected" : ""}`}
+          data-atlas-founding-city={labelMode === "visible" ? "" : undefined}
+          data-city-name={labelMode === "visible" ? location.label : undefined}
           data-globe-marker
-          data-latitude={point.latitude}
-          data-longitude={point.longitude}
-          data-poi-id={point.poiId}
-          key={point.poiId}
-          onClick={() => onSelect(point.poiId)}
-        />)}
+          data-latitude={location.latitude}
+          data-location-id={location.id}
+          data-longitude={location.longitude}
+          data-region-id={location.regionId}
+          key={location.id}
+          onClick={() => onSelect(location.id)}
+          title={location.label}
+          type="button"
+        >{labelMode === "visible" && <><span aria-hidden className="atlas-founding-city-marker" style={{ backgroundColor: location.color }} /><span className="atlas-founding-city-name" style={{ color: location.color }}>{location.label}</span></>}</button>)}
       </div>
       {loading && <p className="atlas-globe-message" role="status">Loading managed 3D globe texture…</p>}
       {error && <p className="atlas-globe-message atlas-globe-message--error" role="alert">{error}</p>}
@@ -354,7 +429,7 @@ export function AtlasGlobe({
       <label><input checked={autoRotate} onChange={(event) => setAutoRotate(event.target.checked)} type="checkbox" /> Auto rotate</label>
       <label>Zoom <input aria-label="Globe zoom" defaultValue="270" max="520" min="205" onInput={(event) => { controls.current.distance = Number(event.currentTarget.value) / 100; }} type="range" /></label>
       <label>Light <input aria-label="Globe light" defaultValue="103" max="125" min="75" onInput={(event) => { controls.current.light = Number(event.currentTarget.value) / 100; }} type="range" /></label>
-      <span className="muted" ref={statusRef}>Rotation -7°, -26° · Camera 2.70</span>
+      <span className="muted" data-testid="atlas-globe-status" ref={statusRef}>Rotation -7°, -26° · Camera 2.70</span>
     </div>
   </div>;
 }
