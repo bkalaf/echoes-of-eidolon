@@ -42,13 +42,14 @@ export function BrandHomeLink() {
 }
 
 function PublicAuthControls({ state }: { state: NavigationAccessState }) {
-  const { accessStatus, navigation, session } = state;
-  if (session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
+  const { accessStatus, hydrated, navigation, session } = state;
+  if (!hydrated || session.isPending) return <div className="auth-actions" aria-label="Checking account session" />;
   if (session.data) {
     const initial = session.data.user.name?.trim().charAt(0).toUpperCase() ?? "";
     return <div className="auth-actions">
       {accessStatus === "error" && <span className="navigation-status" role="status">Player access is temporarily unavailable.</span>}
       {navigation.administration && <a className="button" href="/admin">Administration</a>}
+      {navigation.puzzles && <a className="button" href="/puzzles">Puzzles</a>}
       {navigation.game && <a className="button button--gold" href="/game">Enter Game</a>}
       <a aria-label="Account" className="avatar-link" href="/account/profile"><span aria-hidden="true">{initial}</span></a>
       <a className="button" href="/auth/sign-out">Sign Out</a>
@@ -111,6 +112,7 @@ function SideShell({ children, label, navigation }: SideShellProps) {
         <a href="/">Home</a>
         {label === "Administration" && authorized.account && <a href="/account/profile">Account</a>}
         {authorized.administration && <a href="/admin">Administration</a>}
+        {authorized.puzzles && <a href="/puzzles">Puzzles</a>}
         {authorized.game && <a href="/game">Enter Game</a>}
         {navigation.map(([item, href]) => (
           <a href={href} key={href}>{item}</a>
@@ -169,6 +171,7 @@ export function GameShell({ children }: { children: ReactNode }) {
           <a href="/">Home</a>
           {navigation.account && <a href="/account/profile">Account</a>}
           {navigation.administration && <a href="/admin">Administration</a>}
+          {navigation.puzzles && <a href="/puzzles">Puzzles</a>}
           {navigation.signOut && <a href="/auth/sign-out">Sign Out</a>}
         </nav>
         <GameAudioMixer />

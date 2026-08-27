@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { authorizationRoles } from "../domain/authorization";
 import {
@@ -14,6 +14,10 @@ interface AccessState {
   userId: string | null;
 }
 
+const subscribeToHydration = () => () => undefined;
+const clientHydrationSnapshot = () => true;
+const serverHydrationSnapshot = () => false;
+
 function isNavigationPrincipal(value: unknown): value is NavigationPrincipal {
   if (!value || typeof value !== "object") return false;
   const access = value as Record<string, unknown>;
@@ -28,13 +32,15 @@ function isNavigationPrincipal(value: unknown): value is NavigationPrincipal {
 export interface NavigationAccessState {
   access: NavigationPrincipal | null;
   accessStatus: AccessState["status"];
+  hydrated: boolean;
   navigation: NavigationProjection;
   session: ReturnType<typeof authClient.useSession>;
 }
 
 export function useNavigationAccess(): NavigationAccessState {
   const session = authClient.useSession();
-  const userId = session.data?.user.id ?? null;
+  const hydrated = useSyncExternalStore(subscribeToHydration, clientHydrationSnapshot, serverHydrationSnapshot);
+  const userId = hydrated ? session.data?.user.id ?? null : null;
   const [state, setState] = useState<AccessState>({ access: null, status: "idle", userId: null });
 
   useEffect(() => {
@@ -69,6 +75,7 @@ export function useNavigationAccess(): NavigationAccessState {
   return {
     access: current.access,
     accessStatus: current.status,
+    hydrated,
     navigation: projectNavigation(current.access, Boolean(userId)),
     session,
   };

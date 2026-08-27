@@ -18,14 +18,15 @@ const principal = (
 
 describe("authorized navigation projection", () => {
   it.each([
-    ["guest", null, { account: false, administration: false, game: false, home: true, signOut: false }],
-    ["user without beta", principal("user", false), { account: true, administration: false, game: false, home: true, signOut: true }],
-    ["member without beta", principal("member", false), { account: true, administration: false, game: false, home: true, signOut: true }],
-    ["admin without beta", principal("admin", false), { account: true, administration: true, game: false, home: true, signOut: true }],
-    ["owner without beta", principal("owner", false), { account: true, administration: true, game: false, home: true, signOut: true }],
-    ["user with beta", principal("user", true), { account: true, administration: false, game: true, home: true, signOut: true }],
-    ["admin with beta", principal("admin", true), { account: true, administration: true, game: true, home: true, signOut: true }],
-    ["owner with beta", principal("owner", true), { account: true, administration: true, game: true, home: true, signOut: true }],
+    ["guest", null, { account: false, administration: false, game: false, home: true, puzzles: false, signOut: false }],
+    ["user without beta", principal("user", false), { account: true, administration: false, game: false, home: true, puzzles: false, signOut: true }],
+    ["member without entitlement", principal("member", false), { account: true, administration: false, game: false, home: true, puzzles: false, signOut: true }],
+    ["entitled member", principal("member", false, true, true), { account: true, administration: false, game: false, home: true, puzzles: true, signOut: true }],
+    ["admin without beta", principal("admin", false), { account: true, administration: true, game: false, home: true, puzzles: true, signOut: true }],
+    ["owner without beta", principal("owner", false), { account: true, administration: true, game: false, home: true, puzzles: true, signOut: true }],
+    ["user with beta", principal("user", true), { account: true, administration: false, game: true, home: true, puzzles: false, signOut: true }],
+    ["admin with beta", principal("admin", true), { account: true, administration: true, game: true, home: true, puzzles: true, signOut: true }],
+    ["owner with beta", principal("owner", true), { account: true, administration: true, game: true, home: true, puzzles: true, signOut: true }],
   ] as const)("projects %s", (_label, access, expected) => {
     expect(projectNavigation(access)).toEqual(expected);
   });
@@ -35,8 +36,8 @@ describe("authorized navigation projection", () => {
   });
 
   it("never substitutes membership for administration or player eligibility", () => {
-    expect(projectNavigation(principal("member", false, true, true))).toMatchObject({ administration: false, game: false });
-    expect(projectNavigation(principal("admin", false, true, true))).toMatchObject({ administration: true, game: false });
+    expect(projectNavigation(principal("member", false, true, true))).toMatchObject({ administration: false, game: false, puzzles: true });
+    expect(projectNavigation(principal("admin", false, true, true))).toMatchObject({ administration: true, game: false, puzzles: true });
   });
 
   it.each([

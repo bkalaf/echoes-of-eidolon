@@ -123,6 +123,23 @@ export const puzzleBlueprintDesignV1Schema = z.object({
 
 export type PuzzleBlueprintDesignV1 = z.infer<typeof puzzleBlueprintDesignV1Schema>;
 
+export const puzzleBlueprintDesignV2Schema = puzzleBlueprintDesignV1Schema.omit({ schemaVersion: true }).extend({
+  schemaVersion: z.literal("puzzle-blueprint-design-v2"),
+  publicPresentation: z.object({
+    description: requiredDesignText,
+    opening: requiredDesignText,
+    slug: requiredDesignText,
+    title: requiredDesignText,
+  }).strict(),
+  productionContract: z.object({
+    playerRenderer: requiredDesignText,
+    status: z.literal("PRODUCTION"),
+    submissionKind: requiredDesignText,
+  }).strict(),
+}).strict();
+
+export type PuzzleBlueprintDesignV2 = z.infer<typeof puzzleBlueprintDesignV2Schema>;
+
 export const puzzleBlueprintIntakeFieldMap = Object.freeze({
   puzzleBlueprintId: "PuzzleBlueprint.puzzleBlueprintId",
   title: "PuzzleBlueprint.title",

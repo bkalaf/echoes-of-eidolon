@@ -5,6 +5,7 @@ import {
   adminCapabilities,
   canAccessAdministration,
   canAccessGame,
+  canAccessPuzzles,
   hasAdminCapability,
   hasMemberBenefits,
   resolveAuthorizationRole,
@@ -59,5 +60,15 @@ describe("authorization roles", () => {
     expect(hasMemberBenefits({ role: "admin", membershipEntitled: true })).toBe(true);
     expect(hasMemberBenefits({ role: "owner", membershipEntitled: true })).toBe(false);
     expect(hasMemberBenefits({ role: "owner", membershipEntitled: false, ownerPolicyAllowsBenefits: true })).toBe(true);
+  });
+
+  it("grants the Member puzzle collection only to entitled or operational accounts", () => {
+    expect(canAccessPuzzles("guest", false)).toBe(false);
+    expect(canAccessPuzzles("user", false)).toBe(false);
+    expect(canAccessPuzzles("member", false)).toBe(false);
+    expect(canAccessPuzzles("user", true)).toBe(true);
+    expect(canAccessPuzzles("member", true)).toBe(true);
+    expect(canAccessPuzzles("admin", false)).toBe(true);
+    expect(canAccessPuzzles("owner", false)).toBe(true);
   });
 });

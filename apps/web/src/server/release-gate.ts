@@ -69,6 +69,19 @@ export function generateReleaseArtifact(repositoryRoot: string): string {
   return target;
 }
 
+export function assertPuzzleClientBundleSafe(assetsRoot: string) {
+  if (!existsSync(assetsRoot)) throw new Error("Production client bundle is missing; run the build before the release check.");
+  const files = readdirSync(assetsRoot, { withFileTypes: true }).filter((entry) => entry.isFile()).map((entry) => entry.name);
+  if (files.some((fileName) => fileName.endsWith(".map"))) {
+    throw new Error("Production client source maps must not be published.");
+  }
+  const forbidden = /\bPZB-(?:011|012|021|037)\b|canonicalSolution|decodeOffset|encodedValue|expectedSolvePath|generatorVersion|instanceChecksum|proofDigest|validationToken/;
+  const leaks = files
+    .filter((fileName) => fileName.endsWith(".js") && !/^PacketScreen-[A-Za-z0-9_-]+\.js$/.test(fileName))
+    .filter((fileName) => forbidden.test(readFileSync(resolve(assetsRoot, fileName), "utf8")));
+  if (leaks.length > 0) throw new Error(`Production client bundle exposes puzzle internals: ${leaks.join(", ")}.`);
+}
+
 export async function runReleaseCheck(repositoryRoot: string) {
   const catalog = buildReleaseCatalog(repositoryRoot);
   const governance = readJson<ReleaseGovernance>(resolve(repositoryRoot, "docs/release-governance.json"));

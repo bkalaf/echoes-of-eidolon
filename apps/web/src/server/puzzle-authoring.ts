@@ -2,12 +2,13 @@ import { z } from "zod";
 
 import { PuzzleDifficultyTier, PuzzleFamily } from "../generated/prisma/enums";
 import { Prisma, type PrismaClient } from "../generated/prisma/client";
-import { assertGeneratorVersion, compareGeneratorVersions, deterministicPuzzlePreviewKey, puzzleBlueprintDesignV1Schema } from "../domain/puzzle-blueprint";
+import { assertGeneratorVersion, compareGeneratorVersions, deterministicPuzzlePreviewKey, puzzleBlueprintDesignV1Schema, puzzleBlueprintDesignV2Schema } from "../domain/puzzle-blueprint";
 import { getDatabase } from "./database";
 
 const hintSchema = z.string().trim().min(1).max(10_000);
 const puzzleVersionDesignSchema = z.union([
   puzzleBlueprintDesignV1Schema,
+  puzzleBlueprintDesignV2Schema,
   z.object({ schemaVersion: z.literal("manual-authoring-v1") }).strict(),
 ]);
 

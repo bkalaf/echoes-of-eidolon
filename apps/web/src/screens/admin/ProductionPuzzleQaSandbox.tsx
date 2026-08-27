@@ -10,6 +10,7 @@ async function responseJson<T>(response: Response, fallback: string): Promise<T>
 }
 
 function submissionLabel(submission: ProductionPlayerSubmission) {
+  if (submission.kind === "bitmap-code") return `${submission.value} · ${submission.markedCoordinates.length} marked cells`;
   if (submission.kind === "coordinate") return `row ${submission.row}, column ${submission.column}`;
   if (submission.kind === "set") return `{ ${submission.members.join(", ")} }`;
   if (submission.kind === "hex") return submission.value;
@@ -71,7 +72,7 @@ export function ProductionPuzzleQaSandbox({ initialSandbox }: { initialSandbox: 
 
   return <div className="production-puzzle-qa">
     <aside aria-label="Owner puzzle QA panel" className="production-puzzle-qa__panel stack">
-      <div className="action-row action-row--between"><div><p className="muted">Owner QA</p><h2>{ownerQa.puzzleBlueprintId} · {ownerQa.title}</h2></div><span className="tag">PRODUCTION</span></div>
+      <div className="action-row action-row--between"><div><p className="muted">Owner QA</p><h2>{ownerQa.puzzleBlueprintId} · {ownerQa.publicTitle}</h2><p className="muted">Internal source title: {ownerQa.title}</p></div><span className="tag">PRODUCTION</span></div>
       <dl className="detail-list"><dt>Difficulty tier</dt><dd>{ownerQa.difficultyTier}</dd><dt>Family</dt><dd>{ownerQa.family}</dd><dt>Generator version</dt><dd>{ownerQa.generatorVersion}</dd><dt>Expected answer format</dt><dd>{ownerQa.expectedAnswerFormat}</dd><dt>Current instance</dt><dd>{ownerQa.instanceIdentity}</dd><dt>Accessibility modes</dt><dd>{ownerQa.accessibilityModes.join(" · ")}</dd></dl>
       <section><h3>Authored concept</h3><p>{ownerQa.authoredConcept}</p></section>
       <section><h3>Intended solve path</h3><ol>{ownerQa.intendedSolvePath.map((step) => <li key={step}>{step}</li>)}</ol></section>

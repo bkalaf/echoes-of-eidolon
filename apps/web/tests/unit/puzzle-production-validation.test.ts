@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getPuzzleGeneratorReadinessCatalog } from "../../src/server/puzzle-production-generators";
+import type { CancellationPlayerArtifact, SetPlayerArtifact } from "../../src/server/puzzle-production-generators";
 import {
   createProductionQaSandbox,
   resolveProductionPreviewRoute,
@@ -14,8 +15,9 @@ const ids = ["PZB-011", "PZB-012", "PZB-021", "PZB-037"] as const;
 
 function correctSubmission(puzzleBlueprintId: (typeof ids)[number], solution: string, route?: Awaited<ReturnType<typeof resolveProductionPreviewRoute>>): ProductionPlayerSubmission {
   if (puzzleBlueprintId === "PZB-011") {
-    const [row, column] = solution.split(",").map(Number) as [number, number];
-    return { kind: "coordinate", row, column };
+    const artifact = createProductionQaSandbox("PZB-011", 0, secret).playerPuzzle.artifact as CancellationPlayerArtifact;
+    const markedCoordinates = artifact.matrixA.flatMap((row, rowIndex) => row.flatMap((value, columnIndex) => value + artifact.matrixB[rowIndex]![columnIndex]! === 0 ? [{ row: rowIndex + 1, column: columnIndex + 1 }] : []));
+    return { kind: "bitmap-code", markedCoordinates, value: solution };
   }
   if (puzzleBlueprintId === "PZB-012") return { kind: "set", members: solution.split("-").map(Number) };
   if (puzzleBlueprintId === "PZB-037") return { kind: "hex", value: solution.toLocaleLowerCase("en-US") };
@@ -23,15 +25,14 @@ function correctSubmission(puzzleBlueprintId: (typeof ids)[number], solution: st
 }
 
 function plausibleIncorrectSet(solution: string) {
-  const carrier = createProductionQaSandbox("PZB-012", 0, secret).playerPuzzle.carrier;
-  if (carrier.kind !== "SET_AMBIGRAM") throw new Error("PZB-012 did not expose its authored set carrier.");
+  const artifact = createProductionQaSandbox("PZB-012", 0, secret).playerPuzzle.artifact as SetPlayerArtifact;
   const union = (left: number[], right: number[]) => [...new Set([...left, ...right])].sort((a, b) => a - b);
   const intersect = (left: number[], right: number[]) => left.filter((value) => right.includes(value)).sort((a, b) => a - b);
   const candidates = [
-    intersect(union(carrier.sets.A, carrier.sets.B), carrier.sets.C),
-    union(carrier.sets.A, intersect(carrier.sets.B, carrier.sets.C)),
-    union(intersect(carrier.sets.A, carrier.sets.B), carrier.sets.C),
-    intersect(carrier.sets.A, union(carrier.sets.B, carrier.sets.C)),
+    intersect(union(artifact.sets.A, artifact.sets.B), artifact.sets.C),
+    union(artifact.sets.A, intersect(artifact.sets.B, artifact.sets.C)),
+    union(intersect(artifact.sets.A, artifact.sets.B), artifact.sets.C),
+    intersect(artifact.sets.A, union(artifact.sets.B, artifact.sets.C)),
   ];
   return candidates.find((candidate) => candidate.join("-") !== solution)!;
 }
@@ -54,7 +55,7 @@ describe("production puzzle validation and owner QA separation", () => {
       const submission = correctSubmission(puzzleBlueprintId, reveal.expectedSolution, route);
       expect(validateProductionPreviewSubmission(puzzleBlueprintId, 0, submission, secret).correct).toBe(true);
 
-      const near = puzzleBlueprintId === "PZB-011" ? { kind: "coordinate", row: 1, column: 1 } as const
+      const near = puzzleBlueprintId === "PZB-011" ? { ...(submission as Extract<ProductionPlayerSubmission, { kind: "bitmap-code" }>), markedCoordinates: (submission as Extract<ProductionPlayerSubmission, { kind: "bitmap-code" }>).markedCoordinates.slice(1) }
         : puzzleBlueprintId === "PZB-012" ? { kind: "set", members: plausibleIncorrectSet(reveal.expectedSolution) } as const
           : puzzleBlueprintId === "PZB-037" ? { kind: "hex", value: `#${reveal.expectedSolution}` } as const
             : { ...(submission as Extract<ProductionPlayerSubmission, { kind: "ordered-symbols" }>), symbols: [...(submission as Extract<ProductionPlayerSubmission, { kind: "ordered-symbols" }>).symbols].reverse() };

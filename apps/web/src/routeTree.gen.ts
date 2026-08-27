@@ -19,6 +19,8 @@ import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiReleasesRouteImport } from './routes/api/releases'
 import { Route as ApiVersionRouteImport } from './routes/api/version'
 import { Route as FeaturesFreeToPlayRouteImport } from './routes/features.free-to-play'
+import { Route as PuzzlesIndexRouteImport } from './routes/puzzles/index'
+import { Route as PuzzlesPublicSlugRouteImport } from './routes/puzzles/$publicSlug'
 import { Route as ApiAccountMembershipRouteImport } from './routes/api/account/membership'
 import { Route as ApiAccountSettingsRouteImport } from './routes/api/account/settings'
 import { Route as ApiAdminBulkOperationsRouteImport } from './routes/api/admin/bulk-operations'
@@ -89,6 +91,8 @@ import { Route as ApiAdminSettlementsCompleteNamingRouteImport } from './routes/
 import { Route as ApiAdminSettlementsFoundCityRouteImport } from './routes/api/admin/settlements/found-city'
 import { Route as ApiAdminSettlementsMigrateRouteImport } from './routes/api/admin/settlements/migrate'
 import { Route as ApiExternalDataEntityKeyRouteImport } from './routes/api/external/data/$entityKey'
+import { Route as ApiMemberPuzzlesIndexRouteImport } from './routes/api/member/puzzles/index'
+import { Route as ApiMemberPuzzlesPublicSlugRouteImport } from './routes/api/member/puzzles/$publicSlug'
 import { Route as ApiStoreCheckoutStatusRouteImport } from './routes/api/store/checkout/status'
 import { Route as ApiStoreOrdersPublicOrderTokenRouteImport } from './routes/api/store/orders/$publicOrderToken'
 import { Route as ApiAccountOrdersOrderIdReturnRouteImport } from './routes/api/account/orders/$orderId/return'
@@ -156,6 +160,16 @@ const ApiVersionRoute = ApiVersionRouteImport.update({
 const FeaturesFreeToPlayRoute = FeaturesFreeToPlayRouteImport.update({
   id: '/features/free-to-play',
   path: '/features/free-to-play',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PuzzlesIndexRoute = PuzzlesIndexRouteImport.update({
+  id: '/puzzles/',
+  path: '/puzzles/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PuzzlesPublicSlugRoute = PuzzlesPublicSlugRouteImport.update({
+  id: '/puzzles/$publicSlug',
+  path: '/puzzles/$publicSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAccountMembershipRoute = ApiAccountMembershipRouteImport.update({
@@ -532,6 +546,17 @@ const ApiExternalDataEntityKeyRoute =
     path: '/api/external/data/$entityKey',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiMemberPuzzlesIndexRoute = ApiMemberPuzzlesIndexRouteImport.update({
+  id: '/api/member/puzzles/',
+  path: '/api/member/puzzles/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMemberPuzzlesPublicSlugRoute =
+  ApiMemberPuzzlesPublicSlugRouteImport.update({
+    id: '/api/member/puzzles/$publicSlug',
+    path: '/api/member/puzzles/$publicSlug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiStoreCheckoutStatusRoute = ApiStoreCheckoutStatusRouteImport.update({
   id: '/status',
   path: '/status',
@@ -651,6 +676,8 @@ export interface FileRoutesByFullPath {
   '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/puzzles/$publicSlug': typeof PuzzlesPublicSlugRoute
+  '/puzzles/': typeof PuzzlesIndexRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
@@ -710,6 +737,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/member/puzzles/$publicSlug': typeof ApiMemberPuzzlesPublicSlugRoute
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
@@ -723,6 +751,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements/': typeof ApiAdminSettlementsIndexRoute
+  '/api/member/puzzles/': typeof ApiMemberPuzzlesIndexRoute
   '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -751,6 +780,8 @@ export interface FileRoutesByTo {
   '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/puzzles/$publicSlug': typeof PuzzlesPublicSlugRoute
+  '/puzzles': typeof PuzzlesIndexRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
@@ -810,6 +841,7 @@ export interface FileRoutesByTo {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/member/puzzles/$publicSlug': typeof ApiMemberPuzzlesPublicSlugRoute
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders': typeof ApiAccountOrdersIndexRoute
@@ -823,6 +855,7 @@ export interface FileRoutesByTo {
   '/api/admin/perks': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements': typeof ApiAdminSettlementsIndexRoute
+  '/api/member/puzzles': typeof ApiMemberPuzzlesIndexRoute
   '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -852,6 +885,8 @@ export interface FileRoutesById {
   '/api/releases': typeof ApiReleasesRouteWithChildren
   '/api/version': typeof ApiVersionRoute
   '/features/free-to-play': typeof FeaturesFreeToPlayRoute
+  '/puzzles/$publicSlug': typeof PuzzlesPublicSlugRoute
+  '/puzzles/': typeof PuzzlesIndexRoute
   '/api/account/membership': typeof ApiAccountMembershipRoute
   '/api/account/settings': typeof ApiAccountSettingsRoute
   '/api/admin/bulk-operations': typeof ApiAdminBulkOperationsRoute
@@ -911,6 +946,7 @@ export interface FileRoutesById {
   '/api/admin/settlements/found-city': typeof ApiAdminSettlementsFoundCityRoute
   '/api/admin/settlements/migrate': typeof ApiAdminSettlementsMigrateRoute
   '/api/external/data/$entityKey': typeof ApiExternalDataEntityKeyRouteWithChildren
+  '/api/member/puzzles/$publicSlug': typeof ApiMemberPuzzlesPublicSlugRoute
   '/api/store/checkout/status': typeof ApiStoreCheckoutStatusRoute
   '/api/store/orders/$publicOrderToken': typeof ApiStoreOrdersPublicOrderTokenRoute
   '/api/account/orders/': typeof ApiAccountOrdersIndexRoute
@@ -924,6 +960,7 @@ export interface FileRoutesById {
   '/api/admin/perks/': typeof ApiAdminPerksIndexRoute
   '/api/admin/prompts/': typeof ApiAdminPromptsIndexRoute
   '/api/admin/settlements/': typeof ApiAdminSettlementsIndexRoute
+  '/api/member/puzzles/': typeof ApiMemberPuzzlesIndexRoute
   '/api/account/orders/$orderId/return': typeof ApiAccountOrdersOrderIdReturnRoute
   '/api/admin/accounts/$userId/role': typeof ApiAdminAccountsUserIdRoleRoute
   '/api/admin/beta-invitations/$id/approve': typeof ApiAdminBetaInvitationsIdApproveRoute
@@ -954,6 +991,8 @@ export interface FileRouteTypes {
     | '/api/releases'
     | '/api/version'
     | '/features/free-to-play'
+    | '/puzzles/$publicSlug'
+    | '/puzzles/'
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/bulk-operations'
@@ -1013,6 +1052,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/member/puzzles/$publicSlug'
     | '/api/store/checkout/status'
     | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders/'
@@ -1026,6 +1066,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
     | '/api/admin/settlements/'
+    | '/api/member/puzzles/'
     | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -1054,6 +1095,8 @@ export interface FileRouteTypes {
     | '/api/releases'
     | '/api/version'
     | '/features/free-to-play'
+    | '/puzzles/$publicSlug'
+    | '/puzzles'
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/bulk-operations'
@@ -1113,6 +1156,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/member/puzzles/$publicSlug'
     | '/api/store/checkout/status'
     | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders'
@@ -1126,6 +1170,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks'
     | '/api/admin/prompts'
     | '/api/admin/settlements'
+    | '/api/member/puzzles'
     | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -1154,6 +1199,8 @@ export interface FileRouteTypes {
     | '/api/releases'
     | '/api/version'
     | '/features/free-to-play'
+    | '/puzzles/$publicSlug'
+    | '/puzzles/'
     | '/api/account/membership'
     | '/api/account/settings'
     | '/api/admin/bulk-operations'
@@ -1213,6 +1260,7 @@ export interface FileRouteTypes {
     | '/api/admin/settlements/found-city'
     | '/api/admin/settlements/migrate'
     | '/api/external/data/$entityKey'
+    | '/api/member/puzzles/$publicSlug'
     | '/api/store/checkout/status'
     | '/api/store/orders/$publicOrderToken'
     | '/api/account/orders/'
@@ -1226,6 +1274,7 @@ export interface FileRouteTypes {
     | '/api/admin/perks/'
     | '/api/admin/prompts/'
     | '/api/admin/settlements/'
+    | '/api/member/puzzles/'
     | '/api/account/orders/$orderId/return'
     | '/api/admin/accounts/$userId/role'
     | '/api/admin/beta-invitations/$id/approve'
@@ -1255,6 +1304,8 @@ export interface RootRouteChildren {
   ApiReleasesRoute: typeof ApiReleasesRouteWithChildren
   ApiVersionRoute: typeof ApiVersionRoute
   FeaturesFreeToPlayRoute: typeof FeaturesFreeToPlayRoute
+  PuzzlesPublicSlugRoute: typeof PuzzlesPublicSlugRoute
+  PuzzlesIndexRoute: typeof PuzzlesIndexRoute
   ApiAccountMembershipRoute: typeof ApiAccountMembershipRoute
   ApiAccountSettingsRoute: typeof ApiAccountSettingsRoute
   ApiAdminBulkOperationsRoute: typeof ApiAdminBulkOperationsRoute
@@ -1307,6 +1358,7 @@ export interface RootRouteChildren {
   ApiAdminSettlementsFoundCityRoute: typeof ApiAdminSettlementsFoundCityRoute
   ApiAdminSettlementsMigrateRoute: typeof ApiAdminSettlementsMigrateRoute
   ApiExternalDataEntityKeyRoute: typeof ApiExternalDataEntityKeyRouteWithChildren
+  ApiMemberPuzzlesPublicSlugRoute: typeof ApiMemberPuzzlesPublicSlugRoute
   ApiStoreOrdersPublicOrderTokenRoute: typeof ApiStoreOrdersPublicOrderTokenRoute
   ApiAccountOrdersIndexRoute: typeof ApiAccountOrdersIndexRoute
   ApiAccountSessionsIndexRoute: typeof ApiAccountSessionsIndexRoute
@@ -1319,6 +1371,7 @@ export interface RootRouteChildren {
   ApiAdminPerksIndexRoute: typeof ApiAdminPerksIndexRoute
   ApiAdminPromptsIndexRoute: typeof ApiAdminPromptsIndexRoute
   ApiAdminSettlementsIndexRoute: typeof ApiAdminSettlementsIndexRoute
+  ApiMemberPuzzlesIndexRoute: typeof ApiMemberPuzzlesIndexRoute
   ApiAdminBetaInvitationsIdApproveRoute: typeof ApiAdminBetaInvitationsIdApproveRoute
   ApiAdminBetaInvitationsIdRejectRoute: typeof ApiAdminBetaInvitationsIdRejectRoute
   ApiAdminCommerceProductsProductIdRoute: typeof ApiAdminCommerceProductsProductIdRouteWithChildren
@@ -1397,6 +1450,20 @@ declare module '@tanstack/react-router' {
       path: '/features/free-to-play'
       fullPath: '/features/free-to-play'
       preLoaderRoute: typeof FeaturesFreeToPlayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/puzzles/': {
+      id: '/puzzles/'
+      path: '/puzzles'
+      fullPath: '/puzzles/'
+      preLoaderRoute: typeof PuzzlesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/puzzles/$publicSlug': {
+      id: '/puzzles/$publicSlug'
+      path: '/puzzles/$publicSlug'
+      fullPath: '/puzzles/$publicSlug'
+      preLoaderRoute: typeof PuzzlesPublicSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/account/membership': {
@@ -1889,6 +1956,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiExternalDataEntityKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/member/puzzles/': {
+      id: '/api/member/puzzles/'
+      path: '/api/member/puzzles'
+      fullPath: '/api/member/puzzles/'
+      preLoaderRoute: typeof ApiMemberPuzzlesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/member/puzzles/$publicSlug': {
+      id: '/api/member/puzzles/$publicSlug'
+      path: '/api/member/puzzles/$publicSlug'
+      fullPath: '/api/member/puzzles/$publicSlug'
+      preLoaderRoute: typeof ApiMemberPuzzlesPublicSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/store/checkout/status': {
       id: '/api/store/checkout/status'
       path: '/status'
@@ -2186,6 +2267,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiReleasesRoute: ApiReleasesRouteWithChildren,
   ApiVersionRoute: ApiVersionRoute,
   FeaturesFreeToPlayRoute: FeaturesFreeToPlayRoute,
+  PuzzlesPublicSlugRoute: PuzzlesPublicSlugRoute,
+  PuzzlesIndexRoute: PuzzlesIndexRoute,
   ApiAccountMembershipRoute: ApiAccountMembershipRoute,
   ApiAccountSettingsRoute: ApiAccountSettingsRoute,
   ApiAdminBulkOperationsRoute: ApiAdminBulkOperationsRoute,
@@ -2239,6 +2322,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminSettlementsFoundCityRoute: ApiAdminSettlementsFoundCityRoute,
   ApiAdminSettlementsMigrateRoute: ApiAdminSettlementsMigrateRoute,
   ApiExternalDataEntityKeyRoute: ApiExternalDataEntityKeyRouteWithChildren,
+  ApiMemberPuzzlesPublicSlugRoute: ApiMemberPuzzlesPublicSlugRoute,
   ApiStoreOrdersPublicOrderTokenRoute: ApiStoreOrdersPublicOrderTokenRoute,
   ApiAccountOrdersIndexRoute: ApiAccountOrdersIndexRoute,
   ApiAccountSessionsIndexRoute: ApiAccountSessionsIndexRoute,
@@ -2251,6 +2335,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminPerksIndexRoute: ApiAdminPerksIndexRoute,
   ApiAdminPromptsIndexRoute: ApiAdminPromptsIndexRoute,
   ApiAdminSettlementsIndexRoute: ApiAdminSettlementsIndexRoute,
+  ApiMemberPuzzlesIndexRoute: ApiMemberPuzzlesIndexRoute,
   ApiAdminBetaInvitationsIdApproveRoute: ApiAdminBetaInvitationsIdApproveRoute,
   ApiAdminBetaInvitationsIdRejectRoute: ApiAdminBetaInvitationsIdRejectRoute,
   ApiAdminCommerceProductsProductIdRoute:

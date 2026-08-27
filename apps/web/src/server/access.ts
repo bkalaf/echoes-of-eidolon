@@ -1,4 +1,4 @@
-import { canAccessAdministration, canAccessGame, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
+import { canAccessAdministration, canAccessGame, canAccessPuzzles, hasAdminCapability, resolveAuthorizationRole, type AdminCapability, type AuthorizationRole } from "../domain/authorization";
 import { isParticipationEligible } from "../domain/age-eligibility";
 import { projectMembershipEntitlement, voiceWindowSeconds } from "../domain/membership";
 import { getAuth } from "./auth";
@@ -95,10 +95,19 @@ export async function requirePlayerAccess(request: Request): Promise<ServerAcces
   return access;
 }
 
+export async function requirePuzzleAccess(request: Request): Promise<ServerAccessContext> {
+  const access = await requireServerSession(request);
+  if (!canAccessPuzzles(access.role, access.membershipEntitled)) {
+    throw new Response("Current Member entitlement required.", { status: 403 });
+  }
+  return access;
+}
+
 export function playerAccessResponse(access: ServerAccessContext) {
   return {
     betaEligible: access.betaEligible,
     canPlay: canAccessGame(access.role, access.betaEligible, access.participationEligible),
+    canAccessPuzzles: canAccessPuzzles(access.role, access.membershipEntitled),
     membershipEntitled: access.membershipEntitled,
     participationEligible: access.participationEligible,
     role: access.role,

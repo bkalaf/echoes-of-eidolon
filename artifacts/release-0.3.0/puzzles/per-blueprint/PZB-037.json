@@ -1,6 +1,6 @@
 {
   "schemaVersion": "eidolon-puzzle-blueprint-proof-v3",
-  "generatedAt": "2026-08-23T07:14:45.825Z",
+  "generatedAt": "2026-08-27T05:14:52.948Z",
   "repository": "bkalaf/echoes-of-eidolon",
   "applicationSource": {
     "paths": [
@@ -8,21 +8,34 @@
       "apps/web/src/server/puzzle-tutorial-generators.ts",
       "apps/web/src/server/puzzle-production-generators.ts",
       "apps/web/src/server/puzzle-production-validation.ts",
+      "apps/web/src/server/member-puzzles.ts",
+      "apps/web/src/server/puzzle-production-version-persistence.ts",
+      "apps/web/src/server.ts",
+      "apps/web/src/domain/authorization.ts",
+      "apps/web/src/domain/navigation.ts",
+      "apps/web/src/domain/puzzle-production-version-catalog.ts",
       "apps/web/src/components/puzzles/PlayerPuzzleSurface.tsx",
       "apps/web/src/components/puzzles/OrdinalCancellationPuzzle.tsx",
       "apps/web/src/components/puzzles/SetAmbigramPuzzle.tsx",
       "apps/web/src/components/puzzles/TypographicQrPuzzle.tsx",
       "apps/web/src/components/puzzles/MusicalHexPuzzle.tsx",
       "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzleHub.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzlePage.tsx",
       "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
       "apps/web/src/routes/api/admin/puzzles/preview.ts",
       "apps/web/src/routes/api/admin/puzzles/solution.ts",
+      "apps/web/src/routes/api/member/puzzles/index.ts",
+      "apps/web/src/routes/api/member/puzzles/$publicSlug.ts",
+      "apps/web/src/routes/puzzles/index.tsx",
+      "apps/web/src/routes/puzzles/$publicSlug.tsx",
       "apps/web/src/styles.css",
       "apps/web/tests/unit/puzzle-player-surface.test.tsx",
       "apps/web/tests/unit/puzzle-production-validation.test.ts",
-      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
+      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts",
+      "apps/web/tests/e2e/member-puzzle-release.spec.ts"
     ],
-    "sha256": "dc9d478324a3a4a68a4a5368b21b8eca814de45122053b0117560a381ebf5028"
+    "sha256": "3d7750518fa24b86f868d6677829eaf1cc7f4881544dbcea6eb75f4ab0c8a341"
   },
   "environment": {
     "name": "local-remediation",
@@ -40,8 +53,8 @@
   "commands": [
     {
       "command": "pnpm puzzles:production-audit",
-      "startedAt": "2026-08-23T07:14:45.825Z",
-      "completedAt": "2026-08-23T07:14:45.825Z",
+      "startedAt": "2026-08-27T05:14:52.948Z",
+      "completedAt": "2026-08-27T05:14:52.948Z",
       "exitCode": 0,
       "logPath": null
     }
@@ -55,21 +68,23 @@
   "tier": "TIER_1_INITIATE",
   "primaryFamily": "AUDIO_MUSIC_SPECTRAL",
   "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts",
-  "generatorVersion": "1.0.0",
+  "generatorVersion": "1.1.0",
   "productionStatus": "PRODUCTION",
   "seedVector": "RELEASE_PROOF_VECTOR_01:ba36c533484a1656",
-  "instanceChecksum": "61111405d3bd0541b2e9888f5748e79f374a036a64d99fae46583929b2b2b33c",
+  "instanceChecksum": "8f730b001bdbe2024839f43c75d1c906ba025645a40b3027288b8d24a7620ffc",
   "localDeterministicReplay": true,
   "localSingleSolutionCheck": true,
   "localAlternateRejection": true,
   "answerFreeClient": true,
   "accessibilityEquivalent": true,
   "accessibilityModesImplemented": [
-    "NOTATION",
+    "KEYBOARD",
+    "AUDIO",
     "CAPTIONS",
     "NOTE_EVENT_TABLE",
-    "COLOR_LABELS",
-    "TEXTURE_GRID"
+    "TEXTURE_GRID",
+    "REDUCED_MOTION",
+    "HIGH_CONTRAST"
   ],
   "browserE2e": "PASS",
   "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
@@ -82,6 +97,10 @@
     "apps/web/tests/unit/puzzle-production-validation.test.ts",
     "apps/web/tests/unit/puzzle-player-surface.test.tsx",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+    "apps/web/tests/unit/puzzle-access.test.ts",
+    "apps/web/tests/unit/member-puzzles.test.ts",
+    "apps/web/tests/integration/member-puzzle-version-migration.test.ts",
+    "apps/web/tests/e2e/member-puzzle-release.spec.ts",
     "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
   ],
   "assertions": [
@@ -112,18 +131,22 @@
     {
       "name": "Implemented accessibility equivalents",
       "expected": [
-        "NOTATION",
+        "KEYBOARD",
+        "AUDIO",
         "CAPTIONS",
         "NOTE_EVENT_TABLE",
-        "COLOR_LABELS",
-        "TEXTURE_GRID"
+        "TEXTURE_GRID",
+        "REDUCED_MOTION",
+        "HIGH_CONTRAST"
       ],
       "observed": [
-        "NOTATION",
+        "KEYBOARD",
+        "AUDIO",
         "CAPTIONS",
         "NOTE_EVENT_TABLE",
-        "COLOR_LABELS",
-        "TEXTURE_GRID"
+        "TEXTURE_GRID",
+        "REDUCED_MOTION",
+        "HIGH_CONTRAST"
       ],
       "pass": true
     },
@@ -136,22 +159,22 @@
   ],
   "authoredContract": {
     "answerFormat": "SIX_CHARACTER_HEXADECIMAL",
-    "concept": "A coherent melody uses note names A-F as hexadecimal digits; G is only a control marker. Six-note groups form colors in a 32×4 grid whose repeated structures reveal a generated code.",
+    "concept": "A generated score maps six-note A-F groups to a 32 by 4 color field whose six glyph regions spell the answer.",
     "expectedSolvePath": [
-      "Play the melody or inspect its equivalent notation and retain note names A through F.",
-      "Discard G control markers and group the retained notes six at a time.",
-      "Find and submit the sole repeated six-character hexadecimal group in the 32×4 field."
+      "Read or hear the score while tracking its written note names.",
+      "Treat G as a phrase divider and group the remaining notes six at a time as hexadecimal colors.",
+      "Render the 32 by 4 field and read the six darker glyphs across its hue regions."
     ],
     "hints": [
       {
         "kind": "DIRECTIONAL",
         "level": 1,
-        "text": "The sounds matter less as music than as written note names."
+        "text": "The melody can be read by the names of its notes as well as heard."
       },
       {
         "kind": "GUIDED",
         "level": 2,
-        "text": "Keep only note names A through F, discard each G marker, group six at a time, and find the only six-character group that occurs more than once."
+        "text": "Treat G as a divider. Read A–F in groups of six as colors; the 32×4 panes spell six characters."
       }
     ],
     "playerFacingModalities": [
@@ -161,11 +184,13 @@
       "COLOR_GRID"
     ],
     "accessibilityModes": [
-      "NOTATION",
+      "KEYBOARD",
+      "AUDIO",
       "CAPTIONS",
       "NOTE_EVENT_TABLE",
-      "COLOR_LABELS",
-      "TEXTURE_GRID"
+      "TEXTURE_GRID",
+      "REDUCED_MOTION",
+      "HIGH_CONTRAST"
     ]
   }
 }

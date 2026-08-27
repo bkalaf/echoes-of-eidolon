@@ -1,6 +1,7 @@
 import {
   canAccessAdministration,
   canAccessGame,
+  canAccessPuzzles,
   type AuthorizationRole,
 } from "./authorization";
 
@@ -17,6 +18,7 @@ export interface NavigationProjection {
   administration: boolean;
   game: boolean;
   home: true;
+  puzzles: boolean;
   signOut: boolean;
 }
 
@@ -31,6 +33,7 @@ export function projectNavigation(
       ? canAccessGame(principal.role, principal.betaEligible, principal.participationEligible)
       : false,
     home: true,
+    puzzles: principal ? canAccessPuzzles(principal.role, principal.membershipEntitled) : false,
     signOut: authenticated,
   };
 }

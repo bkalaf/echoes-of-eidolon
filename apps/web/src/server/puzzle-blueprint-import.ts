@@ -8,6 +8,7 @@ import {
 } from "../domain/puzzle-blueprint";
 import { PUZZLE_BLUEPRINT_PACKAGE_SHA256, parsePuzzleBlueprintPackageCsv } from "../domain/puzzle-blueprint-package";
 import { getDatabase } from "./database";
+import { buildProductionPuzzleVersionAddition } from "./puzzle-production-version-persistence";
 
 export class PuzzleBlueprintImportConflictError extends Error {}
 
@@ -114,11 +115,15 @@ export async function importPuzzleBlueprintPackage(
     let missingRoots = 0;
     let missingVersions = 0;
     let unchangedVersions = 0;
+    let supplementalMissingVersions = 0;
+    let supplementalUnchangedVersions = 0;
 
     for (const entry of parsed) {
       const current = byId.get(entry.root.puzzleBlueprintId);
       const hints = entry.hints.map(({ kind, level, template }) => ({ kind, level, template }));
       const design = entry.version.design as unknown as Prisma.InputJsonValue;
+      const supplemental = buildProductionPuzzleVersionAddition(entry.root.puzzleBlueprintId, entry.version.design);
+      if (supplemental) supplementalMissingVersions += current?.versions.some((version) => version.generatorVersion === supplemental.generatorVersion) ? 0 : 1;
       if (!current) {
         missingRoots += 1;
         missingVersions += 1;
@@ -127,11 +132,14 @@ export async function importPuzzleBlueprintPackage(
             data: {
               ...entry.root,
               versions: {
-                create: {
-                  design,
-                  generatorVersion: entry.version.generatorVersion,
-                  hints: { create: hints },
-                },
+                create: [
+                  { design, generatorVersion: entry.version.generatorVersion, hints: { create: hints } },
+                  ...(supplemental ? [{
+                    design: supplemental.design as unknown as Prisma.InputJsonValue,
+                    generatorVersion: supplemental.generatorVersion,
+                    hints: { create: supplemental.hints },
+                  }] : []),
+                ],
               },
             },
           });
@@ -153,15 +161,35 @@ export async function importPuzzleBlueprintPackage(
             },
           });
         }
-        continue;
-      }
-
-      if (stableJson(currentVersion.design) !== stableJson(entry.version.design) || stableJson(currentVersion.hints) !== stableJson(hints)) {
+      } else if (stableJson(currentVersion.design) !== stableJson(entry.version.design) || stableJson(currentVersion.hints) !== stableJson(hints)) {
         throw new PuzzleBlueprintImportConflictError(
           `Puzzle Blueprint ${entry.root.puzzleBlueprintId}@${entry.version.generatorVersion} conflicts with the checksum-pinned package; the immutable version was not overwritten.`,
         );
+      } else {
+        unchangedVersions += 1;
       }
-      unchangedVersions += 1;
+
+      if (supplemental) {
+        const currentSupplemental = current.versions.find((version) => version.generatorVersion === supplemental.generatorVersion);
+        if (!currentSupplemental) {
+          if (apply) {
+            await transaction.puzzleBlueprintVersion.create({
+              data: {
+                design: supplemental.design as unknown as Prisma.InputJsonValue,
+                generatorVersion: supplemental.generatorVersion,
+                hints: { create: supplemental.hints },
+                puzzleBlueprintId: entry.root.puzzleBlueprintId,
+              },
+            });
+          }
+        } else if (stableJson(currentSupplemental.design) !== stableJson(supplemental.design) || stableJson(currentSupplemental.hints) !== stableJson(supplemental.hints)) {
+          throw new PuzzleBlueprintImportConflictError(
+            `Puzzle Blueprint ${entry.root.puzzleBlueprintId}@${supplemental.generatorVersion} conflicts with the supplemental production contract; the immutable version was not overwritten.`,
+          );
+        } else {
+          supplementalUnchangedVersions += 1;
+        }
+      }
     }
 
     return {
@@ -172,6 +200,8 @@ export async function importPuzzleBlueprintPackage(
       missingRoots,
       missingVersions,
       unchangedVersions,
+      supplementalMissingVersions,
+      supplementalUnchangedVersions,
       provenanceComponentHandles: provenanceComponentHandles.size,
     };
   }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });

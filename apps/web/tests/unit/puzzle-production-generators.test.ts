@@ -46,7 +46,39 @@ describe("Witness Puzzle Box 70 production generators", () => {
       for (const decoy of entry.decoys) expect(validateProductionPuzzle(generated, decoy, secret)).toBe(false);
       expect(generated.uniqueSolution).toBe(true);
       expect(generated.alternateSolutionsRejected).toBe(true);
+      expect(entry.generatorVersion).toBe("1.1.0");
     }
+  });
+
+  it("preserves immutable 1.0.0 behavior while current production uses 1.1.0", () => {
+    for (const entry of getProductionGeneratorCatalog()) {
+      const historical = generateProductionPuzzle({ generatorVersion: "1.0.0", puzzleBlueprintId: entry.puzzleBlueprintId, seed: "historical-seed", subjectKey: "HISTORICAL" }, secret);
+      const current = generateProductionPuzzle({ generatorVersion: "1.1.0", puzzleBlueprintId: entry.puzzleBlueprintId, seed: "historical-seed", subjectKey: "HISTORICAL" }, secret);
+      expect(historical.generatorVersion).toBe("1.0.0");
+      expect(current.generatorVersion).toBe("1.1.0");
+      expect(current.instanceChecksum).not.toBe(historical.instanceChecksum);
+    }
+  });
+
+  it("generates the rebuilt bitmap and musical glyph contracts", () => {
+    const cancellation = generateProductionPuzzle({ generatorVersion: "1.1.0", puzzleBlueprintId: "PZB-011", seed: "shape-seed", subjectKey: "SHAPE" }, secret);
+    expect(cancellation.canonicalSolution).toMatch(/^[A-H2-9]{6}$/);
+    expect(cancellation.carrier.kind).toBe("ORDINAL_CANCELLATION_MATRIX");
+    if (cancellation.carrier.kind !== "ORDINAL_CANCELLATION_MATRIX") throw new Error("wrong carrier");
+    expect(cancellation.carrier.matrixA).toHaveLength(7);
+    expect(cancellation.carrier.matrixA.every((row) => row.length === 31)).toBe(true);
+    const zeroes = cancellation.carrier.matrixA.flatMap((row, rowIndex) => row.flatMap((value, columnIndex) => value + cancellation.carrier.matrixB[rowIndex]![columnIndex]! === 0 ? [`${rowIndex}:${columnIndex}`] : []));
+    expect(zeroes.length).toBeGreaterThanOrEqual(48);
+    expect(zeroes.length).toBeLessThanOrEqual(78);
+    expect(solveProductionPuzzle(cancellation)).toEqual([cancellation.canonicalSolution]);
+
+    const music = generateProductionPuzzle({ generatorVersion: "1.1.0", puzzleBlueprintId: "PZB-037", seed: "music-shape-seed", subjectKey: "SHAPE" }, secret);
+    expect(music.canonicalSolution).toMatch(/^[A-F]{6}$/);
+    expect(music.carrier.kind).toBe("MUSICAL_HEX_GRID");
+    if (music.carrier.kind !== "MUSICAL_HEX_GRID") throw new Error("wrong carrier");
+    expect(music.carrier.colorCells).toHaveLength(128);
+    expect(music.carrier.colorCells.every((cell) => /^[A-F]{6}$/.test(cell))).toBe(true);
+    expect(solveProductionPuzzle(music)).toEqual([music.canonicalSolution]);
   });
 
   it("rejects a generic Blueprint that has no authored production generator", () => {
@@ -60,18 +92,17 @@ describe("Witness Puzzle Box 70 production generators", () => {
       const serialized = JSON.stringify(projection);
       expect(serialized).not.toContain(secret);
       expect(serialized).not.toContain("coverage-seed-01");
-      expect(serialized).not.toMatch(/"(?:canonicalSolution|proofDigest|seed|subjectKey|validationToken)"\s*:/i);
+      expect(serialized).not.toMatch(/"(?:answerFormat|canonicalSolution|carrier|concept|difficultyTier|expectedSolvePath|familyKind|generatorVersion|instanceChecksum|instanceId|liveRuntimeRecordsCreated|playerFacingModalities|proofDigest|puzzleBlueprintId|seed|subjectKey|timerStarted|title|validationToken)"\s*:/i);
       expect(projection.accessibilityModes).toEqual(entry.accessibilityModes);
-      expect(projection.answerFormat).toBe(entry.answerFormat);
-      expect(projection.playerFacingModalities).toEqual(entry.playerFacingModalities);
       expect(projection.hints).toHaveLength(2);
-      expect(projection.title).toBe(entry.title);
+      expect(projection.publicTitle).toBe(entry.publicTitle);
+      expect(projection.publicSlug).toBe(entry.publicSlug);
       expect(projection).not.toHaveProperty("concept");
       expect(projection).not.toHaveProperty("expectedSolvePath");
       expect(projection).not.toHaveProperty("generatorVersion");
       expect(projection).not.toHaveProperty("instanceChecksum");
-      expect(projection.timerStarted).toBe(false);
-      expect(projection.liveRuntimeRecordsCreated).toBe(0);
+      expect(projection).not.toHaveProperty("timerStarted");
+      expect(projection).not.toHaveProperty("liveRuntimeRecordsCreated");
     }
   });
 
@@ -87,8 +118,7 @@ describe("Witness Puzzle Box 70 production generators", () => {
   it("serves only the four authored production previews and validates them server-side", () => {
     const previews = getProductionPreviews(secret);
     expect(previews).toHaveLength(4);
-    expect(previews.map((preview) => preview.puzzleBlueprintId)).toEqual(getProductionGeneratorCatalog().map((entry) => entry.puzzleBlueprintId));
-    expect(previews.every((preview) => preview.timerStarted === false && preview.liveRuntimeRecordsCreated === 0)).toBe(true);
+    expect(previews.map((preview) => preview.publicSlug).sort()).toEqual(["glass-vespers", "quiet-accord", "the-pall", "third-reading"]);
     expect(validateProductionPreview("PZB-011", "DECLARED-DECOY", secret)).toEqual({ correct: false, puzzleBlueprintId: "PZB-011", timerStarted: false });
     expect(() => validateProductionPreview("PZB-001", "anything", secret)).toThrow(/no authored production generator/i);
     expect(() => validateProductionPreview("PZB-999", "anything", secret)).toThrow("Unknown production Puzzle Blueprint: PZB-999");

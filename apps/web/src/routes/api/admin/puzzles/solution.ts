@@ -14,7 +14,8 @@ export const Route = createFileRoute("/api/admin/puzzles/solution")({
   server: { handlers: {
     POST: async ({ request }) => {
       try {
-        await requireAdministration(request);
+        const access = await requireAdministration(request);
+        if (access.role !== "owner") throw new Response("Owner authorization required.", { status: 403 });
         const input = revealSchema.parse(await request.json());
         return Response.json(revealProductionPreviewSolution(input.puzzleBlueprintId, input.generation, getAuthEnv().BETTER_AUTH_SECRET), {
           headers: { "cache-control": "no-store, private" },

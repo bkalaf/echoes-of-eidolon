@@ -2,9 +2,10 @@ import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
 export const tutorialPuzzleBlueprintIds = ["PZB-011", "PZB-012", "PZB-037", "PZB-021"] as const;
 export type TutorialPuzzleBlueprintId = (typeof tutorialPuzzleBlueprintIds)[number];
+export type TutorialGeneratorVersion = "1.0.0" | "1.1.0";
 
 export interface TutorialGenerationInput {
-  generatorVersion: "1.0.0";
+  generatorVersion: TutorialGeneratorVersion;
   puzzleBlueprintId: TutorialPuzzleBlueprintId;
   seed: string;
   subjectKey: string;
@@ -13,6 +14,7 @@ export interface TutorialGenerationInput {
 interface OrdinalCancellationCarrier {
   kind: "ORDINAL_CANCELLATION_MATRIX";
   instructions: string;
+  mechanic: "BITMAP_V2" | "COORDINATE_V1";
   matrixA: number[][];
   matrixB: number[][];
   screenReaderRows: string[];
@@ -27,9 +29,12 @@ interface SetAmbigramCarrier {
 }
 
 interface MusicalHexCarrier {
+  colorCells?: string[];
   kind: "MUSICAL_HEX_GRID";
   instructions: string;
+  mechanic: "GLYPH_GRID_V2" | "REPEATED_GROUP_V1";
   noteEvents: string[];
+  scoreEvents?: Array<{ beat: number; control: boolean; measure: number; note: string; octave: number }>;
   textureGrid: string[];
 }
 
@@ -55,7 +60,7 @@ export interface GeneratedTutorialPuzzle {
   alternateSolutionsRejected: true;
   canonicalSolution: string;
   carrier: TutorialCarrier;
-  generatorVersion: "1.0.0";
+  generatorVersion: TutorialGeneratorVersion;
   instanceChecksum: string;
   instanceId: string;
   liveRuntimeRecordsCreated: 0;
@@ -70,7 +75,7 @@ export interface GeneratedTutorialPuzzle {
 export interface PublicTutorialPuzzle {
   accessibilityModes: string[];
   carrier: PublicTutorialCarrier;
-  generatorVersion: "1.0.0";
+  generatorVersion: TutorialGeneratorVersion;
   instanceChecksum: string;
   instanceId: string;
   liveRuntimeRecordsCreated: 0;
@@ -102,9 +107,9 @@ function checksum(value: unknown) {
 }
 
 function generationContext(input: TutorialGenerationInput) {
-  if (input.generatorVersion !== "1.0.0") throw new Error(`${input.puzzleBlueprintId} requires immutable generator version 1.0.0.`);
+  if (input.generatorVersion !== "1.0.0" && input.generatorVersion !== "1.1.0") throw new Error(`${input.puzzleBlueprintId} requires an implemented immutable generator version.`);
   if (!input.seed.trim() || !input.subjectKey.trim()) throw new Error("Tutorial generation requires an authorized seed and subject context.");
-  return `witness-puzzle-production-v1|${input.puzzleBlueprintId}|${input.generatorVersion}|${input.seed}|${input.subjectKey}`;
+  return `witness-puzzle-production-${input.generatorVersion === "1.0.0" ? "v1" : "v2"}|${input.puzzleBlueprintId}|${input.generatorVersion}|${input.seed}|${input.subjectKey}`;
 }
 
 function cancellationPuzzle(bytes: Buffer) {
@@ -136,9 +141,78 @@ function cancellationPuzzle(bytes: Buffer) {
     carrier: {
       kind: "ORDINAL_CANCELLATION_MATRIX" as const,
       instructions: "Add corresponding signed alphabet offsets. Submit the one row,column coordinate whose sum is zero.",
+      mechanic: "COORDINATE_V1" as const,
       matrixA,
       matrixB,
       screenReaderRows: matrixA.map((row, rowIndex) => row.map((value, columnIndex) => `row ${rowIndex + 1} column ${columnIndex + 1}: ${value} plus ${matrixB[rowIndex]![columnIndex]}`).join("; ")),
+    },
+  };
+}
+
+const cancellationGlyphs = Object.freeze({
+  A: ["0110", "1001", "1001", "1111", "1001"],
+  B: ["1110", "1001", "1110", "1001", "1110"],
+  C: ["0111", "1000", "1000", "1000", "0111"],
+  D: ["1110", "1001", "1001", "1001", "1110"],
+  E: ["1111", "1000", "1110", "1000", "1111"],
+  F: ["1111", "1000", "1110", "1000", "1000"],
+  G: ["0111", "1000", "1011", "1001", "0111"],
+  H: ["1001", "1001", "1111", "1001", "1001"],
+  "2": ["1110", "0001", "0110", "1000", "1111"],
+  "3": ["1110", "0001", "0110", "0001", "1110"],
+  "4": ["1001", "1001", "1111", "0001", "0001"],
+  "5": ["1111", "1000", "1110", "0001", "1110"],
+  "6": ["0111", "1000", "1110", "1001", "0110"],
+  "7": ["1111", "0001", "0010", "0100", "0100"],
+  "8": ["0110", "1001", "0110", "1001", "0110"],
+  "9": ["0110", "1001", "0111", "0001", "1110"],
+} as const);
+const cancellationAlphabet = Object.keys(cancellationGlyphs) as Array<keyof typeof cancellationGlyphs>;
+
+function cancellationBitmapPuzzle(bytes: Buffer) {
+  const answer = Array.from({ length: 6 }, (_, index) => cancellationAlphabet[bytes[index]! % cancellationAlphabet.length]).join("");
+  const mask = Array.from({ length: 7 }, () => Array<boolean>(31).fill(false));
+  for (let glyphIndex = 0; glyphIndex < answer.length; glyphIndex += 1) {
+    const glyph = cancellationGlyphs[answer[glyphIndex] as keyof typeof cancellationGlyphs];
+    for (let row = 0; row < 5; row += 1) {
+      for (let column = 0; column < 4; column += 1) {
+        mask[row + 1]![column + 1 + glyphIndex * 5] = glyph[row]![column] === "1";
+      }
+    }
+  }
+  const matrixA: number[][] = [];
+  const matrixB: number[][] = [];
+  for (let row = 0; row < 7; row += 1) {
+    const left: number[] = [];
+    const right: number[] = [];
+    for (let column = 0; column < 31; column += 1) {
+      const index = row * 31 + column;
+      const magnitudeA = 1 + bytes[32 + index]! % 13;
+      const first = bytes[300 + index]! % 2 ? magnitudeA : -magnitudeA;
+      let magnitudeB = 1 + bytes[520 + index]! % 13;
+      let second = bytes[740 + index]! % 2 ? magnitudeB : -magnitudeB;
+      if (mask[row]![column]) second = -first;
+      else if (first + second === 0) {
+        magnitudeB = magnitudeB === 13 ? 12 : magnitudeB + 1;
+        second = second < 0 ? -magnitudeB : magnitudeB;
+      }
+      left.push(first);
+      right.push(second);
+    }
+    matrixA.push(left);
+    matrixB.push(right);
+  }
+  const zeroCount = mask.flat().filter(Boolean).length;
+  if (zeroCount < 48 || zeroCount > 78) throw new Error("PZB-011 bitmap cancellation density is outside its authored range.");
+  return {
+    canonicalSolution: answer,
+    carrier: {
+      instructions: "Two signed records preserve a hidden accord.",
+      kind: "ORDINAL_CANCELLATION_MATRIX" as const,
+      matrixA,
+      matrixB,
+      mechanic: "BITMAP_V2" as const,
+      screenReaderRows: matrixA.map((values, rowIndex) => values.map((value, columnIndex) => `row ${rowIndex + 1} column ${columnIndex + 1}: record A ${value}; record B ${matrixB[rowIndex]![columnIndex]}`).join("; ")),
     },
   };
 }
@@ -208,8 +282,75 @@ function musicalHexPuzzle(secret: string, context: string, bytes: Buffer) {
     carrier: {
       kind: "MUSICAL_HEX_GRID" as const,
       instructions: "Ignore G control markers, group note names A through F six at a time, and submit the sole repeated hexadecimal color.",
+      mechanic: "REPEATED_GROUP_V1" as const,
       noteEvents: groups.flatMap((group, index) => [...group, ...(index % 4 === 3 ? ["G"] : [])]),
       textureGrid: groups.map((group, index) => `cell ${index + 1}: ${group.split("").map((note) => "ABCDEF".indexOf(note) + 1).join("-")}`),
+    },
+  };
+}
+
+const musicalGlyphs = Object.freeze({
+  A: ["0110", "1001", "1111", "1001"],
+  B: ["1110", "1001", "1110", "1110"],
+  C: ["1111", "1000", "1000", "1111"],
+  D: ["1110", "1001", "1001", "1110"],
+  E: ["1111", "1000", "1110", "1111"],
+  F: ["1111", "1000", "1110", "1000"],
+} as const);
+const musicalPalette = Object.freeze([
+  { dark: "AADAAA", light: "DDFDDD" },
+  { dark: "AAAADD", light: "DDDDFF" },
+  { dark: "DDBBAA", light: "FFEEDD" },
+  { dark: "BBAADD", light: "EEDDFF" },
+  { dark: "DDAAAA", light: "FFDDDD" },
+  { dark: "AACCCC", light: "DDFFFF" },
+]);
+const musicalRegionWidths = [6, 5, 5, 5, 5, 6] as const;
+
+function musicalGlyphPuzzle(secret: string, context: string) {
+  const answerBytes = hmac(secret, `${context}|answer`);
+  const answer = Array.from({ length: 6 }, (_, index) => "ABCDEF"[answerBytes[index]! % 6]).join("");
+  const cells = Array.from({ length: 4 }, () => Array<string>(32).fill(""));
+  let offset = 0;
+  for (let answerIndex = 0; answerIndex < 6; answerIndex += 1) {
+    const width = musicalRegionWidths[answerIndex]!;
+    const glyphOffset = answerIndex === 0 ? 1 : 0;
+    const glyph = musicalGlyphs[answer[answerIndex] as keyof typeof musicalGlyphs];
+    for (let row = 0; row < 4; row += 1) {
+      for (let localColumn = 0; localColumn < width; localColumn += 1) {
+        const glyphColumn = localColumn - glyphOffset;
+        const active = glyphColumn >= 0 && glyphColumn < 4 && glyph[row]![glyphColumn] === "1";
+        cells[row]![offset + localColumn] = active ? musicalPalette[answerIndex]!.dark : musicalPalette[answerIndex]!.light;
+      }
+    }
+    offset += width;
+  }
+  if (offset !== 32) throw new Error("PZB-037 color regions must span exactly 32 columns.");
+  const colorCells = cells.flat();
+  const noteEvents: string[] = [];
+  const scoreEvents: NonNullable<MusicalHexCarrier["scoreEvents"]> = [];
+  for (let measure = 0; measure < colorCells.length; measure += 1) {
+    const color = colorCells[measure]!;
+    for (let beat = 0; beat < 6; beat += 1) {
+      const note = color[beat]!;
+      noteEvents.push(note);
+      scoreEvents.push({ beat, control: false, measure, note, octave: 4 + ((measure + beat + note.charCodeAt(0)) % 2) });
+    }
+    if (measure % 8 === 7) {
+      noteEvents.push("G");
+      scoreEvents.push({ beat: 6, control: true, measure, note: "G", octave: 5 });
+    }
+  }
+  return {
+    canonicalSolution: answer,
+    carrier: {
+      colorCells,
+      instructions: "A score survives in sound, ink, and glass.",
+      kind: "MUSICAL_HEX_GRID" as const,
+      mechanic: "GLYPH_GRID_V2" as const,
+      noteEvents,
+      scoreEvents,
+      textureGrid: colorCells.map((color, index) => `row ${Math.floor(index / 32) + 1} column ${index % 32 + 1}: ${color}`),
     },
   };
 }
@@ -254,10 +395,10 @@ function typographicQrPuzzle(secret: string, context: string, bytes: Buffer) {
 
 export function generateTutorialPuzzle(input: TutorialGenerationInput, secret: string): GeneratedTutorialPuzzle {
   const context = generationContext(input);
-  const bytes = stream(secret, context, 192);
-  const generated = input.puzzleBlueprintId === "PZB-011" ? cancellationPuzzle(bytes)
+  const bytes = stream(secret, context, input.generatorVersion === "1.1.0" ? 1_024 : 192);
+  const generated = input.puzzleBlueprintId === "PZB-011" ? (input.generatorVersion === "1.1.0" ? cancellationBitmapPuzzle(bytes) : cancellationPuzzle(bytes))
     : input.puzzleBlueprintId === "PZB-012" ? setAmbigramPuzzle(bytes)
-      : input.puzzleBlueprintId === "PZB-037" ? musicalHexPuzzle(secret, context, bytes)
+      : input.puzzleBlueprintId === "PZB-037" ? (input.generatorVersion === "1.1.0" ? musicalGlyphPuzzle(secret, context) : musicalHexPuzzle(secret, context, bytes))
         : typographicQrPuzzle(secret, context, bytes);
   const publicCore = {
     accessibilityModes: accessibilityModes[input.puzzleBlueprintId],
@@ -283,6 +424,29 @@ export function generateTutorialPuzzle(input: TutorialGenerationInput, secret: s
 
 function solveCarrier(carrier: TutorialCarrier, routeStage?: { symbolCards: SymbolCard[] }) {
   if (carrier.kind === "ORDINAL_CANCELLATION_MATRIX") {
+    if (carrier.mechanic === "BITMAP_V2") {
+      let answer = "";
+      for (let glyphIndex = 0; glyphIndex < 6; glyphIndex += 1) {
+        const rows = Array.from({ length: 5 }, (_, row) => Array.from({ length: 4 }, (_, column) => carrier.matrixA[row + 1]![column + 1 + glyphIndex * 5]! + carrier.matrixB[row + 1]![column + 1 + glyphIndex * 5]! === 0 ? "1" : "0").join(""));
+        const match = Object.entries(cancellationGlyphs).find(([, glyph]) => glyph.every((value, row) => value === rows[row]));
+        if (!match) return [];
+        answer += match[0];
+      }
+      const expectedZeroes = new Set<string>();
+      for (let glyphIndex = 0; glyphIndex < answer.length; glyphIndex += 1) {
+        const glyph = cancellationGlyphs[answer[glyphIndex] as keyof typeof cancellationGlyphs];
+        glyph.forEach((row, rowIndex) => [...row].forEach((pixel, columnIndex) => {
+          if (pixel === "1") expectedZeroes.add(`${rowIndex + 1}:${columnIndex + 1 + glyphIndex * 5}`);
+        }));
+      }
+      for (let row = 0; row < carrier.matrixA.length; row += 1) {
+        for (let column = 0; column < carrier.matrixA[row]!.length; column += 1) {
+          const zero = carrier.matrixA[row]![column]! + carrier.matrixB[row]![column]! === 0;
+          if (zero !== expectedZeroes.has(`${row}:${column}`)) return [];
+        }
+      }
+      return [answer];
+    }
     const solutions: string[] = [];
     for (let row = 0; row < carrier.matrixA.length; row += 1) {
       for (let column = 0; column < carrier.matrixA[row]!.length; column += 1) {
@@ -301,6 +465,20 @@ function solveCarrier(carrier: TutorialCarrier, routeStage?: { symbolCards: Symb
       if (note === "G") continue;
       current += note;
       if (current.length === 6) { groups.push(current); current = ""; }
+    }
+    if (carrier.mechanic === "GLYPH_GRID_V2") {
+      if (groups.length !== 128 || groups.some((group) => !/^[A-F]{6}$/.test(group))) return [];
+      let answer = "";
+      let regionOffset = 0;
+      for (let characterIndex = 0; characterIndex < 6; characterIndex += 1) {
+        const glyphOffset = characterIndex === 0 ? 1 : 0;
+        const rows = Array.from({ length: 4 }, (_, row) => Array.from({ length: 4 }, (_, column) => groups[row * 32 + regionOffset + glyphOffset + column] === musicalPalette[characterIndex]!.dark ? "1" : "0").join(""));
+        const match = Object.entries(musicalGlyphs).find(([, glyph]) => glyph.every((value, row) => value === rows[row]));
+        if (!match) return [];
+        answer += match[0];
+        regionOffset += musicalRegionWidths[characterIndex]!;
+      }
+      return [answer];
     }
     const counts = new Map<string, number>();
     for (const group of groups) counts.set(group, (counts.get(group) ?? 0) + 1);

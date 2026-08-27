@@ -92,6 +92,13 @@ try {
   const verification = new Client({ connectionString: verificationUrl.toString() });
   await verification.connect();
   try {
+    const freshPuzzleVersions = await verification.query(
+      `SELECT count(*)::int AS count FROM "PuzzleBlueprintVersion"
+       WHERE "puzzleBlueprintId" IN ('PZB-011', 'PZB-012', 'PZB-021', 'PZB-037') AND "generatorVersion" = '1.1.0'`,
+    );
+    if (freshPuzzleVersions.rows[0]?.count !== 0) {
+      throw new Error(`Fresh migration unexpectedly manufactured Puzzle roots: ${JSON.stringify(freshPuzzleVersions.rows)}`);
+    }
     const ownerAccount = await verification.query(
       `SELECT u."email", u."username", u."role", u."emailVerified", a."providerId", a."password"
        FROM "User" u JOIN "Account" a ON a."userId" = u."id"
@@ -1049,6 +1056,45 @@ try {
     );
     if (Object.values(retiredDocumentTables.rows[0] ?? {}).some((value) => value !== null)) {
       throw new Error(`Unauthorized Document Builder tables remain after remediation: ${JSON.stringify(retiredDocumentTables.rows)}`);
+    }
+
+    await applyThrough("20260820101500_taxonomy_relational_normalization");
+    await preCorrection.query(
+      `INSERT INTO "PuzzleBlueprint" ("puzzleBlueprintId", "title", "primaryFamily", "difficultyTier") VALUES
+       ('PZB-011', 'Legacy 011', 'CRYPTO_NUMERIC_DATA', 'TIER_1_INITIATE'),
+       ('PZB-012', 'Legacy 012', 'LOGIC_CONSTRAINT', 'TIER_1_INITIATE'),
+       ('PZB-021', 'Legacy 021', 'VISUAL_COLOR_OPTICAL', 'TIER_2_ADEPT'),
+       ('PZB-037', 'Legacy 037', 'AUDIO_MUSIC_SPECTRAL', 'TIER_3_EXPERT')`,
+    );
+    await preCorrection.query("BEGIN");
+    await preCorrection.query(
+      `INSERT INTO "PuzzleBlueprintVersion" ("puzzleBlueprintId", "generatorVersion", "design") VALUES
+       ('PZB-011', '1.0.0', '{"schemaVersion":"puzzle-blueprint-design-v1","legacyMarker":"PZB-011"}'::jsonb),
+       ('PZB-012', '1.0.0', '{"schemaVersion":"puzzle-blueprint-design-v1","legacyMarker":"PZB-012"}'::jsonb),
+       ('PZB-021', '1.0.0', '{"schemaVersion":"puzzle-blueprint-design-v1","legacyMarker":"PZB-021"}'::jsonb),
+       ('PZB-037', '1.0.0', '{"schemaVersion":"puzzle-blueprint-design-v1","legacyMarker":"PZB-037"}'::jsonb)`,
+    );
+    await preCorrection.query(
+      `INSERT INTO "PuzzleHintTemplate" ("puzzleBlueprintId", "generatorVersion", "level", "kind", "template")
+       SELECT id, '1.0.0', level, CASE level WHEN 1 THEN 'DIRECTIONAL'::"PuzzleHintKind" ELSE 'GUIDED'::"PuzzleHintKind" END, 'Legacy hint'
+       FROM unnest(ARRAY['PZB-011','PZB-012','PZB-021','PZB-037']) AS id CROSS JOIN generate_series(1, 2) AS level`,
+    );
+    await preCorrection.query("COMMIT");
+    await applyThrough("20260826120000_member_puzzle_production_versions");
+    const upgradedPuzzleVersions = await preCorrection.query(
+      `SELECT
+         count(*) FILTER (WHERE "generatorVersion"='1.0.0')::int AS base_count,
+         count(*) FILTER (WHERE "generatorVersion"='1.1.0')::int AS target_count,
+         count(*) FILTER (WHERE "generatorVersion"='1.1.0' AND "design"->>'legacyMarker'="puzzleBlueprintId")::int AS preserved_count
+       FROM "PuzzleBlueprintVersion" WHERE "puzzleBlueprintId" IN ('PZB-011','PZB-012','PZB-021','PZB-037')`,
+    );
+    const upgradedPuzzleHints = await preCorrection.query(
+      `SELECT count(*)::int AS count FROM "PuzzleHintTemplate"
+       WHERE "puzzleBlueprintId" IN ('PZB-011','PZB-012','PZB-021','PZB-037') AND "generatorVersion"='1.1.0'`,
+    );
+    if (JSON.stringify(upgradedPuzzleVersions.rows[0]) !== JSON.stringify({ base_count: 4, target_count: 4, preserved_count: 4 })
+      || upgradedPuzzleHints.rows[0]?.count !== 8) {
+      throw new Error(`Populated Puzzle upgrade did not append exactly four immutable versions and eight hints: ${JSON.stringify({ versions: upgradedPuzzleVersions.rows, hints: upgradedPuzzleHints.rows })}`);
     }
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };

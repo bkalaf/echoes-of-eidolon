@@ -11,6 +11,7 @@ import {
   parsePuzzleBlueprintImportArguments,
   PuzzleBlueprintImportConflictError,
 } from "../../src/server/puzzle-blueprint-import";
+import { buildProductionPuzzleVersionAddition } from "../../src/server/puzzle-production-version-persistence";
 
 const source = readFileSync(resolve(import.meta.dirname, "../../data/puzzles/puzzle-blueprint-bank-70.csv"), "utf8");
 
@@ -38,7 +39,7 @@ describe("Puzzle Blueprint package import", () => {
   it("defaults to a read-only plan and performs zero writes", async () => {
     const { database, transaction } = importDatabase();
     const result = await importPuzzleBlueprintPackage(source, {}, database);
-    expect(result).toMatchObject({ applied: false, mode: "verify", packageBlueprints: 70, missingRoots: 70, missingVersions: 70 });
+    expect(result).toMatchObject({ applied: false, mode: "verify", packageBlueprints: 70, missingRoots: 70, missingVersions: 70, supplementalMissingVersions: 4 });
     expect(transaction.puzzleBlueprint.create).not.toHaveBeenCalled();
     expect(transaction.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
     expect(database.$transaction).toHaveBeenCalledWith(expect.any(Function), { isolationLevel: "Serializable" });
@@ -47,8 +48,9 @@ describe("Puzzle Blueprint package import", () => {
   it("creates all 70 roots and immutable versions only in explicit apply mode with a named target", async () => {
     const { database, transaction } = importDatabase();
     const result = await importPuzzleBlueprintPackage(source, { mode: "apply", targetEnvironment: "disposable-test" }, database);
-    expect(result).toMatchObject({ applied: true, mode: "apply", targetEnvironment: "disposable-test", packageBlueprints: 70, missingRoots: 70, missingVersions: 70 });
+    expect(result).toMatchObject({ applied: true, mode: "apply", targetEnvironment: "disposable-test", packageBlueprints: 70, missingRoots: 70, missingVersions: 70, supplementalMissingVersions: 4 });
     expect(transaction.puzzleBlueprint.create).toHaveBeenCalledTimes(70);
+    expect(transaction.puzzleBlueprint.create.mock.calls.filter(([call]) => call.data.versions.create.length === 2)).toHaveLength(4);
     expect(database.$transaction).toHaveBeenCalledWith(expect.any(Function), { isolationLevel: "Serializable" });
   });
 
@@ -86,16 +88,42 @@ describe("Puzzle Blueprint package import", () => {
           design: entry.version.design,
           generatorVersion: entry.version.generatorVersion,
           hints: entry.hints.map(({ kind, level, template }) => ({ kind, level, template })),
-        }],
+        }, ...(() => {
+          const supplemental = buildProductionPuzzleVersionAddition(entry.root.puzzleBlueprintId, entry.version.design);
+          return supplemental ? [{ design: supplemental.design, generatorVersion: supplemental.generatorVersion, hints: supplemental.hints }] : [];
+        })()],
       };
     });
     const { database, transaction } = importDatabase(existing);
 
     const result = await importPuzzleBlueprintPackage(source, { mode: "apply", targetEnvironment: "disposable-test" }, database);
 
-    expect(result).toMatchObject({ applied: true, mode: "apply", missingRoots: 0, missingVersions: 0, unchangedVersions: 70 });
+    expect(result).toMatchObject({ applied: true, mode: "apply", missingRoots: 0, missingVersions: 0, unchangedVersions: 70, supplementalMissingVersions: 0, supplementalUnchangedVersions: 4 });
     expect(transaction.puzzleBlueprint.create).not.toHaveBeenCalled();
     expect(transaction.puzzleBlueprintVersion.create).not.toHaveBeenCalled();
+  });
+
+  it("appends exactly four production 1.1.0 versions to an already imported package", async () => {
+    const existing = parsePuzzleBlueprintPackageCsv(source).map((row) => {
+      const entry = parsePuzzleBlueprintIntakeRow(row);
+      return {
+        ...entry.root,
+        versions: [{
+          design: entry.version.design,
+          generatorVersion: entry.version.generatorVersion,
+          hints: entry.hints.map(({ kind, level, template }) => ({ kind, level, template })),
+        }],
+      };
+    });
+    const { database, transaction } = importDatabase(existing);
+
+    const result = await importPuzzleBlueprintPackage(source, { mode: "apply", targetEnvironment: "upgrade-test" }, database);
+
+    expect(result).toMatchObject({ missingRoots: 0, missingVersions: 0, supplementalMissingVersions: 4, supplementalUnchangedVersions: 0, unchangedVersions: 70 });
+    expect(transaction.puzzleBlueprintVersion.create).toHaveBeenCalledTimes(4);
+    expect(transaction.puzzleBlueprintVersion.create.mock.calls.map(([call]) => `${call.data.puzzleBlueprintId}@${call.data.generatorVersion}`).sort()).toEqual([
+      "PZB-011@1.1.0", "PZB-012@1.1.0", "PZB-021@1.1.0", "PZB-037@1.1.0",
+    ]);
   });
 
   it("parses CLI mode fail-closed and requires an explicit apply target", () => {

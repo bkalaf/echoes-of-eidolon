@@ -1,6 +1,8 @@
 import { resolve } from "node:path";
 
-import { runReleaseCheck } from "../src/server/release-gate";
+import { assertPuzzleClientBundleSafe, runReleaseCheck } from "../src/server/release-gate";
 
-const result = await runReleaseCheck(resolve(import.meta.dirname, "../../.."));
+const repositoryRoot = resolve(import.meta.dirname, "../../..");
+const result = await runReleaseCheck(repositoryRoot);
+assertPuzzleClientBundleSafe(resolve(repositoryRoot, "apps/web/.output/public/assets"));
 process.stdout.write(`release-check ${result.currentVersion} ${result.status} canonical=${result.releaseCount} public=${result.publicReleaseCount}\n`);

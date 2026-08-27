@@ -51,3 +51,11 @@ export function hasMemberBenefits(input: {
   if (input.role === "owner") return input.ownerPolicyAllowsBenefits === true;
   return input.membershipEntitled;
 }
+
+export function canAccessPuzzles(
+  role: AuthorizationRole | null,
+  membershipEntitled: boolean,
+): boolean {
+  if (role === null || role === "guest") return false;
+  return membershipEntitled || canAccessAdministration(role);
+}

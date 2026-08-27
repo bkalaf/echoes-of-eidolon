@@ -1,6 +1,6 @@
 {
   "schemaVersion": "eidolon-puzzle-blueprint-proof-v3",
-  "generatedAt": "2026-08-23T07:14:45.825Z",
+  "generatedAt": "2026-08-27T05:14:52.948Z",
   "repository": "bkalaf/echoes-of-eidolon",
   "applicationSource": {
     "paths": [
@@ -8,21 +8,34 @@
       "apps/web/src/server/puzzle-tutorial-generators.ts",
       "apps/web/src/server/puzzle-production-generators.ts",
       "apps/web/src/server/puzzle-production-validation.ts",
+      "apps/web/src/server/member-puzzles.ts",
+      "apps/web/src/server/puzzle-production-version-persistence.ts",
+      "apps/web/src/server.ts",
+      "apps/web/src/domain/authorization.ts",
+      "apps/web/src/domain/navigation.ts",
+      "apps/web/src/domain/puzzle-production-version-catalog.ts",
       "apps/web/src/components/puzzles/PlayerPuzzleSurface.tsx",
       "apps/web/src/components/puzzles/OrdinalCancellationPuzzle.tsx",
       "apps/web/src/components/puzzles/SetAmbigramPuzzle.tsx",
       "apps/web/src/components/puzzles/TypographicQrPuzzle.tsx",
       "apps/web/src/components/puzzles/MusicalHexPuzzle.tsx",
       "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzleHub.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzlePage.tsx",
       "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
       "apps/web/src/routes/api/admin/puzzles/preview.ts",
       "apps/web/src/routes/api/admin/puzzles/solution.ts",
+      "apps/web/src/routes/api/member/puzzles/index.ts",
+      "apps/web/src/routes/api/member/puzzles/$publicSlug.ts",
+      "apps/web/src/routes/puzzles/index.tsx",
+      "apps/web/src/routes/puzzles/$publicSlug.tsx",
       "apps/web/src/styles.css",
       "apps/web/tests/unit/puzzle-player-surface.test.tsx",
       "apps/web/tests/unit/puzzle-production-validation.test.ts",
-      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
+      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts",
+      "apps/web/tests/e2e/member-puzzle-release.spec.ts"
     ],
-    "sha256": "dc9d478324a3a4a68a4a5368b21b8eca814de45122053b0117560a381ebf5028"
+    "sha256": "3d7750518fa24b86f868d6677829eaf1cc7f4881544dbcea6eb75f4ab0c8a341"
   },
   "environment": {
     "name": "local-remediation",
@@ -40,8 +53,8 @@
   "commands": [
     {
       "command": "pnpm puzzles:production-audit",
-      "startedAt": "2026-08-23T07:14:45.825Z",
-      "completedAt": "2026-08-23T07:14:45.825Z",
+      "startedAt": "2026-08-27T05:14:52.948Z",
+      "completedAt": "2026-08-27T05:14:52.948Z",
       "exitCode": 0,
       "logPath": null
     }
@@ -55,19 +68,18 @@
   "tier": "TIER_1_INITIATE",
   "primaryFamily": "VISUAL_COLOR_OPTICAL",
   "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts",
-  "generatorVersion": "1.0.0",
+  "generatorVersion": "1.1.0",
   "productionStatus": "PRODUCTION",
   "seedVector": "RELEASE_PROOF_VECTOR_01:0be226011ebfa869",
-  "instanceChecksum": "ec9209f1c81275b82a4308fca9e20a493effb5a622339aa42df9ac02cbfafb64",
+  "instanceChecksum": "713e288d94355c15e65e641a0a25ea1a85203678e266aed81b45ebc89f491a95",
   "localDeterministicReplay": true,
   "localSingleSolutionCheck": true,
   "localAlternateRejection": true,
   "answerFreeClient": true,
   "accessibilityEquivalent": true,
   "accessibilityModesImplemented": [
-    "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
-    "MODULE_MATRIX_TABLE",
-    "SCREEN_READER_ROUTE_ACTION",
+    "KEYBOARD",
+    "SCREEN_READER_TONE_TABLE",
     "HIGH_CONTRAST"
   ],
   "browserE2e": "PASS",
@@ -81,6 +93,10 @@
     "apps/web/tests/unit/puzzle-production-validation.test.ts",
     "apps/web/tests/unit/puzzle-player-surface.test.tsx",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+    "apps/web/tests/unit/puzzle-access.test.ts",
+    "apps/web/tests/unit/member-puzzles.test.ts",
+    "apps/web/tests/integration/member-puzzle-version-migration.test.ts",
+    "apps/web/tests/e2e/member-puzzle-release.spec.ts",
     "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
   ],
   "assertions": [
@@ -111,15 +127,13 @@
     {
       "name": "Implemented accessibility equivalents",
       "expected": [
-        "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
-        "MODULE_MATRIX_TABLE",
-        "SCREEN_READER_ROUTE_ACTION",
+        "KEYBOARD",
+        "SCREEN_READER_TONE_TABLE",
         "HIGH_CONTRAST"
       ],
       "observed": [
-        "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
-        "MODULE_MATRIX_TABLE",
-        "SCREEN_READER_ROUTE_ACTION",
+        "KEYBOARD",
+        "SCREEN_READER_TONE_TABLE",
         "HIGH_CONTRAST"
       ],
       "pass": true
@@ -133,24 +147,22 @@
   ],
   "authoredContract": {
     "answerFormat": "ORDERED_SYMBOL_SEQUENCE",
-    "concept": "A dense field of microtext has module-level luminance chosen so downsampling resolves a QR code. The QR contains only a signed player-bound route token.",
+    "concept": "A microtext field must be reduced to a module pattern before its recovered passage yields sortable symbol cards.",
     "expectedSolvePath": [
-      "Recognize the authored control evidence.",
-      "Apply: Downsample or blur to recover modules, scan the QR, authenticate, and complete the route's next generated stage.",
-      "Separate constrained signal from generated noise.",
-      "Derive the instance-specific answer format.",
-      "Submit to server validation before the deadline."
+      "Treat the page as a field of visual density rather than prose.",
+      "Adjust the light-dark cutoff until the complete passage emerges.",
+      "Follow the passage and order its symbol cards by their visible notches."
     ],
     "hints": [
       {
         "kind": "DIRECTIONAL",
         "level": 1,
-        "text": "Do not read the tiny letterforms as prose. Compare how much light each tile carries."
+        "text": "Distance changes what this page is willing to show. Step back from the letters."
       },
       {
         "kind": "GUIDED",
         "level": 2,
-        "text": "Place the threshold between the dark and light clusters until three corner finders and a complete square resolve. Then follow the mark and order the cards from the fewest notches upward."
+        "text": "Reduce the field to light and dark, then adjust the cutoff until a scannable passage emerges."
       }
     ],
     "playerFacingModalities": [
@@ -159,9 +171,8 @@
       "SIGNED_WEB_ROUTE"
     ],
     "accessibilityModes": [
-      "DIRECT_SIGNED_LINK_AFTER_EQUIVALENT_TRANSFORM",
-      "MODULE_MATRIX_TABLE",
-      "SCREEN_READER_ROUTE_ACTION",
+      "KEYBOARD",
+      "SCREEN_READER_TONE_TABLE",
       "HIGH_CONTRAST"
     ]
   }

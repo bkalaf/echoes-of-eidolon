@@ -13,6 +13,7 @@ export const productionPuzzleBlueprintIds = ["PZB-011", "PZB-012", "PZB-021", "P
 export type ProductionPuzzleBlueprintId = (typeof productionPuzzleBlueprintIds)[number];
 
 export type ProductionPlayerSubmission =
+  | { kind: "bitmap-code"; markedCoordinates: Array<{ column: number; row: number }>; value: string }
   | { kind: "coordinate"; row: number; column: number }
   | { kind: "set"; members: number[] }
   | { kind: "hex"; value: string }
@@ -40,6 +41,7 @@ export interface OwnerPuzzleQaMetadata {
   instanceIdentity: string;
   intendedSolvePath: string[];
   puzzleBlueprintId: ProductionPuzzleBlueprintId;
+  publicTitle: string;
   title: string;
 }
 
@@ -51,9 +53,9 @@ export interface ProductionQaSandbox {
 
 const intendedSolvePaths: Record<ProductionPuzzleBlueprintId, string[]> = {
   "PZB-011": [
-    "Compare Matrix A and Matrix B at the same row and column.",
-    "Add each corresponding signed pair without using a precomputed sum column.",
-    "Find the only pair that cancels to exactly zero and submit that row and column.",
+    "Compare the two signed records at the same row and column.",
+    "Mark every corresponding pair that cancels exactly without using a precomputed sum.",
+    "Read the six glyphs drawn by the complete cancellation mask and submit both the code and working mask.",
   ],
   "PZB-012": [
     "Read U as union and I as intersection only where the scope cards use them as operators.",
@@ -66,9 +68,9 @@ const intendedSolvePaths: Record<ProductionPuzzleBlueprintId, string[]> = {
     "Continue through the recovered mark, then order the symbol cards by their visible notch counts and submit the sequence.",
   ],
   "PZB-037": [
-    "Play or inspect the notated melody and keep note names A through F; G is a control marker.",
-    "Group the retained notes six at a time to form the 32 by 4 field.",
-    "Find the sole six-note hexadecimal group repeated across the field and submit those six characters.",
+    "Play or inspect the score and track the written note names.",
+    "Treat G as a phrase divider and group A through F six at a time as hexadecimal colors.",
+    "Render the 32 by 4 field, read the six darker glyphs, and submit them.",
   ],
 };
 
@@ -113,6 +115,7 @@ export function createProductionQaSandbox(puzzleBlueprintId: ProductionPuzzleBlu
       instanceIdentity: instance.instanceId,
       intendedSolvePath: intendedSolvePaths[puzzleBlueprintId],
       puzzleBlueprintId,
+      publicTitle: entry.publicTitle ?? entry.title,
       title: entry.title,
     },
     playerPuzzle: getPublicProductionPuzzle(instance),
@@ -125,6 +128,11 @@ export function getProductionQaSandboxes(secret: string) {
 
 export function resolveProductionPreviewRoute(puzzleBlueprintId: "PZB-021", generation: number, threshold: number, secret: string): PublicRouteStage {
   const { instance } = previewInstance(puzzleBlueprintId, generation, secret);
+  return resolveProductionInstanceRoute(instance, threshold, secret);
+}
+
+export function resolveProductionInstanceRoute(instance: GeneratedProductionPuzzle, threshold: number, secret: string): PublicRouteStage {
+  if (instance.puzzleBlueprintId !== "PZB-021") throw new Error("The recovered passage is not available for this puzzle.");
   if (!thresholdMatches(instance, threshold)) throw new Error("That threshold has not recovered the complete mark yet.");
   const tutorial = instance.tutorialInstance!;
   const stage = resolveTutorialRoute(tutorial, tutorial.routeToken!, secret);
@@ -135,6 +143,23 @@ export function resolveProductionPreviewRoute(puzzleBlueprintId: "PZB-021", gene
 }
 
 function submissionValue(instance: GeneratedProductionPuzzle, submission: ProductionPlayerSubmission) {
+  if (instance.puzzleBlueprintId === "PZB-011" && instance.generatorVersion === "1.1.0" && submission.kind === "bitmap-code") {
+    const carrier = instance.carrier;
+    if (carrier.kind !== "ORDINAL_CANCELLATION_MATRIX" || !/^[A-H2-9]{6}$/i.test(submission.value)) return null;
+    const expected = new Set<string>();
+    for (let row = 0; row < carrier.matrixA.length; row += 1) {
+      for (let column = 0; column < carrier.matrixA[row]!.length; column += 1) {
+        if (carrier.matrixA[row]![column]! + carrier.matrixB[row]![column]! === 0) expected.add(`${row + 1},${column + 1}`);
+      }
+    }
+    const observed = new Set<string>();
+    for (const coordinate of submission.markedCoordinates) {
+      if (!Number.isSafeInteger(coordinate.row) || !Number.isSafeInteger(coordinate.column) || coordinate.row < 1 || coordinate.row > carrier.matrixA.length || coordinate.column < 1 || coordinate.column > carrier.matrixA[0]!.length) return null;
+      observed.add(`${coordinate.row},${coordinate.column}`);
+    }
+    if (observed.size !== submission.markedCoordinates.length || observed.size !== expected.size || [...expected].some((coordinate) => !observed.has(coordinate))) return null;
+    return submission.value;
+  }
   if (instance.puzzleBlueprintId === "PZB-011" && submission.kind === "coordinate") {
     const carrier = instance.carrier;
     if (carrier.kind !== "ORDINAL_CANCELLATION_MATRIX" || !Number.isSafeInteger(submission.row) || !Number.isSafeInteger(submission.column) || submission.row < 1 || submission.column < 1 || submission.row > carrier.matrixA.length || submission.column > carrier.matrixA[0]!.length) return null;
@@ -157,10 +182,13 @@ function submissionValue(instance: GeneratedProductionPuzzle, submission: Produc
 
 export function validateProductionPreviewSubmission(puzzleBlueprintId: ProductionPuzzleBlueprintId, generation: number, submission: ProductionPlayerSubmission, secret: string) {
   const { instance } = previewInstance(puzzleBlueprintId, generation, secret);
+  return { ...validateProductionInstanceSubmission(instance, submission, secret), puzzleBlueprintId };
+}
+
+export function validateProductionInstanceSubmission(instance: GeneratedProductionPuzzle, submission: ProductionPlayerSubmission, secret: string) {
   const value = submissionValue(instance, submission);
   return {
     correct: value !== null && validateProductionPuzzle(instance, value, secret),
-    puzzleBlueprintId,
     timerStarted: false as const,
   };
 }

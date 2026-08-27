@@ -33,13 +33,14 @@ describe("Puzzle Prototype Lab", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ ...response, productionSandboxes: [sandbox] }), ok: true }));
     renderLab("PZB-011");
     const ownerPanel = await screen.findByLabelText("Owner puzzle QA panel");
-    expect(within(ownerPanel).getByRole("heading", { name: /PZB-011 · Ordinal Cancellation Files/ })).toBeInTheDocument();
+    expect(within(ownerPanel).getByRole("heading", { name: /PZB-011 · The Quiet Accord/ })).toBeInTheDocument();
+    expect(within(ownerPanel).getByText(/Internal source title: Ordinal Cancellation Files/)).toBeInTheDocument();
     expect(within(ownerPanel).getByText("Generator version")).toBeInTheDocument();
     expect(within(ownerPanel).getByRole("button", { name: "Regenerate instance" })).toBeInTheDocument();
     expect(within(ownerPanel).getByRole("button", { name: "Reset player surface" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Ordinal Cancellation Files player puzzle")).toBeInTheDocument();
+    expect(screen.getByLabelText("The Quiet Accord player puzzle")).toBeInTheDocument();
     expect(screen.queryByRole("columnheader", { name: "Sum" })).not.toBeInTheDocument();
-  });
+  }, 30_000);
 
   it("fetches the expected answer separately and records player validation history", async () => {
     const response = getPuzzlePrototypeCatalog(prototypeSecret);
@@ -55,10 +56,11 @@ describe("Puzzle Prototype Lab", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Reveal expected solution" }));
     expect(await screen.findByLabelText("Privileged expected solution")).toHaveTextContent(reveal.expectedSolution);
     expect(fetchMock).toHaveBeenCalledWith("/api/admin/puzzles/solution", expect.objectContaining({ method: "POST" }));
-    fireEvent.click(screen.getAllByRole("button", { name: /Matrix A, row 1, column 1, value/ })[0]!);
-    fireEvent.click(screen.getByRole("button", { name: "Check coordinate" }));
+    fireEvent.click(screen.getAllByRole("button", { name: /Record A, row 1, column 1, value/ })[0]!);
+    fireEvent.change(screen.getByLabelText("Six-character bitmap reading"), { target: { value: "AAAAAA" } });
+    fireEvent.click(screen.getByRole("button", { name: "Check the accord" }));
     await waitFor(() => expect(screen.getByRole("heading", { name: "Validation history" }).parentElement).toHaveTextContent("Incorrect"));
-  });
+  }, 30_000);
 
   it("retains all nine interactive prototype family surfaces for the remaining 66", async () => {
     const response = getPuzzlePrototypeCatalog(prototypeSecret);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "eidolon-puzzle-blueprint-proof-v3",
-  "generatedAt": "2026-08-23T07:14:45.825Z",
+  "generatedAt": "2026-08-27T05:14:52.948Z",
   "repository": "bkalaf/echoes-of-eidolon",
   "applicationSource": {
     "paths": [
@@ -8,21 +8,34 @@
       "apps/web/src/server/puzzle-tutorial-generators.ts",
       "apps/web/src/server/puzzle-production-generators.ts",
       "apps/web/src/server/puzzle-production-validation.ts",
+      "apps/web/src/server/member-puzzles.ts",
+      "apps/web/src/server/puzzle-production-version-persistence.ts",
+      "apps/web/src/server.ts",
+      "apps/web/src/domain/authorization.ts",
+      "apps/web/src/domain/navigation.ts",
+      "apps/web/src/domain/puzzle-production-version-catalog.ts",
       "apps/web/src/components/puzzles/PlayerPuzzleSurface.tsx",
       "apps/web/src/components/puzzles/OrdinalCancellationPuzzle.tsx",
       "apps/web/src/components/puzzles/SetAmbigramPuzzle.tsx",
       "apps/web/src/components/puzzles/TypographicQrPuzzle.tsx",
       "apps/web/src/components/puzzles/MusicalHexPuzzle.tsx",
       "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzleHub.tsx",
+      "apps/web/src/screens/puzzles/MemberPuzzlePage.tsx",
       "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
       "apps/web/src/routes/api/admin/puzzles/preview.ts",
       "apps/web/src/routes/api/admin/puzzles/solution.ts",
+      "apps/web/src/routes/api/member/puzzles/index.ts",
+      "apps/web/src/routes/api/member/puzzles/$publicSlug.ts",
+      "apps/web/src/routes/puzzles/index.tsx",
+      "apps/web/src/routes/puzzles/$publicSlug.tsx",
       "apps/web/src/styles.css",
       "apps/web/tests/unit/puzzle-player-surface.test.tsx",
       "apps/web/tests/unit/puzzle-production-validation.test.ts",
-      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
+      "apps/web/tests/e2e/puzzle-production-remediation.spec.ts",
+      "apps/web/tests/e2e/member-puzzle-release.spec.ts"
     ],
-    "sha256": "dc9d478324a3a4a68a4a5368b21b8eca814de45122053b0117560a381ebf5028"
+    "sha256": "3d7750518fa24b86f868d6677829eaf1cc7f4881544dbcea6eb75f4ab0c8a341"
   },
   "environment": {
     "name": "local-remediation",
@@ -40,8 +53,8 @@
   "commands": [
     {
       "command": "pnpm puzzles:production-audit",
-      "startedAt": "2026-08-23T07:14:45.825Z",
-      "completedAt": "2026-08-23T07:14:45.825Z",
+      "startedAt": "2026-08-27T05:14:52.948Z",
+      "completedAt": "2026-08-27T05:14:52.948Z",
       "exitCode": 0,
       "logPath": null
     }
@@ -55,20 +68,19 @@
   "tier": "TIER_1_INITIATE",
   "primaryFamily": "CRYPTO_NUMERIC_DATA",
   "generatorPath": "apps/web/src/server/puzzle-tutorial-generators.ts",
-  "generatorVersion": "1.0.0",
+  "generatorVersion": "1.1.0",
   "productionStatus": "PRODUCTION",
   "seedVector": "RELEASE_PROOF_VECTOR_01:fb1b8f9e698d17af",
-  "instanceChecksum": "0a1c2a80b2a91e7f2af155f7715cb1751fd87afa810ea4fc6e58c2cfb2291a28",
+  "instanceChecksum": "c2edfecff0920e3e56b9df52665247575809eecf9b005924caa581dcd833adcb",
   "localDeterministicReplay": true,
   "localSingleSolutionCheck": true,
   "localAlternateRejection": true,
   "answerFreeClient": true,
   "accessibilityEquivalent": true,
   "accessibilityModesImplemented": [
-    "SCREEN_READER_DATA",
-    "KEYBOARD_ONLY",
-    "HIGH_CONTRAST",
-    "PRINTABLE_WORKSHEET"
+    "KEYBOARD",
+    "SCREEN_READER_LITERAL_MARKS",
+    "HIGH_CONTRAST"
   ],
   "browserE2e": "PASS",
   "ownerQaPath": "apps/web/src/screens/admin/ProductionPuzzleQaSandbox.tsx",
@@ -81,6 +93,10 @@
     "apps/web/tests/unit/puzzle-production-validation.test.ts",
     "apps/web/tests/unit/puzzle-player-surface.test.tsx",
     "apps/web/tests/unit/puzzle-prototype-lab.test.tsx",
+    "apps/web/tests/unit/puzzle-access.test.ts",
+    "apps/web/tests/unit/member-puzzles.test.ts",
+    "apps/web/tests/integration/member-puzzle-version-migration.test.ts",
+    "apps/web/tests/e2e/member-puzzle-release.spec.ts",
     "apps/web/tests/e2e/puzzle-production-remediation.spec.ts"
   ],
   "assertions": [
@@ -111,16 +127,14 @@
     {
       "name": "Implemented accessibility equivalents",
       "expected": [
-        "SCREEN_READER_DATA",
-        "KEYBOARD_ONLY",
-        "HIGH_CONTRAST",
-        "PRINTABLE_WORKSHEET"
+        "KEYBOARD",
+        "SCREEN_READER_LITERAL_MARKS",
+        "HIGH_CONTRAST"
       ],
       "observed": [
-        "SCREEN_READER_DATA",
-        "KEYBOARD_ONLY",
-        "HIGH_CONTRAST",
-        "PRINTABLE_WORKSHEET"
+        "KEYBOARD",
+        "SCREEN_READER_LITERAL_MARKS",
+        "HIGH_CONTRAST"
       ],
       "pass": true
     },
@@ -133,24 +147,22 @@
   ],
   "authoredContract": {
     "answerFormat": "OBJECT_ARRANGEMENT_SIGNATURE",
-    "concept": "U and I act as both literal characters and formally scoped union/intersection operators. Generated set cards have exactly one parse that satisfies the checksum.",
+    "concept": "Ambiguous U and I marks admit several scoped set readings, but only one result matches the seal.",
     "expectedSolvePath": [
-      "Recognize the authored control evidence.",
-      "Apply: Apply the supplied precedence evidence, enumerate parses, execute set operations, preserve ordered-string annotations, and concatenate the unique checksum-valid result.",
-      "Separate constrained signal from generated noise.",
-      "Derive the instance-specific answer format.",
-      "Submit to server validation before the deadline."
+      "Inspect where U and I appear inside the scope ribbons.",
+      "Evaluate the plausible scoped set readings.",
+      "Select the sole result whose count, total, and product match the seal."
     ],
     "hints": [
       {
         "kind": "DIRECTIONAL",
         "level": 1,
-        "text": "U and I are not always letters, but they are not always operators either."
+        "text": "Some marks are doing more than naming the cards. Notice where the ribbons give a mark room to act."
       },
       {
         "kind": "GUIDED",
         "level": 2,
-        "text": "Use the scope marks to enumerate parses, apply union before the indicated intersections, and keep the sole checksum-valid result."
+        "text": "Within a scoped ribbon, read U as union and I as intersection; test the bracketed readings against the seal."
       }
     ],
     "playerFacingModalities": [
@@ -158,10 +170,9 @@
       "TEXT_NOTATION"
     ],
     "accessibilityModes": [
-      "SCREEN_READER_DATA",
-      "KEYBOARD_ONLY",
-      "HIGH_CONTRAST",
-      "PRINTABLE_WORKSHEET"
+      "KEYBOARD",
+      "SCREEN_READER_LITERAL_MARKS",
+      "HIGH_CONTRAST"
     ]
   }
 }

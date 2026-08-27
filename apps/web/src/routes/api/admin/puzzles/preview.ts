@@ -35,6 +35,7 @@ const tutorialRouteSchema = z.object({
 
 const productionPuzzleIdSchema = z.enum(productionPuzzleBlueprintIds);
 const productionPlayerSubmissionSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("bitmap-code"), markedCoordinates: z.array(z.object({ row: z.number().int().min(1).max(100), column: z.number().int().min(1).max(100) }).strict()).min(1).max(500), value: z.string().min(1).max(32) }).strict(),
   z.object({ kind: z.literal("coordinate"), row: z.number().int().min(1).max(100), column: z.number().int().min(1).max(100) }).strict(),
   z.object({ kind: z.literal("set"), members: z.array(z.number().int()).min(1).max(100) }).strict(),
   z.object({ kind: z.literal("hex"), value: z.string().min(1).max(32) }).strict(),
