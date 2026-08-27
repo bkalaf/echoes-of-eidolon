@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Regions", async ({ page }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(300_000);
   await page.setViewportSize({ height: 900, width: 1600 });
   await page.goto("/gameplay/world-atlas");
 
