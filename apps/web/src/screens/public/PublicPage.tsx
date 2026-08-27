@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { PublicShell } from "../../components/shells/Shells";
 import { AtlasGlobe } from "../../components/AtlasGlobe";
+import { atlasRegionLabelColor } from "../../content/atlas-region-presentation";
 import { atlasTextureUrl } from "../../content/atlas-textures";
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
 import { MarkdownDocument } from "../../components/MarkdownDocument";
@@ -64,6 +65,9 @@ function GameplayPage() {
 
 function PublicWorldAtlasPage() {
   const [selectedId, setSelectedId] = useState<string>();
+  const [continentLabelsVisible, setContinentLabelsVisible] = useState(true);
+  const [geographicLabelsVisible, setGeographicLabelsVisible] = useState(true);
+  const [regionTintVisible, setRegionTintVisible] = useState(true);
   const atlas = useQuery({ queryKey: ["public-world-atlas"], queryFn: async () => {
     const response = await fetch("/api/atlas/public");
     if (!response.ok) throw new Error("The public World Atlas could not be loaded.");
@@ -71,8 +75,35 @@ function PublicWorldAtlasPage() {
   } });
   const selected = atlas.data?.foundingCities.find((city) => city.siteId === selectedId);
   const selectedRegion = selected ? atlas.data?.regions.find((region) => region.regionId === selected.regionId) : undefined;
-  const locations = useMemo(() => (atlas.data?.foundingCities ?? []).map((city) => ({ color: city.regionColor, id: city.siteId, label: city.name, latitude: city.latitude, longitude: city.longitude, regionId: city.regionId })), [atlas.data?.foundingCities]);
-  return <><a className="back-link" href="/gameplay">← Gameplay</a><PageHead eyebrow="Gameplay" title="World Atlas" description="Explore the original Year-0 founding geography of Eidolon." />{atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}<p className="notice"><strong>{atlas.data?.foundingCities.length ?? 24} original founding cities</strong> across 25 physical Regions.</p><section className="atlas-layout"><AtlasGlobe connections={atlas.data?.connections ?? []} labelMode="visible" locations={locations} onSelect={setSelectedId} regionMappings={atlas.data?.regionMappings ?? []} regionTintUrl={atlasTextureUrl("region-tint")} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} /><aside className="card"><h2>{selected?.name ?? "Select a founding city"}</h2>{selected ? <><p><strong>Original Founding City</strong></p><p>{selected.regionId} · {selectedRegion?.name ?? "Region unavailable"}</p><p>{selected.latitude}, {selected.longitude}</p></> : <p>Rotate the globe or use its accessible founding-city controls.</p>}<p>{atlas.data?.connections.length ?? 0} public map connections</p></aside></section></>;
+  const locations = useMemo(() => (atlas.data?.foundingCities ?? []).map((city) => ({
+    color: city.regionColor,
+    id: city.siteId,
+    label: city.name,
+    latitude: city.latitude,
+    longitude: city.longitude,
+    regionId: city.regionId,
+    textColor: atlasRegionLabelColor(city.regionId),
+  })), [atlas.data?.foundingCities]);
+  const annotations = useMemo(() => [
+    ...(atlas.data?.continents ?? []).map((continent) => ({ id: continent.name, kind: "continent" as const, label: continent.name, latitude: continent.latitude, longitude: continent.longitude })),
+    ...(atlas.data?.geographicPoints ?? []).map((point) => ({ id: point.poiId, kind: "geographic" as const, label: point.name, latitude: point.latitude, longitude: point.longitude })),
+  ], [atlas.data?.continents, atlas.data?.geographicPoints]);
+  return <div className="public-world-atlas">
+    <div className="public-atlas-heading"><a className="back-link" href="/gameplay">← Gameplay</a><PageHead eyebrow="Gameplay" title="World Atlas" description="Explore the original Year-0 founding geography of Eidolon." /></div>
+    {atlas.isError && <p className="notice notice--bad" role="alert">{atlas.error.message}</p>}
+    <section className="public-atlas-stage">
+      <aside className="card public-atlas-side public-atlas-side--layers">
+        <h2>Map layers</h2>
+        <label className="check"><input checked={regionTintVisible} onChange={(event) => setRegionTintVisible(event.target.checked)} type="checkbox" /> Region colors</label>
+        <label className="check"><input checked={continentLabelsVisible} onChange={(event) => setContinentLabelsVisible(event.target.checked)} type="checkbox" /> Continent names</label>
+        <label className="check"><input checked={geographicLabelsVisible} onChange={(event) => setGeographicLabelsVisible(event.target.checked)} type="checkbox" /> Geographic names</label>
+        <div className="public-atlas-counts"><p><strong>{atlas.data?.foundingCities.length ?? 24} original founding cities</strong></p><p><strong>{atlas.data?.regions.length ?? 25} physical Regions</strong></p><p><strong>{atlas.data?.geographicPoints.length ?? 92} named geographic features</strong></p></div>
+        <p className="muted">Raukaam · Morgenland · Valdmere</p>
+      </aside>
+      <AtlasGlobe annotations={annotations} connections={atlas.data?.connections ?? []} continentLabelsVisible={continentLabelsVisible} geographicLabelsVisible={geographicLabelsVisible} labelMode="visible" locations={locations} onSelect={setSelectedId} regionMappings={atlas.data?.regionMappings ?? []} regionTintUrl={atlasTextureUrl("region-tint")} regionTintVisible={regionTintVisible} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} />
+      <aside className="card public-atlas-side public-atlas-side--detail"><h2>{selected?.name ?? "Select a founding city"}</h2>{selected ? <><p><strong>Original Founding City</strong></p><p>{selected.regionId} · {selectedRegion?.name ?? "Region unavailable"}</p><p>{selected.latitude}, {selected.longitude}</p></> : <p>Rotate the globe or use its accessible founding-city controls.</p>}<p>{atlas.data?.connections.length ?? 0} public map connections</p></aside>
+    </section>
+  </div>;
 }
 
 async function fetchHealth(): Promise<PublicHealthReport> {
@@ -233,5 +264,6 @@ export function PublicPage({ pathname, screen }: { pathname?: string; screen: Pa
     if (screen.screenId === "PUB023") return <InvitePage />;
     return <><PageHead eyebrow={screen.screenId} title={screen.title} description="Reviewed public task." /></>;
   }, [pathname, screen]);
-  return <PublicShell><main className="public-page">{content}</main></PublicShell>;
+  const pageClassName = screen.screenId === "PUB_GAME02_WORLD_ATLAS" ? "public-page public-page--atlas" : "public-page";
+  return <PublicShell><main className={pageClassName}>{content}</main></PublicShell>;
 }

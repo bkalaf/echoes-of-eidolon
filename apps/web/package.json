@@ -19,6 +19,7 @@
     "atlas:region-tint:generate": "tsx scripts/generate-atlas-region-tint.mts",
     "atlas:region-tint:import": "pnpm atlas:region-tint:generate && node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-managed-assets.mjs .local/assets/generated/atlas-region-tint-import.json",
     "atlas:region-tint:reconcile": "pnpm atlas:region-tint:generate && node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-managed-assets.mjs .local/assets/generated/atlas-region-tint-import.json --verify-only",
+    "atlas:geography:sync": "tsx scripts/sync-atlas-geographic-points.mts",
     "settlements:import-initial": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-initial-settlements.mts",
     "worldbuilding:research": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/worldbuilding-research.mts",
     "architect-witness:roster": "node scripts/run-with-local-secrets.mjs pnpm exec tsx scripts/import-architect-witness-roster.mts",

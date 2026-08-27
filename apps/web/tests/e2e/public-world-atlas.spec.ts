@@ -18,8 +18,33 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   expect(response.ok()).toBe(true);
   const projection = await response.json();
   expect(projection.foundingCities).toHaveLength(24);
-  expect(projection.regions).toContainEqual({ color: "#E66A00", name: "Innerwood", regionId: "R10" });
+  expect(projection.regions).toContainEqual({ color: "#228B22", name: "Innerwood", regionId: "R10" });
+  expect(projection.continents).toHaveLength(3);
+  expect(projection.geographicPoints).toHaveLength(92);
   expect(projection).not.toHaveProperty("pointsOfInterest");
+
+  const regionColors = page.getByRole("checkbox", { name: "Region colors" });
+  const continentNames = page.getByRole("checkbox", { name: "Continent names" });
+  const geographicNames = page.getByRole("checkbox", { name: "Geographic names" });
+  await expect(regionColors).toBeChecked();
+  await expect(continentNames).toBeChecked();
+  await expect(geographicNames).toBeChecked();
+  await expect(page.locator("[data-atlas-continent-label]")).toHaveCount(3);
+  await expect(page.locator("[data-atlas-geographic-point]")).toHaveCount(92);
+  await expect(page.locator('[data-atlas-geographic-point][data-label="Northern Ocean"]')).toHaveCount(1);
+  await expect(page.locator('[data-atlas-geographic-point][data-label="Meridian Sea"]')).toHaveCount(1);
+
+  await regionColors.uncheck();
+  await expect(globe).toHaveAttribute("data-region-colors", "hidden");
+  await regionColors.check();
+  await expect(globe).toHaveAttribute("data-region-colors", "visible");
+  await continentNames.uncheck();
+  await expect(page.locator('[data-atlas-continent-label][data-layer-visible="false"]')).toHaveCount(3);
+  await continentNames.check();
+  expect(await page.locator("[data-atlas-continent-label]").evaluateAll((labels) => labels.some((label) => !(label as HTMLElement).hidden))).toBe(true);
+  await geographicNames.uncheck();
+  await expect(page.locator('[data-atlas-geographic-point][data-layer-visible="false"]')).toHaveCount(92);
+  await geographicNames.check();
 
   const autoRotate = page.getByRole("checkbox", { name: "Auto rotate" });
   if (await autoRotate.isChecked()) await autoRotate.uncheck();
@@ -80,6 +105,34 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   await expect(evidenceCity).toBeVisible();
   await evidenceCity.locator(".atlas-founding-city-marker").click();
   await expect(page.getByRole("heading", { name: "Whakareva" })).toBeVisible();
-  await page.locator(".public-page").evaluate((surface) => surface.scrollTo(0, 0));
+  const viewport = page.viewportSize()!;
+  const globeBox = await globe.boundingBox();
+  expect(globeBox).not.toBeNull();
+  expect(Math.abs(globeBox!.x + globeBox!.width / 2 - viewport.width / 2)).toBeLessThan(45);
+  expect(globeBox!.height).toBeGreaterThan(viewport.height * 0.55);
+  expect(await page.locator(".public-page--atlas").evaluate((surface) => ({ clientHeight: surface.clientHeight, scrollHeight: surface.scrollHeight }))).toEqual(expect.objectContaining({
+    clientHeight: expect.any(Number), scrollHeight: expect.any(Number),
+  }));
+  expect(await page.locator(".public-page--atlas").evaluate((surface) => surface.scrollHeight <= surface.clientHeight)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight)).toBe(true);
+
+  await globe.focus();
+  let centeredContinent = false;
+  for (let step = 0; step < 52 && !centeredContinent; step += 1) {
+    centeredContinent = await page.locator("[data-atlas-continent-label]").evaluateAll((labels) => labels.some((label) => {
+      const element = label as HTMLElement;
+      const left = Number.parseFloat(element.style.left);
+      return !element.hidden && left >= 40 && left <= 60;
+    }));
+    if (!centeredContinent) {
+      await globe.press("ArrowRight");
+      await page.waitForTimeout(40);
+    }
+  }
+  expect(centeredContinent).toBe(true);
+  const evidenceSelection = page.locator("button[data-atlas-founding-city]:visible").first();
+  const evidenceSelectionName = (await evidenceSelection.getAttribute("data-city-name"))!;
+  await evidenceSelection.click();
+  await expect(page.getByRole("heading", { name: evidenceSelectionName })).toBeVisible();
   await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/world-atlas-remediation-1600x900.png" });
 });

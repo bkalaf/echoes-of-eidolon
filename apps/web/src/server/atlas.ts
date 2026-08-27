@@ -80,6 +80,12 @@ export interface CanonicalAtlasRegion {
   regionId: RegionId;
 }
 
+export interface CanonicalAtlasContinent {
+  continentName: string;
+  labelLatitude: number;
+  labelLongitude: number;
+}
+
 export type ProjectedPointOfInterest = CanonicalPointOfInterest & { latticeId: LatticeId };
 export type ProjectedSettlementSite = CanonicalSettlementSite & { latticeId: LatticeId };
 
@@ -131,6 +137,7 @@ export interface AtlasAuthoritySummary {
 export interface AtlasReleaseBundle {
   authority: AtlasAuthoritySummary;
   catalog: AtlasCatalog;
+  continents: CanonicalAtlasContinent[];
   foundingCitySites: CanonicalFoundingCitySite[];
   regions: CanonicalAtlasRegion[];
 }
@@ -275,6 +282,19 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
     return { displayName: entry.displayName, regionId: entry.regionId as RegionId };
   });
   assertR09Authority(Array.isArray(continentRecords) && continentRecords.length === 3, "continent count");
+  const continentRegionIds = new Set<string>();
+  const continents = continentRecords.map((entry) => {
+    assertR09Authority(typeof entry.continentName === "string" && entry.continentName.trim().length > 0, "continent name");
+    assertR09Authority(typeof entry.labelLatitude === "number" && Number.isFinite(entry.labelLatitude) && entry.labelLatitude >= -90 && entry.labelLatitude <= 90, `${entry.continentName} label latitude`);
+    assertR09Authority(typeof entry.labelLongitude === "number" && Number.isFinite(entry.labelLongitude) && entry.labelLongitude >= -180 && entry.labelLongitude <= 180, `${entry.continentName} label longitude`);
+    assertR09Authority(Array.isArray(entry.regionIds) && entry.regionIds.length > 0, `${entry.continentName} Region membership`);
+    for (const regionId of entry.regionIds) {
+      assertR09Authority(typeof regionId === "string" && regions.some((region) => region.regionId === regionId) && !continentRegionIds.has(regionId), `${entry.continentName} Region ${String(regionId)}`);
+      continentRegionIds.add(regionId);
+    }
+    return { continentName: entry.continentName.trim(), labelLatitude: entry.labelLatitude, labelLongitude: entry.labelLongitude };
+  });
+  assertR09Authority(continentRegionIds.size === 25, "continent Region coverage");
   assertR09Authority(Array.isArray(connections) && connectionsValue.count === 44 && connections.length === release.invariants.connections, "Lattice connection count");
   assertR09Authority(isRecord(connectionsValue.counts) && connectionsValue.counts.POLE_CROSSOVER === 0 && release.invariants.poleCrossovers === 0, "pole crossover count");
   assertR09Authority(Array.isArray(mappings) && mappingsValue.count === 25 && mappings.length === 25, "Region Mapping count");
@@ -305,7 +325,7 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
   assertR09Authority(ascendancy.latitude === 20.360822 && ascendancy.longitude === -32.076454, "Ascendancy coordinates");
   assertR09Authority(ascendancy.surfaceType === "FLOATING_ISLAND", "Ascendancy surface type");
 
-  const continentNames = continentRecords.map((entry) => entry.continentName);
+  const continentNames = continents.map((entry) => entry.continentName);
   assertR09Authority(continentNames.every((name) => typeof name === "string") && continentNames.join("|") === "Raukaam|Morgenland|Valdmere", "continent names");
   assertR09Authority(initialValue.originalFoundingCityCount === 24 && isRecord(initialValue.innerwood) && initialValue.innerwood.settlementExists === false, "initial founding state");
   for (const [world, value, cityName] of [["C", concordValue, "Ashgarden"], ["S", schismValue, "Second Song"], ["R", ruinValue, "Last Well"]] as const) {
@@ -334,6 +354,7 @@ export async function loadAtlasReleaseBundle(root: string): Promise<AtlasRelease
       pointsOfInterest,
       settlementSites,
     },
+    continents,
     foundingCitySites: foundingRecords.map((site) => omitCopiedLatticeId(site)) as CanonicalFoundingCitySite[],
     regions,
   };

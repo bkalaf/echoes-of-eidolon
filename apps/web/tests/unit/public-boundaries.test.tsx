@@ -10,6 +10,7 @@ const authMocks = vi.hoisted(() => ({ useSession: vi.fn() }));
 vi.mock("../../src/lib/auth-client", () => ({ authClient: { useSession: authMocks.useSession } }));
 
 import { managedAssetUrl } from "../../src/content/managed-assets";
+import { atlasRegionColor } from "../../src/content/atlas-region-presentation";
 import { contactTopicSchema, contactTopicTokens } from "../../src/domain/contact";
 import { pageManifest } from "../../src/lib/page-manifest";
 import { PublicPage } from "../../src/screens/public/PublicPage";
@@ -32,17 +33,30 @@ afterEach(() => vi.unstubAllGlobals());
 describe("public mutation boundaries", () => {
   it("renders and selects exactly 24 original founding cities with truthful detail", async () => {
     const regionIds = Array.from({ length: 25 }, (_, index) => `R${String(index + 1).padStart(2, "0")}`);
-    const regions = regionIds.map((regionId) => ({ color: regionId === "R10" ? "#E66A00" : "#00796B", name: regionId === "R10" ? "Innerwood" : `Region ${regionId}`, regionId }));
+    const regions = regionIds.map((regionId) => ({ color: atlasRegionColor(regionId as Parameters<typeof atlasRegionColor>[0]), name: regionId === "R10" ? "Innerwood" : `Region ${regionId}`, regionId }));
     const foundingCities = regionIds.filter((regionId) => regionId !== "R10").map((regionId, index) => ({
       latitude: index,
       longitude: index * 2,
       name: index === 0 ? "Anseris" : index === 1 ? "Lupin-Ghar" : `Founding City ${regionId}`,
-      regionColor: index === 1 ? "#E66A00" : "#00796B",
+      regionColor: index === 1 ? "#000000" : "#FFFFFF",
       regionId,
       siteId: `SITE-${String(index + 1).padStart(4, "0")}`,
     }));
+    const continents = [
+      { latitude: 41.093565, longitude: -98.497755, name: "Raukaam" },
+      { latitude: 30.236775, longitude: 73.727394, name: "Morgenland" },
+      { latitude: -44.543435, longitude: -31.900026, name: "Valdmere" },
+    ];
+    const geographicPoints = Array.from({ length: 92 }, (_, index) => ({
+      category: index === 90 ? "OCEAN" : "PEAK",
+      latitude: index % 80 - 40,
+      longitude: index % 85 * 4 - 170,
+      name: index === 90 ? "Northern Ocean" : `Geographic Feature ${index + 1}`,
+      poiId: `POI-${String(index + 1).padStart(3, "0")}`,
+      regionId: regionIds[index % regionIds.length],
+    }));
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-      json: async () => ({ connections: [], foundingCities, regionMappings: [], regions }),
+      json: async () => ({ connections: [], continents, foundingCities, geographicPoints, regionMappings: [], regions }),
       ok: true,
     }));
     const { container } = renderWithQuery("PUB_GAME02_WORLD_ATLAS");
@@ -52,6 +66,16 @@ describe("public mutation boundaries", () => {
     expect(container.querySelectorAll("[data-atlas-founding-city]")).toHaveLength(24);
     expect(container.querySelector('[data-region-id="R10"]')).toBeNull();
     expect(screen.getByRole("heading", { name: "Select a founding city" })).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "Region colors" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Continent names" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Geographic names" })).toBeChecked();
+    expect(container.querySelectorAll("[data-atlas-continent-label]")).toHaveLength(3);
+    expect(container.querySelectorAll("[data-atlas-geographic-point]")).toHaveLength(92);
+
+    fireEvent.click(screen.getByRole("checkbox", { name: "Region colors" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Continent names" }));
+    expect(screen.getByRole("application", { name: /Interactive Eidolon globe/ })).toHaveAttribute("data-region-colors", "hidden");
+    expect(container.querySelector('[data-atlas-continent-label][data-layer-visible="false"]')).toBeInTheDocument();
 
     const anseris = screen.getByRole("button", { name: "Select Anseris" });
     fireEvent.click(anseris);
@@ -67,6 +91,14 @@ describe("public mutation boundaries", () => {
     expect(screen.getByRole("heading", { name: "Lupin-Ghar" })).toBeInTheDocument();
     expect(screen.getByText("R02 · Region R02")).toBeInTheDocument();
     expect(screen.getByText("1, 2")).toBeInTheDocument();
+  });
+
+  it("makes the desktop Atlas a centered no-scroll viewport centerpiece", () => {
+    const styles = readFileSync(resolve(process.cwd(), "src/styles.css"), "utf8");
+    expect(styles).toContain(".public-page--atlas");
+    expect(styles).toMatch(/\.public-page--atlas\s*\{[^}]*overflow:\s*hidden/s);
+    expect(styles).toContain(".public-atlas-stage");
+    expect(styles).toMatch(/\.public-atlas-stage\s*\{[^}]*grid-template-columns:[^;}]*1fr[^;}]*1fr/s);
   });
 
   it("uses the captioned Power of Three video in the responsive features panel", () => {

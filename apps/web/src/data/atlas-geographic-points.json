@@ -1,0 +1,746 @@
+{
+  "records": [
+    {
+      "category": "WATERFALL",
+      "latitude": 28.960942,
+      "longitude": -102.70767,
+      "name": "Visible Major Waterfall",
+      "poiId": "POI-001",
+      "regionId": "R05"
+    },
+    {
+      "category": "SHADOW_FOREST",
+      "latitude": 20.375,
+      "longitude": -91.03125,
+      "name": "Shadow Forest Heart",
+      "poiId": "POI-002",
+      "regionId": "R07"
+    },
+    {
+      "category": "HEATHERLANDS",
+      "latitude": 43.125,
+      "longitude": -126.96875,
+      "name": "Rainbow Heatherland Heart",
+      "poiId": "POI-003",
+      "regionId": "R03"
+    },
+    {
+      "category": "REEF",
+      "latitude": 43.122886,
+      "longitude": 121.880496,
+      "name": "Eastern Great Reef",
+      "poiId": "POI-004",
+      "regionId": "R12"
+    },
+    {
+      "category": "VOLCANIC_ISLAND_CHAIN",
+      "latitude": -52.559188,
+      "longitude": 74.983089,
+      "name": "Visible Volcanic Island Chain",
+      "poiId": "POI-005",
+      "regionId": "R21"
+    },
+    {
+      "category": "GREAT_PIT",
+      "latitude": 25.062007,
+      "longitude": -69.40248,
+      "name": "Great Pit",
+      "poiId": "POI-006",
+      "regionId": "R05"
+    },
+    {
+      "category": "WORLD_TREE",
+      "latitude": 26.076663,
+      "longitude": 102.074408,
+      "name": "World Tree",
+      "poiId": "POI-007",
+      "regionId": "R12"
+    },
+    {
+      "category": "HEAVENFALL",
+      "latitude": 46.369786,
+      "longitude": -3.449831,
+      "name": "Heavenfall",
+      "poiId": "POI-008",
+      "regionId": "R15"
+    },
+    {
+      "category": "HELL_DOOR",
+      "latitude": -17.553551,
+      "longitude": 8.726043,
+      "name": "Hell Door",
+      "poiId": "POI-009",
+      "regionId": "R19"
+    },
+    {
+      "category": "MAELSTROM",
+      "latitude": 10.856821,
+      "longitude": 146.719278,
+      "name": "Eastern Maelstrom",
+      "poiId": "POI-010",
+      "regionId": "R12"
+    },
+    {
+      "category": "WHIRLPOOL",
+      "latitude": -52.05186,
+      "longitude": -2.435175,
+      "name": "Ocean Whirlpool",
+      "poiId": "POI-011",
+      "regionId": "R25"
+    },
+    {
+      "category": "FLOATING_ISLAND_GROUP",
+      "latitude": 17.959414,
+      "longitude": 47.282976,
+      "name": "Floating Island Group",
+      "poiId": "POI-012",
+      "regionId": "R10"
+    },
+    {
+      "category": "GEYSER",
+      "latitude": 19.988726,
+      "longitude": 50.326945,
+      "name": "Visible Geyser",
+      "poiId": "POI-013",
+      "regionId": "R09"
+    },
+    {
+      "category": "CALDERA",
+      "latitude": -18.568207,
+      "longitude": -11.56708,
+      "name": "Volcanic Caldera",
+      "poiId": "POI-014",
+      "regionId": "R19"
+    },
+    {
+      "category": "HOT_SPRING",
+      "latitude": -11.465614,
+      "longitude": -5.479143,
+      "name": "Hot Spring Field",
+      "poiId": "POI-015",
+      "regionId": "R19"
+    },
+    {
+      "category": "UNDERWATER_LANDMARK",
+      "latitude": -50.022548,
+      "longitude": 87.869222,
+      "name": "Abyssal Underwater Landmark",
+      "poiId": "POI-016",
+      "regionId": "R21"
+    },
+    {
+      "category": "POLAR_ANOMALY",
+      "latitude": 75.794814,
+      "longitude": 18.872604,
+      "name": "Polar Arcane Anomaly",
+      "poiId": "POI-017",
+      "regionId": "R15"
+    },
+    {
+      "category": "MOUNTAIN_RANGE",
+      "latitude": 52.982609,
+      "longitude": -105.934046,
+      "name": "Northwestern Spine Range",
+      "poiId": "POI-018",
+      "regionId": "R04"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 75.119537,
+      "longitude": -109.737107,
+      "name": "High North Peak",
+      "poiId": "POI-019",
+      "regionId": "R03"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 62.236552,
+      "longitude": -107.537895,
+      "name": "Central Spine Peak",
+      "poiId": "POI-020",
+      "regionId": "R03"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 34.889584,
+      "longitude": -99.328597,
+      "name": "Southern Spine Peak",
+      "poiId": "POI-021",
+      "regionId": "R05"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 58.544592,
+      "longitude": 36.611755,
+      "name": "Western Snow Peak",
+      "poiId": "POI-022",
+      "regionId": "R09"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 40.86681,
+      "longitude": 95.597215,
+      "name": "Eastern Badland Peak",
+      "poiId": "POI-023",
+      "regionId": "R14"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 18.220072,
+      "longitude": 31.677112,
+      "name": "Southwest Peak",
+      "poiId": "POI-024",
+      "regionId": "R15"
+    },
+    {
+      "category": "PEAK",
+      "latitude": -10.135729,
+      "longitude": -78.658727,
+      "name": "Northwest High Peak",
+      "poiId": "POI-025",
+      "regionId": "R18"
+    },
+    {
+      "category": "PEAK",
+      "latitude": -22.626846,
+      "longitude": -68.149411,
+      "name": "Central High Peak",
+      "poiId": "POI-026",
+      "regionId": "R18"
+    },
+    {
+      "category": "PEAK",
+      "latitude": -26.902138,
+      "longitude": 2.704108,
+      "name": "Eastern Volcano Peak",
+      "poiId": "POI-027",
+      "regionId": "R19"
+    },
+    {
+      "category": "PEAK",
+      "latitude": -29.976244,
+      "longitude": 20.769489,
+      "name": "Far East Volcano Peak",
+      "poiId": "POI-028",
+      "regionId": "R19"
+    },
+    {
+      "category": "PEAK",
+      "latitude": 41.625,
+      "longitude": 89.625,
+      "name": "Derived Summit 01",
+      "poiId": "POI-029",
+      "regionId": "R14"
+    },
+    {
+      "category": "PEAK",
+      "latitude": -36.625,
+      "longitude": -61.125,
+      "name": "Derived Summit 02",
+      "poiId": "POI-030",
+      "regionId": "R21"
+    },
+    {
+      "category": "JUNGLE",
+      "latitude": -15.216355,
+      "longitude": -99.392458,
+      "name": "Eastern Monsoon Jungle",
+      "poiId": "POI-031",
+      "regionId": "R17"
+    },
+    {
+      "category": "JUNGLE",
+      "latitude": -24.80189,
+      "longitude": -29.140077,
+      "name": "Southwestern Emerald Jungle",
+      "poiId": "POI-032",
+      "regionId": "R19"
+    },
+    {
+      "category": "BADLANDS",
+      "latitude": 14.939025,
+      "longitude": 77.248603,
+      "name": "Eastern Red Badlands",
+      "poiId": "POI-033",
+      "regionId": "R14"
+    },
+    {
+      "category": "BADLANDS",
+      "latitude": 28.835938,
+      "longitude": 96.898438,
+      "name": "Central Broken Badlands",
+      "poiId": "POI-034",
+      "regionId": "R13"
+    },
+    {
+      "category": "HEATHERLANDS",
+      "latitude": 48.375,
+      "longitude": -134.65625,
+      "name": "Western Heatherlands",
+      "poiId": "POI-035",
+      "regionId": "R02"
+    },
+    {
+      "category": "SHADOW_FOREST",
+      "latitude": 20.508091,
+      "longitude": -91.580353,
+      "name": "Highcourt Shadow Forest",
+      "poiId": "POI-036",
+      "regionId": "R06"
+    },
+    {
+      "category": "STEPPE",
+      "latitude": 16.842925,
+      "longitude": -63.925236,
+      "name": "Northwestern Long Steppe",
+      "poiId": "POI-037",
+      "regionId": "R07"
+    },
+    {
+      "category": "STEPPE",
+      "latitude": 60.881,
+      "longitude": 25.825,
+      "name": "Northern Cold Steppe",
+      "poiId": "POI-038",
+      "regionId": "R15"
+    },
+    {
+      "category": "MOUNTAIN_RANGE",
+      "latitude": -28.105205,
+      "longitude": -69.234563,
+      "name": "Southwestern Spine Range",
+      "poiId": "POI-039",
+      "regionId": "R18"
+    },
+    {
+      "category": "LAKE",
+      "latitude": 42.076625,
+      "longitude": -80.302596,
+      "name": "Northwestern Great Lake",
+      "poiId": "POI-040",
+      "regionId": "R04"
+    },
+    {
+      "category": "LAKE",
+      "latitude": 56.014192,
+      "longitude": 60.415407,
+      "name": "Eastern Great Lake",
+      "poiId": "POI-041",
+      "regionId": "R11"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 53.581405,
+      "longitude": -97.758628,
+      "name": "Northeast Wetland Feeder River",
+      "poiId": "POI-042",
+      "regionId": "R01"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 48.498128,
+      "longitude": -65.690746,
+      "name": "Eastern Wetland Outflow",
+      "poiId": "POI-043",
+      "regionId": "R04"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 37.66776,
+      "longitude": -104.538846,
+      "name": "Waterfall River",
+      "poiId": "POI-044",
+      "regionId": "R04"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 14.679719,
+      "longitude": 86.272997,
+      "name": "Great Southbound River",
+      "poiId": "POI-045",
+      "regionId": "R14"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 19.958271,
+      "longitude": 70.921467,
+      "name": "Western Tributary River",
+      "poiId": "POI-046",
+      "regionId": "R11"
+    },
+    {
+      "category": "RIVER",
+      "latitude": 25.479494,
+      "longitude": 97.752337,
+      "name": "Eastern Tributary River",
+      "poiId": "POI-047",
+      "regionId": "R13"
+    },
+    {
+      "category": "RIVER",
+      "latitude": -51.339025,
+      "longitude": -50.280088,
+      "name": "Southern Great River",
+      "poiId": "POI-048",
+      "regionId": "R23"
+    },
+    {
+      "category": "RIVER",
+      "latitude": -39.113585,
+      "longitude": -9.971625,
+      "name": "Central Plains River",
+      "poiId": "POI-049",
+      "regionId": "R21"
+    },
+    {
+      "category": "FOREST",
+      "latitude": 41.807353,
+      "longitude": -112.617362,
+      "name": "Northwestern Greatwood",
+      "poiId": "POI-050",
+      "regionId": "R03"
+    },
+    {
+      "category": "FOREST",
+      "latitude": 20.508091,
+      "longitude": -91.580353,
+      "name": "Northwestern Shadowwood",
+      "poiId": "POI-051",
+      "regionId": "R06"
+    },
+    {
+      "category": "FOREST",
+      "latitude": 31.392139,
+      "longitude": 58.582888,
+      "name": "Eastern Crownwood",
+      "poiId": "POI-052",
+      "regionId": "R11"
+    },
+    {
+      "category": "FOREST",
+      "latitude": -24.80189,
+      "longitude": -29.140077,
+      "name": "Southwestern Rainwood",
+      "poiId": "POI-053",
+      "regionId": "R19"
+    },
+    {
+      "category": "DESERT",
+      "latitude": 56.246622,
+      "longitude": 20.310811,
+      "name": "Northern Amber Desert",
+      "poiId": "POI-054",
+      "regionId": "R15"
+    },
+    {
+      "category": "DESERT",
+      "latitude": 28.835938,
+      "longitude": 96.898438,
+      "name": "Eastern Red Desert",
+      "poiId": "POI-055",
+      "regionId": "R13"
+    },
+    {
+      "category": "DESERT",
+      "latitude": 6.614945,
+      "longitude": 69.397966,
+      "name": "Central Sunwaste",
+      "poiId": "POI-056",
+      "regionId": "R11"
+    },
+    {
+      "category": "DESERT",
+      "latitude": -0.578713,
+      "longitude": 102.169771,
+      "name": "Southeastern Drylands",
+      "poiId": "POI-057",
+      "regionId": "R16"
+    },
+    {
+      "category": "GRASSLAND",
+      "latitude": 40.047822,
+      "longitude": -127.383937,
+      "name": "Westwind Grasslands",
+      "poiId": "POI-058",
+      "regionId": "R02"
+    },
+    {
+      "category": "GRASSLAND",
+      "latitude": -11.173435,
+      "longitude": -73.874529,
+      "name": "Southwestern Greensteppe",
+      "poiId": "POI-059",
+      "regionId": "R18"
+    },
+    {
+      "category": "GRASSLAND",
+      "latitude": -9.181,
+      "longitude": 74.619,
+      "name": "Eastern Golden Grasslands",
+      "poiId": "POI-060",
+      "regionId": "R11"
+    },
+    {
+      "category": "PLAINS",
+      "latitude": 16.842925,
+      "longitude": -63.925236,
+      "name": "Northwestern Longplain",
+      "poiId": "POI-061",
+      "regionId": "R07"
+    },
+    {
+      "category": "PLAINS",
+      "latitude": -37.473492,
+      "longitude": -101.326362,
+      "name": "Southern Great Plain",
+      "poiId": "POI-062",
+      "regionId": "R21"
+    },
+    {
+      "category": "HILLS",
+      "latitude": 42.639529,
+      "longitude": -126.844251,
+      "name": "Heather Hills",
+      "poiId": "POI-063",
+      "regionId": "R03"
+    },
+    {
+      "category": "FLOATING_ISLAND",
+      "latitude": 15,
+      "longitude": 62,
+      "name": "Floating Island 01",
+      "poiId": "POI-064",
+      "regionId": "R11"
+    },
+    {
+      "category": "FLOATING_ISLAND",
+      "latitude": 13.5,
+      "longitude": 65,
+      "name": "Floating Island 02",
+      "poiId": "POI-065",
+      "regionId": "R11"
+    },
+    {
+      "category": "FLOATING_ISLAND",
+      "latitude": 17,
+      "longitude": 68,
+      "name": "Floating Island 03",
+      "poiId": "POI-066",
+      "regionId": "R11"
+    },
+    {
+      "category": "FLOATING_ISLAND",
+      "latitude": 11.5,
+      "longitude": 50.5,
+      "name": "Floating Island 04",
+      "poiId": "POI-067",
+      "regionId": "R09"
+    },
+    {
+      "category": "GLACIER",
+      "latitude": 71.270192,
+      "longitude": -96.805288,
+      "name": "Northern Crown Glacier",
+      "poiId": "POI-068",
+      "regionId": "R01"
+    },
+    {
+      "category": "GLACIER",
+      "latitude": -18.227767,
+      "longitude": -69.680089,
+      "name": "Southwestern Spine Glacier",
+      "poiId": "POI-069",
+      "regionId": "R18"
+    },
+    {
+      "category": "RAPIDS",
+      "latitude": 37.66776,
+      "longitude": -104.538846,
+      "name": "Waterfall River Rapids",
+      "poiId": "POI-070",
+      "regionId": "R04"
+    },
+    {
+      "category": "RAPIDS",
+      "latitude": -51.339025,
+      "longitude": -50.280088,
+      "name": "Southern Great River Rapids",
+      "poiId": "POI-071",
+      "regionId": "R23"
+    },
+    {
+      "category": "VOLCANO",
+      "latitude": -26.902138,
+      "longitude": 2.704108,
+      "name": "Eastern Volcano",
+      "poiId": "POI-072",
+      "regionId": "R19"
+    },
+    {
+      "category": "VOLCANO",
+      "latitude": -29.976244,
+      "longitude": 20.769489,
+      "name": "Far-East Volcano",
+      "poiId": "POI-073",
+      "regionId": "R19"
+    },
+    {
+      "category": "MOUNTAIN_RANGE",
+      "latitude": 40.362604,
+      "longitude": 92.636874,
+      "name": "Eastern Badland Range",
+      "poiId": "POI-074",
+      "regionId": "R14"
+    },
+    {
+      "category": "MOUNTAIN_RANGE",
+      "latitude": -38.722025,
+      "longitude": -56.554423,
+      "name": "Southern Long Range",
+      "poiId": "POI-075",
+      "regionId": "R21"
+    },
+    {
+      "category": "HILLS",
+      "latitude": 48.375,
+      "longitude": -134.65625,
+      "name": "Western Heather Hills",
+      "poiId": "POI-076",
+      "regionId": "R02"
+    },
+    {
+      "category": "WETLAND",
+      "latitude": 37.533898,
+      "longitude": -71.217485,
+      "name": "Northwestern Reedlands",
+      "poiId": "POI-077",
+      "regionId": "R04"
+    },
+    {
+      "category": "WETLAND",
+      "latitude": -9.543324,
+      "longitude": 82.804924,
+      "name": "Eastern Great Delta Wetlands",
+      "poiId": "POI-078",
+      "regionId": "R14"
+    },
+    {
+      "category": "WETLAND",
+      "latitude": -61.585555,
+      "longitude": -56.111598,
+      "name": "Southern Blackmarsh",
+      "poiId": "POI-079",
+      "regionId": "R23"
+    },
+    {
+      "category": "ISLAND",
+      "latitude": 21.140243,
+      "longitude": -32.789911,
+      "name": "Highcourt Isle",
+      "poiId": "POI-080",
+      "regionId": "R06"
+    },
+    {
+      "category": "ISLAND",
+      "latitude": 39.089905,
+      "longitude": 121.426108,
+      "name": "Eastern Reef Isle",
+      "poiId": "POI-081",
+      "regionId": "R12"
+    },
+    {
+      "category": "ISLAND",
+      "latitude": -52.851641,
+      "longitude": 76.390639,
+      "name": "Emberchain Isle",
+      "poiId": "POI-082",
+      "regionId": "R22"
+    },
+    {
+      "category": "ISLAND",
+      "latitude": -68.899422,
+      "longitude": 43.914722,
+      "name": "Far-South Ice Isle",
+      "poiId": "POI-083",
+      "regionId": "R22"
+    },
+    {
+      "category": "BAY",
+      "latitude": 29,
+      "longitude": 31,
+      "name": "Eastern Crescent Bay",
+      "poiId": "POI-084",
+      "regionId": "R15"
+    },
+    {
+      "category": "BAY",
+      "latitude": -11,
+      "longitude": -108,
+      "name": "Southwestern Emerald Bay",
+      "poiId": "POI-085",
+      "regionId": "R17"
+    },
+    {
+      "category": "PLATEAU",
+      "latitude": 73.492889,
+      "longitude": -105.525328,
+      "name": "Northern Glacial Upland",
+      "poiId": "POI-086",
+      "regionId": "R01"
+    },
+    {
+      "category": "PLATEAU",
+      "latitude": 39.390287,
+      "longitude": 85.52993,
+      "name": "Central Arid Plateau",
+      "poiId": "POI-087",
+      "regionId": "R14"
+    },
+    {
+      "category": "PLATEAU",
+      "latitude": -36.103872,
+      "longitude": -6.331167,
+      "name": "Eastern Grassland Upland",
+      "poiId": "POI-088",
+      "regionId": "R25"
+    },
+    {
+      "category": "SEA",
+      "latitude": 39,
+      "longitude": -12,
+      "name": "Meridian Sea",
+      "poiId": "POI-089",
+      "regionId": "R05"
+    },
+    {
+      "category": "SEA",
+      "latitude": -29,
+      "longitude": 42,
+      "name": "Southern Passage Sea",
+      "poiId": "POI-090",
+      "regionId": "R21"
+    },
+    {
+      "category": "OCEAN",
+      "latitude": 73,
+      "longitude": 0,
+      "name": "Northern Ocean",
+      "poiId": "POI-091",
+      "regionId": "R15"
+    },
+    {
+      "category": "OCEAN",
+      "latitude": -72,
+      "longitude": -18,
+      "name": "Southern Ocean",
+      "poiId": "POI-092",
+      "regionId": "R25"
+    }
+  ],
+  "source": {
+    "repository": "bkalaf/echoes-simulator",
+    "revision": "eec441cdba82f0344ee4ca177f80384627b6faf9",
+    "sourcePath": "resources/canonical/atlas/pois_by_site_naming.csv",
+    "sourceSha256": "2ae815f7edd45a7b8632f5a9df60704df682c3b3b1a11d8f2db5c2fe4d77dfaf"
+  }
+}

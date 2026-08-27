@@ -10,6 +10,15 @@ export interface AtlasGlobeLocation {
   latitude: number;
   longitude: number;
   regionId: string;
+  textColor?: string;
+}
+
+export interface AtlasGlobeAnnotation {
+  id: string;
+  kind: "continent" | "geographic";
+  label: string;
+  latitude: number;
+  longitude: number;
 }
 
 const vertexShaderSource = `#version 300 es
@@ -130,21 +139,29 @@ export function projectGlobeLocation(
 }
 
 export function AtlasGlobe({
+  annotations = [],
   connections = [],
+  continentLabelsVisible = true,
+  geographicLabelsVisible = true,
   labelMode = "hidden",
   locations,
   onSelect,
   regionMappings = [],
   regionTintUrl,
+  regionTintVisible = true,
   selectedId,
   unavailableMessage,
 }: {
+  annotations?: AtlasGlobeAnnotation[];
   connections?: ReadonlyArray<{ atlasConnectionId: string; fromLatticeId: string; toLatticeId: string }>;
+  continentLabelsVisible?: boolean;
+  geographicLabelsVisible?: boolean;
   labelMode?: "hidden" | "visible";
   locations: AtlasGlobeLocation[];
   onSelect: (locationId: string) => void;
   regionMappings?: ReadonlyArray<{ latticeId: string; regionId: string }>;
   regionTintUrl?: string;
+  regionTintVisible?: boolean;
   selectedId?: string;
   unavailableMessage?: string;
 }) {
@@ -161,10 +178,12 @@ export function AtlasGlobe({
     && typeof window.matchMedia === "function"
     && !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const autoRotateRef = useRef(autoRotate);
+  const regionTintVisibleRef = useRef(regionTintVisible);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>();
 
   useEffect(() => { autoRotateRef.current = autoRotate; }, [autoRotate]);
+  useEffect(() => { regionTintVisibleRef.current = regionTintVisible; }, [regionTintVisible]);
   useEffect(() => {
     const canvas = canvasRef.current;
     const markerLayer = markerLayerRef.current;
@@ -301,7 +320,7 @@ export function AtlasGlobe({
           gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); gl.useProgram(program!);
           gl.uniformMatrix4fv(uniforms.projection, false, projection); gl.uniformMatrix4fv(uniforms.view, false, view);
           gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, state.distance);
-          gl.uniform1f(uniforms.light, state.light); gl.uniform1f(uniforms.regionTintStrength, regionTintUrl ? 0.5 : 0);
+          gl.uniform1f(uniforms.light, state.light); gl.uniform1f(uniforms.regionTintStrength, regionTintUrl && regionTintVisibleRef.current ? 0.5 : 0);
           gl.uniform1i(uniforms.baseTexture, 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, baseTexture!);
           gl.uniform1i(uniforms.regionTexture, 1); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, regionTexture!);
           gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_INT, 0);
@@ -311,10 +330,11 @@ export function AtlasGlobe({
         markerElements.forEach((marker) => {
           const position = projectGlobeLocation({ latitude: Number(marker.dataset.latitude), longitude: Number(marker.dataset.longitude) }, state, aspect);
           if (marker.dataset.locationId) projected.set(marker.dataset.locationId, position);
-          marker.hidden = !position.visible;
-          marker.tabIndex = position.visible ? 0 : -1;
-          marker.setAttribute("aria-hidden", String(!position.visible));
-          if (position.visible) {
+          const visible = marker.dataset.layerVisible !== "false" && position.visible;
+          marker.hidden = !visible;
+          if (marker.tagName === "BUTTON") marker.tabIndex = visible ? 0 : -1;
+          marker.setAttribute("aria-hidden", String(!visible));
+          if (visible) {
             marker.dataset.labelSide = position.x > 50 ? "left" : "right";
             marker.style.left = `${position.x}%`;
             marker.style.top = `${position.y}%`;
@@ -362,6 +382,7 @@ export function AtlasGlobe({
     <div
       aria-label="Interactive Eidolon globe, three-dimensional. Use arrow keys to rotate, plus and minus to zoom, and Home to reset."
       className="atlas-globe"
+      data-region-colors={regionTintVisible ? "visible" : "hidden"}
       onKeyDown={(event) => {
         const state = controls.current;
         if (event.key === "ArrowLeft") state.yaw -= 0.12; else if (event.key === "ArrowRight") state.yaw += 0.12;
@@ -418,7 +439,22 @@ export function AtlasGlobe({
           onClick={() => onSelect(location.id)}
           title={location.label}
           type="button"
-        >{labelMode === "visible" && <><span aria-hidden className="atlas-founding-city-marker" style={{ backgroundColor: location.color }} /><span className="atlas-founding-city-name" style={{ color: location.color }}>{location.label}</span></>}</button>)}
+        >{labelMode === "visible" && <><span aria-hidden className="atlas-founding-city-marker" style={{ backgroundColor: location.color }} /><span className="atlas-founding-city-name" style={{ color: location.textColor ?? location.color }}>{location.label}</span></>}</button>)}
+        {annotations.map((annotation) => {
+          const visible = annotation.kind === "continent" ? continentLabelsVisible : geographicLabelsVisible;
+          return <span
+            aria-hidden="true"
+            className={`atlas-globe-annotation atlas-globe-annotation--${annotation.kind}`}
+            data-atlas-continent-label={annotation.kind === "continent" ? "" : undefined}
+            data-atlas-geographic-point={annotation.kind === "geographic" ? "" : undefined}
+            data-globe-marker
+            data-label={annotation.label}
+            data-latitude={annotation.latitude}
+            data-layer-visible={String(visible)}
+            data-longitude={annotation.longitude}
+            key={`${annotation.kind}-${annotation.id}`}
+          >{annotation.kind === "geographic" && <i aria-hidden />}<span>{annotation.label}</span></span>;
+        })}
       </div>
       {loading && <p className="atlas-globe-message" role="status">Loading managed 3D globe texture…</p>}
       {error && <p className="atlas-globe-message atlas-globe-message--error" role="alert">{error}</p>}
