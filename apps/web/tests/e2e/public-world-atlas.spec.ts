@@ -2,11 +2,13 @@ import { expect, test } from "@playwright/test";
 
 test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Regions", async ({ page }) => {
   test.setTimeout(300_000);
-  await page.setViewportSize({ height: 900, width: 1600 });
+  await page.setViewportSize({ height: 720, width: 1600 });
   await page.goto("/gameplay/world-atlas");
 
   const globe = page.getByRole("application", { name: /Interactive Eidolon globe/ });
   await expect(globe).toBeVisible();
+  await expect(page.locator(".site-shell--immersive")).toBeVisible();
+  await expect(page.locator(".public-header, .public-footer")).toHaveCount(0);
   await expect(page.getByText("24 original founding cities")).toBeVisible();
   const cities = page.locator("button[data-atlas-founding-city]");
   await expect(cities).toHaveCount(24, { timeout: 15_000 });
@@ -27,6 +29,7 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   const regionColors = page.getByRole("checkbox", { name: "Region colors" });
   const continentNames = page.getByRole("checkbox", { name: "Continent names" });
   const geographicNames = page.getByRole("checkbox", { name: "Geographic names" });
+  await expect(page.locator(".public-atlas-side--layers .atlas-globe-controls")).toBeVisible();
   await expect(regionColors).toBeChecked();
   await expect(continentNames).toBeChecked();
   await expect(geographicNames).toBeChecked();
@@ -135,6 +138,17 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   expect(await page.locator(".public-page--atlas").evaluate((surface) => surface.scrollHeight <= surface.clientHeight)).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight)).toBe(true);
 
+  const zoom = page.getByRole("slider", { name: "Globe zoom" });
+  const resetDiameter = (await globe.boundingBox())!.width;
+  await zoom.fill("60");
+  const reducedDiameter = (await globe.boundingBox())!.width;
+  expect(reducedDiameter).toBeLessThan(resetDiameter * 0.7);
+  await zoom.fill("115");
+  const expandedBox = await globe.boundingBox();
+  expect(expandedBox!.width).toBeGreaterThan(resetDiameter * 1.1);
+  expect(Math.abs(expandedBox!.width - expandedBox!.height)).toBeLessThan(2);
+  await expect(globe).toHaveCSS("border-top-width", "0px");
+
   await globe.focus();
   let centeredContinent = false;
   for (let step = 0; step < 52 && !centeredContinent; step += 1) {
@@ -153,5 +167,5 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   const evidenceSelectionName = (await evidenceSelection.getAttribute("data-city-name"))!;
   await evidenceSelection.click();
   await expect(page.getByRole("heading", { name: evidenceSelectionName })).toBeVisible();
-  await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/world-atlas-remediation-1600x900.png" });
+  await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/world-atlas-remediation-1600x720.png" });
 });

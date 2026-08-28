@@ -62,6 +62,9 @@ describe("public mutation boundaries", () => {
     const { container } = renderWithQuery("PUB_GAME02_WORLD_ATLAS");
 
     expect(await screen.findByText("24 original founding cities")).toBeInTheDocument();
+    expect(container.querySelector(".site-shell--immersive")).toBeInTheDocument();
+    expect(container.querySelector(".public-header")).not.toBeInTheDocument();
+    expect(container.querySelector(".public-footer")).not.toBeInTheDocument();
     await screen.findByRole("button", { name: "Select Anseris" });
     expect(container.querySelectorAll("[data-atlas-founding-city]")).toHaveLength(24);
     expect(container.querySelector('[data-region-id="R10"]')).toBeNull();
@@ -71,6 +74,8 @@ describe("public mutation boundaries", () => {
     expect(screen.getByRole("checkbox", { name: "Geographic names" })).toBeChecked();
     expect(container.querySelectorAll("[data-atlas-continent-label]")).toHaveLength(3);
     expect(container.querySelectorAll("[data-atlas-geographic-point]")).toHaveLength(92);
+    expect(container.querySelector(".public-atlas-side--layers .atlas-globe-controls")).toBeInTheDocument();
+    expect(screen.getByRole("application", { name: /Interactive Eidolon globe/ })).toHaveAttribute("data-zoom-behavior", "diameter");
 
     fireEvent.click(screen.getByRole("checkbox", { name: "Region colors" }));
     fireEvent.click(screen.getByRole("checkbox", { name: "Continent names" }));
@@ -99,6 +104,8 @@ describe("public mutation boundaries", () => {
     expect(styles).toMatch(/\.public-page--atlas\s*\{[^}]*overflow:\s*hidden/s);
     expect(styles).toContain(".public-atlas-stage");
     expect(styles).toMatch(/\.public-atlas-stage\s*\{[^}]*grid-template-columns:[^;}]*1fr[^;}]*1fr/s);
+    expect(styles).not.toContain("@media (max-width: 1100px), (max-height: 720px)");
+    expect(styles).toMatch(/\.public-atlas-stage[^}]*\.atlas-globe\s*\{[^}]*border:\s*0/s);
   });
 
   it("uses the captioned Power of Three video in the responsive features panel", () => {

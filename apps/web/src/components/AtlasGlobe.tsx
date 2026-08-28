@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { atlasTextureUrl } from "../content/atlas-textures";
 
@@ -108,6 +109,9 @@ function multiply(left: Float32Array, right: Float32Array) {
 
 const clamp = (value: number, minimum: number, maximum: number) => Math.max(minimum, Math.min(maximum, value));
 const fieldOfView = 41 * Math.PI / 180;
+const defaultCameraDistance = 2.7;
+const minimumDiameterZoom = 0.6;
+const maximumDiameterZoom = 1.15;
 
 export function projectGlobeLocation(
   location: Pick<AtlasGlobeLocation, "latitude" | "longitude">,
@@ -142,6 +146,7 @@ export function AtlasGlobe({
   annotations = [],
   connections = [],
   continentLabelsVisible = true,
+  controlsHost,
   geographicLabelsVisible = true,
   labelMode = "hidden",
   locations,
@@ -151,10 +156,12 @@ export function AtlasGlobe({
   regionTintVisible = true,
   selectedId,
   unavailableMessage,
+  zoomBehavior = "camera",
 }: {
   annotations?: AtlasGlobeAnnotation[];
   connections?: ReadonlyArray<{ atlasConnectionId: string; fromLatticeId: string; toLatticeId: string }>;
   continentLabelsVisible?: boolean;
+  controlsHost?: Element | null;
   geographicLabelsVisible?: boolean;
   labelMode?: "hidden" | "visible";
   locations: AtlasGlobeLocation[];
@@ -164,15 +171,26 @@ export function AtlasGlobe({
   regionTintVisible?: boolean;
   selectedId?: string;
   unavailableMessage?: string;
+  zoomBehavior?: "camera" | "diameter";
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const connectionLayerRef = useRef<SVGSVGElement>(null);
   const markerLayerRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLSpanElement>(null);
-  const controls = useRef({ yaw: -0.45, pitch: -0.12, distance: 2.7, light: 1.03, velocityX: 0, velocityY: 0 });
-  const updateStatus = () => {
+  const controls = useRef({ yaw: -0.45, pitch: -0.12, distance: defaultCameraDistance, light: 1.03, velocityX: 0, velocityY: 0 });
+  const diameterZoomRef = useRef(1);
+  const [diameterZoom, setDiameterZoom] = useState(1);
+  const updateStatus = useCallback(() => {
     const state = controls.current;
-    if (statusRef.current) statusRef.current.textContent = `Rotation ${Math.round(state.pitch * 180 / Math.PI)}°, ${Math.round(state.yaw * 180 / Math.PI)}° · Camera ${state.distance.toFixed(2)}`;
+    if (statusRef.current) statusRef.current.textContent = zoomBehavior === "diameter"
+      ? `Rotation ${Math.round(state.pitch * 180 / Math.PI)}°, ${Math.round(state.yaw * 180 / Math.PI)}° · Zoom ${Math.round(diameterZoomRef.current * 100)}%`
+      : `Rotation ${Math.round(state.pitch * 180 / Math.PI)}°, ${Math.round(state.yaw * 180 / Math.PI)}° · Camera ${state.distance.toFixed(2)}`;
+  }, [zoomBehavior]);
+  const updateDiameterZoom = (value: number) => {
+    const next = clamp(value, minimumDiameterZoom, maximumDiameterZoom);
+    diameterZoomRef.current = next;
+    setDiameterZoom(next);
+    updateStatus();
   };
   const [autoRotate, setAutoRotate] = useState(() => typeof window !== "undefined"
     && typeof window.matchMedia === "function"
@@ -314,12 +332,13 @@ export function AtlasGlobe({
           state.velocityX *= 0.92; state.velocityY *= 0.92;
         }
         const aspect = canvas.width / canvas.height; const projection = perspective(fieldOfView, aspect, 0.1, 50);
-        const view = identity(); view[14] = -state.distance; const model = multiply(rotateY(state.yaw), rotateX(state.pitch));
+        const projectionDistance = zoomBehavior === "diameter" ? defaultCameraDistance : state.distance;
+        const view = identity(); view[14] = -projectionDistance; const model = multiply(rotateY(state.yaw), rotateX(state.pitch));
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         if (baseTextureReady && regionTextureReady) {
           gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); gl.useProgram(program!);
           gl.uniformMatrix4fv(uniforms.projection, false, projection); gl.uniformMatrix4fv(uniforms.view, false, view);
-          gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, state.distance);
+          gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, projectionDistance);
           gl.uniform1f(uniforms.light, state.light); gl.uniform1f(uniforms.regionTintStrength, regionTintUrl && regionTintVisibleRef.current ? 0.5 : 0);
           gl.uniform1i(uniforms.baseTexture, 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, baseTexture!);
           gl.uniform1i(uniforms.regionTexture, 1); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, regionTexture!);
@@ -328,7 +347,7 @@ export function AtlasGlobe({
         const projected = new Map<string, { visible: boolean; x: number; y: number }>();
         const markerElements = markerLayer.querySelectorAll<HTMLElement>("[data-globe-marker]");
         markerElements.forEach((marker) => {
-          const position = projectGlobeLocation({ latitude: Number(marker.dataset.latitude), longitude: Number(marker.dataset.longitude) }, state, aspect);
+          const position = projectGlobeLocation({ latitude: Number(marker.dataset.latitude), longitude: Number(marker.dataset.longitude) }, { ...state, distance: projectionDistance }, aspect);
           if (marker.dataset.locationId) projected.set(marker.dataset.locationId, position);
           const visible = marker.dataset.layerVisible !== "false" && position.visible;
           marker.hidden = !visible;
@@ -369,26 +388,43 @@ export function AtlasGlobe({
       allocatedBuffers.forEach((buffer) => gl.deleteBuffer(buffer));
       if (baseTexture) gl.deleteTexture(baseTexture); if (regionTexture) gl.deleteTexture(regionTexture); if (program) gl.deleteProgram(program);
     };
-  }, [connections, locations, regionMappings, regionTintUrl]);
+  }, [connections, locations, regionMappings, regionTintUrl, updateStatus, zoomBehavior]);
 
   const activePointers = useRef(new Map<number, { x: number; y: number }>());
-  const dragState = useRef<{ distance?: number; separation?: number; x: number; y: number } | undefined>(undefined);
+  const dragState = useRef<{ diameterZoom?: number; distance?: number; separation?: number; x: number; y: number } | undefined>(undefined);
   const reset = () => {
-    controls.current = { yaw: -0.45, pitch: -0.12, distance: 2.7, light: 1.03, velocityX: 0, velocityY: 0 };
+    controls.current = { yaw: -0.45, pitch: -0.12, distance: defaultCameraDistance, light: 1.03, velocityX: 0, velocityY: 0 };
+    updateDiameterZoom(1);
     updateStatus();
   };
 
-  return <div className="atlas-globe-wrap">
+  const globeControls = <div className="atlas-globe-controls">
+    <button className="button" onClick={reset}>Reset globe</button>
+    <label>Auto rotate <input checked={autoRotate} onChange={(event) => setAutoRotate(event.target.checked)} type="checkbox" /></label>
+    <label>Zoom {zoomBehavior === "diameter"
+      ? <input aria-label="Globe zoom" max="115" min="60" onChange={(event) => updateDiameterZoom(Number(event.currentTarget.value) / 100)} type="range" value={Math.round(diameterZoom * 100)} />
+      : <input aria-label="Globe zoom" defaultValue="270" max="520" min="205" onInput={(event) => { controls.current.distance = Number(event.currentTarget.value) / 100; }} type="range" />}</label>
+    <label>Light <input aria-label="Globe light" defaultValue="103" max="125" min="75" onInput={(event) => { controls.current.light = Number(event.currentTarget.value) / 100; }} type="range" /></label>
+    <span className="muted" data-testid="atlas-globe-status" ref={statusRef}>{zoomBehavior === "diameter" ? "Rotation -7°, -26° · Zoom 100%" : "Rotation -7°, -26° · Camera 2.70"}</span>
+  </div>;
+
+  return <div className={`atlas-globe-wrap${zoomBehavior === "diameter" ? " atlas-globe-wrap--diameter" : ""}`}>
     <div
       aria-label="Interactive Eidolon globe, three-dimensional. Use arrow keys to rotate, plus and minus to zoom, and Home to reset."
       className="atlas-globe"
       data-region-colors={regionTintVisible ? "visible" : "hidden"}
+      data-zoom-behavior={zoomBehavior}
       onKeyDown={(event) => {
         const state = controls.current;
         if (event.key === "ArrowLeft") state.yaw -= 0.12; else if (event.key === "ArrowRight") state.yaw += 0.12;
         else if (event.key === "ArrowUp") state.pitch = clamp(state.pitch - 0.12, -1.45, 1.45); else if (event.key === "ArrowDown") state.pitch = clamp(state.pitch + 0.12, -1.45, 1.45);
-        else if (event.key === "+" || event.key === "=") state.distance = clamp(state.distance - 0.2, 2.05, 5.2);
-        else if (event.key === "-") state.distance = clamp(state.distance + 0.2, 2.05, 5.2); else if (event.key === "Home") reset(); else return;
+        else if (event.key === "+" || event.key === "=") {
+          if (zoomBehavior === "diameter") updateDiameterZoom(diameterZoomRef.current + 0.1);
+          else state.distance = clamp(state.distance - 0.2, 2.05, 5.2);
+        } else if (event.key === "-") {
+          if (zoomBehavior === "diameter") updateDiameterZoom(diameterZoomRef.current - 0.1);
+          else state.distance = clamp(state.distance + 0.2, 2.05, 5.2);
+        } else if (event.key === "Home") reset(); else return;
         updateStatus();
         event.preventDefault();
       }}
@@ -397,7 +433,7 @@ export function AtlasGlobe({
         event.currentTarget.setPointerCapture(event.pointerId); activePointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
         const pointers = [...activePointers.current.values()];
         dragState.current = pointers.length === 2
-          ? { x: 0, y: 0, distance: controls.current.distance, separation: Math.hypot(pointers[0]!.x - pointers[1]!.x, pointers[0]!.y - pointers[1]!.y) }
+          ? { x: 0, y: 0, diameterZoom: diameterZoomRef.current, distance: controls.current.distance, separation: Math.hypot(pointers[0]!.x - pointers[1]!.x, pointers[0]!.y - pointers[1]!.y) }
           : { x: event.clientX, y: event.clientY };
         controls.current.velocityX = controls.current.velocityY = 0;
       }}
@@ -406,7 +442,8 @@ export function AtlasGlobe({
         activePointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY }); const pointers = [...activePointers.current.values()];
         if (pointers.length === 2 && dragState.current.separation && dragState.current.distance) {
           const separation = Math.hypot(pointers[0]!.x - pointers[1]!.x, pointers[0]!.y - pointers[1]!.y);
-          controls.current.distance = clamp(dragState.current.distance * dragState.current.separation / separation, 2.05, 5.2);
+          if (zoomBehavior === "diameter") updateDiameterZoom((dragState.current.diameterZoom ?? 1) * separation / dragState.current.separation);
+          else controls.current.distance = clamp(dragState.current.distance * dragState.current.separation / separation, 2.05, 5.2);
         } else {
           const deltaX = event.clientX - dragState.current.x; const deltaY = event.clientY - dragState.current.y;
           controls.current.yaw += deltaX * 0.0062; controls.current.pitch = clamp(controls.current.pitch + deltaY * 0.0062, -1.45, 1.45);
@@ -416,8 +453,13 @@ export function AtlasGlobe({
       }}
       onPointerUp={(event) => { activePointers.current.delete(event.pointerId); dragState.current = undefined; }}
       onPointerCancel={(event) => { activePointers.current.delete(event.pointerId); dragState.current = undefined; }}
-      onWheel={(event) => { event.preventDefault(); controls.current.distance = clamp(controls.current.distance * Math.exp(event.deltaY * 0.0011), 2.05, 5.2); }}
+      onWheel={(event) => {
+        event.preventDefault();
+        if (zoomBehavior === "diameter") updateDiameterZoom(diameterZoomRef.current * Math.exp(-event.deltaY * 0.0011));
+        else controls.current.distance = clamp(controls.current.distance * Math.exp(event.deltaY * 0.0011), 2.05, 5.2);
+      }}
       role="application"
+      style={zoomBehavior === "diameter" ? { transform: `scale(${diameterZoom})` } : undefined}
       tabIndex={0}
     >
       <canvas aria-hidden="true" ref={canvasRef} />
@@ -460,12 +502,6 @@ export function AtlasGlobe({
       {error && <p className="atlas-globe-message atlas-globe-message--error" role="alert">{error}</p>}
     </div>
     {unavailableMessage && <p className="notice notice--warn" role="status">{unavailableMessage}</p>}
-    <div className="atlas-globe-controls">
-      <button className="button" onClick={reset}>Reset globe</button>
-      <label><input checked={autoRotate} onChange={(event) => setAutoRotate(event.target.checked)} type="checkbox" /> Auto rotate</label>
-      <label>Zoom <input aria-label="Globe zoom" defaultValue="270" max="520" min="205" onInput={(event) => { controls.current.distance = Number(event.currentTarget.value) / 100; }} type="range" /></label>
-      <label>Light <input aria-label="Globe light" defaultValue="103" max="125" min="75" onInput={(event) => { controls.current.light = Number(event.currentTarget.value) / 100; }} type="range" /></label>
-      <span className="muted" data-testid="atlas-globe-status" ref={statusRef}>Rotation -7°, -26° · Camera 2.70</span>
-    </div>
+    {controlsHost ? createPortal(globeControls, controlsHost) : globeControls}
   </div>;
 }

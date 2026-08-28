@@ -53,6 +53,19 @@ describe("AtlasGlobe", () => {
     expect(projectGlobeLocation({ latitude: 0, longitude: 180 }, { distance: 2.7, pitch: 0, yaw: 0 }, 1).visible).toBe(false);
   });
 
+  it("scales the complete globe surface for diameter zoom without changing the camera projection", () => {
+    render(<AtlasGlobe labelMode="visible" locations={locations.slice(0, 2)} onSelect={() => undefined} zoomBehavior="diameter" />);
+
+    const globe = screen.getByRole("application", { name: /Interactive Eidolon globe/ });
+    const zoom = screen.getByRole("slider", { name: "Globe zoom" });
+    expect(globe).toHaveAttribute("data-zoom-behavior", "diameter");
+    expect(globe).toHaveStyle({ transform: "scale(1)" });
+
+    fireEvent.change(zoom, { target: { value: "115" } });
+    expect(globe).toHaveStyle({ transform: "scale(1.15)" });
+    expect(screen.getByTestId("atlas-globe-status")).toHaveTextContent("Zoom 115%");
+  });
+
   it("renders projected continent and geographic annotations as noninteractive labels with independent visibility", () => {
     const { rerender } = render(<AtlasGlobe annotations={annotations} continentLabelsVisible geographicLabelsVisible locations={locations.slice(0, 1)} onSelect={() => undefined} regionTintVisible />);
 

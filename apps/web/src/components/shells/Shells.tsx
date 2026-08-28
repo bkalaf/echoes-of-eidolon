@@ -71,11 +71,11 @@ function ShellFooter({ canPlay = false, children, className = "" }: { canPlay?: 
   </footer>;
 }
 
-export function PublicShell({ children }: { children: ReactNode }) {
+export function PublicShell({ children, immersive = false }: { children: ReactNode; immersive?: boolean }) {
   const navigationState = useNavigationAccess();
   return (
-    <div className="site-shell">
-      <header className="public-header">
+    <div className={`site-shell${immersive ? " site-shell--immersive" : ""}`}>
+      {!immersive && <header className="public-header">
         <BrandHomeLink />
         <nav aria-label="Primary navigation">
           {publicNav.map(([label, href]) => (
@@ -85,9 +85,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <PublicAuthControls state={navigationState} />
-      </header>
+      </header>}
       <main className="site-main">{children}</main>
-      <ShellFooter canPlay={navigationState.navigation.game}><ManifestNavigationDirectory fallback="/" label="Public page directory" shells={["public", "store", "auth"]} /></ShellFooter>
+      {!immersive && <ShellFooter canPlay={navigationState.navigation.game}><ManifestNavigationDirectory fallback="/" label="Public page directory" shells={["public", "store", "auth"]} /></ShellFooter>}
     </div>
   );
 }
