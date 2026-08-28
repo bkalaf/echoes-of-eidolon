@@ -97,7 +97,7 @@ function PublicWorldAtlasPage() {
         <label className="check"><input checked={regionTintVisible} onChange={(event) => setRegionTintVisible(event.target.checked)} type="checkbox" /> Region colors</label>
         <label className="check"><input checked={continentLabelsVisible} onChange={(event) => setContinentLabelsVisible(event.target.checked)} type="checkbox" /> Continent names</label>
         <label className="check"><input checked={geographicLabelsVisible} onChange={(event) => setGeographicLabelsVisible(event.target.checked)} type="checkbox" /> Geographic names</label>
-        <div className="public-atlas-counts"><p><strong>{atlas.data?.foundingCities.length ?? 24} original founding cities</strong></p><p><strong>{atlas.data?.regions.length ?? 25} physical Regions</strong></p><p><strong>{atlas.data?.geographicPoints.length ?? 92} named geographic features</strong></p></div>
+        <div className="public-atlas-counts"><p><strong>{atlas.data?.foundingCities.length ?? 24} original founding cities</strong></p><p><strong>{atlas.data?.regions.length ?? 25} physical Regions</strong></p><p><strong>{atlas.data?.geographicPoints.length ?? 87} placed geographic features</strong></p></div>
         <p className="muted">Raukaam · Morgenland · Valdmere</p>
       </aside>
       <AtlasGlobe annotations={annotations} connections={atlas.data?.connections ?? []} continentLabelsVisible={continentLabelsVisible} geographicLabelsVisible={geographicLabelsVisible} labelMode="visible" locations={locations} onSelect={setSelectedId} regionMappings={atlas.data?.regionMappings ?? []} regionTintUrl={atlasTextureUrl("region-tint")} regionTintVisible={regionTintVisible} selectedId={selectedId} unavailableMessage={atlas.isPending ? "Loading public Atlas…" : undefined} />

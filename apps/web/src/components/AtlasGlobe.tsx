@@ -453,7 +453,7 @@ export function AtlasGlobe({
             data-layer-visible={String(visible)}
             data-longitude={annotation.longitude}
             key={`${annotation.kind}-${annotation.id}`}
-          >{annotation.kind === "geographic" && <i aria-hidden />}<span>{annotation.label}</span></span>;
+          >{annotation.kind === "geographic" && <i aria-hidden data-atlas-geographic-anchor />}<span data-atlas-geographic-label={annotation.kind === "geographic" ? "" : undefined}>{annotation.label}</span></span>;
         })}
       </div>
       {loading && <p className="atlas-globe-message" role="status">Loading managed 3D globe texture…</p>}

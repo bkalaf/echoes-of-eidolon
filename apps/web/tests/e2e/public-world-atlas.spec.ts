@@ -20,7 +20,8 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   expect(projection.foundingCities).toHaveLength(24);
   expect(projection.regions).toContainEqual({ color: "#228B22", name: "Innerwood", regionId: "R10" });
   expect(projection.continents).toHaveLength(3);
-  expect(projection.geographicPoints).toHaveLength(92);
+  expect(projection.geographicPoints).toHaveLength(87);
+  expect(projection.geographicPoints.some(({ name }: { name: string }) => name === "Heavenfall")).toBe(false);
   expect(projection).not.toHaveProperty("pointsOfInterest");
 
   const regionColors = page.getByRole("checkbox", { name: "Region colors" });
@@ -30,7 +31,7 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   await expect(continentNames).toBeChecked();
   await expect(geographicNames).toBeChecked();
   await expect(page.locator("[data-atlas-continent-label]")).toHaveCount(3);
-  await expect(page.locator("[data-atlas-geographic-point]")).toHaveCount(92);
+  await expect(page.locator("[data-atlas-geographic-point]")).toHaveCount(87);
   await expect(page.locator('[data-atlas-geographic-point][data-label="Northern Ocean"]')).toHaveCount(1);
   await expect(page.locator('[data-atlas-geographic-point][data-label="Meridian Sea"]')).toHaveCount(1);
 
@@ -43,11 +44,29 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   await continentNames.check();
   expect(await page.locator("[data-atlas-continent-label]").evaluateAll((labels) => labels.some((label) => !(label as HTMLElement).hidden))).toBe(true);
   await geographicNames.uncheck();
-  await expect(page.locator('[data-atlas-geographic-point][data-layer-visible="false"]')).toHaveCount(92);
+  await expect(page.locator('[data-atlas-geographic-point][data-layer-visible="false"]')).toHaveCount(87);
   await geographicNames.check();
 
   const autoRotate = page.getByRole("checkbox", { name: "Auto rotate" });
   if (await autoRotate.isChecked()) await autoRotate.uncheck();
+  const geographicAnchorEvidence = await page.locator("[data-atlas-geographic-anchor]:visible").evaluateAll((anchors) => anchors.map((anchorElement) => {
+    const anchor = anchorElement as HTMLElement;
+    const element = anchor.closest<HTMLElement>("[data-atlas-geographic-point]");
+    if (!element) throw new Error("Geographic coordinate anchor has no annotation.");
+    const globeSurface = element.closest<HTMLElement>(".atlas-globe");
+    if (!globeSurface) throw new Error("Geographic annotation is outside the globe.");
+    const globeRectangle = globeSurface.getBoundingClientRect();
+    const anchorRectangle = anchor.getBoundingClientRect();
+    const expectedX = globeRectangle.left + globeRectangle.width * Number.parseFloat(element.style.left) / 100;
+    const expectedY = globeRectangle.top + globeRectangle.height * Number.parseFloat(element.style.top) / 100;
+    return {
+      error: Math.hypot(anchorRectangle.left + anchorRectangle.width / 2 - expectedX, anchorRectangle.top + anchorRectangle.height / 2 - expectedY),
+      side: element.dataset.labelSide,
+    };
+  }));
+  expect(geographicAnchorEvidence.length).toBeGreaterThan(0);
+  expect(Math.max(...geographicAnchorEvidence.map(({ error }) => error))).toBeLessThan(2);
+  expect(new Set(geographicAnchorEvidence.map(({ side }) => side)).size).toBeGreaterThan(1);
   const visibleCities = page.locator("button[data-atlas-founding-city]:visible");
   const first = visibleCities.first();
   const firstName = (await first.getAttribute("data-city-name"))!;

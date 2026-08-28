@@ -25,11 +25,11 @@ const continents = [
   { continentName: "Morgenland", labelLatitude: 30.236775, labelLongitude: 73.727394 },
   { continentName: "Valdmere", labelLatitude: -44.543435, labelLongitude: -31.900026 },
 ];
-const geographicPoints = Array.from({ length: 92 }, (_, index) => ({
-  category: index === 90 ? "OCEAN" : "PEAK",
+const geographicPoints = Array.from({ length: 87 }, (_, index) => ({
+  category: index === 86 ? "OCEAN" : "PEAK",
   latitude: 80 - index % 80 * 2,
   longitude: -170 + index % 85 * 4,
-  name: index === 90 ? "Northern Ocean" : `Geographic Feature ${index + 1}`,
+  name: index === 86 ? "Northern Ocean" : `Geographic Feature ${index + 1}`,
   poiId: `POI-${String(index + 1).padStart(3, "0")}`,
   regionId: regionIds[index % regionIds.length]!,
 }));
@@ -57,7 +57,7 @@ describe("public Atlas projection", () => {
       { latitude: 41.093565, longitude: -98.497755, name: "Raukaam" },
       { latitude: -44.543435, longitude: -31.900026, name: "Valdmere" },
     ]);
-    expect(result.geographicPoints).toHaveLength(92);
+    expect(result.geographicPoints).toHaveLength(87);
     expect(result).not.toHaveProperty("pointsOfInterest");
   });
 

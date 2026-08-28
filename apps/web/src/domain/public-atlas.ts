@@ -1,5 +1,5 @@
 import { assertAtlasRegionPresentation, atlasRegionColor } from "../content/atlas-region-presentation";
-import type { AtlasGeographicPoint } from "../data/atlas-geographic-points";
+import { publicAtlasGeographicPointCount, type AtlasGeographicPoint } from "../data/atlas-geographic-points";
 import type { LatticeId, RegionId } from "../generated/prisma/enums";
 import type { AtlasTopology } from "./atlas-topology";
 import { validateAtlasTopology } from "./atlas-topology";
@@ -107,7 +107,7 @@ export function projectPublicAtlas(authority: PublicAtlasAuthority, topologyInpu
     return { latitude: continent.labelLatitude, longitude: continent.labelLongitude, name };
   });
 
-  if (authority.geographicPoints.length !== 92) throw new Error(`Public Atlas geographic authority mismatch: expected 92 labels, received ${authority.geographicPoints.length}.`);
+  if (authority.geographicPoints.length !== publicAtlasGeographicPointCount) throw new Error(`Public Atlas geographic authority mismatch: expected ${publicAtlasGeographicPointCount} labels, received ${authority.geographicPoints.length}.`);
   const geographicIds = new Set<string>();
   const geographicPoints = [...authority.geographicPoints].sort((left, right) => left.poiId.localeCompare(right.poiId)).map((point) => {
     if (!/^POI-\d{3}$/.test(point.poiId) || geographicIds.has(point.poiId)) throw new Error(`Public Atlas duplicate geographic identity: ${point.poiId}.`);

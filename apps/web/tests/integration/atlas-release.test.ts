@@ -60,7 +60,8 @@ describe("canonical Atlas release", () => {
     ]);
     expect(publicAtlas.regions).toContainEqual({ color: "#228B22", name: "Innerwood", regionId: "R10" });
     expect(publicAtlas.continents.map(({ name }) => name)).toEqual(["Morgenland", "Raukaam", "Valdmere"]);
-    expect(publicAtlas.geographicPoints).toHaveLength(92);
+    expect(publicAtlas.geographicPoints).toHaveLength(87);
+    expect(publicAtlas.geographicPoints.some(({ name }) => name === "Heavenfall")).toBe(false);
     expect(publicAtlas.geographicPoints).toContainEqual({ category: "OCEAN", latitude: 73, longitude: 0, name: "Northern Ocean", poiId: "POI-091", regionId: "R15" });
 
     const created: unknown[] = [];

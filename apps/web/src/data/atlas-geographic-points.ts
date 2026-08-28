@@ -11,6 +11,15 @@ export interface AtlasGeographicPoint {
   regionId: RegionId;
 }
 
+// These records declare a land placement while their authored coordinate is
+// ocean in both the Nimbus land mask and biome raster. Heavenfall also remains
+// owner-approval-required. Do not fabricate replacement coordinates.
+const contradictedPhysicalPlacementIds = new Set([
+  "POI-008", "POI-009", "POI-014", "POI-015", "POI-017",
+]);
+
+export const publicAtlasGeographicPointCount = 87;
+
 function validCoordinate(latitude: number, longitude: number): boolean {
   return Number.isFinite(latitude) && latitude >= -90 && latitude <= 90
     && Number.isFinite(longitude) && longitude >= -180 && longitude <= 180;
@@ -18,7 +27,7 @@ function validCoordinate(latitude: number, longitude: number): boolean {
 
 if (raw.records.length !== 92) throw new Error(`Atlas geographic label authority expected 92 records, received ${raw.records.length}.`);
 const seen = new Set<string>();
-export const atlasGeographicPoints = raw.records.map((record): AtlasGeographicPoint => {
+const materializedGeographicPoints = raw.records.map((record): AtlasGeographicPoint => {
   if (!/^POI-\d{3}$/.test(record.poiId) || seen.has(record.poiId)) throw new Error(`Atlas geographic label has a missing or duplicate ID: ${record.poiId}.`);
   if (!record.name.trim() || !record.category.trim()) throw new Error(`Atlas geographic label ${record.poiId} has a blank name or category.`);
   if (!(record.regionId in atlasRegionPalette)) throw new Error(`Atlas geographic label ${record.poiId} has an unknown Region.`);
@@ -26,5 +35,14 @@ export const atlasGeographicPoints = raw.records.map((record): AtlasGeographicPo
   seen.add(record.poiId);
   return { ...record, regionId: record.regionId as RegionId };
 });
+
+if ([...contradictedPhysicalPlacementIds].some((poiId) => !seen.has(poiId))) {
+  throw new Error("Atlas geographic label authority is missing an expected contradicted placement.");
+}
+
+export const atlasGeographicPoints = materializedGeographicPoints.filter(({ poiId }) => !contradictedPhysicalPlacementIds.has(poiId));
+if (atlasGeographicPoints.length !== publicAtlasGeographicPointCount) {
+  throw new Error(`Public Atlas expected ${publicAtlasGeographicPointCount} physically grounded geographic labels, received ${atlasGeographicPoints.length}.`);
+}
 
 export const atlasGeographicPointsSource = raw.source;

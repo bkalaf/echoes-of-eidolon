@@ -58,6 +58,9 @@ describe("AtlasGlobe", () => {
 
     expect(document.querySelectorAll("[data-atlas-continent-label]")).toHaveLength(1);
     expect(document.querySelectorAll("[data-atlas-geographic-point]")).toHaveLength(1);
+    const geographicPoint = document.querySelector("[data-atlas-geographic-point]");
+    expect(geographicPoint?.querySelector("[data-atlas-geographic-anchor]")).toBeInTheDocument();
+    expect(geographicPoint?.querySelector("[data-atlas-geographic-label]")).toHaveTextContent("Northern Ocean");
     expect(screen.queryByRole("button", { name: /Raukaam|Northern Ocean/ })).not.toBeInTheDocument();
     expect(screen.getByRole("application", { name: /Interactive Eidolon globe/ })).toHaveAttribute("data-region-colors", "visible");
 
