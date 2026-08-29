@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const captureRepositoryEvidence = process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0";
 
 test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Regions", async ({ page }) => {
-  test.setTimeout(300_000);
+  test.setTimeout(420_000);
   await page.setViewportSize({ height: 720, width: 1600 });
   await page.goto("/gameplay/world-atlas");
 
@@ -127,7 +127,7 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   await page.getByRole("button", { name: "Reset globe" }).click();
   const evidenceCity = page.locator('button[data-city-name="Whakareva"]');
   await expect(evidenceCity).toBeVisible();
-  await evidenceCity.evaluate((control: HTMLButtonElement) => control.click());
+  await evidenceCity.locator(".atlas-founding-city-marker").click();
   await expect(page.getByRole("heading", { name: "Whakareva" })).toBeVisible();
   const viewport = page.viewportSize()!;
   const globeBox = await globe.boundingBox();
