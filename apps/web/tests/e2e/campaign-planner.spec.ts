@@ -155,6 +155,7 @@ test("Campaign Planner contains horizontal scrolling and keeps owner controls re
   await page.goto("/admin/campaign/planner?state=CAMPAIGN_CONCORD");
   const title = page.getByRole("heading", { level: 1, name: "Main 18-Book Planner — Concord" });
   const viewport = page.getByTestId("campaign-board-viewport");
+  await expect(title).toBeVisible();
   const titleBefore = await title.boundingBox();
   expect(titleBefore).not.toBeNull();
   await expect(viewport).toHaveCSS("overflow-x", "auto");
