@@ -127,7 +127,8 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   await page.getByRole("button", { name: "Reset globe" }).click();
   const evidenceCity = page.locator('button[data-city-name="Whakareva"]');
   await expect(evidenceCity).toBeVisible();
-  await evidenceCity.locator(".atlas-founding-city-marker").click();
+  await evidenceCity.focus();
+  await evidenceCity.press("Enter");
   await expect(page.getByRole("heading", { name: "Whakareva" })).toBeVisible();
   const viewport = page.viewportSize()!;
   const globeBox = await globe.boundingBox();
