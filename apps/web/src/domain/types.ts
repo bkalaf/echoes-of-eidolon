@@ -108,10 +108,13 @@ export interface WitnessDef {
   witnessDefId: string;
   name: string;
   department: ArchitectDepartment;
+  kernelKey: string;
   apparentDomain: string;
   realDomain: string;
   color: Record<Color, number>;
   architectSoulId: Soul['soulId'];
+  worldKey: WorldKey;
+  bookNumber: number;
 }
 export interface Witness {
   characterId: Character['characterId'];

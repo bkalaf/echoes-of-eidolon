@@ -19,7 +19,7 @@ describe("shared TanStack table engine", () => {
     expect(screen.getByText("1 selected")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Sort by Name" }));
     expect(within(screen.getByRole("table")).getByRole("cell", { name: "Alpha" })).toBeInTheDocument();
-    const stored = window.localStorage.getItem("echoes.table.test.records.v1") ?? "";
+    const stored = window.localStorage.getItem("echoes.table.test.records.v2") ?? "";
     expect(stored).toContain("columnVisibility");
     expect(stored).not.toMatch(/Alpha|Beta|Closed|Open/);
   });

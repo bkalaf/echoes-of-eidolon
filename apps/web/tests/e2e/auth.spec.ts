@@ -424,7 +424,7 @@ test.describe("real Better Auth browser workflows", () => {
     await signIn(page, account.email, account.password);
     await expectAuthenticated(page);
     await page.goto("/account/profile?state=ACC024");
-    await expect(page.getByRole("heading", { name: "Change Password" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Change Password" })).toBeVisible();
     const current = page.getByLabel("Current password");
     const replacement = page.getByLabel("New password", { exact: true });
     const confirmation = page.getByLabel("Confirm new password");

@@ -1,22 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { LookupDisplay } from "../../src/components/LookupDisplay";
 
 describe("LookupDisplay", () => {
-  it("renders the human label first and a searchable/copyable canonical ID second", () => {
+  it("keeps a searchable technical ID hidden until explicit disclosure", () => {
     const { container } = render(<LookupDisplay presentation={{
       primary: "Aardvark",
-      secondary: "BRD_AARDVARK",
+      technicalId: "BRD_AARDVARK",
       context: ["Human"],
     }} />);
     expect(screen.getByText("Aardvark")).toHaveClass("lookup-display__primary");
-    expect(screen.getByText("BRD_AARDVARK")).toHaveAttribute("data-copy-value", "BRD_AARDVARK");
+    expect(screen.queryByText("BRD_AARDVARK")).not.toBeInTheDocument();
     expect(container.querySelector(".lookup-display")).toHaveAttribute(
       "data-search-text",
       expect.stringContaining("brd_aardvark"),
     );
-    expect(container.textContent?.indexOf("Aardvark")).toBeLessThan(container.textContent?.indexOf("BRD_AARDVARK") ?? 0);
+    fireEvent.click(screen.getByRole("button", { name: "Technical details" }));
+    expect(screen.getByText("BRD_AARDVARK")).toHaveAttribute("data-copy-value", "BRD_AARDVARK");
   });
 
   it("renders a real null as an em dash", () => {

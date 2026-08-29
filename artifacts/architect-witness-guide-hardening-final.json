@@ -62,6 +62,20 @@
     "newGuideSouls": 0,
     "persistedGuideTable": false
   },
+  "hammerRegression": {
+    "age": "53",
+    "apparentDomain": "Restitution",
+    "breed": "Minotaur",
+    "gender": "MALE",
+    "realDomain": "Retaliation",
+    "soul": "Andrei Mihai Popescu",
+    "sourceArchitect": "Andrei Mihai Popescu",
+    "sourceArchitectDepartment": "JUSTICE",
+    "species": "Minotaur",
+    "trueFlaw": "Retaliation",
+    "witness": "The Witness of the Hammer",
+    "world": "RUIN"
+  },
   "idempotency": {
     "secondRunChangedRows": 0
   },
@@ -76,10 +90,43 @@
     "nulls": 0,
     "ordinaryChains": 54
   },
+  "unresolvedExceptions": {
+    "characterFields": 432,
+    "entries": 594,
+    "inventedValues": 0,
+    "relationFields": 162,
+    "targetAvailability": {
+      "Constellation": 0,
+      "LegendaryReward": 0
+    }
+  },
+  "witnessChainAudit": {
+    "applicableCulturesResolved": 1,
+    "authoredFactionValues": 0,
+    "breedsResolved": 54,
+    "culturesApplicable": 1,
+    "demographicMismatches": [],
+    "examined": 54,
+    "soulContinuityMatched": 54,
+    "sourceArchitectDepartmentsMatched": 54,
+    "sourceArchitectsResolved": 54,
+    "speciesResolved": 54,
+    "unresolvedFactionAuthority": 54,
+    "witnessDefsResolved": 54,
+    "worldFactionConsistent": 54,
+    "worldsMatched": 54
+  },
   "witnessDefAudit": {
     "allColorKeysExact": true,
     "allColorSums100": true,
     "architectSoulLinksValid": true,
-    "count": 54
+    "count": 54,
+    "nonBlankKernelKeys": 54,
+    "validBookNumbers": 54,
+    "worldCounts": {
+      "CONCORD": 18,
+      "RUIN": 18,
+      "SCHISM": 18
+    }
   }
 }

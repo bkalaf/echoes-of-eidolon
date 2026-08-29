@@ -65,7 +65,7 @@ describe("closed-world generic entity administration", () => {
     await expect(getEntityRecord(database as never, "Soul", "SOUL-1")).resolves.toEqual(existing);
     await expect(createEntityRecord(database as never, "Soul", { soulId: "SOUL-2", name: "Second" })).resolves.toEqual({ soulId: "SOUL-2", name: "Second" });
     await expect(updateEntityRecord(database as never, "Soul", "SOUL-1", { soulId: "SOUL-1", name: "Renamed" })).resolves.toEqual({ soulId: "SOUL-1", name: "Renamed" });
-    expect(delegate.findMany).toHaveBeenCalledWith({ orderBy: { soulId: "asc" }, take: 500 });
+    expect(delegate.findMany).toHaveBeenCalledWith({ orderBy: { soulId: "asc" } });
     expect(delegate.update).toHaveBeenCalledWith({ data: { name: "Renamed" }, where: { soulId: "SOUL-1" } });
   });
 
@@ -76,7 +76,7 @@ describe("closed-world generic entity administration", () => {
     await listEntityRecords(database as never, "Breed");
     await getEntityRecord(database as never, "Breed", "BRD_AARDVARK");
     const include = { culture: true, parentBreed: true, personality: true, species: true };
-    expect(findMany).toHaveBeenCalledWith({ include, orderBy: { breedId: "asc" }, take: 500 });
+    expect(findMany).toHaveBeenCalledWith({ include, orderBy: { breedId: "asc" } });
     expect(findUnique).toHaveBeenCalledWith({ include, where: { breedId: "BRD_AARDVARK" } });
   });
 

@@ -220,7 +220,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "AchievementDefinition.imageAsset",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -306,7 +306,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Architect.character",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "witnesses",
@@ -314,7 +314,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Architect.witnesses",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -862,7 +862,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.species",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "culture",
@@ -870,7 +870,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.culture",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "personality",
@@ -878,7 +878,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.personality",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "parentBreed",
@@ -886,7 +886,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.parentBreed",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "childBreeds",
@@ -894,7 +894,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.childBreeds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "characters",
@@ -902,7 +902,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.characters",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "populationEvents",
@@ -910,7 +910,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.populationEvents",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "dominantInWorlds",
@@ -918,7 +918,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.dominantInWorlds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "researchValues",
@@ -926,7 +926,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Breed.researchValues",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1238,7 +1238,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.breed",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "occupation",
@@ -1246,7 +1246,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.occupation",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "soul",
@@ -1254,7 +1254,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.soul",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "architect",
@@ -1262,7 +1262,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.architect",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "witness",
@@ -1270,7 +1270,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.witness",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "companion",
@@ -1278,7 +1278,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.companion",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "concordFor",
@@ -1286,7 +1286,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.concordFor",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "ruinFor",
@@ -1294,7 +1294,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.ruinFor",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "schismFor",
@@ -1302,7 +1302,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Character.schismFor",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1444,7 +1444,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Citation.source",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "research",
@@ -1452,7 +1452,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Citation.research",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "knowledgeItems",
@@ -1460,7 +1460,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Citation.knowledgeItems",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "disclosureCitations",
@@ -1468,7 +1468,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Citation.disclosureCitations",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1564,7 +1564,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Companion.character",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "companionDef",
@@ -1572,7 +1572,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Companion.companionDef",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "partyMemberships",
@@ -1580,7 +1580,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Companion.partyMemberships",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1778,7 +1778,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.concordCharacter",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "ruinCharacter",
@@ -1786,7 +1786,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.ruinCharacter",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "schismCharacter",
@@ -1794,7 +1794,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.schismCharacter",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "soul",
@@ -1802,7 +1802,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.soul",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "companions",
@@ -1810,7 +1810,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.companions",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "transformationBinding",
@@ -1818,7 +1818,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "CompanionDef.transformationBinding",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1928,7 +1928,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Constellation.beforeWitnesses",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "afterWitnesses",
@@ -1936,7 +1936,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Constellation.afterWitnesses",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2058,7 +2058,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Culture.breeds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "settlementWorlds",
@@ -2066,7 +2066,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Culture.settlementWorlds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2244,7 +2244,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Interlude.substitutionsFrom",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "substitutionsTo",
@@ -2252,7 +2252,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Interlude.substitutionsTo",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2362,7 +2362,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "InterludeSubstitution.interlude",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "replacementInterlude",
@@ -2370,7 +2370,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "InterludeSubstitution.replacementInterlude",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2502,7 +2502,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "KnowledgeBaseItem.citations",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "blocks",
@@ -2510,7 +2510,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "KnowledgeBaseItem.blocks",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "disclosures",
@@ -2518,7 +2518,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "KnowledgeBaseItem.disclosures",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2606,7 +2606,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Layette.transformationBindings",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2694,7 +2694,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "LegendaryReward.witnesses",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2862,7 +2862,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "PersonalityExpression.breeds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3064,7 +3064,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "PointOfInterest.services",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "gameSessions",
@@ -3072,7 +3072,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "PointOfInterest.gameSessions",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3172,7 +3172,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "PuzzleBlueprint.versions",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3282,7 +3282,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Research.citation",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "breedEvidence",
@@ -3290,7 +3290,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Research.breedEvidence",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3410,7 +3410,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Settlement.site",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "worlds",
@@ -3418,7 +3418,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Settlement.worlds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "soundtrackAssignments",
@@ -3426,7 +3426,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Settlement.soundtrackAssignments",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3572,7 +3572,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementPopulationEvent.settlementWorld",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "breed",
@@ -3580,7 +3580,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementPopulationEvent.breed",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3754,7 +3754,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.settlement",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "dominantBreed",
@@ -3762,7 +3762,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.dominantBreed",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "culture",
@@ -3770,7 +3770,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.culture",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "populationEvents",
@@ -3778,7 +3778,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.populationEvents",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "cities",
@@ -3786,7 +3786,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.cities",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "gameSessions",
@@ -3794,7 +3794,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "SettlementWorld.gameSessions",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -3920,7 +3920,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Site.namingContext",
           "writePath": null,
-          "reason": "Persisted field is audited but intentionally excluded from this generic form."
+          "reason": "SPECIALIZED_WORKFLOW"
         },
         {
           "field": "settlement",
@@ -3928,7 +3928,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Site.settlement",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "namingEligibility",
@@ -3936,7 +3936,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Site.namingEligibility",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -4032,7 +4032,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Soul.characters",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "witnessDefs",
@@ -4040,7 +4040,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Soul.witnessDefs",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "companionDefs",
@@ -4048,7 +4048,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Soul.companionDefs",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -4184,7 +4184,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Source.citations",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -4486,7 +4486,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Species.taxonomy",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "breeds",
@@ -4494,7 +4494,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Species.breeds",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -4650,7 +4650,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Taxonomy.parent",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "children",
@@ -4658,7 +4658,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Taxonomy.children",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "species",
@@ -4666,7 +4666,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Taxonomy.species",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -5092,7 +5092,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.character",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "witnessDef",
@@ -5100,7 +5100,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.witnessDef",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "architect",
@@ -5108,7 +5108,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.architect",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "legendaryReward",
@@ -5116,7 +5116,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.legendaryReward",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "constellationBefore",
@@ -5124,7 +5124,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.constellationBefore",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "constellationAfter",
@@ -5132,7 +5132,7 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "Witness.constellationAfter",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -5144,10 +5144,13 @@
         "witnessDefId",
         "name",
         "department",
+        "kernelKey",
         "apparentDomain",
         "realDomain",
         "color",
         "architectSoulId",
+        "worldKey",
+        "bookNumber",
         "architectSoul",
         "witnesses"
       ],
@@ -5179,10 +5182,13 @@
           "witnessDefId",
           "name",
           "department",
+          "kernelKey",
           "apparentDomain",
           "realDomain",
           "color",
           "architectSoulId",
+          "worldKey",
+          "bookNumber",
           "architectSoul",
           "witnesses"
         ],
@@ -5194,10 +5200,13 @@
           "witnessDefId",
           "name",
           "department",
+          "kernelKey",
           "apparentDomain",
           "realDomain",
           "color",
           "architectSoulId",
+          "worldKey",
+          "bookNumber",
           "architectSoul",
           "witnesses"
         ],
@@ -5205,10 +5214,13 @@
           "witnessDefId",
           "name",
           "department",
+          "kernelKey",
           "apparentDomain",
           "realDomain",
           "color",
-          "architectSoulId"
+          "architectSoulId",
+          "worldKey",
+          "bookNumber"
         ],
         "readOnlyFields": [
           "architectSoul",
@@ -5237,6 +5249,14 @@
           "editable": true,
           "owner": "GENERIC_ENTITY_ADMIN",
           "persistenceOwner": "WitnessDef.department",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "kernelKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.kernelKey",
           "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
           "reason": null
         },
@@ -5273,12 +5293,28 @@
           "reason": null
         },
         {
+          "field": "worldKey",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.worldKey",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
+          "field": "bookNumber",
+          "editable": true,
+          "owner": "GENERIC_ENTITY_ADMIN",
+          "persistenceOwner": "WitnessDef.bookNumber",
+          "writePath": "normalizeEntityData -> entity validators -> PrismaClient.witnessDef",
+          "reason": null
+        },
+        {
           "field": "architectSoul",
           "editable": false,
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "WitnessDef.architectSoul",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "field": "witnesses",
@@ -5286,12 +5322,12 @@
           "owner": "WORKFLOW_OR_RELATION_OWNER",
           "persistenceOwner": "WitnessDef.witnesses",
           "writePath": null,
-          "reason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "reason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     }
   ],
-  "generatedAt": "2026-08-20T17:14:33.098Z",
+  "generatedAt": "2026-08-29T03:00:52.749Z",
   "status": "PASS",
   "scope": {
     "activeRegistryEntities": "apps/web/src/content/entities.ts joined to generated Prisma entity-admin contract",
@@ -5303,11 +5339,11 @@
   "liveSourceEvidence": [
     {
       "path": "apps/web/src/data/entity-admin-contract.json",
-      "sha256": "7aff856c2cd2aa5a0c4b205a2ae4482f493d7e745f97fb4d2dd4ef4106c9f2a2"
+      "sha256": "280167c93033aa4657adb32c014589a2b5f319135f5a309fcf714ea60dd59518"
     },
     {
       "path": "apps/web/src/server/entity-admin.ts",
-      "sha256": "d59ce1900bd9c2f07b51f7d1a06c1bb1f7546f302800d11d44ada19768137ed8"
+      "sha256": "ac1f9e595b6b0a10929093bff41e93837dc3d83add6014fc14fb899ce3c92e0b"
     },
     {
       "path": "apps/web/src/data/navigation-registry.generated.json",
@@ -5406,11 +5442,11 @@
   "sourceSurfaceInventory": [
     {
       "path": "apps/web/src/components/DataTable.tsx",
-      "sha256": "29810a7ecf34d0b4fb1c60954a84ee1d859d8ab323542eba3d3871ad0a7a7ef6",
+      "sha256": "f4b717b08f366e92a169c49fcf7ec44d2ad82671eef389a3bb006424bcd29577",
       "tableLines": [
-        226,
-        227,
-        228
+        235,
+        236,
+        237
       ],
       "formLines": []
     },
@@ -5460,14 +5496,14 @@
     },
     {
       "path": "apps/web/src/screens/admin/AtlasAdminPage.tsx",
-      "sha256": "1668ef01c13ebbec8b17a52711f8de304eded0464a4f389b0bbbcc2c483cb93c",
+      "sha256": "e9d483123fe474cee46962c6af289049d58a7b4f63994075b885d8fc0ec32441",
       "tableLines": [
-        65,
-        104,
-        175
+        66,
+        105,
+        176
       ],
       "formLines": [
-        104
+        105
       ]
     },
     {
@@ -5540,20 +5576,21 @@
     },
     {
       "path": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
-      "sha256": "308237a183b7c1328e62d555d2a1127a3d7d2826208947cbe9fbf6ffa6074cb3",
+      "sha256": "287109d9494cbaddafa7390a2b5cf094375a442b9a17efd29548c890307ec7ba",
       "tableLines": [
-        340,
-        495
+        377,
+        659
       ],
       "formLines": [
-        103,
-        189,
-        222,
-        296,
-        301,
-        401,
-        402,
-        501
+        102,
+        204,
+        239,
+        249,
+        334,
+        339,
+        396,
+        461,
+        665
       ]
     },
     {
@@ -5587,7 +5624,7 @@
     },
     {
       "path": "apps/web/src/screens/admin/PuzzleAdminPage.tsx",
-      "sha256": "b03c447b43df564d776d3b487b8a4f1ae94b4f540285e6079f3a35e32fcc5de1",
+      "sha256": "5badd76e17cc37ca472ac6d85786cd3912bef5f26b6312d70e473bf9df88eaba",
       "tableLines": [
         73
       ],
@@ -5595,14 +5632,10 @@
     },
     {
       "path": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx",
-      "sha256": "bf6bb411023cd516c70526490435ff269c35bfccbf06efb08efbe23d10aa4d61",
-      "tableLines": [
-        35,
-        43,
-        86
-      ],
+      "sha256": "94b6a683da06b656db6a11ac90912d7dbf70a9f1ed01aa392a5269d65bad251f",
+      "tableLines": [],
       "formLines": [
-        144
+        62
       ]
     },
     {
@@ -5617,9 +5650,9 @@
   "assertions": [
     {
       "name": "Every active entity has a canonical field inventory",
-      "expected": 34,
+      "expected": 35,
       "observed": 35,
-      "pass": false
+      "pass": true
     },
     {
       "name": "Every persisted Prisma model is classified",
@@ -5629,8 +5662,8 @@
     },
     {
       "name": "Every active canonical field has a write owner",
-      "expected": 293,
-      "observed": 293,
+      "expected": 296,
+      "observed": 296,
       "pass": true
     }
   ],

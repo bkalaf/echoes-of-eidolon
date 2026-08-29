@@ -28,7 +28,7 @@ export interface EntityAdminContract {
 interface EntityDelegate {
   create(args: { data: Record<string, unknown> }): Promise<Record<string, unknown>>;
   delete(args: { where: Record<string, unknown> }): Promise<Record<string, unknown>>;
-  findMany(args: { include?: Record<string, unknown>; orderBy: Record<string, "asc">; take: number }): Promise<Record<string, unknown>[]>;
+  findMany(args: { include?: Record<string, unknown>; orderBy: Record<string, "asc">; take?: number }): Promise<Record<string, unknown>[]>;
   findUnique(args: { include?: Record<string, unknown>; where: Record<string, unknown> }): Promise<Record<string, unknown> | null>;
   update(args: { data: Record<string, unknown>; where: Record<string, unknown> }): Promise<Record<string, unknown>>;
 }
@@ -317,7 +317,7 @@ function presentationIncludeFor(entity: EntityName, contract: EntityAdminContrac
 export async function listEntityRecords(database: PrismaClient, entity: EntityName): Promise<Record<string, unknown>[]> {
   const contract = entityAdminContract(entity);
   const include = presentationIncludeFor(entity, contract);
-  return delegateFor(database, contract).findMany({ ...(include ? { include } : {}), orderBy: { [contract.idField]: "asc" }, take: 500 });
+  return delegateFor(database, contract).findMany({ ...(include ? { include } : {}), orderBy: { [contract.idField]: "asc" } });
 }
 
 export async function getEntityRecord(database: PrismaClient, entity: EntityName, recordId: string): Promise<Record<string, unknown> | null> {

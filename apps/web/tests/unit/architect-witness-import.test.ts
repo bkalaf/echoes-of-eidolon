@@ -52,6 +52,11 @@ function inMemoryDatabase(options: { corruptWitnessSoul?: boolean } = {}) {
         characters.set(String(data.characterId), stored);
         return stored;
       },
+      update: async ({ data, where: { characterId } }: DataArgument & { where: { characterId: string } }) => {
+        const stored = { ...characters.get(characterId), ...data };
+        characters.set(characterId, stored);
+        return stored;
+      },
       findMany: async ({ where: { characterId: { in: ids } } }: CharacterIdsArgument) => ids.flatMap((id) => characters.get(id) ?? []),
     },
     architect: {
@@ -104,7 +109,7 @@ describe("canonical Architect/Witness population import", () => {
     const database = inMemoryDatabase();
     await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
       souls: { created: 58, unchanged: 0 },
-      characters: { created: 112, unchanged: 0 },
+      characters: { created: 112, unchanged: 0, updated: 0 },
       architects: { created: 56, unchanged: 0 },
       witnessDefs: { created: 54, unchanged: 0 },
       witnesses: { created: 54, unchanged: 0 },
@@ -115,7 +120,7 @@ describe("canonical Architect/Witness population import", () => {
     });
     await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
       souls: { created: 0, unchanged: 58 },
-      characters: { created: 0, unchanged: 112 },
+      characters: { created: 0, unchanged: 112, updated: 0 },
       architects: { created: 0, unchanged: 56 },
       witnessDefs: { created: 0, unchanged: 54 },
       witnesses: { created: 0, unchanged: 54 },
@@ -131,6 +136,45 @@ describe("canonical Architect/Witness population import", () => {
     expect(database.stores.characters.get(canonicalCharacterId("Frank Adrian Voss"))?.soulId).toBe(canonicalSoulId("Frank Adrian Voss"));
     expect(database.stores.characters.get("CHA_MOTHER")).toEqual(expect.objectContaining({ breedId: null, soulId: "SOUL_MOTHER" }));
     expect(database.stores.witnessDefs.size).toBe(canonicalArchitectWitnessGuideData.witnessDefs.length);
+    expect(database.stores.witnessDefs.get("WDF_WITNESS_OF_THE_SUMMIT")).toMatchObject({
+      bookNumber: 3,
+      kernelKey: "HUMILITY",
+      worldKey: "CONCORD",
+    });
+    for (const definition of canonicalArchitectWitnessGuideData.witnessDefs) {
+      expect(
+        Object.keys(database.stores.witnessDefs.get(definition.witnessDefId) ?? {}).sort(),
+        `${definition.witnessDefId} source keys must survive import`,
+      ).toEqual(Object.keys(definition).sort());
+    }
+    expect(database.stores.characters.get("CHA_WITNESS_OF_THE_HAMMER")).toMatchObject({ age: "53", gender: "MALE" });
+    expect(database.stores.characters.get("CHA_WITNESS_OF_THE_LOOM")).toMatchObject({ age: "50", gender: "MALE" });
+    expect(database.stores.characters.get("CHA_WITNESS_OF_PATCHWORK")).toMatchObject({ age: "52", gender: "FEMALE" });
+  });
+
+  it("backfills only missing authoritative Character presentation and then becomes idempotent", async () => {
+    const database = inMemoryDatabase();
+    await importCanonicalArchitectWitnessPopulation(database.client as never);
+    const andrei = database.stores.characters.get("CHA_ANDREI_MIHAI_POPESCU")!;
+    for (const field of ["skinScaleColor", "hairFurColor", "eyeColor", "clothing"] as const) andrei[field] = null;
+    database.stores.characters.get("CHA_WITNESS_OF_THE_HAMMER")!.gender = null;
+    database.stores.characters.get("CHA_WITNESS_OF_THE_HAMMER")!.age = null;
+
+    await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
+      characters: { created: 0, updated: 2, unchanged: 110 },
+    });
+    expect(database.stores.characters.get("CHA_ANDREI_MIHAI_POPESCU")).toMatchObject({
+      clothing: expect.stringContaining("Charcoal suit"),
+      eyeColor: "dark brown",
+      gender: "MALE",
+      hairFurColor: expect.stringContaining("salt-and-pepper"),
+      skinScaleColor: "light olive-fair",
+    });
+    expect(database.stores.characters.get("CHA_WITNESS_OF_THE_HAMMER")?.gender).toBe("MALE");
+    expect(database.stores.characters.get("CHA_WITNESS_OF_THE_HAMMER")?.age).toBe("53");
+    await expect(importCanonicalArchitectWitnessPopulation(database.client as never)).resolves.toMatchObject({
+      characters: { created: 0, updated: 0, unchanged: 112 },
+    });
   });
 
   it("rolls back the entire same-batch import when one Witness Soul differs", async () => {

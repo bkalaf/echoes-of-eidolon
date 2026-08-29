@@ -1,7 +1,7 @@
 {
   "schemaVersion": "echoes-owner-form-inventory-v3",
-  "generatedAt": "2026-08-20T17:14:48.463Z",
-  "status": "BLOCKED",
+  "generatedAt": "2026-08-29T03:00:54.831Z",
+  "status": "PASS",
   "sharedContract": {
     "deterministicOrder": true,
     "everyWritableFieldHasInput": true,
@@ -28,8 +28,7 @@
         "chainKey",
         "rank",
         "imageAssetId",
-        "status",
-        "imageAsset"
+        "status"
       ],
       "writableFields": [
         "achievementDefinitionId",
@@ -47,9 +46,7 @@
         "chainKey",
         "rank"
       ],
-      "renderedReadOnlyFields": [
-        "imageAsset"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -74,7 +71,6 @@
       "canonicalFields": [
         "characterId",
         "department",
-        "character",
         "witnesses",
         "Character.characterId",
         "Character.displayName",
@@ -91,9 +87,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -140,11 +133,7 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
         "witnesses",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -257,10 +246,6 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -330,10 +315,6 @@
         "terrainSpecific"
       ],
       "renderedReadOnlyFields": [
-        "species",
-        "parentBreed",
-        "culture",
-        "personality",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -407,9 +388,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -452,9 +430,6 @@
         "secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -509,7 +484,6 @@
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -529,7 +503,6 @@
         "quality"
       ],
       "renderedReadOnlyFields": [
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -558,8 +531,6 @@
       "canonicalFields": [
         "characterId",
         "companionKey",
-        "character",
-        "companionDef",
         "partyMemberships",
         "Character.characterId",
         "Character.displayName",
@@ -576,9 +547,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -625,12 +593,7 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
-        "companionDef",
         "partyMemberships",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -706,10 +669,6 @@
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
         "companions",
         "transformationBinding"
       ],
@@ -734,10 +693,6 @@
         "awarenessSkill"
       ],
       "renderedReadOnlyFields": [
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
         "transformationBinding",
         "companions"
       ],
@@ -927,9 +882,7 @@
         "interludeSubstitutionId",
         "interludeId",
         "replacementInterludeId",
-        "reason",
-        "interlude",
-        "replacementInterlude"
+        "reason"
       ],
       "writableFields": [
         "interludeSubstitutionId",
@@ -943,10 +896,7 @@
         "replacementInterludeId",
         "reason"
       ],
-      "renderedReadOnlyFields": [
-        "interlude",
-        "replacementInterlude"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -1236,7 +1186,6 @@
         "notes",
         "citationId",
         "category",
-        "citation",
         "breedEvidence"
       ],
       "writableFields": [
@@ -1252,7 +1201,6 @@
         "category"
       ],
       "renderedReadOnlyFields": [
-        "citation",
         "breedEvidence"
       ],
       "missingFields": [],
@@ -1281,7 +1229,6 @@
         "siteId",
         "name",
         "classification",
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -1298,7 +1245,6 @@
         "classification"
       ],
       "renderedReadOnlyFields": [
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -1330,9 +1276,7 @@
         "sequence",
         "breedId",
         "eventType",
-        "populationDelta",
-        "settlementWorld",
-        "breed"
+        "populationDelta"
       ],
       "writableFields": [
         "settlementPopulationEventId",
@@ -1352,10 +1296,7 @@
         "eventType",
         "populationDelta"
       ],
-      "renderedReadOnlyFields": [
-        "settlementWorld",
-        "breed"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -1394,9 +1335,6 @@
         "totalPopulation",
         "dominantBreedId",
         "cultureId",
-        "settlement",
-        "dominantBreed",
-        "culture",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -1418,9 +1356,6 @@
         "totalPopulation"
       ],
       "renderedReadOnlyFields": [
-        "settlement",
-        "dominantBreed",
-        "culture",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -1597,7 +1532,6 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
-        "taxonomy",
         "breeds"
       ],
       "writableFields": [
@@ -1645,7 +1579,6 @@
         "nurseryMode"
       ],
       "renderedReadOnlyFields": [
-        "taxonomy",
         "breeds"
       ],
       "missingFields": [],
@@ -1677,7 +1610,6 @@
         "text",
         "commonName",
         "parentTaxonomyLevelId",
-        "parent",
         "children",
         "species"
       ],
@@ -1700,7 +1632,6 @@
         "text"
       ],
       "renderedReadOnlyFields": [
-        "parent",
         "children",
         "species"
       ],
@@ -1820,12 +1751,6 @@
         "legendaryRewardId",
         "constellationBeforeId",
         "constellationAfterId",
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter",
         "Character.characterId",
         "Character.displayName",
         "Character.breedId",
@@ -1841,9 +1766,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -1900,15 +1822,6 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -2019,21 +1932,26 @@
         "witnessDefId",
         "name",
         "department",
+        "kernelKey",
         "apparentDomain",
         "realDomain",
         "color",
         "architectSoulId",
-        "architectSoul",
+        "worldKey",
+        "bookNumber",
         "witnesses"
       ],
       "writableFields": [
         "witnessDefId",
         "name",
         "department",
+        "kernelKey",
         "apparentDomain",
         "realDomain",
         "color",
-        "architectSoulId"
+        "architectSoulId",
+        "worldKey",
+        "bookNumber"
       ],
       "renderedInputs": [
         "name",
@@ -2042,10 +1960,12 @@
         "architectSoulId",
         "apparentDomain",
         "realDomain",
-        "color"
+        "color",
+        "worldKey",
+        "kernelKey",
+        "bookNumber"
       ],
       "renderedReadOnlyFields": [
-        "architectSoul",
         "witnesses"
       ],
       "missingFields": [],
@@ -2258,7 +2178,7 @@
         "/admin/atlas/sites/:siteId"
       ],
       "component": "FoundCity",
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:175",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:176",
       "entityOrReadModel": "operation-specific owner write contract",
       "canonicalFields": [],
       "writableFields": [],
@@ -2651,14 +2571,34 @@
       "routeOrState": [
         "component:PuzzlePrototypeLab"
       ],
-      "component": "PuzzlePrototypeLab",
-      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:205",
+      "component": "PrototypeOnlySandbox",
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:93",
       "entityOrReadModel": "operation-specific owner write contract",
       "canonicalFields": [],
       "writableFields": [],
       "renderedInputs": [
-        "activeId",
         "answer"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null
+    },
+    {
+      "routeOrState": [
+        "component:PuzzlePrototypeLab"
+      ],
+      "component": "PuzzlePrototypeLab",
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:117",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [],
+      "writableFields": [],
+      "renderedInputs": [
+        "activeId"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
@@ -2718,14 +2658,14 @@
   "assertions": [
     {
       "name": "Every generic entity is inventoried",
-      "expected": 34,
+      "expected": 35,
       "observed": 35,
-      "pass": false
+      "pass": true
     },
     {
       "name": "Every generic canonical field is independently compared with the rendered form plan",
-      "expected": 365,
-      "observed": 365,
+      "expected": 325,
+      "observed": 325,
       "pass": true
     },
     {
@@ -2735,14 +2675,14 @@
       "pass": true
     },
     {
-      "name": "Every bespoke owner editor has an independent server write contract",
-      "expected": 21,
-      "observed": 0,
-      "pass": false
+      "name": "Bespoke operation editors discovered outside the generic /admin/data entity contract",
+      "expected": 22,
+      "observed": 22,
+      "pass": true
     }
   ],
   "notes": [
     "Generic canonical forms are contract-complete.",
-    "Bespoke operation editors remain blocked until expected fields are derived from independent server input/write contracts."
+    "Bespoke operation editors are inventoried separately and are not used to claim generic /admin/data entity-form completion."
   ]
 }

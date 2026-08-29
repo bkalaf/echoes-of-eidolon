@@ -33,9 +33,11 @@ describe("persisted Data administration", () => {
     expect(screen.queryByText("First Soul")).not.toBeInTheDocument();
     expect(screen.getByText("Second Soul")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "New" }));
-    expect(screen.getByRole("heading", { name: "Create Soul" })).toBeInTheDocument();
-    expect(screen.getByLabelText("soulId *")).toBeInTheDocument();
-    expect(screen.getByLabelText("name *")).toBeInTheDocument();
+    const editor = screen.getByRole("heading", { name: "Create Soul" }).closest("section")!;
+    expect(within(editor).queryByLabelText("Technical ID *")).not.toBeInTheDocument();
+    fireEvent.click(within(editor).getByRole("button", { name: "Technical details" }));
+    expect(within(editor).getByLabelText("Technical ID *")).toBeInTheDocument();
+    expect(within(editor).getByLabelText("Name *")).toBeInTheDocument();
   });
 
   it("loads an actual record identity into the reviewed editor state and persists changes", async () => {
@@ -45,10 +47,10 @@ describe("persisted Data administration", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderPage("/admin/data/soul/SOUL-2", "DATA_SOUL_EDIT");
     expect(await screen.findByRole("heading", { name: "Second Soul" })).toBeInTheDocument();
-    expect(screen.getAllByText("SOUL-2").length).toBeGreaterThan(0);
+    expect(screen.queryByText("SOUL-2")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
     expect(await screen.findByRole("heading", { name: "Edit Soul" })).toBeInTheDocument();
-    const name = screen.getByLabelText("name *");
+    const name = screen.getByLabelText("Name *");
     expect(name).toHaveValue("Second Soul");
     fireEvent.change(name, { target: { value: "Renamed Soul" } });
     fireEvent.click(screen.getByRole("button", { name: "Save Changes" }));
@@ -66,7 +68,9 @@ describe("persisted Data administration", () => {
     renderPage("/admin/data/breed", "DATA019");
     await screen.findByText("Breed");
     fireEvent.click(screen.getByRole("button", { name: "New" }));
-    fireEvent.change(screen.getByLabelText("breedId *"), { target: { value: "BREED-1" } });
+    const editor = screen.getByRole("heading", { name: "Create Breed" }).closest("section")!;
+    fireEvent.click(within(editor).getByRole("button", { name: "Technical details" }));
+    fireEvent.change(within(editor).getByLabelText("Technical ID *"), { target: { value: "BREED-1" } });
     fireEvent.click(screen.getByRole("button", { name: "Select Animal" }));
     fireEvent.click(screen.getByRole("button", { name: "Create Breed" }));
     await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/breed", expect.objectContaining({ body: JSON.stringify({ record: { breedId: "BREED-1", foodBroad: ["ANIMAL"] } }) })));
@@ -81,8 +85,10 @@ describe("persisted Data administration", () => {
     renderPage("/admin/data/species", "DATA007");
     await screen.findByText("Species");
     fireEvent.click(screen.getByRole("button", { name: "New" }));
-    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Greater blue-ringed octopus" } });
-    expect(screen.getByLabelText("speciesId *")).toHaveValue("SPC_GREATER_BLUE_RINGED_OCTOPUS");
+    const editor = screen.getByRole("heading", { name: "Create Species" }).closest("section")!;
+    fireEvent.change(within(editor).getByLabelText("Name *"), { target: { value: "Greater blue-ringed octopus" } });
+    fireEvent.click(within(editor).getByRole("button", { name: "Technical details" }));
+    expect(within(editor).getByLabelText("Technical ID *")).toHaveValue("SPC_GREATER_BLUE_RINGED_OCTOPUS");
   });
 
   it("locks the canonical name and persistence ID together when editing WorldBuilding records", async () => {
@@ -95,8 +101,10 @@ describe("persisted Data administration", () => {
 
     await screen.findByRole("heading", { name: "Human" });
     fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
-    expect(await screen.findByLabelText("speciesId *")).toBeDisabled();
-    expect(screen.getByLabelText("name *")).toBeDisabled();
+    const editor = (await screen.findByRole("heading", { name: "Edit Species" })).closest("section")!;
+    fireEvent.click(within(editor).getByRole("button", { name: "Technical details" }));
+    expect(within(editor).getByLabelText("Technical ID *")).toBeDisabled();
+    expect(within(editor).getByLabelText("Name *")).toBeDisabled();
     expect(screen.getByText(/Canonical WorldBuilding names and persistence IDs are immutable/)).toBeInTheDocument();
   });
 
@@ -114,13 +122,14 @@ describe("persisted Data administration", () => {
     renderPage("/admin/data/species", "DATA007");
     await screen.findByText("Species");
     fireEvent.click(screen.getByRole("button", { name: "New" }));
-    fireEvent.change(screen.getByLabelText("Civilian"), { target: { value: "Stale clothing" } });
-    fireEvent.change(screen.getByLabelText("speciesKind *"), { target: { value: "PET" } });
+    const editor = screen.getByRole("heading", { name: "Create Species" }).closest("section")!;
+    fireEvent.change(within(editor).getByLabelText("Civilian"), { target: { value: "Stale clothing" } });
+    fireEvent.change(within(editor).getByLabelText("Species Kind *"), { target: { value: "PET" } });
 
-    expect(screen.getByLabelText("anthropomorphization")).toBeDisabled();
-    expect(screen.getByRole("group", { name: "clothing" })).toBeDisabled();
-    expect(screen.getByLabelText("Civilian")).toHaveValue("");
-    expect(screen.getByLabelText("architecture")).toBeDisabled();
+    expect(within(editor).getByLabelText("Anthropomorphization")).toBeDisabled();
+    expect(within(editor).getByRole("group", { name: "Clothing" })).toBeDisabled();
+    expect(within(editor).getByLabelText("Civilian")).toHaveValue("");
+    expect(within(editor).getByLabelText("Architecture")).toBeDisabled();
     expect(screen.getByText(/PET invariant: clothing, architecture, and anthropomorphization remain null/)).toBeInTheDocument();
   });
 
@@ -140,18 +149,19 @@ describe("persisted Data administration", () => {
     renderPage("/admin/data/breed", "DATA019");
     await screen.findByText("Breed");
     fireEvent.click(screen.getByRole("button", { name: "New" }));
-    fireEvent.change(screen.getByLabelText("cultureId"), { target: { value: "CLT_STALE" } });
-    fireEvent.change(screen.getByLabelText("motivation"), { target: { value: "ALTRUISTIC" } });
-    fireEvent.change(screen.getByLabelText("populationKind *"), { target: { value: "PET" } });
+    const editor = screen.getByRole("heading", { name: "Create Breed" }).closest("section")!;
+    fireEvent.change(within(editor).getByLabelText("Culture"), { target: { value: "CLT_STALE" } });
+    fireEvent.change(within(editor).getByLabelText("Motivation"), { target: { value: "ALTRUISTIC" } });
+    fireEvent.change(within(editor).getByLabelText("Population Kind *"), { target: { value: "PET" } });
 
-    expect(screen.getByLabelText("cultureId")).toBeDisabled();
-    expect(screen.getByLabelText("cultureId")).toHaveValue("");
-    expect(screen.getByLabelText("personalityId")).toBeDisabled();
-    expect(screen.getByLabelText("accent")).toBeDisabled();
-    expect(screen.getByRole("group", { name: "clothing" })).toBeDisabled();
-    expect(screen.getByLabelText("architecture")).toBeDisabled();
-    expect(screen.getByLabelText("motivation")).toBeDisabled();
-    expect(screen.getByLabelText("appearance")).not.toBeDisabled();
+    expect(within(editor).getByLabelText("Culture")).toBeDisabled();
+    expect(within(editor).getByLabelText("Culture")).toHaveValue("");
+    expect(within(editor).getByLabelText("Personality")).toBeDisabled();
+    expect(within(editor).getByLabelText("Accent")).toBeDisabled();
+    expect(within(editor).getByRole("group", { name: "Clothing" })).toBeDisabled();
+    expect(within(editor).getByLabelText("Architecture")).toBeDisabled();
+    expect(within(editor).getByLabelText("Motivation")).toBeDisabled();
+    expect(within(editor).getByLabelText("Appearance")).not.toBeDisabled();
     expect(screen.getByText(/PET population invariant: Culture, Personality, sapient presentation, and governance dimensions remain null/)).toBeInTheDocument();
   });
 
@@ -170,11 +180,12 @@ describe("persisted Data administration", () => {
     expect(screen.getByRole("group", { name: "Source Architect / Soul" })).toBeInTheDocument();
     expect(screen.getByRole("group", { name: "Domains" })).toBeInTheDocument();
     const color = screen.getByRole("group", { name: "Spectral Color" });
-    expect(within(color).getByLabelText("SPECTRAL_VIOLET %")).toHaveAttribute("type", "number");
-    expect(within(color).getByLabelText("GREEN %")).toHaveAttribute("type", "number");
-    expect(within(color).getByLabelText("WHITE %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("Spectral violet %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("Green %")).toHaveAttribute("type", "number");
+    expect(within(color).getByLabelText("White %")).toHaveAttribute("type", "number");
     expect(within(color).getByLabelText("Spectral color total")).toHaveTextContent("must equal 100%");
-    expect(await screen.findByRole("button", { name: "Select Hans Halycon Hohenzollern" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("combobox", { name: "Search Soul" }));
+    expect(await screen.findByRole("option", { name: /Hans Halycon Hohenzollern/ })).toBeInTheDocument();
   });
 
   it("shows every parent Character field inside a Witness subtype editor", async () => {
@@ -185,11 +196,52 @@ describe("persisted Data administration", () => {
       ok: true,
     })));
     renderPage("/admin/data/witness/CHA_MARA", "DATA_WITNESS_EDIT");
-    const parent = await screen.findByRole("group", { name: "Character identity" });
-    expect(within(parent).getAllByText("Mara Vale").length).toBeGreaterThan(0);
-    for (const field of contractData.entities.Character.auditFields) expect(within(parent).getAllByText(field.name).length, field.name).toBeGreaterThan(0);
+    const characterSection = await screen.findByRole("group", { name: "Character" });
+    expect(within(characterSection).getAllByText("Mara Vale").length).toBeGreaterThan(0);
+    for (const section of ["Character", "Witness definition", "Source Architect", "Soul continuity", "Witness-specific narrative data", "Rewards / constellations", "Technical details"]) expect(screen.getByRole("group", { name: section })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Edit Record" }));
-    expect(await screen.findByLabelText("Character.displayName *")).toHaveValue("Mara Vale");
+    expect(await screen.findByLabelText("Display Name *")).toHaveValue("Mara Vale");
+  });
+
+  it("uses the owner-curated Witness columns by default", async () => {
+    const character = {
+      characterId: "CHA_WITNESS_OF_THE_HAMMER", displayName: "The Witness of the Hammer", breedId: "BRD_MINOTAUR",
+      occupationId: null, worldKey: "RUIN", soulId: "SOUL_ANDREI", gender: "MALE", age: "53", skinScaleColor: null,
+      hairFurColor: null, eyeColor: null, clothing: null, faction: null, primaryAttribute: null, secondaryAttribute: null,
+      breed: { breedId: "BRD_MINOTAUR", name: "Minotaur" }, soul: { soulId: "SOUL_ANDREI", name: "Andrei Mihai Popescu" },
+    };
+    const witness = {
+      characterId: character.characterId, witnessDefId: "WDF_WITNESS_OF_THE_HAMMER", trueFlawName: "Retaliation",
+      architectCharacterId: "CHA_ANDREI", legendaryRewardId: null, constellationBeforeId: null, constellationAfterId: null,
+      character,
+      witnessDef: { witnessDefId: "WDF_WITNESS_OF_THE_HAMMER", name: "The Witness of the Hammer", worldKey: "RUIN", bookNumber: 14, kernelKey: "REDRESS" },
+      architect: { characterId: "CHA_ANDREI", department: "JUSTICE", character: { characterId: "CHA_ANDREI", displayName: "Andrei Mihai Popescu" } },
+    };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ entity: "Witness", records: [witness], contract: contractData.entities.Witness }), ok: true }));
+    renderPage("/admin/data/witness", "DATA004");
+    const table = await screen.findByRole("table");
+    expect(within(table).getAllByRole("columnheader").map((header) => header.textContent?.replace(/\s+[↕↑↓]$/, "").trim() ?? "")).toEqual([
+      "", "Witness", "World", "Book", "Breed", "Age", "Gender", "Witness definition", "Source Architect", "True flaw", "Actions",
+    ]);
+  });
+
+  it("uses owner-curated WitnessDef columns and humanized enum values by default", async () => {
+    const definition = {
+      witnessDefId: "WDF_WITNESS_OF_THE_HAMMER", name: "The Witness of the Hammer", department: "JUSTICE", kernelKey: "REDRESS",
+      apparentDomain: "Restitution", realDomain: "Retaliation", color: { SPECTRAL_VIOLET: 90, GREEN: 10, WHITE: 0 },
+      architectSoulId: "SOUL_ANDREI", worldKey: "RUIN", bookNumber: 14,
+      architectSoul: { soulId: "SOUL_ANDREI", name: "Andrei Mihai Popescu" },
+    };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ entity: "WitnessDef", records: [definition], contract: contractData.entities.WitnessDef }), ok: true }));
+    renderPage("/admin/data/witness-def", "DATA_WITNESS_DEF");
+    const table = await screen.findByRole("table");
+    expect(within(table).getAllByRole("columnheader").map((header) => header.textContent?.replace(/\s+[↕↑↓]$/, "").trim() ?? "")).toEqual([
+      "", "Witness definition", "World", "Book", "Kernel", "Department", "Source Architect / Soul", "Apparent domain", "Real domain", "Spectral color", "Actions",
+    ]);
+    expect(within(table).getByText("Ruin")).toBeInTheDocument();
+    expect(within(table).getByText("Justice")).toBeInTheDocument();
+    expect(within(table).queryByText("RUIN")).not.toBeInTheDocument();
+    expect(within(table).queryByText("JUSTICE")).not.toBeInTheDocument();
   });
 
   it("edits exactly one table row, keeps immutable identity read-only, and saves explicitly", async () => {
@@ -200,20 +252,20 @@ describe("persisted Data administration", () => {
     renderPage("/admin/data/soul", "DATA015");
     await screen.findByText("First Soul");
 
-    const editActions = screen.getAllByRole("button", { name: "Edit Row" });
+    const editActions = screen.getAllByRole("button", { name: "Edit" });
     fireEvent.click(editActions[0]!);
-    expect(screen.getByLabelText("name *")).toHaveValue("First Soul");
-    expect(screen.queryByLabelText("soulId *")).not.toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: "Edit Row" })[0]).toBeDisabled();
+    expect(screen.getByLabelText("Name *")).toHaveValue("First Soul");
+    expect(screen.queryByLabelText("Technical ID *")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Edit" })[0]).toBeDisabled();
 
-    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Renamed inline" } });
+    fireEvent.change(screen.getByLabelText("Name *"), { target: { value: "Renamed inline" } });
     fireEvent.click(screen.getByRole("button", { name: "Save Row SOUL-1" }));
     await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/data/soul/SOUL-1", expect.objectContaining({
       body: JSON.stringify({ record: { soulId: "SOUL-1", name: "Renamed inline" } }),
       method: "PATCH",
     })));
     expect(await screen.findByText("Renamed inline")).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: "Edit Row" })).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: "Edit" })).toHaveLength(2);
   });
 
   it("preserves unsaved row values and edit mode after a server validation failure", async () => {
@@ -222,12 +274,12 @@ describe("persisted Data administration", () => {
       .mockResolvedValueOnce({ json: async () => ({ error: "Name violates the canonical contract." }), ok: false }));
     renderPage("/admin/data/soul", "DATA015");
     await screen.findByText("First Soul");
-    fireEvent.click(screen.getAllByRole("button", { name: "Edit Row" })[0]!);
-    fireEvent.change(screen.getByLabelText("name *"), { target: { value: "Unsaved owner value" } });
+    fireEvent.click(screen.getAllByRole("button", { name: "Edit" })[0]!);
+    fireEvent.change(screen.getByLabelText("Name *"), { target: { value: "Unsaved owner value" } });
     fireEvent.click(screen.getByRole("button", { name: "Save Row SOUL-1" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Name violates the canonical contract.");
-    expect(screen.getByLabelText("name *")).toHaveValue("Unsaved owner value");
+    expect(screen.getByLabelText("Name *")).toHaveValue("Unsaved owner value");
     expect(screen.getByRole("button", { name: "Save Row SOUL-1" })).toBeInTheDocument();
   });
 
@@ -245,11 +297,13 @@ describe("persisted Data administration", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderPage("/admin/data/character", "DATA003");
     await screen.findByText("Mara Vale");
-    fireEvent.click(screen.getByRole("button", { name: "Edit Row" }));
-    fireEvent.change(screen.getByLabelText("worldKey"), { target: { value: "RUIN" } });
-    expect(await screen.findByRole("button", { name: "Select Aardvark" })).toHaveTextContent("Aardvark");
-    expect(screen.getByRole("button", { name: "Select Aardvark" })).toHaveTextContent("BRD_AARDVARK");
-    fireEvent.click(screen.getByRole("button", { name: "Select Aardvark" }));
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }));
+    const row = screen.getByRole("checkbox", { name: "Select row CHA_MARA" }).closest("tr")!;
+    fireEvent.change(within(row).getByLabelText("World Key"), { target: { value: "RUIN" } });
+    fireEvent.click(within(row).getByRole("combobox", { name: "Search Breed" }));
+    const aardvark = await screen.findByRole("option", { name: /Aardvark/ });
+    expect(aardvark).not.toHaveTextContent("BRD_AARDVARK");
+    fireEvent.mouseDown(aardvark);
     fireEvent.click(screen.getByRole("button", { name: "Save Row CHA_MARA" }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/data/character/CHA_MARA", expect.objectContaining({ method: "PATCH" })));
     const patchCall = fetchMock.mock.calls.find((call) => (call[1] as RequestInit | undefined)?.method === "PATCH")!;
@@ -271,9 +325,10 @@ describe("persisted Data administration", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderPage("/admin/data/witness", "DATA004");
     expect((await screen.findAllByText("Mara Vale")).length).toBeGreaterThan(0);
-    fireEvent.click(screen.getByRole("button", { name: "Edit Row" }));
-    fireEvent.change(screen.getByLabelText("Character.displayName *"), { target: { value: "Mara Vela" } });
-    fireEvent.change(screen.getByLabelText("trueFlawName"), { target: { value: "Pride" } });
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }));
+    const row = screen.getByRole("checkbox", { name: "Select row CHA_MARA" }).closest("tr")!;
+    fireEvent.change(within(row).getByLabelText("Display Name *"), { target: { value: "Mara Vela" } });
+    fireEvent.change(within(row).getByLabelText("True Flaw Name"), { target: { value: "Pride" } });
     fireEvent.click(screen.getByRole("button", { name: "Save Row CHA_MARA" }));
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith("/api/admin/data/witness/CHA_MARA", expect.objectContaining({

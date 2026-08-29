@@ -1096,6 +1096,7 @@ try {
       || upgradedPuzzleHints.rows[0]?.count !== 8) {
       throw new Error(`Populated Puzzle upgrade did not append exactly four immutable versions and eight hints: ${JSON.stringify({ versions: upgradedPuzzleVersions.rows, hints: upgradedPuzzleHints.rows })}`);
     }
+    await applyThrough("20260829010000_final_witness_data_remediation");
 
     const preCorrectionEnvironment = { ...process.env, DATABASE_URL: preCorrectionUrl.toString() };
     await run("pnpm", [

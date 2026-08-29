@@ -31,6 +31,7 @@ interface DataTableColumnMeta {
   filterOptions?: string[];
   filterVariant?: DataTableFilterVariant;
   nullable?: boolean;
+  technical?: boolean;
 }
 
 interface OwnerFilterValue {
@@ -132,12 +133,16 @@ export function DataTable<RowData extends object>({
   rowClassName?: (row: RowData) => string | undefined;
   searchLabel?: string;
 }) {
-  const storageKey = `echoes.table.${preferenceKey}.v1`;
+  const storageKey = `echoes.table.${preferenceKey}.v2`;
   const [preferences] = useState(() => readPreferences(storageKey));
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(preferences.columnOrder);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>(preferences.columnVisibility);
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>(() => ({
+    ...Object.fromEntries(columns.flatMap((column) => column.meta?.technical && typeof column.id === "string" ? [[column.id, false]] : [])),
+    ...preferences.columnVisibility,
+  }));
   const [globalFilter, setGlobalFilter] = useState("");
+  const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 25 });
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -145,7 +150,7 @@ export function DataTable<RowData extends object>({
     features: dataTableFeatures,
     columns,
     data,
-    defaultColumn: { filterFn: "owner" },
+    defaultColumn: { enableGlobalFilter: true, filterFn: "owner", minSize: 120, size: 180, maxSize: 480 },
     enableRowSelection: true,
     getRowId,
     globalFilterFn: "ownerGlobal",
@@ -214,17 +219,21 @@ export function DataTable<RowData extends object>({
     else primary = <input aria-label={`Filter ${label}`} className="input input--compact" placeholder={variant === "relation" ? "Search name or ID" : undefined} type="search" value={value.query ?? ""} onChange={(event) => setTypedFilter(column, { query: event.target.value })} />;
     return <div className="data-table-filter-control">{primary}{emptyControl}</div>;
   };
-  const stickyCell = (columnId: string, index: number) => columnId === "actions" ? { className: "data-table__actions", style: { right: 0 } } : index < 2 ? { className: `data-table__identity data-table__identity--${index + 1}`, style: { left: 42 + table.getVisibleLeafColumns().slice(0, index).reduce((sum, column) => sum + column.getSize(), 0) } } : { className: undefined, style: undefined };
+  const stickyCell = (_columnId: string, index: number) => index === 0 ? { className: "data-table__identity data-table__identity--1", style: { left: 42 } } : { className: undefined, style: undefined };
+  const standardColumns = table.getAllLeafColumns().filter((column) => !column.columnDef.meta?.technical);
+  const technicalColumns = table.getAllLeafColumns().filter((column) => column.columnDef.meta?.technical);
+  const columnControl = (column: (typeof table.getAllLeafColumns extends () => Array<infer T> ? T : never)) => <div key={column.id}><span><input aria-label={`Show ${column.id} column`} checked={column.getIsVisible()} onChange={column.getToggleVisibilityHandler()} type="checkbox" /> {headerLabel(column)}</span><button aria-label={`Move ${column.id} left`} onClick={() => moveColumn(column.id, -1)} type="button">←</button><button aria-label={`Move ${column.id} right`} onClick={() => moveColumn(column.id, 1)} type="button">→</button></div>;
   return <div className="data-table-engine">
     <div className="action-row action-row--between data-table-toolbar">
       <label className="field">{searchLabel}<input aria-label={searchLabel} className="input" type="search" value={globalFilter} onChange={(event) => setGlobalFilter(event.target.value)} /></label>
       <button className="button button--small" onClick={clearFilters} type="button">Clear filters</button>
       <span className="tag">{data.length} total · {filteredCount} shown</span>
       <span className="tag">{table.getSelectedRowModel().rows.length} selected</span>
-      <details><summary>Columns</summary><div className="column-controls">{table.getAllLeafColumns().map((column) => <div key={column.id}><span><input aria-label={`Show ${column.id} column`} checked={column.getIsVisible()} onChange={column.getToggleVisibilityHandler()} type="checkbox" /> {column.id}</span><button aria-label={`Move ${column.id} left`} onClick={() => moveColumn(column.id, -1)} type="button">←</button><button aria-label={`Move ${column.id} right`} onClick={() => moveColumn(column.id, 1)} type="button">→</button></div>)}</div></details>
+      <details><summary>Columns</summary><div className="column-controls"><h4>Record fields</h4>{standardColumns.map(columnControl)}{technicalColumns.length > 0 && <><h4>Technical fields</h4>{technicalColumns.map(columnControl)}</>}</div></details>
     </div>
+    <details className="data-table-advanced-filters" open={advancedFiltersOpen}><summary onClick={(event) => { event.preventDefault(); setAdvancedFiltersOpen((open) => !open); }}>Advanced filters {columnFilters.length > 0 && <span className="tag">{columnFilters.length} active</span>}</summary>{advancedFiltersOpen && <div className="data-table-filter-grid">{table.getAllLeafColumns().filter((column) => column.getCanFilter()).map((column) => <label className="field" key={`${column.id}-filter`}>{headerLabel(column)}{filterControl(column)}</label>)}</div>}</details>
     <div className="table-scroll"><table aria-label={ariaLabel} className="data-table" style={{ width: table.getTotalSize() }}>
-      <thead>{table.getHeaderGroups().map((group) => <Fragment key={group.id}><tr><th aria-label="Select rows" className="data-table__selection" rowSpan={2}><input aria-label="Select all visible rows" checked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} type="checkbox" /></th>{group.headers.map((header, index) => { const sticky = stickyCell(header.column.id, index); return <th aria-sort={header.column.getIsSorted() === "asc" ? "ascending" : header.column.getIsSorted() === "desc" ? "descending" : "none"} className={sticky.className} key={header.id} style={{ ...sticky.style, width: header.getSize() }}><button aria-label={`${header.column.getCanSort() ? "Sort by" : "Column"} ${headerLabel(header.column)}`} className="table-sort" disabled={!header.column.getCanSort()} onClick={header.column.getToggleSortingHandler()} type="button">{header.isPlaceholder ? null : <table.FlexRender header={header} />}{header.column.getIsSorted() === "asc" ? " ↑" : header.column.getIsSorted() === "desc" ? " ↓" : ""}</button>{header.column.getCanResize() && <span aria-label={`Resize ${headerLabel(header.column)} column`} className={`column-resizer${header.column.getIsResizing() ? " is-resizing" : ""}`} onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} role="separator" />}</th>; })}</tr><tr className="data-table-filters">{group.headers.map((header, index) => { const sticky = stickyCell(header.column.id, index); return <th className={sticky.className} key={`${header.id}-filter`} style={sticky.style}>{header.column.getCanFilter() && filterControl(header.column)}</th>; })}</tr></Fragment>)}</thead>
+      <thead>{table.getHeaderGroups().map((group) => <Fragment key={group.id}><tr><th aria-label="Select rows" className="data-table__selection"><input aria-label="Select all visible rows" checked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} type="checkbox" /></th>{group.headers.map((header, index) => { const sticky = stickyCell(header.column.id, index); return <th aria-sort={header.column.getIsSorted() === "asc" ? "ascending" : header.column.getIsSorted() === "desc" ? "descending" : "none"} className={sticky.className} key={header.id} style={{ ...sticky.style, width: header.getSize() }}><button aria-label={`${header.column.getCanSort() ? "Sort by" : "Column"} ${headerLabel(header.column)}`} className="table-sort" disabled={!header.column.getCanSort()} onClick={header.column.getToggleSortingHandler()} type="button">{header.isPlaceholder ? null : <table.FlexRender header={header} />}{header.column.getIsSorted() === "asc" ? " ↑" : header.column.getIsSorted() === "desc" ? " ↓" : ""}</button>{header.column.getCanResize() && <span aria-label={`Resize ${headerLabel(header.column)} column`} className={`column-resizer${header.column.getIsResizing() ? " is-resizing" : ""}`} onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} role="separator" />}</th>; })}</tr></Fragment>)}</thead>
       <tbody>{table.getRowModel().rows.map((row) => <tr aria-selected={row.getIsSelected()} className={rowClassName?.(row.original)} key={row.id} onClick={() => activate(row)} onKeyDown={(event) => { if (onRowActivate && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); activate(row); } }} tabIndex={onRowActivate ? 0 : undefined}><td className="data-table__selection"><input aria-label={`Select row ${row.id}`} checked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} onClick={(event) => event.stopPropagation()} type="checkbox" /></td>{row.getVisibleCells().map((cell, index) => { const sticky = stickyCell(cell.column.id, index); return <td className={sticky.className} key={cell.id} style={sticky.style}><table.FlexRender cell={cell} /></td>; })}</tr>)}</tbody>
     </table></div>
     {filteredCount === 0 && <p className="empty-state">{data.length === 0 ? "No records." : "No records match the current filters."}</p>}

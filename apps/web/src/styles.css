@@ -216,20 +216,35 @@ button, input, select, textarea { font: inherit; }
 .owner-form-sections { display: grid; gap: 16px; margin: 16px 0; }
 .owner-form-section { min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 8px; }
 .owner-form-section > legend { padding: 0 8px; color: var(--gold); font: 600 14px Georgia, serif; }
+.owner-form-section--technical { display: grid; gap: 12px; }
+.technical-details-toggle { width: fit-content; }
 .owner-form-readonly { min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: rgb(4 18 30 / 72%); }
 .owner-form-readonly > strong { overflow-wrap: anywhere; color: var(--text); }
+.technical-id-value { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.technical-id-value code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .inline-row-editor { min-width: 16rem; padding: 8px; border: 1px solid #4f87a4; border-radius: 6px; background: #0b2638; }
 .inline-row-editor .field { min-width: 14rem; margin: 0; }
 .inline-row-editor .textarea { min-height: 7rem; }
 .inline-row-readonly { display: block; min-height: 2.25rem; padding: 7px 8px; border: 1px dashed #365269; border-radius: 5px; background: rgb(4 18 30 / 72%); overflow-wrap: anywhere; }
 .owner-form-context { margin-bottom: 14px; }
-.lookup-option-list { display: grid; gap: 6px; max-height: 260px; overflow-y: auto; }
-.lookup-option { padding: 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel-2); color: inherit; text-align: left; cursor: pointer; }
-.lookup-option:hover, .lookup-option:focus-visible { border-color: var(--cyan); }
+.witness-record-overview .form-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 10px; }
+.relation-autocomplete { width: min(100%, 52rem); }
+.lookup-option-list { display: grid; gap: 6px; max-height: 320px; overflow: auto; overscroll-behavior: contain; }
+.lookup-option { min-width: 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel-2); color: inherit; text-align: left; cursor: pointer; }
+.lookup-option:hover, .lookup-option:focus-visible, .lookup-option.is-active { border-color: var(--cyan); background: #0c2a3d; }
+.lookup-match-count { margin: 4px 0; color: var(--muted); font-size: 11px; }
+.lookup-pagination { justify-content: flex-end; }
 .wide { width: 100%; }
 .muted, small { color: var(--muted); }
 .simple-table, .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.simple-table td, .data-table td, .data-table th { padding: 9px 8px; border-bottom: 1px solid #15354a; text-align: left; }
+.simple-table td, .data-table td, .data-table th { min-width: 0; max-width: 480px; padding: 7px 8px; border-bottom: 1px solid #15354a; overflow: hidden; text-align: left; text-overflow: ellipsis; vertical-align: top; }
+.data-table td { white-space: nowrap; }
+.data-table[aria-label="Witness records"] td,
+.data-table[aria-label="WitnessDef records"] td { white-space: normal; overflow-wrap: anywhere; }
+.data-table[aria-label="Witness records"] .data-table-row-actions,
+.data-table[aria-label="WitnessDef records"] .data-table-row-actions { white-space: nowrap; }
+.data-table td > :not(.inline-row-editor) { max-height: 4.2em; overflow: hidden; }
+.data-table td .lookup-display__primary, .data-table td .lookup-display__context { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .data-table th { color: #7db9da; background: #071725; }
 .data-table thead { position: sticky; top: 0; z-index: 3; }
 .data-table th { position: relative; }
@@ -248,13 +263,17 @@ button, input, select, textarea { font: inherit; }
 .table-sort:disabled { cursor: default; }
 .data-table-filters .input--compact { min-width: 90px; padding: 5px 7px; font-size: 11px; }
 .data-table-filter-control { display: grid; min-width: 120px; gap: 4px; }
+.data-table-advanced-filters { position: static !important; }
+.data-table-advanced-filters > summary { width: fit-content; }
+.data-table-filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: #061521; }
 .data-table-range { display: grid; grid-template-columns: repeat(2, minmax(86px, 1fr)); gap: 4px; }
-.data-table__selection, .data-table__identity, .data-table__actions { position: sticky !important; z-index: 2; background: #071725; }
+.data-table__selection, .data-table__identity { position: sticky !important; z-index: 2; background: #071725; }
 .data-table__selection { left: 0; width: 42px; min-width: 42px; }
 .data-table__identity { z-index: 1; }
-.data-table__actions { right: 0; box-shadow: -1px 0 0 var(--line); }
-.data-table tbody .data-table__identity, .data-table tbody .data-table__actions, .data-table tbody .data-table__selection { background: #071b2a; }
-.data-table tbody tr:nth-child(even) .data-table__identity, .data-table tbody tr:nth-child(even) .data-table__actions, .data-table tbody tr:nth-child(even) .data-table__selection { background: #092031; }
+.data-table-row-actions { flex-wrap: nowrap; white-space: nowrap; }
+.data-table-row-actions .button { min-width: 0; padding: 5px 7px; white-space: nowrap; }
+.data-table tbody .data-table__identity, .data-table tbody .data-table__selection { background: #071b2a; }
+.data-table tbody tr:nth-child(even) .data-table__identity, .data-table tbody tr:nth-child(even) .data-table__selection { background: #092031; }
 .column-resizer { width: 8px; position: absolute; inset: 0 -4px 0 auto; cursor: col-resize; touch-action: none; }
 .column-resizer::after { width: 2px; position: absolute; inset: 15% 3px; content: ""; background: var(--line-2); }
 .column-resizer.is-resizing::after { background: var(--gold); }
@@ -805,9 +824,13 @@ html[data-high-contrast="true"] {
 .meeting-roster > div { display: grid; justify-items: center; gap: 4px; min-width: 54px; text-align: center; }
 .meeting-roster .companion-portrait { width: 44px; height: 44px; font-size: 18px; }
 .inventory-detail-art { display: grid; place-items: center; min-height: 180px; border-radius: 10px; background: var(--panel-strong); font-size: 68px; color: var(--gold); }
-.lookup-display { display: inline-flex; min-width: 0; flex-direction: column; gap: 2px; }
+.lookup-display { display: inline-flex; max-width: 100%; min-width: 0; flex-direction: column; gap: 2px; overflow: hidden; }
 .lookup-display__primary { color: var(--text); font-weight: 650; }
-.lookup-display__secondary, .lookup-display__context { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .78rem; overflow-wrap: anywhere; }
+.lookup-display__context { color: var(--muted); font-size: .76rem; overflow-wrap: anywhere; }
+.lookup-display__technical { display: grid; gap: 4px; justify-items: start; }
+.technical-details-toggle, .technical-copy { padding: 0; border: 0; background: transparent; color: #7db9da; font-size: .7rem; text-decoration: underline; cursor: pointer; }
+.technical-details-content { display: flex; max-width: 100%; align-items: center; gap: 6px; }
+.technical-details-content code, .technical-field code { overflow-wrap: anywhere; color: var(--muted); font-size: .72rem; }
 .lookup-display--null { color: var(--muted); }
 .lookup-display-list { display: grid; gap: 6px; }
 .lookup-contract-error { color: var(--bad); font-weight: 700; }

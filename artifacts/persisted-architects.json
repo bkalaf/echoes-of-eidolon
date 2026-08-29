@@ -8,8 +8,12 @@
       "age": "55",
       "breedId": "BRD_HUMAN_FINNIC_FINNISH",
       "characterId": "CHA_AINO_KAARINA_LEHTINEN",
+      "clothing": "Ice-grey tailored suit with a dark midnight-blue blouse, low black shoes, tiny pearl-grey ear studs. Clean lines, no decorative flourish.",
       "displayName": "Aino Kaarina Lehtinen",
+      "eyeColor": "blue-grey",
       "gender": "FEMALE",
+      "hairFurColor": "naturally pale blond hair already blending with silver at both temples",
+      "skinScaleColor": "very fair neutral",
       "soulId": "SOUL_AINO_KAARINA_LEHTINEN",
       "worldKey": null
     }
@@ -23,8 +27,12 @@
       "age": "43",
       "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_CUBAN",
       "characterId": "CHA_ALEJANDRO_RAFAEL_VALDES",
+      "clothing": "Dark teal suit, white open-collar shirt, no tie, black loafers, narrow silver chain mostly hidden beneath the shirt collar.",
       "displayName": "Alejandro Rafael Valdés",
+      "eyeColor": "dark amber",
       "gender": "MALE",
+      "hairFurColor": "thick black wavy hair; neatly kept short stubble",
+      "skinScaleColor": "warm olive-brown",
       "soulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
       "worldKey": null
     }
@@ -38,8 +46,12 @@
       "age": "60",
       "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ENGLISH",
       "characterId": "CHA_ALEX_ROWAN_WREN",
+      "clothing": "Black softly structured suit with a muted rust high-neck shirt, no tie, flat black shoes, thin black-framed glasses.",
       "displayName": "Alex Rowan Wren",
+      "eyeColor": "grey-blue",
       "gender": "NON_BINARY",
+      "hairFurColor": "short silver hair with darker ash-grey roots",
+      "skinScaleColor": "fair",
       "soulId": "SOUL_ALEX_ROWAN_WREN",
       "worldKey": null
     }
@@ -53,8 +65,12 @@
       "age": "53",
       "breedId": "BRD_HUMAN_ROMANIAN_MOLDOVAN_ROMANIAN",
       "characterId": "CHA_ANDREI_MIHAI_POPESCU",
+      "clothing": "Charcoal suit, pale stone-grey shirt, dark wine tie, black shoes, simple dark watch. Hair short with natural volume.",
       "displayName": "Andrei Mihai Popescu",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "thick salt-and-pepper hair; a close neatly shaped salt-and-pepper beard",
+      "skinScaleColor": "light olive-fair",
       "soulId": "SOUL_ANDREI_MIHAI_POPESCU",
       "worldKey": null
     }
@@ -68,8 +84,12 @@
       "age": "42",
       "breedId": "BRD_HUMAN_NEW_ZEALANDER_PAKEHA_MAORI_MIXED",
       "characterId": "CHA_ARI_RANGI_NGATA_MCKENZIE",
+      "clothing": "Black tailored suit with a deep moss-green collarless shirt, no tie, polished dark shoes, and one small matte silver ear cuff. Hair worn medium-short with natural wave and volume.",
       "displayName": "Ari Rangi Ngata-McKenzie",
+      "eyeColor": "dark hazel",
       "gender": "NON_BINARY",
+      "hairFurColor": "thick dark-brown wavy hair",
+      "skinScaleColor": "warm tawny-olive",
       "soulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
       "worldKey": null
     }
@@ -83,8 +103,12 @@
       "age": "43",
       "breedId": "BRD_HUMAN_GUJARATI_GUJARATI",
       "characterId": "CHA_ARJUN_DEV_MEHTA",
+      "clothing": "Deep charcoal single-breasted suit, crisp white shirt, muted burgundy tie, black leather shoes, thin silver-rim glasses.",
       "displayName": "Arjun Dev Mehta",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "close-cropped black hair; neatly trimmed short beard and mustache",
+      "skinScaleColor": "warm medium-brown",
       "soulId": "SOUL_ARJUN_DEV_MEHTA",
       "worldKey": null
     }
@@ -98,8 +122,12 @@
       "age": "46",
       "breedId": "BRD_HUMAN_OGHUZ_TURKIC_TURKISH",
       "characterId": "CHA_AYLIN_DEFNE_DEMIR",
+      "clothing": "Warm camel-brown tailored trouser suit, black silk blouse, dark low heels, small brushed-gold stud earrings, slim leather-strap watch. Hair worn in a smooth shoulder-length cut with soft inward curve.",
       "displayName": "Aylin Defne Demir",
+      "eyeColor": "dark hazel",
       "gender": "FEMALE",
+      "hairFurColor": "thick dark-brown hair with subtle warm chestnut undertones",
+      "skinScaleColor": "warm olive",
       "soulId": "SOUL_AYLIN_DEFNE_DEMIR",
       "worldKey": null
     }
@@ -113,8 +141,12 @@
       "age": "51",
       "breedId": "BRD_HUMAN_HUNGARIAN_MAGYAR_HUNGARIAN",
       "characterId": "CHA_BALINT_ADAM_KOVACS",
+      "clothing": "Dark charcoal three-piece suit with muted olive tie, pale grey shirt, polished oxblood shoes, classic metal watch.",
       "displayName": "Bálint Ádám Kovács",
+      "eyeColor": "hazel",
       "gender": "MALE",
+      "hairFurColor": "close-cut dark-brown hair greying at the temples; a neatly trimmed full beard with a reddish-brown undertone",
+      "skinScaleColor": "light",
       "soulId": "SOUL_BALINT_ADAM_KOVACS",
       "worldKey": null
     }
@@ -128,8 +160,12 @@
       "age": "56",
       "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_DUTCH",
       "characterId": "CHA_BRAM_WILLEM_DE_VRIES",
+      "clothing": "Mid-grey suit with a pale sage shirt, no tie, brown leather shoes, thin tortoiseshell reading glasses carried in breast pocket rather than worn.",
       "displayName": "Bram Willem de Vries",
+      "eyeColor": "blue",
       "gender": "MALE",
+      "hairFurColor": "receding sandy-blond hair going silver; a closely trimmed sandy-grey beard",
+      "skinScaleColor": "fair",
       "soulId": "SOUL_BRAM_WILLEM_DE_VRIES",
       "worldKey": null
     }
@@ -143,8 +179,12 @@
       "age": "47",
       "breedId": "BRD_HUMAN_FRENCH_FRANCOPHONE_FRENCH",
       "characterId": "CHA_CAMILLE_ELODIE_MOREAU",
+      "clothing": "Deep burgundy tailored trouser suit, soft ivory blouse, understated black pumps, small pearl stud earrings, hair in a clean jaw-length bob tucked behind the right ear.",
       "displayName": "Camille Élodie Moreau",
+      "eyeColor": "blue-grey",
       "gender": "FEMALE",
+      "hairFurColor": "straight dark-chestnut hair",
+      "skinScaleColor": "fair neutral",
       "soulId": "SOUL_CAMILLE_ELODIE_MOREAU",
       "worldKey": null
     }
@@ -158,8 +198,12 @@
       "age": "52",
       "breedId": "BRD_HUMAN_KIPCHAK_AND_NORTHERN_TURKIC_KAZAKH",
       "characterId": "CHA_DANIYAR_SERIKULY_BEKETOV",
+      "clothing": "Deep petrol-blue tailored suit, ivory shirt, muted bronze tie, dark leather shoes, understated steel watch. Polished and influential without ostentation.",
       "displayName": "Daniyar Serikuly Beketov",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "thick black hair with natural silver concentrated at both temples",
+      "skinScaleColor": "warm light-olive",
       "soulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
       "worldKey": null
     }
@@ -173,8 +217,12 @@
       "age": "47",
       "breedId": "BRD_HUMAN_PERSIAN_IRANIAN_PERSIAN_IRANIAN",
       "characterId": "CHA_DARYA_MEHR_FARZAN",
+      "clothing": "Deep plum tailored suit with a black silk shirt buttoned high, no tie, black ankle boots, understated dark-metal cuff links. Hair deliberately shaped but naturally curly.",
       "displayName": "Darya Mehr Farzan",
+      "eyeColor": "amber-brown",
       "gender": "NON_BINARY",
+      "hairFurColor": "dense black curls worn to the jaw; A natural silver streak begins at the right temple and continues through one curl cluster",
+      "skinScaleColor": "warm olive",
       "soulId": "SOUL_DARYA_MEHR_FARZAN",
       "worldKey": null
     }
@@ -188,8 +236,12 @@
       "age": "48",
       "breedId": "BRD_HUMAN_ETHIOPIAN_ERITREAN_HIGHLANDS_AND_SOUTH_HABESHA_ETHIOPIAN_HIGHLAND",
       "characterId": "CHA_DAWIT_TESFAYE_BEKELE",
+      "clothing": "Deep brown-black suit with a muted copper shirt, no tie, dark oxford shoes, simple steel watch. Beard precisely trimmed; hair close-cropped.",
       "displayName": "Dawit Tesfaye Bekele",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "tight black curls cropped close; a neatly shaped short beard",
+      "skinScaleColor": "deep warm brown",
       "soulId": "SOUL_DAWIT_TESFAYE_BEKELE",
       "worldKey": null
     }
@@ -203,8 +255,12 @@
       "age": "55",
       "breedId": "BRD_HUMAN_NORDIC_NORWEGIAN",
       "characterId": "CHA_EIRIK_MAGNUS_SOLBERG",
+      "clothing": "Dark navy suit, pale blue shirt, medium-grey tie, black shoes, simple steel watch. Hair short and brushed to the side.",
       "displayName": "Eirik Magnus Solberg",
+      "eyeColor": "pale blue",
       "gender": "MALE",
+      "hairFurColor": "silver-blond hair cut short; a neatly trimmed silver-blond beard",
+      "skinScaleColor": "fair cool-toned",
       "soulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
       "worldKey": null
     }
@@ -218,8 +274,12 @@
       "age": "39",
       "breedId": "BRD_HUMAN_SPANISH_CASTILIAN_CASTILIAN",
       "characterId": "CHA_ELENA_ISABEL_SERRANO",
+      "clothing": "Cream tailored suit with a deep red silk blouse, dark heels, small brushed-gold earrings. Hair worn below the shoulders in controlled loose curls.",
       "displayName": "Elena Isabel Serrano",
+      "eyeColor": "dark chocolate-brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick chestnut-brown hair with loose natural curls",
+      "skinScaleColor": "warm olive",
       "soulId": "SOUL_ELENA_ISABEL_SERRANO",
       "worldKey": null
     }
@@ -233,8 +293,12 @@
       "age": "57",
       "breedId": "BRD_HUMAN_JEWISH_DIASPORA_JEWISH_DIASPORA",
       "characterId": "CHA_ELI_DAVID_ROSENFELD",
+      "clothing": "Dark navy suit with a white shirt and muted wine tie, brown-black shoes, simple round steel watch. Hair neatly combed; beard close-trimmed.",
       "displayName": "Eli David Rosenfeld",
+      "eyeColor": "warm brown",
       "gender": "MALE",
+      "hairFurColor": "receding dark-brown hair heavily silver at the temples; a short salt-and-pepper beard",
+      "skinScaleColor": "light olive",
       "soulId": "SOUL_ELI_DAVID_ROSENFELD",
       "worldKey": null
     }
@@ -248,8 +312,12 @@
       "age": "38",
       "breedId": "BRD_HUMAN_NORDIC_SWEDISH",
       "characterId": "CHA_ELIN_ASTRID_SJOBERG",
+      "clothing": "Dark teal fitted trouser suit with a white open-collar blouse, black low heels, small silver hoop earrings. Hair in a smooth shoulder-length cut with natural soft wave.",
       "displayName": "Elin Astrid Sjöberg",
+      "eyeColor": "pale blue",
       "gender": "FEMALE",
+      "hairFurColor": "strawberry-blond hair",
+      "skinScaleColor": "fair neutral",
       "soulId": "SOUL_ELIN_ASTRID_SJOBERG",
       "worldKey": null
     }
@@ -263,8 +331,12 @@
       "age": "39",
       "breedId": "BRD_HUMAN_JAPANESE_JAPANESE",
       "characterId": "CHA_EMI_HARUKA_TAKAHASHI",
+      "clothing": "Minimal black tailored suit with a collarless ivory blouse, narrow black trousers, low black shoes, tiny brushed-metal ear studs. No necklace.",
       "displayName": "Emi Haruka Takahashi",
+      "eyeColor": "dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "straight black hair in a precise chin-length bob",
+      "skinScaleColor": "light warm-beige",
       "soulId": "SOUL_EMI_HARUKA_TAKAHASHI",
       "worldKey": null
     }
@@ -278,8 +350,12 @@
       "age": "41",
       "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ANGLO_AUSTRALIAN",
       "characterId": "CHA_EVAN_JAMES_MERCER",
+      "clothing": "Light cool-grey suit, deep navy shirt, no tie, dark shoes, plain silver watch. Hair short with natural texture, slightly tousled at the front but professional.",
       "displayName": "Evan James Mercer",
+      "eyeColor": "hazel-green",
       "gender": "MALE",
+      "hairFurColor": "sandy-brown hair; sandy-brown hair and similar mouth shape",
+      "skinScaleColor": "fair sun-warmed",
       "soulId": "SOUL_EVAN_JAMES_MERCER",
       "worldKey": null
     }
@@ -293,8 +369,12 @@
       "age": "45",
       "breedId": "BRD_HUMAN_ARABIAN_PENINSULA_ARAB_NAJDI",
       "characterId": "CHA_FAISAL_ABDULRAHMAN_AL_HARBI",
+      "clothing": "Impeccable dark charcoal suit with a clean collarless white shirt, no tie, black shoes, understated steel watch. Modern international business dress with a subtle Gulf sensibility, not ceremonial wear.",
       "displayName": "Faisal Abdulrahman Al-Harbi",
+      "eyeColor": "very dark brown",
       "gender": "MALE",
+      "hairFurColor": "slightly receding black hair; a neatly trimmed full short beard",
+      "skinScaleColor": "medium olive-brown",
       "soulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
       "worldKey": null
     }
@@ -308,8 +388,12 @@
       "age": "46",
       "breedId": "BRD_HUMAN_BENGALI_BENGALI",
       "characterId": "CHA_FARID_HASAN_RAHMAN",
+      "clothing": "Deep navy suit with a muted olive shirt and charcoal tie, dark shoes, simple black watch. Hair neatly brushed back; beard short and even.",
       "displayName": "Farid Hasan Rahman",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "thick black hair with slight wave; a neatly trimmed full beard",
+      "skinScaleColor": "warm medium-brown",
       "soulId": "SOUL_FARID_HASAN_RAHMAN",
       "worldKey": null
     }
@@ -323,8 +407,12 @@
       "age": "45",
       "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_GERMAN",
       "characterId": "CHA_FELIX_JOHANN_HARTMANN",
+      "clothing": "Dark graphite double-breasted suit, white shirt, black tie, dark shoes, simple square-faced watch. Hair short and carefully combed back.",
       "displayName": "Felix Johann Hartmann",
+      "eyeColor": "steel-grey",
       "gender": "MALE",
+      "hairFurColor": "short dark-blond hair",
+      "skinScaleColor": "fair",
       "soulId": "SOUL_FELIX_JOHANN_HARTMANN",
       "worldKey": null
     }
@@ -338,8 +426,12 @@
       "age": "62",
       "breedId": "BRD_HUMAN_IRISH_GAELIC_HIGHLAND_SCOTS",
       "characterId": "CHA_FIONA_MAIRI_MACLEOD",
+      "clothing": "Black tailored skirt suit with a dark forest-green silk blouse, low black heels, antique-looking but minimal silver brooch with no heraldic symbol. Hair worn in a smooth shoulder-length silver-grey cut.",
       "displayName": "Fiona Mairi MacLeod",
+      "eyeColor": "cool blue",
       "gender": "FEMALE",
+      "hairFurColor": "silver-grey hair with a few remaining dark strands",
+      "skinScaleColor": "fair",
       "soulId": "SOUL_FIONA_MAIRI_MACLEOD",
       "worldKey": null
     }
@@ -353,8 +445,12 @@
       "age": "52",
       "breedId": "BRD_HUMAN_WELSH_BRITTONIC_CELTIC_WELSH",
       "characterId": "CHA_GARETH_RHYS_MORGAN",
+      "clothing": "Dark charcoal suit with a muted moss-green shirt, no tie, black shoes, plain matte wedding band and understated black watch. Hair combed back with natural texture.",
       "displayName": "Gareth Rhys Morgan",
+      "eyeColor": "blue-green",
       "gender": "MALE",
+      "hairFurColor": "thick dark-brown hair greying heavily at the temples; a short tidy beard",
+      "skinScaleColor": "fair with a mild ruddy undertone",
       "soulId": "SOUL_GARETH_RHYS_MORGAN",
       "worldKey": null
     }
@@ -368,8 +464,12 @@
       "age": "44",
       "breedId": "BRD_HUMAN_ITALIAN_CENTRAL_MEDITERRANEAN_ITALIAN",
       "characterId": "CHA_GIULIA_FRANCESCA_CONTI",
+      "clothing": "Deep emerald tailored trouser suit, pale cream blouse, black low heels, small gold bar earrings. Hair worn in a smooth shoulder-length cut with soft natural movement.",
       "displayName": "Giulia Francesca Conti",
+      "eyeColor": "green-brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick chestnut-brown hair with subtle copper warmth",
+      "skinScaleColor": "warm light-olive",
       "soulId": "SOUL_GIULIA_FRANCESCA_CONTI",
       "worldKey": null
     }
@@ -383,8 +483,12 @@
       "age": "58",
       "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_GERMAN",
       "characterId": "CHA_HANS_HALYCON_HOHENZOLLERN",
+      "clothing": "Impeccable midnight-black double-breasted suit with subtle texture, crisp ivory shirt, deep wine tie, polished black shoes, understated platinum cuff links. Expensive without visible branding.",
       "displayName": "Hans Halycon Hohenzollern",
+      "eyeColor": "steel-blue",
       "gender": "MALE",
+      "hairFurColor": "carefully groomed silver-blond hair swept back from a high forehead",
+      "skinScaleColor": "pale neutral",
       "soulId": "SOUL_HANS_HALYCON_HOHENZOLLERN",
       "worldKey": null
     }
@@ -398,8 +502,12 @@
       "age": "51",
       "breedId": "BRD_HUMAN_MAGHREBI_ARAB_MOROCCAN_ARAB",
       "characterId": "CHA_IMAN_ZAHRA_EL_IDRISSI",
+      "clothing": "Softly structured sand-colored suit with a black high-neck shirt, tapered trousers, dark loafers, and a narrow bronze ring. Curls worn jaw-length and naturally textured.",
       "displayName": "Iman Zahra El Idrissi",
+      "eyeColor": "green-brown",
       "gender": "NON_BINARY",
+      "hairFurColor": "dense dark curls threaded with natural silver around the temples",
+      "skinScaleColor": "warm olive-brown",
       "soulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
       "worldKey": null
     }
@@ -413,8 +521,12 @@
       "age": "46",
       "breedId": "BRD_HUMAN_IBERIAN_ATLANTIC_PORTUGUESE_CREOLE_PORTUGUESE",
       "characterId": "CHA_INES_LEONOR_CARVALHO",
+      "clothing": "Deep navy tailored trouser suit, ivory silk blouse with a clean open collar, slim gold geometric earrings, dark low-heeled shoes. Hair worn shoulder-length with controlled natural waves tucked behind one ear.",
       "displayName": "Inês Leonor Carvalho",
+      "eyeColor": "dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick dark-brown naturally wavy hair",
+      "skinScaleColor": "light olive",
       "soulId": "SOUL_INES_LEONOR_CARVALHO",
       "worldKey": null
     }
@@ -428,8 +540,12 @@
       "age": "61",
       "breedId": "BRD_HUMAN_CENTRAL_AND_GREAT_LAKES_AFRICAN_KONGO_BANTU_TWA_LUBA_LUNDA",
       "characterId": "CHA_JEAN_BAPTISTE_ALAIN_MBUYI",
+      "clothing": "Deep navy suit, white shirt, muted copper tie, black shoes, understated dark leather watch. Crisp tailoring, no decorative motifs.",
       "displayName": "Jean-Baptiste Alain Mbuyi",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "closely cropped salt-and-pepper hair; a neat short salt-and-pepper beard",
+      "skinScaleColor": "deep brown",
       "soulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
       "worldKey": null
     }
@@ -443,8 +559,12 @@
       "age": "50",
       "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_POLISH",
       "characterId": "CHA_KATARZYNA_MARIA_NOWAK",
+      "clothing": "Deep oxblood tailored trouser suit, white silk shirt, black low heels, small black geometric earrings, plain watch. Hair in a clean jaw-length bob.",
       "displayName": "Katarzyna Maria Nowak",
+      "eyeColor": "grey-blue",
       "gender": "FEMALE",
+      "hairFurColor": "dark ash-brown hair with early silver at the temples",
+      "skinScaleColor": "fair neutral",
       "soulId": "SOUL_KATARZYNA_MARIA_NOWAK",
       "worldKey": null
     }
@@ -458,8 +578,12 @@
       "age": "44",
       "breedId": "BRD_HUMAN_FINNIC_ESTONIAN",
       "characterId": "CHA_KRIS_MAARJA_TAMM",
+      "clothing": "Precisely tailored charcoal suit with narrow lapels, slate high-collar shirt, no tie, matte black shoes, one simple brushed-steel ring. Quietly androgynous, severe without looking austere.",
       "displayName": "Kris Maarja Tamm",
+      "eyeColor": "grey-green",
       "gender": "NON_BINARY",
+      "hairFurColor": "ash-blond hair; Architect hair is short and softly asymmetrical",
+      "skinScaleColor": "cool fair",
       "soulId": "SOUL_KRIS_MAARJA_TAMM",
       "worldKey": null
     }
@@ -473,8 +597,12 @@
       "age": "38",
       "breedId": "BRD_HUMAN_PASHTUN_PASHTUN",
       "characterId": "CHA_LAILA_SORAYA_AHMADZAI",
+      "clothing": "Deep black tailored trouser suit with a dark emerald silk blouse, closed collar, black low heels, tiny matte-gold stud earrings. Hair worn in a smooth low ponytail with a precise center part.",
       "displayName": "Laila Soraya Ahmadzai",
+      "eyeColor": "very dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick black hair",
+      "skinScaleColor": "warm medium olive-brown",
       "soulId": "SOUL_LAILA_SORAYA_AHMADZAI",
       "worldKey": null
     }
@@ -488,8 +616,12 @@
       "age": "37",
       "breedId": "BRD_HUMAN_NORTHERN_HAN_CHINESE_HAN_CHINESE",
       "characterId": "CHA_LIN_XIAOYU_MEILIN",
+      "clothing": "Dark emerald tailored suit, pale cool-grey blouse, narrow black shoes, tiny silver stud earrings. Hair sleek and tucked behind the right ear so the birthmark remains visible.",
       "displayName": "Lin Xiaoyu Meilin",
+      "eyeColor": "dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "smooth straight black hair worn just below the shoulders",
+      "skinScaleColor": "light warm-beige",
       "soulId": "SOUL_LIN_XIAOYU_MEILIN",
       "worldKey": null
     }
@@ -503,8 +635,12 @@
       "age": "44",
       "breedId": "BRD_HUMAN_MEXICAN",
       "characterId": "CHA_LUCIA_MARISOL_HERNANDEZ",
+      "clothing": "Wine-red tailored pantsuit with a cream blouse, dark block heels, tiny pearl studs, hair in a polished shoulder-length wave with one side pinned back.",
       "displayName": "Lucía Marisol Hernández",
+      "eyeColor": "very dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick dark-brown wavy hair",
+      "skinScaleColor": "warm medium-brown",
       "soulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
       "worldKey": null
     }
@@ -518,8 +654,12 @@
       "age": "41",
       "breedId": "BRD_HUMAN_ENGLISH_ANGLO_ANGLO_AUSTRALIAN",
       "characterId": "CHA_MARA_ELIZABETH_MERCER",
+      "clothing": "Cream-beige sharply tailored suit with a muted forest-green silk shell, low dark heels, small silver stud earrings, plain watch. Sandy-brown hair worn in a neat collarbone-length blunt cut tucked behind one ear.",
       "displayName": "Mara Elizabeth Mercer",
+      "eyeColor": "hazel-green",
       "gender": "FEMALE",
+      "hairFurColor": "sandy-brown hair",
+      "skinScaleColor": "fair sun-warmed",
       "soulId": "SOUL_MARA_ELIZABETH_MERCER",
       "worldKey": null
     }
@@ -533,8 +673,12 @@
       "age": "53",
       "breedId": "BRD_HUMAN_EGYPTIAN_COPTIC_EGYPTIAN_ARAB",
       "characterId": "CHA_MARIAM_NEFERTARI_EL_MASRY",
+      "clothing": "Ivory tailored longline jacket over a dark teal blouse and matching straight trousers, low black heels, small gold stud earrings. Hair in a smooth low twist with visible silver at the temples.",
       "displayName": "Mariam Nefertari El-Masry",
+      "eyeColor": "very dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "dense black hair with silver beginning at both temples",
+      "skinScaleColor": "warm medium olive-brown",
       "soulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
       "worldKey": null
     }
@@ -548,8 +692,12 @@
       "age": "50",
       "breedId": "BRD_HUMAN_LOWLAND_FILIPINO_TAGALOG_VISAYAN_FILIPINO",
       "characterId": "CHA_MARISOL_ELENA_REYES_MORGAN",
+      "clothing": "Rich burgundy tailored trouser suit, pale blush silk blouse, black low heels, small gold hoop earrings, plain matte wedding band. Hair in a sleek shoulder-length cut with a side part.",
       "displayName": "Marisol Elena Reyes-Morgan",
+      "eyeColor": "dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "straight black hair with a few natural silver strands at the temples",
+      "skinScaleColor": "warm medium-brown",
       "soulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
       "worldKey": null
     }
@@ -563,8 +711,12 @@
       "age": "54",
       "breedId": "BRD_HUMAN_IBERIAN_ATLANTIC_PORTUGUESE_CREOLE_LUSO_BRAZILIAN",
       "characterId": "CHA_MATEUS_GABRIEL_RIBEIRO",
+      "clothing": "Warm dark-brown tailored suit, pale blue shirt, no tie, dark brown shoes, simple leather-strap watch. Hair controlled but naturally curly.",
       "displayName": "Mateus Gabriel Ribeiro",
+      "eyeColor": "hazel-brown",
       "gender": "MALE",
+      "hairFurColor": "thick salt-and-pepper curls; a short neatly shaped salt-and-pepper beard",
+      "skinScaleColor": "warm tan-light-brown",
       "soulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
       "worldKey": null
     }
@@ -578,8 +730,12 @@
       "age": "40",
       "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_RUSSIAN",
       "characterId": "CHA_MIKHAIL_ANDREYEVICH_SOKOLOV",
+      "clothing": "Dark graphite three-piece suit with a pale blue shirt and muted steel-grey tie, black shoes, no jewelry. Hair neatly side-combed.",
       "displayName": "Mikhail Andreyevich Sokolov",
+      "eyeColor": "blue-grey",
       "gender": "MALE",
+      "hairFurColor": "short dark-blond hair",
+      "skinScaleColor": "fair that flushes easily at the cheeks",
       "soulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
       "worldKey": null
     }
@@ -593,8 +749,12 @@
       "age": "47",
       "breedId": "BRD_HUMAN_NORDIC_DANISH",
       "characterId": "CHA_MIKKEL_ANDERS_S_RENSEN",
+      "clothing": "Slate-blue suit, pale grey shirt, dark knit tie, black shoes, minimalist steel watch. Hair neatly side-parted.",
       "displayName": "Mikkel Anders Sørensen",
+      "eyeColor": "cool blue",
       "gender": "MALE",
+      "hairFurColor": "short light-brown hair beginning to recede slightly at the temples; a close trimmed beard with a distinct small white patch under the lower lip",
+      "skinScaleColor": "fair",
       "soulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
       "worldKey": null
     }
@@ -608,8 +768,12 @@
       "age": "45",
       "breedId": "BRD_HUMAN_FRANCOPHONE_CARIBBEAN_CREOLE_HAITIAN",
       "characterId": "CHA_NADEGE_SOLANGE_PIERRE",
+      "clothing": "Rich cobalt tailored suit with a cream collarless blouse, low black heels, slim gold hoop earrings. Hair arranged in a polished low natural puff with soft texture visible.",
       "displayName": "Nadège Solange Pierre",
+      "eyeColor": "dark-brown",
       "gender": "FEMALE",
+      "hairFurColor": "dense black tightly coiled hair",
+      "skinScaleColor": "deep warm-brown",
       "soulId": "SOUL_NADEGE_SOLANGE_PIERRE",
       "worldKey": null
     }
@@ -623,8 +787,12 @@
       "age": "52",
       "breedId": "BRD_HUMAN_CANADIAN_SETTLER_INDIGENOUS_MIXED",
       "characterId": "CHA_NADIA_ROSE_CARDINAL",
+      "clothing": "Forest-green tailored trouser suit with a cream matte-silk blouse, simple dark leather shoes, small hammered-silver stud earrings. Hair in a smooth collarbone-length long bob.",
       "displayName": "Nadia Rose Cardinal",
+      "eyeColor": "deep brown",
       "gender": "FEMALE",
+      "hairFurColor": "straight dark-brown hair with early silver strands concentrated at the temples",
+      "skinScaleColor": "warm medium copper-brown",
       "soulId": "SOUL_NADIA_ROSE_CARDINAL",
       "worldKey": null
     }
@@ -638,8 +806,12 @@
       "age": "35",
       "breedId": "BRD_HUMAN_VIETNAMESE_VIETNAMESE",
       "characterId": "CHA_NGUYEN_LINH_MINH_CHAU",
+      "clothing": "Slate-blue tailored skirt suit with a cream high-neck blouse, dark low heels, tiny white-gold studs. Hair in a sleek chin-length bob tucked behind both ears.",
       "displayName": "Nguyễn Linh Minh Châu",
+      "eyeColor": "very dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "glossy black hair",
+      "skinScaleColor": "light-medium warm golden",
       "soulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
       "worldKey": null
     }
@@ -653,8 +825,12 @@
       "age": "58",
       "breedId": "BRD_HUMAN_GREEK_AEGEAN_BYZANTINE_GREEK",
       "characterId": "CHA_NIKOS_ALEXANDROS_PAPADOPOULOS",
+      "clothing": "Dark charcoal suit with a white shirt and muted bronze tie, dark brown shoes, simple old-fashioned mechanical wristwatch. Curly hair controlled but not flattened.",
       "displayName": "Nikos Alexandros Papadopoulos",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "thick silver-and-dark curly hair; a neatly trimmed full salt-and-pepper beard",
+      "skinScaleColor": "warm olive",
       "soulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
       "worldKey": null
     }
@@ -668,8 +844,12 @@
       "age": "48",
       "breedId": "BRD_HUMAN_AFRIKANER_AFRIKANER",
       "characterId": "CHA_NOELL_PIETER_SMUKK",
+      "clothing": "Cool medium-grey tailored suit, white shirt, narrow dark navy tie, black shoes, minimalist steel watch. Precise and functional rather than luxurious.",
       "displayName": "Noell Pieter Smukk",
+      "eyeColor": "pale blue-grey",
       "gender": "MALE",
+      "hairFurColor": "sandy-blond hair cut short and neat; close-trimmed sandy beard kept just above stubble length",
+      "skinScaleColor": "lightly sun-weathered fair",
       "soulId": "SOUL_NOELL_PIETER_SMUKK",
       "worldKey": null
     }
@@ -683,8 +863,12 @@
       "age": "49",
       "breedId": "BRD_HUMAN_SOUTHERN_AFRICAN_BANTU_NGUNI_SOTHO_TSWANA_ZULU",
       "characterId": "CHA_NOMVULA_THANDIWE_DLAMINI",
+      "clothing": "Deep cobalt structured suit with black blouse, subtle tonal geometric woven texture at the lapel edge, black low-heeled shoes, small matte-gold ear studs. No overt cultural costume.",
       "displayName": "Nomvula Thandiwe Dlamini",
+      "eyeColor": "very dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "dense natural black hair worn in short sculpted twists close to the head",
+      "skinScaleColor": "deep brown",
       "soulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
       "worldKey": null
     }
@@ -698,8 +882,12 @@
       "age": "57",
       "breedId": "BRD_HUMAN_LEVANTINE_ARAB_LEBANESE_ARAB",
       "characterId": "CHA_NOOR_AMAL_KHOURY",
+      "clothing": "Deep olive-black tailored suit with a soft black collarless shirt, polished dark shoes, narrow gold ear cuff on the left ear and a simple watch. Hair worn in a textured neck-length cut swept away from the face.",
       "displayName": "Noor Amal Khoury",
+      "eyeColor": "amber-brown",
       "gender": "NON_BINARY",
+      "hairFurColor": "thick salt-and-pepper dark hair with a soft natural wave",
+      "skinScaleColor": "warm olive",
       "soulId": "SOUL_NOOR_AMAL_KHOURY",
       "worldKey": null
     }
@@ -713,8 +901,12 @@
       "age": "34",
       "breedId": "BRD_HUMAN_RUSSIAN_EASTERN_EUROPEAN_UKRAINIAN",
       "characterId": "CHA_OKSANA_MYKHAILIVNA_KOVALENKO",
+      "clothing": "Black tailored suit with a pale ice-blue blouse, slim black trousers, pointed dark flats, small geometric steel earrings. Hair worn straight to just below the shoulders, center-parted.",
       "displayName": "Oksana Mykhailivna Kovalenko",
+      "eyeColor": "grey-blue",
       "gender": "FEMALE",
+      "hairFurColor": "light chestnut-brown hair",
+      "skinScaleColor": "fair peach-toned",
       "soulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
       "worldKey": null
     }
@@ -728,8 +920,12 @@
       "age": "36",
       "breedId": "BRD_HUMAN_KOREAN_KOREAN",
       "characterId": "CHA_PARK_MIN_JUN_SEONG_HO",
+      "clothing": "Midnight-blue tailored suit, white shirt open at the collar with no tie, black shoes, narrow brushed-metal watch.",
       "displayName": "Park Min-jun Seong-ho",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "straight black hair in a neat side-part",
+      "skinScaleColor": "light-medium warm",
       "soulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
       "worldKey": null
     }
@@ -743,8 +939,12 @@
       "age": "48",
       "breedId": "BRD_HUMAN_AMERICAN_SETTLER_INDIGENOUS_MIXED",
       "characterId": "CHA_RACHEL_DAWN_ADAIR",
+      "clothing": "Deep midnight-blue tailored trouser suit, soft grey blouse, low black shoes, small silver studs, simple black watch. Hair worn just below shoulder length with natural wave.",
       "displayName": "Rachel Dawn Adair",
+      "eyeColor": "dark brown",
       "gender": "FEMALE",
+      "hairFurColor": "thick dark-brown hair with a loose natural wave",
+      "skinScaleColor": "warm beige-copper",
       "soulId": "SOUL_RACHEL_DAWN_ADAIR",
       "worldKey": null
     }
@@ -758,8 +958,12 @@
       "age": "65",
       "breedId": "BRD_HUMAN_YORUBA_YORUBA",
       "characterId": "CHA_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
+      "clothing": "Immaculate black tailored suit, crisp white clerical collar shirt, polished black shoes, simple matte-silver watch. No ornate vestments.",
       "displayName": "Rev. Dr. Samuel Olufemi Adebayo",
+      "eyeColor": "dark-brown",
       "gender": "MALE",
+      "hairFurColor": "close-cropped silver hair; a neatly trimmed short silver beard and mustache",
+      "skinScaleColor": "deep warm-brown",
       "soulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
       "worldKey": null
     }
@@ -773,8 +977,12 @@
       "age": "63",
       "breedId": "BRD_HUMAN_IRISH_GAELIC_IRISH",
       "characterId": "CHA_RORY_SIOBHAN_O_SULLIVAN",
+      "clothing": "Black tailored suit with a soft charcoal waistcoat, ivory high-neck shirt, polished black shoes, and one antique-looking but unbranded silver ring. Hair worn swept back to collar length.",
       "displayName": "Rory Siobhán O'Sullivan",
+      "eyeColor": "light blue-grey",
       "gender": "NON_BINARY",
+      "hairFurColor": "thick silver-white hair that was once dark auburn",
+      "skinScaleColor": "pale neutral",
       "soulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
       "worldKey": null
     }
@@ -788,8 +996,12 @@
       "age": "56",
       "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_COLOMBIAN_MESTIZO",
       "characterId": "CHA_SASHA_VALENTINA_CARDENAS",
+      "clothing": "Warm tobacco-brown tailored suit with a black high-collar shirt, no tie, polished dark boots, one narrow bronze cuff bracelet. Hair worn in a short rounded curly shape.",
       "displayName": "Sasha Valentina Cárdenas",
+      "eyeColor": "dark hazel",
       "gender": "NON_BINARY",
+      "hairFurColor": "dense dark-brown curls threaded naturally with silver",
+      "skinScaleColor": "medium warm-brown",
       "soulId": "SOUL_SASHA_VALENTINA_CARDENAS",
       "worldKey": null
     }
@@ -803,8 +1015,12 @@
       "age": "43",
       "breedId": "BRD_HUMAN_GERMAN_DUTCH_FLEMISH_CONTINENTAL_WEST_GERMANIC_FLEMISH",
       "characterId": "CHA_SOFIE_ELISE_DE_SMET",
+      "clothing": "Deep teal tailored skirt suit with a cream blouse, dark low heels, small pearl studs, slim black watch. Hair worn in a polished shoulder-length wave.",
       "displayName": "Sofie Elise De Smet",
+      "eyeColor": "green-grey",
       "gender": "FEMALE",
+      "hairFurColor": "dark chestnut hair with a natural wave",
+      "skinScaleColor": "fair peach-toned",
       "soulId": "SOUL_SOFIE_ELISE_DE_SMET",
       "worldKey": null
     }
@@ -818,8 +1034,12 @@
       "age": "54",
       "breedId": "BRD_HUMAN_MONGOL_MONGOL",
       "characterId": "CHA_TEMUULEN_ERDENEBAT_GANBOLD",
+      "clothing": "Charcoal tailored suit with a dark copper-brown shirt, no tie, black leather shoes, narrow matte-metal watch. Severe, modern, precise rather than flashy.",
       "displayName": "Temüülen Erdenebat Ganbold",
+      "eyeColor": "dark brown",
       "gender": "MALE",
+      "hairFurColor": "straight black hair worn short with silver beginning above the ears",
+      "skinScaleColor": "warm light-medium",
       "soulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
       "worldKey": null
     }
@@ -833,8 +1053,12 @@
       "age": "50",
       "breedId": "BRD_HUMAN_HISPANIC_AMERICAN_MESTIZO_ARGENTINE",
       "characterId": "CHA_TOMAS_IGNACIO_AGUIRRE",
+      "clothing": "Dark navy suit with subtle texture, pale blue shirt, dark graphite tie, polished brown-black shoes; no jewelry beyond a simple watch.",
       "displayName": "Tomás Ignacio Aguirre",
+      "eyeColor": "dark hazel",
       "gender": "MALE",
+      "hairFurColor": "thick wavy dark hair already salt-and-pepper at the temples; neatly kept dark stubble",
+      "skinScaleColor": "light olive-tan",
       "soulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
       "worldKey": null
     }

@@ -8,8 +8,16 @@
         "breedId": "BRD_ALPINE_IBEX",
         "soulId": "SOUL_KRIS_MAARJA_TAMM",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "44",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SUMMIT",
@@ -29,8 +37,16 @@
         "breedId": "BRD_SELKIE",
         "soulId": "SOUL_INES_LEONOR_CARVALHO",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "46",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SAIL",
@@ -50,8 +66,16 @@
         "breedId": "BRD_GRIFFIN",
         "soulId": "SOUL_ARJUN_DEV_MEHTA",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "43",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_BANNER",
@@ -71,8 +95,16 @@
         "breedId": "BRD_AFRICAN_SAVANNA_ELEPHANT",
         "soulId": "SOUL_NADIA_ROSE_CARDINAL",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "52",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_TABLE",
@@ -92,8 +124,16 @@
         "breedId": "BRD_REINDEER",
         "soulId": "SOUL_TOMAS_IGNACIO_AGUIRRE",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "50",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ROAD",
@@ -113,8 +153,16 @@
         "breedId": "BRD_ARACHNE",
         "soulId": "SOUL_EMI_HARUKA_TAKAHASHI",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "39",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_BRIDGE",
@@ -134,8 +182,16 @@
         "breedId": "BRD_COMMON_OCTOPUS",
         "soulId": "SOUL_DARYA_MEHR_FARZAN",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "47",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_KNOT",
@@ -155,8 +211,16 @@
         "breedId": "BRD_CENTAUR",
         "soulId": "SOUL_PARK_MIN_JUN_SEONG_HO",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "36",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_REINS",
@@ -176,8 +240,16 @@
         "breedId": "BRD_GROUND_PANGOLIN",
         "soulId": "SOUL_NOMVULA_THANDIWE_DLAMINI",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "49",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ARMOR",
@@ -197,8 +269,16 @@
         "breedId": "BRD_AMERICAN_BISON",
         "soulId": "SOUL_FAISAL_ABDULRAHMAN_AL_HARBI",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "45",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_KEYSTONE",
@@ -218,8 +298,16 @@
         "breedId": "BRD_EUROPEAN_MANTIS",
         "soulId": "SOUL_LIN_XIAOYU_MEILIN",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "37",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_NEEDLE",
@@ -239,8 +327,16 @@
         "breedId": "BRD_AXOLOTL_BEAST",
         "soulId": "SOUL_MATEUS_GABRIEL_RIBEIRO",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "54",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SPRING",
@@ -260,8 +356,16 @@
         "breedId": "BRD_DINGO",
         "soulId": "SOUL_EVAN_JAMES_MERCER",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "41",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_MANTLE",
@@ -281,8 +385,16 @@
         "breedId": "BRD_MUMMY",
         "soulId": "SOUL_AINO_KAARINA_LEHTINEN",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "55",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_RELIQUARY",
@@ -302,8 +414,16 @@
         "breedId": "BRD_GOLEMS_GLASS",
         "soulId": "SOUL_ARI_RANGI_NGATA_MCKENZIE",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "42",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_WINDOW",
@@ -323,8 +443,16 @@
         "breedId": "BRD_NINE_BANDED_ARMADILLO",
         "soulId": "SOUL_MARIAM_NEFERTARI_EL_MASRY",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "53",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SHIELD",
@@ -344,8 +472,16 @@
         "breedId": "BRD_NILE_CROCODILE",
         "soulId": "SOUL_DAWIT_TESFAYE_BEKELE",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "48",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_GATE",
@@ -365,8 +501,16 @@
         "breedId": "BRD_URSUS_ARCTOS_BROWN_BEAR",
         "soulId": "SOUL_IMAN_ZAHRA_EL_IDRISSI",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "51",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_CRADLE",
@@ -386,8 +530,16 @@
         "breedId": "BRD_GOLEMS_KINTSUGI_CERAMIC",
         "soulId": "SOUL_MIKHAIL_ANDREYEVICH_SOKOLOV",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "40",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_MOSAIC",
@@ -407,8 +559,16 @@
         "breedId": "BRD_WESTERN_HONEY_BEE",
         "soulId": "SOUL_LUCIA_MARISOL_HERNANDEZ",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "44",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ORCHARD",
@@ -428,8 +588,16 @@
         "breedId": "BRD_KELPIE",
         "soulId": "SOUL_BRAM_WILLEM_DE_VRIES",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "56",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_STILLWATER",
@@ -449,8 +617,16 @@
         "breedId": "BRD_UNICORN",
         "soulId": "SOUL_ELIN_ASTRID_SJOBERG",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "38",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_BALM",
@@ -470,8 +646,16 @@
         "breedId": "BRD_DECAY_SPIRIT",
         "soulId": "SOUL_FARID_HASAN_RAHMAN",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "46",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_WEATHERING",
@@ -491,8 +675,16 @@
         "breedId": "BRD_HUMPBACK_ANGLERFISH",
         "soulId": "SOUL_NGUYEN_LINH_MINH_CHAU",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "35",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LANTERN",
@@ -512,8 +704,16 @@
         "breedId": "BRD_HOMING_PIGEON_BEAST",
         "soulId": "SOUL_ELI_DAVID_ROSENFELD",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "57",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_COMPASS",
@@ -533,8 +733,16 @@
         "breedId": "BRD_GOLEMS_IRON",
         "soulId": "SOUL_OKSANA_MYKHAILIVNA_KOVALENKO",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "34",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LOCK",
@@ -554,8 +762,16 @@
         "breedId": "BRD_GARGOYLE_TWO_HEADED",
         "soulId": "SOUL_LAILA_SORAYA_AHMADZAI",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "38",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SEAL",
@@ -575,8 +791,16 @@
         "breedId": "BRD_TREANT",
         "soulId": "SOUL_NIKOS_ALEXANDROS_PAPADOPOULOS",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "58",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ROOT",
@@ -596,8 +820,16 @@
         "breedId": "BRD_ELEMENTALS_CRYSTAL",
         "soulId": "SOUL_RORY_SIOBHAN_O_SULLIVAN",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "63",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_PRISM",
@@ -617,8 +849,16 @@
         "breedId": "BRD_DWARF",
         "soulId": "SOUL_MIKKEL_ANDERS_S_RENSEN",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "47",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LEDGER",
@@ -638,8 +878,16 @@
         "breedId": "BRD_DINGO",
         "soulId": "SOUL_MARA_ELIZABETH_MERCER",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "41",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_RING",
@@ -659,8 +907,16 @@
         "breedId": "BRD_DJINN",
         "soulId": "SOUL_FELIX_JOHANN_HARTMANN",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "45",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_KEY",
@@ -680,8 +936,16 @@
         "breedId": "BRD_GREATER_HORSESHOE_BAT",
         "soulId": "SOUL_SOFIE_ELISE_DE_SMET",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "43",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_CHIME",
@@ -701,8 +965,16 @@
         "breedId": "BRD_OGRE",
         "soulId": "SOUL_MARISOL_ELENA_REYES_MORGAN",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "50",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LOOM",
@@ -722,8 +994,16 @@
         "breedId": "BRD_GARGOYLE_TWO_HEADED",
         "soulId": "SOUL_JEAN_BAPTISTE_ALAIN_MBUYI",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "61",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_HARNESS",
@@ -743,8 +1023,16 @@
         "breedId": "BRD_STONE_GIANT",
         "soulId": "SOUL_AYLIN_DEFNE_DEMIR",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "46",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_PLUMBLINE",
@@ -764,8 +1052,16 @@
         "breedId": "BRD_OGRE",
         "soulId": "SOUL_GARETH_RHYS_MORGAN",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "52",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_PATCHWORK",
@@ -785,8 +1081,16 @@
         "breedId": "BRD_WHITE_BELLBIRD",
         "soulId": "SOUL_RACHEL_DAWN_ADAIR",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "48",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_BELL",
@@ -806,8 +1110,16 @@
         "breedId": "BRD_SPERM_WHALE",
         "soulId": "SOUL_EIRIK_MAGNUS_SOLBERG",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "55",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ANCHOR",
@@ -827,8 +1139,16 @@
         "breedId": "BRD_NORTH_AMERICAN_BEAVER",
         "soulId": "SOUL_KATARZYNA_MARIA_NOWAK",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "50",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_DAM",
@@ -848,8 +1168,16 @@
         "breedId": "BRD_BARN_OWL",
         "soulId": "SOUL_NOOR_AMAL_KHOURY",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "57",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_BLINDFOLD",
@@ -869,8 +1197,16 @@
         "breedId": "BRD_MINOTAUR",
         "soulId": "SOUL_ANDREI_MIHAI_POPESCU",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "53",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_HAMMER",
@@ -890,8 +1226,16 @@
         "breedId": "BRD_EURASIAN_MAGPIE",
         "soulId": "SOUL_CAMILLE_ELODIE_MOREAU",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "47",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_COIN",
@@ -911,8 +1255,16 @@
         "breedId": "BRD_GALAPAGOS_GIANT_TORTOISE",
         "soulId": "SOUL_BALINT_ADAM_KOVACS",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "51",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_HOURGLASS",
@@ -932,8 +1284,16 @@
         "breedId": "BRD_LAR_GIBBON",
         "soulId": "SOUL_NADEGE_SOLANGE_PIERRE",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "45",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ROPE",
@@ -953,8 +1313,16 @@
         "breedId": "BRD_DOPPELGANGER",
         "soulId": "SOUL_ALEJANDRO_RAFAEL_VALDES",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "43",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_MIRROR",
@@ -974,8 +1342,16 @@
         "breedId": "BRD_LION",
         "soulId": "SOUL_SASHA_VALENTINA_CARDENAS",
         "worldKey": "RUIN",
-        "age": null,
-        "gender": null
+        "age": "56",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SIGIL",
@@ -995,8 +1371,16 @@
         "breedId": "BRD_SPHINX",
         "soulId": "SOUL_FIONA_MAIRI_MACLEOD",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "62",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LENS",
@@ -1016,8 +1400,16 @@
         "breedId": "BRD_HUMAN_YORUBA_YORUBA",
         "soulId": "SOUL_REV_DR_SAMUEL_OLUFEMI_ADEBAYO",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "65",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_FLAME",
@@ -1037,8 +1429,16 @@
         "breedId": "BRD_LUNA_MOTH",
         "soulId": "SOUL_GIULIA_FRANCESCA_CONTI",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "44",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_VEIL",
@@ -1058,8 +1458,16 @@
         "breedId": "BRD_BROWNIE",
         "soulId": "SOUL_ALEX_ROWAN_WREN",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "60",
+        "gender": "NON_BINARY",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_HEARTH",
@@ -1079,8 +1487,16 @@
         "breedId": "BRD_MANDRILL",
         "soulId": "SOUL_ELENA_ISABEL_SERRANO",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "39",
+        "gender": "FEMALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_LAUREL",
@@ -1100,8 +1516,16 @@
         "breedId": "BRD_INDIAN_PEAFOWL",
         "soulId": "SOUL_DANIYAR_SERIKULY_BEKETOV",
         "worldKey": "CONCORD",
-        "age": null,
-        "gender": null
+        "age": "52",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_SPOTLIGHT",
@@ -1121,8 +1545,16 @@
         "breedId": "BRD_RED_DEER",
         "soulId": "SOUL_TEMUULEN_ERDENEBAT_GANBOLD",
         "worldKey": "SCHISM",
-        "age": null,
-        "gender": null
+        "age": "54",
+        "gender": "MALE",
+        "occupationId": null,
+        "skinScaleColor": null,
+        "hairFurColor": null,
+        "eyeColor": null,
+        "clothing": null,
+        "faction": null,
+        "primaryAttribute": null,
+        "secondaryAttribute": null
       },
       "witness": {
         "characterId": "CHA_WITNESS_OF_THE_ARENA",

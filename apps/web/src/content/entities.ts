@@ -34,7 +34,7 @@ export const entityFields = {
   Tome: ["tomeId", "title", "author"],
   Transition: ["transitionId", "name", "bookA", "bookB", "summary"],
   Witness: ["characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId", "constellationBeforeId", "constellationAfterId"],
-  WitnessDef: ["witnessDefId", "name", "department", "apparentDomain", "realDomain", "color", "architectSoulId"],
+  WitnessDef: ["witnessDefId", "name", "department", "kernelKey", "apparentDomain", "realDomain", "color", "architectSoulId", "worldKey", "bookNumber"],
 } as const;
 
 export type EntityName = keyof typeof entityFields;

@@ -51,6 +51,57 @@ describe("canonical Architect and Witness roster", () => {
     }));
   });
 
+  it("inherits Witness demographics from the source Architect with the two owner-locked gender overrides", () => {
+    for (const row of canonicalArchitectWitnessGuideData.architects) {
+      expect(row.character.skinScaleColor, `${row.character.characterId}.skinScaleColor`).toBeTruthy();
+      expect(row.character.hairFurColor, `${row.character.characterId}.hairFurColor`).toBeTruthy();
+      expect(row.character.eyeColor, `${row.character.characterId}.eyeColor`).toBeTruthy();
+      expect(row.character.clothing, `${row.character.characterId}.clothing`).toBeTruthy();
+    }
+
+    const architectById = new Map(canonicalArchitectWitnessGuideData.architects.map((row) => [row.character.characterId, row.character]));
+    const genderOverrides = new Map([
+      ["CHA_WITNESS_OF_THE_LOOM", "MALE"],
+      ["CHA_WITNESS_OF_PATCHWORK", "FEMALE"],
+    ]);
+    for (const row of canonicalArchitectWitnessGuideData.witnesses) {
+      const source = architectById.get(row.witness.architectCharacterId);
+      expect(row.character.age, `${row.character.characterId}.age`).toBe(source?.age);
+      expect(row.character.age, `${row.character.characterId}.age`).toMatch(/\S/);
+      expect(row.character.gender, `${row.character.characterId}.gender`).toBe(genderOverrides.get(row.character.characterId) ?? source?.gender);
+    }
+  });
+
+  it("locks the complete Hammer regression chain without inventing unauthored appearance", () => {
+    const architect = canonicalArchitectWitnessGuideData.architects.find(({ character }) => character.characterId === "CHA_ANDREI_MIHAI_POPESCU");
+    const witness = canonicalArchitectWitnessGuideData.witnesses.find(({ character }) => character.characterId === "CHA_WITNESS_OF_THE_HAMMER");
+    const definition = canonicalArchitectWitnessGuideData.witnessDefs.find(({ witnessDefId }) => witnessDefId === "WDF_WITNESS_OF_THE_HAMMER");
+    const soul = canonicalArchitectWitnessGuideData.souls.find(({ soulId }) => soulId === "SOUL_ANDREI_MIHAI_POPESCU");
+
+    expect(architect).toMatchObject({ architect: { department: "JUSTICE" }, character: { displayName: "Andrei Mihai Popescu", gender: "MALE" } });
+    expect(witness).toMatchObject({
+      character: { age: "53", breedId: "BRD_MINOTAUR", displayName: "The Witness of the Hammer", gender: "MALE", soulId: "SOUL_ANDREI_MIHAI_POPESCU", worldKey: "RUIN" },
+      witness: { architectCharacterId: "CHA_ANDREI_MIHAI_POPESCU", trueFlawName: "Retaliation", witnessDefId: "WDF_WITNESS_OF_THE_HAMMER" },
+    });
+    expect(definition).toMatchObject({ architectSoulId: "SOUL_ANDREI_MIHAI_POPESCU", department: "JUSTICE", kernelKey: "REDRESS", apparentDomain: "Restitution", realDomain: "Retaliation", worldKey: "RUIN" });
+    expect(soul?.name).toBe("Andrei Mihai Popescu");
+    for (const field of ["skinScaleColor", "hairFurColor", "eyeColor", "clothing"] as const) expect(witness?.character[field]).toBeNull();
+  });
+
+  it("defines the complete first-class WitnessDef persistence shape and valid world/book distribution", () => {
+    const canonicalKeys = Object.keys(canonicalArchitectWitnessGuideData.witnessDefs[0]!).sort();
+    expect(canonicalKeys).toEqual([
+      "apparentDomain", "architectSoulId", "bookNumber", "color", "department", "kernelKey", "name", "realDomain", "witnessDefId", "worldKey",
+    ]);
+    const perWorld = Map.groupBy(canonicalArchitectWitnessGuideData.witnessDefs, ({ worldKey }) => worldKey);
+    expect([...perWorld.values()].map((definitions) => definitions.length).sort()).toEqual([18, 18, 18]);
+    for (const definition of canonicalArchitectWitnessGuideData.witnessDefs) {
+      expect(definition.kernelKey.trim(), definition.witnessDefId).not.toBe("");
+      expect(definition.bookNumber, definition.witnessDefId).toBeGreaterThanOrEqual(1);
+      expect(definition.bookNumber, definition.witnessDefId).toBeLessThanOrEqual(18);
+    }
+  });
+
   it("uses deterministic Character and Soul identities without duplicating Guide forms", () => {
     expect(canonicalCharacterId("Kris Maarja Tamm")).toBe("CHA_KRIS_MAARJA_TAMM");
     expect(canonicalSoulId("Kris Maarja Tamm")).toBe("SOUL_KRIS_MAARJA_TAMM");

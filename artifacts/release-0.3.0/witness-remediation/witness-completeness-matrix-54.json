@@ -1,0 +1,1955 @@
+{
+  "counts": {
+    "deterministicFieldsComplete": 54,
+    "rows": 54,
+    "unresolvedCharacterFieldEntries": 432,
+    "unresolvedRelationEntries": 162
+  },
+  "rows": [
+    {
+      "displayName": "The Witness of Patchwork",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "resolved": {
+        "Age": true,
+        "ApparentDomain": true,
+        "BookNumber": true,
+        "Breed": true,
+        "Character": true,
+        "Gender": true,
+        "Kernel": true,
+        "RealDomain": true,
+        "Soul": true,
+        "SourceArchitectCharacter": true,
+        "SourceArchitectSoul": true,
+        "SpectralColor": true,
+        "TrueFlaw": true,
+        "WitnessDef": true,
+        "World": true
+      },
+      "unresolvedCharacterFields": [
+        "occupationId",
+        "skinScaleColor",
+        "hairFurColor",
+        "eyeColor",
+        "clothing",
+        "faction",
+        "primaryAttribute",
+        "secondaryAttribute"
+      ],
+      "unresolvedRelations": [
+        "legendaryRewardId",
+        "constellationBeforeId",
+        "constellationAfterId"
+      ],
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    }
+  ],
+  "schemaVersion": "final-witness-completeness-matrix-v1"
+}

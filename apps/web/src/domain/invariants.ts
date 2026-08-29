@@ -19,6 +19,7 @@ export const witnessDefSchema = z.object({
   witnessDefId: witnessDefIdSchema,
   name: z.string().min(1),
   department: z.enum(ArchitectDepartment),
+  kernelKey: z.string().trim().min(1),
   apparentDomain: z.string().min(1),
   realDomain: z.string().min(1),
   color: z.object({
@@ -27,6 +28,8 @@ export const witnessDefSchema = z.object({
     WHITE: z.number().min(0).max(100),
   }).strict(),
   architectSoulId: z.string().regex(/^SOUL_[A-Z0-9]+(?:_[A-Z0-9]+)*$/),
+  worldKey: z.enum(PrismaWorldKey),
+  bookNumber: z.number().int().min(1).max(18),
 }).strict().superRefine((definition, context) => {
   const total = Object.values(definition.color).reduce((sum, percentage) => sum + percentage, 0);
   if (Math.abs(total - 100) > 0.000001) context.addIssue({ code: "custom", message: "WitnessDef color percentages must total 100." });

@@ -1,16 +1,17 @@
 import lookupData from "../data/lookup-presentation.json";
+import { breedGroupLabel } from "./worldbuilding";
+import { ownerContextLabel } from "./owner-presentation";
 
 type LookupRule = {
   primary?: string;
   primaryTemplate?: string;
-  secondary?: string;
-  secondaryDerived?: string;
-  context?: string[];
+  technicalId?: string;
+  context?: Array<string | { label: string; path: string }>;
 };
 
 export type LookupPresentation = {
   primary: string;
-  secondary: string | null;
+  technicalId: string | null;
   context: string[];
 };
 
@@ -50,7 +51,6 @@ function presentationForRules(
   availableRules: Record<string, LookupRule>,
   entity: string,
   record: Record<string, unknown> | null | undefined,
-  options: { derivedSecondary?: string | null } = {},
 ): LookupPresentation | null {
   if (record == null) return null;
   const rule = availableRules[entity];
@@ -62,16 +62,17 @@ function presentationForRules(
       : null;
   if (!primary) throw new LookupPresentationError(`${entity} lookup has no primary presentation rule.`);
 
-  let secondary: string | null = null;
-  if (rule.secondary) secondary = requiredPath(record, entity, rule.secondary);
-  else if (rule.secondaryDerived) secondary = displayValue(options.derivedSecondary);
+  const technicalId = rule.technicalId ? requiredPath(record, entity, rule.technicalId) : null;
 
   return {
     primary,
-    secondary,
-    context: (rule.context ?? []).flatMap((path) => {
-      const value = displayValue(pathValue(record, path));
-      return value ? [value] : [];
+    technicalId,
+    context: (rule.context ?? []).flatMap((contextRule) => {
+      const path = typeof contextRule === "string" ? contextRule : contextRule.path;
+      const rawValue = pathValue(record, path);
+      const value = displayValue(entity === "Breed" && path === "groupId" && typeof rawValue === "string" ? breedGroupLabel(rawValue) : rawValue);
+      const ownerValue = value ? ownerContextLabel(path, value) : null;
+      return ownerValue ? [typeof contextRule === "string" ? ownerValue : `${contextRule.label}: ${ownerValue}`] : [];
     }),
   };
 }
@@ -79,9 +80,8 @@ function presentationForRules(
 export function lookupPresentationFor(
   entity: string,
   record: Record<string, unknown> | null | undefined,
-  options: { derivedSecondary?: string | null } = {},
 ): LookupPresentation | null {
-  return presentationForRules(rules, entity, record, options);
+  return presentationForRules(rules, entity, record);
 }
 
 export function ownerFormLookupPresentationFor(
@@ -93,7 +93,7 @@ export function ownerFormLookupPresentationFor(
 
 export function lookupSearchText(presentation: LookupPresentation | null): string {
   if (!presentation) return "";
-  return [presentation.primary, presentation.secondary, ...presentation.context]
+  return [presentation.primary, presentation.technicalId, ...presentation.context]
     .filter((value): value is string => Boolean(value))
     .join(" ")
     .toLocaleLowerCase();

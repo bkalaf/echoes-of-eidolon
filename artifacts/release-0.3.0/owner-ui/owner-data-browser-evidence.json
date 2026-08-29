@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "owner-data-browser-evidence-v1",
+  "status": "PASS",
+  "viewport": {
+    "width": 1600,
+    "height": 900
+  },
+  "assertions": {
+    "characterAndWitnessSaveAtomic": true,
+    "humanizedEnumDropdowns": true,
+    "lookupClearAndRestore": true,
+    "lookupSearchByCanonicalId": true,
+    "preservedSelectionAfterReload": true,
+    "responsiveTableOverflowReachable": true,
+    "technicalIdsCopyableAfterDisclosure": true,
+    "technicalIdsHiddenByDefault": true,
+    "rawOwnerTokenOccurrences": 0,
+    "witnessCuratedColumns": true,
+    "witnessDefCuratedColumns": true,
+    "witnessHammerSemanticChainVisible": true
+  },
+  "screenshots": [
+    "screenshots/witness-table-1600x900.png",
+    "screenshots/witness-detail-1600x900.png",
+    "screenshots/witness-edit-character-section-1600x900.png",
+    "screenshots/witness-open-relation-lookup-1600x900.png",
+    "screenshots/witness-humanized-enums-1600x900.png",
+    "screenshots/witness-def-table-1600x900.png",
+    "screenshots/witness-def-detail-1600x900.png",
+    "screenshots/witness-table-responsive-390x844.png"
+  ]
+}

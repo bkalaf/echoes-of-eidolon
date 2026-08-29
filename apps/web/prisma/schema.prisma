@@ -1829,14 +1829,18 @@ model WitnessDef {
   witnessDefId    String              @id
   name            String
   department      ArchitectDepartment @unique
+  kernelKey       String
   apparentDomain  String
   realDomain      String
   color           Json
   architectSoulId String
+  worldKey        WorldKey
+  bookNumber      Int
   architectSoul   Soul                @relation(fields: [architectSoulId], references: [soulId], onDelete: Restrict)
   witnesses       Witness[]
 
   @@index([architectSoulId])
+  @@index([worldKey, bookNumber])
 }
 
 model Witness {

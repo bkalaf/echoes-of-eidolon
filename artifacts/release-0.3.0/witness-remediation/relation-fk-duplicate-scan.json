@@ -1,0 +1,89 @@
+{
+  "counts": {
+    "duplicatePresentations": 0,
+    "pairs": 10
+  },
+  "rows": [
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "characterId",
+      "relation": "character",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "witnessDefId",
+      "relation": "witnessDef",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "architectCharacterId",
+      "relation": "architect",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "legendaryRewardId",
+      "relation": "legendaryReward",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "constellationBeforeId",
+      "relation": "constellationBefore",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Witness",
+      "foreignKey": "constellationAfterId",
+      "relation": "constellationAfter",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "WitnessDef",
+      "foreignKey": "architectSoulId",
+      "relation": "architectSoul",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Character",
+      "foreignKey": "breedId",
+      "relation": "breed",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Character",
+      "foreignKey": "occupationId",
+      "relation": "occupation",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    },
+    {
+      "duplicatePresentations": 0,
+      "entity": "Character",
+      "foreignKey": "soulId",
+      "relation": "soul",
+      "visibleForeignKeyControls": 1,
+      "visibleRelationControls": 0
+    }
+  ],
+  "schemaVersion": "final-witness-relation-duplicate-scan-v1"
+}

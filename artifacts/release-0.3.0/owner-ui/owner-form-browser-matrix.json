@@ -5,63 +5,63 @@
   "scenarios": [
     {
       "name": "Character",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Architect",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "WitnessDef",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Witness",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "CompanionDef",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Companion",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Breed",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Species",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Culture",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "unrelated-generic-entities",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Component and static gates are recorded separately; this does not claim a browser run."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic form contract passed its required 1600x900 Chromium evidence run."
     }
   ]
 }

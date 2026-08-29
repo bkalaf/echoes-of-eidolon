@@ -5,7 +5,7 @@ import guidesData from "../data/architect-witness-guide/guides.json";
 import soulsData from "../data/architect-witness-guide/souls.json";
 import witnessDefsData from "../data/architect-witness-guide/witness_defs.json";
 import witnessesData from "../data/architect-witness-guide/witnesses.json";
-import { ArchitectDepartment, WorldKey } from "../generated/prisma/enums";
+import { AbilityType, ArchitectDepartment, Faction, WorldKey } from "../generated/prisma/enums";
 import { canonicalIdToken } from "./worldbuilding";
 
 const identity = z.string().trim().min(1);
@@ -19,6 +19,14 @@ const characterSchema = z.object({
   worldKey: z.enum(WorldKey).nullable(),
   age: identity.nullable(),
   gender: identity.nullable(),
+  occupationId: identity.regex(/^OCC_[A-Z0-9]+(?:_[A-Z0-9]+)*$/).nullable().optional(),
+  skinScaleColor: z.string().trim().min(1).max(200).nullable().optional(),
+  hairFurColor: z.string().trim().min(1).max(200).nullable().optional(),
+  eyeColor: z.string().trim().min(1).max(200).nullable().optional(),
+  clothing: z.string().trim().min(1).max(2_000).nullable().optional(),
+  faction: z.enum(Faction).nullable().optional(),
+  primaryAttribute: z.enum(AbilityType).nullable().optional(),
+  secondaryAttribute: z.enum(AbilityType).nullable().optional(),
 }).strict();
 
 const soulSchema = z.object({
@@ -120,6 +128,11 @@ const compositePresentations = [
   ["The Witness of the Loom", "The Witness of Patchwork"],
 ] as const;
 
+export const witnessGenderOverrides = Object.freeze({
+  CHA_WITNESS_OF_THE_LOOM: "MALE",
+  CHA_WITNESS_OF_PATCHWORK: "FEMALE",
+} as const);
+
 export function canonicalCharacterId(displayName: string): string {
   const canonicalName = displayName.replace(/^The Witness\b/, "Witness");
   const token = canonicalIdToken(canonicalName);
@@ -161,6 +174,9 @@ function validateCanonicalInput(): void {
     assertCanonicalCharacterBreedPolicy(architect.character);
     if (architect.character.characterId !== architect.architect.characterId) throw new Error("Architect subtype ID must equal its Character ID.");
     if (!souls.has(architect.character.soulId)) throw new Error(`Architect ${architect.character.characterId} references an unknown Soul.`);
+    for (const field of ["skinScaleColor", "hairFurColor", "eyeColor", "clothing"] as const) {
+      if (!architect.character[field]) throw new Error(`Architect ${architect.character.characterId} is missing authoritative ${field}.`);
+    }
   }
   for (const row of parsed.witnesses) {
     assertCanonicalCharacterBreedPolicy(row.character);
@@ -172,11 +188,24 @@ function validateCanonicalInput(): void {
     if (row.character.soulId !== source.character.soulId || definition.architectSoulId !== source.character.soulId) {
       throw new Error(`Witness ${row.character.characterId}, its source Architect, and its WitnessDef must reference the same Soul.`);
     }
+    const expectedGender = witnessGenderOverrides[row.character.characterId as keyof typeof witnessGenderOverrides] ?? source.character.gender;
+    if (row.character.gender !== expectedGender) throw new Error(`Witness ${row.character.characterId} has gender ${row.character.gender ?? "null"}; expected ${expectedGender ?? "null"}.`);
+    if (row.character.age !== source.character.age) throw new Error(`Witness ${row.character.characterId} must preserve its source Architect age.`);
+    for (const field of ["occupationId", "skinScaleColor", "hairFurColor", "eyeColor", "clothing", "faction", "primaryAttribute", "secondaryAttribute"] as const) {
+      if (!(field in row.character) || row.character[field] !== null) throw new Error(`Witness ${row.character.characterId} must explicitly preserve unresolved ${field} as null.`);
+    }
     if (row.character.characterId === source.character.characterId) throw new Error("Architect and Witness must remain distinct Characters.");
   }
   for (const character of parsed.guides.charactersToEnsure) assertCanonicalCharacterBreedPolicy(character);
   for (const definition of parsed.witnessDefs) {
     if (!souls.has(definition.architectSoulId)) throw new Error(`WitnessDef ${definition.witnessDefId} references an unknown Architect Soul.`);
+  }
+  for (const worldKey of Object.values(WorldKey)) {
+    const worldDefinitions = parsed.witnessDefs.filter((definition) => definition.worldKey === worldKey);
+    if (worldDefinitions.length !== 18) throw new Error(`Canonical input must contain 18 WitnessDefs for ${worldKey}.`);
+    if (worldDefinitions.some(({ bookNumber, kernelKey }) => bookNumber < 1 || bookNumber > 18 || !kernelKey.trim())) {
+      throw new Error(`Canonical WitnessDef book or kernel metadata is invalid for ${worldKey}.`);
+    }
   }
   const knownCharacterIds = new Set([
     ...parsed.architects.map(({ character }) => character.characterId),

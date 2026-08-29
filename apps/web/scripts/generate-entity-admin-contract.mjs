@@ -65,7 +65,7 @@ for (const [entity, registeredFields] of [...registered].sort(([left], [right]) 
   entities[entity] = {
     auditFields: auditFields.map((field) => ({
       editability: registeredFields.includes(field.name) ? "EDITABLE" : "EXCLUDED",
-      exclusionReason: registeredFields.includes(field.name) ? null : field.kind === "relation" ? "Relation is edited through its owning canonical foreign-key field or workflow." : "Persisted field is audited but intentionally excluded from this generic form.",
+      exclusionReason: registeredFields.includes(field.name) ? null : field.kind === "relation" ? "OWNED_BY_FOREIGN_KEY" : "SPECIALIZED_WORKFLOW",
       enumName: field.kind === "enum" ? field.type : null,
       isList: field.isList,
       isRequired: field.isRequired,

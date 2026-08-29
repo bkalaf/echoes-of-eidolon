@@ -20,6 +20,10 @@ export const BREED_GROUP_IDS = Object.freeze(breedGroups.map(({ groupId }) => gr
 export type BreedGroupId = (typeof breedGroups)[number]["groupId"];
 export const BREED_GROUPS = Object.freeze(Object.fromEntries(breedGroups.map((group) => [group.groupId, Object.freeze(group)]))) as Readonly<Record<BreedGroupId, Readonly<{ groupId: BreedGroupId; speciesKind: SpeciesKind; label: string }>>>;
 
+export function breedGroupLabel(groupId: string): string {
+  return BREED_GROUPS[groupId as BreedGroupId]?.label ?? groupId;
+}
+
 const taxonomyOrder = ["KINGDOM", "PHYLUM", "CLASS", "ORDER", "FAMILY", "GENUS", "SPECIES"] as const;
 const taxonomyTypes = new Set<string>(taxonomyOrder);
 

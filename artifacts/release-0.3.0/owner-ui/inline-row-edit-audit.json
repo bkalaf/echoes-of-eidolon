@@ -1,7 +1,7 @@
 {
   "schemaVersion": "echoes-owner-row-edit-audit-v1",
-  "generatedAt": "2026-08-20T17:14:36.508Z",
-  "status": "LOCAL_PASS_BROWSER_BLOCKED",
+  "generatedAt": "2026-08-29T03:01:19.091Z",
+  "status": "PASS",
   "editableRegistryTableCount": 35,
   "inlineRowContract": {
     "editRowLabel": true,
@@ -258,7 +258,7 @@
     }
   ],
   "browserEvidence": {
-    "status": "BLOCKED",
-    "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE"
+    "status": "PASS",
+    "artifact": "owner-data-browser-evidence.json"
   }
 }

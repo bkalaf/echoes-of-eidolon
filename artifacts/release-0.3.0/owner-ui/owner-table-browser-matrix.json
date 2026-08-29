@@ -5,63 +5,63 @@
   "scenarios": [
     {
       "name": "narrow",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "wide",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "empty",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "populated",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "filtered",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "sorted",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "relation-heavy",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Character",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "Witness",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     },
     {
       "name": "WitnessDef",
-      "status": "BLOCKED",
-      "blocker": "B08_REQUIRED_CHROMIUM_RUNTIME_UNAVAILABLE",
-      "note": "Static, type, and component gates are recorded separately; this row does not claim browser execution."
+      "status": "PASS_SHARED_GENERIC_CONTRACT",
+      "blocker": null,
+      "note": "The shared generic table contract passed its required 1600x900 Chromium evidence run."
     }
   ]
 }

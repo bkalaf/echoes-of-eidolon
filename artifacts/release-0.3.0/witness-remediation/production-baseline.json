@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "final-witness-production-state-v1",
+  "capturedAt": "2026-08-29T03:20:06Z",
+  "environment": "production",
+  "revision": "9d48a26d1cc8e1661d3c1ca4428c6a6411a6bcb8",
+  "gitStatusLines": 0,
+  "service": "active",
+  "migrations": {
+    "total": 48,
+    "finished": 48,
+    "unfinished": 0
+  },
+  "counts": {
+    "Soul": 58,
+    "Character": 112,
+    "Architect": 56,
+    "WitnessDef": 54,
+    "Witness": 54,
+    "LegendaryReward": 0,
+    "Constellation": 0
+  },
+  "witnessNulls": {
+    "age": 54,
+    "gender": 54,
+    "legendaryRewardId": 54,
+    "constellationBeforeId": 54,
+    "constellationAfterId": 54
+  },
+  "witnessDefMetadataColumnsPresent": 0,
+  "source": "Read-only SSH, systemd, Git, and PostgreSQL checks executed before deployment."
+}

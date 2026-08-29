@@ -101,7 +101,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -135,7 +135,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "witnesses",
@@ -144,7 +144,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -455,7 +455,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "culture",
@@ -464,7 +464,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "personality",
@@ -473,7 +473,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "parentBreed",
@@ -482,7 +482,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "childBreeds",
@@ -491,7 +491,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "characters",
@@ -500,7 +500,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "populationEvents",
@@ -509,7 +509,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "dominantInWorlds",
@@ -518,7 +518,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "researchValues",
@@ -527,7 +527,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -678,7 +678,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "occupation",
@@ -687,7 +687,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "soul",
@@ -696,7 +696,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "architect",
@@ -705,7 +705,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "witness",
@@ -714,7 +714,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "companion",
@@ -723,7 +723,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "concordFor",
@@ -732,7 +732,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "ruinFor",
@@ -741,7 +741,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "schismFor",
@@ -750,7 +750,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -811,7 +811,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "research",
@@ -820,7 +820,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "knowledgeItems",
@@ -829,7 +829,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "disclosureCitations",
@@ -838,7 +838,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -872,7 +872,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "companionDef",
@@ -881,7 +881,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "partyMemberships",
@@ -890,7 +890,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -978,7 +978,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "ruinCharacter",
@@ -987,7 +987,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "schismCharacter",
@@ -996,7 +996,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "soul",
@@ -1005,7 +1005,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "companions",
@@ -1014,7 +1014,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "transformationBinding",
@@ -1023,7 +1023,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1075,7 +1075,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "afterWitnesses",
@@ -1084,7 +1084,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1145,7 +1145,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "settlementWorlds",
@@ -1154,7 +1154,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1240,7 +1240,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "substitutionsTo",
@@ -1249,7 +1249,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1301,7 +1301,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "replacementInterlude",
@@ -1310,7 +1310,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1371,7 +1371,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "blocks",
@@ -1380,7 +1380,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "disclosures",
@@ -1389,7 +1389,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1432,7 +1432,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1475,7 +1475,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1561,7 +1561,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1665,7 +1665,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "gameSessions",
@@ -1674,7 +1674,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1726,7 +1726,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1778,7 +1778,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "breedEvidence",
@@ -1787,7 +1787,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1839,7 +1839,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "worlds",
@@ -1848,7 +1848,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "soundtrackAssignments",
@@ -1857,7 +1857,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -1936,7 +1936,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "breed",
@@ -1945,7 +1945,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2015,7 +2015,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "dominantBreed",
@@ -2024,7 +2024,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "culture",
@@ -2033,7 +2033,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "populationEvents",
@@ -2042,7 +2042,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "cities",
@@ -2051,7 +2051,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "gameSessions",
@@ -2060,7 +2060,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2130,7 +2130,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "namingEligibility",
@@ -2139,7 +2139,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2173,7 +2173,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "witnessDefs",
@@ -2182,7 +2182,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "companionDefs",
@@ -2191,7 +2191,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2270,7 +2270,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2466,7 +2466,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2674,7 +2674,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "witnessDef",
@@ -2683,7 +2683,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "architect",
@@ -2692,7 +2692,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "legendaryReward",
@@ -2701,7 +2701,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "constellationBefore",
@@ -2710,7 +2710,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "constellationAfter",
@@ -2719,7 +2719,7 @@
           "isRequired": false,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     },
@@ -2798,7 +2798,7 @@
           "isRequired": true,
           "isList": false,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         },
         {
           "name": "witnesses",
@@ -2807,7 +2807,7 @@
           "isRequired": true,
           "isList": true,
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow."
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY"
         }
       ]
     }

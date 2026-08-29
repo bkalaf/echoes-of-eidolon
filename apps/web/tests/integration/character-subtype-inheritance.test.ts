@@ -34,6 +34,7 @@ describe("Character subtype shared-primary-key persistence", () => {
     expect(adminContract.entities.Architect?.fields.map((field) => field.name)).toEqual(["characterId", "department"]);
     expect(adminContract.entities.Witness?.idField).toBe("characterId");
     expect(adminContract.entities.Witness?.fields.map((field) => field.name)).toEqual(["characterId", "witnessDefId", "trueFlawName", "architectCharacterId", "legendaryRewardId", "constellationBeforeId", "constellationAfterId"]);
+    expect(adminContract.entities.WitnessDef?.fields.map((field) => field.name)).toEqual(["witnessDefId", "name", "department", "kernelKey", "apparentDomain", "realDomain", "color", "architectSoulId", "worldKey", "bookNumber"]);
     expect(adminContract.entities.Companion?.idField).toBe("characterId");
   });
 

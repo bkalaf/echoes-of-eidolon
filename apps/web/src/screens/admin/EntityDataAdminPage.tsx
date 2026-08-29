@@ -1,18 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { FiniteChipSelection } from "../../components/ui/controls";
 import { DataTable, type DataTableColumnDef } from "../../components/DataTable";
-import { LookupDisplay } from "../../components/LookupDisplay";
 import { OwnerFieldValue } from "../../components/OwnerFieldValue";
+import { RelationAutocomplete } from "../../components/RelationAutocomplete";
 import { entityFields, entityForPath, type EntityName } from "../../content/entities";
 import contractData from "../../data/entity-admin-contract.json";
 import { adminFieldControl, validateAdminEntityDraft } from "../../domain/entity-form";
-import { lookupSearchText, LookupPresentationError, ownerFormLookupPresentationFor } from "../../domain/lookup-presentation";
-import { buildOwnerFormPlan, ownerFormSections, subtypeParentEntity, type OwnerFormFieldPlan } from "../../domain/owner-form-contract";
+import { buildOwnerFormPlan, humanizeOwnerFieldName, ownerFormSections, ownerParentSectionFor, subtypeParentEntity, type OwnerFormFieldPlan } from "../../domain/owner-form-contract";
+import { canonicalizeOwnerToken, humanizeOwnerToken, ownerEnumLabel, ownerNullLabel } from "../../domain/owner-presentation";
 import { clothingSections, formatClothingSections, parseClothingSections } from "../../domain/presentation-audit";
-import { orderOwnerTableFields } from "../../domain/owner-table-field-order";
-import { canonicalEntityId, type CanonicalWorldbuildingEntityKind } from "../../domain/worldbuilding";
+import { breedGroupLabel, canonicalEntityId, type CanonicalWorldbuildingEntityKind } from "../../domain/worldbuilding";
 import { pageManifest, type PageManifestEntry } from "../../lib/page-manifest";
 
 interface AdminField {
@@ -100,7 +99,7 @@ function SpectralColorEditor({ disabled, value, onChange }: { disabled: boolean;
   const normalized = Object.fromEntries(spectralChannels.map((channel) => [channel, Number(parsed[channel] ?? 0)])) as Record<typeof spectralChannels[number], number>;
   const total = spectralChannels.reduce((sum, channel) => sum + normalized[channel], 0);
   const update = (channel: typeof spectralChannels[number], nextValue: string) => onChange(JSON.stringify({ ...normalized, [channel]: Number(nextValue) }, null, 2));
-  return <fieldset className="field span-2"><legend>Color percentages</legend><div className="form-grid">{spectralChannels.map((channel) => <label className="field" key={channel}>{channel} %<input className="input" disabled={disabled} max={100} min={0} step="0.01" type="number" value={normalized[channel]} onChange={(event) => update(channel, event.target.value)} /></label>)}</div><output aria-label="Spectral color total" className={Math.abs(total - 100) < 0.0001 ? "notice notice--good" : "notice notice--bad"}>Total: {total}% {Math.abs(total - 100) < 0.0001 ? "— valid" : "— must equal 100%"}</output></fieldset>;
+  return <fieldset className="field span-2"><legend>Color percentages</legend><div className="form-grid">{spectralChannels.map((channel) => <label className="field" key={channel}>{humanizeOwnerToken(channel)} %<input className="input" disabled={disabled} max={100} min={0} step="0.01" type="number" value={normalized[channel]} onChange={(event) => update(channel, event.target.value)} /></label>)}</div><output aria-label="Spectral color total" className={Math.abs(total - 100) < 0.0001 ? "notice notice--good" : "notice notice--bad"}>Total: {total}% {Math.abs(total - 100) < 0.0001 ? "— valid" : "— must equal 100%"}</output></fieldset>;
 }
 
 async function readLookupOptions(relationType: string): Promise<{ idField: string; records: Record<string, unknown>[] }> {
@@ -117,40 +116,55 @@ async function readLookupOptions(relationType: string): Promise<{ idField: strin
 }
 
 function RelationLookupEditor({ disabled, initialRecord, label, nullable, relationType, value, onChange }: { disabled: boolean; initialRecord?: Record<string, unknown>; label: string; nullable: boolean; relationType: string; value: string; onChange: (value: string) => void }) {
-  const [search, setSearch] = useState("");
+  const [requested, setRequested] = useState(false);
   const options = useQuery({
-    enabled: !disabled,
+    enabled: !disabled && requested,
     queryFn: () => readLookupOptions(relationType),
     queryKey: ["owner-form-lookup", relationType],
   });
-  const records = options.data?.records ?? [];
-  const selectedRecord = records.find((record) => String(record[options.data?.idField ?? ""]) === value) ?? initialRecord;
-  let selectedPresentation = null;
-  let presentationError: string | null = null;
-  try { selectedPresentation = ownerFormLookupPresentationFor(relationType, selectedRecord); }
-  catch (error) { presentationError = error instanceof LookupPresentationError ? error.message : String(error); }
-  const matching = records.flatMap((record) => {
-    try {
-      const presentation = ownerFormLookupPresentationFor(relationType, record);
-      return !search.trim() || lookupSearchText(presentation).includes(search.trim().toLocaleLowerCase()) ? [{ presentation, record }] : [];
-    } catch { return []; }
-  }).slice(0, 20);
-  return <fieldset className="field span-2" disabled={disabled}><legend>{label}</legend><LookupDisplay presentation={selectedPresentation} /><label className="field">Search {relationType} by name or canonical ID<input className="input" type="search" value={search} onChange={(event) => setSearch(event.target.value)} /></label>{options.isPending && <small>Loading {relationType} choices…</small>}{options.error && <p className="notice notice--bad" role="alert">{options.error.message}</p>}{presentationError && <p className="notice notice--bad" role="alert">{presentationError}</p>}<div className="lookup-option-list">{matching.map(({ presentation, record }) => { const id = String(record[options.data?.idField ?? ""]); return <button aria-label={`Select ${presentation?.primary ?? id}`} className="lookup-option" key={id} onClick={() => { onChange(id); setSearch(""); }} type="button"><LookupDisplay presentation={presentation} /></button>; })}</div>{nullable && value && <button className="button" onClick={() => onChange("")} type="button">Clear {label}</button>}</fieldset>;
+  return <RelationAutocomplete disabled={disabled} error={options.error} idField={options.data?.idField ?? ""} initialRecord={initialRecord} label={label} loading={requested && options.isPending} nullable={nullable} records={options.data?.records ?? []} relationType={relationType} value={value} onChange={onChange} onOpen={() => setRequested(true)} />;
+}
+
+function TechnicalIdValue({ value }: { value: unknown }) {
+  const technicalId = display(value);
+  const [copied, setCopied] = useState(false);
+  return <span className="technical-id-value"><code>{technicalId}</code><button className="button button--small" onClick={() => {
+    void navigator.clipboard?.writeText(technicalId).then(() => setCopied(true));
+  }} type="button">{copied ? "Copied" : "Copy ID"}</button></span>;
 }
 
 function ReadOnlyOwnerField({ field, value }: { field: OwnerFormFieldPlan; value: unknown }) {
-  return <div className="field owner-form-readonly"><span>{field.name}</span><OwnerFieldValue field={field} value={value} />{field.exclusionReason && <small>{field.exclusionReason}</small>}</div>;
+  const displayField = field.relationType ? { ...field, isList: false, kind: "relation" as const, type: field.relationType } : field;
+  if (field.technical) return <details className="field owner-form-readonly technical-field"><summary>{field.label}</summary><TechnicalIdValue value={value} /></details>;
+  return <div className="field owner-form-readonly"><span>{field.label}</span><OwnerFieldValue field={displayField} value={value} /></div>;
+}
+
+function OwnerFormSection({ children, section }: { children: ReactNode; section: string }) {
+  const [expanded, setExpanded] = useState(false);
+  if (section === "Technical details") {
+    return <section aria-label={section} className="span-2 owner-form-section owner-form-section--technical" role="group">
+      <button aria-expanded={expanded} className="button button--small technical-details-toggle" onClick={() => setExpanded((current) => !current)} type="button">Technical details</button>
+      {expanded && children}
+    </section>;
+  }
+  return <fieldset className="span-2 owner-form-section"><legend>{section}</legend>{children}</fieldset>;
+}
+
+function plannedValue(record: Record<string, unknown> | undefined, field: OwnerFormFieldPlan): unknown {
+  return field.relationField ? record?.[field.relationField] : record?.[field.name];
 }
 
 function AdminFieldEditor({ contract, controlOverride, disabled, entity, field, initialRelation, labelOverride, relationType, value, onChange }: { contract: AdminContract; controlOverride?: OwnerFormFieldPlan["control"]; disabled: boolean; entity: EntityName; field: AdminField; initialRelation?: Record<string, unknown>; labelOverride?: string; relationType?: string | null; value: string; onChange: (value: string) => void }) {
-  const label = `${labelOverride ?? field.name}${field.isRequired ? " *" : ""}`;
+  const label = `${labelOverride ?? humanizeOwnerFieldName(field.name)}${field.isRequired ? " *" : ""}`;
   const control = controlOverride ?? adminFieldControl(entity, contract.idField, field);
   if (control === "RELATION_LOOKUP" && relationType) return <RelationLookupEditor disabled={disabled} initialRecord={initialRelation} label={label} nullable={!field.isRequired} relationType={relationType} value={value} onChange={onChange} />;
   if (control === "SPECTRAL_COLOR") return <SpectralColorEditor disabled={disabled} value={value} onChange={onChange} />;
   if (control === "ENUM_LIST") return <div className="field span-2"><FiniteChipSelection allowedTokens={field.enumValues} label={label} multiple selectedTokens={selectedList(value || "[]")} onChange={(tokens) => onChange(JSON.stringify(tokens))} /></div>;
   if (control === "STRING_LIST") return <StringListEditor disabled={disabled} label={label} value={value || "[]"} onChange={onChange} />;
   if (control === "CLOTHING") return <ClothingEditor disabled={disabled} label={label} value={value} onChange={onChange} />;
-  if (control === "ENUM") return <label className="field">{label}<select className="select" disabled={disabled} value={value} onChange={(event) => onChange(event.target.value)}><option value="">Select…</option>{field.enumValues.map((option) => <option key={option}>{option}</option>)}</select></label>;
+  if (field.name === "gender") return <label className="field">{label}<select className="select" disabled={disabled} value={value} onChange={(event) => onChange(event.target.value)}><option value="">Not assigned</option>{["MALE", "FEMALE", "NON_BINARY"].map((option) => <option key={option} value={option}>{humanizeOwnerToken(option)}</option>)}</select></label>;
+  if (field.name === "kernelKey") return <label className="field">{label}<input className="input" disabled={disabled} value={humanizeOwnerToken(value)} onChange={(event) => onChange(canonicalizeOwnerToken(event.target.value))} /></label>;
+  if (control === "ENUM") return <label className="field">{label}<select className="select" disabled={disabled} value={value} onChange={(event) => onChange(event.target.value)}><option value="">{ownerNullLabel(field.name)}</option>{field.enumValues.map((option) => <option key={option} value={option}>{ownerEnumLabel(field.type, option)}</option>)}</select></label>;
   if (control === "BOOLEAN") return <label className="field"><input checked={value === "true"} disabled={disabled} type="checkbox" onChange={(event) => onChange(String(event.target.checked))} /> {label}</label>;
   if (control === "JSON") return <label className="field span-2">{label}<textarea className="textarea" disabled={disabled} rows={8} value={value} onChange={(event) => onChange(event.target.value)} /></label>;
   if (control === "LONG_TEXT") return <label className="field span-2">{label}<textarea className="textarea" disabled={disabled} rows={5} value={value} onChange={(event) => onChange(event.target.value)} /></label>;
@@ -181,16 +195,18 @@ function payloadFromDraft(contract: AdminContract, draft: Record<string, string>
   }));
 }
 
-function ParentCharacterContext({ initial }: { initial?: Record<string, unknown> }) {
+function ParentCharacterContext({ entity, initial, section }: { entity: string; initial?: Record<string, unknown>; section: string }) {
   const parent = initial?.character;
   const character = typeof parent === "object" && parent !== null && !Array.isArray(parent) ? parent as Record<string, unknown> : undefined;
   const characterContract = (contractData.entities as unknown as Record<string, AdminContract>).Character;
-  const fields = orderOwnerTableFields("Character", characterContract.idField, auditFieldsFor(characterContract));
-  return character ? <><p className="notice">Parent Character is shown in the same subtype editor. Use the Character record workflow for changes that require its separate write authorization.</p><div className="form-grid">{fields.map((field) => <div className="field owner-form-readonly" key={`parent:${field.name}`}><span>{field.name}</span><OwnerFieldValue field={field} value={character[field.name]} /></div>)}</div></> : <p className="notice notice--bad" role="alert">Parent Character data is unavailable for this subtype record.</p>;
+  const editableNames = new Set(characterContract.fields.map(({ name }) => name));
+  const fields = buildOwnerFormPlan("Character", { ...characterContract, auditFields: auditFieldsFor(characterContract) }).filter((field) => editableNames.has(field.name) && ownerParentSectionFor(entity, field.name) === section);
+  return character ? <div className="form-grid">{fields.map((field) => <ReadOnlyOwnerField field={field} key={`parent:${field.name}`} value={plannedValue(character, field)} />)}</div> : <p className="notice notice--bad" role="alert">Character data failed to hydrate for this record.</p>;
 }
 
-function ContextValue({ label, value }: { label: string; value: unknown }) {
-  return <div className="field owner-form-readonly"><span>{label}</span><strong>{display(value)}</strong></div>;
+function ContextValue({ label, value, enumType }: { label: string; value: unknown; enumType?: string }) {
+  const rendered = enumType && typeof value === "string" ? ownerEnumLabel(enumType, value) : display(value);
+  return <div className="field owner-form-readonly"><span>{label}</span><strong>{rendered}</strong></div>;
 }
 
 function WitnessDefSourceContext({ initial }: { initial?: Record<string, unknown> }) {
@@ -199,14 +215,14 @@ function WitnessDefSourceContext({ initial }: { initial?: Record<string, unknown
   const department = initial?.department;
   const source = characters.find((character) => asRecord(character.architect)?.department === department) ?? characters.find((character) => character.architect);
   if (!initial) return <p className="muted">Choose the Architect Soul by human-readable Soul name; source Architect identity appears after the persisted relation is resolved.</p>;
-  return <div className="form-grid owner-form-context"><ContextValue label="Source Architect Character Name" value={source?.displayName} /><ContextValue label="Source Architect Character ID" value={source?.characterId} /><ContextValue label="Architect Soul ID" value={initial.architectSoulId} /></div>;
+  return <div className="form-grid owner-form-context"><ContextValue label="Source Architect" value={source?.displayName} /><ContextValue label="Architect Soul" value={soul?.name} /></div>;
 }
 
 function WitnessDefinitionContext({ initial }: { initial?: Record<string, unknown> }) {
   const definition = asRecord(initial?.witnessDef);
   if (!definition) return null;
   const color = asRecord(definition.color);
-  return <div className="form-grid owner-form-context"><ContextValue label="Witness Definition Name" value={definition.name} /><ContextValue label="WitnessDef ID" value={definition.witnessDefId} /><ContextValue label="Department" value={definition.department} /><ContextValue label="Apparent Domain" value={definition.apparentDomain} /><ContextValue label="Real Domain" value={definition.realDomain} />{spectralChannels.map((channel) => <ContextValue key={channel} label={`${channel} %`} value={color?.[channel]} />)}</div>;
+  return <div className="form-grid owner-form-context"><ContextValue label="Witness Definition" value={definition.name} /><ContextValue enumType="ArchitectDepartment" label="Department" value={definition.department} /><ContextValue enumType="WorldKey" label="World" value={definition.worldKey} /><ContextValue label="Book" value={definition.bookNumber} /><ContextValue enumType="WitnessKernel" label="Kernel" value={definition.kernelKey} /><ContextValue label="Apparent Domain" value={definition.apparentDomain} /><ContextValue label="Real Domain" value={definition.realDomain} />{spectralChannels.map((channel) => <ContextValue key={channel} label={`${humanizeOwnerToken(channel)} %`} value={color?.[channel]} />)}</div>;
 }
 
 function WitnessContinuityContext({ initial }: { initial?: Record<string, unknown> }) {
@@ -219,7 +235,27 @@ function WitnessContinuityContext({ initial }: { initial?: Record<string, unknow
   const definitionSoul = definition?.architectSoulId;
   const architectSoul = architectCharacter?.soulId;
   const complete = typeof witnessSoul === "string" && witnessSoul === definitionSoul && witnessSoul === architectSoul;
-  return <div className="owner-form-context"><div className="form-grid"><ContextValue label="Source Architect Name" value={architectCharacter?.displayName} /><ContextValue label="Source Architect Character ID" value={initial.architectCharacterId} /><ContextValue label="Witness Character Soul ID" value={witnessSoul} /><ContextValue label="WitnessDef Architect Soul ID" value={definitionSoul} /><ContextValue label="Architect Character Soul ID" value={architectSoul} /></div><p className={complete ? "notice notice--good" : "notice notice--bad"} role="status">Continuity status: {complete ? "PROVEN — all three Soul IDs match" : "FAILED OR INCOMPLETE — Soul IDs do not all match"}</p></div>;
+  const soulName = asRecord(witnessCharacter?.soul)?.name ?? asRecord(architectCharacter?.soul)?.name;
+  return <div className="owner-form-context"><div className="form-grid"><ContextValue label="Source Architect" value={architectCharacter?.displayName} /><ContextValue label="Shared Soul" value={soulName} /></div><p className={complete ? "notice notice--good" : "notice notice--bad"} role="status">Soul continuity: {complete ? "Verified" : "Failed or incomplete"}</p></div>;
+}
+
+function WitnessRecordOverview({ record }: { record: Record<string, unknown> }) {
+  const character = asRecord(record.character);
+  const breed = asRecord(character?.breed);
+  const definition = asRecord(record.witnessDef);
+  const architect = asRecord(record.architect);
+  const architectCharacter = asRecord(architect?.character);
+  const soul = asRecord(character?.soul) ?? asRecord(architectCharacter?.soul);
+  return <section aria-label="Witness record overview" className="inset-card witness-record-overview"><h3>Record overview</h3><div className="form-grid">
+    <ContextValue label="Breed" value={breed?.name} />
+    <ContextValue enumType="WorldKey" label="World" value={character?.worldKey} />
+    <ContextValue label="Source Architect" value={architectCharacter?.displayName} />
+    <ContextValue enumType="ArchitectDepartment" label="Architect Department" value={architect?.department} />
+    <ContextValue label="Shared Soul" value={soul?.name} />
+    <ContextValue label="True Flaw" value={record.trueFlawName} />
+    <ContextValue label="Apparent Domain" value={definition?.apparentDomain} />
+    <ContextValue label="Real Domain" value={definition?.realDomain} />
+  </div></section>;
 }
 
 function EntityForm({ contract, entity, initial, mode, onCancel, onComplete }: {
@@ -237,7 +273,7 @@ function EntityForm({ contract, entity, initial, mode, onCancel, onComplete }: {
   const parentInitial = asRecord(initial?.character);
   const parentContract = (contractData.entities as unknown as Record<string, AdminContract>).Character;
   const resolvedParentContract = { ...parentContract, auditFields: auditFieldsFor(parentContract) };
-  const parentPlan = buildOwnerFormPlan("Character", resolvedParentContract);
+  const parentPlan = buildOwnerFormPlan("Character", resolvedParentContract).filter((field) => parentContract.fields.some(({ name }) => name === field.name));
   const parentEditableByName = new Map(parentContract.fields.map((field) => [field.name, field]));
   const [parentDraft, setParentDraft] = useState<Record<string, string>>(() => parentInitial ? Object.fromEntries(parentContract.fields.map((field) => [field.name, editableValue(parentInitial[field.name], field)])) : {});
   const recordId = initial?.[contract.idField];
@@ -292,20 +328,22 @@ function EntityForm({ contract, entity, initial, mode, onCancel, onComplete }: {
     <div className="owner-form-sections">
       {sections.map((section) => {
         const sectionFields = formPlan.filter((field) => field.section === section);
-        if (!sectionFields.length) return null;
-        return <fieldset className="span-2 owner-form-section" key={section}><legend>{section}</legend>{section === "Character identity" && parentEntity && (mode === "edit" && parentInitial ? <div className="form-grid">{parentPlan.filter((field) => field.name !== parentContract.idField).map((planned) => {
+        const parentSectionFields = parentEntity ? parentPlan.filter((field) => ownerParentSectionFor(entity, field.name) === section) : [];
+        const contextOnly = entity === "Witness" && section === "Soul continuity";
+        if (!sectionFields.length && !parentSectionFields.length && !contextOnly) return null;
+        return <OwnerFormSection key={section} section={section}>{parentEntity && parentSectionFields.length > 0 && (mode === "edit" && parentInitial ? <div className="form-grid">{parentSectionFields.map((planned) => {
           const editable = parentEditableByName.get(planned.name);
-          if (!editable) return <ReadOnlyOwnerField field={{ ...planned, name: `Character.${planned.name}` }} key={`parent:${planned.name}`} value={parentInitial[planned.name]} />;
+          if (!editable) return <ReadOnlyOwnerField field={planned} key={`parent:${planned.name}`} value={plannedValue(parentInitial, planned)} />;
           const relationRecord = planned.relationField ? asRecord(parentInitial[planned.relationField]) : undefined;
-          return <AdminFieldEditor contract={resolvedParentContract} controlOverride={planned.control} disabled={false} entity="Character" field={editable} initialRelation={relationRecord} key={`parent:${planned.name}`} labelOverride={`Character.${planned.name}`} relationType={planned.relationType} value={parentDraft[planned.name] ?? ""} onChange={(value) => setParentDraft((current) => ({ ...current, [planned.name]: value }))} />;
-        })}</div> : <ParentCharacterContext initial={initial} />)}{entity === "WitnessDef" && section === "Source Architect / Soul" && <WitnessDefSourceContext initial={initial} />}{entity === "Witness" && section === "Witness definition" && <WitnessDefinitionContext initial={initial} />}{entity === "Witness" && section === "Architect continuity" && <WitnessContinuityContext initial={initial} />}<div className="form-grid">{sectionFields.map((planned) => {
+          return <AdminFieldEditor contract={resolvedParentContract} controlOverride={planned.control} disabled={planned.technical} entity="Character" field={editable} initialRelation={relationRecord} key={`parent:${planned.name}`} labelOverride={planned.label} relationType={planned.relationType} value={parentDraft[planned.name] ?? ""} onChange={(value) => setParentDraft((current) => ({ ...current, [planned.name]: value }))} />;
+        })}</div> : <ParentCharacterContext entity={entity} initial={initial} section={section} />)}{entity === "WitnessDef" && section === "Source Architect / Soul" && <WitnessDefSourceContext initial={initial} />}{entity === "Witness" && section === "Witness definition" && <WitnessDefinitionContext initial={initial} />}{entity === "Witness" && section === "Soul continuity" && <WitnessContinuityContext initial={initial} />}<div className="form-grid">{sectionFields.map((planned) => {
           const editable = editableByName.get(planned.name);
-          if (!editable) return <ReadOnlyOwnerField field={planned} key={planned.name} value={initial?.[planned.name]} />;
+          if (!editable) return <ReadOnlyOwnerField field={planned} key={planned.name} value={plannedValue(initial, planned)} />;
           const relationRecord = planned.relationField && typeof initial?.[planned.relationField] === "object" && initial[planned.relationField] !== null
             ? initial[planned.relationField] as Record<string, unknown>
             : undefined;
-          return <AdminFieldEditor contract={resolvedContract} controlOverride={planned.control} disabled={fieldDisabled(editable)} entity={entity} field={editable} initialRelation={relationRecord} key={planned.name} relationType={planned.relationType} value={draft[planned.name] ?? ""} onChange={(value) => updateDraftField(editable, value)} />;
-        })}</div></fieldset>;
+          return <AdminFieldEditor contract={resolvedContract} controlOverride={planned.control} disabled={fieldDisabled(editable)} entity={entity} field={editable} initialRelation={relationRecord} key={planned.name} labelOverride={planned.label} relationType={planned.relationType} value={draft[planned.name] ?? ""} onChange={(value) => updateDraftField(editable, value)} />;
+        })}</div></OwnerFormSection>;
       })}
     </div>
     <div className="action-row"><button className="button button--gold" disabled={mutation.isPending} onClick={() => mutation.mutate()}>{mutation.isPending ? "Saving…" : mode === "edit" ? "Save Changes" : `Create ${entity}`}</button>{mode === "edit" && onCancel && <button className="button" disabled={mutation.isPending} onClick={onCancel} type="button">Cancel</button>}</div>
@@ -324,7 +362,7 @@ function ObjectTypeIndex() {
   const auditEntries = Object.entries(auditModels);
   const auditRows = auditEntries.flatMap(([entity, model]) => model.fields.map((field) => {
     const policy = (contracts as Record<string, AdminContract>)[entity]?.auditFields?.find((candidate) => candidate.name === field.name);
-    return { ...field, domain: domainFor(entity), editability: policy?.editability ?? "EXCLUDED", entity, exclusionReason: policy?.exclusionReason ?? "—" };
+    return { ...field, domain: domainFor(entity), editability: policy?.editability ?? "EXCLUDED", entity };
   }));
   const auditColumns: DataTableColumnDef<(typeof auditRows)[number]>[] = [
     { accessorKey: "entity", header: "Entity" },
@@ -335,9 +373,29 @@ function ObjectTypeIndex() {
     { accessorFn: (field) => field.isList ? "Yes" : "No", header: "List", id: "isList" },
     { accessorFn: (field) => field.enumName ?? "—", header: "Enum", id: "enumName" },
     { accessorKey: "editability", header: "Editability" },
-    { accessorKey: "exclusionReason", header: "Exclusion reason" },
   ];
-  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><p className="kicker">CANONICAL OBJECT TYPES</p><h2>Data Registry</h2></div><span className="tag">{entries.length} active types</span></div><p>Open a persisted record table, search canonical fields, create records, or enter the validated import workflow.</p><div className="data-registry-grid">{entries.map(({ entity, path }) => <article className="mini-card" key={entity}><h3>{entity}</h3><p>{auditFieldsFor(contracts[entity]).length} persisted fields · {entityFields[entity].length} generic-form fields</p><a className="button" href={path}>Open Records</a></article>)}</div></section><section className="card"><div className="action-row action-row--between"><div><p className="kicker">SHARED DOMAIN VALIDATION</p><h2>WorldBuilding Integrity</h2></div><span className="tag">{integrity.data?.length ?? 0} issues</span></div>{integrity.isPending ? <p>Evaluating canonical rows…</p> : integrity.isError ? <p className="notice notice--bad">{integrity.error.message}</p> : integrity.data?.length ? <ul>{integrity.data.map((issue) => <li key={`${issue.entity}:${issue.entityId}:${issue.message}`}><strong>{issue.entity} {issue.entityId}</strong>: {issue.message}</li>)}</ul> : <p className="notice notice--good">All persisted WorldBuilding rows satisfy the shared domain validator.</p>}</section><section className="card"><div className="action-row action-row--between"><div><p className="kicker">SCHEMA COMPLETENESS</p><h2>Data Integrity Field Audit</h2></div><span className="tag">{auditRows.length} fields</span></div><p>Every canonical persisted Prisma field appears here. Generic-form editability is shown separately and relations remain workflow-owned.</p>{domains.map((domain) => <section className="integrity-domain" key={domain}><h3>{domain}</h3><DataTable columns={auditColumns} data={auditRows.filter((field) => field.domain === domain)} getRowId={(field) => `${field.entity}.${field.name}`} preferenceKey={`admin.data-integrity.${domain}`} /></section>)}</section></div>;
+  return <div className="stack"><section className="card"><div className="action-row action-row--between"><div><p className="kicker">CANONICAL OBJECT TYPES</p><h2>Data Registry</h2></div><span className="tag">{entries.length} active types</span></div><div className="data-registry-grid">{entries.map(({ entity, path }) => <article className="mini-card" key={entity}><h3>{entity}</h3><p>{auditFieldsFor(contracts[entity]).length} persisted fields · {entityFields[entity].length} editable fields</p><a className="button" href={path}>Open Records</a></article>)}</div></section><section className="card"><div className="action-row action-row--between"><div><p className="kicker">SHARED DOMAIN VALIDATION</p><h2>WorldBuilding Integrity</h2></div><span className="tag">{integrity.data?.length ?? 0} issues</span></div>{integrity.isPending ? <p>Evaluating canonical rows…</p> : integrity.isError ? <p className="notice notice--bad">{integrity.error.message}</p> : integrity.data?.length ? <ul>{integrity.data.map((issue) => <li key={`${issue.entity}:${issue.entityId}:${issue.message}`}><strong>{issue.entity} {issue.entityId}</strong>: {issue.message}</li>)}</ul> : <p className="notice notice--good">All persisted WorldBuilding rows satisfy the shared domain validator.</p>}</section><section className="card"><div className="action-row action-row--between"><div><p className="kicker">SCHEMA COMPLETENESS</p><h2>Data Integrity Field Audit</h2></div><span className="tag">{auditRows.length} fields</span></div>{domains.map((domain) => <section className="integrity-domain" key={domain}><h3>{domain}</h3><DataTable columns={auditColumns} data={auditRows.filter((field) => field.domain === domain)} getRowId={(field) => `${field.entity}.${field.name}`} preferenceKey={`admin.data-integrity.${domain}`} /></section>)}</section></div>;
+}
+
+function OwnerRecordDetail({ contract, entity, record }: { contract: AdminContract; entity: EntityName; record: Record<string, unknown> }) {
+  const plan = buildOwnerFormPlan(entity, { ...contract, auditFields: auditFieldsFor(contract) });
+  const hasParent = Boolean(subtypeParentEntity(entity));
+  const characterContract = (contractData.entities as unknown as Record<string, AdminContract>).Character;
+  const parentEditableNames = new Set(characterContract.fields.map(({ name }) => name));
+  const parentPlan = hasParent ? buildOwnerFormPlan("Character", { ...characterContract, auditFields: auditFieldsFor(characterContract) }).filter((field) => parentEditableNames.has(field.name)) : [];
+  return <div className="owner-form-sections">{ownerFormSections(entity).map((section) => {
+    const fields = plan.filter((field) => field.section === section);
+    const parentFields = parentPlan.filter((field) => ownerParentSectionFor(entity, field.name) === section);
+    const contextOnly = entity === "Witness" && section === "Soul continuity";
+    if (!fields.length && !parentFields.length && !contextOnly) return null;
+    return <OwnerFormSection key={section} section={section}>
+      {hasParent && parentFields.length > 0 && <ParentCharacterContext entity={entity} initial={record} section={section} />}
+      {entity === "WitnessDef" && section === "Source Architect / Soul" && <WitnessDefSourceContext initial={record} />}
+      {entity === "Witness" && section === "Witness definition" && <WitnessDefinitionContext initial={record} />}
+      {entity === "Witness" && section === "Soul continuity" && <WitnessContinuityContext initial={record} />}
+      <div className="form-grid">{fields.map((field) => <ReadOnlyOwnerField field={field} key={field.name} value={plannedValue(record, field)} />)}</div>
+    </OwnerFormSection>;
+  })}</div>;
 }
 
 function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityName; pathname: string; screen: PageManifestEntry }) {
@@ -355,6 +413,8 @@ function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityNa
   const requestedId = decodeURIComponent(pathname.split("/").filter(Boolean).at(-1) ?? "");
   const selected = collection.data?.records.find((record) => String(record[collection.data?.contract.idField ?? ""]) === requestedId)
     ?? (requestedId === "sample-record" ? collection.data?.records[0] : undefined);
+  const selectedCharacter = asRecord(selected?.character);
+  const selectedHeading = selectedCharacter?.displayName ?? selected?.displayName ?? selected?.name ?? selected?.title ?? selected?.term ?? `${entity} record`;
   const complete = (record: Record<string, unknown>) => {
     queryClient.setQueryData<EntityCollection>(["entity-admin", entityKey], (current) => current ? { ...current, records: [...current.records.filter((candidate) => candidate[current.contract.idField] !== record[current.contract.idField]), record].sort((left, right) => String(left[current.contract.idField]).localeCompare(String(right[current.contract.idField]))) } : current);
     setCreating(false);
@@ -399,7 +459,13 @@ function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityNa
   if (isEditor && !pathname.endsWith("/new")) return selected
     ? editing
       ? <EntityForm contract={contract} entity={entity} initial={selected} mode="edit" onCancel={() => setEditing(false)} onComplete={complete} />
-      : <section className="card stack"><div className="action-row action-row--between"><div><p className="kicker">RECORD DETAIL</p><h2>{String(selected.displayName ?? selected.name ?? selected.title ?? selected.term ?? selected[contract.idField])}</h2><p className="muted">{String(selected[contract.idField])}</p></div><button className="button button--gold" onClick={() => { setSaveStatus(""); setEditing(true); }} type="button">Edit Record</button></div>{saveStatus && <p className="notice notice--good" role="status">{saveStatus}</p>}<div className="owner-form-sections">{ownerFormSections(entity).map((section) => { const fields = buildOwnerFormPlan(entity, { ...contract, auditFields: auditFieldsFor(contract) }).filter((field) => field.section === section); if (!fields.length) return null; return <fieldset className="span-2 owner-form-section" key={section}><legend>{section}</legend>{section === "Character identity" && subtypeParentEntity(entity) && <ParentCharacterContext initial={selected} />}{entity === "WitnessDef" && section === "Source Architect / Soul" && <WitnessDefSourceContext initial={selected} />}{entity === "Witness" && section === "Witness definition" && <WitnessDefinitionContext initial={selected} />}{entity === "Witness" && section === "Architect continuity" && <WitnessContinuityContext initial={selected} />}<div className="form-grid">{fields.map((field) => <ReadOnlyOwnerField field={field} key={field.name} value={selected[field.name]} />)}</div></fieldset>; })}</div><a className="button" href={`/admin/data/${entityKey}`}>Back to records</a></section>
+      : <section className="card stack">
+        <div className="action-row action-row--between"><div><p className="kicker">RECORD DETAIL</p><h2>{String(selectedHeading)}</h2></div><button className="button button--gold" onClick={() => { setSaveStatus(""); setEditing(true); }} type="button">Edit Record</button></div>
+        {saveStatus && <p className="notice notice--good" role="status">{saveStatus}</p>}
+        {entity === "Witness" && <WitnessRecordOverview record={selected} />}
+        <OwnerRecordDetail contract={contract} entity={entity} record={selected} />
+        <a className="button" href={`/admin/data/${entityKey}`}>Back to records</a>
+      </section>
     : <section className="card"><h2>{entity} record not found</h2><p>No persisted record matches {requestedId}.</p><a className="button" href={`/admin/data/${entityKey}`}>Back to records</a></section>;
   const resolvedContract = { ...contract, auditFields: auditFieldsFor(contract) };
   const formPlan = buildOwnerFormPlan(entity, resolvedContract);
@@ -442,7 +508,7 @@ function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityNa
       setRowValidationError(error instanceof Error ? error.message : String(error));
     }
   };
-  const inlineCell = (record: Record<string, unknown>, field: AuditField, owner: "Character" | "Entity") => {
+  const inlineCell = (record: Record<string, unknown>, field: Pick<AuditField, "isList" | "kind" | "name" | "type">, owner: "Character" | "Entity") => {
     const recordId = String(record[contract.idField]);
     const editingThisRow = editingRowId === recordId;
     const parent = asRecord(record.character);
@@ -452,47 +518,145 @@ function EntityRecordsAdminPage({ entity, pathname, screen }: { entity: EntityNa
     const editable = (owner === "Character" ? characterEditableByName : editableByName).get(field.name);
     const planned = (owner === "Character" ? characterPlanByName : formPlanByName).get(field.name);
     const immutable = field.name === ownerContract.idField;
-    if (!editingThisRow || !editable || immutable) return <span className={editingThisRow ? "inline-row-readonly" : undefined}><OwnerFieldValue field={field} value={source?.[field.name]} /></span>;
+    if (!editingThisRow || !editable || immutable) {
+      if (planned?.technical) return <TechnicalIdValue value={source?.[field.name]} />;
+      const displayField = planned?.relationType ? { ...field, isList: false, kind: "relation" as const, type: planned.relationType } : field;
+      return <span className={editingThisRow ? "inline-row-readonly" : undefined}><OwnerFieldValue field={displayField} value={planned ? plannedValue(source, planned) : source?.[field.name]} /></span>;
+    }
     const relationRecord = planned?.relationField ? asRecord(source?.[planned.relationField]) : undefined;
     const draft = owner === "Character" ? parentCharacterDraft : rowDraft;
     const update = owner === "Character" ? setParentCharacterDraft : setRowDraft;
-    return <div className="inline-row-editor"><AdminFieldEditor contract={ownerContract} controlOverride={planned?.control} disabled={false} entity={ownerEntity} field={editable} initialRelation={relationRecord} labelOverride={owner === "Character" ? `Character.${field.name}` : undefined} relationType={planned?.relationType} value={draft[field.name] ?? ""} onChange={(value) => update((current) => ({ ...current, [field.name]: value }))} /></div>;
+    return <div className="inline-row-editor"><AdminFieldEditor contract={ownerContract} controlOverride={planned?.control} disabled={false} entity={ownerEntity} field={editable} initialRelation={relationRecord} labelOverride={planned?.label} relationType={planned?.relationType} value={draft[field.name] ?? ""} onChange={(value) => update((current) => ({ ...current, [field.name]: value }))} /></div>;
   };
   const parentColumns: DataTableColumnDef<Record<string, unknown>>[] = hasParentCharacter
-    ? orderOwnerTableFields("Character", characterContract.idField, auditFieldsFor(characterContract)).filter((field) => field.name !== characterContract.idField).map((field) => ({
-      accessorFn: (record: Record<string, unknown>) => asRecord(record.character)?.[field.name],
+    ? buildOwnerFormPlan("Character", resolvedCharacterContract).filter((field) => field.name !== characterContract.idField && characterEditableByName.has(field.name)).map((field) => ({
+      accessorFn: (record: Record<string, unknown>) => { const character = asRecord(record.character); return field.relationField ? { technicalId: character?.[field.name], relation: character?.[field.relationField] } : character?.[field.name]; },
       cell: ({ row }: { row: { original: Record<string, unknown> } }) => inlineCell(row.original, field, "Character"),
-      header: `Character.${field.name}`,
+      header: field.label,
       id: `character.${field.name}`,
-      meta: { filterVariant: field.kind === "relation" ? "relation" as const : field.isList ? "array" as const : field.kind === "enum" ? "enum" as const : undefined, nullable: !field.isRequired },
+      meta: { filterVariant: field.relationType ? "relation" as const : field.isList ? "array" as const : field.kind === "enum" ? "enum" as const : undefined, nullable: !field.isRequired },
     }))
     : [];
-  const columns: DataTableColumnDef<Record<string, unknown>>[] = [
+  const recordColumns: DataTableColumnDef<Record<string, unknown>>[] = [
     ...parentColumns,
-    ...orderOwnerTableFields(entity, contract.idField, auditFieldsFor(contract)).map((field) => ({
-      accessorFn: (record: Record<string, unknown>) => record[field.name],
+    ...formPlan.map((field) => ({
+      accessorFn: (record: Record<string, unknown>) => field.relationField ? { technicalId: record[field.name], relation: record[field.relationField] } : field.type === "BreedGroupId" && typeof record[field.name] === "string" ? breedGroupLabel(String(record[field.name])) : record[field.name],
       cell: ({ row }: { row: { original: Record<string, unknown> } }) => inlineCell(row.original, field, "Entity"),
-      header: field.name,
+      header: field.label,
       id: field.name,
-      meta: { filterVariant: field.kind === "relation" ? "relation" as const : field.isList ? "array" as const : field.kind === "enum" ? "enum" as const : undefined, nullable: !field.isRequired },
+      meta: { filterVariant: field.relationType ? "relation" as const : field.isList ? "array" as const : field.kind === "enum" ? "enum" as const : undefined, nullable: !field.isRequired, technical: field.technical },
     })),
-    {
-      cell: ({ row }) => {
-        const id = String(row.original[contract.idField]);
-        const editingThisRow = editingRowId === id;
-        return <div className="action-row">{editingThisRow ? <><button aria-label={`Save Row ${id}`} className="button button--small button--gold" disabled={inlineSave.isPending} onClick={() => saveInlineRow(id)} type="button">✓</button><button className="button button--small" disabled={inlineSave.isPending} onClick={cancelInlineEdit} type="button">Cancel Row</button></> : <button className="button button--small button--gold" disabled={editingRowId !== undefined} onClick={() => beginInlineEdit(row.original)} type="button">Edit Row</button>}<a className="button button--small" href={`/admin/data/${entityKey}/${encodeURIComponent(id)}`}>View Record</a><button className="button button--small button--danger" disabled={editingRowId !== undefined} onClick={() => { if (window.confirm(`Delete ${entity} ${id}? This cannot be undone.`)) remove.mutate(id); }}>Delete</button></div>;
-      },
-      enableColumnFilter: false,
-      enableSorting: false,
-      header: "Actions",
-      id: "actions",
-    },
   ];
+  const actionColumn: DataTableColumnDef<Record<string, unknown>> = {
+    cell: ({ row }) => {
+      const id = String(row.original[contract.idField]);
+      const editingThisRow = editingRowId === id;
+      return <div className="action-row data-table-row-actions">{editingThisRow ? <><button aria-label={`Save Row ${id}`} className="button button--small button--gold" disabled={inlineSave.isPending} onClick={() => saveInlineRow(id)} type="button">Save</button><button className="button button--small" disabled={inlineSave.isPending} onClick={cancelInlineEdit} type="button">Cancel</button></> : <button className="button button--small button--gold" disabled={editingRowId !== undefined} onClick={() => beginInlineEdit(row.original)} type="button">Edit</button>}<a className="button button--small" href={`/admin/data/${entityKey}/${encodeURIComponent(id)}`}>View</a><button className="button button--small button--danger" disabled={editingRowId !== undefined} onClick={() => { if (window.confirm(`Delete ${entity} ${id}? This cannot be undone.`)) remove.mutate(id); }}>Delete</button></div>;
+    },
+    enableColumnFilter: false,
+    enableSorting: false,
+    header: "Actions",
+    id: "actions",
+  };
+  const metadataColumns = recordColumns.map((column) => ({
+    ...column,
+    id: `metadata.${String(column.id)}`,
+    meta: { ...column.meta, technical: true },
+  }));
+  const characterField = (name: string) => characterPlanByName.get(name)!;
+  const entityField = (name: string) => formPlanByName.get(name)!;
+  const plainField = (name: string, type = "String", kind: AuditField["kind"] = "scalar"): Pick<AuditField, "isList" | "kind" | "name" | "type"> => ({ isList: false, kind, name, type });
+  const witnessColumns: DataTableColumnDef<Record<string, unknown>>[] = entity === "Witness" ? [
+    {
+      accessorFn: (record) => ({ characterId: asRecord(record.character)?.characterId, displayName: asRecord(record.character)?.displayName }),
+      cell: ({ row }) => inlineCell(row.original, characterField("displayName"), "Character"),
+      header: "Witness",
+      id: "witness",
+    },
+    {
+      accessorFn: (record) => asRecord(record.character)?.worldKey,
+      cell: ({ row }) => inlineCell(row.original, characterField("worldKey"), "Character"),
+      header: "World",
+      id: "world",
+      meta: { filterVariant: "enum" },
+    },
+    {
+      accessorFn: (record) => Number(asRecord(record.witnessDef)?.bookNumber),
+      cell: ({ row }) => <OwnerFieldValue field={plainField("bookNumber", "Int")} value={asRecord(row.original.witnessDef)?.bookNumber} />,
+      header: "Book",
+      id: "book",
+      meta: { filterVariant: "number" },
+    },
+    {
+      accessorFn: (record) => ({ technicalId: asRecord(record.character)?.breedId, relation: asRecord(asRecord(record.character)?.breed) }),
+      cell: ({ row }) => inlineCell(row.original, characterField("breedId"), "Character"),
+      header: "Breed",
+      id: "breed",
+      meta: { filterVariant: "relation" },
+    },
+    {
+      accessorFn: (record) => asRecord(record.character)?.age,
+      cell: ({ row }) => inlineCell(row.original, characterField("age"), "Character"),
+      header: "Age",
+      id: "age",
+    },
+    {
+      accessorFn: (record) => asRecord(record.character)?.gender,
+      cell: ({ row }) => inlineCell(row.original, characterField("gender"), "Character"),
+      header: "Gender",
+      id: "gender",
+    },
+    {
+      accessorFn: (record) => ({ technicalId: record.witnessDefId, relation: record.witnessDef }),
+      cell: ({ row }) => inlineCell(row.original, entityField("witnessDefId"), "Entity"),
+      header: "Witness definition",
+      id: "definition",
+      meta: { filterVariant: "relation" },
+    },
+    {
+      accessorFn: (record) => ({ technicalId: record.architectCharacterId, relation: record.architect }),
+      cell: ({ row }) => inlineCell(row.original, entityField("architectCharacterId"), "Entity"),
+      header: "Source Architect",
+      id: "architect",
+      meta: { filterVariant: "relation" },
+    },
+    {
+      accessorFn: (record) => record.trueFlawName,
+      cell: ({ row }) => inlineCell(row.original, entityField("trueFlawName"), "Entity"),
+      header: "True flaw",
+      id: "true-flaw",
+      meta: { nullable: true },
+    },
+    actionColumn,
+    ...metadataColumns,
+  ] : [];
+  const witnessDefinitionColumns: DataTableColumnDef<Record<string, unknown>>[] = entity === "WitnessDef" ? [
+    { accessorFn: (record) => ({ technicalId: record.witnessDefId, name: record.name }), cell: ({ row }) => inlineCell(row.original, entityField("name"), "Entity"), header: "Witness definition", id: "definition" },
+    { accessorFn: (record) => record.worldKey, cell: ({ row }) => inlineCell(row.original, entityField("worldKey"), "Entity"), header: "World", id: "world", meta: { filterVariant: "enum" } },
+    { accessorFn: (record) => record.bookNumber, cell: ({ row }) => inlineCell(row.original, entityField("bookNumber"), "Entity"), header: "Book", id: "book", meta: { filterVariant: "number" } },
+    { accessorFn: (record) => record.kernelKey, cell: ({ row }) => inlineCell(row.original, entityField("kernelKey"), "Entity"), header: "Kernel", id: "kernel" },
+    { accessorFn: (record) => record.department, cell: ({ row }) => inlineCell(row.original, entityField("department"), "Entity"), header: "Department", id: "department", meta: { filterVariant: "enum" } },
+    { accessorFn: (record) => ({ technicalId: record.architectSoulId, relation: record.architectSoul }), cell: ({ row }) => inlineCell(row.original, entityField("architectSoulId"), "Entity"), header: "Source Architect / Soul", id: "source-soul", meta: { filterVariant: "relation" } },
+    { accessorFn: (record) => record.apparentDomain, cell: ({ row }) => inlineCell(row.original, entityField("apparentDomain"), "Entity"), header: "Apparent domain", id: "apparent-domain" },
+    { accessorFn: (record) => record.realDomain, cell: ({ row }) => inlineCell(row.original, entityField("realDomain"), "Entity"), header: "Real domain", id: "real-domain" },
+    {
+      accessorFn: (record) => record.color,
+      cell: ({ row }) => editingRowId === String(row.original[contract.idField])
+        ? inlineCell(row.original, entityField("color"), "Entity")
+        : <span>{spectralChannels.map((channel) => `${humanizeOwnerToken(channel)} ${String(asRecord(row.original.color)?.[channel] ?? 0)}%`).join(" · ")}</span>,
+      header: "Spectral color",
+      id: "spectral-color",
+    },
+    actionColumn,
+    ...metadataColumns,
+  ] : [];
+  const columns = entity === "Witness" ? witnessColumns : entity === "WitnessDef" ? witnessDefinitionColumns : [recordColumns[0]!, actionColumn, ...recordColumns.slice(1)];
+  const preferenceKey = entity === "Witness" || entity === "WitnessDef" ? `entity-${entityKey}-curated-v1` : `entity-${entityKey}`;
   return <div className="stack">
     <section className="card">
       <div className="action-row action-row--between"><div><p className="kicker">PERSISTED RECORDS</p><h2>{entity}</h2></div><span className="tag">{collection.data.records.length} records</span></div>
       <div className="action-row"><button className="button button--gold" onClick={() => setCreating((value) => !value)}>{creating ? "Close New Record" : "New"}</button><a className="button" href={`/admin/data/${entityKey}/import`}>Import</a></div>
-      <DataTable columns={columns} data={collection.data.records} getRowId={(record) => String(record[contract.idField])} preferenceKey={`entity-${entityKey}`} searchLabel={`Search ${entity}`} />
+      <DataTable ariaLabel={`${entity} records`} columns={columns} data={collection.data.records} getRowId={(record) => String(record[contract.idField])} preferenceKey={preferenceKey} searchLabel={`Search ${entity}`} />
       {inlineSave.error && <p className="notice notice--bad" role="alert">{inlineSave.error.message}</p>}
       {!inlineSave.error && rowValidationError && <p className="notice notice--bad" role="alert">{rowValidationError}</p>}
       {!editingRowId && saveStatus && <p className="notice notice--good" role="status">{saveStatus}</p>}

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { PromptFamily, PromptStatus } from "../generated/prisma/enums";
 import type { Prisma, PrismaClient } from "../generated/prisma/client";
 import { getDatabase } from "./database";
+import { composeWitnessImagePrompt, witnessCanonicalVisualFields } from "./witness-image-prompt";
 
 const requiredText = (label: string, maximum: number) => z.string().trim().min(1, `${label} is required.`).max(maximum, `${label} is too long.`);
 
@@ -15,11 +16,13 @@ export const promptRecordCreateSchema = z.object({
   status: z.enum(PromptStatus),
   targetId: requiredText("Target identifier", 500),
   targetType: requiredText("Target type", 200),
+  requiredCanonicalVisualFields: z.array(z.enum(witnessCanonicalVisualFields)).default([]),
 }).strict();
 
 export const promptVersionAppendSchema = z.object({
   promptText: requiredText("Prompt text", 100_000),
   responseContract: z.json(),
+  requiredCanonicalVisualFields: z.array(z.enum(witnessCanonicalVisualFields)).default([]),
 }).strict();
 
 export const promptResultAssociationSchema = z.object({
@@ -49,6 +52,11 @@ const promptSelection = {
 
 export class PromptAuthoringConflictError extends Error {}
 
+async function canonicalPromptText(input: { family: string; promptText: string; targetId: string; targetType: string; requiredCanonicalVisualFields: Array<(typeof witnessCanonicalVisualFields)[number]> }, database: Pick<PrismaClient, "witness">): Promise<string> {
+  if (input.family !== "IMAGE" || input.targetType !== "Witness") return input.promptText;
+  return composeWitnessImagePrompt(input.targetId, input.promptText, input.requiredCanonicalVisualFields, database);
+}
+
 export async function getPromptRecord(promptRecordId: string, database: PrismaClient = getDatabase()) {
   const prompt = await database.promptRecord.findUnique({ where: { promptRecordId }, select: promptSelection });
   if (!prompt) throw new PromptAuthoringConflictError("Prompt record was not found.");
@@ -57,6 +65,7 @@ export async function getPromptRecord(promptRecordId: string, database: PrismaCl
 
 export async function createPromptRecord(input: z.infer<typeof promptRecordCreateSchema>, database: PrismaClient = getDatabase()) {
   const promptRecordId = randomUUID();
+  const promptText = await canonicalPromptText(input, database);
   await database.promptRecord.create({
     data: {
       family: input.family,
@@ -67,7 +76,7 @@ export async function createPromptRecord(input: z.infer<typeof promptRecordCreat
       targetType: input.targetType,
       versions: {
         create: {
-          promptText: input.promptText,
+          promptText,
           promptVersionId: randomUUID(),
           responseContract: input.responseContract as Prisma.InputJsonValue,
           version: 1,
@@ -82,13 +91,14 @@ export async function appendPromptVersion(promptRecordId: string, input: z.infer
   await database.$transaction(async (transaction) => {
     const prompt = await transaction.promptRecord.findUnique({
       where: { promptRecordId },
-      select: { versions: { orderBy: { version: "desc" }, select: { version: true }, take: 1 } },
+      select: { family: true, targetId: true, targetType: true, versions: { orderBy: { version: "desc" }, select: { version: true }, take: 1 } },
     });
     if (!prompt) throw new PromptAuthoringConflictError("Prompt record was not found.");
+    const promptText = await canonicalPromptText({ ...input, family: prompt.family, targetId: prompt.targetId, targetType: prompt.targetType }, transaction as unknown as PrismaClient);
     await transaction.promptVersion.create({
       data: {
         promptRecordId,
-        promptText: input.promptText,
+        promptText,
         promptVersionId: randomUUID(),
         responseContract: input.responseContract as Prisma.InputJsonValue,
         version: (prompt.versions[0]?.version ?? 0) + 1,

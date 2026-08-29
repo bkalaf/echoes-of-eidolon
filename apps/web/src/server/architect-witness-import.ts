@@ -5,6 +5,7 @@ import type { ArchitectDepartment } from "../generated/prisma/enums";
 
 type Transaction = Prisma.TransactionClient;
 type Counter = { created: number; unchanged: number };
+type CharacterCounter = Counter & { updated: number };
 
 const presidingIds = new Set(["CHA_HANS_HALYCON_HOHENZOLLERN", "CHA_NOELL_PIETER_SMUKK"]);
 
@@ -106,11 +107,24 @@ async function ensureSoul(transaction: Transaction, expected: { soulId: string; 
   else throw new ArchitectWitnessPopulationError(`Soul ${expected.soulId} conflicts with canonical identity ${expected.name}.`);
 }
 
-type CanonicalCharacter = (typeof canonicalArchitectWitnessGuideData.architects)[number]["character"];
+type CanonicalCharacter =
+  | (typeof canonicalArchitectWitnessGuideData.architects)[number]["character"]
+  | (typeof canonicalArchitectWitnessGuideData.witnesses)[number]["character"]
+  | (typeof canonicalArchitectWitnessGuideData.guides.charactersToEnsure)[number];
 
-async function ensureCharacter(transaction: Transaction, input: CanonicalCharacter, result: PopulationImportResult): Promise<void> {
-  assertCanonicalCharacterBreedPolicy(input);
-  const expected = {
+const optionalCanonicalCharacterFields = [
+  "occupationId",
+  "skinScaleColor",
+  "hairFurColor",
+  "eyeColor",
+  "clothing",
+  "faction",
+  "primaryAttribute",
+  "secondaryAttribute",
+] as const;
+
+function canonicalCharacterFields(input: CanonicalCharacter): Prisma.CharacterUncheckedCreateInput {
+  const expected: Prisma.CharacterUncheckedCreateInput = {
     characterId: input.characterId,
     displayName: input.displayName,
     breedId: input.breedId,
@@ -119,6 +133,16 @@ async function ensureCharacter(transaction: Transaction, input: CanonicalCharact
     age: input.age,
     gender: input.gender,
   };
+  const record = input as unknown as Record<string, unknown>;
+  const expectedRecord = expected as unknown as Record<string, unknown>;
+  for (const field of optionalCanonicalCharacterFields) if (field in record) expectedRecord[field] = record[field];
+  return expected;
+}
+
+async function ensureCharacter(transaction: Transaction, input: CanonicalCharacter, result: PopulationImportResult): Promise<void> {
+  assertCanonicalCharacterBreedPolicy(input);
+  const expected = canonicalCharacterFields(input);
+  const expectedRecord = expected as unknown as Record<string, unknown>;
   const conflicting = await transaction.character.findFirst({
     select: { characterId: true },
     where: { displayName: expected.displayName, NOT: { characterId: expected.characterId } },
@@ -128,8 +152,16 @@ async function ensureCharacter(transaction: Transaction, input: CanonicalCharact
   if (!existing) {
     await transaction.character.create({ data: expected });
     result.characters.created += 1;
-  } else if (sameFields(existing, expected)) result.characters.unchanged += 1;
-  else throw new ArchitectWitnessPopulationError(`Character ${expected.characterId} conflicts with the canonical input.`);
+  } else if (sameFields(existing, expectedRecord)) result.characters.unchanged += 1;
+  else {
+    const existingRecord = existing as unknown as Record<string, unknown>;
+    const backfill = Object.fromEntries(Object.entries(expectedRecord).filter(([field, value]) => existingRecord[field] == null && value != null));
+    const conflicts = Object.entries(expectedRecord).filter(([field, value]) => existingRecord[field] != null && !valuesEqual(existingRecord[field], value));
+    if (conflicts.length) throw new ArchitectWitnessPopulationError(`Character ${expected.characterId} conflicts with the canonical input at ${conflicts.map(([field]) => field).join(",")}.`);
+    if (!Object.keys(backfill).length) throw new ArchitectWitnessPopulationError(`Character ${expected.characterId} conflicts with the canonical input.`);
+    await transaction.character.update({ data: backfill as Prisma.CharacterUncheckedUpdateInput, where: { characterId: expected.characterId } });
+    result.characters.updated += 1;
+  }
 }
 
 async function ensureArchitect(
@@ -152,10 +184,13 @@ async function ensureWitnessDef(transaction: Transaction, definition: CanonicalW
     witnessDefId: definition.witnessDefId,
     name: definition.name,
     department: definition.department,
+    kernelKey: definition.kernelKey,
     apparentDomain: definition.apparentDomain,
     realDomain: definition.realDomain,
     color: definition.color,
     architectSoulId: definition.architectSoulId,
+    worldKey: definition.worldKey,
+    bookNumber: definition.bookNumber,
   };
   const conflict = await transaction.witnessDef.findFirst({
     select: { witnessDefId: true },
@@ -188,7 +223,7 @@ async function ensureWitness(transaction: Transaction, expected: CanonicalWitnes
 
 export interface PopulationImportResult {
   souls: Counter;
-  characters: Counter;
+  characters: CharacterCounter;
   architects: Counter;
   witnessDefs: Counter;
   witnesses: Counter;
@@ -197,7 +232,7 @@ export interface PopulationImportResult {
 function emptyResult(): PopulationImportResult {
   return {
     souls: { created: 0, unchanged: 0 },
-    characters: { created: 0, unchanged: 0 },
+    characters: { created: 0, updated: 0, unchanged: 0 },
     architects: { created: 0, unchanged: 0 },
     witnessDefs: { created: 0, unchanged: 0 },
     witnesses: { created: 0, unchanged: 0 },
@@ -242,6 +277,8 @@ export async function auditArchitectWitnessPopulation(database: PrismaClient) {
     database.witness.findMany({ where: { characterId: { in: witnessIds } }, include: { character: true, architect: { include: { character: true } }, witnessDef: true } }),
   ]);
   const issues: string[] = [];
+  const canonicalArchitectById = new Map(canonicalArchitectWitnessGuideData.architects.map(({ character }) => [character.characterId, character]));
+  const canonicalDefinitionById = new Map(canonicalArchitectWitnessGuideData.witnessDefs.map((definition) => [definition.witnessDefId, definition]));
   if (souls.length !== 58) issues.push(`Expected 58 canonical Souls; found ${souls.length}.`);
   if (characters.length !== 112) issues.push(`Expected 112 canonical Characters; found ${characters.length}.`);
   if (architects.length !== 56) issues.push(`Expected 56 canonical Architects; found ${architects.length}.`);
@@ -272,6 +309,9 @@ export async function auditArchitectWitnessPopulation(database: PrismaClient) {
 
   const chains = witnesses.map((witness) => ({ architect: witness.architect.character, witness: witness.character }));
   for (const witness of witnesses) {
+    const canonicalDefinition = canonicalDefinitionById.get(witness.witnessDefId);
+    const sourceCharacter = canonicalArchitectById.get(witness.architectCharacterId);
+    const expectedGender = witness.characterId === "CHA_WITNESS_OF_THE_LOOM" ? "MALE" : witness.characterId === "CHA_WITNESS_OF_PATCHWORK" ? "FEMALE" : sourceCharacter?.gender;
     try {
       assertWitnessArchitectSoulContinuity(witness.character, witness.architect.character);
       if (witness.witnessDef.architectSoulId !== witness.architect.character.soulId) throw new Error("Definition Soul mismatch");
@@ -287,6 +327,13 @@ export async function auditArchitectWitnessPopulation(database: PrismaClient) {
     }
     if (witness.architect.department === null) issues.push(`Witness ${witness.characterId} points to a presiding Architect.`);
     if (witness.witnessDef.department !== witness.architect.department) issues.push(`Witness ${witness.characterId} definition department differs from its source Architect.`);
+    if (!canonicalDefinition || !sameFields(witness.witnessDef as unknown as Record<string, unknown>, {
+      kernelKey: canonicalDefinition.kernelKey,
+      worldKey: canonicalDefinition.worldKey,
+      bookNumber: canonicalDefinition.bookNumber,
+    })) issues.push(`WitnessDef ${witness.witnessDefId} has invalid canonical world, book, or kernel metadata.`);
+    if (witness.character.age !== sourceCharacter?.age) issues.push(`Witness ${witness.characterId} age differs from its source Architect.`);
+    if (witness.character.gender !== expectedGender) issues.push(`Witness ${witness.characterId} gender differs from its canonical demographic rule.`);
     const color = witness.witnessDef.color as Record<string, number>;
     if (Object.keys(color).sort().join(",") !== "GREEN,SPECTRAL_VIOLET,WHITE" || Math.abs(Object.values(color).reduce((sum, value) => sum + value, 0) - 100) > 0.000001) {
       issues.push(`WitnessDef ${witness.witnessDefId} has invalid canonical color percentages.`);

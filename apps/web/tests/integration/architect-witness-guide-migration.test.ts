@@ -7,6 +7,7 @@ const webRoot = resolve(import.meta.dirname, "../..");
 const schema = readFileSync(resolve(webRoot, "prisma/schema.prisma"), "utf8");
 const canonicalMigrationPath = resolve(webRoot, "prisma/migrations/20260816000000_architect_witness_guide_canon/migration.sql");
 const remediationMigrationPath = resolve(webRoot, "prisma/migrations/20260816003000_bulk_api_and_document_bucket_remediation/migration.sql");
+const finalWitnessMigrationPath = resolve(webRoot, "prisma/migrations/20260829010000_final_witness_data_remediation/migration.sql");
 const model = (name: string) => schema.match(new RegExp(`model ${name} \\{([\\s\\S]*?)\\n\\}`))?.[1] ?? "";
 
 describe("Architect Witness Guide canonical persistence", () => {
@@ -18,7 +19,23 @@ describe("Architect Witness Guide canonical persistence", () => {
     expect(witnessDef).toMatch(/color\s+Json/);
     expect(witnessDef).toMatch(/architectSoulId\s+String/);
     expect(witnessDef).toMatch(/architectSoul\s+Soul/);
+    expect(witnessDef).toMatch(/kernelKey\s+String/);
+    expect(witnessDef).toMatch(/worldKey\s+WorldKey/);
+    expect(witnessDef).toMatch(/bookNumber\s+Int/);
     expect(schema).not.toMatch(/enum WitnessColor/);
+  });
+
+  it("backfills final Witness metadata and demographics transactionally and idempotently", () => {
+    expect(existsSync(finalWitnessMigrationPath)).toBe(true);
+    const migration = readFileSync(finalWitnessMigrationPath, "utf8");
+    expect(migration).toMatch(/^BEGIN;/m);
+    expect(migration).toMatch(/^COMMIT;/m);
+    expect(migration).toContain("FINAL_WITNESS_REMEDIATION_BLOCKER");
+    expect(migration).toContain('ADD COLUMN IF NOT EXISTS "kernelKey"');
+    expect(migration).toContain('CREATE INDEX IF NOT EXISTS "WitnessDef_worldKey_bookNumber_idx"');
+    expect(migration).toContain("CHA_WITNESS_OF_THE_LOOM");
+    expect(migration).toContain("CHA_WITNESS_OF_PATCHWORK");
+    expect(migration).not.toMatch(/DELETE FROM "(?:Witness|WitnessDef|Character)"/);
   });
 
   it("adds forward migrations for canonical definitions and exact Bulk API states", () => {

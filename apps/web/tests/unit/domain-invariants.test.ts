@@ -23,10 +23,13 @@ describe("canonical domain invariants", () => {
       witnessDefId: "WDF_WITNESS_OF_THE_SUMMIT",
       name: "The Witness of the Summit",
       department: "ASTRONOMY",
+      kernelKey: "HUMILITY",
       apparentDomain: "Perspective",
       realDomain: "Conceit",
       color: { SPECTRAL_VIOLET: 93.25, GREEN: 6.75, WHITE: 0 },
       architectSoulId: "SOUL_KRIS_MAARJA_TAMM",
+      worldKey: "CONCORD",
+      bookNumber: 3,
     });
     expect(definition.color).toEqual({ SPECTRAL_VIOLET: 93.25, GREEN: 6.75, WHITE: 0 });
     expect(witnessDefSchema.safeParse({ ...definition, witnessDefId: "WDEF_SUMMIT" }).success).toBe(false);

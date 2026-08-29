@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "final-witness-migration-idempotency-v1",
+  "databaseHost": "127.0.0.1",
+  "databaseName": "eidolon",
+  "migration": "20260829010000_final_witness_data_remediation",
+  "rowsExamined": {
+    "Witness": 54,
+    "WitnessDef": 54,
+    "WitnessCharacter": 54
+  },
+  "beforeDigest": "8be48aae9004033eb8a43660d67d1f1e8100f91ec589c6ae87862cd98693d60e",
+  "afterDigest": "8be48aae9004033eb8a43660d67d1f1e8100f91ec589c6ae87862cd98693d60e",
+  "secondRunChangedRows": 0,
+  "status": "PASS"
+}

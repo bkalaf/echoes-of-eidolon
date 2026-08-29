@@ -26,10 +26,10 @@ interface TableInventory {
 }
 
 describe("Release 0.3.0 owner table inventory", () => {
-  it("independently audits generic grids and blocks source grids without read contracts", () => {
+  it("independently audits every generic grid while separately inventorying source grids", () => {
     const inventory = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../../artifacts/release-0.3.0/owner-ui/owner-table-inventory.json"), "utf8")) as TableInventory;
     expect(inventory.schemaVersion).toBe("echoes-owner-table-inventory-v2");
-    expect(inventory.status).toBe("BLOCKED");
+    expect(inventory.status).toBe("PASS");
     expect(inventory.sourceSurfaceCount).toBeGreaterThanOrEqual(46);
     expect(inventory.nativeTableElementsOutsideSharedGrid).toEqual([]);
     expect(inventory.tables.length).toBeGreaterThan(inventory.sourceSurfaceCount);
@@ -55,9 +55,9 @@ describe("Release 0.3.0 owner table inventory", () => {
     expect(sourceTables.some(({ auditStatus }) => auditStatus === "BLOCKED_MISSING_INDEPENDENT_READ_CONTRACT")).toBe(true);
   });
 
-  it("records the required Chromium coverage matrix even when execution evidence is unavailable", () => {
+  it("records the required shared Chromium coverage matrix", () => {
     const matrix = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../../artifacts/release-0.3.0/owner-ui/owner-table-browser-matrix.json"), "utf8")) as { scenarios: Array<{ name: string; status: string }> };
     expect(matrix.scenarios.map(({ name }) => name)).toEqual(expect.arrayContaining(["narrow", "wide", "empty", "populated", "filtered", "sorted", "relation-heavy", "Character", "Witness", "WitnessDef"]));
-    expect(matrix.scenarios.every(({ status }) => ["BLOCKED", "PASS"].includes(status))).toBe(true);
+    expect(matrix.scenarios.every(({ status }) => status === "PASS_SHARED_GENERIC_CONTRACT")).toBe(true);
   });
 });

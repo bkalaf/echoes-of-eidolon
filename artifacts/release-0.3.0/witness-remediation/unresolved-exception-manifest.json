@@ -1,0 +1,4780 @@
+{
+  "policy": "Null means canonically unresolved; no value was inferred, synthesized, or mapped from an unapproved candidate.",
+  "rows": [
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Summit",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SUMMIT"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Sail",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SAIL"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Banner",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BANNER"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Table",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_TABLE"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Road",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROAD"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Bridge",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BRIDGE"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Knot",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KNOT"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Reins",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_REINS"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Armor",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARMOR"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Keystone",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEYSTONE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Needle",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_NEEDLE"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Spring",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPRING"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Mantle",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MANTLE"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Reliquary",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RELIQUARY"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Window",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_WINDOW"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Shield",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SHIELD"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Gate",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_GATE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Cradle",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CRADLE"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Mosaic",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MOSAIC"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of the Orchard",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ORCHARD"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of Stillwater",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_STILLWATER"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of the Balm",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BALM"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of Weathering",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_WEATHERING"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Lantern",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LANTERN"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Compass",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COMPASS"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Lock",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOCK"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Seal",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SEAL"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Root",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROOT"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Prism",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PRISM"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ledger",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LEDGER"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Ring",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_RING"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Key",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_KEY"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Chime",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_CHIME"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Loom",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LOOM"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Harness",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HARNESS"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of the Plumbline",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_PLUMBLINE"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of Patchwork",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_PATCHWORK"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Bell",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BELL"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Anchor",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ANCHOR"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Dam",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_DAM"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Blindfold",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_BLINDFOLD"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Hammer",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HAMMER"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Coin",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_COIN"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Hourglass",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HOURGLASS"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Rope",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ROPE"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Mirror",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_MIRROR"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Sigil",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SIGIL"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Lens",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LENS"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Flame",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_FLAME"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Veil",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_VEIL"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Hearth",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_HEARTH"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Laurel",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_LAUREL"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Spotlight",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_SPOTLIGHT"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.occupationId",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.skinScaleColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.hairFurColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.eyeColor",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.clothing",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.faction",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.primaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Character.secondaryAttribute",
+      "ownerDecision": "DEFERRED_NO_CANONICAL_VALUE",
+      "status": "AUTHORITY_NOT_FOUND",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Witness.legendaryRewardId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Witness.constellationBeforeId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    },
+    {
+      "displayName": "The Witness of the Arena",
+      "field": "Witness.constellationAfterId",
+      "ownerDecision": "DEFERRED_NO_APPROVED_TARGET_MAPPING",
+      "status": "APPLICABLE_TARGET_UNRESOLVED",
+      "value": null,
+      "witnessCharacterId": "CHA_WITNESS_OF_THE_ARENA"
+    }
+  ],
+  "schemaVersion": "final-witness-unresolved-exceptions-v1",
+  "sourcesInspected": [
+    {
+      "finding": "Canonical Witness package contains no values for these fields.",
+      "path": "/home/bobby/Downloads/EIDOLON_ARCHITECT_WITNESS_GUIDE_CANONICAL_INPUT_2026-08-15.zip"
+    },
+    {
+      "finding": "Candidate bank is awaiting owner mapping and is not target authority.",
+      "path": "/home/bobby/Downloads/witness_reward_mapping_decoy_riddle_data_only.html"
+    },
+    {
+      "finding": "Planning material is not canonical field authority.",
+      "path": "/home/bobby/Downloads/ChatGPT-Outline Witness Compromises-20260826-1833 (2).md"
+    },
+    {
+      "finding": "Current canonical roster explicitly preserves the eight Character fields and three Witness relations as null.",
+      "path": "apps/web/src/data/architect-witness-guide"
+    }
+  ],
+  "targetAvailability": {
+    "Constellation": 0,
+    "LegendaryReward": 0
+  }
+}

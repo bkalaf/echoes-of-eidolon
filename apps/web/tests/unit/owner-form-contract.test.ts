@@ -9,15 +9,24 @@ import {
 import { lookupPresentationRule } from "../../src/domain/lookup-presentation";
 
 describe("universal owner form contract", () => {
-  it("represents every canonical field exactly once as an input or read-only value", () => {
+  it("represents every persisted scalar once and removes owning relation/FK duplication", () => {
     for (const [entity, contract] of Object.entries(contractData.entities)) {
       const plan = buildOwnerFormPlan(entity, contract);
-      expect(plan.map(({ name }) => name).sort(), entity).toEqual(
-        contract.auditFields.map(({ name }) => name).sort(),
-      );
-      expect(new Set(plan.map(({ name }) => name)).size, entity).toBe(contract.auditFields.length);
+      const owningRelations = contract.auditFields.filter((field) => field.kind === "relation" && field.relationFromFields?.length);
+      if (owningRelations.length) expect(plan.map(({ name }) => name), entity).not.toEqual(expect.arrayContaining(owningRelations.map(({ name }) => name)));
+      for (const relation of owningRelations) for (const foreignKey of relation.relationFromFields ?? []) {
+        expect(plan.filter(({ name }) => name === foreignKey), `${entity}.${relation.name}`).toHaveLength(1);
+      }
+      expect(new Set(plan.map(({ name }) => name)).size, entity).toBe(plan.length);
       expect(plan.every(({ treatment }) => treatment === "INPUT" || treatment === "READ_ONLY"), entity).toBe(true);
     }
+  });
+
+  it("uses the required semantic Witness composition", () => {
+    expect(ownerFormSections("Witness")).toEqual(["Character", "Witness definition", "Source Architect", "Soul continuity", "Witness-specific narrative data", "Rewards / constellations", "Technical details"]);
+    const plan = buildOwnerFormPlan("Witness", contractData.entities.Witness);
+    expect(plan.find(({ name }) => name === "architectCharacterId")).toMatchObject({ label: "Architect", relationField: "architect", section: "Source Architect" });
+    expect(plan.some(({ name }) => name === "architect")).toBe(false);
   });
 
   it("turns every owning foreign key into a human-readable searchable relation control", () => {
@@ -48,9 +57,11 @@ describe("universal owner form contract", () => {
     expect(ownerFormSections("WitnessDef")).toEqual([
       "Identity",
       "Source Architect / Soul",
+      "World / Book / Kernel",
       "Domains",
       "Spectral Color",
       "Related / Read-only",
+      "Technical details",
     ]);
     const plan = buildOwnerFormPlan("WitnessDef", contractData.entities.WitnessDef);
     expect(plan.find(({ name }) => name === "color")).toMatchObject({
@@ -58,5 +69,8 @@ describe("universal owner form contract", () => {
       section: "Spectral Color",
       treatment: "INPUT",
     });
+    for (const name of ["worldKey", "bookNumber", "kernelKey"]) {
+      expect(plan.find((field) => field.name === name)).toMatchObject({ section: "World / Book / Kernel", treatment: "INPUT" });
+    }
   });
 });

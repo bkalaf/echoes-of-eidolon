@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { pageManifest } from "../../src/lib/page-manifest";
@@ -30,6 +30,7 @@ describe("wireframe tool authority", () => {
   it("does not substitute the composer for the review queue", () => {
     renderTool("TOO001");
     expect(screen.getByRole("heading", { name: "Wireframe Review Queue" })).toBeInTheDocument();
+    fireEvent.change(screen.getByRole("searchbox", { name: "Quick search table" }), { target: { value: "AT004_FOUND_CITY" } });
     expect(screen.getByText("AT004_FOUND_CITY")).toBeInTheDocument();
     expect(screen.getByText(`${pageManifest.length} of ${pageManifest.length}`)).toBeInTheDocument();
     expect(screen.queryByText("Untitled task")).not.toBeInTheDocument();

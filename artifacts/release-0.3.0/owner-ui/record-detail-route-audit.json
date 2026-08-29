@@ -1,7 +1,7 @@
 {
   "schemaVersion": "echoes-record-detail-route-audit-v1",
-  "generatedAt": "2026-08-20T17:14:33.103Z",
-  "status": "LOCAL_PASS_BROWSER_DATABASE_BLOCKED",
+  "generatedAt": "2026-08-29T03:00:52.754Z",
+  "status": "PASS",
   "entitiesChecked": 35,
   "existingRecordDetailRoutes": 35,
   "entities": [
@@ -265,8 +265,8 @@
     ]
   },
   "browserDatabaseEvidence": {
-    "status": "BLOCKED",
-    "blocker": "B08_REQUIRED_CHROMIUM_AND_POSTGRES_RUNTIME_UNAVAILABLE",
+    "status": "PASS",
+    "artifact": "owner-data-browser-evidence.json",
     "requiredEntities": [
       "Breed",
       "Character",

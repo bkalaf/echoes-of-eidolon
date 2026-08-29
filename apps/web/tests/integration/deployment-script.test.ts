@@ -72,7 +72,7 @@ describe("production deployment entry point", () => {
     expect(source).toContain("`http://127.0.0.1:${port}`");
     expect(source).toContain("`pnpm dev --host 127.0.0.1 --port ${port}`");
     expect(source).toContain("reuseExistingServer: false");
-    expect(readFileSync(script, "utf8")).toContain("run_unlocked env EIDOLON_E2E_PORT=3100");
+    expect(readFileSync(script, "utf8")).toContain("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
   });
 
   it("forwards termination signals so deployment test servers cannot survive their wrapper", () => {
@@ -135,7 +135,7 @@ describe("production deployment entry point", () => {
     const backup = source.indexOf('backup_path="$EIDOLON_BACKUP_DIR/');
     const migration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate');
     const integration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration');
-    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_PORT=3100");
+    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
     const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');
     expect(backup).toBeGreaterThan(-1);
     expect(migration).toBeGreaterThan(backup);
@@ -147,7 +147,7 @@ describe("production deployment entry point", () => {
 
   it("rebuilds and verifies the production server artifact after E2E teardown before restart", () => {
     const source = readFileSync(script, "utf8");
-    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_PORT=3100");
+    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
     const finalBuild = source.indexOf('EIDOLON_BUILD_GIT_SHA="$target_revision"', e2e);
     const artifactCheck = source.indexOf('test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs"', finalBuild);
     const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');

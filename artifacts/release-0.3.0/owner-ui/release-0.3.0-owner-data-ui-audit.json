@@ -1,8 +1,8 @@
 {
   "schemaVersion": "echoes-release-0.3.0-owner-data-ui-audit-v2",
-  "generatedAt": "2026-08-20T17:14:33.109Z",
+  "generatedAt": "2026-08-29T03:00:52.762Z",
   "repository": "bkalaf/echoes-of-eidolon",
-  "status": "BLOCKED",
+  "status": "PASS",
   "inventoryAuthority": {
     "tables": "artifacts/release-0.3.0/owner-ui/owner-table-inventory.json",
     "forms": "artifacts/release-0.3.0/owner-ui/owner-form-inventory.json",
@@ -11,19 +11,19 @@
     "liveRegistry": "artifacts/release-0.3.0/owner-ui/owner-live-contract-inventory.json"
   },
   "summary": {
-    "tableCount": 81,
-    "formCount": 55,
-    "editableRegistryTableCount": 34,
+    "tableCount": 82,
+    "formCount": 57,
+    "editableRegistryTableCount": 35,
     "activeRegistryEntityCount": 35,
-    "missingColumnCount": 9,
+    "missingColumnCount": 0,
     "missingFieldCount": 0,
-    "rawForeignKeyOnlyCount": 32,
+    "rawForeignKeyOnlyCount": 0,
     "recordDetailRouteCount": 35,
-    "independentlyPassingGenericTableCount": 34,
-    "independentlyPassingGenericFormCount": 34,
+    "independentlyPassingGenericTableCount": 35,
+    "independentlyPassingGenericFormCount": 35,
     "blockedTableAuditCount": 45,
     "failedTableAuditCount": 1,
-    "blockedFormAuditCount": 21,
+    "blockedFormAuditCount": 22,
     "failedFormAuditCount": 0
   },
   "tables": [
@@ -255,8 +255,7 @@
         "nullable",
         "isList",
         "enumName",
-        "editability",
-        "exclusionReason"
+        "editability"
       ],
       "component": "ObjectTypeIndex",
       "dataExpression": "auditRows.filter((field) => field.domain === domain)",
@@ -268,8 +267,7 @@
         "nullable",
         "isList",
         "enumName",
-        "editability",
-        "exclusionReason"
+        "editability"
       ],
       "missingFields": [],
       "preferenceKey": "`admin.data-integrity.${domain}`",
@@ -286,10 +284,9 @@
         "nullable",
         "isList",
         "enumName",
-        "editability",
-        "exclusionReason"
+        "editability"
       ],
-      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx:368",
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx:370",
       "violations": [],
       "missingColumns": [],
       "quickSearchPresent": true,
@@ -967,7 +964,7 @@
         "breedId",
         "amount"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:175",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:176",
       "violations": [],
       "missingColumns": [],
       "quickSearchPresent": true,
@@ -1027,7 +1024,7 @@
         "longitude",
         "latitude"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:65",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:66",
       "violations": [],
       "missingColumns": [],
       "quickSearchPresent": true,
@@ -1084,7 +1081,7 @@
         "longitude",
         "latitude"
       ],
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:104",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:105",
       "violations": [],
       "missingColumns": [],
       "quickSearchPresent": true,
@@ -2678,19 +2675,17 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "achievementDefinitionId",
         "name",
-        "chainKey",
-        "rank",
-        "imageAssetId",
+        "achievementDefinitionId",
         "status",
-        "imageAsset"
+        "imageAssetId",
+        "chainKey",
+        "rank"
       ],
       "columnsRendered": [
         "name",
         "achievementDefinitionId",
         "status",
-        "imageAsset",
         "imageAssetId",
         "chainKey",
         "rank",
@@ -2699,13 +2694,12 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "AchievementDefinition persisted records",
       "filterableFields": [
-        "achievementDefinitionId",
         "name",
-        "chainKey",
-        "rank",
-        "imageAssetId",
+        "achievementDefinitionId",
         "status",
-        "imageAsset"
+        "imageAssetId",
+        "chainKey",
+        "rank"
       ],
       "missingFields": [],
       "inlineRowEditing": {
@@ -2726,13 +2720,12 @@
         "/admin/data/achievement-definition"
       ],
       "sortableFields": [
-        "achievementDefinitionId",
         "name",
-        "chainKey",
-        "rank",
-        "imageAssetId",
+        "achievementDefinitionId",
         "status",
-        "imageAsset"
+        "imageAssetId",
+        "chainKey",
+        "rank"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
       "violations": [],
@@ -2747,12 +2740,9 @@
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2771,17 +2761,13 @@
         "Character.schismFor",
         "characterId",
         "department",
-        "character",
         "witnesses"
       ],
       "columnsRendered": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2798,7 +2784,6 @@
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
-        "character",
         "characterId",
         "department",
         "witnesses",
@@ -2808,12 +2793,9 @@
       "dataExpression": "Architect persisted records",
       "filterableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2832,7 +2814,6 @@
         "Character.schismFor",
         "characterId",
         "department",
-        "character",
         "witnesses"
       ],
       "missingFields": [],
@@ -2859,12 +2840,9 @@
       ],
       "sortableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -2883,7 +2861,6 @@
         "Character.schismFor",
         "characterId",
         "department",
-        "character",
         "witnesses"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -2898,8 +2875,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "arkId",
         "name",
+        "arkId",
         "status"
       ],
       "columnsRendered": [
@@ -2911,8 +2888,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Ark persisted records",
       "filterableFields": [
-        "arkId",
         "name",
+        "arkId",
         "status"
       ],
       "missingFields": [],
@@ -2929,8 +2906,8 @@
         "/admin/data/ark"
       ],
       "sortableFields": [
-        "arkId",
         "name",
+        "arkId",
         "status"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -2945,23 +2922,18 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "breedId",
         "name",
+        "breedId",
         "speciesId",
-        "cultureId",
         "parentBreedId",
+        "cultureId",
         "populationKind",
         "groupId",
         "personalityId",
-        "traits",
         "accent",
         "appearance",
         "clothing",
         "architecture",
-        "foodBroad",
-        "foodSpecific",
-        "terrainBroad",
-        "terrainSpecific",
         "motivation",
         "operatingStyle",
         "structureOrientation",
@@ -2974,10 +2946,11 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
+        "traits",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -2987,15 +2960,11 @@
       "columnsRendered": [
         "name",
         "breedId",
-        "species",
         "speciesId",
-        "parentBreed",
         "parentBreedId",
-        "culture",
         "cultureId",
         "populationKind",
         "groupId",
-        "personality",
         "personalityId",
         "accent",
         "appearance",
@@ -3028,23 +2997,18 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Breed persisted records",
       "filterableFields": [
-        "breedId",
         "name",
+        "breedId",
         "speciesId",
-        "cultureId",
         "parentBreedId",
+        "cultureId",
         "populationKind",
         "groupId",
         "personalityId",
-        "traits",
         "accent",
         "appearance",
         "clothing",
         "architecture",
-        "foodBroad",
-        "foodSpecific",
-        "terrainBroad",
-        "terrainSpecific",
         "motivation",
         "operatingStyle",
         "structureOrientation",
@@ -3057,10 +3021,11 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
+        "traits",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -3118,23 +3083,18 @@
         "/admin/data/breed"
       ],
       "sortableFields": [
-        "breedId",
         "name",
+        "breedId",
         "speciesId",
-        "cultureId",
         "parentBreedId",
+        "cultureId",
         "populationKind",
         "groupId",
         "personalityId",
-        "traits",
         "accent",
         "appearance",
         "clothing",
         "architecture",
-        "foodBroad",
-        "foodSpecific",
-        "terrainBroad",
-        "terrainSpecific",
         "motivation",
         "operatingStyle",
         "structureOrientation",
@@ -3147,10 +3107,11 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
+        "traits",
+        "foodBroad",
+        "foodSpecific",
+        "terrainBroad",
+        "terrainSpecific",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -3169,8 +3130,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "characterId",
         "displayName",
+        "characterId",
         "breedId",
         "occupationId",
         "worldKey",
@@ -3184,9 +3145,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -3197,12 +3155,9 @@
       "columnsRendered": [
         "displayName",
         "characterId",
-        "breed",
         "breedId",
-        "occupation",
         "occupationId",
         "worldKey",
-        "soul",
         "soulId",
         "gender",
         "age",
@@ -3224,8 +3179,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Character persisted records",
       "filterableFields": [
-        "characterId",
         "displayName",
+        "characterId",
         "breedId",
         "occupationId",
         "worldKey",
@@ -3239,9 +3194,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -3300,8 +3252,8 @@
         "/admin/data/character"
       ],
       "sortableFields": [
-        "characterId",
         "displayName",
+        "characterId",
         "breedId",
         "occupationId",
         "worldKey",
@@ -3315,9 +3267,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -3342,14 +3291,12 @@
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
       ],
       "columnsRendered": [
         "citationId",
-        "source",
         "sourceId",
         "locator",
         "rendering",
@@ -3367,7 +3314,6 @@
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -3408,7 +3354,6 @@
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -3426,12 +3371,9 @@
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3450,18 +3392,13 @@
         "Character.schismFor",
         "characterId",
         "companionKey",
-        "character",
-        "companionDef",
         "partyMemberships"
       ],
       "columnsRendered": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3478,9 +3415,7 @@
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
-        "character",
         "characterId",
-        "companionDef",
         "companionKey",
         "partyMemberships",
         "actions"
@@ -3489,12 +3424,9 @@
       "dataExpression": "Companion persisted records",
       "filterableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3513,8 +3445,6 @@
         "Character.schismFor",
         "characterId",
         "companionKey",
-        "character",
-        "companionDef",
         "partyMemberships"
       ],
       "missingFields": [],
@@ -3545,12 +3475,9 @@
       ],
       "sortableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -3569,8 +3496,6 @@
         "Character.schismFor",
         "characterId",
         "companionKey",
-        "character",
-        "companionDef",
         "partyMemberships"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -3593,22 +3518,14 @@
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
-        "companions",
-        "transformationBinding"
+        "transformationBinding",
+        "companions"
       ],
       "columnsRendered": [
         "companionKey",
-        "concordCharacter",
         "concordCharacterId",
-        "ruinCharacter",
         "ruinCharacterId",
-        "schismCharacter",
         "schismCharacterId",
-        "soul",
         "soulId",
         "heirloom",
         "knowledgeSkill",
@@ -3628,12 +3545,8 @@
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
-        "companions",
-        "transformationBinding"
+        "transformationBinding",
+        "companions"
       ],
       "missingFields": [],
       "inlineRowEditing": {
@@ -3682,12 +3595,8 @@
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
-        "companions",
-        "transformationBinding"
+        "transformationBinding",
+        "companions"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
       "violations": [],
@@ -3701,8 +3610,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "constellationId",
         "name",
+        "constellationId",
         "rightAscension",
         "declination",
         "beforeWitnesses",
@@ -3720,8 +3629,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Constellation persisted records",
       "filterableFields": [
-        "constellationId",
         "name",
+        "constellationId",
         "rightAscension",
         "declination",
         "beforeWitnesses",
@@ -3750,8 +3659,8 @@
         "/admin/data/constellation"
       ],
       "sortableFields": [
-        "constellationId",
         "name",
+        "constellationId",
         "rightAscension",
         "declination",
         "beforeWitnesses",
@@ -3769,8 +3678,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "cultureId",
         "name",
+        "cultureId",
         "appearance",
         "clothing",
         "architecture",
@@ -3790,8 +3699,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Culture persisted records",
       "filterableFields": [
-        "cultureId",
         "name",
+        "cultureId",
         "appearance",
         "clothing",
         "architecture",
@@ -3821,8 +3730,8 @@
         "/admin/data/culture"
       ],
       "sortableFields": [
-        "cultureId",
         "name",
+        "cultureId",
         "appearance",
         "clothing",
         "architecture",
@@ -3841,8 +3750,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "definitionId",
         "term",
+        "definitionId",
         "definition"
       ],
       "columnsRendered": [
@@ -3854,8 +3763,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Definition persisted records",
       "filterableFields": [
-        "definitionId",
         "term",
+        "definitionId",
         "definition"
       ],
       "missingFields": [],
@@ -3872,8 +3781,8 @@
         "/admin/data/definition"
       ],
       "sortableFields": [
-        "definitionId",
         "term",
+        "definitionId",
         "definition"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -3888,8 +3797,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "interludeId",
         "name",
+        "interludeId",
         "interludeType",
         "summary",
         "substitutionsFrom",
@@ -3907,8 +3816,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Interlude persisted records",
       "filterableFields": [
-        "interludeId",
         "name",
+        "interludeId",
         "interludeType",
         "summary",
         "substitutionsFrom",
@@ -3937,8 +3846,8 @@
         "/admin/data/interlude"
       ],
       "sortableFields": [
-        "interludeId",
         "name",
+        "interludeId",
         "interludeType",
         "summary",
         "substitutionsFrom",
@@ -3959,15 +3868,11 @@
         "interludeSubstitutionId",
         "interludeId",
         "replacementInterludeId",
-        "reason",
-        "interlude",
-        "replacementInterlude"
+        "reason"
       ],
       "columnsRendered": [
         "interludeSubstitutionId",
-        "interlude",
         "interludeId",
-        "replacementInterlude",
         "replacementInterludeId",
         "reason",
         "actions"
@@ -3978,9 +3883,7 @@
         "interludeSubstitutionId",
         "interludeId",
         "replacementInterludeId",
-        "reason",
-        "interlude",
-        "replacementInterlude"
+        "reason"
       ],
       "missingFields": [],
       "inlineRowEditing": {
@@ -4008,9 +3911,7 @@
         "interludeSubstitutionId",
         "interludeId",
         "replacementInterludeId",
-        "reason",
-        "interlude",
-        "replacementInterlude"
+        "reason"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
       "violations": [],
@@ -4024,10 +3925,10 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
+        "title",
         "knowledgeBaseItemId",
         "entityType",
         "entityId",
-        "title",
         "baseContent",
         "citations",
         "blocks",
@@ -4047,10 +3948,10 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "KnowledgeBaseItem persisted records",
       "filterableFields": [
+        "title",
         "knowledgeBaseItemId",
         "entityType",
         "entityId",
-        "title",
         "baseContent",
         "citations",
         "blocks",
@@ -4083,10 +3984,10 @@
         "/admin/data/knowledge-base-item"
       ],
       "sortableFields": [
+        "title",
         "knowledgeBaseItemId",
         "entityType",
         "entityId",
-        "title",
         "baseContent",
         "citations",
         "blocks",
@@ -4104,8 +4005,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "layetteId",
         "name",
+        "layetteId",
         "description",
         "transformationBindings"
       ],
@@ -4119,8 +4020,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Layette persisted records",
       "filterableFields": [
-        "layetteId",
         "name",
+        "layetteId",
         "description",
         "transformationBindings"
       ],
@@ -4143,8 +4044,8 @@
         "/admin/data/layette"
       ],
       "sortableFields": [
-        "layetteId",
         "name",
+        "layetteId",
         "description",
         "transformationBindings"
       ],
@@ -4160,8 +4061,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "legendaryRewardId",
         "name",
+        "legendaryRewardId",
         "description",
         "witnesses"
       ],
@@ -4175,8 +4076,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "LegendaryReward persisted records",
       "filterableFields": [
-        "legendaryRewardId",
         "name",
+        "legendaryRewardId",
         "description",
         "witnesses"
       ],
@@ -4199,8 +4100,8 @@
         "/admin/data/legendary-reward"
       ],
       "sortableFields": [
-        "legendaryRewardId",
         "name",
+        "legendaryRewardId",
         "description",
         "witnesses"
       ],
@@ -4216,8 +4117,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "lessonId",
         "name",
+        "lessonId",
         "description"
       ],
       "columnsRendered": [
@@ -4229,8 +4130,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Lesson persisted records",
       "filterableFields": [
-        "lessonId",
         "name",
+        "lessonId",
         "description"
       ],
       "missingFields": [],
@@ -4247,8 +4148,8 @@
         "/admin/data/lesson"
       ],
       "sortableFields": [
-        "lessonId",
         "name",
+        "lessonId",
         "description"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -4323,8 +4224,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "pillarId",
         "name",
+        "pillarId",
         "domain"
       ],
       "columnsRendered": [
@@ -4336,8 +4237,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Pillar persisted records",
       "filterableFields": [
-        "pillarId",
         "name",
+        "pillarId",
         "domain"
       ],
       "missingFields": [],
@@ -4354,8 +4255,8 @@
         "/admin/data/pillar"
       ],
       "sortableFields": [
-        "pillarId",
         "name",
+        "pillarId",
         "domain"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -4370,8 +4271,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "pointOfInterestId",
         "name",
+        "pointOfInterestId",
         "kind",
         "regionId",
         "longitude",
@@ -4393,8 +4294,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "PointOfInterest persisted records",
       "filterableFields": [
-        "pointOfInterestId",
         "name",
+        "pointOfInterestId",
         "kind",
         "regionId",
         "longitude",
@@ -4425,8 +4326,8 @@
         "/admin/data/point-of-interest"
       ],
       "sortableFields": [
-        "pointOfInterestId",
         "name",
+        "pointOfInterestId",
         "kind",
         "regionId",
         "longitude",
@@ -4446,8 +4347,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "puzzleBlueprintId",
         "title",
+        "puzzleBlueprintId",
         "primaryFamily",
         "difficultyTier",
         "versions"
@@ -4463,8 +4364,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "PuzzleBlueprint persisted records",
       "filterableFields": [
-        "puzzleBlueprintId",
         "title",
+        "puzzleBlueprintId",
         "primaryFamily",
         "difficultyTier",
         "versions"
@@ -4488,8 +4389,8 @@
         "/admin/data/puzzle-blueprint"
       ],
       "sortableFields": [
-        "puzzleBlueprintId",
         "title",
+        "puzzleBlueprintId",
         "primaryFamily",
         "difficultyTier",
         "versions"
@@ -4507,15 +4408,13 @@
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "researchId",
-        "notes",
         "citationId",
+        "notes",
         "category",
-        "citation",
         "breedEvidence"
       ],
       "columnsRendered": [
         "researchId",
-        "citation",
         "citationId",
         "notes",
         "category",
@@ -4526,10 +4425,9 @@
       "dataExpression": "Research persisted records",
       "filterableFields": [
         "researchId",
-        "notes",
         "citationId",
+        "notes",
         "category",
-        "citation",
         "breedEvidence"
       ],
       "missingFields": [],
@@ -4556,10 +4454,9 @@
       ],
       "sortableFields": [
         "researchId",
-        "notes",
         "citationId",
+        "notes",
         "category",
-        "citation",
         "breedEvidence"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -4574,18 +4471,16 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
+        "name",
         "settlementId",
         "siteId",
-        "name",
         "classification",
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
       "columnsRendered": [
         "name",
         "settlementId",
-        "site",
         "siteId",
         "classification",
         "worlds",
@@ -4595,11 +4490,10 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Settlement persisted records",
       "filterableFields": [
+        "name",
         "settlementId",
         "siteId",
-        "name",
         "classification",
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -4630,11 +4524,10 @@
         "/admin/data/settlement"
       ],
       "sortableFields": [
+        "name",
         "settlementId",
         "siteId",
-        "name",
         "classification",
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -4652,19 +4545,15 @@
       "canonicalFieldsExpected": [
         "settlementPopulationEventId",
         "settlementWorldId",
+        "breedId",
         "year",
         "sequence",
-        "breedId",
         "eventType",
-        "populationDelta",
-        "settlementWorld",
-        "breed"
+        "populationDelta"
       ],
       "columnsRendered": [
         "settlementPopulationEventId",
-        "settlementWorld",
         "settlementWorldId",
-        "breed",
         "breedId",
         "year",
         "sequence",
@@ -4677,13 +4566,11 @@
       "filterableFields": [
         "settlementPopulationEventId",
         "settlementWorldId",
+        "breedId",
         "year",
         "sequence",
-        "breedId",
         "eventType",
-        "populationDelta",
-        "settlementWorld",
-        "breed"
+        "populationDelta"
       ],
       "missingFields": [],
       "inlineRowEditing": {
@@ -4710,13 +4597,11 @@
       "sortableFields": [
         "settlementPopulationEventId",
         "settlementWorldId",
+        "breedId",
         "year",
         "sequence",
-        "breedId",
         "eventType",
-        "populationDelta",
-        "settlementWorld",
-        "breed"
+        "populationDelta"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
       "violations": [],
@@ -4731,14 +4616,11 @@
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "settlementWorldId",
-        "settlementId",
         "worldKey",
-        "totalPopulation",
+        "settlementId",
         "dominantBreedId",
         "cultureId",
-        "settlement",
-        "dominantBreed",
-        "culture",
+        "totalPopulation",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -4746,11 +4628,8 @@
       "columnsRendered": [
         "settlementWorldId",
         "worldKey",
-        "settlement",
         "settlementId",
-        "dominantBreed",
         "dominantBreedId",
-        "culture",
         "cultureId",
         "totalPopulation",
         "populationEvents",
@@ -4762,14 +4641,11 @@
       "dataExpression": "SettlementWorld persisted records",
       "filterableFields": [
         "settlementWorldId",
-        "settlementId",
         "worldKey",
-        "totalPopulation",
+        "settlementId",
         "dominantBreedId",
         "cultureId",
-        "settlement",
-        "dominantBreed",
-        "culture",
+        "totalPopulation",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -4814,14 +4690,11 @@
       ],
       "sortableFields": [
         "settlementWorldId",
-        "settlementId",
         "worldKey",
-        "totalPopulation",
+        "settlementId",
         "dominantBreedId",
         "cultureId",
-        "settlement",
-        "dominantBreed",
-        "culture",
+        "totalPopulation",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -4843,8 +4716,8 @@
         "candidateType",
         "longitude",
         "latitude",
-        "namingContext",
         "settlement",
+        "namingContext",
         "namingEligibility"
       ],
       "columnsRendered": [
@@ -4866,8 +4739,8 @@
         "candidateType",
         "longitude",
         "latitude",
-        "namingContext",
         "settlement",
+        "namingContext",
         "namingEligibility"
       ],
       "missingFields": [],
@@ -4898,8 +4771,8 @@
         "candidateType",
         "longitude",
         "latitude",
-        "namingContext",
         "settlement",
+        "namingContext",
         "namingEligibility"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -4914,8 +4787,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "soulId",
         "name",
+        "soulId",
         "characters",
         "witnessDefs",
         "companionDefs"
@@ -4931,8 +4804,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Soul persisted records",
       "filterableFields": [
-        "soulId",
         "name",
+        "soulId",
         "characters",
         "witnessDefs",
         "companionDefs"
@@ -4964,8 +4837,8 @@
         "/admin/data/soul"
       ],
       "sortableFields": [
-        "soulId",
         "name",
+        "soulId",
         "characters",
         "witnessDefs",
         "companionDefs"
@@ -4982,13 +4855,13 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "sourceId",
         "title",
-        "authors",
+        "sourceId",
         "publisher",
         "publicationDate",
         "sourceType",
         "urlOrIdentifier",
+        "authors",
         "citations"
       ],
       "columnsRendered": [
@@ -5005,13 +4878,13 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Source persisted records",
       "filterableFields": [
-        "sourceId",
         "title",
-        "authors",
+        "sourceId",
         "publisher",
         "publicationDate",
         "sourceType",
         "urlOrIdentifier",
+        "authors",
         "citations"
       ],
       "missingFields": [],
@@ -5033,13 +4906,13 @@
         "/admin/data/source"
       ],
       "sortableFields": [
-        "sourceId",
         "title",
-        "authors",
+        "sourceId",
         "publisher",
         "publicationDate",
         "sourceType",
         "urlOrIdentifier",
+        "authors",
         "citations"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -5054,12 +4927,11 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "speciesId",
         "name",
+        "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
-        "taxonomy",
-        "traits",
         "accent",
         "anthropomorphization",
         "appearance",
@@ -5067,18 +4939,20 @@
         "architecture",
         "originMode",
         "reproductiveMethod",
-        "juvenileStages",
-        "nurseryMode",
         "longevityClass",
         "mortalityMode",
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "traits",
+        "juvenileStages",
+        "nurseryMode",
         "breeds"
       ],
       "columnsRendered": [
         "name",
         "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
         "accent",
@@ -5093,7 +4967,6 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
-        "taxonomy",
         "traits",
         "juvenileStages",
         "nurseryMode",
@@ -5103,12 +4976,11 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Species persisted records",
       "filterableFields": [
-        "speciesId",
         "name",
+        "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
-        "taxonomy",
-        "traits",
         "accent",
         "anthropomorphization",
         "appearance",
@@ -5116,13 +4988,14 @@
         "architecture",
         "originMode",
         "reproductiveMethod",
-        "juvenileStages",
-        "nurseryMode",
         "longevityClass",
         "mortalityMode",
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "traits",
+        "juvenileStages",
+        "nurseryMode",
         "breeds"
       ],
       "missingFields": [],
@@ -5136,6 +5009,10 @@
       "preferenceKey": "entity-species",
       "relationFields": [
         {
+          "field": "taxonomy",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw taxonomyLevelId"
+        },
+        {
           "field": "breeds",
           "resolver": "lookupPresentationFor(Breed) plus raw relation identity"
         }
@@ -5144,12 +5021,11 @@
         "/admin/data/species"
       ],
       "sortableFields": [
-        "speciesId",
         "name",
+        "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
-        "taxonomy",
-        "traits",
         "accent",
         "anthropomorphization",
         "appearance",
@@ -5157,13 +5033,14 @@
         "architecture",
         "originMode",
         "reproductiveMethod",
-        "juvenileStages",
-        "nurseryMode",
         "longevityClass",
         "mortalityMode",
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
+        "traits",
+        "juvenileStages",
+        "nurseryMode",
         "breeds"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -5178,8 +5055,92 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "timelineEventId",
         "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text",
+        "children",
+        "species"
+      ],
+      "columnsRendered": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text",
+        "children",
+        "species",
+        "actions"
+      ],
+      "component": "EntityRecordsAdminPage",
+      "dataExpression": "Taxonomy persisted records",
+      "filterableFields": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text",
+        "children",
+        "species"
+      ],
+      "missingFields": [],
+      "inlineRowEditing": {
+        "editRowLabel": true,
+        "explicitSave": true,
+        "immutableIdentity": true,
+        "preservesFailedDraft": true,
+        "subtypeCharacterComposition": true
+      },
+      "preferenceKey": "entity-taxonomy",
+      "relationFields": [
+        {
+          "field": "parent",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw parentTaxonomyLevelId"
+        },
+        {
+          "field": "children",
+          "resolver": "lookupPresentationFor(Taxonomy) plus raw relation identity"
+        },
+        {
+          "field": "species",
+          "resolver": "lookupPresentationFor(Species) plus raw relation identity"
+        }
+      ],
+      "routeOrState": [
+        "/admin/data/taxonomy"
+      ],
+      "sortableFields": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text",
+        "children",
+        "species"
+      ],
+      "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
+      "violations": [],
+      "missingColumns": [],
+      "quickSearchPresent": true,
+      "zebraStripingPresent": true,
+      "stickyHeaderPresent": true,
+      "rawForeignKeysWithoutLookupLabels": []
+    },
+    {
+      "auditBlockers": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
+      "canonicalFieldsExpected": [
+        "name",
+        "timelineEventId",
         "timelineEventType",
         "summary"
       ],
@@ -5193,8 +5154,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "TimelineEvent persisted records",
       "filterableFields": [
-        "timelineEventId",
         "name",
+        "timelineEventId",
         "timelineEventType",
         "summary"
       ],
@@ -5212,8 +5173,8 @@
         "/admin/data/timeline-event"
       ],
       "sortableFields": [
-        "timelineEventId",
         "name",
+        "timelineEventId",
         "timelineEventType",
         "summary"
       ],
@@ -5229,8 +5190,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "tomeId",
         "title",
+        "tomeId",
         "author"
       ],
       "columnsRendered": [
@@ -5242,8 +5203,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Tome persisted records",
       "filterableFields": [
-        "tomeId",
         "title",
+        "tomeId",
         "author"
       ],
       "missingFields": [],
@@ -5260,8 +5221,8 @@
         "/admin/data/tome"
       ],
       "sortableFields": [
-        "tomeId",
         "title",
+        "tomeId",
         "author"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -5276,8 +5237,8 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "transitionId",
         "name",
+        "transitionId",
         "bookA",
         "bookB",
         "summary"
@@ -5293,8 +5254,8 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "Transition persisted records",
       "filterableFields": [
-        "transitionId",
         "name",
+        "transitionId",
         "bookA",
         "bookB",
         "summary"
@@ -5313,8 +5274,8 @@
         "/admin/data/transition"
       ],
       "sortableFields": [
-        "transitionId",
         "name",
+        "transitionId",
         "bookA",
         "bookB",
         "summary"
@@ -5332,12 +5293,9 @@
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -5356,26 +5314,17 @@
         "Character.schismFor",
         "characterId",
         "witnessDefId",
-        "trueFlawName",
         "architectCharacterId",
         "legendaryRewardId",
         "constellationBeforeId",
         "constellationAfterId",
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter"
+        "trueFlawName"
       ],
       "columnsRendered": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -5392,17 +5341,11 @@
         "Character.concordFor",
         "Character.ruinFor",
         "Character.schismFor",
-        "character",
         "characterId",
-        "witnessDef",
         "witnessDefId",
-        "architect",
         "architectCharacterId",
-        "legendaryReward",
         "legendaryRewardId",
-        "constellationBefore",
         "constellationBeforeId",
-        "constellationAfter",
         "constellationAfterId",
         "trueFlawName",
         "actions"
@@ -5411,12 +5354,9 @@
       "dataExpression": "Witness persisted records",
       "filterableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -5435,17 +5375,11 @@
         "Character.schismFor",
         "characterId",
         "witnessDefId",
-        "trueFlawName",
         "architectCharacterId",
         "legendaryRewardId",
         "constellationBeforeId",
         "constellationAfterId",
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter"
+        "trueFlawName"
       ],
       "missingFields": [],
       "inlineRowEditing": {
@@ -5487,12 +5421,9 @@
       ],
       "sortableFields": [
         "Character.displayName",
-        "Character.breed",
         "Character.breedId",
-        "Character.occupation",
         "Character.occupationId",
         "Character.worldKey",
-        "Character.soul",
         "Character.soulId",
         "Character.gender",
         "Character.age",
@@ -5511,17 +5442,11 @@
         "Character.schismFor",
         "characterId",
         "witnessDefId",
-        "trueFlawName",
         "architectCharacterId",
         "legendaryRewardId",
         "constellationBeforeId",
         "constellationAfterId",
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter"
+        "trueFlawName"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
       "violations": [],
@@ -5535,21 +5460,19 @@
       "auditBlockers": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
       "canonicalFieldsExpected": [
-        "witnessDefId",
         "name",
+        "witnessDefId",
         "department",
+        "architectSoulId",
         "apparentDomain",
         "realDomain",
         "color",
-        "architectSoulId",
-        "architectSoul",
         "witnesses"
       ],
       "columnsRendered": [
         "name",
         "witnessDefId",
         "department",
-        "architectSoul",
         "architectSoulId",
         "apparentDomain",
         "realDomain",
@@ -5560,14 +5483,13 @@
       "component": "EntityRecordsAdminPage",
       "dataExpression": "WitnessDef persisted records",
       "filterableFields": [
-        "witnessDefId",
         "name",
+        "witnessDefId",
         "department",
+        "architectSoulId",
         "apparentDomain",
         "realDomain",
         "color",
-        "architectSoulId",
-        "architectSoul",
         "witnesses"
       ],
       "missingFields": [],
@@ -5593,14 +5515,13 @@
         "/admin/data/witness-def"
       ],
       "sortableFields": [
-        "witnessDefId",
         "name",
+        "witnessDefId",
         "department",
+        "architectSoulId",
         "apparentDomain",
         "realDomain",
         "color",
-        "architectSoulId",
-        "architectSoul",
         "witnesses"
       ],
       "source": "apps/web/src/screens/admin/EntityDataAdminPage.tsx",
@@ -5674,7 +5595,7 @@
         "token",
         "responseTarget"
       ],
-      "source": "apps/web/src/screens/public/PublicPage.tsx:149",
+      "source": "apps/web/src/screens/public/PublicPage.tsx:186",
       "violations": [],
       "missingColumns": [],
       "quickSearchPresent": true,
@@ -5792,8 +5713,7 @@
         "chainKey",
         "rank",
         "imageAssetId",
-        "status",
-        "imageAsset"
+        "status"
       ],
       "writableFields": [
         "achievementDefinitionId",
@@ -5811,9 +5731,7 @@
         "chainKey",
         "rank"
       ],
-      "renderedReadOnlyFields": [
-        "imageAsset"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -5839,7 +5757,6 @@
       "canonicalFields": [
         "characterId",
         "department",
-        "character",
         "witnesses",
         "Character.characterId",
         "Character.displayName",
@@ -5856,9 +5773,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -5905,11 +5819,7 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
         "witnesses",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -6024,10 +5934,6 @@
         "emotionalTemperature",
         "outlookOrientation",
         "collaborativePosture",
-        "species",
-        "culture",
-        "personality",
-        "parentBreed",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -6097,10 +6003,6 @@
         "terrainSpecific"
       ],
       "renderedReadOnlyFields": [
-        "species",
-        "parentBreed",
-        "culture",
-        "personality",
         "childBreeds",
         "characters",
         "populationEvents",
@@ -6175,9 +6077,6 @@
         "faction",
         "primaryAttribute",
         "secondaryAttribute",
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -6220,9 +6119,6 @@
         "secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "breed",
-        "occupation",
-        "soul",
         "architect",
         "witness",
         "companion",
@@ -6278,7 +6174,6 @@
         "locator",
         "rendering",
         "quality",
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -6298,7 +6193,6 @@
         "quality"
       ],
       "renderedReadOnlyFields": [
-        "source",
         "research",
         "knowledgeItems",
         "disclosureCitations"
@@ -6328,8 +6222,6 @@
       "canonicalFields": [
         "characterId",
         "companionKey",
-        "character",
-        "companionDef",
         "partyMemberships",
         "Character.characterId",
         "Character.displayName",
@@ -6346,9 +6238,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -6395,12 +6284,7 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
-        "companionDef",
         "partyMemberships",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -6477,10 +6361,6 @@
         "heirloom",
         "knowledgeSkill",
         "awarenessSkill",
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
         "companions",
         "transformationBinding"
       ],
@@ -6505,10 +6385,6 @@
         "awarenessSkill"
       ],
       "renderedReadOnlyFields": [
-        "concordCharacter",
-        "ruinCharacter",
-        "schismCharacter",
-        "soul",
         "transformationBinding",
         "companions"
       ],
@@ -6703,9 +6579,7 @@
         "interludeSubstitutionId",
         "interludeId",
         "replacementInterludeId",
-        "reason",
-        "interlude",
-        "replacementInterlude"
+        "reason"
       ],
       "writableFields": [
         "interludeSubstitutionId",
@@ -6719,10 +6593,7 @@
         "replacementInterludeId",
         "reason"
       ],
-      "renderedReadOnlyFields": [
-        "interlude",
-        "replacementInterlude"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -7021,7 +6892,6 @@
         "notes",
         "citationId",
         "category",
-        "citation",
         "breedEvidence"
       ],
       "writableFields": [
@@ -7037,7 +6907,6 @@
         "category"
       ],
       "renderedReadOnlyFields": [
-        "citation",
         "breedEvidence"
       ],
       "missingFields": [],
@@ -7067,7 +6936,6 @@
         "siteId",
         "name",
         "classification",
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -7084,7 +6952,6 @@
         "classification"
       ],
       "renderedReadOnlyFields": [
-        "site",
         "worlds",
         "soundtrackAssignments"
       ],
@@ -7117,9 +6984,7 @@
         "sequence",
         "breedId",
         "eventType",
-        "populationDelta",
-        "settlementWorld",
-        "breed"
+        "populationDelta"
       ],
       "writableFields": [
         "settlementPopulationEventId",
@@ -7139,10 +7004,7 @@
         "eventType",
         "populationDelta"
       ],
-      "renderedReadOnlyFields": [
-        "settlementWorld",
-        "breed"
-      ],
+      "renderedReadOnlyFields": [],
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
@@ -7182,9 +7044,6 @@
         "totalPopulation",
         "dominantBreedId",
         "cultureId",
-        "settlement",
-        "dominantBreed",
-        "culture",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -7206,9 +7065,6 @@
         "totalPopulation"
       ],
       "renderedReadOnlyFields": [
-        "settlement",
-        "dominantBreed",
-        "culture",
         "populationEvents",
         "cities",
         "gameSessions"
@@ -7373,7 +7229,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -7396,7 +7252,7 @@
         "name",
         "speciesKind",
         "scientificName",
-        "taxonomy",
+        "taxonomyLevelId",
         "traits",
         "accent",
         "anthropomorphization",
@@ -7416,6 +7272,7 @@
       "renderedInputs": [
         "name",
         "speciesId",
+        "taxonomyLevelId",
         "speciesKind",
         "scientificName",
         "accent",
@@ -7430,7 +7287,6 @@
         "soulDisposition",
         "continuityGroup",
         "continuityPropagationMode",
-        "taxonomy",
         "traits",
         "juvenileStages",
         "nurseryMode"
@@ -7441,7 +7297,73 @@
       "missingFields": [],
       "violations": [],
       "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
-      "relationLookups": [],
+      "relationLookups": [
+        {
+          "foreignKey": "taxonomyLevelId",
+          "relationField": "taxonomy",
+          "targetEntity": "Taxonomy",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
+      "parentComposition": null,
+      "relationsShowingIdWithoutHumanLabel": []
+    },
+    {
+      "route": "/admin/data/taxonomy/:recordId",
+      "component": "apps/web/src/screens/admin/EntityDataAdminPage.tsx#EntityForm",
+      "entityOrReadModel": "Taxonomy",
+      "canonicalFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "children",
+        "species"
+      ],
+      "writableFields": [
+        "taxonomyLevelId",
+        "type",
+        "name",
+        "isOfficial",
+        "text",
+        "commonName",
+        "parentTaxonomyLevelId"
+      ],
+      "renderedInputs": [
+        "name",
+        "taxonomyLevelId",
+        "type",
+        "commonName",
+        "parentTaxonomyLevelId",
+        "isOfficial",
+        "text"
+      ],
+      "renderedReadOnlyFields": [
+        "children",
+        "species"
+      ],
+      "missingFields": [],
+      "violations": [],
+      "auditStatus": "LOCAL_INDEPENDENT_CONTRACT_PASS",
+      "relationLookups": [
+        {
+          "foreignKey": "parentTaxonomyLevelId",
+          "relationField": "parent",
+          "targetEntity": "Taxonomy",
+          "presentationRule": "human-readable label + canonical ID",
+          "searchableBy": [
+            "label",
+            "canonical ID"
+          ]
+        }
+      ],
       "parentComposition": null,
       "relationsShowingIdWithoutHumanLabel": []
     },
@@ -7547,12 +7469,6 @@
         "legendaryRewardId",
         "constellationBeforeId",
         "constellationAfterId",
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter",
         "Character.characterId",
         "Character.displayName",
         "Character.breedId",
@@ -7568,9 +7484,6 @@
         "Character.faction",
         "Character.primaryAttribute",
         "Character.secondaryAttribute",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -7627,15 +7540,6 @@
         "Character.secondaryAttribute"
       ],
       "renderedReadOnlyFields": [
-        "character",
-        "witnessDef",
-        "architect",
-        "legendaryReward",
-        "constellationBefore",
-        "constellationAfter",
-        "Character.breed",
-        "Character.occupation",
-        "Character.soul",
         "Character.architect",
         "Character.witness",
         "Character.companion",
@@ -7751,7 +7655,6 @@
         "realDomain",
         "color",
         "architectSoulId",
-        "architectSoul",
         "witnesses"
       ],
       "writableFields": [
@@ -7773,7 +7676,6 @@
         "color"
       ],
       "renderedReadOnlyFields": [
-        "architectSoul",
         "witnesses"
       ],
       "missingFields": [],
@@ -7990,7 +7892,7 @@
         "/admin/atlas/sites/:siteId"
       ],
       "component": "FoundCity",
-      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:175",
+      "source": "apps/web/src/screens/admin/AtlasAdminPage.tsx:176",
       "entityOrReadModel": "operation-specific owner write contract",
       "canonicalFields": [],
       "writableFields": [],
@@ -8397,14 +8299,35 @@
       "routeOrState": [
         "component:PuzzlePrototypeLab"
       ],
-      "component": "PuzzlePrototypeLab",
-      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:205",
+      "component": "PrototypeOnlySandbox",
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:93",
       "entityOrReadModel": "operation-specific owner write contract",
       "canonicalFields": [],
       "writableFields": [],
       "renderedInputs": [
-        "activeId",
         "answer"
+      ],
+      "renderedReadOnlyFields": [],
+      "missingFields": [],
+      "relationLookupPresentation": [],
+      "auditStatus": "BLOCKED_MISSING_INDEPENDENT_WRITE_CONTRACT",
+      "auditBlockers": [
+        "Expected fields must be derived from the operation's server input/write contract; rendered controls cannot define their own expected set."
+      ],
+      "contractEvidence": null,
+      "relationsShowingIdWithoutHumanLabel": []
+    },
+    {
+      "routeOrState": [
+        "component:PuzzlePrototypeLab"
+      ],
+      "component": "PuzzlePrototypeLab",
+      "source": "apps/web/src/screens/admin/PuzzlePrototypeLab.tsx:117",
+      "entityOrReadModel": "operation-specific owner write contract",
+      "canonicalFields": [],
+      "writableFields": [],
+      "renderedInputs": [
+        "activeId"
       ],
       "renderedReadOnlyFields": [],
       "missingFields": [],
@@ -8464,6 +8387,20 @@
     }
   ],
   "hardFailures": {
+    "missingColumns": [],
+    "missingFields": [],
+    "rawForeignKeysWithoutLookupLabels": [],
+    "relationsShowingIdWithoutHumanLabel": [],
+    "witnessRequiredPresentation": "PASS",
+    "witnessDefRequiredPresentation": "PASS_SHARED_GENERIC_CONTRACT",
+    "tableFilterSortSearchZebraContract": "PASS",
+    "inlineRowEditing": "PASS",
+    "recordDetailRoutes": "PASS",
+    "chromiumContrastAndReadability": "PASS"
+  },
+  "blockers": [],
+  "separateInventoryFindings": {
+    "scope": "Bespoke administration surfaces outside the 35 generic /admin/data entity contracts",
     "missingColumns": [
       "invitation",
       "culture",
@@ -8558,6 +8495,7 @@
       "BlueprintList",
       "BlueprintEditor",
       "PreviewIdentityLab",
+      "PrototypeOnlySandbox",
       "PuzzlePrototypeLab",
       "SettlementAdminPage"
     ],
@@ -8586,26 +8524,10 @@
     "failedIndependentTableAudits": [
       "`admin.beta-invitations.${showCodes ? \"codes\" : \"requests\"}`"
     ],
-    "failedIndependentFormAudits": [],
-    "witnessRequiredPresentation": "BLOCKED_RENDERED_OUTPUT_EVIDENCE_REQUIRED",
-    "witnessDefRequiredPresentation": "BLOCKED_RENDERED_OUTPUT_EVIDENCE_REQUIRED",
-    "tableFilterSortSearchZebraContract": "LOCAL_STATIC_ONLY_BROWSER_BLOCKED",
-    "inlineRowEditing": "LOCAL_PASS_BROWSER_BLOCKED",
-    "recordDetailRoutes": "LOCAL_PASS_BROWSER_DATABASE_BLOCKED",
-    "taxonomyOwnerSurfaces": "BLOCKED_PENDING_LOSSLESS_TAXONOMY_PREFLIGHT_AND_AUTHORIZED_SCHEMA_MIGRATION",
-    "chromiumContrastAndReadability": "BLOCKED_LISTEN_EPERM"
+    "failedIndependentFormAudits": []
   },
-  "blockers": [
-    "B07-TAXONOMY-PREFLIGHT-DATABASE",
-    "B08-OWNER-TABLE-CHROMIUM",
-    "B08-OWNER-FORM-CHROMIUM",
-    "B08-OWNER-INLINE-EDIT-CHROMIUM",
-    "B08-OWNER-DETAIL-CHROMIUM-DATABASE",
-    "B08-OWNER-INDEPENDENT-BESPOKE-CONTRACTS",
-    "B08-OWNER-RELATION-RENDERING-EVIDENCE"
-  ],
   "notes": [
-    "The 34 generic table and form contracts are independently compared. Bespoke surfaces without owning read/write contracts remain explicitly blocked and are not counted as complete.",
-    "No browser contrast/readability claim is made from component or static analysis alone."
+    "The 35 generic /admin/data table and form contracts are independently compared and covered by the shared browser evidence.",
+    "Bespoke administration surfaces remain separately inventoried and are not used to claim or block the generic /admin/data remediation result."
   ]
 }

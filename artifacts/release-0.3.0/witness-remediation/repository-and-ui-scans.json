@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "final-witness-repository-and-ui-scans-v1",
+  "sourceInspection": [
+    {
+      "path": "/home/bobby/Downloads/EIDOLON_ARCHITECT_WITNESS_GUIDE_CANONICAL_INPUT_2026-08-15.zip",
+      "exists": true,
+      "byteSize": 23311,
+      "sha256": "f9dbadc4e9816ce8b6f360c4c835c3ef200de00afbb3093c956c4edafef6b3f5",
+      "markers": {}
+    },
+    {
+      "path": "/home/bobby/Downloads/witness_reward_mapping_decoy_riddle_data_only.html",
+      "exists": true,
+      "byteSize": 1972045,
+      "sha256": "9e79508e8c4be7d651336c4c94e748f43946a0eb39fa68c82b52845472009c12",
+      "markers": {
+        "APPROVED_CANDIDATE_BANK_AWAITING_MAPPING": true,
+        "POSSIBLE_WITNESS_AWAITING_MAPPING": true
+      }
+    },
+    {
+      "path": "/home/bobby/Downloads/ChatGPT-Outline Witness Compromises-20260826-1833 (2).md",
+      "exists": true,
+      "byteSize": 101955,
+      "sha256": "7405c17c4c8e6e043383bebc625d97dd82b08711cf85f9f3cd0da320250c188c",
+      "markers": {}
+    },
+    {
+      "path": "/home/bobby/echoes-of-eidolon/apps/web/src/data/architect-witness-guide/witnesses.json",
+      "exists": true,
+      "byteSize": 49399,
+      "sha256": "cb2d37d630fe267ebb56fe637bc05b4f5939d3c4d60ca9a0a4e26e750d912ec9",
+      "markers": {}
+    },
+    {
+      "path": "/home/bobby/echoes-of-eidolon/apps/web/src/data/architect-witness-guide/witness_defs.json",
+      "exists": true,
+      "byteSize": 24404,
+      "sha256": "bed8a8ee54ccd2a55888e1a79e30b4f1500a150cb324c7551f3ec3a907197224",
+      "markers": {}
+    }
+  ],
+  "forbiddenDisclaimerScan": {
+    "command": "rg -n --hidden with generated/build dependency exclusions",
+    "occurrenceCount": 0,
+    "matches": [],
+    "status": "PASS"
+  },
+  "rawTokenPresentationScan": {
+    "browserArtifact": "../owner-ui/owner-data-browser-evidence.json",
+    "chromiumStatus": "PASS",
+    "occurrenceCount": 0,
+    "status": "PASS"
+  }
+}

@@ -9634,6 +9634,14 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
+          "name": "kernelKey",
+          "type": "String"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
           "name": "apparentDomain",
           "type": "String"
         },
@@ -9660,6 +9668,22 @@
           "kind": "scalar",
           "name": "architectSoulId",
           "type": "String"
+        },
+        {
+          "enumName": "WorldKey",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        },
+        {
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "bookNumber",
+          "type": "Int"
         },
         {
           "enumName": null,
@@ -9812,7 +9836,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -9907,7 +9931,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -9920,7 +9944,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -10372,7 +10396,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -10385,7 +10409,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -10398,7 +10422,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -10411,7 +10435,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -10424,7 +10448,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -10435,7 +10459,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -10446,7 +10470,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -10457,7 +10481,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -10468,7 +10492,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11186,7 +11210,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11199,7 +11223,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11212,7 +11236,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11225,7 +11249,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11236,7 +11260,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11247,7 +11271,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -11258,7 +11282,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11269,7 +11293,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11280,7 +11304,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11506,7 +11530,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11519,7 +11543,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11530,7 +11554,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11541,7 +11565,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11631,7 +11655,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11644,7 +11668,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11657,7 +11681,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11787,7 +11811,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11800,7 +11824,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11813,7 +11837,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11826,7 +11850,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -11839,7 +11863,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -11850,7 +11874,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -12034,7 +12058,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12045,7 +12069,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12150,7 +12174,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12161,7 +12185,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12330,7 +12354,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12341,7 +12365,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12443,7 +12467,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -12456,7 +12480,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -12563,7 +12587,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12574,7 +12598,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12585,7 +12609,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12717,7 +12741,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12793,7 +12817,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -12944,7 +12968,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13209,7 +13233,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13220,7 +13244,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13359,7 +13383,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13470,7 +13494,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -13483,7 +13507,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -13592,7 +13616,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -13605,7 +13629,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13616,7 +13640,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13747,7 +13771,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -13760,7 +13784,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -13909,7 +13933,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -13922,7 +13946,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -13935,7 +13959,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -13948,7 +13972,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13959,7 +13983,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -13970,7 +13994,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14097,7 +14121,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Persisted field is audited but intentionally excluded from this generic form.",
+          "exclusionReason": "SPECIALIZED_WORKFLOW",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -14107,7 +14131,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -14118,7 +14142,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14234,7 +14258,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14245,7 +14269,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14256,7 +14280,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14363,7 +14387,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -14657,7 +14681,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -14670,7 +14694,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -15057,7 +15081,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -15070,7 +15094,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -15081,7 +15105,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -15498,7 +15522,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -15511,7 +15535,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -15524,7 +15548,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -15537,7 +15561,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -15550,7 +15574,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -15563,7 +15587,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": false,
@@ -15682,6 +15706,16 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
+          "name": "kernelKey",
+          "type": "String"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
           "name": "apparentDomain",
           "type": "String"
         },
@@ -15716,8 +15750,28 @@
           "type": "String"
         },
         {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": "WorldKey",
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        },
+        {
+          "editability": "EDITABLE",
+          "exclusionReason": null,
+          "enumName": null,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "bookNumber",
+          "type": "Int"
+        },
+        {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": false,
           "isRequired": true,
@@ -15730,7 +15784,7 @@
         },
         {
           "editability": "EXCLUDED",
-          "exclusionReason": "Relation is edited through its owning canonical foreign-key field or workflow.",
+          "exclusionReason": "OWNED_BY_FOREIGN_KEY",
           "enumName": null,
           "isList": true,
           "isRequired": true,
@@ -15830,6 +15884,15 @@
           "isList": false,
           "isRequired": true,
           "kind": "scalar",
+          "name": "kernelKey",
+          "type": "String"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
           "name": "apparentDomain",
           "type": "String"
         },
@@ -15859,6 +15922,28 @@
           "kind": "scalar",
           "name": "architectSoulId",
           "type": "String"
+        },
+        {
+          "enumValues": [
+            "CONCORD",
+            "RUIN",
+            "SCHISM"
+          ],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "enum",
+          "name": "worldKey",
+          "type": "WorldKey"
+        },
+        {
+          "enumValues": [],
+          "hasDefault": false,
+          "isList": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "name": "bookNumber",
+          "type": "Int"
         }
       ],
       "idField": "witnessDefId"

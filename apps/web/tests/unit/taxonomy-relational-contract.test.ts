@@ -34,7 +34,7 @@ describe("first-class relational Taxonomy", () => {
   it("registers readable Taxonomy administration and exact field order", () => {
     expect(entityFields.Taxonomy).toEqual(["taxonomyLevelId", "type", "name", "isOfficial", "text", "commonName", "parentTaxonomyLevelId"]);
     expect(entityForPath("/admin/data/taxonomy")).toBe("Taxonomy");
-    expect(lookupPresentationFor("Taxonomy", { taxonomyLevelId: "TAX_CLASS_MAMMALIA", type: "CLASS", name: "Mammalia" })).toEqual({ primary: "Mammalia", secondary: "TAX_CLASS_MAMMALIA", context: ["CLASS"] });
+    expect(lookupPresentationFor("Taxonomy", { taxonomyLevelId: "TAX_CLASS_MAMMALIA", type: "CLASS", name: "Mammalia" })).toEqual({ primary: "Mammalia", technicalId: "TAX_CLASS_MAMMALIA", context: ["CLASS"] });
     const contract = contractData.entities.Taxonomy;
     expect(orderOwnerTableFields("Taxonomy", contract.idField, contract.auditFields).slice(0, 8).map(({ name }) => name)).toEqual([
       "name", "taxonomyLevelId", "type", "commonName", "parent", "parentTaxonomyLevelId", "isOfficial", "text",

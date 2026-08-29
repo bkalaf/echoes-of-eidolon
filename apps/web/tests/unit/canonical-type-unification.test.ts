@@ -49,6 +49,9 @@ describe("canonical Character subtype schema", () => {
     expect(witnessDef).toMatch(/realDomain\s+String/);
     expect(witnessDef).toMatch(/color\s+Json/);
     expect(witnessDef).toMatch(/architectSoulId\s+String/);
+    expect(witnessDef).toMatch(/kernelKey\s+String/);
+    expect(witnessDef).toMatch(/worldKey\s+WorldKey/);
+    expect(witnessDef).toMatch(/bookNumber\s+Int/);
     const companionDef = model("CompanionDef");
     expect(companionDef).toMatch(/companionKey\s+CompanionKey\s+@id/);
     for (const field of ["concordCharacterId", "ruinCharacterId", "schismCharacterId", "soulId", "heirloom", "knowledgeSkill", "awarenessSkill"]) expect(companionDef).toMatch(new RegExp(`\\b${field}\\b`));
