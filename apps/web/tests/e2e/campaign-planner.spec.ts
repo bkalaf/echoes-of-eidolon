@@ -155,6 +155,8 @@ test("Campaign Planner contains horizontal scrolling and keeps owner controls re
   await page.goto("/admin/campaign/planner?state=CAMPAIGN_CONCORD");
   const title = page.getByRole("heading", { level: 1, name: "Main 18-Book Planner — Concord" });
   const viewport = page.getByTestId("campaign-board-viewport");
+  const first = page.getByTestId("campaign-placement-layout-witness-a");
+  await expect(first).toBeVisible();
   await expect(title).toBeVisible();
   const titleBefore = await title.boundingBox();
   expect(titleBefore).not.toBeNull();
@@ -165,7 +167,6 @@ test("Campaign Planner contains horizontal scrolling and keeps owner controls re
   const titleAfter = await title.boundingBox();
   expect(titleAfter?.x).toBe(titleBefore?.x);
 
-  const first = page.getByTestId("campaign-placement-layout-witness-a");
   await expect(first.getByRole("button", { name: "↑ Move up" })).toHaveText("↑ Move up");
   await expect(first.getByRole("button", { name: "↓ Move down" })).toHaveText("↓ Move down");
   await expect(first.getByRole("button", { name: "↑ Move up" })).toBeDisabled();
