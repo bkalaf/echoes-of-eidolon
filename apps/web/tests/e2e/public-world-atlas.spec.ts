@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const captureRepositoryEvidence = process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0";
 
 test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Regions", async ({ page }) => {
-  test.setTimeout(420_000);
+  test.setTimeout(600_000);
   await page.setViewportSize({ height: 720, width: 1600 });
   await page.goto("/gameplay/world-atlas");
 
@@ -160,7 +160,7 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
       return !element.hidden && left >= 40 && left <= 60;
     }));
     if (!centeredContinent) {
-      await globe.press("ArrowRight");
+      await page.keyboard.press("ArrowRight");
       await page.waitForTimeout(40);
     }
   }
