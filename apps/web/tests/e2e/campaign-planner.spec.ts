@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const captureRepositoryEvidence = process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0";
+
 test("Campaign Planner renders authoritative contiguous and mirrored Book geometry", async ({ page }) => {
   await page.route("**/api/auth/get-session", async (route) => {
     await route.fulfill({
@@ -168,5 +170,5 @@ test("Campaign Planner contains horizontal scrolling and keeps owner controls re
   await expect(first.getByRole("button", { name: "↑ Move up" })).toBeDisabled();
   await expect(page.getByRole("option", { name: /Nadia Okafor/ })).toBeVisible();
   await expect(page.getByRole("option", { name: /Kris Maarja Tamm/ })).toBeVisible();
-  await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/campaign/campaign-planner-1600x900.png" });
+  if (captureRepositoryEvidence) await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/campaign/campaign-planner-1600x900.png" });
 });

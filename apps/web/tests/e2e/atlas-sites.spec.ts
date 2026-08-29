@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 
+const captureRepositoryEvidence = process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0";
 const classifications = ["HAMLET", "VILLAGE", "TOWN", "CITY", "METROPOLIS"] as const;
 const sites = Array.from({ length: 400 }, (_, index) => {
   const ordinal = index + 1;
@@ -97,5 +98,5 @@ test("400 Atlas Sites remain selectable through clustering, zoom, spiderfy, sear
   await page.getByLabel("Site search results").getByRole("button", { name: /SITE-0001/ }).click();
   await expect(page.getByText("Already founded")).toHaveAttribute("aria-disabled", "true");
   await expect(page.getByText("Already founded")).not.toHaveAttribute("href");
-  await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/atlas-sites-1600x900.png" });
+  if (captureRepositoryEvidence) await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/atlas-sites-1600x900.png" });
 });

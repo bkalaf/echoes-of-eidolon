@@ -8,8 +8,14 @@ import { describe, expect, it } from "vitest";
 const script = resolve(import.meta.dirname, "../../../../infra/scripts/deploy-production.sh");
 const serviceUnit = resolve(import.meta.dirname, "../../../../infra/systemd/eidolon-web.service");
 const playwrightConfig = resolve(import.meta.dirname, "../../playwright.config.ts");
+const productionPlaywrightConfig = resolve(import.meta.dirname, "../../playwright.production.config.ts");
 const viteConfig = resolve(import.meta.dirname, "../../vite.config.ts");
 const localSecretsRunner = resolve(import.meta.dirname, "../../scripts/run-with-local-secrets.mjs");
+const repositoryEvidenceSpecs = [
+  resolve(import.meta.dirname, "../e2e/atlas-sites.spec.ts"),
+  resolve(import.meta.dirname, "../e2e/campaign-planner.spec.ts"),
+  resolve(import.meta.dirname, "../e2e/public-world-atlas.spec.ts"),
+];
 
 function fixture() {
   const root = mkdtempSync(resolve(tmpdir(), "eidolon-deploy-test-"));
@@ -68,11 +74,22 @@ describe("production deployment entry point", () => {
 
   it("binds the E2E readiness server to the same IPv4 loopback address Playwright probes", () => {
     const source = readFileSync(playwrightConfig, "utf8");
+    const productionSource = readFileSync(productionPlaywrightConfig, "utf8");
     expect(source).toContain('process.env.EIDOLON_E2E_PORT ?? "3000"');
     expect(source).toContain("`http://127.0.0.1:${port}`");
     expect(source).toContain("`pnpm dev --host 127.0.0.1 --port ${port}`");
     expect(source).toContain("reuseExistingServer: false");
-    expect(readFileSync(script, "utf8")).toContain("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
+    expect(productionSource).toContain('process.env.EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE = "0"');
+    expect(productionSource).toContain('process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE = "0"');
+    expect(productionSource).toContain('command: "node scripts/run-with-local-secrets.mjs node .output/server/index.mjs"');
+    expect(productionSource).toContain('url: "http://127.0.0.1:3100"');
+    expect(productionSource).toContain('outputDir: "/tmp/echoes-production-e2e-results"');
+    for (const evidenceSpec of repositoryEvidenceSpecs) {
+      const evidenceSource = readFileSync(evidenceSpec, "utf8");
+      expect(evidenceSource).toContain('process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0"');
+      expect(evidenceSource).toMatch(/if \(captureRepositoryEvidence\) await page\.screenshot/);
+    }
+    expect(readFileSync(script, "utf8")).toContain('pnpm --dir "$EIDOLON_REPOSITORY_DIR/apps/web" exec playwright test --config playwright.production.config.ts');
   });
 
   it("forwards termination signals so deployment test servers cannot survive their wrapper", () => {
@@ -135,7 +152,7 @@ describe("production deployment entry point", () => {
     const backup = source.indexOf('backup_path="$EIDOLON_BACKUP_DIR/');
     const migration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate');
     const integration = source.indexOf('run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration');
-    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
+    const e2e = source.indexOf('pnpm --dir "$EIDOLON_REPOSITORY_DIR/apps/web" exec playwright test --config playwright.production.config.ts');
     const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');
     expect(backup).toBeGreaterThan(-1);
     expect(migration).toBeGreaterThan(backup);
@@ -147,7 +164,7 @@ describe("production deployment entry point", () => {
 
   it("rebuilds and verifies the production server artifact after E2E teardown before restart", () => {
     const source = readFileSync(script, "utf8");
-    const e2e = source.indexOf("run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1");
+    const e2e = source.indexOf('pnpm --dir "$EIDOLON_REPOSITORY_DIR/apps/web" exec playwright test --config playwright.production.config.ts');
     const finalBuild = source.indexOf('EIDOLON_BUILD_GIT_SHA="$target_revision"', e2e);
     const artifactCheck = source.indexOf('test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs"', finalBuild);
     const restart = source.lastIndexOf('run_unlocked systemctl restart "$EIDOLON_SYSTEMD_SERVICE"');

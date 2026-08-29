@@ -201,7 +201,7 @@ fi
 
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" --filter @echoes/web db:migrate
 run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:integration
-run_unlocked env EIDOLON_E2E_CAPTURE_OWNER_EVIDENCE=0 EIDOLON_E2E_PORT=3100 EIDOLON_E2E_PRODUCTION_BUILD=1 pnpm --dir "$EIDOLON_REPOSITORY_DIR" test:e2e
+run_unlocked pnpm --dir "$EIDOLON_REPOSITORY_DIR/apps/web" exec playwright test --config playwright.production.config.ts
 run_unlocked env EIDOLON_BUILD_GIT_SHA="$target_revision" pnpm --dir "$EIDOLON_REPOSITORY_DIR" build
 run_unlocked test -s "$EIDOLON_REPOSITORY_DIR/apps/web/.output/server/index.mjs"
 promotion_started=true

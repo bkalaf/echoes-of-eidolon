@@ -60,8 +60,10 @@ async function createOwner(page: Page) {
   return { ...account, userId: user.id };
 }
 
-async function visibleHeaders(page: Page): Promise<string[]> {
-  return page.getByRole("table").locator("thead th").allTextContents().then((headers) => headers.map((header) => header.trim()));
+async function expectVisibleHeaders(page: Page, expected: string[]) {
+  const headers = page.getByRole("table").locator("thead th");
+  await expect(headers).toHaveCount(expected.length);
+  await expect(headers).toHaveText(expected);
 }
 
 test("owner Witness and WitnessDef list, detail, edit, lookup, save, reload, and responsive surfaces", async ({ browser }) => {
@@ -85,7 +87,7 @@ test("owner Witness and WitnessDef list, detail, edit, lookup, save, reload, and
     await page.goto("/admin/data/witness");
     await page.locator("html[data-hydrated=true]").waitFor();
     await expect(page.getByRole("heading", { name: "Witness", exact: true })).toBeVisible();
-    expect(await visibleHeaders(page)).toEqual(["", "Witness", "World", "Book", "Breed", "Age", "Gender", "Witness definition", "Source Architect", "True flaw", "Actions"]);
+    await expectVisibleHeaders(page, ["", "Witness", "World", "Book", "Breed", "Age", "Gender", "Witness definition", "Source Architect", "True flaw", "Actions"]);
     await page.getByLabel("Search Witness").fill("CHA_WITNESS_OF_THE_HAMMER");
     const hammerRow = page.getByRole("table").locator("tbody tr").filter({ hasText: "The Witness of the Hammer" });
     await expect(hammerRow).toHaveCount(1);
@@ -142,7 +144,7 @@ test("owner Witness and WitnessDef list, detail, edit, lookup, save, reload, and
 
     await page.goto("/admin/data/witness-def");
     await page.locator("html[data-hydrated=true]").waitFor();
-    expect(await visibleHeaders(page)).toEqual(["", "Witness definition", "World", "Book", "Kernel", "Department", "Source Architect / Soul", "Apparent domain", "Real domain", "Spectral color", "Actions"]);
+    await expectVisibleHeaders(page, ["", "Witness definition", "World", "Book", "Kernel", "Department", "Source Architect / Soul", "Apparent domain", "Real domain", "Spectral color", "Actions"]);
     await page.getByLabel("Search WitnessDef").fill("WDF_WITNESS_OF_THE_HAMMER");
     const definitionRow = page.getByRole("table").locator("tbody tr").filter({ hasText: "The Witness of the Hammer" });
     await expect(definitionRow).toHaveCount(1);

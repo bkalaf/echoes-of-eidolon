@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const captureRepositoryEvidence = process.env.EIDOLON_E2E_CAPTURE_REPOSITORY_EVIDENCE !== "0";
+
 test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Regions", async ({ page }) => {
   test.setTimeout(300_000);
   await page.setViewportSize({ height: 720, width: 1600 });
@@ -167,5 +169,5 @@ test("public World Atlas renders the 24 Year-0 founding cities on 25 colored Reg
   const evidenceSelectionName = (await evidenceSelection.getAttribute("data-city-name"))!;
   await evidenceSelection.click();
   await expect(page.getByRole("heading", { name: evidenceSelectionName })).toBeVisible();
-  await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/world-atlas-remediation-1600x720.png" });
+  if (captureRepositoryEvidence) await page.screenshot({ fullPage: false, path: "artifacts/release-0.3.0/atlas/world-atlas-remediation-1600x720.png" });
 });
