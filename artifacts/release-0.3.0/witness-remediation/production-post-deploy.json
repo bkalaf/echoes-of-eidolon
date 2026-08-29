@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "final-witness-production-state-v1",
+  "capturedAt": "2026-08-29T06:57:42Z",
+  "environment": "production",
+  "codeRevision": "4f3bfb6203f1e4d1a023c6aa5d0a0f0a4e4d3b18",
+  "gitStatusLines": 0,
+  "service": {
+    "activeState": "active",
+    "subState": "running",
+    "activeSince": "2026-08-29T06:54:23Z",
+    "healthStatus": 200
+  },
+  "deploymentRecord": {
+    "recordedAt": "2026-08-29T06:54:25Z",
+    "status": "healthy",
+    "backup": "20260829T063928Z_4f3bfb6203f1e4d1a023c6aa5d0a0f0a4e4d3b18.dump"
+  },
+  "migrations": {
+    "total": 49,
+    "finished": 49,
+    "failedOrRolledBack": 0
+  },
+  "counts": {
+    "Soul": 58,
+    "Character": 112,
+    "Architect": 56,
+    "WitnessDef": 54,
+    "Witness": 54,
+    "LegendaryReward": 0,
+    "Constellation": 0
+  },
+  "canonicalAudit": {
+    "soulFieldMismatches": 0,
+    "architectFieldMismatches": 0,
+    "witnessDefFieldMismatches": 0,
+    "witnessFieldMismatches": 0,
+    "missingIds": 0,
+    "unexpectedIds": 0,
+    "architectVisualRecordsComplete": 56,
+    "witnessDemographicMismatches": 0,
+    "witnessSoulContinuityMatched": 54
+  },
+  "canonicalImporter": {
+    "firstRunUpdatedCharacters": 56,
+    "secondRunUpdatedCharacters": 0,
+    "secondRunUnchangedCharacters": 112,
+    "secondRunIssues": 0
+  },
+  "migrationIdempotency": {
+    "rowsExamined": {
+      "Witness": 54,
+      "WitnessDef": 54,
+      "WitnessCharacter": 54
+    },
+    "beforeDigest": "8be48aae9004033eb8a43660d67d1f1e8100f91ec589c6ae87862cd98693d60e",
+    "afterDigest": "8be48aae9004033eb8a43660d67d1f1e8100f91ec589c6ae87862cd98693d60e",
+    "secondRunChangedRows": 0,
+    "status": "PASS"
+  },
+  "unresolvedAuthority": {
+    "entries": 594,
+    "witnessCharacterFields": 432,
+    "witnessRelationFields": 162,
+    "inventedValues": 0
+  },
+  "productionVerification": {
+    "unitTestFiles": 161,
+    "unitTests": 888,
+    "integrationTestFiles": 15,
+    "integrationTests": 64,
+    "chromiumTests": 51,
+    "chromiumFailures": 0
+  },
+  "backups": [
+    {
+      "purpose": "pre-migration deployment backup",
+      "name": "20260829T063928Z_4f3bfb6203f1e4d1a023c6aa5d0a0f0a4e4d3b18.dump",
+      "sizeBytes": 1078313,
+      "sha256": "750d8a05490b8af37fca45fa334eb08a2924855349819a971f5c0c45a41cfee3"
+    },
+    {
+      "purpose": "pre-Architect-visual canonical import backup",
+      "name": "20260829T065651Z_pre_architect_visual_import_4f3bfb6203f1e4d1a023c6aa5d0a0f0a4e4d3b18.dump",
+      "sizeBytes": 1078313,
+      "sha256": "713549ed600e6915e11b2c6a7abbbaed5d464707db4eccd14b964123341b8850"
+    }
+  ],
+  "releaseState": {
+    "version": "0.3.0",
+    "status": "DRAFT",
+    "publicReleaseCreated": false,
+    "tagCreated": false
+  },
+  "source": "Post-deploy SSH, systemd, Git, PostgreSQL, canonical importer, canonical audit, migration idempotency, backup hash, and production Playwright checks."
+}
