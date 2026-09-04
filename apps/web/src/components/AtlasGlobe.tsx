@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { managedAssetUrl } from "../content/managed-assets";
+import { createF28RenderGeometry } from "./atlas-f28";
 
 interface AtlasGlobePoint {
   category: string;
@@ -15,54 +15,17 @@ interface AtlasGlobePoint {
 
 const vertexShaderSource = `#version 300 es
 precision highp float;
-in vec3 aPosition; in vec3 aNormal; in vec2 aUv;
+in vec3 aPosition; in vec3 aNormal; in vec3 aColor; in float aEmission;
 uniform mat4 uProjection, uView, uModel;
-out vec3 vNormal; out vec3 vWorld; out vec2 vUv;
-void main(){vec4 w=uModel*vec4(aPosition,1.0);vWorld=w.xyz;vNormal=mat3(uModel)*aNormal;vUv=aUv;gl_Position=uProjection*uView*w;}`;
+out vec3 vNormal; out vec3 vWorld; out vec3 vColor; out float vEmission;
+void main(){vec4 w=uModel*vec4(aPosition,1.0);vWorld=w.xyz;vNormal=mat3(uModel)*aNormal;vColor=aColor;vEmission=aEmission;gl_Position=uProjection*uView*w;}`;
 
 const fragmentShaderSource = `#version 300 es
 precision highp float;
-in vec3 vNormal; in vec3 vWorld; in vec2 vUv;
-uniform sampler2D uTexture; uniform vec3 uCamera; uniform float uLight;
+in vec3 vNormal; in vec3 vWorld; in vec3 vColor; in float vEmission;
+uniform vec3 uCamera; uniform float uLight;
 out vec4 outColor;
-void main(){vec3 tex=texture(uTexture,vUv).rgb;vec3 n=normalize(vNormal);vec3 V=normalize(uCamera-vWorld);vec3 L=normalize(vec3(-0.48,0.58,0.82));float diff=max(dot(n,L),0.0);vec3 H=normalize(L+V);float spec=pow(max(dot(n,H),0.0),72.0)*0.10;float rim=pow(1.0-max(dot(n,V),0.0),3.0);vec3 c=tex*(0.79+0.29*diff)*uLight;c+=vec3(spec);c+=vec3(0.018,0.075,0.12)*rim*0.48;c=pow(max(c,vec3(0.0)),vec3(0.98));outColor=vec4(c,1.0);}`;
-
-function makeSphere(latitudeSegments = 256, longitudeSegments = 512) {
-  const vertexCount = (latitudeSegments + 1) * (longitudeSegments + 1);
-  const positions = new Float32Array(vertexCount * 3);
-  const normals = new Float32Array(vertexCount * 3);
-  const uvs = new Float32Array(vertexCount * 2);
-  const indices = new Uint32Array(latitudeSegments * longitudeSegments * 6);
-  let positionIndex = 0;
-  let uvIndex = 0;
-  for (let y = 0; y <= latitudeSegments; y += 1) {
-    const theta = y / latitudeSegments * Math.PI;
-    const sinTheta = Math.sin(theta);
-    const cosTheta = Math.cos(theta);
-    for (let x = 0; x <= longitudeSegments; x += 1) {
-      const phi = x / longitudeSegments * Math.PI * 2 - Math.PI;
-      const px = sinTheta * Math.sin(phi);
-      const py = cosTheta;
-      const pz = sinTheta * Math.cos(phi);
-      positions[positionIndex] = normals[positionIndex] = px;
-      positions[positionIndex + 1] = normals[positionIndex + 1] = py;
-      positions[positionIndex + 2] = normals[positionIndex + 2] = pz;
-      positionIndex += 3;
-      uvs[uvIndex++] = x / longitudeSegments;
-      uvs[uvIndex++] = y / latitudeSegments;
-    }
-  }
-  let index = 0;
-  for (let y = 0; y < latitudeSegments; y += 1) {
-    for (let x = 0; x < longitudeSegments; x += 1) {
-      const a = y * (longitudeSegments + 1) + x;
-      const b = a + longitudeSegments + 1;
-      indices[index++] = a; indices[index++] = b; indices[index++] = a + 1;
-      indices[index++] = b; indices[index++] = b + 1; indices[index++] = a + 1;
-    }
-  }
-  return { positions, normals, uvs, indices };
-}
+void main(){vec3 n=normalize(vNormal);vec3 V=normalize(uCamera-vWorld);vec3 L=normalize(vec3(-0.48,0.58,0.82));float diff=max(dot(n,L),0.0);vec3 H=normalize(L+V);float spec=pow(max(dot(n,H),0.0),72.0)*0.16;float rim=pow(1.0-max(dot(n,V),0.0),3.0);vec3 c=vColor*(0.46+0.64*diff)*uLight;c+=vec3(spec);c+=vec3(0.018,0.06,0.09)*rim*0.38;c+=vColor*vEmission;c=pow(max(c,vec3(0.0)),vec3(0.96));outColor=vec4(c,1.0);}`;
 
 function identity() {
   return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
@@ -157,7 +120,6 @@ export function AtlasGlobe({
     let observer: ResizeObserver | undefined;
     const allocatedBuffers: WebGLBuffer[] = [];
     let program: WebGLProgram | undefined;
-    let texture: WebGLTexture | undefined;
     try {
       const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource);
       const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
@@ -168,7 +130,7 @@ export function AtlasGlobe({
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program) ?? "WebGL program linking failed.");
       gl.useProgram(program);
 
-      const sphere = makeSphere();
+      const geometry = createF28RenderGeometry();
       const bind = (name: string, data: Float32Array, size: number) => {
         const location = gl.getAttribLocation(program!, name);
         const buffer = gl.createBuffer();
@@ -177,35 +139,17 @@ export function AtlasGlobe({
         gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW); gl.enableVertexAttribArray(location);
         gl.vertexAttribPointer(location, size, gl.FLOAT, false, 0, 0);
       };
-      bind("aPosition", sphere.positions, 3); bind("aNormal", sphere.normals, 3); bind("aUv", sphere.uvs, 2);
-      const indexBuffer = gl.createBuffer();
-      if (!indexBuffer) throw new Error("WebGL index allocation failed.");
-      allocatedBuffers.push(indexBuffer); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, sphere.indices, gl.STATIC_DRAW);
+      bind("aPosition", geometry.positions, 3);
+      bind("aNormal", geometry.normals, 3);
+      bind("aColor", geometry.colors, 3);
+      bind("aEmission", geometry.emissions, 1);
 
       const uniforms = {
         projection: gl.getUniformLocation(program, "uProjection"), view: gl.getUniformLocation(program, "uView"),
         model: gl.getUniformLocation(program, "uModel"), camera: gl.getUniformLocation(program, "uCamera"),
-        texture: gl.getUniformLocation(program, "uTexture"), light: gl.getUniformLocation(program, "uLight"),
+        light: gl.getUniformLocation(program, "uLight"),
       };
-      texture = gl.createTexture() ?? undefined;
-      if (!texture) throw new Error("WebGL texture allocation failed.");
-      gl.bindTexture(gl.TEXTURE_2D, texture); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      const anisotropy = gl.getExtension("EXT_texture_filter_anisotropic");
-      if (anisotropy) gl.texParameterf(gl.TEXTURE_2D, anisotropy.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));
-
-      let textureReady = false;
-      const image = new Image(); image.crossOrigin = "anonymous";
-      image.onload = () => {
-        gl.bindTexture(gl.TEXTURE_2D, texture!); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image); gl.generateMipmap(gl.TEXTURE_2D);
-        textureReady = true; setLoading(false);
-      };
-      image.onerror = () => { setLoading(false); setError("The verified managed globe texture could not be loaded."); };
-      image.src = managedAssetUrl("atlas.nimbus.globe-albedo");
+      setLoading(false);
 
       const resize = () => {
         const rectangle = canvas.getBoundingClientRect(); const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -225,13 +169,11 @@ export function AtlasGlobe({
         const aspect = canvas.width / canvas.height; const projection = perspective(fieldOfView, aspect, 0.1, 50);
         const view = identity(); view[14] = -state.distance; const model = multiply(rotateY(state.yaw), rotateX(state.pitch));
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        if (textureReady) {
-          gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); gl.useProgram(program!);
-          gl.uniformMatrix4fv(uniforms.projection, false, projection); gl.uniformMatrix4fv(uniforms.view, false, view);
-          gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, state.distance);
-          gl.uniform1f(uniforms.light, state.light); gl.uniform1i(uniforms.texture, 0); gl.activeTexture(gl.TEXTURE0);
-          gl.bindTexture(gl.TEXTURE_2D, texture!); gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_INT, 0);
-        }
+        gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); gl.useProgram(program!);
+        gl.uniformMatrix4fv(uniforms.projection, false, projection); gl.uniformMatrix4fv(uniforms.view, false, view);
+        gl.uniformMatrix4fv(uniforms.model, false, model); gl.uniform3f(uniforms.camera, 0, 0, state.distance);
+        gl.uniform1f(uniforms.light, state.light); gl.drawArrays(gl.TRIANGLES, 0, geometry.vertexCount);
+
         const projected = new Map<string, { visible: boolean; x: number; y: number }>();
         const markerElements = markerLayer.querySelectorAll<HTMLElement>("[data-globe-marker]");
         markerElements.forEach((marker) => {
@@ -278,7 +220,7 @@ export function AtlasGlobe({
     return () => {
       cancelAnimationFrame(animationFrame); observer?.disconnect();
       allocatedBuffers.forEach((buffer) => gl.deleteBuffer(buffer));
-      if (texture) gl.deleteTexture(texture); if (program) gl.deleteProgram(program);
+      if (program) gl.deleteProgram(program);
     };
   }, [connections, points, regionMappings]);
 
@@ -291,7 +233,7 @@ export function AtlasGlobe({
 
   return <div className="atlas-globe-wrap">
     <div
-      aria-label="Interactive Eidolon globe, three-dimensional. Use arrow keys to rotate, plus and minus to zoom, and Home to reset."
+      aria-label="Interactive Eidolon F28 tiled globe, three-dimensional. Use arrow keys to rotate, plus and minus to zoom, and Home to reset."
       className="atlas-globe"
       onKeyDown={(event) => {
         const state = controls.current;
@@ -345,7 +287,7 @@ export function AtlasGlobe({
           onClick={() => onSelect(point.poiId)}
         />)}
       </div>
-      {loading && <p className="atlas-globe-message" role="status">Loading managed 3D globe texture…</p>}
+      {loading && <p className="atlas-globe-message" role="status">Building locked F28 tiled globe…</p>}
       {error && <p className="atlas-globe-message atlas-globe-message--error" role="alert">{error}</p>}
     </div>
     {unavailableMessage && <p className="notice notice--warn" role="status">{unavailableMessage}</p>}
