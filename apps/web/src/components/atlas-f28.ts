@@ -293,9 +293,9 @@ function pushHeavenfall(geometry: MutableGeometry, cell: F28Cell) {
     pushTriangle(geometry, scale(cell.center, 1.033), basinRing[(index + 1) % basinRing.length]!, basinRing[index]!, basin);
   }
   const beamLower = localRing(cell.center, cell.corners, 0.055, 1.041);
-  const beamUpper = localRing(cell.center, cell.corners, 0.035, 1.205);
+  const beamUpper = localRing(cell.center, cell.corners, 0.035, 1.10);
   pushWallRing(geometry, beamLower, beamUpper, beam, 1.35);
-  const beamTop = scale(cell.center, 1.205);
+  const beamTop = scale(cell.center, 1.10);
   for (let index = 0; index < beamUpper.length; index += 1) {
     pushTriangle(geometry, beamTop, beamUpper[index]!, beamUpper[(index + 1) % beamUpper.length]!, beam, 1.35);
   }
@@ -308,7 +308,7 @@ function pushEarthFocus(geometry: MutableGeometry, cell: F28Cell) {
   const base = localRing(cell.center, cell.corners, 0.78, 1.009);
   const shoulder = localRing(cell.center, cell.corners, 0.40, 1.052);
   pushWallRing(geometry, base, shoulder, darkRock);
-  const peak = scale(cell.center, 1.155);
+  const peak = scale(cell.center, 1.075);
   for (let index = 0; index < shoulder.length; index += 1) {
     const color = index % 2 === 0 ? midRock : highRock;
     pushTriangle(geometry, shoulder[index]!, shoulder[(index + 1) % shoulder.length]!, peak, color);
@@ -320,7 +320,10 @@ const neutralTileColor = (index: number): Color => {
   return mixed === 0 || mixed === 3 ? [0.075, 0.085, 0.095] : [0.42, 0.46, 0.50];
 };
 
+let cachedRenderGeometry: F28RenderGeometry | undefined;
+
 export function createF28RenderGeometry(): F28RenderGeometry {
+  if (cachedRenderGeometry) return cachedRenderGeometry;
   cachedGeodesic ??= makeTriangulatedGeodesic();
   const cells = createF28Cells();
   const geometry: MutableGeometry = { colors: [], emissions: [], normals: [], positions: [] };
@@ -352,11 +355,12 @@ export function createF28RenderGeometry(): F28RenderGeometry {
   if (heavenfall) pushHeavenfall(geometry, heavenfall);
   if (earthFocus) pushEarthFocus(geometry, earthFocus);
 
-  return {
+  cachedRenderGeometry = {
     colors: new Float32Array(geometry.colors),
     emissions: new Float32Array(geometry.emissions),
     normals: new Float32Array(geometry.normals),
     positions: new Float32Array(geometry.positions),
     vertexCount: geometry.positions.length / 3,
   };
+  return cachedRenderGeometry;
 }
